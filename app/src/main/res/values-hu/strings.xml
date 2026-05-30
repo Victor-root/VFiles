@@ -576,4 +576,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Követés a GitHubon</string>
     <string name="about_author_twitter_title">Követés Twitteren</string>
+    <string name="app_name_launcher">Fájlok</string>
 </resources>

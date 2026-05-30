@@ -636,4 +636,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sekti GitHub svetainėje</string>
     <string name="about_author_twitter_title">Sekti Twitter svetainėje</string>
+    <string name="app_name_launcher">Failai</string>
 </resources>

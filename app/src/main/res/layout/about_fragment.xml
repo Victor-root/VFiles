@@ -247,9 +247,11 @@
                         <me.zhanghai.android.foregroundcompat.ForegroundLinearLayout
                             android:id="@+id/authorNameLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="?listPreferredItemHeightSmall"
+                            android:layout_height="wrap_content"
                             android:paddingStart="?android:listPreferredItemPaddingStart"
                             android:paddingEnd="?android:listPreferredItemPaddingEnd"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
@@ -263,14 +265,31 @@
                                 android:src="@drawable/person_icon_white_24dp"
                                 app:tint="?colorControlNormal" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/content_start_from_screen_edge_margin_minus_24dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@string/about_author_name_title"
-                                android:textAppearance="?textAppearanceListItem" />
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/content_start_from_screen_edge_margin_minus_24dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@string/about_author_name_title"
+                                    android:textAppearance="?textAppearanceListItem" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/content_start_from_screen_edge_margin_minus_24dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@string/about_fork_subtitle"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                            </LinearLayout>
                         </me.zhanghai.android.foregroundcompat.ForegroundLinearLayout>
 
                         <me.zhanghai.android.foregroundcompat.ForegroundLinearLayout
@@ -297,33 +316,6 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="@string/about_author_github_title"
-                                android:textAppearance="?textAppearanceListItem" />
-                        </me.zhanghai.android.foregroundcompat.ForegroundLinearLayout>
-
-                        <me.zhanghai.android.foregroundcompat.ForegroundLinearLayout
-                            android:id="@+id/authorTwitterLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="?listPreferredItemHeightSmall"
-                            android:paddingStart="?android:listPreferredItemPaddingStart"
-                            android:paddingEnd="?android:listPreferredItemPaddingEnd"
-                            android:foreground="?selectableItemBackground"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="@dimen/icon_size"
-                                android:layout_height="@dimen/icon_size"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/twitter_icon_white_24dp"
-                                app:tint="?colorControlNormal" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/content_start_from_screen_edge_margin_minus_24dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@string/about_author_twitter_title"
                                 android:textAppearance="?textAppearanceListItem" />
                         </me.zhanghai.android.foregroundcompat.ForegroundLinearLayout>
                     </LinearLayout>

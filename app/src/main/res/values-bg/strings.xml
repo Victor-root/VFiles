@@ -659,4 +659,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Следване в GitHub</string>
     <string name="about_author_twitter_title">Следване в Twitter</string>
+    <string name="app_name_launcher">Файлове</string>
 </resources>

@@ -60,6 +60,7 @@
         <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
             android:exported="true"
+            android:label="@string/app_name_launcher"
             android:visibleToInstantApps="true"
             tools:ignore="UnusedAttribute">
             <intent-filter>

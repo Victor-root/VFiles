@@ -644,4 +644,5 @@
     <string name="about_author_name_title">張海</string>
     <string name="about_author_github_title">GitHub でフォロー</string>
     <string name="about_author_twitter_title">Twitter でフォロー</string>
+    <string name="app_name_launcher">ファイル</string>
 </resources>

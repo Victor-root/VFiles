@@ -50,17 +50,13 @@ class AboutFragment : Fragment() {
         binding.authorGitHubLayout.setOnClickListener {
             startActivitySafe(AUTHOR_GITHUB_URI.createViewIntent())
         }
-        binding.authorTwitterLayout.setOnClickListener {
-            startActivitySafe(AUTHOR_TWITTER_URI.createViewIntent())
-        }
     }
 
     companion object {
-        private val GITHUB_URI = Uri.parse("https://github.com/zhanghai/MaterialFiles")
+        private val GITHUB_URI = Uri.parse("https://github.com/Victor-root/MaterialFiles")
         private val PRIVACY_POLICY_URI =
             Uri.parse("https://github.com/zhanghai/MaterialFiles/blob/master/PRIVACY.md")
         private val AUTHOR_RESUME_URI = Uri.parse("https://resume.zhanghai.me/")
-        private val AUTHOR_GITHUB_URI = Uri.parse("https://github.com/zhanghai")
-        private val AUTHOR_TWITTER_URI = Uri.parse("https://twitter.com/zhanghai95")
+        private val AUTHOR_GITHUB_URI = Uri.parse("https://github.com/Victor-root")
     }
 }

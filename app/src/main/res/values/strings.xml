@@ -8,6 +8,7 @@
 <resources>
 
     <string name="app_name">Material Files</string>
+    <string name="app_name_launcher">Files</string>
 
     <string name="close">Close</string>
     <string name="copy">Copy</string>
@@ -799,6 +800,7 @@
     <string name="about_privacy_policy_title">Privacy policy</string>
     <string name="about_author_title">Author</string>
     <string name="about_author_name_title">Hai Zhang</string>
+    <string name="about_fork_subtitle">Forked by Victor-root</string>
     <string name="about_author_github_title">Follow on GitHub</string>
     <string name="about_author_twitter_title">Follow on Twitter</string>
 

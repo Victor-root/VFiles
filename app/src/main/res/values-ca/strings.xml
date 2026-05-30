@@ -615,4 +615,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Segueix a GitHub</string>
     <string name="about_author_twitter_title">Segueix al Twitter</string>
+    <string name="app_name_launcher">Fitxers</string>
 </resources>

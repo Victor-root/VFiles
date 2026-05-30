@@ -710,4 +710,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Suivre sur GitHub</string>
     <string name="about_author_twitter_title">Suivre sur Twitter</string>
+    <string name="app_name_launcher">Fichiers</string>
 </resources>

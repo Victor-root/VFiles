@@ -559,4 +559,5 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Seuraa GitHubissa</string>
     <string name="about_author_twitter_title">Seuraa Twitterissä</string>
+    <string name="app_name_launcher">Tiedostot</string>
 </resources>
