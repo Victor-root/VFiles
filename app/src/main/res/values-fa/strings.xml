@@ -285,6 +285,9 @@
     <string name="file_list_paste_extract_title_format">در حال استخراج %1$,d</string>
     <string name="file_list_paste_action_extract_here">اینجا استخراج شود</string>
     <string name="file_list_empty">بدون پرونده</string>
+    <string name="file_list_error_folder_not_found">این پوشه دیگر وجود ندارد</string>
+    <string name="file_list_error_permission_denied">شما اجازهٔ باز کردن این پوشه را ندارید</string>
+    <string name="file_list_error_unknown">باز کردن این پوشه ممکن نیست</string>
     <string name="file_list_action_create_file">پرونده</string>
     <string name="file_list_action_create_directory">شاخه</string>
 
@@ -368,6 +371,7 @@
     <string name="file_properties_apk_signature_digests_empty">بدون امضای معتبر</string>
     <string name="file_properties_apk_past_signature_digests">امضاهای قدیمی</string>
     <string name="storage_file_system_root_title">ریشه</string>
+    <string name="storage_internal_storage">حافظه داخلی</string>
     <string name="storage_list_title">ذخیره‌ساز</string>
     <string name="storage_list_empty">بدون ذخیره‌ساز</string>
     <string name="storage_add_storage_title">افزودن ذخیره‌ساز</string>

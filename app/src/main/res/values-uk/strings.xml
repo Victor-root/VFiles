@@ -368,6 +368,9 @@
     <string name="file_list_paste_extract_title_format">Видобування %1$,d</string>
     <string name="file_list_paste_action_extract_here">Видобути тут</string>
     <string name="file_list_empty">Нема файлів</string>
+    <string name="file_list_error_folder_not_found">Ця папка більше не існує</string>
+    <string name="file_list_error_permission_denied">У вас немає дозволу відкрити цю папку</string>
+    <string name="file_list_error_unknown">Не вдалося відкрити цю папку</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Тека</string>
 
@@ -494,6 +497,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Збігається з префіксом контрольної суми %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Відповідної контрольної суми не знайдено</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Внутрішня пам\'ять</string>
     <string name="storage_list_title">Сховище</string>
     <string name="storage_list_empty">Нема сховища</string>
     <string name="storage_add_storage_title">Додати сховище</string>

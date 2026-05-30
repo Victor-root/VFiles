@@ -368,6 +368,9 @@
     <string name="file_list_paste_extract_title_format">Извлечение %1$,d</string>
     <string name="file_list_paste_action_extract_here">Извлечь здесь</string>
     <string name="file_list_empty">Нет файлов</string>
+    <string name="file_list_error_folder_not_found">Эта папка больше не существует</string>
+    <string name="file_list_error_permission_denied">У вас нет разрешения на открытие этой папки</string>
+    <string name="file_list_error_unknown">Не удалось открыть эту папку</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>
 
@@ -494,6 +497,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Совпадение префикса контрольной суммы %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Соответствующая контрольная сумма не найдена</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Внутренняя память</string>
     <string name="storage_list_title">Накопитель</string>
     <string name="storage_list_empty">Нет накопителей</string>
     <string name="storage_add_storage_title">Добавить накопитель</string>

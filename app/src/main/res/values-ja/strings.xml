@@ -282,6 +282,9 @@
     <string name="file_list_paste_extract_title_format">%1$,d 件を展開中</string>
     <string name="file_list_paste_action_extract_here">ここに展開</string>
     <string name="file_list_empty">ファイルがありません</string>
+    <string name="file_list_error_folder_not_found">このフォルダは存在しません</string>
+    <string name="file_list_error_permission_denied">このフォルダを開く権限がありません</string>
+    <string name="file_list_error_unknown">このフォルダを開けません</string>
     <string name="file_list_action_create_file">ファイル</string>
     <string name="file_list_action_create_directory">フォルダ</string>
 
@@ -402,6 +405,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">%1$s チェックサムが先頭から検索して一致</string>
     <string name="file_properties_checksum_compare_no_match">一致するチェックサムが見つかりません</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">内部ストレージ</string>
     <string name="storage_list_title">ストレージ</string>
     <string name="storage_list_empty">ストレージがありません</string>
     <string name="storage_add_storage_title">ストレージを追加</string>

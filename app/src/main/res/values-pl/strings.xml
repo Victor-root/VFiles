@@ -366,6 +366,9 @@
     <string name="file_list_paste_extract_title_format">Rozpakowywanie %1$,d</string>
     <string name="file_list_paste_action_extract_here">Wypakuj tutaj</string>
     <string name="file_list_empty">Brak plików</string>
+    <string name="file_list_error_folder_not_found">Ten folder już nie istnieje</string>
+    <string name="file_list_error_permission_denied">Nie masz uprawnień do otwarcia tego folderu</string>
+    <string name="file_list_error_unknown">Nie można otworzyć tego folderu</string>
     <string name="file_list_action_create_file">Plik</string>
     <string name="file_list_action_create_directory">Katalog</string>
 
@@ -492,6 +495,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Pasuje do przedrostka sumy kontrolnej %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Nie znaleziono pasującej sumy kontrolnej</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Pamięć wewnętrzna</string>
     <string name="storage_list_title">Pamięć</string>
     <string name="storage_list_empty">Brak nośników</string>
     <string name="storage_add_storage_title">Dodaj nośnik</string>

@@ -312,6 +312,9 @@
     <string name="file_list_paste_extract_title_format">Afþjappa %1$,d</string>
     <string name="file_list_paste_action_extract_here">Afþjappa hér</string>
     <string name="file_list_empty">Engar skrár</string>
+    <string name="file_list_error_folder_not_found">Þessi mappa er ekki lengur til</string>
+    <string name="file_list_error_permission_denied">Þú hefur ekki heimild til að opna þessa möppu</string>
+    <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
     <string name="file_list_action_create_file">Skrá</string>
     <string name="file_list_action_create_directory">Mappa</string>
 
@@ -434,6 +437,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Samsvarar forskeyti á %1$s gátsummu</string>
     <string name="file_properties_checksum_compare_no_match">Engin samsvarandi gátsumma fannst</string>
     <string name="storage_file_system_root_title">Rót</string>
+    <string name="storage_internal_storage">Innri geymsla</string>
     <string name="storage_list_title">Geymslurými</string>
     <string name="storage_list_empty">Ekkert geymslurými</string>
     <string name="storage_add_storage_title">Bæta við geymslurými</string>

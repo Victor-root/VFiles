@@ -366,6 +366,9 @@
     <string name="file_list_paste_extract_title_format">מחלץ את %1$,d</string>
     <string name="file_list_paste_action_extract_here">חילוץ לכאן</string>
     <string name="file_list_empty">אין קבצים</string>
+    <string name="file_list_error_folder_not_found">התיקייה הזו כבר לא קיימת</string>
+    <string name="file_list_error_permission_denied">אין לך הרשאה לפתוח את התיקייה הזו</string>
+    <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
     <string name="file_list_action_create_file">קובץ</string>
     <string name="file_list_action_create_directory">תיקייה</string>
 
@@ -492,6 +495,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">תואם לקידומת של סיכום הביקורת %1$s</string>
     <string name="file_properties_checksum_compare_no_match">לא נמצא סיכום ביקורת תואם</string>
     <string name="storage_file_system_root_title">שורש</string>
+    <string name="storage_internal_storage">אחסון פנימי</string>
     <string name="storage_list_title">אחסון</string>
     <string name="storage_list_empty">ללא אחסון</string>
     <string name="storage_add_storage_title">הוספת אחסון</string>

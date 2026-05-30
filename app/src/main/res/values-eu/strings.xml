@@ -261,6 +261,9 @@
     <string name="file_list_paste_extract_title_format">%1$,d erauzten</string>
     <string name="file_list_paste_action_extract_here">Erauzi hemen</string>
     <string name="file_list_empty">Fitxategirik ez</string>
+    <string name="file_list_error_folder_not_found">Karpeta hau jada ez dago</string>
+    <string name="file_list_error_permission_denied">Ez duzu baimenik karpeta hau irekitzeko</string>
+    <string name="file_list_error_unknown">Ezin da karpeta hau ireki</string>
     <string name="file_list_action_create_file">Fitxategia</string>
     <string name="file_list_action_create_directory">Karpeta</string>
 
@@ -286,6 +289,7 @@
     <string name="file_properties_basic_archive_entry">Artxibo sarrera</string>
     <string name="file_properties_basic_free_space">Espazio librea</string>
     <string name="storage_file_system_root_title">Erroa</string>
+    <string name="storage_internal_storage">Barne-biltegiratzea</string>
     <string name="navigation_storage_subtitle_format">%1$s libre %2$s guztira</string>
     <string name="navigation_add_storage">Gehitu biltegia…</string>
     <string name="navigation_standard_directory_alarms">Alarmak</string>

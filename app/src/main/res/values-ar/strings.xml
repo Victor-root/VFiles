@@ -422,6 +422,9 @@
     <string name="file_list_paste_extract_title_format">استخراج %1$,d</string>
     <string name="file_list_paste_action_extract_here">استخرج هنا</string>
     <string name="file_list_empty">لا توجد ملفات</string>
+    <string name="file_list_error_folder_not_found">لم يعد هذا المجلد موجودًا</string>
+    <string name="file_list_error_permission_denied">ليس لديك إذن لفتح هذا المجلد</string>
+    <string name="file_list_error_unknown">تعذّر فتح هذا المجلد</string>
     <string name="file_list_action_create_file">ملف</string>
     <string name="file_list_action_create_directory">مجلد</string>
 
@@ -552,6 +555,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">تطابقات بادئة %1$s المجموع الاختباري</string>
     <string name="file_properties_checksum_compare_no_match">لم يتم العثور على المجموع الاختباري المطابق</string>
     <string name="storage_file_system_root_title">الروت</string>
+    <string name="storage_internal_storage">التخزين الداخلي</string>
     <string name="storage_list_title">وحدة تخزين</string>
     <string name="storage_list_empty">لا توجد وحدة تخزين</string>
     <string name="storage_add_storage_title">إضافة وحدة تخزين</string>

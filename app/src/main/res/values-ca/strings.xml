@@ -298,6 +298,9 @@
     <string name="file_list_paste_extract_title_format">S\'està extraient %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extreu aquí</string>
     <string name="file_list_empty">No hi ha cap fitxer</string>
+    <string name="file_list_error_folder_not_found">Aquesta carpeta ja no existeix</string>
+    <string name="file_list_error_permission_denied">No teniu permís per obrir aquesta carpeta</string>
+    <string name="file_list_error_unknown">No s\'ha pogut obrir aquesta carpeta</string>
     <string name="file_list_action_create_file">Fitxer</string>
     <string name="file_list_action_create_directory">Carpeta</string>
 
@@ -381,6 +384,7 @@
     <string name="file_properties_apk_signature_digests_empty">No hi ha cap signatura vàlida</string>
     <string name="file_properties_apk_past_signature_digests">Signatures antigues</string>
     <string name="storage_file_system_root_title">Arrel</string>
+    <string name="storage_internal_storage">Emmagatzematge intern</string>
     <string name="storage_list_title">Emmagatzematge</string>
     <string name="storage_list_empty">Sense emmagatzematge</string>
     <string name="storage_add_storage_title">Afegeix l\'emmagatzematge</string>

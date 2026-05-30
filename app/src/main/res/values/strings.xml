@@ -319,6 +319,9 @@
     <string name="file_list_paste_extract_title_format">Extracting %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extract here</string>
     <string name="file_list_empty">No files</string>
+    <string name="file_list_error_folder_not_found">This folder no longer exists</string>
+    <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
+    <string name="file_list_error_unknown">Unable to open this folder</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Folder</string>
 
@@ -528,6 +531,7 @@
     <string name="file_properties_checksum_sha_512" translatable="false">SHA-512</string>
 
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Internal storage</string>
     <string name="storage_list_title">Storage</string>
     <string name="storage_list_empty">No storage</string>
     <string name="storage_add_storage_title">Add storage</string>

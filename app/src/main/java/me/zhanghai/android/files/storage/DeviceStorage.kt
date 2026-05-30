@@ -13,7 +13,6 @@ import java8.nio.file.Path
 import java8.nio.file.Paths
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.compat.getDescriptionCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.util.createIntent
@@ -76,10 +75,10 @@ data class PrimaryStorageVolume(
 
     override val iconRes: Int
         @DrawableRes
-        get() = R.drawable.sd_card_icon_white_24dp
+        get() = R.drawable.device_mobile_icon_white_24dp
 
     override fun getDefaultName(context: Context): String =
-        storageVolume.getDescriptionCompat(context)
+        context.getString(R.string.storage_internal_storage)
 
     override val linuxPath: String
         get() = storageVolume.pathCompat

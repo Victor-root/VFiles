@@ -310,6 +310,9 @@
     <string name="file_list_paste_extract_title_format">Bezig met uitpakken van %1$,d</string>
     <string name="file_list_paste_action_extract_here">Hier uitpakken</string>
     <string name="file_list_empty">Geen bestanden</string>
+    <string name="file_list_error_folder_not_found">Deze map bestaat niet meer</string>
+    <string name="file_list_error_permission_denied">Je hebt geen toestemming om deze map te openen</string>
+    <string name="file_list_error_unknown">Kan deze map niet openen</string>
     <string name="file_list_action_create_file">Bestand</string>
     <string name="file_list_action_create_directory">Map</string>
 
@@ -432,6 +435,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Komt overeen met het voorvoegsel van %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Er zijn geen overeenkomsten gevonden</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Interne opslag</string>
     <string name="storage_list_title">Opslag</string>
     <string name="storage_list_empty">Geen opslag</string>
     <string name="storage_add_storage_title">Opslagmedium toevoegen</string>

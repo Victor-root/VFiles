@@ -326,6 +326,9 @@
     <string name="file_list_paste_extract_title_format">A extrair %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrair aqui</string>
     <string name="file_list_empty">Sem ficheiros</string>
+    <string name="file_list_error_folder_not_found">Esta pasta já não existe</string>
+    <string name="file_list_error_permission_denied">Não tem permissão para abrir esta pasta</string>
+    <string name="file_list_error_unknown">Não foi possível abrir esta pasta</string>
     <string name="file_list_action_create_file">Ficheiro</string>
     <string name="file_list_action_create_directory">Pastas</string>
 
@@ -411,6 +414,7 @@
     <string name="file_properties_apk_signature_digests_empty">Não há assinaturas válidas</string>
     <string name="file_properties_apk_past_signature_digests">Assinaturas antigas</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Armazenamento interno</string>
     <string name="storage_list_title">Armazenamento</string>
     <string name="storage_list_empty">Nenhum armazenamento</string>
     <string name="storage_add_storage_title">Adicionar armazenamento</string>

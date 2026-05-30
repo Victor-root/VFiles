@@ -280,6 +280,9 @@
     <string name="file_list_paste_extract_title_format">解開 %1$,d</string>
     <string name="file_list_paste_action_extract_here">在這裡解開</string>
     <string name="file_list_empty">無檔案</string>
+    <string name="file_list_error_folder_not_found">此資料夾已不存在</string>
+    <string name="file_list_error_permission_denied">您沒有權限開啟此資料夾</string>
+    <string name="file_list_error_unknown">無法開啟此資料夾</string>
     <string name="file_list_action_create_file">檔案</string>
     <string name="file_list_action_create_directory">資料夾</string>
 
@@ -401,6 +404,7 @@
     <string name="file_properties_checksum_compare_no_match">找不到相符的總和檢查碼</string>
 
     <string name="storage_file_system_root_title">根目錄</string>
+    <string name="storage_internal_storage">內部儲存空間</string>
     <string name="storage_list_title">儲存空間</string>
     <string name="storage_list_empty">無儲存空間</string>
     <string name="storage_add_storage_title">新增儲存空間</string>

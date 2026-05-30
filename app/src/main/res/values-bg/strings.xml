@@ -310,6 +310,9 @@
     <string name="file_list_paste_extract_title_format">Извличане на %1$,d</string>
     <string name="file_list_paste_action_extract_here">Извличане тук</string>
     <string name="file_list_empty">Няма файлове</string>
+    <string name="file_list_error_folder_not_found">Тази папка вече не съществува</string>
+    <string name="file_list_error_permission_denied">Нямате разрешение да отворите тази папка</string>
+    <string name="file_list_error_unknown">Папката не може да бъде отворена</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>
 
@@ -425,6 +428,7 @@
     <string name="file_properties_apk_signature_digests_empty">Няма валидни подписи</string>
     <string name="file_properties_apk_past_signature_digests">Стари подписи</string>
     <string name="storage_file_system_root_title">Коренова папка</string>
+    <string name="storage_internal_storage">Вътрешна памет</string>
     <string name="storage_list_title">Хранилище</string>
     <string name="storage_list_empty">Няма хранилища</string>
     <string name="storage_add_storage_title">Добавяне на хранилище</string>

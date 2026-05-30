@@ -267,6 +267,9 @@
     <string name="file_list_paste_extract_title_format">%1$,d çıkartılıyor</string>
     <string name="file_list_paste_action_extract_here">Buraya çıkart</string>
     <string name="file_list_empty">Dosya yok</string>
+    <string name="file_list_error_folder_not_found">Bu klasör artık mevcut değil</string>
+    <string name="file_list_error_permission_denied">Bu klasörü açma izniniz yok</string>
+    <string name="file_list_error_unknown">Bu klasör açılamıyor</string>
     <string name="file_list_action_create_file">Dosya</string>
     <string name="file_list_action_create_directory">Klasör</string>
 
@@ -350,6 +353,7 @@
     <string name="file_properties_apk_signature_digests_empty">Uygun imza bulunamadı</string>
     <string name="file_properties_apk_past_signature_digests">Eski imzalar</string>
     <string name="storage_file_system_root_title">Kök</string>
+    <string name="storage_internal_storage">Dahili depolama</string>
     <string name="storage_list_title">Depolama</string>
     <string name="storage_list_empty">Depolama yok</string>
     <string name="storage_add_storage_title">Depolama ekle</string>

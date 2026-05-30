@@ -340,6 +340,9 @@
     <string name="file_list_paste_extract_title_format">Extraire %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extraire ici</string>
     <string name="file_list_empty">Pas de fichiers</string>
+    <string name="file_list_error_folder_not_found">Ce dossier n\'existe plus</string>
+    <string name="file_list_error_permission_denied">Vous n\'avez pas l\'autorisation d\'ouvrir ce dossier</string>
+    <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
     <string name="file_list_action_create_file">Fichier</string>
     <string name="file_list_action_create_directory">Dossier</string>
 
@@ -464,6 +467,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Correspond au prefix de la somme de contrôle %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Aucune somme de contrôle correspondante trouvée</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Stockage interne</string>
     <string name="storage_list_title">Support de stockage</string>
     <string name="storage_list_empty">Pas de support de stockage</string>
     <string name="storage_add_storage_title">Ajouter un support de stockage</string>

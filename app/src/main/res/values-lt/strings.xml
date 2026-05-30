@@ -343,6 +343,9 @@
     <string name="file_list_paste_extract_title_format">Išskleidžiama %1$,d</string>
     <string name="file_list_paste_action_extract_here">Išskleisti čia</string>
     <string name="file_list_empty">Nėra failų</string>
+    <string name="file_list_error_folder_not_found">Šio aplanko nebėra</string>
+    <string name="file_list_error_permission_denied">Neturite leidimo atidaryti šio aplanko</string>
+    <string name="file_list_error_unknown">Nepavyko atidaryti šio aplanko</string>
     <string name="file_list_action_create_file">Failas</string>
     <string name="file_list_action_create_directory">Aplankas</string>
 
@@ -430,6 +433,7 @@
     <string name="file_properties_apk_signature_digests_empty">Nėra tinkamų parašų</string>
     <string name="file_properties_apk_past_signature_digests">Seni parašai</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Vidinė atmintis</string>
     <string name="storage_list_title">Saugykla</string>
     <string name="storage_list_empty">Nėra saugyklos</string>
     <string name="storage_add_storage_title">Pridėti saugyklą</string>

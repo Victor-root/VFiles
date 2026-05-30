@@ -277,6 +277,9 @@
     <string name="file_list_paste_extract_title_format">Puretaan %1$,d</string>
     <string name="file_list_paste_action_extract_here">Pura tähän</string>
     <string name="file_list_empty">Ei tiedostoja</string>
+    <string name="file_list_error_folder_not_found">Tätä kansiota ei ole enää olemassa</string>
+    <string name="file_list_error_permission_denied">Sinulla ei ole oikeutta avata tätä kansiota</string>
+    <string name="file_list_error_unknown">Kansiota ei voi avata</string>
     <string name="file_list_action_create_file">Tiedosto</string>
     <string name="file_list_action_create_directory">Kansio</string>
 
@@ -357,6 +360,7 @@
     <string name="file_properties_apk_signature_digests_empty">Ei kelvollisia allekirjoituksia</string>
     <string name="file_properties_apk_past_signature_digests">Vanhat allekirjoitukset</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Sisäinen tallennustila</string>
     <string name="storage_list_title">Tallennustila</string>
     <string name="storage_list_empty">Ei tallennustilaa</string>
     <string name="storage_add_storage_title">Lisää tallennustila</string>

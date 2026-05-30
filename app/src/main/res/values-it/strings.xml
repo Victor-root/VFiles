@@ -338,6 +338,9 @@
     <string name="file_list_paste_extract_title_format">Estrazione di %1$,d</string>
     <string name="file_list_paste_action_extract_here">Estrai qui</string>
     <string name="file_list_empty">Nessun file</string>
+    <string name="file_list_error_folder_not_found">Questa cartella non esiste più</string>
+    <string name="file_list_error_permission_denied">Non hai i permessi per aprire questa cartella</string>
+    <string name="file_list_error_unknown">Impossibile aprire questa cartella</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Cartella</string>
 
@@ -462,6 +465,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Corrisponde al prefisso di %1$s checksum</string>
     <string name="file_properties_checksum_compare_no_match">Nessun checksum corrispondente trovato</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Memoria interna</string>
     <string name="storage_list_title">Archiviazione</string>
     <string name="storage_list_empty">Nessuna archiviazione</string>
     <string name="storage_add_storage_title">Aggiungi archiviazione</string>

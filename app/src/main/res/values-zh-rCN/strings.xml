@@ -280,6 +280,9 @@
     <string name="file_list_paste_extract_title_format">提取 %1$,d</string>
     <string name="file_list_paste_action_extract_here">提取到此处</string>
     <string name="file_list_empty">无文件</string>
+    <string name="file_list_error_folder_not_found">此文件夹已不存在</string>
+    <string name="file_list_error_permission_denied">您没有权限打开此文件夹</string>
+    <string name="file_list_error_unknown">无法打开此文件夹</string>
     <string name="file_list_action_create_file">文件</string>
     <string name="file_list_action_create_directory">文件夹</string>
 
@@ -401,6 +404,7 @@
     <string name="file_properties_checksum_compare_no_match">未找到匹配的校验和</string>
 
     <string name="storage_file_system_root_title">根目录</string>
+    <string name="storage_internal_storage">内部存储</string>
     <string name="storage_list_title">存储空间</string>
     <string name="storage_list_empty">无存储空间</string>
     <string name="storage_add_storage_title">添加存储空间</string>

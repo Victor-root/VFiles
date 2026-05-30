@@ -324,6 +324,9 @@
     <string name="file_list_paste_extract_title_format">Se extrag %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrage aici</string>
     <string name="file_list_empty">Fără fișiere</string>
+    <string name="file_list_error_folder_not_found">Acest folder nu mai există</string>
+    <string name="file_list_error_permission_denied">Nu aveți permisiunea de a deschide acest folder</string>
+    <string name="file_list_error_unknown">Nu se poate deschide acest folder</string>
     <string name="file_list_action_create_file">Fișier</string>
     <string name="file_list_action_create_directory">Dosar</string>
 
@@ -409,6 +412,7 @@
     <string name="file_properties_apk_signature_digests_empty">Nu există semnături valide</string>
     <string name="file_properties_apk_past_signature_digests">Semnături vechi</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Stocare internă</string>
     <string name="storage_list_title">Stocare</string>
     <string name="storage_list_empty">Nu există stocare</string>
     <string name="storage_add_storage_title">Adaugă stocare</string>

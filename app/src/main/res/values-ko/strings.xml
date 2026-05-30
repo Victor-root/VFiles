@@ -282,6 +282,9 @@
     <string name="file_list_paste_extract_title_format">%1$,d개 항목 압축 해제</string>
     <string name="file_list_paste_action_extract_here">여기에 압축 풀기</string>
     <string name="file_list_empty">파일 없음</string>
+    <string name="file_list_error_folder_not_found">이 폴더가 더 이상 존재하지 않습니다</string>
+    <string name="file_list_error_permission_denied">이 폴더를 열 권한이 없습니다</string>
+    <string name="file_list_error_unknown">이 폴더를 열 수 없습니다</string>
     <string name="file_list_action_create_file">파일</string>
     <string name="file_list_action_create_directory">폴더</string>
 
@@ -402,6 +405,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">%1$s의 체크섬 앞부분과 일치</string>
     <string name="file_properties_checksum_compare_no_match">일치하는 체크섬 없음</string>
     <string name="storage_file_system_root_title">루트</string>
+    <string name="storage_internal_storage">내부 저장소</string>
     <string name="storage_list_title">저장소</string>
     <string name="storage_list_empty">저장소 없음</string>
     <string name="storage_add_storage_title">저장소 추가</string>

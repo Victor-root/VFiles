@@ -310,6 +310,9 @@
     <string name="file_list_paste_extract_title_format">Extrahiere %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrahiere hier</string>
     <string name="file_list_empty">Keine Dateien</string>
+    <string name="file_list_error_folder_not_found">Dieser Ordner existiert nicht mehr</string>
+    <string name="file_list_error_permission_denied">Sie haben keine Berechtigung, diesen Ordner zu öffnen</string>
+    <string name="file_list_error_unknown">Dieser Ordner kann nicht geöffnet werden</string>
     <string name="file_list_action_create_file">Datei</string>
     <string name="file_list_action_create_directory">Ordner</string>
 
@@ -432,6 +435,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Entspricht dem Prefix der %1$s Prüfsumme</string>
     <string name="file_properties_checksum_compare_no_match">Keine passende Prüfsumme gefunden</string>
     <string name="storage_file_system_root_title">Wurzel</string>
+    <string name="storage_internal_storage">Interner Speicher</string>
     <string name="storage_list_title">Speicher</string>
     <string name="storage_list_empty">Kein Speicher</string>
     <string name="storage_add_storage_title">Speicher hinzufügen</string>

@@ -310,6 +310,9 @@
     <string name="file_list_paste_extract_title_format">Pakker ut %1$,d</string>
     <string name="file_list_paste_action_extract_here">Pakk ut her</string>
     <string name="file_list_empty">Ingen filer</string>
+    <string name="file_list_error_folder_not_found">Denne mappen finnes ikke lenger</string>
+    <string name="file_list_error_permission_denied">Du har ikke tillatelse til å åpne denne mappen</string>
+    <string name="file_list_error_unknown">Kan ikke åpne denne mappen</string>
     <string name="file_list_action_create_file">Fil</string>
     <string name="file_list_action_create_directory">Mappe</string>
 
@@ -432,6 +435,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Samsvarer med starten av %1$s-sjekksumen</string>
     <string name="file_properties_checksum_compare_no_match">Fant ingen samsvarende sjekksum</string>
     <string name="storage_file_system_root_title">Rot</string>
+    <string name="storage_internal_storage">Internt lager</string>
     <string name="storage_list_title">Lagring</string>
     <string name="storage_list_empty">Ingen lagring</string>
     <string name="storage_add_storage_title">Legg til lagring</string>

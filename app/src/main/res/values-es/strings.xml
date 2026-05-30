@@ -338,6 +338,9 @@
     <string name="file_list_paste_extract_title_format">Extrayendo %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extraer aquí</string>
     <string name="file_list_empty">Sin archivos</string>
+    <string name="file_list_error_folder_not_found">Esta carpeta ya no existe</string>
+    <string name="file_list_error_permission_denied">No tienes permiso para abrir esta carpeta</string>
+    <string name="file_list_error_unknown">No se puede abrir esta carpeta</string>
     <string name="file_list_action_create_file">Archivo</string>
     <string name="file_list_action_create_directory">Carpeta</string>
 
@@ -462,6 +465,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Coincide con el prefijo de la suma de comprobación %1$s</string>
     <string name="file_properties_checksum_compare_no_match">No se ha encontrado ninguna coincidencia</string>
     <string name="storage_file_system_root_title">Raíz</string>
+    <string name="storage_internal_storage">Almacenamiento interno</string>
     <string name="storage_list_title">Almacenamiento</string>
     <string name="storage_list_empty">No hay almacenamiento</string>
     <string name="storage_add_storage_title">Añadir almacenamiento</string>

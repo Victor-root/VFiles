@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2018 Hai Zhang <dreaming.in.code.zh@gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<resources>
+
+    <!-- In night mode, paint the app bar with a dark surface instead of the light primary tint, so
+         the header and its title/icons read as white on a dark surface rather than a dark-on-light
+         eyesore. The colored app bar is kept for the light theme only. -->
+    <style name="Theme.MaterialFiles" parent="Base.Theme.MaterialFiles">
+        <item name="colorAppBarSurface">?colorSurface</item>
+        <item name="colorOnAppBarSurface">?colorOnSurface</item>
+    </style>
+</resources>

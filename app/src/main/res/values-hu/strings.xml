@@ -289,6 +289,9 @@
     <string name="file_list_paste_extract_title_format">%1$,d fájl kibontása</string>
     <string name="file_list_paste_action_extract_here">Kibontás ide</string>
     <string name="file_list_empty">Nincsenek fájlok</string>
+    <string name="file_list_error_folder_not_found">Ez a mappa már nem létezik</string>
+    <string name="file_list_error_permission_denied">Nincs jogosultsága a mappa megnyitásához</string>
+    <string name="file_list_error_unknown">A mappa nem nyitható meg</string>
     <string name="file_list_action_create_file">Fájl</string>
     <string name="file_list_action_create_directory">Mappa</string>
 
@@ -372,6 +375,7 @@
     <string name="file_properties_apk_signature_digests_empty">Nincsenek érvényes aláírások</string>
     <string name="file_properties_apk_past_signature_digests">Régi aláírások</string>
     <string name="storage_file_system_root_title">Gyökér</string>
+    <string name="storage_internal_storage">Belső tárhely</string>
     <string name="storage_list_title">Tároló</string>
     <string name="storage_list_empty">Nincs tároló</string>
     <string name="storage_add_storage_title">Tároló hozzáadása</string>

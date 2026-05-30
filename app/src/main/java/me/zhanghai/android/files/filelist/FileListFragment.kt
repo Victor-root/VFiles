@@ -49,6 +49,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leinardi.android.speeddial.SpeedDialView
+import java8.nio.file.AccessDeniedException
+import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import kotlinx.parcelize.Parcelize
@@ -117,6 +119,7 @@ import me.zhanghai.android.files.util.createViewIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.extraPathList
 import me.zhanghai.android.files.util.fadeToVisibilityUnsafe
+import me.zhanghai.android.files.util.findCauseByClass
 import me.zhanghai.android.files.util.getDimensionDp
 import me.zhanghai.android.files.util.getQuantityString
 import me.zhanghai.android.files.util.hasSw600Dp
@@ -635,7 +638,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         val throwable = (stateful as? Failure)?.throwable
         if (throwable != null) {
             throwable.printStackTrace()
-            val error = throwable.toString()
+            val error = getReadableErrorMessage(throwable)
             if (hasFiles) {
                 showToast(error)
             } else {
@@ -653,6 +656,15 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             viewModel.pendingState?.let { layoutManager.onRestoreInstanceState(it) }
         }
     }
+
+    private fun getReadableErrorMessage(throwable: Throwable): String =
+        when {
+            throwable.findCauseByClass<NoSuchFileException>() != null ->
+                getString(R.string.file_list_error_folder_not_found)
+            throwable.findCauseByClass<AccessDeniedException>() != null ->
+                getString(R.string.file_list_error_permission_denied)
+            else -> getString(R.string.file_list_error_unknown)
+        }
 
     private fun getSubtitle(files: List<FileItem>): String {
         val directoryCount = files.count { it.attributes.isDirectory }

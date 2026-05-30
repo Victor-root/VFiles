@@ -6,6 +6,13 @@
   -->
 
 <resources>
+    <!-- In night mode, paint the app bar with a dark surface instead of the light primary tint, so
+         the header and its title/icons read as white on a dark surface rather than a dark-on-light
+         eyesore. The colored app bar is kept for the light theme only. -->
+    <style name="Theme.MaterialFiles.Material3" parent="Base.Theme.MaterialFiles.Material3">
+        <item name="colorAppBarSurface">?colorSurface</item>
+        <item name="colorOnAppBarSurface">?colorOnSurface</item>
+    </style>
     <style name="Theme.MaterialFiles.Material3.Black">
         <item name="colorPrimaryDark">@color/color_primary_dark_black</item>
         <item name="colorSurface">@android:color/black</item>

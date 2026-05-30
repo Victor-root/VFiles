@@ -352,6 +352,9 @@
     <string name="file_list_paste_extract_title_format">Rozbalování %1$,d</string>
     <string name="file_list_paste_action_extract_here">Rozbalit zde</string>
     <string name="file_list_empty">Žádné soubory</string>
+    <string name="file_list_error_folder_not_found">Tato složka již neexistuje</string>
+    <string name="file_list_error_permission_denied">Nemáte oprávnění k otevření této složky</string>
+    <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
     <string name="file_list_action_create_file">Soubor</string>
     <string name="file_list_action_create_directory">Složka</string>
 
@@ -469,6 +472,7 @@
     <string name="file_properties_checksum_compare_placeholder">Jakýkoli kontrolní součet</string>
     <string name="file_properties_checksum_compare_no_match">Žádný odpovídající kontrolní součet</string>
     <string name="storage_file_system_root_title">Root</string>
+    <string name="storage_internal_storage">Vnitřní úložiště</string>
     <string name="storage_list_title">Úložiště</string>
     <string name="storage_list_empty">Žádné úložiště</string>
     <string name="storage_add_storage_title">Přidat úložiště</string>

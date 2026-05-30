@@ -310,6 +310,9 @@
     <string name="file_list_paste_extract_title_format">Εξαγωγή %1$,d</string>
     <string name="file_list_paste_action_extract_here">Εξαγωγή εδώ</string>
     <string name="file_list_empty">Χωρίς αρχεία</string>
+    <string name="file_list_error_folder_not_found">Αυτός ο φάκελος δεν υπάρχει πλέον</string>
+    <string name="file_list_error_permission_denied">Δεν έχετε δικαίωμα να ανοίξετε αυτόν τον φάκελο</string>
+    <string name="file_list_error_unknown">Δεν είναι δυνατό το άνοιγμα αυτού του φακέλου</string>
     <string name="file_list_action_create_file">Αρχείο</string>
     <string name="file_list_action_create_directory">Φάκελος</string>
 
@@ -432,6 +435,7 @@
     <string name="file_properties_checksum_compare_prefix_match_format">Ταιριάζει με το πρόθεμα αθροίσματος ελέγχου %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Δεν βρέθηκε άθροισμα ελέγχου που ταιριάζει</string>
     <string name="storage_file_system_root_title">Ρίζα</string>
+    <string name="storage_internal_storage">Εσωτερικός χώρος αποθήκευσης</string>
     <string name="storage_list_title">Χώρος αποθήκευσης</string>
     <string name="storage_list_empty">Χωρίς χώρο αποθήκευσης</string>
     <string name="storage_add_storage_title">Προσθήκη χώρου αποθήκευσης</string>
