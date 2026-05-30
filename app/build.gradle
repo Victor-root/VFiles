@@ -102,6 +102,11 @@ android {
 }
 
 repositories {
+    // Bundled offline Maven repository (see local-maven/). dav4jvm is served from here instead
+    // of JitPack, which no longer provides an artifact for the pinned commit.
+    maven {
+        url uri("$rootDir/local-maven")
+    }
     maven {
         url 'https://jitpack.io'
     }

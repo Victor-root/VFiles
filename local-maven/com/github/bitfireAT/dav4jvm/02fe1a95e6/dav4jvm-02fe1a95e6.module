@@ -1,0 +1,110 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.bitfireAT",
+    "module": "dav4jvm",
+    "version": "02fe1a95e6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "5.1.0"
+          }
+        },
+        {
+          "group": "org.ogce",
+          "module": "xpp3",
+          "version": {
+            "requires": "1.1.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dav4jvm-02fe1a95e6.jar",
+          "url": "dav4jvm-02fe1a95e6.jar",
+          "size": 341511,
+          "sha512": "9450cb6981456013c76ecb36a793eb0e61b9094e1604b4f43092545a115d950372513ad6355e65f39f46ae512521296e2222943b69f404e6953f6697f661ebd0",
+          "sha256": "04af5e9978b21db8f1bf4a6c9684f0c82f25886016a8f935800f26e471676ae2",
+          "sha1": "fabe25db0a69bb637b02a909146e811822ea8f64",
+          "md5": "2fff3d2331aa3c51a2cf66e5d48b92e5"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "5.1.0"
+          }
+        },
+        {
+          "group": "org.ogce",
+          "module": "xpp3",
+          "version": {
+            "requires": "1.1.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dav4jvm-02fe1a95e6.jar",
+          "url": "dav4jvm-02fe1a95e6.jar",
+          "size": 341511,
+          "sha512": "9450cb6981456013c76ecb36a793eb0e61b9094e1604b4f43092545a115d950372513ad6355e65f39f46ae512521296e2222943b69f404e6953f6697f661ebd0",
+          "sha256": "04af5e9978b21db8f1bf4a6c9684f0c82f25886016a8f935800f26e471676ae2",
+          "sha1": "fabe25db0a69bb637b02a909146e811822ea8f64",
+          "md5": "2fff3d2331aa3c51a2cf66e5d48b92e5"
+        }
+      ]
+    }
+  ]
+}
