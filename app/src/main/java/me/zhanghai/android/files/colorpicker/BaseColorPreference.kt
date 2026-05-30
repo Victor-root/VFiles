@@ -63,4 +63,9 @@ abstract class BaseColorPreference : DialogPreference {
     abstract val defaultValue: Int
 
     abstract val entryValues: IntArray
+
+    // When non-null, the first of [entryValues] is a "dynamic" color following the system/wallpaper
+    // colors rather than a fixed preset, and the picker shows it apart from the rest with a label.
+    @get:ColorInt
+    open val leadingDynamicColor: Int? = null
 }

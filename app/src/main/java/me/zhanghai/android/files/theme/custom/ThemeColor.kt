@@ -23,5 +23,9 @@ enum class ThemeColor(@ColorRes val resourceId: Int) {
     MATERIAL_DEEP_ORANGE(R.color.material_deep_orange),
     MATERIAL_BROWN(R.color.material_brown),
     MATERIAL_GREY(R.color.material_grey),
-    MATERIAL_BLUE_GREY(R.color.material_blue_grey)
+    MATERIAL_BLUE_GREY(R.color.material_blue_grey),
+    // Follows the system / wallpaper colors (Material You), only meaningful with Material Design 3
+    // on Android 12+. Kept last so the ordinals of the real colors (which is what gets persisted)
+    // stay stable, and so it is easy to hide on older versions.
+    DYNAMIC(R.color.theme_color_dynamic)
 }

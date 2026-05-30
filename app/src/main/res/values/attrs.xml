@@ -8,6 +8,7 @@
 <resources>
 
     <attr name="colorAppBarSurface" format="color" />
+    <attr name="colorOnAppBarSurface" format="color" />
 
     <declare-styleable name="AspectRatioFrameLayout">
         <attr name="aspectRatio" format="float" />

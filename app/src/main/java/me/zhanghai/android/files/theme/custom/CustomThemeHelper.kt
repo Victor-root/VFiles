@@ -66,14 +66,23 @@ object CustomThemeHelper {
     private fun getCustomThemeRes(@StyleRes baseThemeRes: Int, context: Context): Int {
         val resources = context.resources
         val baseThemeName = resources.getResourceName(baseThemeRes)
-        val customThemeName = if (Settings.MATERIAL_DESIGN_3.valueCompat) {
+        val themeColor = Settings.THEME_COLOR.valueCompat
+        val isMaterial3 = Settings.MATERIAL_DESIGN_3.valueCompat
+        // With Material Design 3, the "dynamic" color follows the system/wallpaper colors, which the
+        // base Material3 theme already applies; so we leave it without a color suffix in that case.
+        val isDynamic = themeColor == ThemeColor.DYNAMIC && isMaterial3
+        // DYNAMIC has no fixed-color theme of its own, so if it somehow ends up selected without
+        // Material Design 3 we fall back to the default color to keep the theme name valid.
+        val effectiveThemeColor =
+            if (themeColor == ThemeColor.DYNAMIC && !isMaterial3) ThemeColor.entries[0] else themeColor
+        val themeColorName = resources.getResourceEntryName(effectiveThemeColor.resourceId)
+        val customThemeName = if (isMaterial3) {
             val defaultThemeName = resources.getResourceEntryName(R.style.Theme_MaterialFiles)
             val material3ThemeName =
                 resources.getResourceEntryName(R.style.Theme_MaterialFiles_Material3)
-            baseThemeName.replace(defaultThemeName, material3ThemeName)
+            baseThemeName.replace(defaultThemeName, material3ThemeName) +
+                if (isDynamic) "" else ".$themeColorName"
         } else {
-            val themeColorName =
-                resources.getResourceEntryName(Settings.THEME_COLOR.valueCompat.resourceId)
             "$baseThemeName.$themeColorName"
         } + if (Settings.BLACK_NIGHT_MODE.valueCompat) ".Black" else ""
         return resources.getIdentifier(customThemeName, null, null)

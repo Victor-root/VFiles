@@ -39,6 +39,20 @@ import me.zhanghai.android.files.util.valueCompat
 val navigationItems: List<NavigationItem?>
     get() =
         mutableListOf<NavigationItem?>().apply {
+            val bookmarkDirectoryItems = bookmarkDirectoryItems
+            if (bookmarkDirectoryItems.isNotEmpty()) {
+                addAll(bookmarkDirectoryItems)
+            }
+            val standardDirectoryItems = standardDirectoryItems
+            if (standardDirectoryItems.isNotEmpty()) {
+                if (isNotEmpty()) {
+                    add(null)
+                }
+                addAll(standardDirectoryItems)
+            }
+            if (isNotEmpty()) {
+                add(null)
+            }
             addAll(storageItems)
             if (Environment::class.supportsExternalStorageManager()) {
                 // Starting with R, we can get read/write access to non-primary storage volumes with
@@ -48,16 +62,6 @@ val navigationItems: List<NavigationItem?>
                 addAll(storageVolumeItems)
             }
             add(AddStorageItem())
-            val standardDirectoryItems = standardDirectoryItems
-            if (standardDirectoryItems.isNotEmpty()) {
-                add(null)
-                addAll(standardDirectoryItems)
-            }
-            val bookmarkDirectoryItems = bookmarkDirectoryItems
-            if (bookmarkDirectoryItems.isNotEmpty()) {
-                add(null)
-                addAll(bookmarkDirectoryItems)
-            }
             add(null)
             addAll(menuItems)
         }
@@ -267,16 +271,21 @@ private val defaultStandardDirectories: List<StandardDirectory>
 // @see android.os.Environment#STANDARD_DIRECTORIES
 private val DEFAULT_STANDARD_DIRECTORIES = listOf(
     StandardDirectory(
-        R.drawable.alarm_icon_white_24dp, R.string.navigation_standard_directory_alarms,
-        Environment.DIRECTORY_ALARMS, false
-    ),
-    StandardDirectory(
         R.drawable.camera_icon_white_24dp, R.string.navigation_standard_directory_dcim,
         Environment.DIRECTORY_DCIM, true
     ),
     StandardDirectory(
         R.drawable.document_icon_white_24dp, R.string.navigation_standard_directory_documents,
-        Environment.DIRECTORY_DOCUMENTS, false),
+        Environment.DIRECTORY_DOCUMENTS, true
+    ),
+    StandardDirectory(
+        R.drawable.image_icon_white_24dp, R.string.navigation_standard_directory_pictures,
+        Environment.DIRECTORY_PICTURES, true
+    ),
+    StandardDirectory(
+        R.drawable.audio_icon_white_24dp, R.string.navigation_standard_directory_music,
+        Environment.DIRECTORY_MUSIC, true
+    ),
     StandardDirectory(
         R.drawable.download_icon_white_24dp, R.string.navigation_standard_directory_downloads,
         Environment.DIRECTORY_DOWNLOADS, true
@@ -286,17 +295,13 @@ private val DEFAULT_STANDARD_DIRECTORIES = listOf(
         Environment.DIRECTORY_MOVIES, true
     ),
     StandardDirectory(
-        R.drawable.audio_icon_white_24dp, R.string.navigation_standard_directory_music,
-        Environment.DIRECTORY_MUSIC, true
+        R.drawable.alarm_icon_white_24dp, R.string.navigation_standard_directory_alarms,
+        Environment.DIRECTORY_ALARMS, false
     ),
     StandardDirectory(
         R.drawable.notification_icon_white_24dp,
         R.string.navigation_standard_directory_notifications, Environment.DIRECTORY_NOTIFICATIONS,
         false
-    ),
-    StandardDirectory(
-        R.drawable.image_icon_white_24dp, R.string.navigation_standard_directory_pictures,
-        Environment.DIRECTORY_PICTURES, true
     ),
     StandardDirectory(
         R.drawable.podcast_icon_white_24dp, R.string.navigation_standard_directory_podcasts,
@@ -340,7 +345,7 @@ private class BookmarkDirectoryItem(
         get() = bookmarkDirectory.id
 
     @DrawableRes
-    override val iconRes: Int = R.drawable.directory_icon_white_24dp
+    override val iconRes: Int = R.drawable.bookmark_icon_white_24dp
 
     override fun getTitle(context: Context): String = bookmarkDirectory.name
 

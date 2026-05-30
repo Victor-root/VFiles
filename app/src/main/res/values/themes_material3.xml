@@ -39,7 +39,8 @@
         <item name="toolbarStyle">@style/Widget.MaterialFiles.Material3.Toolbar</item>
         <item name="minTouchTargetSize">0dp</item>
 
-        <item name="colorAppBarSurface">?colorSurface</item>
+        <item name="colorAppBarSurface">?colorPrimary</item>
+        <item name="colorOnAppBarSurface">?colorOnPrimary</item>
     </style>
     <style name="Theme.MaterialFiles.Material3" parent="Base.Theme.MaterialFiles.Material3" />
 
@@ -95,6 +96,7 @@
         <item name="minTouchTargetSize">0dp</item>
 
         <item name="colorAppBarSurface">@color/dark_50_percent</item>
+        <item name="colorOnAppBarSurface">@android:color/white</item>
     </style>
     <style name="Theme.MaterialFiles.Material3.Immersive" parent="Base.Theme.MaterialFiles.Material3.Immersive" />
 

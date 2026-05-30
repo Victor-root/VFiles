@@ -29,7 +29,7 @@ object Settings {
     val STORAGES: SettingLiveData<List<Storage>> =
         ParcelValueSettingLiveData(
             R.string.pref_key_storages,
-            listOf(FileSystemRoot(null, true), PrimaryStorageVolume(null, true))
+            listOf(FileSystemRoot(null, false), PrimaryStorageVolume(null, true))
         )
 
     val FILE_LIST_DEFAULT_DIRECTORY: SettingLiveData<Path> =

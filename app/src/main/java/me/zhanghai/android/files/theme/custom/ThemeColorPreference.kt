@@ -7,6 +7,7 @@ package me.zhanghai.android.files.theme.custom
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -17,6 +18,17 @@ import me.zhanghai.android.files.colorpicker.ColorPreferenceDialogFragment
 import me.zhanghai.android.files.compat.getColorCompat
 
 class ThemeColorPreference : BaseColorPreference {
+    // The order colors are shown in the picker: the "dynamic" (wallpaper) color first, then the
+    // fixed colors. The dynamic color only makes sense on Android 12+, so it is omitted below that.
+    // This display order is intentionally decoupled from ThemeColor's ordinals, which is what gets
+    // persisted, so reordering the picker never changes a saved value.
+    private val entryThemeColors: List<ThemeColor> = buildList {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            add(ThemeColor.DYNAMIC)
+        }
+        addAll(ThemeColor.entries.filter { it != ThemeColor.DYNAMIC })
+    }
+
     private lateinit var _stringValue: String
     var stringValue: String
         get() = _stringValue
@@ -36,22 +48,36 @@ class ThemeColorPreference : BaseColorPreference {
         get() {
             var initialValue = initialValue
             if (initialValue == null) {
-                initialValue = entryValues[stringValue.toInt()]
+                initialValue = context.getColorCompat(stringValue.toThemeColor().resourceId)
                 this.initialValue = initialValue
             }
             return initialValue
         }
         set(value) {
-            stringValue = entryValues.indexOf(value).toString()
+            val index = entryValues.indexOf(value)
+            val themeColor = if (index != -1) entryThemeColors[index] else ThemeColor.entries[0]
+            stringValue = themeColor.ordinal.toString()
         }
 
     private lateinit var defaultStringValue: String
     override val defaultValue: Int
         @ColorInt
-        get() = entryValues[defaultStringValue.toInt()]
+        get() = context.getColorCompat(defaultStringValue.toThemeColor().resourceId)
 
     override var entryValues: IntArray
         private set
+
+    // On Android 12+ the first entry is ThemeColor.DYNAMIC, shown apart in the picker.
+    @get:ColorInt
+    override val leadingDynamicColor: Int?
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            context.getColorCompat(ThemeColor.DYNAMIC.resourceId)
+        } else {
+            null
+        }
+
+    private fun String.toThemeColor(): ThemeColor =
+        ThemeColor.entries.getOrElse(toInt()) { ThemeColor.entries[0] }
 
     constructor(context: Context) : super(context)
 
@@ -70,7 +96,7 @@ class ThemeColorPreference : BaseColorPreference {
 
     init {
         val context = context
-        entryValues = ThemeColor.entries.map { context.getColorCompat(it.resourceId) }.toIntArray()
+        entryValues = entryThemeColors.map { context.getColorCompat(it.resourceId) }.toIntArray()
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any? =

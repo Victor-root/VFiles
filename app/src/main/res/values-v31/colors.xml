@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2021 Hai Zhang <dreaming.in.code.zh@gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<resources>
+
+    <!-- The swatch for the "wallpaper/dynamic" theme color option mirrors the system accent so it
+         visually matches the wallpaper-based colors actually applied on Android 12+. -->
+    <color name="theme_color_dynamic">@android:color/system_accent1_500</color>
+</resources>

@@ -68,9 +68,9 @@ class ThemedSpeedDialView : SpeedDialView {
         val context = context
         if (context.isMaterial3Theme) {
             mainFabClosedBackgroundColor =
-                context.getColorByAttr(com.google.android.material.R.attr.colorSecondaryContainer)
+                context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary)
             mainFabClosedIconColor =
-                context.getColorByAttr(com.google.android.material.R.attr.colorOnSecondaryContainer)
+                context.getColorByAttr(com.google.android.material.R.attr.colorOnPrimary)
             mainFabOpenedBackgroundColor =
                 context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary)
             mainFabOpenedIconColor =

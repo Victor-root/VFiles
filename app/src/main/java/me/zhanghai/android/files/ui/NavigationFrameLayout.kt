@@ -37,7 +37,6 @@ class NavigationFrameLayout : FrameLayout {
         if (background is ColorDrawable) {
             this.background = MaterialShapeDrawable().apply {
                 fillColor = ColorStateList.valueOf(background.color)
-                initializeElevationOverlay(context)
                 elevation = this@NavigationFrameLayout.elevation
             }
         }

@@ -13,7 +13,9 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.shape.MaterialShapeDrawable
 import me.zhanghai.android.files.util.activity
 
@@ -37,11 +39,12 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         val defaultBackgroundColor = (background as? MaterialShapeDrawable)?.fillColor?.defaultColor
         if (defaultBackgroundColor != null) {
             val window = context.activity!!.window
-            val statusBarColor = window.statusBarColor
-            if (defaultBackgroundColor == statusBarColor
-                || defaultBackgroundColor == ColorUtils.setAlphaComponent(statusBarColor, 0xFF)) {
-                window.statusBarColor = Color.TRANSPARENT
-            }
+            window.statusBarColor = Color.TRANSPARENT
+            // Keep the lifted (scrolled) state the same color as the resting app bar. Otherwise
+            // lift-on-scroll repaints it with a tonal surface color the moment content scrolls
+            // under it, which would make our colored header (and the synced nav bar) flash white.
+            setLiftOnScrollColor(ColorStateList.valueOf(defaultBackgroundColor))
+            syncNavigationBar(defaultBackgroundColor)
         }
 
         addLiftOnScrollListener { _, backgroundColor ->
@@ -72,6 +75,18 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         syncBackgroundColorViews.forEach {
             (it.background as? MaterialShapeDrawable)?.fillColor =
                 ColorStateList.valueOf(backgroundColor)
+        }
+        syncNavigationBar(backgroundColor)
+    }
+
+    private fun syncNavigationBar(@ColorInt backgroundColor: Int) {
+        val window = context.activity?.window ?: return
+        window.navigationBarColor = backgroundColor
+        // Keep nav bar icon tint consistent with the background luminance.
+        // windowLightNavigationBar (and its programmatic equivalent) require API 26+.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val isLight = ColorUtils.calculateLuminance(backgroundColor) > 0.5
+            WindowInsetsControllerCompat(window, this).isAppearanceLightNavigationBars = isLight
         }
     }
 

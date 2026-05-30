@@ -652,6 +652,8 @@
     <string name="settings_locale_title">Langage </string>
     <string name="settings_theme_color_title">Couleur du thème</string>
     <string name="settings_theme_color_summary">Couleur qui apparaît le plus souvent dans l’application</string>
+    <string name="color_picker_dynamic_color_label">Selon le fond d’écran</string>
+    <string name="color_picker_preset_colors_label">Autres couleurs</string>
     <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Mode nuit</string>
     <string-array name="settings_night_mode_entries">

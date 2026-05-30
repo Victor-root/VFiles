@@ -57,14 +57,28 @@
         <item name="strokeWidth">@dimen/mtrl_btn_stroke_size</item>
     </style>
 
-    <!-- See also ThemeOverlay.AppCompat.ActionBar . -->
+    <!-- App bar painted with the theme color: its title, subtitle and icons use the matching
+         on-color so they stay legible on the colored surface. See also ThemeOverlay.AppCompat.ActionBar. -->
     <style name="ThemeOverlay.MaterialFiles.ActionBar" parent="">
-        <item name="colorControlNormal">?android:textColorPrimary</item>
+        <item name="colorControlNormal">?colorOnAppBarSurface</item>
+        <item name="android:textColorPrimary">?colorOnAppBarSurface</item>
+        <item name="android:textColorSecondary">?colorOnAppBarSurface</item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.ActionBar</item>
     </style>
 
+    <!-- Overflow / sub menus open on a normal surface, so reset the text and control colors that
+         would otherwise be inherited from the colored app bar (which would be illegible). -->
     <style name="ThemeOverlay.MaterialFiles.ActionBarPopup" parent="">
-        <item name="colorControlNormal">?android:textColorSecondary</item>
+        <item name="colorControlNormal">?attr/colorOnSurface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
+    </style>
+
+    <!-- Toolbar sitting on a plain surface (e.g. the bottom create-file bar): keep normal content
+         colors rather than the colored app bar's on-color. -->
+    <style name="ThemeOverlay.MaterialFiles.Toolbar.Surface" parent="">
+        <item name="colorControlNormal">?android:textColorPrimary</item>
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.ActionBar</item>
     </style>
 </resources>

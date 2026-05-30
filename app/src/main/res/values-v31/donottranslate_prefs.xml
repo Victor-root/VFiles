@@ -8,4 +8,8 @@
 <resources>
 
     <bool name="pref_default_value_material_design_3">true</bool>
+
+    <!-- Index of ThemeColor.DYNAMIC. On Android 12+ the theme color defaults to the
+         wallpaper/dynamic colors (Material You), matching the platform default. -->
+    <string name="pref_default_value_theme_color">20</string>
 </resources>

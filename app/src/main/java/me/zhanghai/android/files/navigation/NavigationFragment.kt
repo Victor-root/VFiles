@@ -17,6 +17,7 @@ import java8.nio.file.Path
 import me.zhanghai.android.files.databinding.NavigationFragmentBinding
 import me.zhanghai.android.files.util.startActivitySafe
 
+
 class NavigationFragment : Fragment(), NavigationItem.Listener {
     private lateinit var binding: NavigationFragmentBinding
 

@@ -57,6 +57,7 @@ import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.clipboardManager
 import me.zhanghai.android.files.compat.checkSelfPermissionCompat
 import me.zhanghai.android.files.compat.setGroupDividerEnabledCompat
+import me.zhanghai.android.files.compat.setOptionalIconsVisibleCompat
 import me.zhanghai.android.files.databinding.FileListFragmentAppBarIncludeBinding
 import me.zhanghai.android.files.databinding.FileListFragmentBinding
 import me.zhanghai.android.files.databinding.FileListFragmentBottomBarIncludeBinding
@@ -385,8 +386,41 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         super.onCreateOptionsMenu(menu, inflater)
 
         menuBinding = MenuBinding.inflate(menu, inflater)
-        menuBinding.viewSortItem.subMenu!!.setGroupDividerEnabledCompat(true)
+        menu.setOptionalIconsVisibleCompat(true)
+        menuBinding.viewSortItem.subMenu!!.apply {
+            setGroupDividerEnabledCompat(true)
+            setOptionalIconsVisibleCompat(true)
+        }
+        tintOverflowMenuIcons(menu)
         setUpSearchView()
+    }
+
+    private fun tintOverflowMenuIcons(menu: Menu) {
+        val ta = requireContext().obtainStyledAttributes(intArrayOf(android.R.attr.textColorPrimary))
+        val iconColor = ta.getColor(0, 0xFF000000.toInt())
+        ta.recycle()
+        val iconTint = android.content.res.ColorStateList.valueOf(iconColor)
+        val actionBarIds = setOf(R.id.action_search, R.id.action_view_sort)
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            if (item.itemId !in actionBarIds) {
+                item.icon?.let { icon ->
+                    val mutated = icon.mutate()
+                    androidx.core.graphics.drawable.DrawableCompat.setTintList(mutated, iconTint)
+                    item.icon = mutated
+                }
+            }
+        }
+        menuBinding.viewSortItem.subMenu?.let { subMenu ->
+            for (i in 0 until subMenu.size()) {
+                val item = subMenu.getItem(i)
+                item.icon?.let { icon ->
+                    val mutated = icon.mutate()
+                    androidx.core.graphics.drawable.DrawableCompat.setTintList(mutated, iconTint)
+                    item.icon = mutated
+                }
+            }
+        }
     }
 
     private fun setUpSearchView() {
