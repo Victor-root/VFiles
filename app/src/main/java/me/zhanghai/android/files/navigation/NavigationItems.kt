@@ -362,7 +362,7 @@ private val menuItems: List<NavigationItem>
     @Size(3)
     get() = listOf(
         IntentMenuItem(
-            R.drawable.shared_directory_icon_white_24dp, R.string.navigation_ftp_server,
+            R.drawable.ftp_server_icon_white_24dp, R.string.navigation_ftp_server,
             FtpServerActivity::class.createIntent()
         ),
         IntentMenuItem(

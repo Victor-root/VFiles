@@ -201,7 +201,18 @@ class FileListAdapter(
                 }
             }
             popupMenu = PopupMenu(menuButton.context, menuButton)
-                .apply { inflate(R.menu.file_item) }
+                .apply {
+                    inflate(R.menu.file_item)
+                    // PopupMenu hides icons by default — force them visible via reflection
+                    try {
+                        val field = javaClass.getDeclaredField("mPopup")
+                        field.isAccessible = true
+                        field.get(this)?.let {
+                            it.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                                .invoke(it, true)
+                        }
+                    } catch (_: Exception) {}
+                }
             menuButton.setOnClickListener { popupMenu.show() }
         }
     }

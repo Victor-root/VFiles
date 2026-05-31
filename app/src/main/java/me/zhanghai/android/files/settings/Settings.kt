@@ -136,21 +136,7 @@ object Settings {
         ParcelValueSettingLiveData(R.string.pref_key_standard_directory_settings, emptyList())
 
     val BOOKMARK_DIRECTORIES: SettingLiveData<List<BookmarkDirectory>> =
-        ParcelValueSettingLiveData(
-            R.string.pref_key_bookmark_directories, listOf(
-                BookmarkDirectory(
-                    application.getString(R.string.settings_bookmark_directory_screenshots),
-                    Paths.get(
-                        File(
-                            @Suppress("DEPRECATION")
-                            Environment.getExternalStoragePublicDirectory(
-                                Environment.DIRECTORY_PICTURES
-                            ), EnvironmentCompat2.DIRECTORY_SCREENSHOTS
-                        ).absolutePath
-                    )
-                )
-            )
-        )
+        ParcelValueSettingLiveData(R.string.pref_key_bookmark_directories, emptyList())
 
     val ROOT_STRATEGY: SettingLiveData<RootStrategy> =
         EnumSettingLiveData(
