@@ -13,19 +13,22 @@
 
         <me.zhanghai.android.files.settings.LocalePreference
             android:key="@string/pref_key_locale"
-            android:title="@string/settings_locale_title" />
+            android:title="@string/settings_locale_title"
+            app:singleLineTitle="false" />
 
         <me.zhanghai.android.files.theme.custom.ThemeColorPreference
             android:key="@string/pref_key_theme_color"
             android:title="@string/settings_theme_color_title"
             android:defaultValue="@string/pref_default_value_theme_color"
-            android:summary="@string/settings_theme_color_summary" />
+            android:summary="@string/settings_theme_color_summary"
+            app:singleLineTitle="false" />
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_material_design_3"
             android:title="@string/settings_material_design_3_title"
             android:defaultValue="@bool/pref_default_value_material_design_3"
-            android:disableDependentsState="true" />
+            android:disableDependentsState="true"
+            app:singleLineTitle="false" />
 
         <rikka.preference.SimpleMenuPreference
             android:key="@string/pref_key_night_mode"
@@ -33,17 +36,20 @@
             android:defaultValue="@string/pref_default_value_night_mode"
             android:entries="@array/settings_night_mode_entries"
             android:entryValues="@array/pref_entry_values_night_mode"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_black_night_mode"
             android:title="@string/settings_black_night_mode"
-            android:defaultValue="@bool/pref_default_value_black_night_mode" />
+            android:defaultValue="@bool/pref_default_value_black_night_mode"
+            app:singleLineTitle="false" />
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_file_list_animation"
             android:title="@string/settings_file_list_animation_title"
-            android:defaultValue="@bool/pref_default_value_file_list_animation" />
+            android:defaultValue="@bool/pref_default_value_file_list_animation"
+            app:singleLineTitle="false" />
 
         <rikka.preference.SimpleMenuPreference
             android:key="@string/pref_key_file_name_ellipsize"
@@ -51,6 +57,7 @@
             android:defaultValue="@string/pref_default_value_file_name_ellipsize"
             android:entries="@array/settings_file_name_ellipsize_entries"
             android:entryValues="@array/pref_entry_values_file_name_ellipsize"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
@@ -59,19 +66,23 @@
         <me.zhanghai.android.files.settings.DefaultDirectoryPreference
             android:key="@string/pref_key_file_list_default_directory"
             android:title="@string/settings_default_directory_title"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <me.zhanghai.android.files.settings.StoragesPreference
             android:title="@string/settings_storages_title"
-            android:summary="@string/settings_storages_summary_empty" />
+            android:summary="@string/settings_storages_summary_empty"
+            app:singleLineTitle="false" />
 
         <me.zhanghai.android.files.settings.StandardDirectoriesPreference
             android:title="@string/settings_standard_directories_title"
-            android:summary="@string/settings_standard_directories_summary_empty" />
+            android:summary="@string/settings_standard_directories_summary_empty"
+            app:singleLineTitle="false" />
 
         <me.zhanghai.android.files.settings.BookmarkDirectoriesPreference
             android:title="@string/settings_bookmark_directories_title"
-            android:summary="@string/settings_bookmark_directories_summary_empty" />
+            android:summary="@string/settings_bookmark_directories_summary_empty"
+            app:singleLineTitle="false" />
 
         <me.zhanghai.android.files.settings.RootStrategyPreference
             android:key="@string/pref_key_root_strategy"
@@ -79,12 +90,14 @@
             android:defaultValue="@string/pref_default_value_root_strategy"
             android:entries="@array/settings_root_strategy_entries"
             android:entryValues="@array/pref_entry_values_root_strategy"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <me.zhanghai.android.files.settings.CharsetPreference
             android:key="@string/pref_key_archive_file_name_encoding"
             android:title="@string/settings_archive_file_name_encoding_title"
             android:defaultValue="@string/pref_default_value_archive_file_name_encoding"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <rikka.preference.SimpleMenuPreference
@@ -93,6 +106,7 @@
             android:defaultValue="@string/pref_default_value_open_apk_default_action"
             android:entries="@array/settings_open_apk_default_action_entries"
             android:entryValues="@array/pref_entry_values_open_apk_default_action"
+            app:singleLineTitle="false"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
@@ -100,11 +114,13 @@
             android:title="@string/settings_show_pdf_thumbnail_pre_28_title"
             android:defaultValue="@bool/pref_default_value_show_pdf_thumbnail_pre_28"
             android:summary="@string/settings_show_pdf_thumbnail_pre_28_summary"
-            app:isPreferenceVisible="@bool/pref_visible_show_pdf_thumbnail_pre_28" />
+            app:isPreferenceVisible="@bool/pref_visible_show_pdf_thumbnail_pre_28"
+            app:singleLineTitle="false" />
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_read_remote_files_for_thumbnail"
             android:title="@string/settings_read_remote_files_for_thumbnail_title"
-            android:defaultValue="@bool/pref_default_value_read_remote_files_for_thumbnail" />
+            android:defaultValue="@bool/pref_default_value_read_remote_files_for_thumbnail"
+            app:singleLineTitle="false" />
     </PreferenceCategory>
 </PreferenceScreen>

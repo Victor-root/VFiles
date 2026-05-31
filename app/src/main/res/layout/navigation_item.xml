@@ -9,7 +9,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/itemLayout"
     android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeightSmall"
+    android:layout_height="wrap_content"
+    android:minHeight="?listPreferredItemHeightSmall"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:ellipsize="end"
-            android:maxLines="1" />
+            android:maxLines="2" />
 
         <me.zhanghai.android.files.ui.AutoGoneTextView
             android:id="@+id/subtitleText"
@@ -42,6 +43,6 @@
             android:layout_height="wrap_content"
             android:duplicateParentState="true"
             android:ellipsize="end"
-            android:maxLines="1" />
+            android:maxLines="2" />
     </LinearLayout>
 </me.zhanghai.android.files.ui.CheckableForegroundLinearLayout>

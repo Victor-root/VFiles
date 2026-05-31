@@ -66,7 +66,8 @@ class BookmarkDirectoriesPreference : Preference {
 
         val summaryText = holder.findViewById(android.R.id.summary) as TextView
         summaryText.ellipsize = TextUtils.TruncateAt.END
-        summaryText.isSingleLine = true
+        summaryText.isSingleLine = false
+        summaryText.maxLines = 2
     }
 
     override fun onClick() {
