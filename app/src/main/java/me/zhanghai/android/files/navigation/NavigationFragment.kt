@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import java8.nio.file.Path
 import me.zhanghai.android.files.databinding.NavigationFragmentBinding
+import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
 
 
@@ -71,6 +73,10 @@ class NavigationFragment : Fragment(), NavigationItem.Listener {
 
     override fun launchIntent(intent: Intent) {
         startActivitySafe(intent)
+    }
+
+    override fun showToast(textRes: Int) {
+        showToast(textRes, Toast.LENGTH_LONG)
     }
 
     override fun closeNavigationDrawer() {

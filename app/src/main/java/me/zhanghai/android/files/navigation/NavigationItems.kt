@@ -33,6 +33,7 @@ import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
 import me.zhanghai.android.files.util.putArgs
+import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 import me.zhanghai.android.files.util.valueCompat
 
@@ -42,6 +43,10 @@ val navigationItems: List<NavigationItem?>
             val bookmarkDirectoryItems = bookmarkDirectoryItems
             if (bookmarkDirectoryItems.isNotEmpty()) {
                 addAll(bookmarkDirectoryItems)
+            } else {
+                // No bookmarks yet — show a subtle hint so users discover the feature. It
+                // disappears automatically as soon as the first bookmark is added.
+                add(BookmarksHintItem())
             }
             val standardDirectoryItems = standardDirectoryItems
             if (standardDirectoryItems.isNotEmpty()) {
@@ -331,6 +336,23 @@ private val DEFAULT_STANDARD_DIRECTORIES = listOf(
 internal fun getExternalStorageDirectory(relativePath: String): String =
     @Suppress("DEPRECATION")
     Environment.getExternalStoragePublicDirectory(relativePath).path
+
+private class BookmarksHintItem : NavigationItem() {
+    override val id: Long = R.string.navigation_bookmarks_hint_title.toLong()
+
+    @DrawableRes
+    override val iconRes: Int = R.drawable.bookmark_outline_icon_white_24dp
+
+    override fun getTitle(context: Context): String =
+        context.getString(R.string.navigation_bookmarks_hint_title)
+
+    override fun getSubtitle(context: Context): String =
+        context.getString(R.string.navigation_bookmarks_hint_subtitle)
+
+    override fun onClick(listener: Listener) {
+        listener.showToast(R.string.navigation_bookmarks_hint_toast)
+    }
+}
 
 private val bookmarkDirectoryItems: List<NavigationItem>
     @Size(min = 0)

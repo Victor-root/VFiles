@@ -599,7 +599,10 @@
     <string name="storage_edit_webdav_server_add">Ajouter</string>
 
     <string name="navigation_storage_subtitle_format">%1$s de libre sur %2$s</string>
-    <string name="navigation_add_storage">Ajouter un support de stockage…</string>
+    <string name="navigation_add_storage">Ajouter un support de stockage</string>
+    <string name="navigation_bookmarks_hint_title">Marque-pages</string>
+    <string name="navigation_bookmarks_hint_subtitle">Ajoutez vos dossiers favoris ici pour y accéder rapidement</string>
+    <string name="navigation_bookmarks_hint_toast">Ouvrez un dossier, puis appuyez sur ⋮ et « Ajouter un marque-page »</string>
     <string name="navigation_standard_directory_alarms">Alarmes</string>
     <string name="navigation_standard_directory_dcim">DCIM</string>
     <string name="navigation_standard_directory_documents">Documents</string>

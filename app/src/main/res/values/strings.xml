@@ -679,7 +679,10 @@
     <string name="storage_edit_webdav_server_add">Add</string>
 
     <string name="navigation_storage_subtitle_format">%1$s free of %2$s</string>
-    <string name="navigation_add_storage">Add storage…</string>
+    <string name="navigation_add_storage">Add storage</string>
+    <string name="navigation_bookmarks_hint_title">Bookmarks</string>
+    <string name="navigation_bookmarks_hint_subtitle">Add your favorite folders here for quick access</string>
+    <string name="navigation_bookmarks_hint_toast">Open a folder, then tap ⋮ and “Add bookmark”</string>
     <string name="navigation_standard_directory_alarms">Alarms</string>
     <string name="navigation_standard_directory_dcim">DCIM</string>
     <string name="navigation_standard_directory_documents">Documents</string>
