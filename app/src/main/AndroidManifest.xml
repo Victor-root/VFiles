@@ -59,6 +59,12 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
+            android:name="me.zhanghai.android.files.onboarding.OnboardingActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MaterialFiles" />
+
+        <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
             android:exported="true"
             android:label="@string/app_name_launcher"

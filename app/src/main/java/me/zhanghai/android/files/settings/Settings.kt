@@ -167,4 +167,10 @@ object Settings {
             R.string.pref_key_read_remote_files_for_thumbnail,
             R.bool.pref_default_value_read_remote_files_for_thumbnail
         )
+
+    val ONBOARDING_COMPLETED: SettingLiveData<Boolean> =
+        BooleanSettingLiveData(
+            R.string.pref_key_onboarding_completed,
+            R.bool.pref_default_value_onboarding_completed
+        )
 }

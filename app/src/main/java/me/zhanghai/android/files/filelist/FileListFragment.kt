@@ -1600,22 +1600,8 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
     }
 
     private fun ensureNotificationPermission() {
-        if (viewModel.isNotificationPermissionRequested) {
-            return
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) !=
-                PackageManager.PERMISSION_GRANTED) {
-                if (shouldShowRequestPermissionRationale(
-                        android.Manifest.permission.POST_NOTIFICATIONS
-                    )) {
-                    ShowRequestNotificationPermissionRationaleDialogFragment.show(this)
-                } else {
-                    requestNotificationPermission()
-                }
-                viewModel.isNotificationPermissionRequested = true
-            }
-        }
+        // The notification permission is requested once during onboarding (OnboardingActivity),
+        // so the file list never proactively prompts for it again afterwards.
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

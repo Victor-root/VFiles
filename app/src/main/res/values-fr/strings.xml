@@ -715,4 +715,32 @@
     <string name="about_author_github_title">Suivre sur GitHub</string>
     <string name="about_author_twitter_title">Suivre sur Twitter</string>
     <string name="app_name_launcher">Fichiers</string>
+
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_finish">Commencer</string>
+
+    <string name="onboarding_welcome_title">Bienvenue dans Material Files</string>
+    <string name="onboarding_welcome_description">Accordez quelques autorisations pour profiter pleinement de l\'application. Les optionnelles pourront être modifiées plus tard dans les réglages.</string>
+    <string name="onboarding_grant">Accorder</string>
+    <string name="onboarding_required">Requis</string>
+    <string name="onboarding_optional">Optionnel</string>
+
+    <string name="onboarding_files_title">Accès aux fichiers</string>
+    <string name="onboarding_files_description">Material Files a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
+    <string name="onboarding_files_grant">Accorder l\'accès</string>
+    <string name="onboarding_files_granted">Accès accordé</string>
+    <string name="onboarding_files_not_granted">Accès requis pour utiliser l\'application</string>
+
+    <string name="onboarding_notifications_title">Notifications</string>
+    <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers — copies, déplacements, archives — même lorsque l\'application est en arrière-plan.</string>
+    <string name="onboarding_notifications_grant">Autoriser les notifications</string>
+    <string name="onboarding_notifications_granted">Notifications autorisées</string>
+    <string name="onboarding_notifications_not_needed">Non requis sur cette version d\'Android</string>
+    <string name="onboarding_notifications_not_granted">Vous pourrez activer cela plus tard dans les réglages</string>
+
+    <string name="onboarding_install_apps_title">Installation d\'applications</string>
+    <string name="onboarding_install_apps_description">Autorisez Material Files à installer des fichiers APK directement depuis l\'application. Idéal pour installer des apps téléchargées ou reçues sans passer par un installeur tiers.</string>
+    <string name="onboarding_install_apps_grant">Autoriser l\'installation</string>
+    <string name="onboarding_install_apps_granted">Installation autorisée</string>
+    <string name="onboarding_install_apps_not_granted">Vous pourrez activer cela plus tard dans les réglages</string>
 </resources>
