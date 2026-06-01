@@ -21,6 +21,7 @@ import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.PrimaryStorageVolume
 import me.zhanghai.android.files.storage.Storage
+import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.night.NightMode
 import java.io.File
@@ -137,6 +138,9 @@ object Settings {
 
     val BOOKMARK_DIRECTORIES: SettingLiveData<List<BookmarkDirectory>> =
         ParcelValueSettingLiveData(R.string.pref_key_bookmark_directories, emptyList())
+
+    val STORAGE_VOLUME_CUSTOMIZATIONS: SettingLiveData<List<StorageVolumeCustomization>> =
+        ParcelValueSettingLiveData(R.string.pref_key_storage_volume_customizations, emptyList())
 
     val ROOT_STRATEGY: SettingLiveData<RootStrategy> =
         EnumSettingLiveData(

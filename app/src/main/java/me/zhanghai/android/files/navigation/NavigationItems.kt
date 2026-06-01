@@ -17,9 +17,11 @@ import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.about.AboutActivity
+import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.compat.getDescriptionCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
+import me.zhanghai.android.files.compat.uuidCompat
 import me.zhanghai.android.files.file.JavaFile
 import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.ftpserver.FtpServerActivity
@@ -29,7 +31,10 @@ import me.zhanghai.android.files.settings.StandardDirectoryListActivity
 import me.zhanghai.android.files.storage.AddStorageDialogActivity
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
+import me.zhanghai.android.files.storage.StorageVolumeCustomization
+import me.zhanghai.android.files.storage.StorageVolumeCustomizations
 import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.update.UpdateManager
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
@@ -155,19 +160,79 @@ private val storageVolumeItems: List<NavigationItem>
 private class StorageVolumeItem(
     private val storageVolume: StorageVolume
 ) : PathItem(Paths.get(storageVolume.pathCompat)), NavigationRoot {
+    private val customization: StorageVolumeCustomization? =
+        storageVolume.uuidCompat?.let { StorageVolumeCustomizations.get(it) }
+
     override val id: Long
         get() = storageVolume.hashCode().toLong()
 
     override val iconRes: Int
         @DrawableRes
-        get() = R.drawable.sd_card_icon_white_24dp
+        get() = when (resolveIconType()) {
+            VolumeIconType.USB -> R.drawable.usb_icon_white_24dp
+            // SD_CARD, and AUTO when detection is inconclusive, both use the SD card icon.
+            else -> R.drawable.sd_card_icon_white_24dp
+        }
 
-    override fun getTitle(context: Context): String = storageVolume.getDescriptionCompat(context)
+    private fun resolveIconType(): VolumeIconType =
+        when (val iconType = customization?.iconType ?: VolumeIconType.AUTO) {
+            VolumeIconType.AUTO -> storageVolume.detectRemovableType() ?: VolumeIconType.SD_CARD
+            else -> iconType
+        }
+
+    override fun getTitle(context: Context): String =
+        customization?.name ?: storageVolume.getDescriptionCompat(context)
 
     override fun getSubtitle(context: Context): String? =
         getStorageSubtitle(storageVolume.pathCompat, context)
 
     override fun getName(context: Context): String = getTitle(context)
+
+    // Long-press opens a small dialog to rename the volume, choose its icon, or eject it.
+    override fun onLongClick(listener: Listener): Boolean {
+        val uuid = storageVolume.uuidCompat ?: return false
+        listener.launchIntent(
+            EditStorageVolumeDialogActivity::class.createIntent()
+                .putArgs(
+                    EditStorageVolumeDialogFragment.Args(
+                        uuid, storageVolume.getDescriptionCompat(application)
+                    )
+                )
+        )
+        return true
+    }
+}
+
+/**
+ * Best-effort guess of whether a removable volume is a USB drive or an SD card. There is no public
+ * API for this, so we try the OS description text first, then the (restricted) vold volume id whose
+ * major device number distinguishes the bus. Returns null when it can't tell, and the user can
+ * always override the icon from the volume's edit dialog.
+ */
+private fun StorageVolume.detectRemovableType(): VolumeIconType? {
+    val description = try {
+        getDescriptionCompat(application).lowercase()
+    } catch (e: Exception) {
+        ""
+    }
+    when {
+        "usb" in description -> return VolumeIconType.USB
+        "sd card" in description || "sdcard" in description || "carte sd" in description ->
+            return VolumeIconType.SD_CARD
+    }
+    // The vold volume id (e.g. "public:8,1") encodes the underlying block device major number:
+    // 8 = SCSI disk (USB mass storage), 179 = mmc (SD card). Hidden API, so guard heavily.
+    try {
+        val id = StorageVolume::class.java.getMethod("getId").invoke(this) as? String
+        val major = id?.substringAfter(':', "")?.substringBefore(',')?.trim()?.toIntOrNull()
+        when (major) {
+            8 -> return VolumeIconType.USB
+            179 -> return VolumeIconType.SD_CARD
+        }
+    } catch (e: Throwable) {
+        // Hidden-API access blocked or unavailable — fall through to null.
+    }
+    return null
 }
 
 private fun getStorageSubtitle(linuxPath: String, context: Context): String? {

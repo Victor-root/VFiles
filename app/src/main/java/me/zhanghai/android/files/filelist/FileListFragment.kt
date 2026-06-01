@@ -86,6 +86,7 @@ import me.zhanghai.android.files.provider.archive.createArchiveRootPath
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.linux.isLinuxPath
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.terminal.Terminal
 import me.zhanghai.android.files.ui.AppBarLayoutExpandHackListener
 import me.zhanghai.android.files.ui.CoordinatorAppBarLayout
@@ -425,6 +426,10 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
 
     override fun onResume() {
         super.onResume()
+
+        // Re-scan mounted volumes: an SD card or USB drive plugged in while we were in the
+        // background should appear under Internal storage in the drawer without a restart.
+        StorageVolumeListLiveData.refresh()
 
         if (!viewModel.isNotificationPermissionRequested) {
             ensureStorageAccess()

@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.storageManager
+import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.compat.registerReceiverCompat
 import me.zhanghai.android.files.compat.storageVolumesCompat
 
@@ -44,5 +45,18 @@ object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
 
     private fun loadValue() {
         value = storageManager.storageVolumesCompat
+    }
+
+    /**
+     * Re-query the mounted volumes on demand (e.g. when the app is resumed). Modern Android does not
+     * always send the "file"-scheme media broadcasts for USB drives, so a drive plugged in while the
+     * app was in the background would otherwise never show up until a restart. Only emits when the
+     * set of volumes actually changed, to avoid needless navigation-drawer rebuilds.
+     */
+    fun refresh() {
+        val volumes = storageManager.storageVolumesCompat
+        if (value?.map { it.pathCompat } != volumes.map { it.pathCompat }) {
+            value = volumes
+        }
     }
 }

@@ -237,6 +237,11 @@
             android:theme="@style/Theme.MaterialFiles.Translucent" />
 
         <activity
+            android:name="me.zhanghai.android.files.navigation.EditStorageVolumeDialogActivity"
+            android:label="@string/storage_volume_edit_title"
+            android:theme="@style/Theme.MaterialFiles.Translucent" />
+
+        <activity
             android:name="me.zhanghai.android.files.ftpserver.FtpServerActivity"
             android:exported="true"
             android:label="@string/ftp_server_title"
