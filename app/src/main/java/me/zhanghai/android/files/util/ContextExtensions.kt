@@ -57,6 +57,19 @@ val Context.activity: Activity?
         }
     }
 
+// True on Android TV / Google TV (leanback). Used to apply TV-only behavior (e.g. D-pad focus
+// handling, disabling the breadcrumb) without changing the phone/tablet experience.
+val Context.isTelevision: Boolean
+    get() {
+        val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as? android.app.UiModeManager
+        if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+            return true
+        }
+        return packageManager.hasSystemFeature(
+            android.content.pm.PackageManager.FEATURE_LEANBACK
+        )
+    }
+
 fun Context.getAnimation(@AnimRes id: Int): Animation = AnimationUtils.loadAnimation(this, id)
 
 fun Context.getBoolean(@BoolRes id: Int): Boolean = resources.getBoolean(id)

@@ -56,6 +56,26 @@ class NavigationFragment : Fragment(), NavigationItem.Listener {
         adapter.replace(navigationItems)
     }
 
+    // Moves D-pad focus to the currently active (checked) row, or falls back to the first row.
+    // Called when the drawer opens on Android TV so the cursor lands exactly where the user is,
+    // e.g. on "Downloads" if that was the last browsed location.
+    fun focusList(): Boolean {
+        val recyclerView = binding.recyclerView
+        val layoutManager = recyclerView.layoutManager ?: return recyclerView.requestFocus()
+        // Find the position of the checked item (the one matching the current path).
+        val targetPosition = (0 until adapter.itemCount).firstOrNull { pos ->
+            val item = adapter.getItem(pos)
+            item != null && item.isChecked(this)
+        } ?: 0
+        // Scroll it into view first, then request focus on its view holder.
+        layoutManager.scrollToPosition(targetPosition)
+        recyclerView.post {
+            val vh = recyclerView.findViewHolderForAdapterPosition(targetPosition)
+            vh?.itemView?.requestFocus() ?: recyclerView.requestFocus()
+        }
+        return true
+    }
+
     private fun onCurrentPathChanged(path: Path) {
         adapter.notifyCheckedChanged()
     }

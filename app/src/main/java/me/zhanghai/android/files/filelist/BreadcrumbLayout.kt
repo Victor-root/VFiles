@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.annotation.AttrRes
@@ -21,6 +22,7 @@ import me.zhanghai.android.files.databinding.BreadcrumbItemBinding
 import me.zhanghai.android.files.util.getColorByAttr
 import me.zhanghai.android.files.util.getDimensionPixelSize
 import me.zhanghai.android.files.util.getResourceIdByAttr
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.layoutInflater
 import me.zhanghai.android.files.util.withTheme
 
@@ -49,6 +51,10 @@ class BreadcrumbLayout : HorizontalScrollView {
     private var isScrollToSelectedItemPending = false
     private var isFirstScroll = true
 
+    // On Android TV the breadcrumb is a read-only path display (no navigation, not in the D-pad
+    // focus path). On phones/tablets it stays fully interactive.
+    private val isTelevision = context.isTelevision
+
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(
@@ -68,6 +74,12 @@ class BreadcrumbLayout : HorizontalScrollView {
 
     init {
         isHorizontalScrollBarEnabled = false
+        if (isTelevision) {
+            // Read-only path display on TV: keep it out of the D-pad focus path so the header focus
+            // only reaches the toolbar.
+            isFocusable = false
+            descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+        }
         itemsLayout = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
         itemsLayout.setPaddingRelative(paddingStart, paddingTop, paddingEnd, paddingBottom)
         setPaddingRelative(0, 0, 0, 0)
@@ -182,10 +194,11 @@ class BreadcrumbLayout : HorizontalScrollView {
             binding.root.isActivated = index == data.selectedIndex
             val path = data.paths[index]
             binding.root.setOnClickListener {
-                if (data.selectedIndex == index) {
-                    scrollToSelectedItem()
-                } else {
-                    listener.navigateTo(path)
+                when {
+                    // TV: tapping a breadcrumb never navigates, only re-centers it.
+                    isTelevision -> scrollToSelectedItem()
+                    data.selectedIndex == index -> scrollToSelectedItem()
+                    else -> listener.navigateTo(path)
                 }
             }
             menu.setOnMenuItemClickListener {

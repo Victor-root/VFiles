@@ -16,6 +16,8 @@ import me.zhanghai.android.files.R
 class FtpServerStatePreference : SwitchPreferenceCompat {
     private val observer = Observer<FtpServerService.State> { onStateChanged(it) }
 
+    private var state = FtpServerService.State.STOPPED
+
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -48,6 +50,7 @@ class FtpServerStatePreference : SwitchPreferenceCompat {
     }
 
     private fun onStateChanged(state: FtpServerService.State) {
+        this.state = state
         val summaryRes = when (state) {
             FtpServerService.State.STARTING -> R.string.ftp_server_state_summary_starting
             FtpServerService.State.RUNNING -> R.string.ftp_server_state_summary_running
@@ -57,11 +60,16 @@ class FtpServerStatePreference : SwitchPreferenceCompat {
         summary = context.getString(summaryRes)
         isChecked = state == FtpServerService.State.STARTING
             || state == FtpServerService.State.RUNNING
-        isEnabled = !(state == FtpServerService.State.STARTING
-            || state == FtpServerService.State.STOPPING)
+        // Intentionally not disabling the preference during STARTING/STOPPING: on Android TV a
+        // disabled row loses D-pad focus, bouncing the cursor to the toolbar's back button.
+        // Clicks during a transition are ignored in onClick() instead.
     }
 
     override fun onClick() {
+        if (state == FtpServerService.State.STARTING
+            || state == FtpServerService.State.STOPPING) {
+            return
+        }
         FtpServerService.toggle(context)
     }
 }

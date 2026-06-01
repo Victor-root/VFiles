@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.filelist
 
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -214,6 +215,47 @@ class FileListAdapter(
                     } catch (_: Exception) {}
                 }
             menuButton.setOnClickListener { popupMenu.show() }
+
+            // D-pad focus: the whole row (itemLayout) is the primary traversal target so DPAD
+            // UP/DOWN moves between rows and UP from the FAB lands on the row (not the kebab).
+            // DPAD RIGHT from the row moves focus onto the kebab; from there LEFT/UP/DOWN return.
+            itemLayout.isFocusable = true
+            menuButton.isFocusable = false
+            // The icon has a click listener (tap-to-select) which, with FOCUSABLE_AUTO, makes it
+            // D-pad focusable. That stole focus from the row (so the row highlight didn't show) and
+            // crashed isAtTopOfFileList. Keep it clickable for touch but off the D-pad focus path.
+            iconLayout.isFocusable = false
+
+            itemLayout.setOnKeyListener { _, keyCode, event ->
+                if (event.action != KeyEvent.ACTION_DOWN) {
+                    false
+                } else when (keyCode) {
+                    // DPAD RIGHT moves focus onto the kebab.
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        menuButton.isFocusable = true
+                        menuButton.requestFocus()
+                    }
+                    // DPAD UP from the first row escapes to the toolbar (backup for the Activity's
+                    // dispatchKeyEvent on Android ≥16, where the RecyclerView traps upward focus).
+                    KeyEvent.KEYCODE_DPAD_UP ->
+                        bindingAdapterPosition == 0 && listener.onFileListReachedTop()
+                    else -> false
+                }
+            }
+
+            menuButton.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) menuButton.isFocusable = false
+            }
+
+            menuButton.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode in intArrayOf(
+                        KeyEvent.KEYCODE_DPAD_LEFT,
+                        KeyEvent.KEYCODE_DPAD_UP,
+                        KeyEvent.KEYCODE_DPAD_DOWN)) {
+                    itemLayout.requestFocus()
+                    true
+                } else false
+            }
         }
     }
 
@@ -227,6 +269,9 @@ class FileListAdapter(
         val isEnabled = isFileSelectable(file) || isDirectory
         holder.itemLayout.isEnabled = isEnabled
         holder.menuButton.isEnabled = isEnabled
+        // Ensure menuButton is off the traversal path each time the ViewHolder is rebound, in case
+        // it was left focusable by a previous item that had the kebab focused when recycled.
+        holder.menuButton.isFocusable = false
         val menu = holder.popupMenu.menu
         val path = file.path
         val hasPickOptions = pickOptions != null
@@ -494,5 +539,7 @@ class FileListAdapter(
         fun addBookmark(file: FileItem)
         fun createShortcut(file: FileItem)
         fun showPropertiesDialog(file: FileItem)
+        // D-pad UP from the first row: escape focus to the toolbar. Returns whether focus moved.
+        fun onFileListReachedTop(): Boolean
     }
 }

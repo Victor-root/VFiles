@@ -26,6 +26,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -124,6 +125,7 @@ import me.zhanghai.android.files.util.getDimensionDp
 import me.zhanghai.android.files.util.getQuantityString
 import me.zhanghai.android.files.util.hasSw600Dp
 import me.zhanghai.android.files.util.isOrientationLandscape
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.setOnEditorConfirmActionListener
 import me.zhanghai.android.files.util.showToast
@@ -225,6 +227,25 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         val activity = requireActivity() as AppCompatActivity
         activity.setTitle(R.string.file_list_title)
         activity.setSupportActionBar(binding.toolbar)
+        if (requireContext().isTelevision) {
+            // AppBarLayout and Toolbar set touchscreenBlocksFocus=true, which makes requestFocus()
+            // on the toolbar's buttons fail whenever the device reports a touchscreen — true on the
+            // Android TV emulator (but not on real TVs). Clearing it lets D-pad focus reach the
+            // toolbar (hamburger / search / overflow). No-op on real, touchscreen-less TVs.
+            binding.appBarLayout.touchscreenBlocksFocus = false
+            binding.toolbar.touchscreenBlocksFocus = false
+            // Make the hamburger nav button reachable via D-pad.
+            binding.toolbar.post {
+                for (i in 0 until binding.toolbar.childCount) {
+                    val child = binding.toolbar.getChildAt(i)
+                    if (child is android.widget.ImageButton) {
+                        child.isFocusable = true
+                        child.isFocusableInTouchMode = false
+                        break
+                    }
+                }
+            }
+        }
         overlayActionMode = OverlayToolbarActionMode(binding.overlayToolbar)
         bottomActionMode = PersistentBarLayoutToolbarActionMode(
             binding.persistentBarLayout, binding.bottomBarLayout, binding.bottomToolbar
@@ -265,6 +286,20 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
 
         val viewLifecycleOwner = viewLifecycleOwner
+
+        // Lowest-priority fallback: back never exits the app. When everything else is inactive,
+        // open the sidebar. (Use Home to exit.) Registered first so it sits at the bottom of the
+        // dispatcher stack and is only reached when all higher-priority callbacks are disabled.
+        addOnBackPressedCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!isNavigationDrawerOpen()) {
+                    openNavigationDrawer()
+                }
+                // On persistent-drawer layouts (large landscape) the sidebar is always visible;
+                // we simply swallow the back event — Home is the exit gesture.
+            }
+        })
+
         addOnBackPressedCallback(
             object : OnBackPressedCallback(false) {
                 override fun handleOnBackPressed() {
@@ -281,6 +316,20 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         addOnBackPressedCallback(SpeedDialViewOnBackPressedCallback(binding.speedDialView))
         binding.drawerLayout?.let {
             addOnBackPressedCallback(DrawerLayoutOnBackPressedCallback(it))
+            // On Android TV, trap D-pad focus inside the navigation drawer while it is open:
+            // block focus on the content behind it and pull focus into the drawer, so navigating
+            // the sidebar can't leak into the file list underneath.
+            it.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+                override fun onDrawerOpened(drawerView: View) {
+                    mainContentView()?.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+                    navigationFragment.focusList()
+                }
+
+                override fun onDrawerClosed(drawerView: View) {
+                    mainContentView()?.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
+                    binding.recyclerView.requestFocus()
+                }
+            })
         }
 
         if (!viewModel.hasTrail) {
@@ -646,6 +695,20 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             }
         }
         binding.emptyView.fadeToVisibilityUnsafe(stateful is Success && !hasFiles)
+        // D-pad focus: when the list has items, the RecyclerView container itself must NOT be a
+        // focus target — otherwise focus coming from the toolbar can land on the container (which
+        // scrolls without highlighting any row) instead of on a row. Keep it focusable only when
+        // empty, so an empty folder can still hold focus (e.g. for DPAD LEFT to open the drawer).
+        binding.recyclerView.isFocusable = !hasFiles
+        if (stateful is Success && !hasFiles && requireContext().isTelevision) {
+            // An empty folder has no row to hold D-pad focus, so on TV the cursor would be lost and
+            // the user stuck. If focus has nowhere to go, move it to the toolbar (back / hamburger).
+            binding.recyclerView.post {
+                if (isAdded && requireActivity().currentFocus == null) {
+                    focusToolbar()
+                }
+            }
+        }
         if (files != null) {
             updateAdapterFileList()
         } else {
@@ -1470,6 +1533,8 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         FilePropertiesDialogFragment.show(file, this)
     }
 
+    override fun onFileListReachedTop(): Boolean = focusToolbar()
+
     private fun showCreateFileDialog() {
         CreateFileDialogFragment.show(this)
     }
@@ -1506,6 +1571,72 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
 
     override fun closeNavigationDrawer() {
         binding.drawerLayout?.closeDrawer(GravityCompat.START)
+    }
+
+    // Returns true when there is an overlay drawer to open (i.e. not the persistent side drawer
+    // used on large landscape layouts), so the caller knows the D-pad event was consumed.
+    fun openNavigationDrawer(): Boolean {
+        val drawerLayout = binding.drawerLayout ?: return false
+        drawerLayout.openDrawer(GravityCompat.START)
+        return true
+    }
+
+    fun isNavigationDrawerOpen(): Boolean =
+        binding.drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
+
+    // True when focus is in the file list area: a row root (direct RecyclerView child) OR the
+    // RecyclerView itself (an empty folder, where no rows exist to hold focus). Excludes row child
+    // views like the kebab button, whose parent is the row, not the RecyclerView.
+    fun isFileListFocused(): Boolean {
+        val focused = binding.recyclerView.findFocus() ?: return false
+        return focused === binding.recyclerView || focused.parent === binding.recyclerView
+    }
+
+    // True when focus is on the first item in the list, or the list is empty. Used to manually
+    // escape focus to the toolbar on Android ≥16, where RecyclerView no longer lets DPAD UP leave
+    // the list on its own.
+    fun isAtTopOfFileList(): Boolean {
+        val focused = binding.recyclerView.findFocus() ?: return false
+        if (focused === binding.recyclerView) return true
+        // findContainingViewHolder walks up to the row's itemView, so this is safe even when a
+        // descendant (icon, kebab, …) holds focus. getChildAdapterPosition() requires a *direct*
+        // RecyclerView child and throws ClassCastException on a deeper view.
+        val holder = binding.recyclerView.findContainingViewHolder(focused) ?: return false
+        return holder.bindingAdapterPosition == 0
+    }
+
+    // Move D-pad focus up into the toolbar (the hamburger nav icon). Returns whether focus moved.
+    // The nav button is made focusable on the spot because, since API 26, a clickable view is not
+    // automatically focusable, and Toolbar creates the button lazily.
+    fun focusToolbar(): Boolean {
+        val toolbar = binding.toolbar
+        for (i in 0 until toolbar.childCount) {
+            val child = toolbar.getChildAt(i)
+            if (child is ImageButton) {
+                child.isFocusable = true
+                child.isFocusableInTouchMode = false
+                if (child.isShown && child.isEnabled) {
+                    return child.requestFocus()
+                }
+            }
+        }
+        // Fallback: any focusable inside the toolbar (e.g. search/overflow in the ActionMenuView).
+        val focusables = ArrayList<View>()
+        toolbar.addFocusables(focusables, View.FOCUS_DOWN, View.FOCUSABLES_ALL)
+        return focusables.firstOrNull { it !== toolbar && it.isShown && it.isEnabled }
+            ?.requestFocus() ?: false
+    }
+
+    // The DrawerLayout child holding the app content (everything except the navigation drawer).
+    private fun mainContentView(): ViewGroup? {
+        val drawerLayout = binding.drawerLayout ?: return null
+        for (i in 0 until drawerLayout.childCount) {
+            val child = drawerLayout.getChildAt(i)
+            if (child.id != R.id.navigationFragment) {
+                return child as? ViewGroup
+            }
+        }
+        return null
     }
 
     private fun ensureStorageAccess() {

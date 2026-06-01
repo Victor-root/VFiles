@@ -63,6 +63,37 @@ class FileListActivity : AppActivity() {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (::fragment.isInitialized && event.action == KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_DPAD_LEFT ->
+                    // Only open from within the file list row (isFileListFocused checks that the
+                    // focused view's parent is the RecyclerView, so the kebab is excluded).
+                    if (!fragment.isNavigationDrawerOpen() && fragment.isFileListFocused()) {
+                        if (fragment.openNavigationDrawer()) {
+                            return true
+                        }
+                    }
+                KeyEvent.KEYCODE_DPAD_RIGHT ->
+                    if (fragment.isNavigationDrawerOpen()) {
+                        fragment.closeNavigationDrawer()
+                        return true
+                    }
+                KeyEvent.KEYCODE_DPAD_UP ->
+                    // Android 16's RecyclerView no longer lets focus escape upward naturally when
+                    // the top item is focused. Intercept it and move focus to the toolbar. Only
+                    // consume the event if focus actually moved, so normal UP still works.
+                    if (!fragment.isNavigationDrawerOpen()
+                        && fragment.isFileListFocused()
+                        && fragment.isAtTopOfFileList()
+                        && fragment.focusToolbar()) {
+                        return true
+                    }
+            }
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
     override fun onKeyShortcut(keyCode: Int, event: KeyEvent): Boolean {
         if (fragment.onKeyShortcut(keyCode, event)) {
             return true

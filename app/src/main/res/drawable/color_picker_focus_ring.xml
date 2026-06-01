@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ GridView selector for the color palette. The grid disables its default (rectangular) selector,
+  ~ so on Android TV / D-pad there was no indication of which swatch is focused. This draws a round
+  ~ ring around the focused/selected swatch instead.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <inset android:inset="2dp">
+            <shape android:shape="oval">
+                <stroke android:width="3dp" android:color="?attr/colorControlActivated" />
+            </shape>
+        </inset>
+    </item>
+
+    <item android:state_focused="true">
+        <inset android:inset="2dp">
+            <shape android:shape="oval">
+                <stroke android:width="3dp" android:color="?attr/colorControlActivated" />
+            </shape>
+        </inset>
+    </item>
+
+    <item android:state_selected="true">
+        <inset android:inset="2dp">
+            <shape android:shape="oval">
+                <stroke android:width="3dp" android:color="?attr/colorControlActivated" />
+            </shape>
+        </inset>
+    </item>
+
+    <item>
+        <shape android:shape="oval" />
+    </item>
+</selector>

@@ -166,6 +166,9 @@ class NavigationListAdapter(
                 ItemHolder(
                     NavigationItemBinding.inflate(parent.context.layoutInflater, parent, false)
                 ).apply {
+                    // Rows are clickable but, since API 26, that no longer implies focusable. Make
+                    // them D-pad focusable (but not in touch mode) so the drawer is navigable on TV.
+                    binding.itemLayout.isFocusable = true
                     binding.itemLayout.updatePaddingRelative(
                         viewAttributes.itemHorizontalPadding,
                         viewAttributes.itemVerticalPadding,
