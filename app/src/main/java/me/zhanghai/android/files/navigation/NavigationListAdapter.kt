@@ -149,6 +149,12 @@ class NavigationListAdapter(
         notifyItemRangeChanged(0, itemCount, PAYLOAD_CHECKED_CHANGED)
     }
 
+    // Recompute just the (live free-space) subtitles in place, without re-binding the whole row, so
+    // there's no flicker or D-pad focus loss when the sidebar is permanently visible.
+    fun notifySubtitleChanged() {
+        notifyItemRangeChanged(0, itemCount, PAYLOAD_SUBTITLE_CHANGED)
+    }
+
     override val hasStableIds: Boolean
         get() = true
 
@@ -232,6 +238,9 @@ class NavigationListAdapter(
                 val binding = (holder as ItemHolder).binding
                 binding.itemLayout.isChecked = item.isChecked(listener)
                 if (payloads.isNotEmpty()) {
+                    if (PAYLOAD_SUBTITLE_CHANGED in payloads) {
+                        binding.subtitleText.text = item.getSubtitle(binding.subtitleText.context)
+                    }
                     return
                 }
                 binding.itemLayout.setOnClickListener { item.onClick(listener) }
@@ -247,6 +256,7 @@ class NavigationListAdapter(
 
     companion object {
         private val PAYLOAD_CHECKED_CHANGED = Any()
+        private val PAYLOAD_SUBTITLE_CHANGED = Any()
     }
 
     private class ViewAttributes(

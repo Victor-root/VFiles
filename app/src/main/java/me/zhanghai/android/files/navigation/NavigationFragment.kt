@@ -56,6 +56,23 @@ class NavigationFragment : Fragment(), NavigationItem.Listener {
         adapter.replace(navigationItems)
     }
 
+    // Rebuild the items so the live free-space subtitles (e.g. "Internal storage") are recomputed.
+    // Called when the drawer opens, so deleting files is reflected without restarting the app.
+    fun refresh() {
+        if (::adapter.isInitialized) {
+            adapter.replace(navigationItems)
+        }
+    }
+
+    // Recompute just the free-space subtitles in place (no flicker / focus loss). Used when the
+    // sidebar is permanently visible, where there's no "drawer opened" moment to refresh on. May be
+    // called before the view (and adapter) exist, so guard against that.
+    fun refreshSubtitles() {
+        if (::adapter.isInitialized) {
+            adapter.notifySubtitleChanged()
+        }
+    }
+
     // Moves D-pad focus to the currently active (checked) row, or falls back to the first row.
     // Called when the drawer opens on Android TV so the cursor lands exactly where the user is,
     // e.g. on "Downloads" if that was the last browsed location.

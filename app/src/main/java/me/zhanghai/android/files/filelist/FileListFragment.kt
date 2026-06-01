@@ -323,6 +323,9 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             it.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
                 override fun onDrawerOpened(drawerView: View) {
                     mainContentView()?.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+                    // Recompute free-space subtitles so e.g. deleting files updates "Internal
+                    // storage" here without an app restart.
+                    navigationFragment.refresh()
                     navigationFragment.focusList()
                 }
 
@@ -722,6 +725,10 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
         if (stateful is Success) {
             viewModel.pendingState?.let { layoutManager.onRestoreInstanceState(it) }
+            // A finished operation (delete, paste, new folder…) may have changed the free space, so
+            // refresh the drawer's storage subtitles in place. This is what keeps a permanently
+            // visible sidebar up to date; the sliding drawer also refreshes when it opens.
+            navigationFragment.refreshSubtitles()
         }
     }
 
