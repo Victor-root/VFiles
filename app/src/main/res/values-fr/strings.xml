@@ -717,6 +717,14 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Suivre sur GitHub</string>
     <string name="about_author_twitter_title">Suivre sur Twitter</string>
+    <string name="about_check_for_update_title">Rechercher des mises à jour</string>
+    <string name="about_update_available_title">Mise à jour disponible</string>
+    <string name="about_update_summary_idle">Appuyez pour vérifier</string>
+    <string name="about_update_checking">Recherche…</string>
+    <string name="about_update_up_to_date">Votre application est à jour</string>
+    <string name="about_update_available_summary_format">Version %1$s — appuyez pour installer</string>
+    <string name="about_update_downloading">Téléchargement de la mise à jour…</string>
+    <string name="about_update_download_failed">Échec du téléchargement — appuyez pour réessayer</string>
     <string name="app_name_launcher">Fichiers</string>
 
     <string name="onboarding_next">Suivant</string>

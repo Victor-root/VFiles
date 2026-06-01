@@ -23,6 +23,7 @@ import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.storage.WebDavServerAuthenticator
 import me.zhanghai.android.files.theme.custom.CustomThemeHelper
 import me.zhanghai.android.files.theme.night.NightModeHelper
+import me.zhanghai.android.files.update.UpdateManager
 import java.util.Properties
 import me.zhanghai.android.files.provider.ftp.client.Client as FtpClient
 import me.zhanghai.android.files.provider.sftp.client.Client as SftpClient
@@ -37,6 +38,7 @@ val appInitializers = listOf(
     ::initializeFileSystemProviders,
     ::upgradeApp,
     ::initializeLiveDataObjects,
+    ::initializeUpdateCheck,
     ::initializeCustomTheme,
     ::initializeNightMode,
     ::createNotificationChannels
@@ -80,6 +82,12 @@ private fun initializeLiveDataObjects() {
     // Force initialization of LiveData objects so that it won't happen on a background thread.
     StorageVolumeListLiveData.value
     Settings.FILE_LIST_DEFAULT_DIRECTORY.value
+}
+
+private fun initializeUpdateCheck() {
+    // Throttled to once every 12h; only issues a network request when due. Runs after
+    // initializeLiveDataObjects so Settings is already initialized on the main thread.
+    UpdateManager.checkInBackground()
 }
 
 private fun initializeCustomTheme() {

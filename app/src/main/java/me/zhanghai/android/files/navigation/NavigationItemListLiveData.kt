@@ -17,6 +17,9 @@ object NavigationItemListLiveData : MediatorLiveData<List<NavigationItem?>>() {
         addSource(StorageVolumeListLiveData) { loadValue() }
         addSource(StandardDirectoriesLiveData) { loadValue() }
         addSource(Settings.BOOKMARK_DIRECTORIES) { loadValue() }
+        // Refresh so the "About" item's update badge appears/disappears as soon as a background
+        // check records (or clears) an available release.
+        addSource(Settings.UPDATE_AVAILABLE_VERSION) { loadValue() }
     }
 
     private fun loadValue() {

@@ -24,6 +24,9 @@ abstract class NavigationItem {
 
     open fun getSubtitle(context: Context): String? = null
 
+    // Whether to draw a small "attention" dot on this item (e.g. an available app update).
+    open val showBadge: Boolean = false
+
     open fun isChecked(listener: Listener): Boolean = false
 
     abstract fun onClick(listener: Listener)

@@ -397,6 +397,17 @@
             android:exported="false"
             android:grantUriPermissions="true" />
 
+        <!-- Dedicated provider used only to hand a downloaded APK to the system installer. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="@string/update_provider_authority"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/update_file_provider_paths" />
+        </provider>
+
         <receiver android:name="me.zhanghai.android.files.filejob.FileJobReceiver" />
 
         <receiver android:name="me.zhanghai.android.files.ftpserver.FtpServerReceiver" />

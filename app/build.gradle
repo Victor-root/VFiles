@@ -40,6 +40,7 @@ android {
         buildConfigField 'String', 'FILE_PROVIDIER_AUTHORITY', 'APPLICATION_ID + ".file_provider"'
         resValue 'string', 'app_provider_authority', applicationId + '.app_provider'
         resValue 'string', 'file_provider_authority', applicationId + '.file_provider'
+        resValue 'string', 'update_provider_authority', applicationId + '.update_provider'
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=none'
@@ -97,6 +98,26 @@ android {
     bundle {
         language {
             enableSplit = false
+        }
+    }
+}
+
+// Always name the assembled APK "MaterialFiles-v<versionName>.apk" so the file name carries the
+// current version. Uses AGP's new variant API (the legacy applicationVariants was removed in newer
+// AGP). The in-app updater reads the version from the GitHub release tag, so this mainly keeps
+// local and signed builds consistently named.
+def appVersionName = android.defaultConfig.versionName
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        // Best-effort: the in-app updater no longer relies on the APK file name (it reads the
+        // GitHub release tag), so never let a variant-API difference fail the build over a cosmetic
+        // rename.
+        try {
+            variant.outputs.each { output ->
+                output.outputFileName.set("MaterialFiles-v${appVersionName}.apk")
+            }
+        } catch (Throwable t) {
+            logger.warn("APK rename skipped: ${t.message}")
         }
     }
 }

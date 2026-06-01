@@ -45,4 +45,12 @@
             android:ellipsize="end"
             android:maxLines="2" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/badgeDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/update_badge_dot"
+        android:visibility="gone" />
 </me.zhanghai.android.files.ui.CheckableForegroundLinearLayout>

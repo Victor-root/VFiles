@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import androidx.annotation.Px
 import androidx.annotation.StyleRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePaddingRelative
 import androidx.recyclerview.widget.RecyclerView
@@ -235,6 +236,7 @@ class NavigationListAdapter(
                 binding.iconImage.setImageDrawable(item.getIcon(binding.iconImage.context))
                 binding.titleText.text = item.getTitle(binding.titleText.context)
                 binding.subtitleText.text = item.getSubtitle(binding.subtitleText.context)
+                binding.badgeDot.isVisible = item.showBadge
             }
             ViewType.DIVIDER -> {}
         }

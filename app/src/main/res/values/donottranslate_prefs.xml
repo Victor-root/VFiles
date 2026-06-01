@@ -85,4 +85,10 @@
 
     <string name="pref_key_onboarding_completed">key_onboarding_completed</string>
     <bool name="pref_default_value_onboarding_completed">false</bool>
+
+    <string name="pref_key_update_last_check_time">key_update_last_check_time</string>
+    <string name="pref_default_value_update_last_check_time">0</string>
+    <string name="pref_key_update_available_version">key_update_available_version</string>
+    <string name="pref_key_update_available_asset_name">key_update_available_asset_name</string>
+    <string name="pref_key_update_available_download_url">key_update_available_download_url</string>
 </resources>

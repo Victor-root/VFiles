@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Exposes cacheDir/updates/ to the system installer for in-app updates. Fork addition. -->
+<paths>
+    <cache-path
+        name="updates"
+        path="updates/" />
+</paths>

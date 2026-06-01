@@ -30,6 +30,7 @@ import me.zhanghai.android.files.storage.AddStorageDialogActivity
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.update.UpdateManager
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
 import me.zhanghai.android.files.util.putArgs
@@ -393,13 +394,15 @@ private val menuItems: List<NavigationItem>
         ),
         IntentMenuItem(
             R.drawable.about_icon_white_24dp, R.string.navigation_about,
-            AboutActivity::class.createIntent()
+            AboutActivity::class.createIntent(),
+            showBadge = UpdateManager.isUpdateAvailable()
         )
     )
 
 private abstract class MenuItem(
     @DrawableRes override val iconRes: Int,
-    @StringRes val titleRes: Int
+    @StringRes val titleRes: Int,
+    override val showBadge: Boolean = false
 ) : NavigationItem() {
     override fun getTitle(context: Context): String = context.getString(titleRes)
 }
@@ -407,8 +410,9 @@ private abstract class MenuItem(
 private class IntentMenuItem(
     @DrawableRes iconRes: Int,
     @StringRes titleRes: Int,
-    private val intent: Intent
-) : MenuItem(iconRes, titleRes) {
+    private val intent: Intent,
+    showBadge: Boolean = false
+) : MenuItem(iconRes, titleRes, showBadge) {
     override val id: Long
         get() = intent.component.hashCode().toLong()
 
