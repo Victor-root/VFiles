@@ -824,8 +824,8 @@
     <string name="about_licenses_title">Licenses</string>
     <string name="about_privacy_policy_title">Privacy policy</string>
     <string name="about_author_title">Author</string>
-    <string name="about_author_name_title">Hai Zhang</string>
-    <string name="about_fork_subtitle">Forked by Victor-root</string>
+    <string name="about_author_name_title">Victor-root</string>
+    <string name="about_fork_subtitle">Original by Hai Zhang</string>
     <string name="about_author_github_title">Follow on GitHub</string>
     <string name="about_author_twitter_title">Follow on Twitter</string>
     <string name="about_check_for_update_title">Check for updates</string>

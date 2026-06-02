@@ -732,7 +732,8 @@
     <string name="about_licenses_title">Licences</string>
     <string name="about_privacy_policy_title">Politique de confidentialité</string>
     <string name="about_author_title">Auteur</string>
-    <string name="about_author_name_title">Hai Zhang</string>
+    <string name="about_author_name_title">Victor-root</string>
+    <string name="about_fork_subtitle">Version originale par Hai Zhang</string>
     <string name="about_author_github_title">Suivre sur GitHub</string>
     <string name="about_author_twitter_title">Suivre sur Twitter</string>
     <string name="about_check_for_update_title">Rechercher des mises à jour</string>
