@@ -27,6 +27,14 @@ abstract class NavigationItem {
     // Whether to draw a small "attention" dot on this item (e.g. an available app update).
     open val showBadge: Boolean = false
 
+    // Whether to indent this row, to show it's nested under a group (e.g. one of several partitions
+    // of the same removable drive).
+    open val isIndented: Boolean = false
+
+    // Whether this is a non-interactive section header (e.g. the parent row of a removable drive
+    // whose partitions are listed beneath it). Such rows aren't clickable or focusable.
+    open val isHeader: Boolean = false
+
     open fun isChecked(listener: Listener): Boolean = false
 
     abstract fun onClick(listener: Listener)

@@ -7,6 +7,8 @@ package me.zhanghai.android.files.navigation
 
 import android.content.Context
 import android.content.Intent
+import android.hardware.usb.UsbConstants
+import android.hardware.usb.UsbManager
 import android.os.Build
 import android.os.Environment
 import android.os.storage.StorageVolume
@@ -153,12 +155,74 @@ private class IntentStorageItem(
 
 private val storageVolumeItems: List<NavigationItem>
     @Size(min = 0)
-    get() =
-        StorageVolumeListLiveData.valueCompat.filter { !it.isPrimaryCompat && it.isMounted }
-            .map { StorageVolumeItem(it) }
+    get() {
+        val volumes = StorageVolumeListLiveData.valueCompat
+            .filter { !it.isPrimaryCompat && it.isMounted }
+        if (volumes.isEmpty()) {
+            return emptyList()
+        }
+        val items = mutableListOf<NavigationItem>()
+        val usbDeviceCount = usbMassStorageDeviceCount()
+        // Group volumes by type; the partitions of one physical drive (a single USB device, or the
+        // one SD card slot) get a parent header with their partitions nested (indented) under it.
+        for ((type, typeVolumes) in volumes.groupBy { it.resolvedIconType() }) {
+            val sorted = typeVolumes.sortedBy { it.uuidCompat.orEmpty() }
+            val sameDrive = type != VolumeIconType.USB || usbDeviceCount <= 1
+            when {
+                sorted.size > 1 && sameDrive -> {
+                    // One drive, several partitions → header + indented "Partition N" children.
+                    items += StorageVolumeGroupHeaderItem(type)
+                    sorted.forEachIndexed { index, volume ->
+                        items += StorageVolumeItem(volume, partitionNumber = index + 1)
+                    }
+                }
+                sorted.size > 1 -> {
+                    // Several separate same-type drives → number them ("USB drive 1", "USB drive 2").
+                    sorted.forEachIndexed { index, volume ->
+                        items += StorageVolumeItem(volume, separateNumber = index + 1)
+                    }
+                }
+                else -> items += StorageVolumeItem(sorted.first())
+            }
+        }
+        return items
+    }
+
+// A non-interactive parent header for a removable drive whose partitions are listed (indented)
+// beneath it.
+private class StorageVolumeGroupHeaderItem(
+    private val iconType: VolumeIconType
+) : NavigationItem() {
+    override val id: Long
+        get() = ("storageVolumeHeader:" + iconType.name).hashCode().toLong()
+
+    override val iconRes: Int
+        @DrawableRes
+        get() = when (iconType) {
+            VolumeIconType.USB -> R.drawable.usb_icon_white_24dp
+            else -> R.drawable.sd_card_icon_white_24dp
+        }
+
+    override fun getTitle(context: Context): String =
+        context.getString(
+            when (iconType) {
+                VolumeIconType.USB -> R.string.storage_volume_default_name_usb
+                else -> R.string.storage_volume_default_name_sd_card
+            }
+        )
+
+    override val isHeader: Boolean = true
+
+    override fun onClick(listener: Listener) {}
+}
 
 private class StorageVolumeItem(
-    private val storageVolume: StorageVolume
+    private val storageVolume: StorageVolume,
+    // >0 when this volume is one partition of a multi-partition drive group: shown as "Partition N"
+    // and indented under the group header.
+    private val partitionNumber: Int = 0,
+    // >0 when this is one of several separate same-type drives: shown as "USB drive N".
+    private val separateNumber: Int = 0
 ) : PathItem(Paths.get(storageVolume.pathCompat)), NavigationRoot {
     private val customization: StorageVolumeCustomization? =
         storageVolume.uuidCompat?.let { StorageVolumeCustomizations.get(it) }
@@ -174,14 +238,38 @@ private class StorageVolumeItem(
             else -> R.drawable.sd_card_icon_white_24dp
         }
 
-    private fun resolveIconType(): VolumeIconType =
-        when (val iconType = customization?.iconType ?: VolumeIconType.AUTO) {
-            VolumeIconType.AUTO -> storageVolume.detectRemovableType() ?: VolumeIconType.SD_CARD
-            else -> iconType
-        }
+    private fun resolveIconType(): VolumeIconType = storageVolume.resolvedIconType()
 
-    override fun getTitle(context: Context): String =
-        customization?.name ?: storageVolume.getDescriptionCompat(context)
+    // Partitions of a drive group are indented under their header.
+    override val isIndented: Boolean
+        get() = partitionNumber > 0
+
+    override fun getTitle(context: Context): String = customization?.name ?: defaultName(context)
+
+    // The name shown when the user hasn't set a custom one: a real OS label if there is one,
+    // otherwise a friendly name. Children of a drive group are just "Partition N" (the header
+    // already says "USB drive"); separate same-type drives are numbered; a lone drive is unnumbered.
+    private fun defaultName(context: Context): String {
+        val description = storageVolume.getDescriptionCompat(context)
+        if (description.isNotBlank() &&
+            !looksLikeRawVolumeId(description, storageVolume.uuidCompat)) {
+            return description
+        }
+        return when {
+            partitionNumber > 0 ->
+                context.getString(R.string.storage_volume_partition_numbered, partitionNumber)
+            separateNumber > 0 -> "${typeName(context)} $separateNumber"
+            else -> typeName(context)
+        }
+    }
+
+    private fun typeName(context: Context): String =
+        context.getString(
+            when (resolveIconType()) {
+                VolumeIconType.USB -> R.string.storage_volume_default_name_usb
+                else -> R.string.storage_volume_default_name_sd_card
+            }
+        )
 
     override fun getSubtitle(context: Context): String? =
         getStorageSubtitle(storageVolume.pathCompat, context)
@@ -193,11 +281,7 @@ private class StorageVolumeItem(
         val uuid = storageVolume.uuidCompat ?: return false
         listener.launchIntent(
             EditStorageVolumeDialogActivity::class.createIntent()
-                .putArgs(
-                    EditStorageVolumeDialogFragment.Args(
-                        uuid, storageVolume.getDescriptionCompat(application)
-                    )
-                )
+                .putArgs(EditStorageVolumeDialogFragment.Args(uuid, defaultName(application)))
         )
         return true
     }
@@ -230,10 +314,48 @@ private fun StorageVolume.detectRemovableType(): VolumeIconType? {
             179 -> return VolumeIconType.SD_CARD
         }
     } catch (e: Throwable) {
-        // Hidden-API access blocked or unavailable — fall through to null.
+        // Hidden-API access blocked or unavailable — fall through.
+    }
+    // Public-API fallback for when the reflection above is blocked (common on Android 11+): if a
+    // USB mass-storage device is plugged into the host port, a removable volume is almost certainly
+    // it, since SD cards don't appear on the USB bus.
+    if (isUsbMassStorageConnected()) {
+        return VolumeIconType.USB
     }
     return null
 }
+
+/** Number of USB mass-storage devices currently connected to the USB host port. */
+private fun usbMassStorageDeviceCount(): Int =
+    try {
+        val usbManager = application.getSystemService(Context.USB_SERVICE) as? UsbManager
+        usbManager?.deviceList?.values?.count { device ->
+            (0 until device.interfaceCount).any {
+                device.getInterface(it).interfaceClass == UsbConstants.USB_CLASS_MASS_STORAGE
+            }
+        } ?: 0
+    } catch (e: Exception) {
+        0
+    }
+
+private fun isUsbMassStorageConnected(): Boolean = usbMassStorageDeviceCount() > 0
+
+// Resolve the icon type for a volume, honoring any user override and falling back to the SD card
+// icon when auto-detection is inconclusive.
+private fun StorageVolume.resolvedIconType(): VolumeIconType {
+    val custom = uuidCompat?.let { StorageVolumeCustomizations.get(it) }
+    return when (val type = custom?.iconType ?: VolumeIconType.AUTO) {
+        VolumeIconType.AUTO -> detectRemovableType() ?: VolumeIconType.SD_CARD
+        else -> type
+    }
+}
+
+private val RAW_VOLUME_ID_REGEX = Regex("^\\p{XDigit}{4}-\\p{XDigit}{4}$")
+
+// Whether the OS "description" of a volume is really just its serial / UUID, with no human label
+// (e.g. "FF33-F9E0"), so we can show a friendly name instead.
+private fun looksLikeRawVolumeId(name: String, uuid: String?): Boolean =
+    (uuid != null && name.equals(uuid, ignoreCase = true)) || RAW_VOLUME_ID_REGEX.matches(name)
 
 private fun getStorageSubtitle(linuxPath: String, context: Context): String? {
     var totalSpace = JavaFile.getTotalSpace(linuxPath)

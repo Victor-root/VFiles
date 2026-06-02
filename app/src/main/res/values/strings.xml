@@ -706,6 +706,9 @@
     <string name="storage_volume_icon_usb">USB drive</string>
     <string name="storage_volume_icon_sd_card">SD card</string>
     <string name="storage_volume_eject">Eject</string>
+    <string name="storage_volume_default_name_usb">USB drive</string>
+    <string name="storage_volume_default_name_sd_card">SD card</string>
+    <string name="storage_volume_partition_numbered">Partition %1$d</string>
     <string name="navigation_ftp_server" translatable="false">@string/ftp_server_title</string>
     <string name="navigation_settings" translatable="false">@string/settings_title</string>
     <string name="navigation_about" translatable="false">@string/about_title</string>

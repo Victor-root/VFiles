@@ -145,6 +145,10 @@ class NavigationListAdapter(
         )
     }
 
+    // Extra start padding applied to nested rows (e.g. partitions of the same removable drive).
+    private val indentPadding =
+        (16 * context.resources.displayMetrics.density).toInt()
+
     fun notifyCheckedChanged() {
         notifyItemRangeChanged(0, itemCount, PAYLOAD_CHECKED_CHANGED)
     }
@@ -243,8 +247,24 @@ class NavigationListAdapter(
                     }
                     return
                 }
-                binding.itemLayout.setOnClickListener { item.onClick(listener) }
-                binding.itemLayout.setOnLongClickListener { item.onLongClick(listener) }
+                // Headers (e.g. a removable drive's parent row) are just labels: not interactive.
+                val interactive = !item.isHeader
+                binding.itemLayout.isFocusable = interactive
+                binding.itemLayout.isClickable = interactive
+                binding.itemLayout.isLongClickable = interactive
+                if (interactive) {
+                    binding.itemLayout.setOnClickListener { item.onClick(listener) }
+                    binding.itemLayout.setOnLongClickListener { item.onLongClick(listener) }
+                } else {
+                    binding.itemLayout.setOnClickListener(null)
+                    binding.itemLayout.setOnLongClickListener(null)
+                }
+                // Indent nested rows (e.g. partitions of the same drive). Set every bind so recycled
+                // holders don't keep a stale indent.
+                binding.itemLayout.updatePaddingRelative(
+                    start = viewAttributes.itemHorizontalPadding +
+                        if (item.isIndented) indentPadding else 0
+                )
                 binding.iconImage.setImageDrawable(item.getIcon(binding.iconImage.context))
                 binding.titleText.text = item.getTitle(binding.titleText.context)
                 binding.subtitleText.text = item.getSubtitle(binding.subtitleText.context)
