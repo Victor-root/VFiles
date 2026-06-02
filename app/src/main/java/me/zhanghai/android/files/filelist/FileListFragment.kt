@@ -40,6 +40,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePaddingRelative
 import androidx.drawerlayout.widget.DrawerLayout
@@ -125,6 +126,7 @@ import me.zhanghai.android.files.util.findCauseByClass
 import me.zhanghai.android.files.util.getDimensionDp
 import me.zhanghai.android.files.util.getQuantityString
 import me.zhanghai.android.files.util.hasSw600Dp
+import me.zhanghai.android.files.util.isLightTheme
 import me.zhanghai.android.files.util.isOrientationLandscape
 import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.putArgs
@@ -321,7 +323,37 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             // block focus on the content behind it and pull focus into the drawer, so navigating
             // the sidebar can't leak into the file list underneath.
             it.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+                private var statusBarMatchesDrawer = false
+                private var lastSlideOffset = 0f
+
+                // Drive the status bar icon tint from the START of each animation so the system's
+                // icon crossfade runs concurrently with the slide in BOTH directions: enter
+                // drawer-mode as soon as it begins opening, leave it as soon as it begins closing.
+                // Switching only at the end (e.g. offset 0) would flip the icons abruptly with no
+                // fade. Direction is inferred from the offset delta (>= keeps duplicate frames as
+                // "opening" so they don't falsely trigger the closing branch).
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                    val opening = slideOffset >= lastSlideOffset
+                    lastSlideOffset = slideOffset
+                    val matchDrawer = when {
+                        !statusBarMatchesDrawer && opening && slideOffset > 0f -> true
+                        statusBarMatchesDrawer && !opening && slideOffset < 1f -> false
+                        else -> statusBarMatchesDrawer
+                    }
+                    if (matchDrawer == statusBarMatchesDrawer) {
+                        return
+                    }
+                    statusBarMatchesDrawer = matchDrawer
+                    if (matchDrawer) {
+                        WindowInsetsControllerCompat(requireActivity().window, drawerView)
+                            .isAppearanceLightStatusBars = requireContext().isLightTheme
+                    } else {
+                        binding.appBarLayout.refreshSystemBars()
+                    }
+                }
+
                 override fun onDrawerOpened(drawerView: View) {
+                    lastSlideOffset = 1f
                     mainContentView()?.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
                     // Recompute free-space subtitles so e.g. deleting files updates "Internal
                     // storage" here without an app restart.
@@ -330,8 +362,14 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                 }
 
                 override fun onDrawerClosed(drawerView: View) {
+                    lastSlideOffset = 0f
                     mainContentView()?.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
                     binding.recyclerView.requestFocus()
+                    // Safety net in case the slide callback didn't settle exactly at 0.
+                    if (statusBarMatchesDrawer) {
+                        statusBarMatchesDrawer = false
+                        binding.appBarLayout.refreshSystemBars()
+                    }
                 }
             })
         }
