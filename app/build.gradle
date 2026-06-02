@@ -72,6 +72,15 @@ android {
         warning 'InvalidPackage', 'MissingTranslation'
     }
     buildTypes {
+        debug {
+            // Sign debug builds (the green-triangle install) with the release key too, when
+            // signing.properties is present, so they share a signature with the published release
+            // APK. Without that shared signature you can't install one over the other, which breaks
+            // testing in-app updates. Guarded so builds without signing.properties are unaffected.
+            if (rootProject.file('signing.properties').exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
         release {
             minifyEnabled true
             shrinkResources true
