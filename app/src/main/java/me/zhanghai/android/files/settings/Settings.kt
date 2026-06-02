@@ -142,6 +142,9 @@ object Settings {
     val STORAGE_VOLUME_CUSTOMIZATIONS: SettingLiveData<List<StorageVolumeCustomization>> =
         ParcelValueSettingLiveData(R.string.pref_key_storage_volume_customizations, emptyList())
 
+    val FILE_OPEN_DEFAULT_APPS: SettingLiveData<List<FileOpenDefaultApp>> =
+        ParcelValueSettingLiveData(R.string.pref_key_file_open_default_apps, emptyList())
+
     val ROOT_STRATEGY: SettingLiveData<RootStrategy> =
         EnumSettingLiveData(
             R.string.pref_key_root_strategy, R.string.pref_default_value_root_strategy,

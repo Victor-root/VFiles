@@ -789,6 +789,14 @@
     <string name="settings_bookmark_directories_summary_empty">No bookmark folders</string>
     <string name="settings_bookmark_directory_list_title" translatable="false">@string/settings_bookmark_directories_title</string>
     <string name="settings_bookmark_directory_list_empty" translatable="false">@string/settings_bookmark_directories_summary_empty</string>
+    <string name="settings_default_apps_title">Default apps</string>
+    <string name="settings_default_apps_summary">Choose which app opens each type of file</string>
+    <string name="settings_default_apps_ask">Ask every time</string>
+    <string name="settings_default_apps_image">Images</string>
+    <string name="settings_default_apps_audio">Audio / Music</string>
+    <string name="settings_default_apps_video">Videos</string>
+    <string name="settings_default_apps_pdf">PDF</string>
+    <string name="settings_default_apps_text">Text</string>
     <string name="settings_root_strategy_title">Root access mode</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">You have %1$,d file operation running and changing root access mode now may result in unexpected error. Are you sure you want to change it now?</item>

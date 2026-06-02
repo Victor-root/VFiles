@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2024 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
+ */
+
+package me.zhanghai.android.files.settings
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import me.zhanghai.android.files.databinding.DefaultAppsFragmentBinding
+
+class DefaultAppsFragment : Fragment() {
+    private lateinit var binding: DefaultAppsFragmentBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        DefaultAppsFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val activity = requireActivity() as AppCompatActivity
+        activity.setSupportActionBar(binding.toolbar)
+        activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+}

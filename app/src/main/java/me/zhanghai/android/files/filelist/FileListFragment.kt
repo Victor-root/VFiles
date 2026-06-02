@@ -86,6 +86,8 @@ import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
 import me.zhanghai.android.files.provider.archive.createArchiveRootPath
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.linux.isLinuxPath
+import me.zhanghai.android.files.settings.FileOpenAppCategory
+import me.zhanghai.android.files.settings.FileOpenDefaultApps
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.terminal.Terminal
@@ -1427,6 +1429,9 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                 .apply {
                     extraPath = path
                     maybeAddImageViewerActivityExtras(this, path, mimeType)
+                    if (!withChooser) {
+                        applyDefaultAppPackage(this, mimeType)
+                    }
                 }
                 .let {
                     if (withChooser) {
@@ -1441,6 +1446,19 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                     }
                 }
             startActivitySafe(intent)
+        }
+    }
+
+    // If the user picked a default app for this file's category (Settings > Default apps), open it
+    // directly with that app instead of asking — but only when the app can actually handle the file,
+    // otherwise fall back to the normal handling.
+    private fun applyDefaultAppPackage(intent: Intent, mimeType: MimeType) {
+        val category = FileOpenAppCategory.forMimeType(mimeType) ?: return
+        val packageName = FileOpenDefaultApps.getPackage(category) ?: return
+        val canHandle = Intent(intent).setPackage(packageName)
+            .resolveActivity(requireContext().packageManager) != null
+        if (canHandle) {
+            intent.setPackage(packageName)
         }
     }
 

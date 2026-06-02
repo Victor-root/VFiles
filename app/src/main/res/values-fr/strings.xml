@@ -696,6 +696,14 @@
     <string name="settings_bookmark_directory_screenshots">Captures d\'écran</string>
     <string name="settings_bookmark_directories_title">Dossiers de marque-pages</string>
     <string name="settings_bookmark_directories_summary_empty">Pas de dossiers de marque-pages</string>
+    <string name="settings_default_apps_title">Applications par défaut</string>
+    <string name="settings_default_apps_summary">Choisir l\'app qui ouvre chaque type de fichier</string>
+    <string name="settings_default_apps_ask">Demander à chaque fois</string>
+    <string name="settings_default_apps_image">Images</string>
+    <string name="settings_default_apps_audio">Audio / Musique</string>
+    <string name="settings_default_apps_video">Vidéos</string>
+    <string name="settings_default_apps_pdf">PDF</string>
+    <string name="settings_default_apps_text">Texte</string>
     <string name="settings_root_strategy_title">Mode d\'accès root</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Vous avez %1$,d opération de fichiers en cours d’exécution et changer maintenant le mode d’accès root peut entraîner une erreur inattendue. Êtes-vous sûr de vouloir changer cela maintenant ?</item>
