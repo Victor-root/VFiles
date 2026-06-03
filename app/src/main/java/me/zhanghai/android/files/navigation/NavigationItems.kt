@@ -41,7 +41,6 @@ import me.zhanghai.android.files.update.UpdateManager
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 import me.zhanghai.android.files.util.valueCompat
 

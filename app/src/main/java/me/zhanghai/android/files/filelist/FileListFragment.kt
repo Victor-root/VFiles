@@ -321,9 +321,10 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         addOnBackPressedCallback(SpeedDialViewOnBackPressedCallback(binding.speedDialView))
         binding.drawerLayout?.let {
             addOnBackPressedCallback(DrawerLayoutOnBackPressedCallback(it))
-            // On Android TV, trap D-pad focus inside the navigation drawer while it is open:
-            // block focus on the content behind it and pull focus into the drawer, so navigating
-            // the sidebar can't leak into the file list underneath.
+            // Drawer listener handling, in order: the status bar icon tint crossfade (the drawer
+            // covers the colored header), and on Android TV trapping D-pad focus inside the open
+            // drawer (block focus on the content behind it and pull focus into the drawer, so
+            // navigating the sidebar can't leak into the file list underneath).
             it.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
                 private var statusBarMatchesDrawer = false
                 private var lastSlideOffset = 0f

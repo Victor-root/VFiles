@@ -65,8 +65,8 @@ class DefaultAppsPreferenceFragment : PreferenceFragmentCompat() {
             .mapNotNull { packageName -> appLabel(packageName)?.let { packageName to it } }
             .sortedBy { it.second.lowercase() }
         // First entry clears the choice ("ask every time"); the rest are the candidate apps.
-        val labels = (listOf(getString(R.string.settings_default_apps_ask)) + apps.map { it.second })
-            .toTypedArray()
+        val labels = (listOf<CharSequence>(getString(R.string.settings_default_apps_ask)) +
+            apps.map { it.second }).toTypedArray()
         val current = FileOpenDefaultApps.getPackage(category)
         val checkedItem = if (current == null) {
             0
