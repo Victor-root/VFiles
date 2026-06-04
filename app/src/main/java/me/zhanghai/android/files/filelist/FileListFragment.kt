@@ -53,6 +53,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePaddingRelative
 import androidx.drawerlayout.widget.DrawerLayout
@@ -307,19 +308,6 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         FileJobProgressLiveData.observe(viewLifecycleOwner) { onFileJobProgressChanged(it) }
 
         val viewLifecycleOwner = viewLifecycleOwner
-
-        // Lowest-priority fallback: back never exits the app. When everything else is inactive,
-        // open the sidebar. (Use Home to exit.) Registered first so it sits at the bottom of the
-        // dispatcher stack and is only reached when all higher-priority callbacks are disabled.
-        addOnBackPressedCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (!isNavigationDrawerOpen()) {
-                    openNavigationDrawer()
-                }
-                // On persistent-drawer layouts (large landscape) the sidebar is always visible;
-                // we simply swallow the back event — Home is the exit gesture.
-            }
-        })
 
         addOnBackPressedCallback(
             object : OnBackPressedCallback(false) {
@@ -971,19 +959,62 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             getString(R.string.file_list_title)
         } else {
             val count = if (pickOptions.allowMultiple) Int.MAX_VALUE else 1
-            when (pickOptions.mode) {
+            val baseTitle = when (pickOptions.mode) {
                 PickOptions.Mode.OPEN_FILE ->
                     getQuantityString(R.plurals.file_list_title_open_file, count)
                 PickOptions.Mode.CREATE_FILE -> getString(R.string.file_list_title_create_file)
                 PickOptions.Mode.OPEN_DIRECTORY ->
                     getQuantityString(R.plurals.file_list_title_open_directory, count)
             }
+            // Append the requesting app so it's clear this is a picker opened by another app, not
+            // the standalone Material Files. The marquee lets the (now longer) title be read fully.
+            val callingAppLabel = callingAppLabel()
+            if (callingAppLabel != null) "$baseTitle · $callingAppLabel" else baseTitle
         }
         requireActivity().title = title
+        applyToolbarTitleMarquee()
+        if (pickOptions != null) {
+            // Replace the hamburger with a close affordance that cancels the pick — the standard
+            // "you're in a picker, not the main app" signal. Normal mode is left untouched.
+            binding.toolbar.setNavigationIcon(R.drawable.close_icon_control_normal_24dp)
+            binding.toolbar.setNavigationContentDescription(android.R.string.cancel)
+            binding.toolbar.setNavigationOnClickListener { requireActivity().finish() }
+        }
         updateSelectAllMenuItem()
         updateOverlayToolbar()
         updateBottomToolbar()
         adapter.pickOptions = pickOptions
+    }
+
+    // The label of the app that opened this picker, or null if unknown or it's the system/our own.
+    private fun callingAppLabel(): String? {
+        val activity = requireActivity()
+        val callingPackage = activity.callingPackage ?: return null
+        if (callingPackage == "android" || callingPackage == activity.packageName) {
+            return null
+        }
+        return try {
+            val packageManager = activity.packageManager
+            packageManager.getApplicationInfo(callingPackage, 0).loadLabel(packageManager).toString()
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+    }
+
+    // Let a long toolbar title (e.g. a file-picker prompt) scroll instead of being cut off, so it
+    // can be read in full. Marquee only animates when the text actually overflows, so short titles
+    // are unaffected. Posted because the Toolbar creates/updates its title view after setTitle.
+    private fun applyToolbarTitleMarquee() {
+        binding.toolbar.post {
+            for (child in binding.toolbar.children) {
+                if (child is TextView) {
+                    child.isSingleLine = true
+                    child.ellipsize = TextUtils.TruncateAt.MARQUEE
+                    child.marqueeRepeatLimit = -1
+                    child.isSelected = true
+                }
+            }
+        }
     }
 
     private fun updateSelectAllMenuItem() {
