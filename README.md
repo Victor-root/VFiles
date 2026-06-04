@@ -1,82 +1,85 @@
-# Material Files
+# Material Files — Victor-root fork
 
-[本文中文版](README_zh-CN.md)
+**English** · [Français](README.fr.md)
 
-[![Android CI status](https://github.com/zhanghai/MaterialFiles/workflows/Android%20CI/badge.svg)](https://github.com/zhanghai/MaterialFiles/actions) [![GitHub release](https://img.shields.io/github/v/release/zhanghai/MaterialFiles)](https://github.com/zhanghai/MaterialFiles/releases) [![License](https://img.shields.io/github/license/zhanghai/MaterialFiles?color=blue)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/Victor-root/MaterialFiles)](https://github.com/Victor-root/MaterialFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/MaterialFiles?color=blue)](LICENSE)
 
-An open source Material Design file manager, for Android 5.0+.
+A personal, improved fork of **[Material Files](https://github.com/zhanghai/MaterialFiles)** by Hai Zhang — an open-source Material Design file manager for Android.
 
-[<img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="240">](https://play.google.com/store/apps/details?id=me.zhanghai.android.files) [<img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" width="240">](https://f-droid.org/packages/me.zhanghai.android.files) [<img alt="Get it on GitHub" src="https://raw.githubusercontent.com/Kunzisoft/Github-badge/main/get-it-on-github.png" width="240">](https://github.com/zhanghai/MaterialFiles/releases/latest/download/app-release-universal.apk)
+> **Why this fork?**
+> Material Files is already an excellent app — this is **not** a competitor or a criticism of the original. I forked it to build a version tailored to **my own daily use**: mostly small UI-consistency improvements, bug fixes, and first-class **Android TV** support. Everything here sits on top of the original author's work, and all credit for the app itself goes to him.
 
-[Help translation on Transifex](https://www.transifex.com/zhanghai/MaterialFiles/) ([Search Android & GNOME translations](https://translations.zhanghai.me/), [Microsoft language resources](https://learn.microsoft.com/en-us/globalization/reference/microsoft-language-resources), [MIME type translations](https://gitlab.freedesktop.org/xdg/shared-mime-info/-/tree/master/po))
+The original repository remains the reference; the sections below describe **only what this fork adds or changes**. For what the app fundamentally *is*, see [About the original app](#about-the-original-app).
 
-## Preview
+## What this fork changes
 
-<p><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="32%" /></p>
+### 📺 Android TV support
+- Full D-pad navigation — the sidebar, toolbar and file lists are reachable and highlight correctly with a remote.
+- The first-launch onboarding works on TV.
+- Fixed getting stuck in an empty folder (focus falls back to the toolbar) and a focus jump when toggling the FTP server.
 
-## Features
+### 🚀 First-launch onboarding
+- A welcome flow that requests the permissions the app needs (all-files access, notifications, install-from-APK) up front, so nothing has to be granted mid-use later.
 
-- Open source: Lightweight, clean and secure.
-- Material Design: Follows Material Design guidelines, with attention into details.
-- Breadcrumbs: Navigate in the filesystem with ease.
-- Root support: View and manage files with root access.
-- Archive support: View, extract and create common compressed files.
-- NAS support: View and manage files on FTP, SFTP, SMB and WebDAV servers.
-- Themes: Customizable UI colors, plus night mode with optional true black.
-- Linux-aware: Like [Nautilus](https://apps.gnome.org/Nautilus/), knows symbolic links, file permissions and SELinux context.
-- Robust: Uses Linux system calls under the hood, not yet another [`ls` parser](https://news.ycombinator.com/item?id=7994720).
-- Well-implemented: Built upon the right things, including [Java NIO2 File API](https://docs.oracle.com/javase/8/docs/api/java/nio/file/package-summary.html) and [LiveData](https://developer.android.com/topic/libraries/architecture/livedata).
+### ⬆️ In-app updates
+- Checks this repo's GitHub releases and can download and install a newer APK directly from **About → Check for updates** — no store required.
 
-## Why Material Files?
+### 💾 Removable storage (SD card / USB), reworked
+- SD cards and USB drives **appear automatically under "Internal storage"** and refresh when you plug one in — no manual "Add storage" SAF dance.
+- **Rename** a volume and choose its **icon**; USB vs SD is auto-detected (with a manual override).
+- A multi-partition drive is grouped under a single **"USB drive" / "SD card"** header, with its partitions nested as **"Partition 1, 2, …"**.
+- **Eject** shortcut, and the free-space figure refreshes live (e.g. right after deleting files) instead of only after a restart.
 
-Because I like Material Design, and clean Material Design.
+### 🎯 Default apps per file type
+- New **Settings → Default apps**: pick which app opens Images, Audio, Video, PDF and Text — so those files open straight away in your app of choice instead of asking every time.
 
-There are already a handful of powerful file managers, but most of them just aren't Material Design. And even among the ones with Material Design, they usually have various minor design flaws (layout, alignment, padding, icon, font, etc) across the app which makes me uncomfortable, while still being minor enough so that not everybody would care to fix it. So I had to create my own.
+### 🎨 UI consistency & theming
+- Status-bar icons tint themselves to the header/drawer colour (light or dark), fixing unreadable white-on-white and black-on-dark cases, with a smooth crossfade when the drawer opens.
+- Dark app bar in night mode instead of the light primary tint.
+- Icons shown in the ⋮ overflow menus; themed popup in dark mode.
+- Material You (M3) dark-mode colour and switch-thumb fixes.
+- Long names wrap instead of being cut off with "…".
+- Internal storage renamed with a phone icon; a real ribbon marks bookmarked folders; refreshed FTP-server icon.
 
-Because I want an open source file manager.
+### 🐛 Other fixes & polish
+- Friendly message when a folder can't be opened, instead of a silent failure.
+- Cloud backup / data extraction disabled for privacy.
+- All fork-specific strings translated into **31 languages**.
+- App ID changed to `fr.vroot.android.files` so it installs alongside the Play/F-Droid build rather than conflicting with it.
 
-Most of the popular and reliable file managers are just closed source, and I sometimes use them to view and modify files that require root access. But deep down inside, I just feel uneasy with giving any closed source app the root access to my device. After all, that means giving literally full access to my device, which stays with me every day and stores my own information, and what apps do with such access merely depends on their good intent.
+## About the original app
 
-Because I want a file manager that is implemented the right way.
+Material Files is an open-source Material Design file manager for Android 6.0+:
 
-- This app implemented [Java NIO2 File API](https://docs.oracle.com/javase/8/docs/api/java/nio/file/package-summary.html) as its backend, instead of inventing a custom model for file information/operations, which often gets coupled with UI logic and grows into a mixture of everything ([example](https://github.com/TeamAmaze/AmazeFileManager/blob/master/app/src/main/java/com/amaze/filemanager/filesystem/HybridFile.java)). On the contrary, a decoupled backend allows cleaner code (which means less bugs), and easier addition of support for other file systems.
+- Material Design with attention to detail, and breadcrumb navigation.
+- Root support; view/extract/create common archives; FTP, SFTP, SMB and WebDAV.
+- Customisable colours and night mode (with optional true black).
+- Linux-aware — symbolic links, permissions and SELinux context — via real system calls rather than parsing `ls`, built on the Java NIO2 file API with `ViewModel`/`LiveData`.
 
-- This app doesn't use `java.io.File` or parse the output of `ls`, but built bindings to Linux syscalls to properly access the file system. `java.io.File` is an old API missing many features, and just can't handle things like symbolic links correctly, which is the reason why many people rather parse `ls` instead. However parsing the output `ls` is not only slow, but also [unreliable](https://news.ycombinator.com/item?id=7994720), which made [Cabinet](https://github.com/aminb/cabinet/blob/master/app/src/main/java/com/afollestad/cabinet/file/root/LsParser.java) broken on newer Android versions. By virtue of using Linux syscalls, this app is able to be fast and smooth, and handle advanced things like Linux permissions, symbolic links and even SELinux context. It can also handle file names with invalid UTF-8 encoding because paths are not naively stored as Java `String`s, which most file managers does and fails during file operation.
+## Building
 
-- This app built its frontend upon modern `ViewModel` and `LiveData` which enables a clear code structure and support for rotation. It also properly handles things like errors during file operation, file conflicts and foreground/background state.
+Open the project in Android Studio and run it, or from the command line:
 
-In a word, this app tries to follow the best practices on Android and do the right thing, while keeping its source code clean and maintainable.
+```sh
+./gradlew assembleRelease
+```
 
-Because I know people can do it right.
+The native code is compiled for all ABIs (arm64-v8a, armeabi-v7a, x86, x86_64), producing a single universal APK that runs on any device.
 
-[Nautilus](https://wiki.gnome.org/Apps/Files) is a beautifully-designed and user-friendly file manager on Linux desktop, and it's fully Linux-aware. [Phonograph](https://github.com/kabouzeid/Phonograph) is an open source Material Design music player app (which I've been using for years), and it has just the right Material Design and implementation.
+## Credits & license
 
-So, it's time for yet another Android file manager.
+- **Original app and all of its core features:** [Hai Zhang](https://github.com/zhanghai) and contributors.
+- **This fork:** [Victor-root](https://github.com/Victor-root).
 
-## Inclusion in custom ROMs
+Released under the **GNU General Public License v3.0**, the same license as the original. See [LICENSE](LICENSE).
 
-Thank you if you choose to include Material Files in your custom ROM! However since I've received several user complaints due to improper inclusion, I'd like to offer some suggestions on including this app properly for the good of end users:
+```
+Copyright (C) 2018 Hai Zhang
+Copyright (C) 2024 Victor-root (fork modifications)
 
-- Please don't replace the AOSP [DocumentsUI](https://android.googlesource.com/platform/packages/apps/DocumentsUI/) app with this app. This app is not designed to replace DocumentsUI and can't handle a number of functionalities in DocumentsUI - in fact, it relies on DocumentsUI to do things like granting external SD card access.
-
-- Please make sure this app can be uninstalled or at least disabled. Some users may not want this app for a variety of reasons, and get very upset when they can't remove it.
-
-- Please avoid conflict with the Play/F-Droid version of this app. App stores cannot update apps signed with a different certificate, so you can either ship an APK that's signed by me (or F-Droid) so that users will be able to update it on Play/F-Droid, or fork this project and rename the package name when you need to sign the APK with a different certificate and potentially making other changes.
-
-## License
-
-    Copyright (C) 2018 Hai Zhang
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version. It is distributed WITHOUT ANY WARRANTY; see the GNU
+General Public License for more details.
+```
