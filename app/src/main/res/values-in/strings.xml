@@ -619,4 +619,5 @@
     <string name="storage_volume_icon_usb">Drive USB</string>
     <string name="storage_volume_name">Nama</string>
     <string name="storage_volume_partition_numbered">Partisi %1$d</string>
+    <string name="file_job_progress_title">Operasi yang sedang berjalan</string>
 </resources>

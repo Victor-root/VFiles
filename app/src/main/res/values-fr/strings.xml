@@ -696,6 +696,7 @@
     <string name="settings_bookmark_directory_screenshots">Captures d\'écran</string>
     <string name="settings_bookmark_directories_title">Dossiers de marque-pages</string>
     <string name="settings_bookmark_directories_summary_empty">Pas de dossiers de marque-pages</string>
+    <string name="file_job_progress_title">Opérations en cours</string>
     <string name="settings_default_apps_title">Applications par défaut</string>
     <string name="settings_default_apps_summary">Choisir l\'app qui ouvre chaque type de fichier</string>
     <string name="settings_default_apps_ask">Demander à chaque fois</string>

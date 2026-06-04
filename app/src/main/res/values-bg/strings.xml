@@ -719,4 +719,5 @@
     <string name="storage_volume_icon_usb">USB устройство</string>
     <string name="storage_volume_name">Име</string>
     <string name="storage_volume_partition_numbered">Дял %1$d</string>
+    <string name="file_job_progress_title">Текущи операции</string>
 </resources>

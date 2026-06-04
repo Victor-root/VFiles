@@ -769,4 +769,5 @@
     <string name="storage_volume_icon_usb">USB disk</string>
     <string name="storage_volume_name">Název</string>
     <string name="storage_volume_partition_numbered">Oddíl %1$d</string>
+    <string name="file_job_progress_title">Probíhající operace</string>
 </resources>

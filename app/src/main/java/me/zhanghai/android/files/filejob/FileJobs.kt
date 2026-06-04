@@ -150,6 +150,7 @@ private fun FileJob.postNotification(
         }
     }.build()
     service.notificationManager.notify(id, notification)
+    FileJobProgressLiveData.update(id, title, text, max, progress, indeterminate)
 }
 
 private const val PROGRESS_INTERVAL_MILLIS = 200L

@@ -435,4 +435,5 @@
     <string name="storage_volume_icon_usb">USB unitatea</string>
     <string name="storage_volume_name">Izena</string>
     <string name="storage_volume_partition_numbered">%1$d. partizioa</string>
+    <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

@@ -789,6 +789,7 @@
     <string name="settings_bookmark_directories_summary_empty">No bookmark folders</string>
     <string name="settings_bookmark_directory_list_title" translatable="false">@string/settings_bookmark_directories_title</string>
     <string name="settings_bookmark_directory_list_empty" translatable="false">@string/settings_bookmark_directories_summary_empty</string>
+    <string name="file_job_progress_title">Operations in progress</string>
     <string name="settings_default_apps_title">Default apps</string>
     <string name="settings_default_apps_summary">Choose which app opens each type of file</string>
     <string name="settings_default_apps_ask">Ask every time</string>

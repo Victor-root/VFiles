@@ -797,4 +797,5 @@
     <string name="storage_volume_icon_usb">כונן USB</string>
     <string name="storage_volume_name">שם</string>
     <string name="storage_volume_partition_numbered">מחיצה %1$d</string>
+    <string name="file_job_progress_title">פעולות מתבצעות</string>
 </resources>

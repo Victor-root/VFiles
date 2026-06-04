@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2024 Hai Zhang <dreaming.in.code.zh@gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fileJobProgressButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start|bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:contentDescription="@string/file_job_progress_title"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/fileJobProgressIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:indicatorColor="?attr/colorPrimary"
+                    app:indicatorSize="36dp"
+                    app:trackThickness="3dp" />
+
+                <TextView
+                    android:id="@+id/fileJobProgressCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+</merge>

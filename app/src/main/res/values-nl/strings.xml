@@ -735,4 +735,5 @@
     <string name="storage_volume_icon_usb">USB-station</string>
     <string name="storage_volume_name">Naam</string>
     <string name="storage_volume_partition_numbered">Partitie %1$d</string>
+    <string name="file_job_progress_title">Lopende bewerkingen</string>
 </resources>

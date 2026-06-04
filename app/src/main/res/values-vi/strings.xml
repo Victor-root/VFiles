@@ -598,4 +598,5 @@
     <string name="storage_volume_icon_usb">Ổ USB</string>
     <string name="storage_volume_name">Tên</string>
     <string name="storage_volume_partition_numbered">Phân vùng %1$d</string>
+    <string name="file_job_progress_title">Thao tác đang chạy</string>
 </resources>

@@ -608,4 +608,5 @@
     <string name="storage_volume_icon_usb">USB sürücü</string>
     <string name="storage_volume_name">Ad</string>
     <string name="storage_volume_partition_numbered">Bölüm %1$d</string>
+    <string name="file_job_progress_title">Süren işlemler</string>
 </resources>

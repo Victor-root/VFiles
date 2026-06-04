@@ -22,11 +22,23 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import me.zhanghai.android.files.databinding.FileJobProgressItemBinding
+import me.zhanghai.android.files.databinding.FileJobProgressPopupBinding
+import me.zhanghai.android.files.databinding.FileListFragmentProgressIncludeBinding
+import me.zhanghai.android.files.filejob.FileJobProgress
+import me.zhanghai.android.files.filejob.FileJobProgressLiveData
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -290,6 +302,10 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             true
         }
 
+        binding.fileJobProgressIndicator.isIndeterminate = false
+        binding.fileJobProgressButton.setOnClickListener { toggleFileJobProgressPopup() }
+        FileJobProgressLiveData.observe(viewLifecycleOwner) { onFileJobProgressChanged(it) }
+
         val viewLifecycleOwner = viewLifecycleOwner
 
         // Lowest-priority fallback: back never exits the app. When everything else is inactive,
@@ -481,6 +497,14 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         if (!viewModel.isStorageAccessRequested) {
             ensureNotificationPermission()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Avoid a leaked window if the view is destroyed while the progress popover is open.
+        fileJobProgressPopup?.dismiss()
+        fileJobProgressPopup = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -1884,6 +1908,93 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                 PackageManager.PERMISSION_GRANTED
     }
 
+    // ── In-app file job progress (bottom-left button + popover) ────────────────
+
+    private var fileJobProgressPopup: PopupWindow? = null
+    private var fileJobProgressListView: LinearLayout? = null
+    private val fileJobProgressRows = LinkedHashMap<Int, FileJobProgressItemBinding>()
+
+    private fun onFileJobProgressChanged(progresses: List<FileJobProgress>) {
+        val button = binding.fileJobProgressButton
+        if (progresses.isEmpty()) {
+            button.isVisible = false
+            fileJobProgressPopup?.dismiss()
+            return
+        }
+        button.isVisible = true
+        // Overall ring = average of the operations that have a determinate progress.
+        val fractions = progresses.mapNotNull { it.fraction }
+        val overall = if (fractions.isNotEmpty()) (fractions.average() * 100).roundToInt() else 0
+        binding.fileJobProgressIndicator.setProgressCompat(overall, true)
+        binding.fileJobProgressCount.text = progresses.size.toString()
+        if (fileJobProgressPopup?.isShowing == true) {
+            updateFileJobProgressPopupRows(progresses)
+        }
+    }
+
+    private fun toggleFileJobProgressPopup() {
+        val popup = fileJobProgressPopup
+        if (popup != null && popup.isShowing) {
+            popup.dismiss()
+            return
+        }
+        showFileJobProgressPopup()
+    }
+
+    private fun showFileJobProgressPopup() {
+        val density = resources.displayMetrics.density
+        val widthPx = (320 * density).toInt()
+        val popupBinding = FileJobProgressPopupBinding.inflate(layoutInflater)
+        fileJobProgressRows.clear()
+        fileJobProgressListView = popupBinding.fileJobProgressList
+        val popup = PopupWindow(
+            popupBinding.root, widthPx, ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            isOutsideTouchable = true
+            isFocusable = true
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setOnDismissListener {
+                fileJobProgressRows.clear()
+                fileJobProgressListView = null
+            }
+        }
+        fileJobProgressPopup = popup
+        updateFileJobProgressPopupRows(FileJobProgressLiveData.value.orEmpty())
+        // Place it just above the button.
+        popupBinding.root.measure(
+            View.MeasureSpec.makeMeasureSpec(widthPx, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        val button = binding.fileJobProgressButton
+        val yOffset = -(button.height + popupBinding.root.measuredHeight + (8 * density).toInt())
+        popup.showAsDropDown(button, 0, yOffset, Gravity.START)
+    }
+
+    private fun updateFileJobProgressPopupRows(progresses: List<FileJobProgress>) {
+        val container = fileJobProgressListView ?: return
+        val newIds = progresses.mapTo(mutableSetOf()) { it.id }
+        fileJobProgressRows.keys.toList().forEach { id ->
+            if (id !in newIds) {
+                container.removeView(fileJobProgressRows.remove(id)!!.root)
+            }
+        }
+        for (progress in progresses) {
+            val row = fileJobProgressRows.getOrPut(progress.id) {
+                FileJobProgressItemBinding.inflate(layoutInflater, container, false).also {
+                    it.progressIndicator.isIndeterminate = false
+                    it.cancelButton.setOnClickListener { FileJobService.cancelJob(progress.id) }
+                    container.addView(it.root)
+                }
+            }
+            row.titleText.text = progress.title
+            row.detailText.text = progress.detail
+            row.detailText.isVisible = !progress.detail.isNullOrEmpty()
+            row.progressIndicator.setProgressCompat(
+                ((progress.fraction ?: 0f) * 100).roundToInt(), true
+            )
+        }
+    }
+
     @Parcelize
     class Args(val intent: Intent) : ParcelableArgs
 
@@ -1905,7 +2016,10 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         val bottomBarLayout: ViewGroup,
         val bottomToolbar: Toolbar,
         val bottomCreateFileNameEdit: EditText,
-        val speedDialView: SpeedDialView
+        val speedDialView: SpeedDialView,
+        val fileJobProgressButton: MaterialCardView,
+        val fileJobProgressIndicator: CircularProgressIndicator,
+        val fileJobProgressCount: TextView
     ) {
         companion object {
             fun inflate(
@@ -1920,6 +2034,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                 val contentBinding = FileListFragmentContentIncludeBinding.bind(bindingRoot)
                 val bottomBarBinding = FileListFragmentBottomBarIncludeBinding.bind(bindingRoot)
                 val speedDialBinding = FileListFragmentSpeedDialIncludeBinding.bind(bindingRoot)
+                val progressBinding = FileListFragmentProgressIncludeBinding.bind(bindingRoot)
                 return Binding(
                     bindingRoot, includeBinding.drawerLayout, includeBinding.persistentDrawerLayout,
                     includeBinding.persistentBarLayout, appBarBinding.appBarLayout,
@@ -1928,7 +2043,9 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                     contentBinding.progress, contentBinding.errorText, contentBinding.emptyView,
                     contentBinding.swipeRefreshLayout, contentBinding.recyclerView,
                     bottomBarBinding.bottomBarLayout, bottomBarBinding.bottomToolbar,
-                    bottomBarBinding.bottomCreateFileNameEdit, speedDialBinding.speedDialView
+                    bottomBarBinding.bottomCreateFileNameEdit, speedDialBinding.speedDialView,
+                    progressBinding.fileJobProgressButton, progressBinding.fileJobProgressIndicator,
+                    progressBinding.fileJobProgressCount
                 )
             }
         }

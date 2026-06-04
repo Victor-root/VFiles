@@ -735,4 +735,5 @@
     <string name="storage_volume_icon_usb">USB-Laufwerk</string>
     <string name="storage_volume_name">Name</string>
     <string name="storage_volume_partition_numbered">Partition %1$d</string>
+    <string name="file_job_progress_title">Laufende Vorgänge</string>
 </resources>

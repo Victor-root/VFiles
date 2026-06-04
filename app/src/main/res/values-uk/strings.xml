@@ -799,4 +799,5 @@
     <string name="storage_volume_icon_usb">USB-накопичувач</string>
     <string name="storage_volume_name">Назва</string>
     <string name="storage_volume_partition_numbered">Розділ %1$d</string>
+    <string name="file_job_progress_title">Поточні операції</string>
 </resources>

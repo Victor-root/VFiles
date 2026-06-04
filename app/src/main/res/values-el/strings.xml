@@ -735,4 +735,5 @@
     <string name="storage_volume_icon_usb">Μονάδα USB</string>
     <string name="storage_volume_name">Όνομα</string>
     <string name="storage_volume_partition_numbered">Διαμέρισμα %1$d</string>
+    <string name="file_job_progress_title">Λειτουργίες σε εξέλιξη</string>
 </resources>

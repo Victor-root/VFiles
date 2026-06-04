@@ -737,4 +737,5 @@
     <string name="storage_volume_icon_usb">USB-drif</string>
     <string name="storage_volume_name">Nafn</string>
     <string name="storage_volume_partition_numbered">Disksneið %1$d</string>
+    <string name="file_job_progress_title">Aðgerðir í gangi</string>
 </resources>

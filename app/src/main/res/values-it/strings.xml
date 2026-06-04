@@ -766,4 +766,5 @@
     <string name="storage_volume_icon_usb">Unità USB</string>
     <string name="storage_volume_name">Nome</string>
     <string name="storage_volume_partition_numbered">Partizione %1$d</string>
+    <string name="file_job_progress_title">Operazioni in corso</string>
 </resources>

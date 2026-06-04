@@ -859,4 +859,5 @@
     <string name="storage_volume_icon_usb">محرك USB</string>
     <string name="storage_volume_name">الاسم</string>
     <string name="storage_volume_partition_numbered">القسم %1$d</string>
+    <string name="file_job_progress_title">العمليات الجارية</string>
 </resources>

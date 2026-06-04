@@ -629,4 +629,5 @@
     <string name="storage_volume_icon_usb">درایو USB</string>
     <string name="storage_volume_name">نام</string>
     <string name="storage_volume_partition_numbered">پارتیشن %1$d</string>
+    <string name="file_job_progress_title">عملیات در حال انجام</string>
 </resources>

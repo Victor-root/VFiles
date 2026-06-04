@@ -696,4 +696,5 @@
     <string name="storage_volume_icon_usb">USB atmintinė</string>
     <string name="storage_volume_name">Pavadinimas</string>
     <string name="storage_volume_partition_numbered">Skaidinys %1$d</string>
+    <string name="file_job_progress_title">Vykdomos operacijos</string>
 </resources>
