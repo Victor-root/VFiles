@@ -94,6 +94,13 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         lastSystemBarColor = backgroundColor
         val window = context.activity?.window ?: return
         window.navigationBarColor = backgroundColor
+        // By default the system may paint a translucent contrast scrim over the navigation bar
+        // (e.g. under gesture navigation, where it's enforced even for opaque colors). On some
+        // devices — notably large screens — that scrim swallows our color and leaves the bar
+        // looking white. Opt out so the exact color above is what's shown.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
         // Match the system-bar icon tints to the background luminance: dark icons only on light
         // colors (e.g. a flashy yellow), light (white) icons otherwise — including in light mode,
         // where the colored header is usually dark enough that black icons would be hard to read.
