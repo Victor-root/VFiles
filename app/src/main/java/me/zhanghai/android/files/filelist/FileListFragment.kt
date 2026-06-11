@@ -85,7 +85,9 @@ import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.file.extension
+import me.zhanghai.android.files.file.documentUri
 import me.zhanghai.android.files.file.fileProviderUri
+import me.zhanghai.android.files.file.treeDocumentUri
 import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.file.isImage
 import me.zhanghai.android.files.filejob.FileJobService
@@ -1046,11 +1048,18 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             val pickOptions = viewModel.pickOptions!!
             if (paths.size == 1) {
                 val path = paths.single()
-                data = path.fileProviderUri
+                // Return Storage Access Framework URIs backed by FileSystemDocumentsProvider so the
+                // grant is persistable: a tree URI for directories and a document URI for files. A
+                // file being created may not exist yet, so it keeps using the FileProvider URI.
+                data = when (pickOptions.mode) {
+                    PickOptions.Mode.OPEN_DIRECTORY -> path.treeDocumentUri
+                    PickOptions.Mode.OPEN_FILE -> path.documentUri
+                    PickOptions.Mode.CREATE_FILE -> path.fileProviderUri
+                }
                 extraPath = path
             } else {
                 val mimeTypes = pickOptions.mimeTypes.map { it.value }
-                val items = paths.map { ClipData.Item(it.fileProviderUri) }
+                val items = paths.map { ClipData.Item(it.documentUri) }
                 clipData = ClipData::class.create(null, mimeTypes, items)
                 extraPathList = paths.toList()
             }
