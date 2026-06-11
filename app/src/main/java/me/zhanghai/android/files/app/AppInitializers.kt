@@ -31,7 +31,6 @@ import me.zhanghai.android.files.provider.smb.client.Client as SmbClient
 import me.zhanghai.android.files.provider.webdav.client.Client as WebDavClient
 
 val appInitializers = listOf(
-    ::initializeCrashlytics,
     ::disableHiddenApiChecks,
     ::initializeWebViewDebugging,
     ::initializeCoil,
@@ -43,12 +42,6 @@ val appInitializers = listOf(
     ::initializeNightMode,
     ::createNotificationChannels
 )
-
-private fun initializeCrashlytics() {
-//#ifdef NONFREE
-    me.zhanghai.android.files.nonfree.CrashlyticsInitializer.initialize()
-//#endif
-}
 
 private fun disableHiddenApiChecks() {
     HiddenApi.disableHiddenApiChecks()
