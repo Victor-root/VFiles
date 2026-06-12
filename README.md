@@ -47,6 +47,38 @@ The original repository remains the reference; the sections below describe **onl
 - All fork-specific strings translated into **31 languages**.
 - App ID changed to `fr.vroot.android.files` so it installs alongside the Play/F-Droid build rather than conflicting with it.
 
+## Making Material Files the default system file picker
+
+Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` intents through **Google DocumentsUI** (`com.google.android.documentsui`), even when Material Files is installed as a DocumentsProvider. Disabling that system app makes Android fall back to Material Files as the picker for every app on the device — no root required, just ADB over USB.
+
+### Disable (make Material Files the default picker)
+
+```sh
+# Disable the main DocumentsUI app
+adb shell pm disable-user --user 0 com.google.android.documentsui
+
+# Disable its overlay module (present on some ROMs — ignore the error if absent)
+adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
+```
+
+After running these, any app that opens a file or folder picker will use Material Files instead.
+
+### Re-enable (restore Google's picker)
+
+```sh
+adb shell pm enable com.google.android.documentsui
+adb shell pm enable com.google.android.overlay.modules.documentsui
+```
+
+### Notes
+
+- **No root needed** — `pm disable-user --user 0` runs over a standard ADB (USB debugging) connection.
+- Tested on **LineageOS** and other AOSP-based ROMs. On stock OEM ROMs the overlay package name may differ or be absent; the `pm disable-user` command for the main package is sufficient in that case.
+- The change survives reboots but is **per-user** (only affects the user whose session is active when ADB runs, typically user 0).
+- If another picker app is installed (e.g. a third-party file manager with a DocumentsProvider), Android may show a chooser. Install only one provider if you want zero prompts.
+
+---
+
 ## About the original app
 
 Material Files is an open-source Material Design file manager for Android 6.0+:

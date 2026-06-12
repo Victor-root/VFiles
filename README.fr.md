@@ -47,6 +47,38 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Toutes les chaînes propres au fork traduites en **31 langues**.
 - Identifiant d'application changé en `fr.vroot.android.files`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
 
+## Faire de Material Files le sélecteur de fichiers par défaut du système
+
+Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **Google DocumentsUI** (`com.google.android.documentsui`), même si Material Files est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers Material Files comme sélecteur pour toutes les apps de l'appareil — sans root, uniquement via ADB (débogage USB).
+
+### Désactiver (faire de Material Files le sélecteur par défaut)
+
+```sh
+# Désactiver l'application DocumentsUI principale
+adb shell pm disable-user --user 0 com.google.android.documentsui
+
+# Désactiver son module overlay (présent sur certaines ROM — ignorer l'erreur s'il est absent)
+adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
+```
+
+Après ces commandes, toute application qui ouvre un sélecteur de fichier ou de dossier utilisera Material Files.
+
+### Réactiver (remettre le sélecteur Google)
+
+```sh
+adb shell pm enable com.google.android.documentsui
+adb shell pm enable com.google.android.overlay.modules.documentsui
+```
+
+### Notes
+
+- **Sans root** — `pm disable-user --user 0` s'exécute via une connexion ADB standard (débogage USB).
+- Testé sur **LineageOS** et d'autres ROM basées sur AOSP. Sur les ROM constructeur stock, le nom du module overlay peut différer ou être absent ; la commande `pm disable-user` sur le paquet principal est suffisante dans ce cas.
+- Le changement survit aux redémarrages, mais est **par utilisateur** (affecte uniquement l'utilisateur actif lors de l'exécution ADB, en général l'utilisateur 0).
+- Si une autre application avec un DocumentsProvider est installée, Android peut afficher un sélecteur. N'installez qu'un seul fournisseur si vous voulez éviter toute invite.
+
+---
+
 ## À propos de l'application d'origine
 
 Material Files est un gestionnaire de fichiers Material Design open source pour Android 6.0+ :
