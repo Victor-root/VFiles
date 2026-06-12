@@ -85,7 +85,6 @@ import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.file.extension
-import me.zhanghai.android.files.file.documentUri
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.file.treeDocumentUri
 import me.zhanghai.android.files.file.isApk
@@ -1044,40 +1043,73 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
     }
 
     private fun pickPaths(paths: LinkedHashSet<Path>) {
-        val intent = Intent().apply {
-            val pickOptions = viewModel.pickOptions!!
-            if (paths.size == 1) {
-                val path = paths.single()
-                // Return Storage Access Framework URIs backed by FileSystemDocumentsProvider so the
-                // grant is persistable: a tree URI for directories and a document URI for files. A
-                // file being created may not exist yet, so it keeps using the FileProvider URI.
-                data = when (pickOptions.mode) {
-                    PickOptions.Mode.OPEN_DIRECTORY -> path.treeDocumentUri
-                    PickOptions.Mode.OPEN_FILE -> path.documentUri
-                    PickOptions.Mode.CREATE_FILE -> path.fileProviderUri
+        val pickOptions = viewModel.pickOptions!!
+        val activity = requireActivity()
+        // Resolve each selected path to the URI handed back to the caller. Files are shared through
+        // the (private) FileProvider - the long-proven path that also works for SMB/FTP/archives;
+        // only ACTION_OPEN_DOCUMENT_TREE needs a SAF tree URI, which must come from
+        // FileSystemDocumentsProvider.
+        val singlePath = paths.singleOrNull()
+        val uris = if (singlePath != null) {
+            listOf(
+                if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
+                    singlePath.treeDocumentUri
+                } else {
+                    singlePath.fileProviderUri
                 }
-                extraPath = path
+            )
+        } else {
+            paths.map { it.fileProviderUri }
+        }
+        var flags =
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+        if (!pickOptions.readOnly) {
+            flags = flags or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        }
+        if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
+            flags = flags or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
+        }
+        val mimeTypes = pickOptions.mimeTypes.map { it.value }
+        val intent = Intent().apply {
+            if (singlePath != null) {
+                data = uris.single()
+                extraPath = singlePath
+                // Also carry the grant through ClipData, the channel some callers read instead of
+                // the intent flags.
+                if (mimeTypes.isNotEmpty()) {
+                    clipData = ClipData::class.create(null, mimeTypes, listOf(ClipData.Item(data!!)))
+                }
             } else {
-                val mimeTypes = pickOptions.mimeTypes.map { it.value }
-                val items = paths.map { ClipData.Item(it.documentUri) }
-                clipData = ClipData::class.create(null, mimeTypes, items)
+                clipData = ClipData::class.create(null, mimeTypes, uris.map { ClipData.Item(it) })
                 extraPathList = paths.toList()
-            }
-            var flags =
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                    Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-            if (!pickOptions.readOnly) {
-                flags = flags or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            }
-            if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
-                flags = flags or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
             }
             addFlags(flags)
         }
-        requireActivity().run {
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+        // Belt-and-suspenders: besides the grant flags on the result intent, grant the URI(s) to the
+        // calling package explicitly. The implicit activity-result grant is tied to the lifetime of
+        // the result-receiving activity, so a caller that reads the URI later or from another
+        // component can hit "requires the provider be exported, or grantUriPermission()". An
+        // explicit grant is recorded in our own UriGrantsManager and stays valid until revoked or
+        // reboot, regardless of the caller's lifecycle, while keeping the provider private
+        // (exported=false).
+        val callingPackage = activity.callingPackage
+        if (callingPackage != null) {
+            val grantFlags = flags and (
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                    Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
+                )
+            for (uri in uris) {
+                try {
+                    activity.grantUriPermission(callingPackage, uri, grantFlags)
+                } catch (e: SecurityException) {
+                    e.printStackTrace()
+                }
+            }
         }
+        activity.setResult(Activity.RESULT_OK, intent)
+        activity.finish()
     }
 
     private fun onSelectedFilesChanged(files: FileItemSet) {
