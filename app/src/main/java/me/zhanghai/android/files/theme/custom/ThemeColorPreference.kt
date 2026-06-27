@@ -48,7 +48,7 @@ class ThemeColorPreference : BaseColorPreference {
         get() {
             var initialValue = initialValue
             if (initialValue == null) {
-                initialValue = context.getColorCompat(stringValue.toThemeColor().resourceId)
+                initialValue = stringValue.toThemeColor().displayColor()
                 this.initialValue = initialValue
             }
             return initialValue
@@ -62,7 +62,7 @@ class ThemeColorPreference : BaseColorPreference {
     private lateinit var defaultStringValue: String
     override val defaultValue: Int
         @ColorInt
-        get() = context.getColorCompat(defaultStringValue.toThemeColor().resourceId)
+        get() = defaultStringValue.toThemeColor().displayColor()
 
     override var entryValues: IntArray
         private set
@@ -71,13 +71,25 @@ class ThemeColorPreference : BaseColorPreference {
     @get:ColorInt
     override val leadingDynamicColor: Int?
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            context.getColorCompat(ThemeColor.DYNAMIC.resourceId)
+            ThemeColor.DYNAMIC.displayColor()
         } else {
             null
         }
 
     private fun String.toThemeColor(): ThemeColor =
         ThemeColor.entries.getOrElse(toInt()) { ThemeColor.entries[0] }
+
+    // The swatch color shown for a theme color. The "wallpaper" (dynamic) entry reflects the real
+    // wallpaper color instead of the system accent, so it stays correct on OEM skins whose accent
+    // does not follow the wallpaper; it falls back to the resource (system accent) when the
+    // wallpaper color can't be read.
+    @ColorInt
+    private fun ThemeColor.displayColor(): Int =
+        if (this == ThemeColor.DYNAMIC) {
+            context.wallpaperAccentColor() ?: context.getColorCompat(resourceId)
+        } else {
+            context.getColorCompat(resourceId)
+        }
 
     constructor(context: Context) : super(context)
 
@@ -95,8 +107,7 @@ class ThemeColorPreference : BaseColorPreference {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        val context = context
-        entryValues = entryThemeColors.map { context.getColorCompat(it.resourceId) }.toIntArray()
+        entryValues = entryThemeColors.map { it.displayColor() }.toIntArray()
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any? =

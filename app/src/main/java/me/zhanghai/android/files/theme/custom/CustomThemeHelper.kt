@@ -11,6 +11,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.DynamicColorsOptions
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.compat.recreateCompat
 import me.zhanghai.android.files.compat.setThemeCompat
@@ -42,6 +44,25 @@ object CustomThemeHelper {
         activityBaseThemes[activity] = baseThemeRes
         val customThemeRes = getCustomThemeRes(baseThemeRes, activity)
         activity.setThemeCompat(customThemeRes)
+        applyWallpaperDynamicColors(activity)
+    }
+
+    // When the "wallpaper" (dynamic) color is selected with Material Design 3, the base theme would
+    // otherwise take its colors from the system accent (@android:color/system_accent*). On OEM skins
+    // (e.g. ColorOS) that accent is a fixed value that ignores the wallpaper, so we instead seed a
+    // content-based Material 3 palette from the real wallpaper color and apply it as an overlay,
+    // overriding the system accent. Falls back to the base theme's system-accent colors when the
+    // wallpaper color can't be read (older API, or the read failed).
+    private fun applyWallpaperDynamicColors(activity: Activity) {
+        if (Settings.THEME_COLOR.valueCompat != ThemeColor.DYNAMIC
+            || !Settings.MATERIAL_DESIGN_3.valueCompat) {
+            return
+        }
+        val seedColor = activity.wallpaperAccentColor() ?: return
+        val options = DynamicColorsOptions.Builder()
+            .setContentBasedSource(seedColor)
+            .build()
+        DynamicColors.applyToActivityIfAvailable(activity, options)
     }
 
     fun sync() {
