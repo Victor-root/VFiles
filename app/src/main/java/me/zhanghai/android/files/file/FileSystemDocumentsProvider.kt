@@ -8,6 +8,7 @@ package me.zhanghai.android.files.file
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
+import android.os.Binder
 import android.os.CancellationSignal
 import android.os.ParcelFileDescriptor
 import android.os.StrictMode
@@ -136,8 +137,20 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         // Reuse FileProvider, which already opens any Path - a real file descriptor for local files
         // and a seekable proxy descriptor (via StorageManager) for remote and archive paths.
         val uri = documentId.toPath().fileProviderUri
-        return context!!.contentResolver.openFileDescriptor(uri, mode, signal)
-            ?: throw FileNotFoundException(documentId)
+        // The framework already enforced the caller's SAF grant on this document (a tree or single
+        // grant) before dispatching here. We now open our own *non-exported* FileProvider on the
+        // caller's behalf, and that must run under our own identity: the binder calling identity is
+        // still the requesting app, which holds no grant on the private file_provider URI - a
+        // document reached through a tree grant (e.g. one created with createDocument) is never
+        // handed one - so FileProvider would reject it with a SecurityException. Clearing the
+        // calling identity makes us, the provider's owner, the caller.
+        val token = Binder.clearCallingIdentity()
+        return try {
+            context!!.contentResolver.openFileDescriptor(uri, mode, signal)
+                ?: throw FileNotFoundException(documentId)
+        } finally {
+            Binder.restoreCallingIdentity(token)
+        }
     }
 
     override fun createDocument(
