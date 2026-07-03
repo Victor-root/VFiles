@@ -84,7 +84,10 @@ import me.zhanghai.android.files.databinding.FileListFragmentSpeedDialIncludeBin
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
+import me.zhanghai.android.files.file.canActAsExternalStoragePicker
 import me.zhanghai.android.files.file.extension
+import me.zhanghai.android.files.file.externalStorageDocumentUriOrNull
+import me.zhanghai.android.files.file.externalStorageTreeUriOrNull
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.file.treeDocumentUri
 import me.zhanghai.android.files.file.isApk
@@ -1050,16 +1053,36 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         // only ACTION_OPEN_DOCUMENT_TREE needs a SAF tree URI, which must come from
         // FileSystemDocumentsProvider.
         val singlePath = paths.singleOrNull()
-        val uris = if (singlePath != null) {
-            listOf(
-                if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
-                    singlePath.treeDocumentUri
-                } else {
-                    singlePath.fileProviderUri
+        // When Material Files is the platform document picker (systemPicker builds signed with the
+        // platform key, holding MANAGE_DOCUMENTS), hand back the same
+        // com.android.externalstorage.documents URIs that DocumentsUI would, so apps that require
+        // ExternalStorageProvider URIs accept the result and the real I/O goes through the genuine
+        // ExternalStorageProvider. Everything this doesn't cover - the whole standard build (the
+        // permission is never held there), remote backends, unmounted volumes, Android/data|obb, and
+        // CREATE_FILE (ESP only serves an existing document; the file is created lazily on first
+        // write through our FileProvider) - falls back to our own provider URIs, unchanged. See
+        // ExternalStoragePickerUri.kt.
+        val canUseExternalStorage = activity.canActAsExternalStoragePicker()
+        fun pickUriForPath(path: Path): Uri {
+            if (canUseExternalStorage) {
+                when (pickOptions.mode) {
+                    PickOptions.Mode.OPEN_DIRECTORY ->
+                        path.externalStorageTreeUriOrNull()?.let { return it }
+                    PickOptions.Mode.OPEN_FILE ->
+                        path.externalStorageDocumentUriOrNull()?.let { return it }
+                    PickOptions.Mode.CREATE_FILE -> {}
                 }
-            )
+            }
+            return if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
+                path.treeDocumentUri
+            } else {
+                path.fileProviderUri
+            }
+        }
+        val uris = if (singlePath != null) {
+            listOf(pickUriForPath(singlePath))
         } else {
-            paths.map { it.fileProviderUri }
+            paths.map { pickUriForPath(it) }
         }
         var flags =
             Intent.FLAG_GRANT_READ_URI_PERMISSION or

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2024 Hai Zhang <dreaming.in.code.zh@gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<!--
+  ~ systemPicker flavor overlay (see docs/systempicker-integration.md).
+  ~
+  ~ Adds MANAGE_DOCUMENTS so a platform-signed build can hand back real
+  ~ com.android.externalstorage.documents URIs, exactly like DocumentsUI, and thereby serve as a
+  ~ drop-in system document picker. MANAGE_DOCUMENTS is a signature permission, so it is only
+  ~ actually granted when this build is signed with the ROM's platform key.
+  ~
+  ~ This overlay is merged only into the systemPicker variant; the standard build never declares
+  ~ this permission. It intentionally adds nothing else - the SAF intent-filters are already in the
+  ~ main manifest, and the runtime code is gated on holding the permission.
+  -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+</manifest>

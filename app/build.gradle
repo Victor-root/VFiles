@@ -93,6 +93,28 @@ android {
     }
 }
 
+// Opt-in "systemPicker" flavor for ROM integrators (see docs/systempicker-integration.md).
+//
+// Enabled only when the build is invoked with -PsystemPicker; without that property NO product
+// flavor is registered, so the standard build is completely unchanged - same "assembleRelease"
+// task, same output directory, same merged manifest (no MANAGE_DOCUMENTS), same BuildConfig. The
+// only delta this file adds to a standard build is this if-block, which does not execute.
+//
+// The flavor's sole build-time effect is merging app/src/systemPicker/AndroidManifest.xml (which
+// adds the MANAGE_DOCUMENTS permission). The URI-emission code lives in the main source set and is
+// gated at runtime on actually holding that permission, so it stays inert unless the flavor build
+// is signed with the platform key.
+if (project.hasProperty('systemPicker')) {
+    android {
+        flavorDimensions 'documents'
+        productFlavors {
+            systemPicker {
+                dimension 'documents'
+            }
+        }
+    }
+}
+
 // Always name the assembled APK "MaterialFiles-v<versionName>.apk" so the file name carries the
 // current version. Uses AGP's new variant API (the legacy applicationVariants was removed in newer
 // AGP). The in-app updater reads the version from the GitHub release tag, so this mainly keeps
