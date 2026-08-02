@@ -3,6 +3,18 @@
  * All Rights Reserved.
  */
 
+// Uses the raw android.view.WindowInsets systemWindowInset*/replaceSystemWindowInsets()/
+// consumeSystemWindowInsets() API throughout its drag/measure/layout logic, tightly coupled with
+// the same pattern in PersistentDrawerLayout, CoordinatorScrollingFrameLayout,
+// CoordinatorScrollingLinearLayout, NavigationRecyclerView, FitsSystemWindowsAppBarLayout and
+// ScrollingViewOnApplyWindowInsetsListener. Migrating to WindowInsetsCompat's Insets-per-type model
+// means deciding, and getting right, which inset type each of these interacting views should react
+// to and how "consuming" behaves under the API 30+ dispatch model, which cannot be verified without
+// running on real devices across notch/gesture-nav/RTL/tablet configurations. Left as-is rather than
+// risk a visual regression in the bar drag animation or window inset padding that cannot be caught
+// by reading the code.
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.ui
 
 import android.content.Context

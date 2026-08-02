@@ -3,6 +3,13 @@
  * All Rights Reserved.
  */
 
+// Extends FitsSystemWindowsAppBarLayout, part of the same interacting raw-WindowInsets subsystem
+// (see the comment there). window.statusBarColor/navigationBarColor are additionally deprecated in
+// favor of edge-to-edge, which Android 15+ enforces regardless: a real fix would mean redrawing this
+// app bar's content behind the system bars using WindowInsetsCompat padding, not a mechanical
+// substitution, and isn't verifiable without a real device. Left as-is.
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.ui
 
 import android.content.Context

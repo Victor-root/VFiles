@@ -3,6 +3,10 @@
  * All Rights Reserved.
  */
 
+// See the comment on PersistentBarLayout.kt: part of the same interacting raw-WindowInsets
+// subsystem, left as-is rather than risk an unverifiable visual regression.
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.ui
 
 import android.annotation.SuppressLint

@@ -3,6 +3,13 @@
  * All Rights Reserved.
  */
 
+// window.statusBarColor is deprecated in favor of edge-to-edge, which Android 15+ enforces
+// regardless: a real fix means redrawing this screen's content behind the system bars using
+// WindowInsetsCompat padding (it already partly does, via Insetter, for the app bar - see
+// applySystemWindowInsetsToPadding below), not a mechanical substitution, and isn't verifiable
+// without a real device. Left as-is.
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.viewer.image
 
 import android.content.Intent

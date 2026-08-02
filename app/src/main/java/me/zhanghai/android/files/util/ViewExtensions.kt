@@ -80,6 +80,10 @@ fun <T : View> View.findViewByClass(clazz: Class<T>): T? {
 val View.isLayoutDirectionRtl: Boolean
     get() = layoutDirection == View.LAYOUT_DIRECTION_RTL
 
+// Used by PersistentBarLayout/CoordinatorScrollingFrameLayout (see the comment on
+// ui/PersistentBarLayout.kt): part of the same interacting raw-WindowInsets subsystem, left as-is
+// rather than risk an unverifiable visual regression.
+@Suppress("DEPRECATION")
 var View.layoutInStatusBar: Boolean
     get() = systemUiVisibility.hasBits(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     set(value) {
@@ -91,6 +95,7 @@ var View.layoutInStatusBar: Boolean
         }
     }
 
+@Suppress("DEPRECATION")
 var View.layoutInNavigation: Boolean
     get() = systemUiVisibility.hasBits(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)
     set(value) {

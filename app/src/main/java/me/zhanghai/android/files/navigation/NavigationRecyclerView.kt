@@ -3,6 +3,11 @@
  * All Rights Reserved.
  */
 
+// See the comment on ui/PersistentBarLayout.kt: part of the same interacting raw-WindowInsets
+// subsystem (inset padding tied to the status-bar-transparency-driven scrim draw() here), left
+// as-is rather than risk an unverifiable visual regression.
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.navigation
 
 import android.content.Context
