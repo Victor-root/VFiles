@@ -1,6 +1,6 @@
 # Privacy Policy
 
-This build of Material Files (`fr.vroot.android.files`) does **not** collect,
+This build of Material Files (`fr.vroot.vfiles`) does **not** collect,
 transmit, or share any personal information.
 
 - **No analytics.** There is no Firebase/Google Analytics or any other
@@ -22,4 +22,4 @@ The only network connections the app makes are:
 
 ## Contact
 
-Questions about this policy: https://github.com/Victor-root/MaterialFiles
+Questions about this policy: https://github.com/Victor-root/VFiles

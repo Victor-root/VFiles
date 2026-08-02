@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Αρχεία Υλικού</string>
-
     <string name="close">Κλείσιμο</string>
     <string name="copy">Αντιγραφή</string>
     <string name="cut">Αποκοπή</string>

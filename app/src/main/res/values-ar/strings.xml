@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">ملفات متيريال</string>
-
     <string name="close">غلق</string>
     <string name="copy">نسخ</string>
     <string name="cut">قص</string>

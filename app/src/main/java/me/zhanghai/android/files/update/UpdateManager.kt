@@ -31,7 +31,7 @@ import me.zhanghai.android.files.util.valueCompat
  */
 object UpdateManager {
     private const val TAG = "MaterialFiles-Updater"
-    private const val GITHUB_REPO = "Victor-root/MaterialFiles"
+    private const val GITHUB_REPO = "Victor-root/VFiles"
 
     // Twelve hours: short enough that a freshly published release is noticed within the same day,
     // long enough to never approach GitHub's anonymous rate limit.

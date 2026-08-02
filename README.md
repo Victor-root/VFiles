@@ -2,7 +2,7 @@
 
 **English** · [Français](README.fr.md)
 
-[![Latest release](https://img.shields.io/github/v/release/Victor-root/MaterialFiles)](https://github.com/Victor-root/MaterialFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/MaterialFiles?color=blue)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
 
 A personal, improved fork of **[Material Files](https://github.com/zhanghai/MaterialFiles)** by Hai Zhang, an open-source Material Design file manager for Android.
 
@@ -51,7 +51,7 @@ The original repository remains the reference; the sections below describe **onl
 - Fixed a crash on tablets in landscape, and the status/navigation bars are now coloured to match the app bar.
 - Back exits at the root instead of leaving the app stuck, and long toolbar titles now marquee-scroll.
 - All fork-specific strings translated into **31 languages**.
-- App ID changed to `fr.vroot.android.files` so it installs alongside the Play/F-Droid build rather than conflicting with it.
+- App ID changed to `fr.vroot.vfiles` so it installs alongside the Play/F-Droid build rather than conflicting with it.
 
 ## 🗂️ Making Material Files the default system file picker
 

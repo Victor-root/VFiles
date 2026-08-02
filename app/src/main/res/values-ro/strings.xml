@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">Închide</string>
     <string name="copy">Copiază</string>
     <string name="cut">Decupează</string>

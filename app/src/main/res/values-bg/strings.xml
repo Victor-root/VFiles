@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">Затваряне</string>
     <string name="copy">Копиране</string>
     <string name="cut">Изрязване</string>

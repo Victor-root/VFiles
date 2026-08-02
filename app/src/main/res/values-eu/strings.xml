@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">Itxi</string>
     <string name="copy">Kopiatu</string>
     <string name="cut">Moztu</string>

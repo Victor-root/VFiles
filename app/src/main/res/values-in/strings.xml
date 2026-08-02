@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">Tutup</string>
     <string name="copy">Salin</string>
     <string name="cut">Potong</string>

@@ -9,8 +9,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity">
 
-    <string name="app_name">Material Файлы</string>
-
     <string name="close">Закрыть</string>
     <string name="copy">Копировать</string>
     <string name="cut">Вырезать</string>

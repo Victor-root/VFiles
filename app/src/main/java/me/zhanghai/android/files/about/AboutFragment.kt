@@ -114,7 +114,7 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
-        private val GITHUB_URI = Uri.parse("https://github.com/Victor-root/MaterialFiles")
+        private val GITHUB_URI = Uri.parse("https://github.com/Victor-root/VFiles")
         private val AUTHOR_RESUME_URI = Uri.parse("https://github.com/Victor-root")
         private val AUTHOR_GITHUB_URI = Uri.parse("https://github.com/Victor-root")
     }

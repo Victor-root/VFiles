@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">סגירה</string>
     <string name="copy">העתקה</string>
     <string name="cut">גזירה</string>

@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material-bestanden</string>
-
     <string name="close">Sluiten</string>
     <string name="copy">Kopiëren</string>
     <string name="cut">Knippen</string>

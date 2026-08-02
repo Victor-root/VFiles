@@ -9,8 +9,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity">
 
-    <string name="app_name">Material Failai</string>
-
     <string name="close">Uždaryti</string>
     <string name="copy">Kopijuoti</string>
     <string name="cut">Iškirpti</string>

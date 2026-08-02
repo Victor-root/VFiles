@@ -2,7 +2,7 @@
 
 [English](README.md) · **Français**
 
-[![Dernière version](https://img.shields.io/github/v/release/Victor-root/MaterialFiles)](https://github.com/Victor-root/MaterialFiles/releases) [![Licence : GPL v3](https://img.shields.io/github/license/Victor-root/MaterialFiles?color=blue)](LICENSE)
+[![Dernière version](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![Licence : GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
 
 Un fork personnel et amélioré de **[Material Files](https://github.com/zhanghai/MaterialFiles)** de Hai Zhang, un gestionnaire de fichiers Material Design open source pour Android.
 
@@ -51,7 +51,7 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Correction d'un plantage sur tablette en mode paysage, et les barres de statut/navigation sont désormais colorées pour correspondre à la barre d'application.
 - Retour arrière quitte directement à la racine au lieu de rester bloqué, et les titres longs de la barre d'outils défilent désormais.
 - Toutes les chaînes propres au fork traduites en **31 langues**.
-- Identifiant d'application changé en `fr.vroot.android.files`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
+- Identifiant d'application changé en `fr.vroot.vfiles`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
 
 ## 🗂️ Faire de Material Files le sélecteur de fichiers par défaut du système
 

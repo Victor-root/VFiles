@@ -7,8 +7,6 @@
 
 <resources>
 
-    <string name="app_name">Material Files</string>
-
     <string name="close">Đóng</string>
     <string name="copy">Sao chép</string>
     <string name="cut">Cắt</string>
