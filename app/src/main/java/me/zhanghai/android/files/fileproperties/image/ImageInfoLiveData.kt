@@ -6,11 +6,11 @@
 package me.zhanghai.android.files.fileproperties.image
 
 import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.util.Size
 import androidx.exifinterface.media.ExifInterface
 import com.caverock.androidsvg.SVG
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.fileproperties.PathObserverLiveData
 import me.zhanghai.android.files.provider.common.getLastModifiedTime
@@ -35,7 +35,7 @@ class ImageInfoLiveData(
 
     override fun loadValue() {
         value = Loading(value?.value)
-        AsyncTask.THREAD_POOL_EXECUTOR.execute {
+        backgroundExecutor.execute {
             val value = try {
                 val imageInfo = when (mimeType) {
                     MimeType.IMAGE_SVG_XML -> {

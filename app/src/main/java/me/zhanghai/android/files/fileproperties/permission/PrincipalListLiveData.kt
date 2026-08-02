@@ -6,8 +6,8 @@
 package me.zhanghai.android.files.fileproperties.permission
 
 import android.content.pm.ApplicationInfo
-import android.os.AsyncTask
 import androidx.lifecycle.MutableLiveData
+import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
@@ -22,7 +22,7 @@ abstract class PrincipalListLiveData : MutableLiveData<Stateful<List<PrincipalIt
 
     private fun loadValue() {
         value = Loading(value?.value)
-        AsyncTask.THREAD_POOL_EXECUTOR.execute {
+        backgroundExecutor.execute {
             val value = try {
                 val principals = androidPrincipals
                 val androidIds = principals.mapTo(mutableSetOf()) { it.id }

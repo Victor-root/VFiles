@@ -6,9 +6,9 @@
 package me.zhanghai.android.files.fileproperties.apk
 
 import android.content.pm.PackageManager
-import android.os.AsyncTask
 import android.os.Build
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.fileproperties.PathObserverLiveData
 import me.zhanghai.android.files.util.Failure
@@ -29,7 +29,7 @@ class ApkInfoLiveData(path: Path) : PathObserverLiveData<Stateful<ApkInfo>>(path
 
     override fun loadValue() {
         value = Loading(value?.value)
-        AsyncTask.THREAD_POOL_EXECUTOR.execute {
+        backgroundExecutor.execute {
             val value = try {
                 // We must always pass in PackageManager.GET_SIGNATURES for
                 // PackageManager.getPackageArchiveInfo() to call

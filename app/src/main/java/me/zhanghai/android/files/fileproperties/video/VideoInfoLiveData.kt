@@ -6,10 +6,10 @@
 package me.zhanghai.android.files.fileproperties.video
 
 import android.media.MediaMetadataRetriever
-import android.os.AsyncTask
 import android.util.Size
 import java.time.Duration
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.compat.use
 import me.zhanghai.android.files.fileproperties.PathObserverLiveData
 import me.zhanghai.android.files.fileproperties.date
@@ -30,7 +30,7 @@ class VideoInfoLiveData(path: Path) : PathObserverLiveData<Stateful<VideoInfo>>(
 
     override fun loadValue() {
         value = Loading(value?.value)
-        AsyncTask.THREAD_POOL_EXECUTOR.execute {
+        backgroundExecutor.execute {
             val value = try {
                 val videoInfo = MediaMetadataRetriever().use { retriever ->
                     retriever.setDataSource(path)

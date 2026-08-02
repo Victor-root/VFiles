@@ -5,8 +5,8 @@
 
 package me.zhanghai.android.files.filelist
 
-import android.os.AsyncTask
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.loadFileItem
 import me.zhanghai.android.files.provider.common.search
@@ -17,7 +17,6 @@ import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.valueCompat
 import java.io.IOException
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
 class SearchFileListLiveData(
@@ -33,7 +32,7 @@ class SearchFileListLiveData(
     fun loadValue() {
         future?.cancel(true)
         value = Loading(emptyList())
-        future = (AsyncTask.THREAD_POOL_EXECUTOR as ExecutorService).submit<Unit> {
+        future = backgroundExecutor.submit<Unit> {
             val fileList = mutableListOf<FileItem>()
             try {
                 path.search(query, INTERVAL_MILLIS) { paths: List<Path> ->

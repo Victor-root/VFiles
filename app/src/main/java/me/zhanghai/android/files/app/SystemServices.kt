@@ -19,8 +19,23 @@ import me.zhanghai.android.files.compat.getSystemServiceCompat
 import me.zhanghai.android.files.compat.mainExecutorCompat
 import okhttp3.OkHttpClient
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 val appClassLoader = AppProvider::class.java.classLoader
+
+// Same sizing android.os.AsyncTask.THREAD_POOL_EXECUTOR used (a shared pool for short, bursty
+// background work), without depending on that deprecated field.
+val backgroundExecutor: ExecutorService by lazy {
+    val cpuCount = Runtime.getRuntime().availableProcessors()
+    val corePoolSize = (cpuCount - 1).coerceIn(2, 4)
+    val maximumPoolSize = cpuCount * 2 + 1
+    ThreadPoolExecutor(
+        corePoolSize, maximumPoolSize, 30L, TimeUnit.SECONDS, LinkedBlockingQueue(128)
+    )
+}
 
 val clipboardManager: ClipboardManager by lazy {
     application.getSystemServiceCompat(ClipboardManager::class.java)
