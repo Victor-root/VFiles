@@ -168,8 +168,15 @@ abstract class AbstractLocalCursor : Cursor {
 
     override fun isNull(columnIndex: Int): Boolean = getObjectChecked(columnIndex) == null
 
+    // Cursor.deactivate()/requery() are themselves deprecated on the platform interface this class
+    // implements; overriding them is mandatory, not optional, since Cursor declares them abstract.
+    // @Suppress("DEPRECATION") does not cover this specific "override not itself marked deprecated"
+    // diagnostic, so this follows the compiler's own other suggested fix instead. Neither is called
+    // anywhere in this codebase.
+    @Deprecated("Deprecated in Cursor")
     override fun deactivate() {}
 
+    @Deprecated("Deprecated in Cursor")
     override fun requery(): Boolean = true
 
     override fun close() {

@@ -41,7 +41,7 @@ class AddExternalStorageShortcutFragment : Fragment() {
 
     @Parcelize
     class Args(
-        @StringRes val customNameRes: Int?,
+        @param:StringRes val customNameRes: Int?,
         val uri: ExternalStorageUri
     ) : ParcelableArgs
 }

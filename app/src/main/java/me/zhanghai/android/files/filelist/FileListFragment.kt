@@ -232,6 +232,9 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             .also { binding = it }
             .root
 
+    // window.statusBarColor below is part of the same status-bar-color-sync subsystem documented in
+    // ui/PersistentBarLayout.kt/CoordinatorAppBarLayout.kt: not verifiable here.
+    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

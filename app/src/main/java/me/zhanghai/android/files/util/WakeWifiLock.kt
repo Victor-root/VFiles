@@ -13,6 +13,10 @@ import me.zhanghai.android.files.app.wifiManager
 class WakeWifiLock(tag: String) {
     private val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, tag)
         .apply { setReferenceCounted(false) }
+    // Keeps the FTP server reachable while the screen is off. There is no direct replacement
+    // constant for this exact "stay at full performance" semantic, and changing WiFi lock behavior
+    // risks the FTP server dropping its connection when idle, which is not verifiable here.
+    @Suppress("DEPRECATION")
     private val wifiLock =
         wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, tag)
             .apply { setReferenceCounted(false) }

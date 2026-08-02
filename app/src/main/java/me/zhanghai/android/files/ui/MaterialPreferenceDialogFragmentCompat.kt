@@ -199,7 +199,7 @@ abstract class MaterialPreferenceDialogFragmentCompat : AppCompatDialogFragment(
         val positiveButtonText: CharSequence?,
         val negativeButtonText: CharSequence?,
         val dialogMessage: CharSequence?,
-        @LayoutRes val dialogLayoutRes: Int,
+        @param:LayoutRes val dialogLayoutRes: Int,
         val dialogIcon: Bitmap?
     ) : ParcelableState
 }
