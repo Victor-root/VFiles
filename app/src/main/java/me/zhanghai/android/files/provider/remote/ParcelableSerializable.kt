@@ -13,6 +13,9 @@ class ParcelableSerializable(private val value: Serializable) : Parcelable {
     @Suppress("UNCHECKED_CAST")
     fun <T> value(): T = value as T
 
+    // The wrapped value is Serializable, so there is no single Class<T> to pass the API-33+ typed
+    // replacement.
+    @Suppress("DEPRECATION")
     private constructor(source: Parcel) : this(source.readSerializable()!!)
 
     override fun describeContents(): Int = 0

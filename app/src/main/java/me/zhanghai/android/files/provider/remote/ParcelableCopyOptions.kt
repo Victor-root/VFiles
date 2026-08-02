@@ -13,6 +13,9 @@ import me.zhanghai.android.files.compat.readSerializableCompat
 import java.io.Serializable
 
 class ParcelableCopyOptions(val value: Array<out CopyOption>) : Parcelable {
+    // CopyOption is an interface with several implementations, so there is no single Class<T> to
+    // pass the API-33+ typed replacement.
+    @Suppress("DEPRECATION")
     private constructor(source: Parcel) : this(
         Array(source.readInt()) {
             when (val type = source.readInt()) {

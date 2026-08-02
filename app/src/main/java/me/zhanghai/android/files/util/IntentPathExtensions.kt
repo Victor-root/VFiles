@@ -115,8 +115,9 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
 private const val EXTRA_PATH_URI_LIST = "${BuildConfig.APPLICATION_ID}.extra.PATH_URI_LIST"
 
 var Intent.extraPathList: List<Path>
+    // Generic: no Class<T> available at this call site for the API-33+ typed replacement.
+    @Suppress("UNCHECKED_CAST", "DEPRECATION")
     get() {
-        @Suppress("UNCHECKED_CAST")
         val extraPathUris = (getSerializableExtra(EXTRA_PATH_URI_LIST) as List<URI>?)
             ?.takeIfNotEmpty()
         extraPathUris?.let { return it.map { uri -> Paths.get(uri) } }

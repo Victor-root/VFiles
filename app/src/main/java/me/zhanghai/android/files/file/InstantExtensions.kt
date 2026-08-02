@@ -3,6 +3,8 @@
  * All Rights Reserved.
  */
 
+@file:Suppress("DEPRECATION")
+
 package me.zhanghai.android.files.file
 
 import android.content.Context
@@ -14,7 +16,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /* @see com.android.documentsui.base.Shared#formatTime(Context, long) */
-@Suppress("DEPRECATION")
 fun Instant.formatShort(context: Context): String {
     val time = toEpochMilli()
     val then = Time().apply { set(time) }

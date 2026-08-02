@@ -77,16 +77,20 @@ fun KClass<Intent>.createViewAppInMarket(packageName: String): Intent =
 fun KClass<Intent>.createViewLocation(latitude: Float, longitude: Float, label: String): Intent =
     Uri.parse("geo:0,0?q=$latitude,$longitude(${Uri.encode(label)})").createViewIntent()
 
+// Generic: no Class<T> available at these call sites for the API-33+ typed replacements.
+@Suppress("DEPRECATION")
 fun <T : Parcelable> Intent.getParcelableExtraSafe(key: String?): T? {
     setExtrasClassLoader(appClassLoader)
     return getParcelableExtra(key)
 }
 
+@Suppress("DEPRECATION")
 fun Intent.getParcelableArrayExtraSafe(key: String?): Array<Parcelable>? {
     setExtrasClassLoader(appClassLoader)
     return getParcelableArrayExtra(key)
 }
 
+@Suppress("DEPRECATION")
 fun <T : Parcelable?> Intent.getParcelableArrayListExtraSafe(key: String?): ArrayList<T>? {
     setExtrasClassLoader(appClassLoader)
     return getParcelableArrayListExtra(key)

@@ -230,6 +230,9 @@ internal class ArchiveFileSystem(
 
         @JvmField
         val CREATOR = object : Parcelable.Creator<ArchiveFileSystem> {
+            // Path is an interface with many implementations, so there is no single Class<T> to
+            // pass the API-33+ typed replacement.
+            @Suppress("DEPRECATION")
             override fun createFromParcel(source: Parcel): ArchiveFileSystem {
                 val archiveFile = source.readParcelable<Parcelable>(Path::class.java.classLoader)
                     as Path

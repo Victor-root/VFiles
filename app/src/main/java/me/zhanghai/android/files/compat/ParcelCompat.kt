@@ -16,6 +16,9 @@ fun Parcel.writeBooleanCompat(value: Boolean) {
     ParcelCompat.writeBoolean(this, value)
 }
 
+// The pre-Q fallback and the generic classLoader-only overload used here have no way to supply the
+// Class<E> the API-33+ replacement wants, since E is erased at this call site.
+@Suppress("DEPRECATION")
 fun <E : Parcelable?, L : MutableList<E>> Parcel.readParcelableListCompat(
     list: L,
     classLoader: ClassLoader?
@@ -61,5 +64,6 @@ fun <T : Parcelable?> Parcel.writeParcelableListCompat(value: List<T>?, flags: I
     }
 }
 
-@Suppress("UNCHECKED_CAST")
+// Generic: no Class<T> available at this call site for the API-33+ replacement.
+@Suppress("UNCHECKED_CAST", "DEPRECATION")
 fun <T> Parcel.readSerializableCompat(): T? = readSerializable() as T?

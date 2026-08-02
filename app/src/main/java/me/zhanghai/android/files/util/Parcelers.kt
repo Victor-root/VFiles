@@ -21,6 +21,8 @@ object BundleParceler : Parceler<Bundle?> {
 }
 
 object ParcelableParceler : Parceler<Any?> {
+    // Generic: no Class<T> available at this call site for the API-33+ typed replacement.
+    @Suppress("DEPRECATION")
     override fun create(parcel: Parcel): Any? = parcel.readParcelable(appClassLoader)
 
     override fun Any?.write(parcel: Parcel, flags: Int) {

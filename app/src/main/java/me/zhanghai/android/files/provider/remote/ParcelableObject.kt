@@ -12,6 +12,9 @@ class ParcelableObject(val value: Any) : Parcelable {
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> value(): T = value as T
 
+    // The wrapped value is Any, so there is no single Class<T> to pass the API-33+ typed
+    // replacement.
+    @Suppress("DEPRECATION")
     private constructor(source: Parcel) : this(
         source.readParcelable<Parcelable>(ParcelableObject::class.java.classLoader) as Any
     )

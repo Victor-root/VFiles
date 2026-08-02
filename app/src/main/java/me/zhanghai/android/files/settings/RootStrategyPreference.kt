@@ -41,7 +41,7 @@ class RootStrategyPreference : SimpleMenuPreference {
         dialogMessage = context.resources.getQuantityString(
             R.plurals.settings_root_strategy_message_format, jobCount, jobCount
         )
-        setPositiveButtonText(android.R.string.yes)
+        setPositiveButtonText(android.R.string.ok)
         setNegativeButtonText(R.string.maybe_later)
         preferenceManager.showDialog(this)
     }

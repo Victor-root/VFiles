@@ -446,6 +446,7 @@ object DocumentResolver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !isRemoveUnsupported(uri)) {
             removeApi24(uri, parentUri)
         } else {
+            @Suppress("DEPRECATION")
             delete(uri)
         }
     }
