@@ -18,7 +18,7 @@ import me.zhanghai.android.files.file.isVideo
  * "Default apps". [queryMimeType] is the representative MIME used to list candidate apps.
  */
 enum class FileOpenAppCategory(
-    @StringRes val titleRes: Int,
+    @param:StringRes val titleRes: Int,
     val queryMimeType: String,
     val matches: (MimeType) -> Boolean
 ) {

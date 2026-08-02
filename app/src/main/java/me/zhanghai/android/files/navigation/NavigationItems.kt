@@ -586,8 +586,8 @@ private val menuItems: List<NavigationItem>
     )
 
 private abstract class MenuItem(
-    @DrawableRes override val iconRes: Int,
-    @StringRes val titleRes: Int,
+    @param:DrawableRes override val iconRes: Int,
+    @param:StringRes val titleRes: Int,
     override val showBadge: Boolean = false
 ) : NavigationItem() {
     override fun getTitle(context: Context): String = context.getString(titleRes)

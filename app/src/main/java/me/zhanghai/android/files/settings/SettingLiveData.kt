@@ -18,7 +18,7 @@ abstract class SettingLiveData<T>(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
-    @AnyRes private val defaultValueRes: Int
+    @param:AnyRes private val defaultValueRes: Int
 ) : LiveData<T>(), OnSharedPreferenceChangeListener {
     private val sharedPreferences = getSharedPreferences(nameSuffix)
     private val key = getKey(keyRes, keySuffix)

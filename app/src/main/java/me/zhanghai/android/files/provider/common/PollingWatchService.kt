@@ -183,8 +183,8 @@ class PollingWatchService : AbstractWatchService<PollingWatchKey>() {
                     // Ensure that the attributes class has overridden equals().
                     val attributes = it.values.firstOrNull() ?: return@also
                     check(
-                        attributes::class.java.getMethod("equals", Object::class.java)
-                            != Object::class.java.getMethod("equals", Object::class.java)
+                        attributes::class.java.getMethod("equals", Any::class.java)
+                            != Any::class.java.getMethod("equals", Any::class.java)
                     )
                 }
             }

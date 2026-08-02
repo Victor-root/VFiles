@@ -3,6 +3,8 @@
  * All Rights Reserved.
  */
 
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package me.zhanghai.android.files.storage
 
 import android.os.AsyncTask
@@ -10,6 +12,7 @@ import jcifs.context.SingletonContext
 import jcifs.smb.SmbException
 import jcifs.smb.SmbFile
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach

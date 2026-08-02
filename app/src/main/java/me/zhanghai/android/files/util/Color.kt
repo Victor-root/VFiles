@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
 import android.graphics.Color as AndroidColor
 
 @JvmInline
-value class Color(@ColorInt val value: Int)
+value class Color(@param:ColorInt val value: Int)
 
 fun Int.asColor(): Color = Color(this)
 

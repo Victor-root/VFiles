@@ -32,7 +32,7 @@ import java.util.concurrent.CountDownLatch
 
 @Throws(DavException::class, IOException::class)
 fun DavResource.getCompat(accept: String, headers: Headers?): InputStream =
-    get(accept, headers).also { checkStatus(it) }.body!!.byteStream()
+    get(accept, headers).also { checkStatus(it) }.body.byteStream()
 
 @Throws(DavException::class, IOException::class)
 fun DavResource.getRangeCompat(
@@ -57,7 +57,7 @@ fun DavResource.getRangeCompat(
                 throw HttpException(it)
             }
         }
-        .body!!.byteStream()
+        .body.byteStream()
 
 // This doesn't follow redirects since the request body is one-shot anyway.
 @Throws(DavException::class, IOException::class)

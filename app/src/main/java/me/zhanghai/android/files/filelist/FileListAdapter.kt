@@ -349,7 +349,7 @@ class FileListAdapter(
             val hasAppIconBadge = appDirectoryPackageName != null
             isVisible = hasAppIconBadge
             if (hasAppIconBadge) {
-                load(AppIconPackageName(appDirectoryPackageName!!))
+                load(AppIconPackageName(appDirectoryPackageName))
             }
         }
         holder.badgeImage.apply {
@@ -367,7 +367,7 @@ class FileListAdapter(
             val hasBadge = badgeIconRes != null
             isVisible = hasBadge
             if (hasBadge) {
-                setImageResource(badgeIconRes!!)
+                setImageResource(badgeIconRes)
             } else {
                 setImageDrawable(null)
             }
@@ -376,7 +376,7 @@ class FileListAdapter(
         holder.descriptionText?.text = if (isDirectory) {
             null
         } else {
-            val context = holder.descriptionText!!.context
+            val context = holder.descriptionText.context
             val lastModificationTime = attributes.lastModifiedTime().toInstant()
                 .formatShort(context)
             val size = attributes.fileSize.formatHumanReadable(context)

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.zhanghai.android.files.util.layoutInflater
 
 class StaticAdapter(
-    @LayoutRes val layoutRes: Int,
+    @param:LayoutRes val layoutRes: Int,
     val listener: ((Int) -> Unit)? = null
 ) : RecyclerView.Adapter<StaticAdapter.ViewHolder>() {
     init {

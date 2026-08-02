@@ -121,7 +121,6 @@ fun Set<PosixFilePermission>.toMode(): Set<PosixFileModeBit> =
                 PosixFilePermission.OTHERS_READ -> PosixFileModeBit.OTHERS_READ
                 PosixFilePermission.OTHERS_WRITE -> PosixFileModeBit.OTHERS_WRITE
                 PosixFilePermission.OTHERS_EXECUTE -> PosixFileModeBit.OTHERS_EXECUTE
-                else -> throw UnsupportedOperationException(permission.toString())
             }
         }
     }

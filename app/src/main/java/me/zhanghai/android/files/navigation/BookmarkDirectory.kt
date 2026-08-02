@@ -14,6 +14,7 @@ import me.zhanghai.android.files.util.ParcelableParceler
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.util.Random
 
+@ConsistentCopyVisibility
 @Parcelize
 // @see https://youtrack.jetbrains.com/issue/KT-24842
 // @Parcelize throws IllegalAccessError if the primary constructor is private.

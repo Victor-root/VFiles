@@ -13,9 +13,8 @@ import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
 import me.zhanghai.android.foregroundcompat.ForegroundCompat
 
-@Suppress("UNCHECKED_CAST")
 fun <T : View> View.requireViewByIdCompat(@IdRes id: Int): T =
-    ViewCompat.requireViewById(this, id) as T
+    ViewCompat.requireViewById(this, id)
 
 var View.scrollIndicatorsCompat: Int
     get() = ViewCompat.getScrollIndicators(this)

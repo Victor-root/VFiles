@@ -280,21 +280,21 @@ class NavigationListAdapter(
     }
 
     private class ViewAttributes(
-        @Px val itemHorizontalPadding: Int,
-        @Px val itemVerticalPadding: Int,
+        @param:Px val itemHorizontalPadding: Int,
+        @param:Px val itemVerticalPadding: Int,
         val itemBackground: Drawable?,
         val itemForeground: Drawable?,
-        @Px val itemIconSize: Int,
+        @param:Px val itemIconSize: Int,
         val itemIconTint: ColorStateList?,
-        @Px val itemIconPadding: Int,
-        @StyleRes val itemTextAppearance: Int,
+        @param:Px val itemIconPadding: Int,
+        @param:StyleRes val itemTextAppearance: Int,
         val itemTextColor: ColorStateList?,
-        @StyleRes val itemSubtitleTextAppearance: Int,
+        @param:StyleRes val itemSubtitleTextAppearance: Int,
         val itemSubtitleTextColor: ColorStateList?,
-        @Px val itemSubtitleTextSize: Float,
-        @Px val dividerInsetStart: Int,
-        @Px val dividerInsetEnd: Int,
-        @Px val dividerVerticalPadding: Int
+        @param:Px val itemSubtitleTextSize: Float,
+        @param:Px val dividerInsetStart: Int,
+        @param:Px val dividerInsetEnd: Int,
+        @param:Px val dividerVerticalPadding: Int
     )
 
     private enum class ViewType {

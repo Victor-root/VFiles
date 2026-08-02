@@ -52,7 +52,6 @@ fun Array<out CopyOption>.toCopyOptions(): CopyOptions {
                     StandardCopyOption.REPLACE_EXISTING -> replaceExisting = true
                     StandardCopyOption.COPY_ATTRIBUTES -> copyAttributes = true
                     StandardCopyOption.ATOMIC_MOVE -> atomicMove = true
-                    else -> throw UnsupportedOperationException(option.toString())
                 }
             option === LinkOption.NOFOLLOW_LINKS -> noFollowLinks = true
             option is ProgressCopyOption -> {

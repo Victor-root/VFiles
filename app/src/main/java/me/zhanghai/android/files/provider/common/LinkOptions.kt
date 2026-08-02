@@ -22,7 +22,6 @@ fun Array<out LinkOption>.toLinkOptions(): LinkOptions {
     for (option in this) {
         when (option) {
             LinkOption.NOFOLLOW_LINKS -> noFollowLinks = true
-            else -> throw UnsupportedOperationException(option.toString())
         }
     }
     return LinkOptions(noFollowLinks)

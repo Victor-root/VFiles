@@ -3,7 +3,7 @@ package me.zhanghai.android.files.theme.custom
 import androidx.annotation.ColorRes
 import me.zhanghai.android.files.R
 
-enum class ThemeColor(@ColorRes val resourceId: Int) {
+enum class ThemeColor(@param:ColorRes val resourceId: Int) {
     COLOR_PRIMARY(R.color.color_primary),
     MATERIAL_RED(R.color.material_red),
     MATERIAL_PINK(R.color.material_pink),

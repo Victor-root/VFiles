@@ -236,10 +236,7 @@ object DocumentFileSystemProvider : FileSystemProvider(), PathObservableProvider
                 throw e.toFileSystemException(file.toString())
             }
         }
-        // TODO: kotlinc: Type mismatch: inferred type is ParcelFileDescriptor? but
-        //  ParcelFileDescriptor was expected
-        //return FileChannel::class.open(pfd, mode)
-        return FileChannel::class.open(pfd!!, mode)
+        return FileChannel::class.open(pfd, mode)
     }
 
     @Throws(IOException::class)

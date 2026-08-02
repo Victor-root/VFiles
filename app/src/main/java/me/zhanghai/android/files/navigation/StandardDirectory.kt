@@ -9,9 +9,10 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
+@ConsistentCopyVisibility
 data class StandardDirectory internal constructor(
-    @DrawableRes val iconRes: Int,
-    @StringRes private val titleRes: Int,
+    @param:DrawableRes val iconRes: Int,
+    @param:StringRes private val titleRes: Int,
     private val customTitle: String?,
     val relativePath: String,
     val isEnabled: Boolean

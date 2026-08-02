@@ -236,7 +236,6 @@ class LocalLinuxFileSystemProvider(provider: LinuxFileSystemProvider) : FileSyst
         if (path2 !is LinuxPath) {
             return false
         }
-        path2 as? LinuxPath ?: throw ProviderMismatchException(path2.toString())
         val pathBytes = path.toByteString()
         val path2Bytes = path2.toByteString()
         val pathStat = try {

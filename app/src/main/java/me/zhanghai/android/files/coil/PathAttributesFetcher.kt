@@ -76,8 +76,6 @@ class PathAttributesFetcher(
         val isThumbnail = width is Dimension.Pixels && width.px <= 512
             && height is Dimension.Pixels && height.px <= 384
         if (isThumbnail) {
-            width as Dimension.Pixels
-            height as Dimension.Pixels
             if (path.isDocumentPath && attributes.documentSupportsThumbnail) {
                 val thumbnail = runWithCancellationSignal { signal ->
                     try {

@@ -144,9 +144,9 @@ class OnboardingActivity : AppActivity() {
     // ── pages ─────────────────────────────────────────────────────────────────
 
     sealed class OnboardingPage(
-        @DrawableRes val iconRes: Int,
-        @StringRes val titleRes: Int,
-        @StringRes val descriptionRes: Int,
+        @param:DrawableRes val iconRes: Int,
+        @param:StringRes val titleRes: Int,
+        @param:StringRes val descriptionRes: Int,
         val isRequired: Boolean
     ) {
         abstract fun isGranted(context: Context): Boolean

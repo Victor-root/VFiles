@@ -50,7 +50,6 @@ fun Set<OpenOption>.toOpenOptions(): OpenOptions {
                 StandardOpenOption.SPARSE -> sparse = true
                 StandardOpenOption.SYNC -> sync = true
                 StandardOpenOption.DSYNC -> dsync = true
-                else -> throw UnsupportedOperationException(option.toString())
             }
             LinkOption.NOFOLLOW_LINKS -> noFollowLinks = true
             else -> throw UnsupportedOperationException(option.toString())

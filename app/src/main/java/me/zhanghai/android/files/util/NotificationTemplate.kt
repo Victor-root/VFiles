@@ -19,10 +19,10 @@ import me.zhanghai.android.files.compat.getColorCompat
 
 class NotificationTemplate(
     val channelTemplate: NotificationChannelTemplate,
-    @ColorRes val colorRes: Int? = null,
-    @DrawableRes val smallIcon: Int? = null,
-    @StringRes val contentTitleRes: Int? = null,
-    @StringRes val contentTextRes: Int? = null,
+    @param:ColorRes val colorRes: Int? = null,
+    @param:DrawableRes val smallIcon: Int? = null,
+    @param:StringRes val contentTitleRes: Int? = null,
+    @param:StringRes val contentTextRes: Int? = null,
     val ongoing: Boolean? = null,
     val onlyAlertOnce: Boolean? = null,
     val autoCancel: Boolean? = null,
@@ -45,9 +45,9 @@ class NotificationTemplate(
 
 class NotificationChannelTemplate(
     val id: String,
-    @StringRes val nameRes: Int,
+    @param:StringRes val nameRes: Int,
     val importance: Int,
-    @StringRes val descriptionRes: Int? = null,
+    @param:StringRes val descriptionRes: Int? = null,
     val group: String? = null,
     val showBadge: Boolean? = null,
     val sound: Pair<Uri, AudioAttributes>? = null,
