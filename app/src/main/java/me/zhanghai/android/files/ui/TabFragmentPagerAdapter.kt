@@ -9,6 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
+// The replacement, FragmentStateAdapter, is for ViewPager2. This adapter's only caller
+// (FilePropertiesDialogFragment) uses TabLayout.setupWithViewPager(), the classic ViewPager (v1)
+// integration, so migrating this adapter alone would not be enough: it would also mean swapping the
+// underlying ViewPager widget and its TabLayout wiring, a real UI change beyond this warning.
+@Suppress("DEPRECATION")
 class TabFragmentPagerAdapter(
     fragmentManager: FragmentManager,
     private vararg val tabs: Pair<CharSequence?, () -> Fragment>

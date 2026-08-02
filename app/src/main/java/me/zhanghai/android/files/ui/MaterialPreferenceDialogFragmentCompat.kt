@@ -33,6 +33,10 @@ import me.zhanghai.android.files.util.toBitmapDrawable
 abstract class MaterialPreferenceDialogFragmentCompat : AppCompatDialogFragment(),
     DialogInterface.OnClickListener {
 
+    // Mirrors androidx.preference.PreferenceDialogFragmentCompat's own targetFragment-based
+    // contract with DialogPreference.TargetFragment; that AndroidX Preference mechanism, not this
+    // app's own choice, is what requires it.
+    @Suppress("DEPRECATION")
     open val preference: DialogPreference by lazy {
         val fragment = targetFragment
         check(fragment is DialogPreference.TargetFragment) {

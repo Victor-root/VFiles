@@ -179,6 +179,12 @@ fun Fragment.startActivitySafe(intent: Intent, options: Bundle? = null) {
     }
 }
 
+// Used by PathPreference, which implements com.takisoft.preferencex's own
+// PreferenceActivityResultListener/requestCode-based result-dispatch contract; that third-party
+// library's own mechanism is what requires the classic startActivityForResult() here; not this
+// app's own choice, and not swappable to registerForActivityResult() without risking breaking that
+// library's request-code routing.
+@Suppress("DEPRECATION")
 fun Fragment.startActivityForResultSafe(intent: Intent, requestCode: Int, options: Bundle? = null) {
     try {
         startActivityForResult(intent, requestCode, options)

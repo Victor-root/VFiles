@@ -13,6 +13,11 @@ import java.io.IOException
 
 val isGeocoderPresent by lazy { Geocoder.isPresent() }
 
+// The modern replacement is a callback-based overload (API 33+, needing an SDK gate since minSdk
+// is 23) with its own error-reporting shape, not a drop-in swap. This synchronous overload is
+// already off the main thread via Dispatchers.IO below, so it does not block the UI either way. Not
+// verifiable without a real device with GPS-tagged photos/videos to exercise this against.
+@Suppress("DEPRECATION")
 @Throws(IOException::class)
 suspend fun Geocoder.awaitGetFromLocation(
     latitude: Double,

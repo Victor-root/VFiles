@@ -3,6 +3,11 @@
  * All Rights Reserved.
  */
 
+// The *Unsafe functions below deliberately fire a one-shot fade/slide animation on GlobalScope
+// (hence the name): giving them a proper caller-supplied CoroutineScope instead would be a real API
+// change, not a local fix, touching all 15 files that call them throughout the app.
+@file:OptIn(DelicateCoroutinesApi::class)
+
 package me.zhanghai.android.files.util
 
 import android.annotation.SuppressLint
@@ -15,6 +20,7 @@ import androidx.core.view.children
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

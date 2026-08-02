@@ -29,6 +29,12 @@ object FtpServerUrl {
         return "ftp://${if (username != null) "$username@" else ""}$host:$port/"
     }
 
+    // The modern replacement, ConnectivityManager.registerNetworkCallback(), is a different
+    // registration/callback lifecycle entirely (not an IntentFilter/BroadcastReceiver), and this
+    // still works: CONNECTIVITY_ACTION is only restricted for manifest-declared receivers, not one
+    // registered at runtime like this. Not verifiable without a real device to trigger a network
+    // change on.
+    @Suppress("DEPRECATION")
     fun createChangeReceiver(context: Context, onChange: () -> Unit): RuntimeBroadcastReceiver =
         RuntimeBroadcastReceiver(
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION), object : BroadcastReceiver() {

@@ -67,6 +67,11 @@ class FileJobConflictDialogFragment : AppCompatDialogFragment() {
         outState.putState(State(binding.allCheck.isChecked))
     }
 
+    // The replacement means handling WindowInsetsCompat.Type.ime() directly to resize the dialog
+    // around the keyboard, the same category as the WindowInsets subsystem documented in
+    // ui/PersistentBarLayout.kt: not verifiable here, and getting it wrong would mean the keyboard
+    // covering the rename field.
+    @Suppress("DEPRECATION")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val sourceFile = args.sourceFile
         val targetFile = args.targetFile

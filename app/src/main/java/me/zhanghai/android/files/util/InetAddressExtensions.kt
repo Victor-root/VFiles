@@ -12,6 +12,12 @@ import java.net.SocketException
 import java.net.UnknownHostException
 import kotlin.reflect.KClass
 
+// WifiInfo.connectionInfo/ipAddress are deprecated for privacy reasons: on modern Android they
+// return redacted info unless the caller holds a runtime-granted location permission, which this
+// app does not request anywhere. Adding that permission just to keep this working would be a much
+// bigger, unrelated change than a warning cleanup; the NetworkInterface fallback right below already
+// covers the case where this returns nothing.
+@Suppress("DEPRECATION")
 fun KClass<InetAddress>.getLocalAddress(): InetAddress? {
     val wifiInfo = wifiManager.connectionInfo
     if (wifiInfo != null) {

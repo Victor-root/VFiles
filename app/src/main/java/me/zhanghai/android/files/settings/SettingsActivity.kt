@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.settings
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -70,7 +71,14 @@ class SettingsActivity : AppActivity(), OnThemeChangedListener, OnNightModeChang
         finish()
         val intent = SettingsActivity::class.createIntent().putArgs(Args(savedInstanceState))
         startActivitySafe(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         isRestarting = true
     }
 
