@@ -632,11 +632,11 @@
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Enregistrer sous</string>
     <string name="save_as_error">Erreur lors de l\'enregistrement du fichier</string>
-    <string name="save_as_success_format">\"%1$s\" a été enregister dans \"%2$s\"</string>
+    <string name="save_as_success_format">\"%1$s\" a été enregistré dans \"%2$s\"</string>
     <string name="text_editor_title">Éditeur de texte</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
-    <string name="text_editor_save_success">Sauvegarder</string>
+    <string name="text_editor_save_success">Sauvegardé</string>
     <string name="text_editor_reload_message">Êtes-vous sûr de vouloir recharger ? Les modifications non enregistrées apportées à ce document seront perdues.</string>
     <string name="text_editor_encoding">Encodage</string>
     <string name="text_editor_close_message">Êtes-vous sûr de vouloir rejeter les modifications non enregistrées apportées à ce document ?</string>
