@@ -6,12 +6,9 @@
 
 Un fork personnel et amélioré de **[Material Files](https://github.com/zhanghai/MaterialFiles)** de Hai Zhang, un gestionnaire de fichiers Material Design open source pour Android.
 
-> **Pourquoi ce fork ?**
-> Material Files est déjà une excellente application. Ceci n'est **pas** un concurrent ni une critique de l'original. Je l'ai forké pour avoir une version adaptée à **mon usage quotidien** : surtout des améliorations de cohérence de l'interface, des corrections de bugs, et un vrai support **Android TV**. Tout repose sur le travail de l'auteur d'origine, à qui revient tout le mérite de l'application.
-
 Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent **uniquement ce que ce fork ajoute ou modifie**. Pour ce qu'est fondamentalement l'application, voir [À propos de l'application d'origine](#à-propos-de-lapplication-dorigine).
 
-## Ce que ce fork change
+## ✨ Ce que ce fork change
 
 ### 📺 Support Android TV
 - Navigation complète à la télécommande (D-pad) : la barre latérale, la barre d'outils et les listes sont accessibles et correctement surlignées.
@@ -33,21 +30,32 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 ### 🎯 Applications par défaut par type de fichier
 - Nouveau **Réglages → Applications par défaut** : choisissez quelle app ouvre les images, l'audio, les vidéos, les PDF et le texte, pour que ces fichiers s'ouvrent directement avec la bonne app, sans demander à chaque fois.
 
+### 📋 Progression des opérations sur les fichiers
+- Un bouton de progression apparaît dans la barre d'outils pendant les copies, déplacements et opérations d'archive, ouvrant une popup avec le détail en direct de chaque fichier, plutôt qu'une simple notification.
+
+### 🔒 Confidentialité et performance
+- **Firebase (Analytics + Crashlytics) entièrement supprimé.** Rien concernant votre usage ou les plantages n'est envoyé où que ce soit, et l'application démarre aussi plus vite sans lui.
+- Sauvegarde cloud et extraction de données désactivées, pour qu'Android n'envoie jamais les données de l'app hors de l'appareil.
+
 ### 🎨 Cohérence de l'interface et thème
 - Les icônes de la barre d'état s'adaptent à la couleur de l'en-tête / du tiroir (claire ou foncée), corrigeant les cas illisibles blanc-sur-blanc et noir-sur-foncé, avec un fondu à l'ouverture du tiroir.
 - Barre d'application foncée en mode nuit au lieu de la teinte primaire claire.
 - Icônes affichées dans les menus ⋮ ; popup thémé en mode sombre.
-- Corrections des couleurs Material You (M3) en mode sombre et du curseur des interrupteurs.
+- Tiroir de navigation repensé et thémé pour Material You (M3), avec corrections des couleurs en mode sombre et du curseur des interrupteurs.
 - Les noms longs passent à la ligne au lieu d'être coupés par « … ».
 - Stockage interne renommé avec une icône de téléphone ; un vrai ruban marque les dossiers en marque-page ; icône du serveur FTP rafraîchie.
 
 ### 🐛 Autres corrections et finitions
 - Message clair quand un dossier ne peut pas être ouvert, au lieu d'un échec silencieux.
-- Sauvegarde cloud / extraction de données désactivées pour la confidentialité.
+- **Chiffrement** optionnel par serveur pour les partages SMB.
+- Correction d'un plantage sur tablette en mode paysage, et les barres de statut/navigation sont désormais colorées pour correspondre à la barre d'application.
+- Retour arrière quitte directement à la racine au lieu de rester bloqué, et les titres longs de la barre d'outils défilent désormais.
 - Toutes les chaînes propres au fork traduites en **31 langues**.
 - Identifiant d'application changé en `fr.vroot.android.files`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
 
-## Faire de Material Files le sélecteur de fichiers par défaut du système
+## 🗂️ Faire de Material Files le sélecteur de fichiers par défaut du système
+
+Material Files expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android, pas seulement le stockage local : les partages SMB, FTP, SFTP et WebDAV, ainsi que le contenu des archives, apparaissent comme de simples dossiers dans la boîte de dialogue « Ouvrir » ou « Enregistrer » de n'importe quelle app, exactement comme un dossier local.
 
 Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **Google DocumentsUI** (`com.google.android.documentsui`), même si Material Files est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers Material Files comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
 
@@ -77,9 +85,13 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 - Le changement survit aux redémarrages, mais est **par utilisateur** (affecte uniquement l'utilisateur actif lors de l'exécution ADB, en général l'utilisateur 0).
 - Si une autre application avec un DocumentsProvider est installée, Android peut afficher un sélecteur. N'installez qu'un seul fournisseur si vous voulez éviter toute invite.
 
+### 🔧 Pour les créateurs de ROM : en faire le vrai sélecteur système
+
+Une variante de build séparée et optionnelle, `systemPicker`, permet à un créateur de ROM de remplacer purement et simplement DocumentsUI : signé avec la clé plateforme de la ROM, Material Files renvoie exactement les mêmes URI de stockage que DocumentsUI, si bien que même les apps qui les exigent spécifiquement (pas seulement celles qui utilisent le sélecteur générique ci-dessus) fonctionnent avec lui. Voir [`docs/systempicker-integration.md`](docs/systempicker-integration.md) (en anglais) pour les prérequis et les étapes d'intégration. Cela n'affecte en rien une installation normale.
+
 ---
 
-## À propos de l'application d'origine
+## À propos de l'application d'origine ℹ️
 
 Material Files est un gestionnaire de fichiers Material Design open source pour Android 6.0+ :
 
@@ -88,17 +100,11 @@ Material Files est un gestionnaire de fichiers Material Design open source pour 
 - Couleurs personnalisables et mode nuit (avec noir intégral optionnel).
 - Compatible Linux (liens symboliques, permissions et contexte SELinux) via de vrais appels système plutôt qu'en analysant `ls`, bâti sur l'API de fichiers Java NIO2 avec `ViewModel` / `LiveData`.
 
-## Compilation
+## 💭 Pourquoi ce fork ?
 
-Ouvrez le projet dans Android Studio et lancez-le, ou en ligne de commande :
+Material Files est déjà une excellente application. Ceci n'est **pas** un concurrent ni une critique de l'original. Je l'ai forké pour avoir une version adaptée à **mon usage quotidien** : surtout des améliorations de cohérence de l'interface, des corrections de bugs, et un vrai support **Android TV**. Tout ce qui précède repose sur le travail de l'auteur d'origine, à qui revient tout le mérite de l'application.
 
-```sh
-./gradlew assembleRelease
-```
-
-Le code natif est compilé pour toutes les ABI (arm64-v8a, armeabi-v7a, x86, x86_64), produisant une APK universelle unique qui fonctionne sur tous les appareils.
-
-## Crédits et licence
+## 🙏 Crédits et licence
 
 - **Application d'origine et toutes ses fonctionnalités :** [Hai Zhang](https://github.com/zhanghai) et les contributeurs.
 - **Ce fork :** [Victor-root](https://github.com/Victor-root).

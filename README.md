@@ -6,12 +6,9 @@
 
 A personal, improved fork of **[Material Files](https://github.com/zhanghai/MaterialFiles)** by Hai Zhang, an open-source Material Design file manager for Android.
 
-> **Why this fork?**
-> Material Files is already an excellent app. This is **not** a competitor or a criticism of the original. I forked it to build a version tailored to **my own daily use**: mostly small UI-consistency improvements, bug fixes, and first-class **Android TV** support. Everything here sits on top of the original author's work, and all credit for the app itself goes to him.
-
 The original repository remains the reference; the sections below describe **only what this fork adds or changes**. For what the app fundamentally *is*, see [About the original app](#about-the-original-app).
 
-## What this fork changes
+## ✨ What this fork changes
 
 ### 📺 Android TV support
 - Full D-pad navigation: the sidebar, toolbar and file lists are reachable and highlight correctly with a remote.
@@ -33,21 +30,32 @@ The original repository remains the reference; the sections below describe **onl
 ### 🎯 Default apps per file type
 - New **Settings → Default apps**: pick which app opens Images, Audio, Video, PDF and Text, so those files open straight away in your app of choice instead of asking every time.
 
+### 📋 File operation progress
+- A progress button appears in the toolbar during copies, moves and archive operations, opening a popover with live per-file details instead of only a notification.
+
+### 🔒 Privacy & performance
+- **Firebase (Analytics + Crashlytics) removed entirely.** Nothing about your usage or crashes is sent anywhere, and the app also starts faster without it.
+- Cloud backup and data extraction disabled, so Android never ships app data off-device.
+
 ### 🎨 UI consistency & theming
 - Status-bar icons tint themselves to the header/drawer colour (light or dark), fixing unreadable white-on-white and black-on-dark cases, with a smooth crossfade when the drawer opens.
 - Dark app bar in night mode instead of the light primary tint.
 - Icons shown in the ⋮ overflow menus; themed popup in dark mode.
-- Material You (M3) dark-mode colour and switch-thumb fixes.
+- Navigation drawer redesigned and themed for Material You (M3), including dark-mode colour and switch-thumb fixes.
 - Long names wrap instead of being cut off with "…".
 - Internal storage renamed with a phone icon; a real ribbon marks bookmarked folders; refreshed FTP-server icon.
 
 ### 🐛 Other fixes & polish
 - Friendly message when a folder can't be opened, instead of a silent failure.
-- Cloud backup / data extraction disabled for privacy.
+- Optional per-server **encryption** for SMB shares.
+- Fixed a crash on tablets in landscape, and the status/navigation bars are now coloured to match the app bar.
+- Back exits at the root instead of leaving the app stuck, and long toolbar titles now marquee-scroll.
 - All fork-specific strings translated into **31 languages**.
 - App ID changed to `fr.vroot.android.files` so it installs alongside the Play/F-Droid build rather than conflicting with it.
 
-## Making Material Files the default system file picker
+## 🗂️ Making Material Files the default system file picker
+
+Material Files exposes **every backend it supports** through Android's file picker, not just local storage: SMB, FTP, SFTP and WebDAV shares, and the contents of archives, all show up as regular folders inside any app's "Open" or "Save" dialog, the same way a local folder would.
 
 Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` intents through **Google DocumentsUI** (`com.google.android.documentsui`), even when Material Files is installed as a DocumentsProvider. Disabling that system app makes Android fall back to Material Files as the picker for every app on the device. No root required, just ADB over USB.
 
@@ -77,9 +85,13 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 - The change survives reboots but is **per-user** (only affects the user whose session is active when ADB runs, typically user 0).
 - If another picker app is installed (e.g. a third-party file manager with a DocumentsProvider), Android may show a chooser. Install only one provider if you want zero prompts.
 
+### 🔧 For ROM builders: making it the literal system picker
+
+A separate, opt-in `systemPicker` build variant lets a ROM builder replace DocumentsUI outright: signed with the ROM's platform key, Material Files hands back the exact same storage URIs DocumentsUI would, so even apps that specifically require them (not just apps using the generic picker above) work against it. See [`docs/systempicker-integration.md`](docs/systempicker-integration.md) for the requirements and integration steps. This does not affect a normal install in any way.
+
 ---
 
-## About the original app
+## About the original app ℹ️
 
 Material Files is an open-source Material Design file manager for Android 6.0+:
 
@@ -88,17 +100,11 @@ Material Files is an open-source Material Design file manager for Android 6.0+:
 - Customisable colours and night mode (with optional true black).
 - Linux-aware (symbolic links, permissions and SELinux context) via real system calls rather than parsing `ls`, built on the Java NIO2 file API with `ViewModel`/`LiveData`.
 
-## Building
+## 💭 Why this fork?
 
-Open the project in Android Studio and run it, or from the command line:
+Material Files is already an excellent app. This is **not** a competitor or a criticism of the original. I forked it to build a version tailored to **my own daily use**: mostly small UI-consistency improvements, bug fixes, and first-class **Android TV** support. Everything above sits on top of the original author's work, and all credit for the app itself goes to him.
 
-```sh
-./gradlew assembleRelease
-```
-
-The native code is compiled for all ABIs (arm64-v8a, armeabi-v7a, x86, x86_64), producing a single universal APK that runs on any device.
-
-## Credits & license
+## 🙏 Credits & license
 
 - **Original app and all of its core features:** [Hai Zhang](https://github.com/zhanghai) and contributors.
 - **This fork:** [Victor-root](https://github.com/Victor-root).
