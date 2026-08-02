@@ -74,8 +74,8 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
             .also { binding = it }
             .root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         if (paths.isEmpty()) {
             // TODO: Show a toast.

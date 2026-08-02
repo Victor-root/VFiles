@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.storage
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import kotlinx.parcelize.Parcelize
@@ -21,8 +22,8 @@ import me.zhanghai.android.files.util.showToast
 class AddExternalStorageShortcutFragment : Fragment() {
     private val args by args<Args>()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val uri = args.uri
         val hasDocumentsUi = uri.value.createDocumentsUiViewDirectoryIntent()

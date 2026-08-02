@@ -7,6 +7,7 @@ package me.zhanghai.android.files.settings
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.theme.custom.CustomThemeHelper
 import me.zhanghai.android.files.theme.custom.ThemeColor
@@ -29,8 +30,8 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val viewLifecycleOwner = viewLifecycleOwner
         // The following may end up passing the same lambda instance to the observer because it has
