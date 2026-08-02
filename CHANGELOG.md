@@ -13,7 +13,7 @@ Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 - **Fournisseur de documents (DocumentsProvider)** : Material Files peut
   désormais servir de source dans le sélecteur du système. Une autre appli peut
   choisir un **dossier** (`OPEN_DOCUMENT_TREE`) ou un **fichier**
-  (`OPEN_DOCUMENT` / `GET_CONTENT`) sur **n'importe quel back-end** — stockage
+  (`OPEN_DOCUMENT` / `GET_CONTENT`) sur **n'importe quel back-end** : stockage
   local, SMB, FTP, SFTP, WebDAV, archives.
 - Les fichiers et dossiers sélectionnés renvoient de vraies URI de
   document/arborescence avec **permissions persistantes** (l'appli destinataire

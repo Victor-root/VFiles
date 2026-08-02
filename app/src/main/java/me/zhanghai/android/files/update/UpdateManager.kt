@@ -24,7 +24,7 @@ import me.zhanghai.android.files.util.valueCompat
  *
  *   2. The user opens About and taps the entry: [downloadAndInstall] streams the APK into the
  *      private cache and hands it to Android's system installer, which shows the standard "Update?"
- *      prompt. Nothing else is ever surfaced — no notifications, no dialogs of our own.
+ *      prompt. Nothing else is ever surfaced: no notifications, no dialogs of our own.
  *
  * Writing a [Settings] value updates its LiveData synchronously, so every write here is posted to
  * the main thread.
@@ -33,7 +33,7 @@ object UpdateManager {
     private const val TAG = "MaterialFiles-Updater"
     private const val GITHUB_REPO = "Victor-root/MaterialFiles"
 
-    // Twelve hours — short enough that a freshly published release is noticed within the same day,
+    // Twelve hours: short enough that a freshly published release is noticed within the same day,
     // long enough to never approach GitHub's anonymous rate limit.
     private const val CHECK_INTERVAL_MS = 12L * 60L * 60L * 1000L
 
@@ -50,8 +50,8 @@ object UpdateManager {
 
     /**
      * Throttled background check. Call from the main thread (app start, opening About). Reads the
-     * throttle on the calling thread — which also forces [Settings] to initialise on the main
-     * thread — then does only the network call off-thread.
+     * throttle on the calling thread (which also forces [Settings] to initialise on the main
+     * thread), then does only the network call off-thread.
      */
     fun checkInBackground() {
         if (isFdroidInstall()) {
@@ -143,7 +143,7 @@ object UpdateManager {
 
     /**
      * The currently-known newer release, or null when we're already up to date. Pure read with no
-     * side effects — safe to call from the main thread while building the navigation drawer.
+     * side effects: safe to call from the main thread while building the navigation drawer.
      */
     fun getStoredRelease(): ReleaseInfo? {
         val version = Settings.UPDATE_AVAILABLE_VERSION.valueCompat

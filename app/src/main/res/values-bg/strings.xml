@@ -665,11 +665,11 @@
     <string name="about_author_twitter_title">Следване в Twitter</string>
     <string name="app_name_launcher">Файлове</string>
     <string name="about_check_for_update_title">Проверка за актуализации</string>
-    <string name="about_fork_subtitle">Оригинал — Hai Zhang</string>
-    <string name="about_update_available_summary_format">Версия %1$s — докоснете за инсталиране</string>
+    <string name="about_fork_subtitle">Оригинал: Hai Zhang</string>
+    <string name="about_update_available_summary_format">Версия %1$s: докоснете за инсталиране</string>
     <string name="about_update_available_title">Налична актуализация</string>
     <string name="about_update_checking">Проверка…</string>
-    <string name="about_update_download_failed">Изтеглянето е неуспешно — докоснете за повторен опит</string>
+    <string name="about_update_download_failed">Изтеглянето е неуспешно: докоснете за повторен опит</string>
     <string name="about_update_downloading">Изтегляне на актуализацията…</string>
     <string name="about_update_summary_idle">Докоснете за проверка</string>
     <string name="about_update_up_to_date">Имате най-новата версия</string>

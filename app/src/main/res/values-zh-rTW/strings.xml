@@ -652,10 +652,10 @@
     <string name="app_name_launcher">檔案</string>
     <string name="about_check_for_update_title">檢查更新</string>
     <string name="about_fork_subtitle">原作者：Hai Zhang</string>
-    <string name="about_update_available_summary_format">版本 %1$s — 輕觸以安裝</string>
+    <string name="about_update_available_summary_format">版本 %1$s: 輕觸以安裝</string>
     <string name="about_update_available_title">有可用更新</string>
     <string name="about_update_checking">正在檢查…</string>
-    <string name="about_update_download_failed">下載失敗 — 輕觸以重試</string>
+    <string name="about_update_download_failed">下載失敗: 輕觸以重試</string>
     <string name="about_update_downloading">正在下載更新…</string>
     <string name="about_update_summary_idle">輕觸以檢查</string>
     <string name="about_update_up_to_date">已是最新版本</string>

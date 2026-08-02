@@ -382,10 +382,10 @@
     <string name="app_name_launcher">Fitxategiak</string>
     <string name="about_check_for_update_title">Bilatu eguneratzeak</string>
     <string name="about_fork_subtitle">Jatorrizkoa: Hai Zhang</string>
-    <string name="about_update_available_summary_format">%1$s bertsioa — sakatu instalatzeko</string>
+    <string name="about_update_available_summary_format">%1$s bertsioa: sakatu instalatzeko</string>
     <string name="about_update_available_title">Eguneratzea eskuragarri</string>
     <string name="about_update_checking">Egiaztatzen…</string>
-    <string name="about_update_download_failed">Deskargak huts egin du — sakatu berriro saiatzeko</string>
+    <string name="about_update_download_failed">Deskargak huts egin du: sakatu berriro saiatzeko</string>
     <string name="about_update_downloading">Eguneratzea deskargatzen…</string>
     <string name="about_update_summary_idle">Sakatu egiaztatzeko</string>
     <string name="about_update_up_to_date">Eguneratuta zaude</string>

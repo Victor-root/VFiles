@@ -744,10 +744,10 @@
     <string name="app_name_launcher">קבצים</string>
     <string name="about_check_for_update_title">בדיקת עדכונים</string>
     <string name="about_fork_subtitle">מקור: Hai Zhang</string>
-    <string name="about_update_available_summary_format">גרסה %1$s — הקש כדי להתקין</string>
+    <string name="about_update_available_summary_format">גרסה %1$s: הקש כדי להתקין</string>
     <string name="about_update_available_title">עדכון זמין</string>
     <string name="about_update_checking">בודק…</string>
-    <string name="about_update_download_failed">ההורדה נכשלה — הקש כדי לנסות שוב</string>
+    <string name="about_update_download_failed">ההורדה נכשלה: הקש כדי לנסות שוב</string>
     <string name="about_update_downloading">מוריד עדכון…</string>
     <string name="about_update_summary_idle">הקש כדי לבדוק</string>
     <string name="about_update_up_to_date">אתה מעודכן</string>

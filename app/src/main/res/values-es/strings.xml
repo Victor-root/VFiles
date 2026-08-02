@@ -713,10 +713,10 @@
     <string name="app_name_launcher">Archivos</string>
     <string name="about_check_for_update_title">Buscar actualizaciones</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versión %1$s — toca para instalar</string>
+    <string name="about_update_available_summary_format">Versión %1$s: toca para instalar</string>
     <string name="about_update_available_title">Actualización disponible</string>
     <string name="about_update_checking">Buscando…</string>
-    <string name="about_update_download_failed">Error de descarga — toca para reintentar</string>
+    <string name="about_update_download_failed">Error de descarga: toca para reintentar</string>
     <string name="about_update_downloading">Descargando actualización…</string>
     <string name="about_update_summary_idle">Toca para buscar</string>
     <string name="about_update_up_to_date">Estás al día</string>

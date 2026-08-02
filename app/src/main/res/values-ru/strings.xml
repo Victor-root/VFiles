@@ -745,11 +745,11 @@
     <string name="about_author_twitter_title">Подписаться в Twitter</string>
     <string name="app_name_launcher">Файлы</string>
     <string name="about_check_for_update_title">Проверить обновления</string>
-    <string name="about_fork_subtitle">Оригинал — Hai Zhang</string>
-    <string name="about_update_available_summary_format">Версия %1$s — нажмите, чтобы установить</string>
+    <string name="about_fork_subtitle">Оригинал: Hai Zhang</string>
+    <string name="about_update_available_summary_format">Версия %1$s: нажмите, чтобы установить</string>
     <string name="about_update_available_title">Доступно обновление</string>
     <string name="about_update_checking">Проверка…</string>
-    <string name="about_update_download_failed">Ошибка загрузки — нажмите, чтобы повторить</string>
+    <string name="about_update_download_failed">Ошибка загрузки: нажмите, чтобы повторить</string>
     <string name="about_update_downloading">Загрузка обновления…</string>
     <string name="about_update_summary_idle">Нажмите, чтобы проверить</string>
     <string name="about_update_up_to_date">У вас последняя версия</string>
@@ -771,7 +771,7 @@
     <string name="onboarding_install_apps_not_granted">Это можно включить позже в настройках</string>
     <string name="onboarding_install_apps_title">Установка приложений</string>
     <string name="onboarding_next">Далее</string>
-    <string name="onboarding_notifications_description">Разрешите уведомления, чтобы отслеживать ход операций с файлами — копирование, перемещение, архивацию — даже когда приложение в фоне.</string>
+    <string name="onboarding_notifications_description">Разрешите уведомления, чтобы отслеживать ход операций с файлами (копирование, перемещение, архивацию) даже когда приложение в фоне.</string>
     <string name="onboarding_notifications_grant">Разрешить уведомления</string>
     <string name="onboarding_notifications_granted">Уведомления разрешены</string>
     <string name="onboarding_notifications_not_granted">Это можно включить позже в настройках</string>

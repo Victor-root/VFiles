@@ -643,10 +643,10 @@
     <string name="app_name_launcher">Failai</string>
     <string name="about_check_for_update_title">Tikrinti, ar yra naujinių</string>
     <string name="about_fork_subtitle">Originalas: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versija %1$s — palieskite, kad įdiegtumėte</string>
+    <string name="about_update_available_summary_format">Versija %1$s: palieskite, kad įdiegtumėte</string>
     <string name="about_update_available_title">Yra naujinys</string>
     <string name="about_update_checking">Tikrinama…</string>
-    <string name="about_update_download_failed">Atsisiųsti nepavyko — palieskite, kad bandytumėte dar kartą</string>
+    <string name="about_update_download_failed">Atsisiųsti nepavyko: palieskite, kad bandytumėte dar kartą</string>
     <string name="about_update_downloading">Atsisiunčiamas naujinys…</string>
     <string name="about_update_summary_idle">Palieskite, kad patikrintumėte</string>
     <string name="about_update_up_to_date">Naudojate naujausią versiją</string>

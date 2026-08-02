@@ -12,7 +12,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * Streams a remote APK into the app's private cache. Runs synchronously — callers schedule it on a
+ * Streams a remote APK into the app's private cache. Runs synchronously: callers schedule it on a
  * background thread. The download lives under cacheDir/updates/, which is the path exposed by
  * res/xml/update_file_provider_paths.xml, so the system installer can read it through the dedicated
  * FileProvider without any external-storage permission.

@@ -684,10 +684,10 @@
     <string name="app_name_launcher">Skrár</string>
     <string name="about_check_for_update_title">Leita að uppfærslum</string>
     <string name="about_fork_subtitle">Upprunalegt eftir Hai Zhang</string>
-    <string name="about_update_available_summary_format">Útgáfa %1$s — ýttu til að setja upp</string>
+    <string name="about_update_available_summary_format">Útgáfa %1$s: ýttu til að setja upp</string>
     <string name="about_update_available_title">Uppfærsla tiltæk</string>
     <string name="about_update_checking">Athuga…</string>
-    <string name="about_update_download_failed">Niðurhal mistókst — ýttu til að reyna aftur</string>
+    <string name="about_update_download_failed">Niðurhal mistókst: ýttu til að reyna aftur</string>
     <string name="about_update_downloading">Sæki uppfærslu…</string>
     <string name="about_update_summary_idle">Ýttu til að athuga</string>
     <string name="about_update_up_to_date">Þú ert með nýjustu útgáfuna</string>

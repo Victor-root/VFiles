@@ -22,7 +22,7 @@ data class ReleaseInfo(
 
 /**
  * Hits the GitHub Releases API and reports whether the latest release ships an APK newer than what
- * is currently installed. Synchronous on purpose — callers run it off the main thread.
+ * is currently installed. Synchronous on purpose: callers run it off the main thread.
  *
  * No external HTTP library: HttpURLConnection + org.json are part of the platform, so we don't drag
  * OkHttp/Retrofit in just to issue one request every twelve hours.
@@ -106,7 +106,7 @@ internal object UpdateChecker {
             conn = (URL(url).openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
                 // GitHub returns a richer JSON shape on this Accept type, and a descriptive
-                // User-Agent is mandatory — the API refuses unidentified clients with HTTP 403.
+                // User-Agent is mandatory: the API refuses unidentified clients with HTTP 403.
                 setRequestProperty("Accept", "application/vnd.github+json")
                 setRequestProperty("User-Agent", "MaterialFiles-Android-Updater")
                 connectTimeout = 10_000

@@ -621,10 +621,10 @@
     <string name="app_name_launcher">Fișiere</string>
     <string name="about_check_for_update_title">Caută actualizări</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versiunea %1$s — atinge pentru a instala</string>
+    <string name="about_update_available_summary_format">Versiunea %1$s: atinge pentru a instala</string>
     <string name="about_update_available_title">Actualizare disponibilă</string>
     <string name="about_update_checking">Se verifică…</string>
-    <string name="about_update_download_failed">Descărcare eșuată — atinge pentru a reîncerca</string>
+    <string name="about_update_download_failed">Descărcare eșuată: atinge pentru a reîncerca</string>
     <string name="about_update_downloading">Se descarcă actualizarea…</string>
     <string name="about_update_summary_idle">Atinge pentru a verifica</string>
     <string name="about_update_up_to_date">Ești la zi</string>

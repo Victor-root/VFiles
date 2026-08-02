@@ -555,10 +555,10 @@
     <string name="app_name_launcher">Dosyalar</string>
     <string name="about_check_for_update_title">Güncellemeleri denetle</string>
     <string name="about_fork_subtitle">Orijinali: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Sürüm %1$s — yüklemek için dokunun</string>
+    <string name="about_update_available_summary_format">Sürüm %1$s: yüklemek için dokunun</string>
     <string name="about_update_available_title">Güncelleme mevcut</string>
     <string name="about_update_checking">Denetleniyor…</string>
-    <string name="about_update_download_failed">İndirme başarısız — yeniden denemek için dokunun</string>
+    <string name="about_update_download_failed">İndirme başarısız: yeniden denemek için dokunun</string>
     <string name="about_update_downloading">Güncelleme indiriliyor…</string>
     <string name="about_update_summary_idle">Denetlemek için dokunun</string>
     <string name="about_update_up_to_date">Günceldesiniz</string>

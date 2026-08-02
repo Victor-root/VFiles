@@ -2,7 +2,7 @@
 
 > **Audience: ROM builders / integrators.** This is **not** something you install as an APK. It
 > only works when the build is signed with the **platform key** of the ROM it ships in. On a stock,
-> pre-built ROM you cannot use it — there is no way to hold the required permission without the
+> pre-built ROM you cannot use it. There is no way to hold the required permission without the
 > platform signature.
 
 ## What it does
@@ -15,8 +15,8 @@ though it does not own the provider.
 
 A normal build of Material Files returns URIs from **its own** providers instead
 (`…documents` / `…file_provider`). That works for most apps, but apps that require genuine
-`ExternalStorageProvider` URIs — the whole SimpleMobileTools / **Fossify** family, which compares the
-returned tree URI for strict equality and then `takePersistableUriPermission()`s it — reject them.
+`ExternalStorageProvider` URIs (the whole SimpleMobileTools / **Fossify** family, which compares the
+returned tree URI for strict equality and then `takePersistableUriPermission()`s it) reject them.
 
 The `systemPicker` flavor makes Material Files behave like DocumentsUI: for a folder/file on **local
 storage** it returns the same `com.android.externalstorage.documents` tree/document URI DocumentsUI
@@ -28,7 +28,7 @@ own URIs, since `ExternalStorageProvider` cannot serve them.
 ## Why the platform signature is mandatory
 
 `MANAGE_DOCUMENTS` is declared `protectionLevel="signature"`. It is granted **only** to apps signed
-with the same certificate as the framework (`android` package) — i.e. the platform key. It is *not*
+with the same certificate as the framework (`android` package), i.e. the platform key. It is *not*
 covered by the privileged-app allowlist, so `/system/priv-app` + `privapp-permissions.xml` is **not**
 enough, and it cannot be granted with `pm grant`, `appops`, or root. This is exactly how the real
 DocumentsUI obtains it (`certificate: platform` in its `Android.bp`).
@@ -36,7 +36,7 @@ DocumentsUI obtains it (`certificate: platform` in its `Android.bp`).
 The code is defensively gated: it emits an `ExternalStorageProvider` URI only when
 `checkSelfPermission(MANAGE_DOCUMENTS) == GRANTED` at runtime. If the flavor is built but **not**
 platform-signed, the permission is not granted, the check fails, and Material Files transparently
-falls back to its normal behavior — it does not crash and does not hand back a dead URI.
+falls back to its normal behavior. It does not crash and does not hand back a dead URI.
 
 ## Building the flavor
 
@@ -51,7 +51,7 @@ The flavor is **opt-in via a Gradle property** so the standard build is untouche
 ```
 
 Only `app/src/systemPicker/AndroidManifest.xml` (which adds the `MANAGE_DOCUMENTS`
-`uses-permission`) is merged into this variant. Everything else — including the SAF intent-filters —
+`uses-permission`) is merged into this variant. Everything else (including the SAF intent-filters)
 already lives in the main manifest.
 
 ## Integrating into a ROM
@@ -63,10 +63,10 @@ already lives in the main manifest.
 2. **Place it in the system image** (`/system` or `/system_ext`).
 3. **Remove or disable the stock DocumentsUI** (`com.android.documentsui`). It wins SAF intent
    resolution via `android:priority="100"` on its filters (Material Files' filters are priority 0),
-   and it is *not* a reassignable `RoleManager` role — so as long as it is present it will be chosen.
+   and it is *not* a reassignable `RoleManager` role, so as long as it is present it will be chosen.
    Once it is gone, Material Files is the sole SAF handler.
 
-`ExternalStorageProvider` (`com.android.externalstorage`) must stay enabled — it is a separate
+`ExternalStorageProvider` (`com.android.externalstorage`) must stay enabled: it is a separate
 package from DocumentsUI and serves the actual document I/O.
 
 ### Not required
@@ -94,4 +94,4 @@ build:
   would be a dead URI. Folder grants (`OPEN_DOCUMENT_TREE`) and opening existing files
   (`OPEN_DOCUMENT`/`GET_CONTENT`) are the covered cases.
 - Apps like Fossify only accept the **first-level** folder they ask for (e.g. `primary:Music`), not
-  a deep sub-folder — this is their own constraint, unchanged by this flavor.
+  a deep sub-folder. This is their own constraint, unchanged by this flavor.

@@ -566,10 +566,10 @@
     <string name="app_name_launcher">Berkas</string>
     <string name="about_check_for_update_title">Periksa pembaruan</string>
     <string name="about_fork_subtitle">Asli oleh Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versi %1$s — ketuk untuk memasang</string>
+    <string name="about_update_available_summary_format">Versi %1$s: ketuk untuk memasang</string>
     <string name="about_update_available_title">Pembaruan tersedia</string>
     <string name="about_update_checking">Memeriksa…</string>
-    <string name="about_update_download_failed">Unduhan gagal — ketuk untuk mencoba lagi</string>
+    <string name="about_update_download_failed">Unduhan gagal: ketuk untuk mencoba lagi</string>
     <string name="about_update_downloading">Mengunduh pembaruan…</string>
     <string name="about_update_summary_idle">Ketuk untuk memeriksa</string>
     <string name="about_update_up_to_date">Anda sudah yang terbaru</string>

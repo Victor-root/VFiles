@@ -682,10 +682,10 @@
     <string name="app_name_launcher">Bestanden</string>
     <string name="about_check_for_update_title">Controleren op updates</string>
     <string name="about_fork_subtitle">Origineel door Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versie %1$s — tik om te installeren</string>
+    <string name="about_update_available_summary_format">Versie %1$s: tik om te installeren</string>
     <string name="about_update_available_title">Update beschikbaar</string>
     <string name="about_update_checking">Controleren…</string>
-    <string name="about_update_download_failed">Download mislukt — tik om opnieuw te proberen</string>
+    <string name="about_update_download_failed">Download mislukt: tik om opnieuw te proberen</string>
     <string name="about_update_downloading">Update downloaden…</string>
     <string name="about_update_summary_idle">Tik om te controleren</string>
     <string name="about_update_up_to_date">Je bent up-to-date</string>

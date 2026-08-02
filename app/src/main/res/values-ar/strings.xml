@@ -806,10 +806,10 @@
     <string name="app_name_launcher">الملفات</string>
     <string name="about_check_for_update_title">البحث عن تحديثات</string>
     <string name="about_fork_subtitle">الأصل من تأليف Hai Zhang</string>
-    <string name="about_update_available_summary_format">الإصدار %1$s — اضغط للتثبيت</string>
+    <string name="about_update_available_summary_format">الإصدار %1$s: اضغط للتثبيت</string>
     <string name="about_update_available_title">يتوفر تحديث</string>
     <string name="about_update_checking">جارٍ التحقق…</string>
-    <string name="about_update_download_failed">فشل التنزيل — اضغط لإعادة المحاولة</string>
+    <string name="about_update_download_failed">فشل التنزيل: اضغط لإعادة المحاولة</string>
     <string name="about_update_downloading">جارٍ تنزيل التحديث…</string>
     <string name="about_update_summary_idle">اضغط للتحقق</string>
     <string name="about_update_up_to_date">أنت على أحدث إصدار</string>

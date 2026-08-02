@@ -51,7 +51,7 @@ val navigationItems: List<NavigationItem?>
             if (bookmarkDirectoryItems.isNotEmpty()) {
                 addAll(bookmarkDirectoryItems)
             } else {
-                // No bookmarks yet — show a subtle hint so users discover the feature. It
+                // No bookmarks yet: show a subtle hint so users discover the feature. It
                 // disappears automatically as soon as the first bookmark is added.
                 add(BookmarksHintItem())
             }
@@ -313,7 +313,7 @@ private fun StorageVolume.detectRemovableType(): VolumeIconType? {
             179 -> return VolumeIconType.SD_CARD
         }
     } catch (e: Throwable) {
-        // Hidden-API access blocked or unavailable — fall through.
+        // Hidden-API access blocked or unavailable. Fall through.
     }
     // Public-API fallback for when the reflection above is blocked (common on Android 11+): if a
     // USB mass-storage device is plugged into the host port, a removable volume is almost certainly

@@ -92,7 +92,7 @@ class OnboardingActivity : AppActivity() {
         val requiredGranted = pages.filter { it.isRequired }.all { it.isGranted(this) }
         binding.continueButton.isEnabled = requiredGranted
 
-        // Everything granted — continue straight to the app.
+        // Everything granted: continue straight to the app.
         if (pages.all { it.isGranted(this) }) {
             finishOnboarding()
         }

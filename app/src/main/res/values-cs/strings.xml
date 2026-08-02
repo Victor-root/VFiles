@@ -716,10 +716,10 @@
     <string name="app_name_launcher">Soubory</string>
     <string name="about_check_for_update_title">Vyhledat aktualizace</string>
     <string name="about_fork_subtitle">Originál: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Verze %1$s — klepnutím nainstalujete</string>
+    <string name="about_update_available_summary_format">Verze %1$s: klepnutím nainstalujete</string>
     <string name="about_update_available_title">Dostupná aktualizace</string>
     <string name="about_update_checking">Kontrola…</string>
-    <string name="about_update_download_failed">Stahování selhalo — klepnutím to zkuste znovu</string>
+    <string name="about_update_download_failed">Stahování selhalo: klepnutím to zkuste znovu</string>
     <string name="about_update_downloading">Stahování aktualizace…</string>
     <string name="about_update_summary_idle">Klepnutím zkontrolujete</string>
     <string name="about_update_up_to_date">Máte aktuální verzi</string>

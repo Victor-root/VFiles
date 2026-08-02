@@ -12,7 +12,7 @@ import java.io.File
 import me.zhanghai.android.files.R
 
 /**
- * Hands a freshly-downloaded APK to Android's system installer. We never install silently — the
+ * Hands a freshly-downloaded APK to Android's system installer. We never install silently: the
  * user only sees the standard "Update?" dialog, same as any sideloaded install.
  *
  * On Android 8+ the system handles the "Install unknown apps" toggle inline when ACTION_VIEW is

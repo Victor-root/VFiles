@@ -13,8 +13,8 @@ import androidx.annotation.ColorInt
 /**
  * Primary color extracted from the system wallpaper (ARGB), or null if unavailable.
  *
- * Read straight from the wallpaper's own extracted colors via [WallpaperManager.getWallpaperColors]
- * — NOT the system "dynamic" / Material You accent (`@android:color/system_accent*`). On some OEM
+ * Read straight from the wallpaper's own extracted colors via [WallpaperManager.getWallpaperColors],
+ * NOT the system "dynamic" / Material You accent (`@android:color/system_accent*`). On some OEM
  * skins (e.g. ColorOS) that system accent is a fixed value that does not follow the wallpaper, so
  * reading the wallpaper colors directly is what keeps the "wallpaper" theme option matching the
  * actual wallpaper. Only the extracted colors are read, never the wallpaper image, so no permission

@@ -583,10 +583,10 @@
     <string name="app_name_launcher">Fájlok</string>
     <string name="about_check_for_update_title">Frissítések keresése</string>
     <string name="about_fork_subtitle">Eredeti: Hai Zhang</string>
-    <string name="about_update_available_summary_format">%1$s verzió — koppintson a telepítéshez</string>
+    <string name="about_update_available_summary_format">%1$s verzió: koppintson a telepítéshez</string>
     <string name="about_update_available_title">Elérhető frissítés</string>
     <string name="about_update_checking">Ellenőrzés…</string>
-    <string name="about_update_download_failed">A letöltés sikertelen — koppintson az újrapróbálkozáshoz</string>
+    <string name="about_update_download_failed">A letöltés sikertelen: koppintson az újrapróbálkozáshoz</string>
     <string name="about_update_downloading">Frissítés letöltése…</string>
     <string name="about_update_summary_idle">Koppintson az ellenőrzéshez</string>
     <string name="about_update_up_to_date">Naprakész</string>

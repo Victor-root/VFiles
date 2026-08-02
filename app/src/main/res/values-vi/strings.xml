@@ -545,10 +545,10 @@
     <string name="app_name_launcher">Tệp</string>
     <string name="about_check_for_update_title">Kiểm tra cập nhật</string>
     <string name="about_fork_subtitle">Bản gốc bởi Hai Zhang</string>
-    <string name="about_update_available_summary_format">Phiên bản %1$s — nhấn để cài đặt</string>
+    <string name="about_update_available_summary_format">Phiên bản %1$s: nhấn để cài đặt</string>
     <string name="about_update_available_title">Có bản cập nhật</string>
     <string name="about_update_checking">Đang kiểm tra…</string>
-    <string name="about_update_download_failed">Tải xuống thất bại — nhấn để thử lại</string>
+    <string name="about_update_download_failed">Tải xuống thất bại: nhấn để thử lại</string>
     <string name="about_update_downloading">Đang tải bản cập nhật…</string>
     <string name="about_update_summary_idle">Nhấn để kiểm tra</string>
     <string name="about_update_up_to_date">Bạn đã cập nhật</string>

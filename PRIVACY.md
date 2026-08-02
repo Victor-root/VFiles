@@ -9,8 +9,8 @@ transmit, or share any personal information.
   service.
 - **No advertising.** There are no ads and no advertising identifiers.
 
-Everything the app works with — your files, bookmarks, and the credentials of any
-SMB/FTP/SFTP/WebDAV servers you add — stays **on your device**. Server
+Everything the app works with (your files, bookmarks, and the credentials of any
+SMB/FTP/SFTP/WebDAV servers you add) stays **on your device**. Server
 credentials are stored locally and are only ever sent to the servers you
 explicitly connect to.
 

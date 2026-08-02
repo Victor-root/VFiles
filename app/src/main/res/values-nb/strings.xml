@@ -682,10 +682,10 @@
     <string name="app_name_launcher">Filer</string>
     <string name="about_check_for_update_title">Se etter oppdateringer</string>
     <string name="about_fork_subtitle">Original av Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versjon %1$s — trykk for å installere</string>
+    <string name="about_update_available_summary_format">Versjon %1$s: trykk for å installere</string>
     <string name="about_update_available_title">Oppdatering tilgjengelig</string>
     <string name="about_update_checking">Sjekker…</string>
-    <string name="about_update_download_failed">Nedlastingen mislyktes — trykk for å prøve igjen</string>
+    <string name="about_update_download_failed">Nedlastingen mislyktes: trykk for å prøve igjen</string>
     <string name="about_update_downloading">Laster ned oppdatering…</string>
     <string name="about_update_summary_idle">Trykk for å sjekke</string>
     <string name="about_update_up_to_date">Du er oppdatert</string>

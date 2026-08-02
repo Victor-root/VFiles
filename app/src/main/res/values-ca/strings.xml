@@ -622,10 +622,10 @@
     <string name="app_name_launcher">Fitxers</string>
     <string name="about_check_for_update_title">Cerca actualitzacions</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versió %1$s — toca per instal·lar</string>
+    <string name="about_update_available_summary_format">Versió %1$s: toca per instal·lar</string>
     <string name="about_update_available_title">Actualització disponible</string>
     <string name="about_update_checking">S\'està comprovant…</string>
-    <string name="about_update_download_failed">Ha fallat la baixada — toca per tornar-ho a provar</string>
+    <string name="about_update_download_failed">Ha fallat la baixada: toca per tornar-ho a provar</string>
     <string name="about_update_downloading">S\'està baixant l\'actualització…</string>
     <string name="about_update_summary_idle">Toca per comprovar</string>
     <string name="about_update_up_to_date">Esteu al dia</string>

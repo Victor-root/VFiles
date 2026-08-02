@@ -682,10 +682,10 @@
     <string name="app_name_launcher">Αρχεία</string>
     <string name="about_check_for_update_title">Έλεγχος για ενημερώσεις</string>
     <string name="about_fork_subtitle">Πρωτότυπο από τον Hai Zhang</string>
-    <string name="about_update_available_summary_format">Έκδοση %1$s — πατήστε για εγκατάσταση</string>
+    <string name="about_update_available_summary_format">Έκδοση %1$s: πατήστε για εγκατάσταση</string>
     <string name="about_update_available_title">Διαθέσιμη ενημέρωση</string>
     <string name="about_update_checking">Έλεγχος…</string>
-    <string name="about_update_download_failed">Αποτυχία λήψης — πατήστε για επανάληψη</string>
+    <string name="about_update_download_failed">Αποτυχία λήψης: πατήστε για επανάληψη</string>
     <string name="about_update_downloading">Λήψη ενημέρωσης…</string>
     <string name="about_update_summary_idle">Πατήστε για έλεγχο</string>
     <string name="about_update_up_to_date">Είστε ενημερωμένοι</string>

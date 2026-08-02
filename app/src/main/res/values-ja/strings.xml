@@ -651,10 +651,10 @@
     <string name="app_name_launcher">ファイル</string>
     <string name="about_check_for_update_title">アップデートを確認</string>
     <string name="about_fork_subtitle">オリジナル: Hai Zhang</string>
-    <string name="about_update_available_summary_format">バージョン %1$s — タップしてインストール</string>
+    <string name="about_update_available_summary_format">バージョン %1$s: タップしてインストール</string>
     <string name="about_update_available_title">アップデートあり</string>
     <string name="about_update_checking">確認中…</string>
-    <string name="about_update_download_failed">ダウンロード失敗 — タップして再試行</string>
+    <string name="about_update_download_failed">ダウンロード失敗: タップして再試行</string>
     <string name="about_update_downloading">アップデートをダウンロード中…</string>
     <string name="about_update_summary_idle">タップして確認</string>
     <string name="about_update_up_to_date">最新の状態です</string>

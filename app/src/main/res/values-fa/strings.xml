@@ -576,10 +576,10 @@
     <string name="app_name_launcher">فایل‌ها</string>
     <string name="about_check_for_update_title">بررسی به‌روزرسانی‌ها</string>
     <string name="about_fork_subtitle">اصلی از Hai Zhang</string>
-    <string name="about_update_available_summary_format">نسخهٔ %1$s — برای نصب ضربه بزنید</string>
+    <string name="about_update_available_summary_format">نسخهٔ %1$s: برای نصب ضربه بزنید</string>
     <string name="about_update_available_title">به‌روزرسانی موجود است</string>
     <string name="about_update_checking">در حال بررسی…</string>
-    <string name="about_update_download_failed">دانلود ناموفق بود — برای تلاش دوباره ضربه بزنید</string>
+    <string name="about_update_download_failed">دانلود ناموفق بود: برای تلاش دوباره ضربه بزنید</string>
     <string name="about_update_downloading">در حال دانلود به‌روزرسانی…</string>
     <string name="about_update_summary_idle">برای بررسی ضربه بزنید</string>
     <string name="about_update_up_to_date">برنامه به‌روز است</string>

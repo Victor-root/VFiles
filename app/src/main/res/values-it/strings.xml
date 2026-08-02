@@ -713,10 +713,10 @@
     <string name="app_name_launcher">File</string>
     <string name="about_check_for_update_title">Controlla aggiornamenti</string>
     <string name="about_fork_subtitle">Originale di Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versione %1$s — tocca per installare</string>
+    <string name="about_update_available_summary_format">Versione %1$s: tocca per installare</string>
     <string name="about_update_available_title">Aggiornamento disponibile</string>
     <string name="about_update_checking">Controllo…</string>
-    <string name="about_update_download_failed">Download non riuscito — tocca per riprovare</string>
+    <string name="about_update_download_failed">Download non riuscito: tocca per riprovare</string>
     <string name="about_update_downloading">Download dell\'aggiornamento…</string>
     <string name="about_update_summary_idle">Tocca per controllare</string>
     <string name="about_update_up_to_date">Sei aggiornato</string>

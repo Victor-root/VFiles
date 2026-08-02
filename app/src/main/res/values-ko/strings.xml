@@ -651,10 +651,10 @@
     <string name="app_name_launcher">파일</string>
     <string name="about_check_for_update_title">업데이트 확인</string>
     <string name="about_fork_subtitle">원작자: Hai Zhang</string>
-    <string name="about_update_available_summary_format">버전 %1$s — 탭하여 설치</string>
+    <string name="about_update_available_summary_format">버전 %1$s: 탭하여 설치</string>
     <string name="about_update_available_title">업데이트 사용 가능</string>
     <string name="about_update_checking">확인 중…</string>
-    <string name="about_update_download_failed">다운로드 실패 — 탭하여 재시도</string>
+    <string name="about_update_download_failed">다운로드 실패: 탭하여 재시도</string>
     <string name="about_update_downloading">업데이트 다운로드 중…</string>
     <string name="about_update_summary_idle">탭하여 확인</string>
     <string name="about_update_up_to_date">최신 상태입니다</string>

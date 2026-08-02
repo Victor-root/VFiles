@@ -744,10 +744,10 @@
     <string name="app_name_launcher">Pliki</string>
     <string name="about_check_for_update_title">Sprawdź aktualizacje</string>
     <string name="about_fork_subtitle">Oryginał: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Wersja %1$s — dotknij, aby zainstalować</string>
+    <string name="about_update_available_summary_format">Wersja %1$s: dotknij, aby zainstalować</string>
     <string name="about_update_available_title">Dostępna aktualizacja</string>
     <string name="about_update_checking">Sprawdzanie…</string>
-    <string name="about_update_download_failed">Pobieranie nie powiodło się — dotknij, aby ponowić</string>
+    <string name="about_update_download_failed">Pobieranie nie powiodło się: dotknij, aby ponowić</string>
     <string name="about_update_downloading">Pobieranie aktualizacji…</string>
     <string name="about_update_summary_idle">Dotknij, aby sprawdzić</string>
     <string name="about_update_up_to_date">Masz najnowszą wersję</string>

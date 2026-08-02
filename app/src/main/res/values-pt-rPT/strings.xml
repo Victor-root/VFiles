@@ -653,10 +653,10 @@
     <string name="app_name_launcher">Ficheiros</string>
     <string name="about_check_for_update_title">Procurar atualizações</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versão %1$s — toque para instalar</string>
+    <string name="about_update_available_summary_format">Versão %1$s: toque para instalar</string>
     <string name="about_update_available_title">Atualização disponível</string>
     <string name="about_update_checking">A verificar…</string>
-    <string name="about_update_download_failed">Falha na transferência — toque para tentar novamente</string>
+    <string name="about_update_download_failed">Falha na transferência: toque para tentar novamente</string>
     <string name="about_update_downloading">A transferir a atualização…</string>
     <string name="about_update_summary_idle">Toque para verificar</string>
     <string name="about_update_up_to_date">Está atualizado</string>

@@ -742,9 +742,9 @@
     <string name="about_update_summary_idle">Appuyez pour vérifier</string>
     <string name="about_update_checking">Recherche…</string>
     <string name="about_update_up_to_date">Votre application est à jour</string>
-    <string name="about_update_available_summary_format">Version %1$s — appuyez pour installer</string>
+    <string name="about_update_available_summary_format">Version %1$s : appuyez pour installer</string>
     <string name="about_update_downloading">Téléchargement de la mise à jour…</string>
-    <string name="about_update_download_failed">Échec du téléchargement — appuyez pour réessayer</string>
+    <string name="about_update_download_failed">Échec du téléchargement : appuyez pour réessayer</string>
     <string name="app_name_launcher">Fichiers</string>
 
     <string name="onboarding_next">Suivant</string>
@@ -763,7 +763,7 @@
     <string name="onboarding_files_not_granted">Accès requis pour utiliser l\'application</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
-    <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers — copies, déplacements, archives — même lorsque l\'application est en arrière-plan.</string>
+    <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers (copies, déplacements, archives) même lorsque l\'application est en arrière-plan.</string>
     <string name="onboarding_notifications_grant">Autoriser les notifications</string>
     <string name="onboarding_notifications_granted">Notifications autorisées</string>
     <string name="onboarding_notifications_not_needed">Non requis sur cette version d\'Android</string>

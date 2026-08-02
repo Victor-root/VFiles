@@ -252,8 +252,8 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         activity.setSupportActionBar(binding.toolbar)
         if (requireContext().isTelevision) {
             // AppBarLayout and Toolbar set touchscreenBlocksFocus=true, which makes requestFocus()
-            // on the toolbar's buttons fail whenever the device reports a touchscreen — true on the
-            // Android TV emulator (but not on real TVs). Clearing it lets D-pad focus reach the
+            // on the toolbar's buttons fail whenever the device reports a touchscreen. That's true on
+            // the Android TV emulator (but not on real TVs). Clearing it lets D-pad focus reach the
             // toolbar (hamburger / search / overflow). No-op on real, touchscreen-less TVs.
             binding.appBarLayout.touchscreenBlocksFocus = false
             binding.toolbar.touchscreenBlocksFocus = false
@@ -387,8 +387,8 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
 
         // Tablet (persistent-drawer) layout only: here the app bar lives inside a
-        // LinearLayout(fitsSystemWindows) that consumes the top inset as padding, so — unlike the
-        // phone, where the app bar draws behind a transparent status bar — the status bar area shows
+        // LinearLayout(fitsSystemWindows) that consumes the top inset as padding, so, unlike the
+        // phone, where the app bar draws behind a transparent status bar, the status bar area shows
         // the (white) window background while its icons are tinted for the colored header, leaving
         // them invisible. There is no sliding drawer to flash white here, so just paint the status
         // bar to match the app bar; the icon tint already applied by CoordinatorAppBarLayout stays
@@ -773,7 +773,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
         binding.emptyView.fadeToVisibilityUnsafe(stateful is Success && !hasFiles)
         // D-pad focus: when the list has items, the RecyclerView container itself must NOT be a
-        // focus target — otherwise focus coming from the toolbar can land on the container (which
+        // focus target: otherwise focus coming from the toolbar can land on the container (which
         // scrolls without highlighting any row) instead of on a row. Keep it focusable only when
         // empty, so an empty folder can still hold focus (e.g. for DPAD LEFT to open the drawer).
         binding.recyclerView.isFocusable = !hasFiles
@@ -990,7 +990,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         requireActivity().title = title
         applyToolbarTitleMarquee()
         if (pickOptions != null) {
-            // Replace the hamburger with a close affordance that cancels the pick — the standard
+            // Replace the hamburger with a close affordance that cancels the pick: the standard
             // "you're in a picker, not the main app" signal. Normal mode is left untouched.
             binding.toolbar.setNavigationIcon(R.drawable.close_icon_control_normal_24dp)
             binding.toolbar.setNavigationContentDescription(android.R.string.cancel)
@@ -1582,7 +1582,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
     }
 
     // If the user picked a default app for this file's category (Settings > Default apps), open it
-    // directly with that app instead of asking — but only when the app can actually handle the file,
+    // directly with that app instead of asking, but only when the app can actually handle the file,
     // otherwise fall back to the normal handling.
     private fun applyDefaultAppPackage(intent: Intent, mimeType: MimeType) {
         val category = FileOpenAppCategory.forMimeType(mimeType) ?: return

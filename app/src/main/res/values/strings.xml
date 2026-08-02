@@ -834,9 +834,9 @@
     <string name="about_update_summary_idle">Tap to check</string>
     <string name="about_update_checking">Checking…</string>
     <string name="about_update_up_to_date">You\'re up to date</string>
-    <string name="about_update_available_summary_format">Version %1$s — tap to install</string>
+    <string name="about_update_available_summary_format">Version %1$s: tap to install</string>
     <string name="about_update_downloading">Downloading update…</string>
-    <string name="about_update_download_failed">Download failed — tap to retry</string>
+    <string name="about_update_download_failed">Download failed: tap to retry</string>
 
     <string name="shortcut_downloads_title" translatable="false">@string/navigation_standard_directory_downloads</string>
     <string name="shortcut_ftp_server_title" translatable="false">@string/ftp_server_title</string>

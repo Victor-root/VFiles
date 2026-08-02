@@ -34,7 +34,7 @@ class FileListActivity : AppActivity() {
 
         if (!Settings.ONBOARDING_COMPLETED.valueCompat) {
             if (isStorageAlreadyGranted()) {
-                // Existing install with permissions already granted — skip onboarding.
+                // Existing install with permissions already granted: skip onboarding.
                 Settings.ONBOARDING_COMPLETED.putValue(true)
             } else {
                 startActivity(OnboardingActivity::class.createIntent())
