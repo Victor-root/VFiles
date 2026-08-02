@@ -15,9 +15,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.widget.ViewPager2
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import java8.nio.file.Path
@@ -45,7 +47,7 @@ import me.zhanghai.android.files.util.withChooser
 import me.zhanghai.android.systemuihelper.SystemUiHelper
 import java.io.IOException
 
-class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
+class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener, MenuProvider {
     private val args by args<Args>()
     private val argsPaths by lazy { args.intent.extraPathList }
 
@@ -61,8 +63,6 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
         super.onCreate(savedInstanceState)
 
         paths = (savedInstanceState?.getState<State>()?.paths ?: argsPaths).toMutableList()
-
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -76,6 +76,8 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         if (paths.isEmpty()) {
             // TODO: Show a toast.
@@ -123,7 +125,7 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
         super.onViewStateRestored(savedInstanceState)
 
         if (paths.isEmpty()) {
-            // We did finish the activity in onActivityCreated(), however we will still be called
+            // We did finish the activity in onViewCreated(), however we will still be called
             // here before the activity is actually finished.
             return
         }
@@ -137,13 +139,11 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
         outState.putState(State(paths))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.image_viewer, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+    override fun onMenuItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_delete -> {
                 confirmDelete()
@@ -153,7 +153,7 @@ class ImageViewerFragment : Fragment(), ConfirmDeleteDialogFragment.Listener {
                 share()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
 
     private fun confirmDelete() {

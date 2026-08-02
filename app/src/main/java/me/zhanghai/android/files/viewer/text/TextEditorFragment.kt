@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -44,7 +45,7 @@ import me.zhanghai.android.files.util.viewModels
 import java.nio.charset.Charset
 
 class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
-    ConfirmCloseDialogFragment.Listener {
+    ConfirmCloseDialogFragment.Listener, MenuProvider {
     private val args by args<Args>()
     private lateinit var argsFile: Path
 
@@ -60,8 +61,6 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
 
         lifecycleScope.launch {
             // One-shot: addOnBackPressedCallback() needs viewLifecycleOwner, which only exists
@@ -101,6 +100,8 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         val argsFile = args.intent.extraPath
         if (argsFile == null) {
@@ -147,20 +148,16 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
         viewModel.setEditTextSavedState(binding.textEdit.onSaveInstanceState())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         menuBinding = MenuBinding.inflate(menu, inflater)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-
+    override fun onPrepareMenu(menu: Menu) {
         updateSaveMenuItem()
         updateEncodingMenuItems()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+    override fun onMenuItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_save -> {
                 save()
@@ -174,7 +171,7 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
                 viewModel.encoding.value = Charset.forName(item.titleCondensed!!.toString())
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
 
     fun onSupportNavigateUp(): Boolean {

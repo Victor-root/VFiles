@@ -52,6 +52,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuProvider
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -59,6 +60,7 @@ import androidx.core.view.updatePaddingRelative
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -170,7 +172,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
     ShowRequestNotificationPermissionRationaleDialogFragment.Listener,
     ShowRequestNotificationPermissionInSettingsRationaleDialogFragment.Listener,
     ShowRequestStoragePermissionRationaleDialogFragment.Listener,
-    ShowRequestStoragePermissionInSettingsRationaleDialogFragment.Listener {
+    ShowRequestStoragePermissionInSettingsRationaleDialogFragment.Listener, MenuProvider {
     private val requestAllFilesAccessLauncher = registerForActivityResult(
         RequestAllFilesAccessContract(), this::onRequestAllFilesAccessResult
     )
@@ -221,12 +223,6 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         viewModel.search(query)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -238,6 +234,8 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         if (savedInstanceState == null) {
             navigationFragment = NavigationFragment()
@@ -511,9 +509,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         fileJobProgressPopup = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         menuBinding = MenuBinding.inflate(menu, inflater)
         menu.setOptionalIconsVisibleCompat(true)
         menuBinding.viewSortItem.subMenu!!.apply {
@@ -598,15 +594,13 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-
+    override fun onPrepareMenu(menu: Menu) {
         updateViewSortMenuItems()
         updateSelectAllMenuItem()
         updateShowHiddenFilesMenuItem()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 binding.drawerLayout?.openDrawer(GravityCompat.START)
@@ -703,7 +697,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                 createShortcut()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 
