@@ -15,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withCreated
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -49,8 +52,10 @@ class EditFtpServerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launchWhenStarted {
-            launch { viewModel.connectState.collect { onConnectStateChanged(it) } }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.connectState.collect { onConnectStateChanged(it) } }
+            }
         }
     }
 
@@ -67,16 +72,18 @@ class EditFtpServerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val activity = requireActivity() as AppCompatActivity
-        activity.lifecycleScope.launchWhenCreated {
-            activity.setSupportActionBar(binding.toolbar)
-            activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            activity.setTitle(
-                if (args.server != null) {
-                    R.string.storage_edit_ftp_server_title_edit
-                } else {
-                    R.string.storage_edit_ftp_server_title_add
-                }
-            )
+        activity.lifecycleScope.launch {
+            activity.withCreated {
+                activity.setSupportActionBar(binding.toolbar)
+                activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                activity.setTitle(
+                    if (args.server != null) {
+                        R.string.storage_edit_ftp_server_title_edit
+                    } else {
+                        R.string.storage_edit_ftp_server_title_add
+                    }
+                )
+            }
         }
 
         binding.hostEdit.hideTextInputLayoutErrorOnTextChange(binding.hostLayout)

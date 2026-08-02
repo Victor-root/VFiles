@@ -19,7 +19,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withCreated
+import androidx.lifecycle.withStarted
 import java8.nio.file.Path
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -59,23 +63,30 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
 
         setHasOptionsMenu(true)
 
-        lifecycleScope.launchWhenStarted {
-            onBackPressedCallback = object : OnBackPressedCallback(false) {
-                override fun handleOnBackPressed() {
-                    ConfirmCloseDialogFragment.show(this@TextEditorFragment)
+        lifecycleScope.launch {
+            // One-shot: addOnBackPressedCallback() needs viewLifecycleOwner, which only exists
+            // from onViewCreated() onward, so this waits for STARTED (which is reached after
+            // onViewCreated()) but must run exactly once, not restart on every re-entry into
+            // STARTED like the ongoing collectors below.
+            withStarted {
+                onBackPressedCallback = object : OnBackPressedCallback(false) {
+                    override fun handleOnBackPressed() {
+                        ConfirmCloseDialogFragment.show(this@TextEditorFragment)
+                    }
                 }
+                addOnBackPressedCallback(onBackPressedCallback)
             }
-            launch {
-                viewModel.isTextChanged.collect {
-                    onBackPressedCallback.isEnabled = viewModel.isTextChanged.value
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.isTextChanged.collect {
+                        onBackPressedCallback.isEnabled = viewModel.isTextChanged.value
+                    }
                 }
+                launch { viewModel.encoding.collect { onEncodingChanged(it) } }
+                launch { viewModel.textState.collect { onTextStateChanged(it) } }
+                launch { viewModel.isTextChanged.collect { onIsTextChangedChanged(it) } }
+                launch { viewModel.writeFileState.collect { onWriteFileStateChanged(it) } }
             }
-            addOnBackPressedCallback(onBackPressedCallback)
-
-            launch { viewModel.encoding.collect { onEncodingChanged(it) } }
-            launch { viewModel.textState.collect { onTextStateChanged(it) } }
-            launch { viewModel.isTextChanged.collect { onIsTextChangedChanged(it) } }
-            launch { viewModel.writeFileState.collect { onWriteFileStateChanged(it) } }
         }
     }
 
@@ -100,9 +111,11 @@ class TextEditorFragment : Fragment(), ConfirmReloadDialogFragment.Listener,
         this.argsFile = argsFile
 
         val activity = requireActivity() as AppCompatActivity
-        activity.lifecycleScope.launchWhenCreated {
-            activity.setSupportActionBar(binding.toolbar)
-            activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        activity.lifecycleScope.launch {
+            activity.withCreated {
+                activity.setSupportActionBar(binding.toolbar)
+                activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            }
         }
 
         // TODO: Move reload-prevent here so that we can also handle save-as, etc. Or maybe just get
