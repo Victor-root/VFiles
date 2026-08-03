@@ -73,9 +73,7 @@ Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 - Corrections de focus : ne plus rester bloqué dans un dossier vide ; gestion de
   l'interrupteur du serveur FTP.
 
-### Mises à jour & premier lancement
-- **Mise à jour intégrée** : installe les nouvelles versions directement depuis
-  GitHub (désactivée pour les installations F-Droid).
+### Premier lancement
 - Flux d'autorisations au premier lancement (onboarding).
 
 ### Paramètres
@@ -88,7 +86,7 @@ Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
   de JitPack (build plus fiable).
 
 ### Identité du fork & traductions
-- Rebranding : `applicationId` `fr.vroot.android.files`, nom de lanceur
+- Rebranding : `applicationId` `fr.vroot.vfiles`, nom de lanceur
   localisé, icônes, écran « À propos » (Victor-root mainteneur, Hai Zhang
   crédité comme auteur original).
 - README réécrit (anglais + français avec sélecteur de langue) ; ancien README
