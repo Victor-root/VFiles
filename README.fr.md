@@ -1,4 +1,4 @@
-# Material Files (fork de Victor-root)
+# VFiles
 
 [English](README.md) · **Français**
 
@@ -44,6 +44,7 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Tiroir de navigation repensé et thémé pour Material You (M3), avec corrections des couleurs en mode sombre et du curseur des interrupteurs.
 - Les noms longs passent à la ligne au lieu d'être coupés par « … ».
 - Stockage interne renommé avec une icône de téléphone ; un vrai ruban marque les dossiers en marque-page ; icône du serveur FTP rafraîchie.
+- **Bord à bord** optionnel (Réglages → Interface → « Bord à bord ») : le contenu défile derrière la barre d'état et la barre de navigation au lieu de s'arrêter au-dessus. Désactivé par défaut.
 
 ### 🐛 Autres corrections et finitions
 - Message clair quand un dossier ne peut pas être ouvert, au lieu d'un échec silencieux.
@@ -53,13 +54,13 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Toutes les chaînes propres au fork traduites en **31 langues**.
 - Identifiant d'application changé en `fr.vroot.vfiles`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
 
-## 🗂️ Faire de Material Files le sélecteur de fichiers par défaut du système
+## 🗂️ Faire de VFiles le sélecteur de fichiers par défaut du système
 
-Material Files expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android, pas seulement le stockage local : les partages SMB, FTP, SFTP et WebDAV, ainsi que le contenu des archives, apparaissent comme de simples dossiers dans la boîte de dialogue « Ouvrir » ou « Enregistrer » de n'importe quelle app, exactement comme un dossier local.
+VFiles expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android, pas seulement le stockage local : les partages SMB, FTP, SFTP et WebDAV, ainsi que le contenu des archives, apparaissent comme de simples dossiers dans la boîte de dialogue « Ouvrir » ou « Enregistrer » de n'importe quelle app, exactement comme un dossier local.
 
-Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **Google DocumentsUI** (`com.google.android.documentsui`), même si Material Files est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers Material Files comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
+Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **Google DocumentsUI** (`com.google.android.documentsui`), même si VFiles est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers VFiles comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
 
-### Désactiver (faire de Material Files le sélecteur par défaut)
+### Désactiver (faire de VFiles le sélecteur par défaut)
 
 ```sh
 # Désactiver l'application DocumentsUI principale
@@ -69,7 +70,7 @@ adb shell pm disable-user --user 0 com.google.android.documentsui
 adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
 ```
 
-Après ces commandes, toute application qui ouvre un sélecteur de fichier ou de dossier utilisera Material Files.
+Après ces commandes, toute application qui ouvre un sélecteur de fichier ou de dossier utilisera VFiles.
 
 ### Réactiver (remettre le sélecteur Google)
 
@@ -87,7 +88,7 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 
 ### 🔧 Pour les créateurs de ROM : en faire le vrai sélecteur système
 
-Une variante de build séparée et optionnelle, `systemPicker`, permet à un créateur de ROM de remplacer purement et simplement DocumentsUI : signé avec la clé plateforme de la ROM, Material Files renvoie exactement les mêmes URI de stockage que DocumentsUI, si bien que même les apps qui les exigent spécifiquement (pas seulement celles qui utilisent le sélecteur générique ci-dessus) fonctionnent avec lui. Voir [`docs/systempicker-integration.md`](docs/systempicker-integration.md) (en anglais) pour les prérequis et les étapes d'intégration. Cela n'affecte en rien une installation normale.
+Une variante de build séparée et optionnelle, `systemPicker`, permet à un créateur de ROM de remplacer purement et simplement DocumentsUI : signé avec la clé plateforme de la ROM, VFiles renvoie exactement les mêmes URI de stockage que DocumentsUI, si bien que même les apps qui les exigent spécifiquement (pas seulement celles qui utilisent le sélecteur générique ci-dessus) fonctionnent avec lui. Voir [`docs/systempicker-integration.md`](docs/systempicker-integration.md) (en anglais) pour les prérequis et les étapes d'intégration. Cela n'affecte en rien une installation normale.
 
 ---
 

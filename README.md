@@ -1,4 +1,4 @@
-# Material Files (Victor-root fork)
+# VFiles
 
 **English** · [Français](README.fr.md)
 
@@ -44,6 +44,7 @@ The original repository remains the reference; the sections below describe **onl
 - Navigation drawer redesigned and themed for Material You (M3), including dark-mode colour and switch-thumb fixes.
 - Long names wrap instead of being cut off with "…".
 - Internal storage renamed with a phone icon; a real ribbon marks bookmarked folders; refreshed FTP-server icon.
+- Optional **edge-to-edge display** (Settings → Interface → "Edge-to-edge display"): content scrolls behind the status and navigation bars instead of stopping above them. Off by default.
 
 ### 🐛 Other fixes & polish
 - Friendly message when a folder can't be opened, instead of a silent failure.
@@ -53,13 +54,13 @@ The original repository remains the reference; the sections below describe **onl
 - All fork-specific strings translated into **31 languages**.
 - App ID changed to `fr.vroot.vfiles` so it installs alongside the Play/F-Droid build rather than conflicting with it.
 
-## 🗂️ Making Material Files the default system file picker
+## 🗂️ Making VFiles the default system file picker
 
-Material Files exposes **every backend it supports** through Android's file picker, not just local storage: SMB, FTP, SFTP and WebDAV shares, and the contents of archives, all show up as regular folders inside any app's "Open" or "Save" dialog, the same way a local folder would.
+VFiles exposes **every backend it supports** through Android's file picker, not just local storage: SMB, FTP, SFTP and WebDAV shares, and the contents of archives, all show up as regular folders inside any app's "Open" or "Save" dialog, the same way a local folder would.
 
-Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` intents through **Google DocumentsUI** (`com.google.android.documentsui`), even when Material Files is installed as a DocumentsProvider. Disabling that system app makes Android fall back to Material Files as the picker for every app on the device. No root required, just ADB over USB.
+Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` intents through **Google DocumentsUI** (`com.google.android.documentsui`), even when VFiles is installed as a DocumentsProvider. Disabling that system app makes Android fall back to VFiles as the picker for every app on the device. No root required, just ADB over USB.
 
-### Disable (make Material Files the default picker)
+### Disable (make VFiles the default picker)
 
 ```sh
 # Disable the main DocumentsUI app
@@ -69,7 +70,7 @@ adb shell pm disable-user --user 0 com.google.android.documentsui
 adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
 ```
 
-After running these, any app that opens a file or folder picker will use Material Files instead.
+After running these, any app that opens a file or folder picker will use VFiles instead.
 
 ### Re-enable (restore Google's picker)
 
@@ -87,7 +88,7 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 
 ### 🔧 For ROM builders: making it the literal system picker
 
-A separate, opt-in `systemPicker` build variant lets a ROM builder replace DocumentsUI outright: signed with the ROM's platform key, Material Files hands back the exact same storage URIs DocumentsUI would, so even apps that specifically require them (not just apps using the generic picker above) work against it. See [`docs/systempicker-integration.md`](docs/systempicker-integration.md) for the requirements and integration steps. This does not affect a normal install in any way.
+A separate, opt-in `systemPicker` build variant lets a ROM builder replace DocumentsUI outright: signed with the ROM's platform key, VFiles hands back the exact same storage URIs DocumentsUI would, so even apps that specifically require them (not just apps using the generic picker above) work against it. See [`docs/systempicker-integration.md`](docs/systempicker-integration.md) for the requirements and integration steps. This does not affect a normal install in any way.
 
 ---
 

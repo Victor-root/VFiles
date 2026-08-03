@@ -1,4 +1,4 @@
-# Using Material Files as the system document picker (`systemPicker` flavor)
+# Using VFiles as the system document picker (`systemPicker` flavor)
 
 > **Audience: ROM builders / integrators.** This is **not** something you install as an APK. It
 > only works when the build is signed with the **platform key** of the ROM it ships in. On a stock,
@@ -13,16 +13,16 @@ By default Android routes the Storage Access Framework intents (`OPEN_DOCUMENT`,
 `android.permission.MANAGE_DOCUMENTS`, the system lets it grant those URIs to the calling app even
 though it does not own the provider.
 
-A normal build of Material Files returns URIs from **its own** providers instead
+A normal build of VFiles returns URIs from **its own** providers instead
 (`…documents` / `…file_provider`). That works for most apps, but apps that require genuine
 `ExternalStorageProvider` URIs (the whole SimpleMobileTools / **Fossify** family, which compares the
 returned tree URI for strict equality and then `takePersistableUriPermission()`s it) reject them.
 
-The `systemPicker` flavor makes Material Files behave like DocumentsUI: for a folder/file on **local
+The `systemPicker` flavor makes VFiles behave like DocumentsUI: for a folder/file on **local
 storage** it returns the same `com.android.externalstorage.documents` tree/document URI DocumentsUI
 would, with the same grant flags. The actual reads/writes are then served by the genuine
 `ExternalStorageProvider` (a separate package, `com.android.externalstorage`, which stays present),
-not by Material Files. Remote backends (SMB/FTP/SFTP/WebDAV/archives) keep returning Material Files'
+not by VFiles. Remote backends (SMB/FTP/SFTP/WebDAV/archives) keep returning VFiles'
 own URIs, since `ExternalStorageProvider` cannot serve them.
 
 ## Why the platform signature is mandatory
@@ -35,7 +35,7 @@ DocumentsUI obtains it (`certificate: platform` in its `Android.bp`).
 
 The code is defensively gated: it emits an `ExternalStorageProvider` URI only when
 `checkSelfPermission(MANAGE_DOCUMENTS) == GRANTED` at runtime. If the flavor is built but **not**
-platform-signed, the permission is not granted, the check fails, and Material Files transparently
+platform-signed, the permission is not granted, the check fails, and VFiles transparently
 falls back to its normal behavior. It does not crash and does not hand back a dead URI.
 
 ## Building the flavor
@@ -56,15 +56,15 @@ already lives in the main manifest.
 
 ## Integrating into a ROM
 
-1. **Sign with the platform key.** In your ROM tree, add Material Files as a prebuilt and set
+1. **Sign with the platform key.** In your ROM tree, add VFiles as a prebuilt and set
    `LOCAL_CERTIFICATE := platform` (Android.mk) / `certificate: "platform"` (Android.bp), or sign the
    `systemPicker` APK with the ROM's platform key. This is the only *required* step for the
    permission.
 2. **Place it in the system image** (`/system` or `/system_ext`).
 3. **Remove or disable the stock DocumentsUI** (`com.android.documentsui`). It wins SAF intent
-   resolution via `android:priority="100"` on its filters (Material Files' filters are priority 0),
+   resolution via `android:priority="100"` on its filters (VFiles' filters are priority 0),
    and it is *not* a reassignable `RoleManager` role, so as long as it is present it will be chosen.
-   Once it is gone, Material Files is the sole SAF handler.
+   Once it is gone, VFiles is the sole SAF handler.
 
 `ExternalStorageProvider` (`com.android.externalstorage`) must stay enabled: it is a separate
 package from DocumentsUI and serves the actual document I/O.
@@ -88,8 +88,8 @@ build:
 
 ## Scope / known limitations
 
-- **`CREATE_DOCUMENT`** keeps Material Files' own `file_provider` URI (it works for generic
-  consumers). `ExternalStorageProvider` only serves an *existing* document, and Material Files
+- **`CREATE_DOCUMENT`** keeps VFiles' own `file_provider` URI (it works for generic
+  consumers). `ExternalStorageProvider` only serves an *existing* document, and VFiles
   creates the file lazily on first write, so emitting an ESP document URI for a not-yet-created file
   would be a dead URI. Folder grants (`OPEN_DOCUMENT_TREE`) and opening existing files
   (`OPEN_DOCUMENT`/`GET_CONTENT`) are the covered cases.
