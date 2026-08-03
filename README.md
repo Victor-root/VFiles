@@ -2,7 +2,10 @@
 
 **English** · [Français](README.fr.md)
 
-[![Latest release](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/Victor-root/VFiles?style=for-the-badge&logo=github&label=release)](https://github.com/Victor-root/VFiles/releases)
+[![Last update](https://img.shields.io/github/last-commit/Victor-root/VFiles/main?style=for-the-badge&logo=git&label=last%20update)](https://github.com/Victor-root/VFiles/commits/main)
+[![Android](https://img.shields.io/badge/Android-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Victor-root/VFiles/releases/latest)
+[![Android TV](https://img.shields.io/badge/Android%20TV-supported-3DDC84?style=for-the-badge&logo=androidtv&logoColor=white)](https://github.com/Victor-root/VFiles/releases/latest)
 
 [<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://github.com/Victor-root/Omnify)
 
