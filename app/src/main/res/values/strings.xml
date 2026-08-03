@@ -770,6 +770,8 @@
     </string-array>
     <string name="settings_black_night_mode">Black night mode</string>
     <string name="settings_file_list_animation_title">File list animation</string>
+    <string name="settings_edge_to_edge_title">Edge-to-edge display</string>
+    <string name="settings_edge_to_edge_summary">Content scrolls behind the status and navigation bars</string>
     <string name="settings_file_name_ellipsize_title">Display long file name</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Ellipsize the beginning</item>

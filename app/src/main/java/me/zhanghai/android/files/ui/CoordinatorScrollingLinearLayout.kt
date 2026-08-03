@@ -27,7 +27,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.layoutInNavigation
+import me.zhanghai.android.files.util.valueCompat
 
 class CoordinatorScrollingLinearLayout : LinearLayout, AttachedBehavior {
     private var bottomInsets: WindowInsets? = null
@@ -129,7 +131,11 @@ class CoordinatorScrollingLinearLayout : LinearLayout, AttachedBehavior {
             var parentHeightMeasureSpec = parentHeightMeasureSpec
             @SuppressLint("RestrictedApi")
             val parentInsets = parent.lastWindowInsets
-            if (parentInsets != null) {
+            // Edge-to-edge spans the whole window instead: the app bar no longer reserves the top
+            // inset (see CoordinatorAppBarLayout), so this content has to be tall enough to reach
+            // the top of the window once the app bar has scrolled away, and it draws into the
+            // navigation bar rather than stopping above it.
+            if (parentInsets != null && !Settings.EDGE_TO_EDGE.valueCompat) {
                 val parentHeightSize = (MeasureSpec.getSize(parentHeightMeasureSpec)
                     - parentInsets.systemWindowInsetTop - parentInsets.systemWindowInsetBottom)
                 val parentHeightMode = MeasureSpec.getMode(parentHeightMeasureSpec)

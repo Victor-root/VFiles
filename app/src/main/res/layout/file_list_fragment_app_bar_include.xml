@@ -19,39 +19,50 @@
         app:liftOnScroll="true"
         app:liftOnScrollTargetViewId="@id/recyclerView">
 
-        <FrameLayout
+        <!--
+          ~ The toolbar and the breadcrumb row below it are grouped into a single scrolling child
+          ~ here (rather than two separate ones) so CoordinatorAppBarLayout only ever has to deal
+          ~ with one scroll-flagged child, like every other screen using it.
+          -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_scrollFlags="@integer/file_list_toolbar_scroll_flags">
 
-            <me.zhanghai.android.files.ui.CrossfadeSubtitleToolbar
-                android:id="@+id/toolbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:paddingStart="@dimen/file_list_toolbar_padding_start"
-                android:paddingEnd="@dimen/file_list_toolbar_padding_end_with_overflow"
-                app:navigationIcon="@drawable/menu_icon_control_normal_24dp"
-                app:navigationContentDescription="@string/open_navigation_drawer"
-                app:popupTheme="?actionBarPopupTheme"
-                app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Small" />
+                android:layout_height="wrap_content">
 
-            <me.zhanghai.android.files.ui.OverlayToolbar
-                android:id="@+id/overlayToolbar"
+                <me.zhanghai.android.files.ui.CrossfadeSubtitleToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:paddingStart="@dimen/file_list_toolbar_padding_start"
+                    android:paddingEnd="@dimen/file_list_toolbar_padding_end_with_overflow"
+                    app:navigationIcon="@drawable/menu_icon_control_normal_24dp"
+                    app:navigationContentDescription="@string/open_navigation_drawer"
+                    app:popupTheme="?actionBarPopupTheme"
+                    app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Small" />
+
+                <me.zhanghai.android.files.ui.OverlayToolbar
+                    android:id="@+id/overlayToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:paddingStart="@dimen/file_list_toolbar_padding_start"
+                    android:paddingEnd="@dimen/file_list_toolbar_padding_end_with_overflow"
+                    android:background="?colorAppBarSurface"
+                    android:visibility="gone"
+                    app:navigationIcon="@drawable/close_icon_control_normal_24dp"
+                    app:popupTheme="?actionBarPopupTheme" />
+            </FrameLayout>
+
+            <me.zhanghai.android.files.filelist.BreadcrumbLayout
+                android:id="@+id/breadcrumbLayout"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:paddingStart="@dimen/file_list_toolbar_padding_start"
-                android:paddingEnd="@dimen/file_list_toolbar_padding_end_with_overflow"
-                android:background="?colorAppBarSurface"
-                android:visibility="gone"
-                app:navigationIcon="@drawable/close_icon_control_normal_24dp"
-                app:popupTheme="?actionBarPopupTheme" />
-        </FrameLayout>
-
-        <me.zhanghai.android.files.filelist.BreadcrumbLayout
-            android:id="@+id/breadcrumbLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/content_start_margin_minus_12dp"
-            android:paddingEnd="@dimen/screen_edge_margin_minus_12dp" />
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/content_start_margin_minus_12dp"
+                android:paddingEnd="@dimen/screen_edge_margin_minus_12dp" />
+        </LinearLayout>
     </me.zhanghai.android.files.ui.CoordinatorAppBarLayout>
 </merge>

@@ -680,6 +680,8 @@
     </string-array>
     <string name="settings_black_night_mode">Mode nuit noire</string>
     <string name="settings_file_list_animation_title">Animation de liste de fichiers</string>
+    <string name="settings_edge_to_edge_title">Affichage bord à bord</string>
+    <string name="settings_edge_to_edge_summary">Le contenu défile derrière la barre d\'état et la barre de navigation</string>
     <string name="settings_file_name_ellipsize_title">Affichage du nom de fichier</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Tronquer le début</item>

@@ -51,6 +51,13 @@
             android:defaultValue="@bool/pref_default_value_file_list_animation"
             app:singleLineTitle="false" />
 
+        <SwitchPreferenceCompat
+            android:key="@string/pref_key_edge_to_edge"
+            android:title="@string/settings_edge_to_edge_title"
+            android:summary="@string/settings_edge_to_edge_summary"
+            android:defaultValue="@bool/pref_default_value_edge_to_edge"
+            app:singleLineTitle="false" />
+
         <rikka.preference.SimpleMenuPreference
             android:key="@string/pref_key_file_name_ellipsize"
             android:title="@string/settings_file_name_ellipsize_title"
