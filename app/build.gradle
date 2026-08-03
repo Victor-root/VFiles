@@ -115,7 +115,7 @@ if (project.hasProperty('systemPicker')) {
     }
 }
 
-// Always name the assembled APK "MaterialFiles-v<versionName>.apk" so the file name carries the
+// Always name the assembled APK "VFiles-v<versionName>.apk" so the file name carries the
 // current version. Uses AGP's new variant API (the legacy applicationVariants was removed in newer
 // AGP). The in-app updater reads the version from the GitHub release tag, so this mainly keeps
 // local and signed builds consistently named.
@@ -127,7 +127,7 @@ androidComponents {
         // rename.
         try {
             variant.outputs.each { output ->
-                output.outputFileName.set("MaterialFiles-v${appVersionName}.apk")
+                output.outputFileName.set("VFiles-v${appVersionName}.apk")
             }
         } catch (Throwable t) {
             logger.warn("APK rename skipped: ${t.message}")

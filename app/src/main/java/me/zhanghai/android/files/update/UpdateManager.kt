@@ -19,7 +19,7 @@ import me.zhanghai.android.files.util.valueCompat
  * Silent, GitHub-Releases-backed self-updater.
  *
  *   1. [checkInBackground] hits the releases API on a daemon thread (throttled to once every 12h)
- *      and, when a newer "MaterialFiles-v<version>.apk" asset is published, records it in [Settings]
+ *      and, when a newer "VFiles-v<version>.apk" asset is published, records it in [Settings]
  *      so the navigation drawer can show an unobtrusive badge on "About".
  *
  *   2. The user opens About and taps the entry: [downloadAndInstall] streams the APK into the

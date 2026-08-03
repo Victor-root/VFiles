@@ -11,7 +11,7 @@ import java.net.URL
 /**
  * A newer release published on GitHub Releases.
  *
- * [versionName] is parsed out of the asset filename (e.g. "1.9.0" from "MaterialFiles-v1.9.0.apk").
+ * [versionName] is parsed out of the asset filename (e.g. "1.9.0" from "VFiles-v1.9.0.apk").
  */
 data class ReleaseInfo(
     val versionName: String,
@@ -28,9 +28,9 @@ data class ReleaseInfo(
  * OkHttp/Retrofit in just to issue one request every twelve hours.
  */
 internal object UpdateChecker {
-    // Matches the APK names produced by the "MaterialFiles-v<version>.apk" output renaming in
+    // Matches the APK names produced by the "VFiles-v<version>.apk" output renaming in
     // build.gradle. The version sub-group is fed back verbatim for the comparison below.
-    private val APK_NAME_REGEX = Regex("^MaterialFiles-v(.+)\\.apk$", RegexOption.IGNORE_CASE)
+    private val APK_NAME_REGEX = Regex("^VFiles-v(.+)\\.apk$", RegexOption.IGNORE_CASE)
 
     /**
      * Fetches the latest release for `owner/repo`. Returns null when the request fails, the release
