@@ -27,7 +27,6 @@ android {
         resValue 'string', 'app_provider_authority', applicationId + '.app_provider'
         resValue 'string', 'file_provider_authority', applicationId + '.file_provider'
         resValue 'string', 'documents_provider_authority', applicationId + '.documents'
-        resValue 'string', 'update_provider_authority', applicationId + '.update_provider'
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=none'
@@ -62,8 +61,8 @@ android {
         debug {
             // Sign debug builds (the green-triangle install) with the release key too, when
             // signing.properties is present, so they share a signature with the published release
-            // APK. Without that shared signature you can't install one over the other, which breaks
-            // testing in-app updates. Guarded so builds without signing.properties are unaffected.
+            // APK. Without that shared signature you can't install one over the other without
+            // uninstalling first. Guarded so builds without signing.properties are unaffected.
             if (rootProject.file('signing.properties').exists()) {
                 signingConfig signingConfigs.release
             }
@@ -116,15 +115,13 @@ if (project.hasProperty('systemPicker')) {
 }
 
 // Always name the assembled APK "VFiles-v<versionName>.apk" so the file name carries the
-// current version. Uses AGP's new variant API (the legacy applicationVariants was removed in newer
-// AGP). The in-app updater reads the version from the GitHub release tag, so this mainly keeps
-// local and signed builds consistently named.
+// current version. This is the name users see on the GitHub Releases page. Uses AGP's new
+// variant API (the legacy applicationVariants was removed in newer AGP).
 def appVersionName = android.defaultConfig.versionName
 androidComponents {
     onVariants(selector().all()) { variant ->
-        // Best-effort: the in-app updater no longer relies on the APK file name (it reads the
-        // GitHub release tag), so never let a variant-API difference fail the build over a cosmetic
-        // rename.
+        // Best-effort: this is a cosmetic rename, so never let a variant-API difference fail
+        // the build over it.
         try {
             variant.outputs.each { output ->
                 output.outputFileName.set("VFiles-v${appVersionName}.apk")

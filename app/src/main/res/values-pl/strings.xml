@@ -740,15 +740,7 @@
     <string name="about_author_github_title">Obserwuj na GitHubie</string>
     <string name="about_author_twitter_title">Obserwuj na Twitterze</string>
     <string name="app_name_launcher">Pliki</string>
-    <string name="about_check_for_update_title">Sprawdź aktualizacje</string>
     <string name="about_fork_subtitle">Oryginał: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Wersja %1$s: dotknij, aby zainstalować</string>
-    <string name="about_update_available_title">Dostępna aktualizacja</string>
-    <string name="about_update_checking">Sprawdzanie…</string>
-    <string name="about_update_download_failed">Pobieranie nie powiodło się: dotknij, aby ponowić</string>
-    <string name="about_update_downloading">Pobieranie aktualizacji…</string>
-    <string name="about_update_summary_idle">Dotknij, aby sprawdzić</string>
-    <string name="about_update_up_to_date">Masz najnowszą wersję</string>
     <string name="color_picker_dynamic_color_label">Na podstawie tapety</string>
     <string name="color_picker_preset_colors_label">Inne kolory</string>
     <string name="navigation_bookmarks_hint_subtitle">Dodaj tu ulubione foldery, aby mieć do nich szybki dostęp</string>
@@ -761,11 +753,6 @@
     <string name="onboarding_files_title">Dostęp do plików</string>
     <string name="onboarding_finish">Rozpocznij</string>
     <string name="onboarding_grant">Przyznaj</string>
-    <string name="onboarding_install_apps_description">Zezwól aplikacji Material Files na bezpośrednie instalowanie plików APK. Dzięki temu zainstalujesz aplikacje z pobranych lub otrzymanych plików, bez instalatora innej firmy.</string>
-    <string name="onboarding_install_apps_grant">Zezwól na instalację</string>
-    <string name="onboarding_install_apps_granted">Instalacja dozwolona</string>
-    <string name="onboarding_install_apps_not_granted">Możesz włączyć to później w Ustawieniach</string>
-    <string name="onboarding_install_apps_title">Instaluj aplikacje</string>
     <string name="onboarding_next">Dalej</string>
     <string name="onboarding_notifications_description">Zezwól na powiadomienia, aby śledzić postęp operacji na plikach, takich jak kopiowanie, przenoszenie i archiwizacja, nawet gdy aplikacja działa w tle.</string>
     <string name="onboarding_notifications_grant">Zezwól na powiadomienia</string>

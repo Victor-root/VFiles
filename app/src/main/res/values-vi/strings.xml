@@ -541,15 +541,7 @@
     <string name="about_author_github_title">Theo dõi trên GitHub</string>
     <string name="about_author_twitter_title">Theo dõi trên Twitter</string>
     <string name="app_name_launcher">Tệp</string>
-    <string name="about_check_for_update_title">Kiểm tra cập nhật</string>
     <string name="about_fork_subtitle">Bản gốc bởi Hai Zhang</string>
-    <string name="about_update_available_summary_format">Phiên bản %1$s: nhấn để cài đặt</string>
-    <string name="about_update_available_title">Có bản cập nhật</string>
-    <string name="about_update_checking">Đang kiểm tra…</string>
-    <string name="about_update_download_failed">Tải xuống thất bại: nhấn để thử lại</string>
-    <string name="about_update_downloading">Đang tải bản cập nhật…</string>
-    <string name="about_update_summary_idle">Nhấn để kiểm tra</string>
-    <string name="about_update_up_to_date">Bạn đã cập nhật</string>
     <string name="color_picker_dynamic_color_label">Dựa trên hình nền</string>
     <string name="color_picker_preset_colors_label">Màu khác</string>
     <string name="navigation_bookmarks_hint_subtitle">Thêm các thư mục yêu thích vào đây để truy cập nhanh</string>
@@ -562,11 +554,6 @@
     <string name="onboarding_files_title">Truy cập tệp</string>
     <string name="onboarding_finish">Bắt đầu</string>
     <string name="onboarding_grant">Cấp</string>
-    <string name="onboarding_install_apps_description">Cho phép Material Files cài đặt trực tiếp tệp APK. Nhờ đó bạn có thể cài ứng dụng từ tệp đã tải hoặc nhận mà không cần trình cài đặt của bên thứ ba.</string>
-    <string name="onboarding_install_apps_grant">Cho phép cài đặt</string>
-    <string name="onboarding_install_apps_granted">Đã cho phép cài đặt</string>
-    <string name="onboarding_install_apps_not_granted">Bạn có thể bật mục này sau trong Cài đặt</string>
-    <string name="onboarding_install_apps_title">Cài đặt ứng dụng</string>
     <string name="onboarding_next">Tiếp theo</string>
     <string name="onboarding_notifications_description">Cho phép thông báo để theo dõi tiến trình các thao tác tệp như sao chép, di chuyển và nén, ngay cả khi ứng dụng chạy nền.</string>
     <string name="onboarding_notifications_grant">Cho phép thông báo</string>

@@ -647,15 +647,7 @@
     <string name="about_author_github_title">GitHub 팔로우하기</string>
     <string name="about_author_twitter_title">Twitter 팔로우하기</string>
     <string name="app_name_launcher">파일</string>
-    <string name="about_check_for_update_title">업데이트 확인</string>
     <string name="about_fork_subtitle">원작자: Hai Zhang</string>
-    <string name="about_update_available_summary_format">버전 %1$s: 탭하여 설치</string>
-    <string name="about_update_available_title">업데이트 사용 가능</string>
-    <string name="about_update_checking">확인 중…</string>
-    <string name="about_update_download_failed">다운로드 실패: 탭하여 재시도</string>
-    <string name="about_update_downloading">업데이트 다운로드 중…</string>
-    <string name="about_update_summary_idle">탭하여 확인</string>
-    <string name="about_update_up_to_date">최신 상태입니다</string>
     <string name="color_picker_dynamic_color_label">배경화면 기반</string>
     <string name="color_picker_preset_colors_label">다른 색상</string>
     <string name="navigation_bookmarks_hint_subtitle">자주 쓰는 폴더를 여기에 추가하여 빠르게 접근하세요</string>
@@ -668,11 +660,6 @@
     <string name="onboarding_files_title">파일 액세스</string>
     <string name="onboarding_finish">시작하기</string>
     <string name="onboarding_grant">허용</string>
-    <string name="onboarding_install_apps_description">Material Files가 APK 파일을 직접 설치하도록 허용합니다. 타사 설치 프로그램 없이 다운로드하거나 받은 파일에서 앱을 설치할 수 있습니다.</string>
-    <string name="onboarding_install_apps_grant">설치 허용</string>
-    <string name="onboarding_install_apps_granted">설치 허용됨</string>
-    <string name="onboarding_install_apps_not_granted">나중에 설정에서 사용 설정할 수 있습니다</string>
-    <string name="onboarding_install_apps_title">앱 설치</string>
     <string name="onboarding_next">다음</string>
     <string name="onboarding_notifications_description">알림을 허용하면 앱이 백그라운드에 있을 때에도 복사, 이동, 압축 등 파일 작업의 진행 상황을 추적할 수 있습니다.</string>
     <string name="onboarding_notifications_grant">알림 허용</string>

@@ -678,15 +678,7 @@
     <string name="about_author_github_title">Auf GitHub folgen</string>
     <string name="about_author_twitter_title">Auf Twitter folgen</string>
     <string name="app_name_launcher">Dateien</string>
-    <string name="about_check_for_update_title">Nach Updates suchen</string>
     <string name="about_fork_subtitle">Original von Hai Zhang</string>
-    <string name="about_update_available_summary_format">Version %1$s – zum Installieren tippen</string>
-    <string name="about_update_available_title">Update verfügbar</string>
-    <string name="about_update_checking">Suche…</string>
-    <string name="about_update_download_failed">Download fehlgeschlagen – zum Wiederholen tippen</string>
-    <string name="about_update_downloading">Update wird heruntergeladen…</string>
-    <string name="about_update_summary_idle">Zum Prüfen tippen</string>
-    <string name="about_update_up_to_date">Alles aktuell</string>
     <string name="color_picker_dynamic_color_label">Anhand des Hintergrunds</string>
     <string name="color_picker_preset_colors_label">Andere Farben</string>
     <string name="navigation_bookmarks_hint_subtitle">Füge hier deine Lieblingsordner für schnellen Zugriff hinzu</string>
@@ -699,11 +691,6 @@
     <string name="onboarding_files_title">Dateizugriff</string>
     <string name="onboarding_finish">Loslegen</string>
     <string name="onboarding_grant">Erlauben</string>
-    <string name="onboarding_install_apps_description">Erlaube Material Files, APK-Dateien direkt zu installieren. So installierst du Apps aus heruntergeladenen oder erhaltenen Dateien, ohne einen Installer von Drittanbietern.</string>
-    <string name="onboarding_install_apps_grant">Installation erlauben</string>
-    <string name="onboarding_install_apps_granted">Installation erlaubt</string>
-    <string name="onboarding_install_apps_not_granted">Du kannst dies später in den Einstellungen aktivieren</string>
-    <string name="onboarding_install_apps_title">Apps installieren</string>
     <string name="onboarding_next">Weiter</string>
     <string name="onboarding_notifications_description">Erlaube Benachrichtigungen, um den Fortschritt von Dateivorgängen wie Kopieren, Verschieben und Archivieren zu verfolgen – auch wenn die App im Hintergrund läuft.</string>
     <string name="onboarding_notifications_grant">Benachrichtigungen erlauben</string>

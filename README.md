@@ -29,10 +29,7 @@
 - Fixed getting stuck in an empty folder (focus falls back to the toolbar) and a focus jump when toggling the FTP server.
 
 ### 🚀 First-launch onboarding
-- A welcome flow that requests the permissions the app needs (all-files access, notifications, install-from-APK) up front, so nothing has to be granted mid-use later.
-
-### ⬆️ In-app updates
-- Checks this repo's GitHub releases and can download and install a newer APK directly from **About → Check for updates**, no store required.
+- A welcome flow that requests the permissions the app needs (all-files access, notifications) up front, so nothing has to be granted mid-use later.
 
 ### 💾 Removable storage (SD card / USB), reworked
 - SD cards and USB drives **appear automatically under "Internal storage"** and refresh when you plug one in. No manual "Add storage" SAF dance.
@@ -66,6 +63,10 @@
 - Back exits at the root instead of leaving the app stuck, and long toolbar titles now marquee-scroll.
 - All fork-specific strings translated into **31 languages**.
 - App ID changed to `fr.vroot.vfiles` so it installs alongside the Play/F-Droid build rather than conflicting with it.
+
+## ⬆️ Updating VFiles
+
+There's no in-app updater and no store listing. To update: open the [Releases page](https://github.com/Victor-root/VFiles/releases), download the latest APK, and install it over your current install. It's signed with the same key each time, so your files and settings are kept. Whichever app opens the downloaded file (browser, file manager) will ask, the first time, for permission to install unknown apps.
 
 ## 🗂️ Making VFiles the default system file picker
 

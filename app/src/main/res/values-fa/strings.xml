@@ -572,15 +572,7 @@
     <string name="about_author_github_title">پی‌گیری در گیت‌هاب</string>
     <string name="about_author_twitter_title">پی‌گیری در توییتر</string>
     <string name="app_name_launcher">فایل‌ها</string>
-    <string name="about_check_for_update_title">بررسی به‌روزرسانی‌ها</string>
     <string name="about_fork_subtitle">اصلی از Hai Zhang</string>
-    <string name="about_update_available_summary_format">نسخهٔ %1$s: برای نصب ضربه بزنید</string>
-    <string name="about_update_available_title">به‌روزرسانی موجود است</string>
-    <string name="about_update_checking">در حال بررسی…</string>
-    <string name="about_update_download_failed">دانلود ناموفق بود: برای تلاش دوباره ضربه بزنید</string>
-    <string name="about_update_downloading">در حال دانلود به‌روزرسانی…</string>
-    <string name="about_update_summary_idle">برای بررسی ضربه بزنید</string>
-    <string name="about_update_up_to_date">برنامه به‌روز است</string>
     <string name="color_picker_dynamic_color_label">بر اساس کاغذدیواری</string>
     <string name="color_picker_preset_colors_label">رنگ‌های دیگر</string>
     <string name="navigation_bookmarks_hint_subtitle">پوشه‌های دلخواه خود را برای دسترسی سریع اینجا اضافه کنید</string>
@@ -593,11 +585,6 @@
     <string name="onboarding_files_title">دسترسی به فایل‌ها</string>
     <string name="onboarding_finish">شروع</string>
     <string name="onboarding_grant">اعطا</string>
-    <string name="onboarding_install_apps_description">به Material Files اجازه دهید فایل‌های APK را مستقیماً نصب کند. به این ترتیب می‌توانید برنامه‌ها را از فایل‌های دانلود یا دریافت‌شده بدون نصب‌کنندهٔ شخص ثالث نصب کنید.</string>
-    <string name="onboarding_install_apps_grant">اجازهٔ نصب</string>
-    <string name="onboarding_install_apps_granted">نصب مجاز شد</string>
-    <string name="onboarding_install_apps_not_granted">می‌توانید بعداً این را در تنظیمات فعال کنید</string>
-    <string name="onboarding_install_apps_title">نصب برنامه‌ها</string>
     <string name="onboarding_next">بعدی</string>
     <string name="onboarding_notifications_description">اعلان‌ها را مجاز کنید تا پیشرفت عملیات فایل مانند کپی، انتقال و بایگانی را حتی وقتی برنامه در پس‌زمینه است دنبال کنید.</string>
     <string name="onboarding_notifications_grant">اجازهٔ اعلان‌ها</string>

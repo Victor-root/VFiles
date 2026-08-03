@@ -740,15 +740,7 @@
     <string name="about_author_github_title">לעקוב ב-GitHub</string>
     <string name="about_author_twitter_title">לעקוב בטוויטר</string>
     <string name="app_name_launcher">קבצים</string>
-    <string name="about_check_for_update_title">בדיקת עדכונים</string>
     <string name="about_fork_subtitle">מקור: Hai Zhang</string>
-    <string name="about_update_available_summary_format">גרסה %1$s: הקש כדי להתקין</string>
-    <string name="about_update_available_title">עדכון זמין</string>
-    <string name="about_update_checking">בודק…</string>
-    <string name="about_update_download_failed">ההורדה נכשלה: הקש כדי לנסות שוב</string>
-    <string name="about_update_downloading">מוריד עדכון…</string>
-    <string name="about_update_summary_idle">הקש כדי לבדוק</string>
-    <string name="about_update_up_to_date">אתה מעודכן</string>
     <string name="color_picker_dynamic_color_label">בהתאם לטפט</string>
     <string name="color_picker_preset_colors_label">צבעים אחרים</string>
     <string name="navigation_bookmarks_hint_subtitle">הוסף כאן את התיקיות המועדפות לגישה מהירה</string>
@@ -761,11 +753,6 @@
     <string name="onboarding_files_title">גישה לקבצים</string>
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>
-    <string name="onboarding_install_apps_description">אפשר ל-Material Files להתקין קובצי APK ישירות. כך תוכל להתקין אפליקציות מקבצים שהורדת או קיבלת, ללא תוכנת התקנה של צד שלישי.</string>
-    <string name="onboarding_install_apps_grant">אפשר התקנה</string>
-    <string name="onboarding_install_apps_granted">ההתקנה אושרה</string>
-    <string name="onboarding_install_apps_not_granted">תוכל להפעיל זאת מאוחר יותר בהגדרות</string>
-    <string name="onboarding_install_apps_title">התקנת אפליקציות</string>
     <string name="onboarding_next">הבא</string>
     <string name="onboarding_notifications_description">אפשר התראות כדי לעקוב אחר התקדמות פעולות קבצים כמו העתקה, העברה ויצירת ארכיון, גם כשהאפליקציה פועלת ברקע.</string>
     <string name="onboarding_notifications_grant">אפשר התראות</string>

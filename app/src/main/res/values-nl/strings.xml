@@ -678,15 +678,7 @@
     <string name="about_author_github_title">Volgen op GitHub</string>
     <string name="about_author_twitter_title">Volgen op Twitter</string>
     <string name="app_name_launcher">Bestanden</string>
-    <string name="about_check_for_update_title">Controleren op updates</string>
     <string name="about_fork_subtitle">Origineel door Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versie %1$s: tik om te installeren</string>
-    <string name="about_update_available_title">Update beschikbaar</string>
-    <string name="about_update_checking">Controleren…</string>
-    <string name="about_update_download_failed">Download mislukt: tik om opnieuw te proberen</string>
-    <string name="about_update_downloading">Update downloaden…</string>
-    <string name="about_update_summary_idle">Tik om te controleren</string>
-    <string name="about_update_up_to_date">Je bent up-to-date</string>
     <string name="color_picker_dynamic_color_label">Op basis van achtergrond</string>
     <string name="color_picker_preset_colors_label">Andere kleuren</string>
     <string name="navigation_bookmarks_hint_subtitle">Voeg hier je favoriete mappen toe voor snelle toegang</string>
@@ -699,11 +691,6 @@
     <string name="onboarding_files_title">Bestandstoegang</string>
     <string name="onboarding_finish">Aan de slag</string>
     <string name="onboarding_grant">Verlenen</string>
-    <string name="onboarding_install_apps_description">Sta Material Files toe om APK-bestanden rechtstreeks te installeren. Zo installeer je apps vanuit bestanden die je downloadt of ontvangt, zonder externe installer.</string>
-    <string name="onboarding_install_apps_grant">Installatie toestaan</string>
-    <string name="onboarding_install_apps_granted">Installatie toegestaan</string>
-    <string name="onboarding_install_apps_not_granted">Je kunt dit later inschakelen in Instellingen</string>
-    <string name="onboarding_install_apps_title">Apps installeren</string>
     <string name="onboarding_next">Volgende</string>
     <string name="onboarding_notifications_description">Sta meldingen toe om de voortgang van bestandsbewerkingen zoals kopiëren, verplaatsen en archiveren te volgen, ook als de app op de achtergrond draait.</string>
     <string name="onboarding_notifications_grant">Meldingen toestaan</string>

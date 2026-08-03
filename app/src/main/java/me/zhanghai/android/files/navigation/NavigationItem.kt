@@ -24,9 +24,6 @@ abstract class NavigationItem {
 
     open fun getSubtitle(context: Context): String? = null
 
-    // Whether to draw a small "attention" dot on this item (e.g. an available app update).
-    open val showBadge: Boolean = false
-
     // Whether to indent this row, to show it's nested under a group (e.g. one of several partitions
     // of the same removable drive).
     open val isIndented: Boolean = false

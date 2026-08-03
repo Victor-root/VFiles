@@ -678,15 +678,7 @@
     <string name="about_author_github_title">Følg på GitHub</string>
     <string name="about_author_twitter_title">Følg på Twitter</string>
     <string name="app_name_launcher">Filer</string>
-    <string name="about_check_for_update_title">Se etter oppdateringer</string>
     <string name="about_fork_subtitle">Original av Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versjon %1$s: trykk for å installere</string>
-    <string name="about_update_available_title">Oppdatering tilgjengelig</string>
-    <string name="about_update_checking">Sjekker…</string>
-    <string name="about_update_download_failed">Nedlastingen mislyktes: trykk for å prøve igjen</string>
-    <string name="about_update_downloading">Laster ned oppdatering…</string>
-    <string name="about_update_summary_idle">Trykk for å sjekke</string>
-    <string name="about_update_up_to_date">Du er oppdatert</string>
     <string name="color_picker_dynamic_color_label">Basert på bakgrunn</string>
     <string name="color_picker_preset_colors_label">Andre farger</string>
     <string name="navigation_bookmarks_hint_subtitle">Legg til favorittmappene dine her for rask tilgang</string>
@@ -699,11 +691,6 @@
     <string name="onboarding_files_title">Filtilgang</string>
     <string name="onboarding_finish">Kom i gang</string>
     <string name="onboarding_grant">Gi</string>
-    <string name="onboarding_install_apps_description">La Material Files installere APK-filer direkte. Slik kan du installere apper fra filer du laster ned eller mottar, uten en tredjeparts installasjonsprogram.</string>
-    <string name="onboarding_install_apps_grant">Tillat installasjon</string>
-    <string name="onboarding_install_apps_granted">Installasjon tillatt</string>
-    <string name="onboarding_install_apps_not_granted">Du kan slå på dette senere i Innstillinger</string>
-    <string name="onboarding_install_apps_title">Installer apper</string>
     <string name="onboarding_next">Neste</string>
     <string name="onboarding_notifications_description">Tillat varsler for å følge fremdriften til filoperasjoner som kopiering, flytting og arkivering, selv når appen kjører i bakgrunnen.</string>
     <string name="onboarding_notifications_grant">Tillat varsler</string>

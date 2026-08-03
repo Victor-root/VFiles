@@ -111,35 +111,6 @@ class IntegerSettingLiveData(
     }
 }
 
-class LongSettingLiveData(
-    nameSuffix: String?,
-    @StringRes keyRes: Int,
-    keySuffix: String?,
-    @StringRes defaultValueRes: Int
-) : SettingLiveData<Long>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
-    constructor(@StringRes keyRes: Int, @StringRes defaultValueRes: Int) : this(
-        null, keyRes, null, defaultValueRes
-    )
-
-    init {
-        init()
-    }
-
-    override fun getDefaultValue(@StringRes defaultValueRes: Int): Long =
-        application.getString(defaultValueRes).toLong()
-
-    override fun getValue(
-        sharedPreferences: SharedPreferences,
-        key: String,
-        defaultValue: Long
-    ): Long =
-        sharedPreferences.getLong(key, defaultValue)
-
-    override fun putValue(sharedPreferences: SharedPreferences, key: String, value: Long) {
-        sharedPreferences.edit { putLong(key, value) }
-    }
-}
-
 class FloatSettingLiveData(
     nameSuffix: String?,
     @StringRes keyRes: Int,

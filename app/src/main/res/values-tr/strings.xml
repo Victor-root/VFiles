@@ -551,15 +551,7 @@
     <string name="about_author_github_title">GitHub\'da takip edin</string>
     <string name="about_author_twitter_title">Twitter\'da takip edin</string>
     <string name="app_name_launcher">Dosyalar</string>
-    <string name="about_check_for_update_title">Güncellemeleri denetle</string>
     <string name="about_fork_subtitle">Orijinali: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Sürüm %1$s: yüklemek için dokunun</string>
-    <string name="about_update_available_title">Güncelleme mevcut</string>
-    <string name="about_update_checking">Denetleniyor…</string>
-    <string name="about_update_download_failed">İndirme başarısız: yeniden denemek için dokunun</string>
-    <string name="about_update_downloading">Güncelleme indiriliyor…</string>
-    <string name="about_update_summary_idle">Denetlemek için dokunun</string>
-    <string name="about_update_up_to_date">Günceldesiniz</string>
     <string name="color_picker_dynamic_color_label">Duvar kâğıdına göre</string>
     <string name="color_picker_preset_colors_label">Diğer renkler</string>
     <string name="navigation_bookmarks_hint_subtitle">Hızlı erişim için sık kullandığınız klasörleri buraya ekleyin</string>
@@ -572,11 +564,6 @@
     <string name="onboarding_files_title">Dosya erişimi</string>
     <string name="onboarding_finish">Başla</string>
     <string name="onboarding_grant">Ver</string>
-    <string name="onboarding_install_apps_description">Material Files\'ın APK dosyalarını doğrudan yüklemesine izin verin. Böylece üçüncü taraf bir yükleyiciye gerek kalmadan indirdiğiniz veya aldığınız dosyalardan uygulama yükleyebilirsiniz.</string>
-    <string name="onboarding_install_apps_grant">Yüklemeye izin ver</string>
-    <string name="onboarding_install_apps_granted">Yüklemeye izin verildi</string>
-    <string name="onboarding_install_apps_not_granted">Bunu daha sonra Ayarlar\'dan etkinleştirebilirsiniz</string>
-    <string name="onboarding_install_apps_title">Uygulama yükle</string>
     <string name="onboarding_next">İleri</string>
     <string name="onboarding_notifications_description">Uygulama arka plandayken bile kopyalama, taşıma ve arşivleme gibi dosya işlemlerinin ilerleyişini izlemek için bildirimlere izin verin.</string>
     <string name="onboarding_notifications_grant">Bildirimlere izin ver</string>

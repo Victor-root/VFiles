@@ -185,25 +185,4 @@ object Settings {
             R.string.pref_key_onboarding_completed,
             R.bool.pref_default_value_onboarding_completed
         )
-
-    val UPDATE_LAST_CHECK_TIME: SettingLiveData<Long> =
-        LongSettingLiveData(
-            R.string.pref_key_update_last_check_time,
-            R.string.pref_default_value_update_last_check_time
-        )
-
-    val UPDATE_AVAILABLE_VERSION: SettingLiveData<String> =
-        StringSettingLiveData(
-            R.string.pref_key_update_available_version, R.string.pref_default_value_empty
-        )
-
-    val UPDATE_AVAILABLE_ASSET_NAME: SettingLiveData<String> =
-        StringSettingLiveData(
-            R.string.pref_key_update_available_asset_name, R.string.pref_default_value_empty
-        )
-
-    val UPDATE_AVAILABLE_DOWNLOAD_URL: SettingLiveData<String> =
-        StringSettingLiveData(
-            R.string.pref_key_update_available_download_url, R.string.pref_default_value_empty
-        )
 }

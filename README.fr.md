@@ -16,10 +16,7 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Correction du blocage dans un dossier vide (le focus revient à la barre d'outils) et d'un saut de focus lors de l'activation du serveur FTP.
 
 ### 🚀 Onboarding au premier lancement
-- Un écran d'accueil qui demande en amont les autorisations nécessaires (accès à tous les fichiers, notifications, installation d'APK), pour ne rien avoir à accorder en cours d'usage.
-
-### ⬆️ Mises à jour intégrées
-- Vérifie les *releases* GitHub de ce dépôt et peut télécharger et installer une nouvelle APK directement depuis **À propos → Rechercher des mises à jour**, sans passer par un store.
+- Un écran d'accueil qui demande en amont les autorisations nécessaires (accès à tous les fichiers, notifications), pour ne rien avoir à accorder en cours d'usage.
 
 ### 💾 Stockage amovible (carte SD / USB), repensé
 - Les cartes SD et clés USB **apparaissent automatiquement sous « Stockage interne »** et se rafraîchissent au branchement. Fini le « Ajouter un support » manuel via SAF.
@@ -53,6 +50,10 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Retour arrière quitte directement à la racine au lieu de rester bloqué, et les titres longs de la barre d'outils défilent désormais.
 - Toutes les chaînes propres au fork traduites en **31 langues**.
 - Identifiant d'application changé en `fr.vroot.vfiles`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
+
+## ⬆️ Mettre VFiles à jour
+
+Il n'y a pas de système de mise à jour intégré ni de fiche sur un store. Pour mettre à jour : ouvrez la page des [releases](https://github.com/Victor-root/VFiles/releases), téléchargez la dernière APK, et installez-la par-dessus l'installation actuelle. Elle est signée avec la même clé à chaque fois, donc vos fichiers et réglages sont conservés. L'application qui ouvre le fichier téléchargé (navigateur, gestionnaire de fichiers) demandera, la première fois, l'autorisation d'installer des applications inconnues.
 
 ## 🗂️ Faire de VFiles le sélecteur de fichiers par défaut du système
 

@@ -50,10 +50,6 @@
                 android:id="@+id/cardNotifications"
                 layout="@layout/onboarding_permission_item" />
 
-            <include
-                android:id="@+id/cardInstall"
-                layout="@layout/onboarding_permission_item" />
-
         </LinearLayout>
 
     </ScrollView>

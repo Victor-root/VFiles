@@ -562,15 +562,7 @@
     <string name="about_author_github_title">Seuraa GitHubissa</string>
     <string name="about_author_twitter_title">Seuraa Twitterissä</string>
     <string name="app_name_launcher">Tiedostot</string>
-    <string name="about_check_for_update_title">Tarkista päivitykset</string>
     <string name="about_fork_subtitle">Alkuperäinen: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versio %1$s: asenna napauttamalla</string>
-    <string name="about_update_available_title">Päivitys saatavilla</string>
-    <string name="about_update_checking">Tarkistetaan…</string>
-    <string name="about_update_download_failed">Lataus epäonnistui: yritä uudelleen napauttamalla</string>
-    <string name="about_update_downloading">Ladataan päivitystä…</string>
-    <string name="about_update_summary_idle">Tarkista napauttamalla</string>
-    <string name="about_update_up_to_date">Sovellus on ajan tasalla</string>
     <string name="color_picker_dynamic_color_label">Taustakuvan mukaan</string>
     <string name="color_picker_preset_colors_label">Muut värit</string>
     <string name="navigation_bookmarks_hint_subtitle">Lisää suosikkikansiosi tähän nopeaa käyttöä varten</string>
@@ -583,11 +575,6 @@
     <string name="onboarding_files_title">Tiedostojen käyttöoikeus</string>
     <string name="onboarding_finish">Aloita</string>
     <string name="onboarding_grant">Myönnä</string>
-    <string name="onboarding_install_apps_description">Salli Material Filesin asentaa APK-tiedostoja suoraan. Näin voit asentaa sovelluksia lataamistasi tai saamistasi tiedostoista ilman kolmannen osapuolen asennusohjelmaa.</string>
-    <string name="onboarding_install_apps_grant">Salli asennus</string>
-    <string name="onboarding_install_apps_granted">Asennus sallittu</string>
-    <string name="onboarding_install_apps_not_granted">Voit ottaa tämän käyttöön myöhemmin asetuksissa</string>
-    <string name="onboarding_install_apps_title">Asenna sovelluksia</string>
     <string name="onboarding_next">Seuraava</string>
     <string name="onboarding_notifications_description">Salli ilmoitukset, jotta voit seurata tiedostotoimintojen, kuten kopioinnin, siirron ja arkistoinnin, edistymistä, vaikka sovellus olisi taustalla.</string>
     <string name="onboarding_notifications_grant">Salli ilmoitukset</string>

@@ -37,7 +37,6 @@ import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.storage.StorageVolumeCustomizations
 import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.storage.VolumeIconType
-import me.zhanghai.android.files.update.UpdateManager
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
 import me.zhanghai.android.files.util.putArgs
@@ -580,15 +579,13 @@ private val menuItems: List<NavigationItem>
         ),
         IntentMenuItem(
             R.drawable.about_icon_white_24dp, R.string.navigation_about,
-            AboutActivity::class.createIntent(),
-            showBadge = UpdateManager.isUpdateAvailable()
+            AboutActivity::class.createIntent()
         )
     )
 
 private abstract class MenuItem(
     @param:DrawableRes override val iconRes: Int,
-    @param:StringRes val titleRes: Int,
-    override val showBadge: Boolean = false
+    @param:StringRes val titleRes: Int
 ) : NavigationItem() {
     override fun getTitle(context: Context): String = context.getString(titleRes)
 }
@@ -596,9 +593,8 @@ private abstract class MenuItem(
 private class IntentMenuItem(
     @DrawableRes iconRes: Int,
     @StringRes titleRes: Int,
-    private val intent: Intent,
-    showBadge: Boolean = false
-) : MenuItem(iconRes, titleRes, showBadge) {
+    private val intent: Intent
+) : MenuItem(iconRes, titleRes) {
     override val id: Long
         get() = intent.component.hashCode().toLong()
 

@@ -647,15 +647,7 @@
     <string name="about_author_github_title">GitHub でフォロー</string>
     <string name="about_author_twitter_title">Twitter でフォロー</string>
     <string name="app_name_launcher">ファイル</string>
-    <string name="about_check_for_update_title">アップデートを確認</string>
     <string name="about_fork_subtitle">オリジナル: Hai Zhang</string>
-    <string name="about_update_available_summary_format">バージョン %1$s: タップしてインストール</string>
-    <string name="about_update_available_title">アップデートあり</string>
-    <string name="about_update_checking">確認中…</string>
-    <string name="about_update_download_failed">ダウンロード失敗: タップして再試行</string>
-    <string name="about_update_downloading">アップデートをダウンロード中…</string>
-    <string name="about_update_summary_idle">タップして確認</string>
-    <string name="about_update_up_to_date">最新の状態です</string>
     <string name="color_picker_dynamic_color_label">壁紙に基づく</string>
     <string name="color_picker_preset_colors_label">その他の色</string>
     <string name="navigation_bookmarks_hint_subtitle">よく使うフォルダをここに追加してすばやくアクセス</string>
@@ -668,11 +660,6 @@
     <string name="onboarding_files_title">ファイルアクセス</string>
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>
-    <string name="onboarding_install_apps_description">Material Files が APK ファイルを直接インストールできるようにします。サードパーティのインストーラーなしで、ダウンロードまたは受信したファイルからアプリをインストールできます。</string>
-    <string name="onboarding_install_apps_grant">インストールを許可</string>
-    <string name="onboarding_install_apps_granted">インストールを許可しました</string>
-    <string name="onboarding_install_apps_not_granted">後で設定から有効にできます</string>
-    <string name="onboarding_install_apps_title">アプリのインストール</string>
     <string name="onboarding_next">次へ</string>
     <string name="onboarding_notifications_description">通知を許可すると、アプリがバックグラウンドにあるときでも、コピー・移動・圧縮などのファイル操作の進行状況を確認できます。</string>
     <string name="onboarding_notifications_grant">通知を許可</string>

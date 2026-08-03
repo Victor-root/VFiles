@@ -712,15 +712,7 @@
     <string name="about_author_github_title">Sledovat na GitHubu</string>
     <string name="about_author_twitter_title">Sledovat na Twitteru</string>
     <string name="app_name_launcher">Soubory</string>
-    <string name="about_check_for_update_title">Vyhledat aktualizace</string>
     <string name="about_fork_subtitle">Originál: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Verze %1$s: klepnutím nainstalujete</string>
-    <string name="about_update_available_title">Dostupná aktualizace</string>
-    <string name="about_update_checking">Kontrola…</string>
-    <string name="about_update_download_failed">Stahování selhalo: klepnutím to zkuste znovu</string>
-    <string name="about_update_downloading">Stahování aktualizace…</string>
-    <string name="about_update_summary_idle">Klepnutím zkontrolujete</string>
-    <string name="about_update_up_to_date">Máte aktuální verzi</string>
     <string name="color_picker_dynamic_color_label">Podle tapety</string>
     <string name="color_picker_preset_colors_label">Další barvy</string>
     <string name="navigation_bookmarks_hint_subtitle">Sem přidejte oblíbené složky pro rychlý přístup</string>
@@ -733,11 +725,6 @@
     <string name="onboarding_files_title">Přístup k souborům</string>
     <string name="onboarding_finish">Začít</string>
     <string name="onboarding_grant">Udělit</string>
-    <string name="onboarding_install_apps_description">Povolte aplikaci Material Files přímou instalaci souborů APK. Můžete tak instalovat aplikace ze stažených nebo přijatých souborů bez instalátoru třetí strany.</string>
-    <string name="onboarding_install_apps_grant">Povolit instalaci</string>
-    <string name="onboarding_install_apps_granted">Instalace povolena</string>
-    <string name="onboarding_install_apps_not_granted">Můžete to zapnout později v Nastavení</string>
-    <string name="onboarding_install_apps_title">Instalovat aplikace</string>
     <string name="onboarding_next">Další</string>
     <string name="onboarding_notifications_description">Povolte oznámení, abyste mohli sledovat průběh operací se soubory, jako je kopírování, přesouvání a archivace, i když je aplikace na pozadí.</string>
     <string name="onboarding_notifications_grant">Povolit oznámení</string>

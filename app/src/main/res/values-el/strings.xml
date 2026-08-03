@@ -678,15 +678,7 @@
     <string name="about_author_github_title">Ακολουθήστε στο GitHub</string>
     <string name="about_author_twitter_title">Ακολουθήστε στο Twitter</string>
     <string name="app_name_launcher">Αρχεία</string>
-    <string name="about_check_for_update_title">Έλεγχος για ενημερώσεις</string>
     <string name="about_fork_subtitle">Πρωτότυπο από τον Hai Zhang</string>
-    <string name="about_update_available_summary_format">Έκδοση %1$s: πατήστε για εγκατάσταση</string>
-    <string name="about_update_available_title">Διαθέσιμη ενημέρωση</string>
-    <string name="about_update_checking">Έλεγχος…</string>
-    <string name="about_update_download_failed">Αποτυχία λήψης: πατήστε για επανάληψη</string>
-    <string name="about_update_downloading">Λήψη ενημέρωσης…</string>
-    <string name="about_update_summary_idle">Πατήστε για έλεγχο</string>
-    <string name="about_update_up_to_date">Είστε ενημερωμένοι</string>
     <string name="color_picker_dynamic_color_label">Βάσει ταπετσαρίας</string>
     <string name="color_picker_preset_colors_label">Άλλα χρώματα</string>
     <string name="navigation_bookmarks_hint_subtitle">Προσθέστε εδώ τους αγαπημένους σας φακέλους για γρήγορη πρόσβαση</string>
@@ -699,11 +691,6 @@
     <string name="onboarding_files_title">Πρόσβαση σε αρχεία</string>
     <string name="onboarding_finish">Ξεκινήστε</string>
     <string name="onboarding_grant">Παραχώρηση</string>
-    <string name="onboarding_install_apps_description">Επιτρέψτε στο Material Files να εγκαθιστά απευθείας αρχεία APK. Έτσι μπορείτε να εγκαθιστάτε εφαρμογές από αρχεία που κατεβάζετε ή λαμβάνετε, χωρίς πρόγραμμα εγκατάστασης τρίτου.</string>
-    <string name="onboarding_install_apps_grant">Να επιτρέπεται η εγκατάσταση</string>
-    <string name="onboarding_install_apps_granted">Η εγκατάσταση επιτρέπεται</string>
-    <string name="onboarding_install_apps_not_granted">Μπορείτε να το ενεργοποιήσετε αργότερα στις Ρυθμίσεις</string>
-    <string name="onboarding_install_apps_title">Εγκατάσταση εφαρμογών</string>
     <string name="onboarding_next">Επόμενο</string>
     <string name="onboarding_notifications_description">Επιτρέψτε τις ειδοποιήσεις για να παρακολουθείτε την πρόοδο εργασιών αρχείων, όπως αντιγραφές, μετακινήσεις και αρχειοθετήσεις, ακόμη και όταν η εφαρμογή είναι στο παρασκήνιο.</string>
     <string name="onboarding_notifications_grant">Να επιτρέπονται ειδοποιήσεις</string>

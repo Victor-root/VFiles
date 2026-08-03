@@ -579,15 +579,7 @@
     <string name="about_author_github_title">Követés a GitHubon</string>
     <string name="about_author_twitter_title">Követés Twitteren</string>
     <string name="app_name_launcher">Fájlok</string>
-    <string name="about_check_for_update_title">Frissítések keresése</string>
     <string name="about_fork_subtitle">Eredeti: Hai Zhang</string>
-    <string name="about_update_available_summary_format">%1$s verzió: koppintson a telepítéshez</string>
-    <string name="about_update_available_title">Elérhető frissítés</string>
-    <string name="about_update_checking">Ellenőrzés…</string>
-    <string name="about_update_download_failed">A letöltés sikertelen: koppintson az újrapróbálkozáshoz</string>
-    <string name="about_update_downloading">Frissítés letöltése…</string>
-    <string name="about_update_summary_idle">Koppintson az ellenőrzéshez</string>
-    <string name="about_update_up_to_date">Naprakész</string>
     <string name="color_picker_dynamic_color_label">A háttérkép alapján</string>
     <string name="color_picker_preset_colors_label">Más színek</string>
     <string name="navigation_bookmarks_hint_subtitle">Adja hozzá itt a kedvenc mappáit a gyors eléréshez</string>
@@ -600,11 +592,6 @@
     <string name="onboarding_files_title">Fájlhozzáférés</string>
     <string name="onboarding_finish">Kezdés</string>
     <string name="onboarding_grant">Megadás</string>
-    <string name="onboarding_install_apps_description">Engedélyezze, hogy a Material Files közvetlenül telepítsen APK-fájlokat. Így harmadik féltől származó telepítő nélkül telepíthet alkalmazásokat a letöltött vagy kapott fájlokból.</string>
-    <string name="onboarding_install_apps_grant">Telepítés engedélyezése</string>
-    <string name="onboarding_install_apps_granted">Telepítés engedélyezve</string>
-    <string name="onboarding_install_apps_not_granted">Ezt később a Beállításokban engedélyezheti</string>
-    <string name="onboarding_install_apps_title">Alkalmazások telepítése</string>
     <string name="onboarding_next">Tovább</string>
     <string name="onboarding_notifications_description">Engedélyezze az értesítéseket a fájlműveletek – például másolás, áthelyezés és archiválás – előrehaladásának követéséhez, akkor is, ha az alkalmazás a háttérben fut.</string>
     <string name="onboarding_notifications_grant">Értesítések engedélyezése</string>

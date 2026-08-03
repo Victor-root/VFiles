@@ -680,15 +680,7 @@
     <string name="about_author_github_title">Fylgjast með á GitHub</string>
     <string name="about_author_twitter_title">Fylgjast með á Twitter</string>
     <string name="app_name_launcher">Skrár</string>
-    <string name="about_check_for_update_title">Leita að uppfærslum</string>
     <string name="about_fork_subtitle">Upprunalegt eftir Hai Zhang</string>
-    <string name="about_update_available_summary_format">Útgáfa %1$s: ýttu til að setja upp</string>
-    <string name="about_update_available_title">Uppfærsla tiltæk</string>
-    <string name="about_update_checking">Athuga…</string>
-    <string name="about_update_download_failed">Niðurhal mistókst: ýttu til að reyna aftur</string>
-    <string name="about_update_downloading">Sæki uppfærslu…</string>
-    <string name="about_update_summary_idle">Ýttu til að athuga</string>
-    <string name="about_update_up_to_date">Þú ert með nýjustu útgáfuna</string>
     <string name="color_picker_dynamic_color_label">Eftir veggfóðri</string>
     <string name="color_picker_preset_colors_label">Aðrir litir</string>
     <string name="navigation_bookmarks_hint_subtitle">Bættu uppáhaldsmöppunum þínum hér við til að fá skjótan aðgang</string>
@@ -701,11 +693,6 @@
     <string name="onboarding_files_title">Skráaaðgangur</string>
     <string name="onboarding_finish">Hefjast handa</string>
     <string name="onboarding_grant">Veita</string>
-    <string name="onboarding_install_apps_description">Leyfðu Material Files að setja APK-skrár upp beint. Þannig geturðu sett upp forrit úr skrám sem þú sækir eða færð, án uppsetningarforrits frá þriðja aðila.</string>
-    <string name="onboarding_install_apps_grant">Leyfa uppsetningu</string>
-    <string name="onboarding_install_apps_granted">Uppsetning leyfð</string>
-    <string name="onboarding_install_apps_not_granted">Þú getur virkjað þetta síðar í Stillingum</string>
-    <string name="onboarding_install_apps_title">Setja upp forrit</string>
     <string name="onboarding_next">Næsta</string>
     <string name="onboarding_notifications_description">Leyfðu tilkynningar til að fylgjast með framvindu skráaaðgerða á borð við afritun, færslu og pökkun, jafnvel þegar forritið er í bakgrunni.</string>
     <string name="onboarding_notifications_grant">Leyfa tilkynningar</string>

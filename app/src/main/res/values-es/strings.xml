@@ -709,15 +709,7 @@
     <string name="about_author_github_title">Seguir en GitHub</string>
     <string name="about_author_twitter_title">Seguir en Twitter</string>
     <string name="app_name_launcher">Archivos</string>
-    <string name="about_check_for_update_title">Buscar actualizaciones</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versión %1$s: toca para instalar</string>
-    <string name="about_update_available_title">Actualización disponible</string>
-    <string name="about_update_checking">Buscando…</string>
-    <string name="about_update_download_failed">Error de descarga: toca para reintentar</string>
-    <string name="about_update_downloading">Descargando actualización…</string>
-    <string name="about_update_summary_idle">Toca para buscar</string>
-    <string name="about_update_up_to_date">Estás al día</string>
     <string name="color_picker_dynamic_color_label">Según el fondo de pantalla</string>
     <string name="color_picker_preset_colors_label">Otros colores</string>
     <string name="navigation_bookmarks_hint_subtitle">Añade aquí tus carpetas favoritas para acceder rápido</string>
@@ -730,11 +722,6 @@
     <string name="onboarding_files_title">Acceso a archivos</string>
     <string name="onboarding_finish">Empezar</string>
     <string name="onboarding_grant">Conceder</string>
-    <string name="onboarding_install_apps_description">Permite a Material Files instalar archivos APK directamente. Así puedes instalar apps desde archivos que descargues o recibas, sin un instalador de terceros.</string>
-    <string name="onboarding_install_apps_grant">Permitir instalación</string>
-    <string name="onboarding_install_apps_granted">Instalación permitida</string>
-    <string name="onboarding_install_apps_not_granted">Puedes activarlo más tarde en Ajustes</string>
-    <string name="onboarding_install_apps_title">Instalar apps</string>
     <string name="onboarding_next">Siguiente</string>
     <string name="onboarding_notifications_description">Permite las notificaciones para seguir el progreso de operaciones como copias, movimientos y archivos, incluso con la app en segundo plano.</string>
     <string name="onboarding_notifications_grant">Permitir notificaciones</string>

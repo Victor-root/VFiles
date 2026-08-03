@@ -742,15 +742,7 @@
     <string name="about_author_github_title">Стежити на GitHub</string>
     <string name="about_author_twitter_title">Стежити у Twitter</string>
     <string name="app_name_launcher">Файли</string>
-    <string name="about_check_for_update_title">Перевірити оновлення</string>
     <string name="about_fork_subtitle">Оригінал: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Версія %1$s: торкніться, щоб установити</string>
-    <string name="about_update_available_title">Доступне оновлення</string>
-    <string name="about_update_checking">Перевірка…</string>
-    <string name="about_update_download_failed">Не вдалося завантажити: торкніться, щоб повторити</string>
-    <string name="about_update_downloading">Завантаження оновлення…</string>
-    <string name="about_update_summary_idle">Торкніться, щоб перевірити</string>
-    <string name="about_update_up_to_date">У вас найновіша версія</string>
     <string name="color_picker_dynamic_color_label">На основі шпалер</string>
     <string name="color_picker_preset_colors_label">Інші кольори</string>
     <string name="navigation_bookmarks_hint_subtitle">Додайте сюди улюблені папки для швидкого доступу</string>
@@ -763,11 +755,6 @@
     <string name="onboarding_files_title">Доступ до файлів</string>
     <string name="onboarding_finish">Почати</string>
     <string name="onboarding_grant">Надати</string>
-    <string name="onboarding_install_apps_description">Дозвольте Material Files встановлювати файли APK напряму. Так ви зможете встановлювати додатки із завантажених або отриманих файлів без стороннього встановлювача.</string>
-    <string name="onboarding_install_apps_grant">Дозволити встановлення</string>
-    <string name="onboarding_install_apps_granted">Встановлення дозволено</string>
-    <string name="onboarding_install_apps_not_granted">Це можна ввімкнути пізніше в Налаштуваннях</string>
-    <string name="onboarding_install_apps_title">Встановлення додатків</string>
     <string name="onboarding_next">Далі</string>
     <string name="onboarding_notifications_description">Дозвольте сповіщення, щоб відстежувати перебіг операцій із файлами (копіювання, переміщення, архівування) навіть коли додаток у фоні.</string>
     <string name="onboarding_notifications_grant">Дозволити сповіщення</string>

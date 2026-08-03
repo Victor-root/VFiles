@@ -802,15 +802,7 @@
     <string name="about_author_github_title">تابعني على GitHub</string>
     <string name="about_author_twitter_title">متابعة على Twitter</string>
     <string name="app_name_launcher">الملفات</string>
-    <string name="about_check_for_update_title">البحث عن تحديثات</string>
     <string name="about_fork_subtitle">الأصل من تأليف Hai Zhang</string>
-    <string name="about_update_available_summary_format">الإصدار %1$s: اضغط للتثبيت</string>
-    <string name="about_update_available_title">يتوفر تحديث</string>
-    <string name="about_update_checking">جارٍ التحقق…</string>
-    <string name="about_update_download_failed">فشل التنزيل: اضغط لإعادة المحاولة</string>
-    <string name="about_update_downloading">جارٍ تنزيل التحديث…</string>
-    <string name="about_update_summary_idle">اضغط للتحقق</string>
-    <string name="about_update_up_to_date">أنت على أحدث إصدار</string>
     <string name="color_picker_dynamic_color_label">استنادًا إلى الخلفية</string>
     <string name="color_picker_preset_colors_label">ألوان أخرى</string>
     <string name="navigation_bookmarks_hint_subtitle">أضف مجلداتك المفضلة هنا للوصول السريع</string>
@@ -823,11 +815,6 @@
     <string name="onboarding_files_title">الوصول إلى الملفات</string>
     <string name="onboarding_finish">ابدأ</string>
     <string name="onboarding_grant">منح</string>
-    <string name="onboarding_install_apps_description">اسمح لـ Material Files بتثبيت ملفات APK مباشرةً. يتيح لك ذلك تثبيت التطبيقات من الملفات التي تنزّلها أو تستلمها دون الحاجة إلى مثبّت خارجي.</string>
-    <string name="onboarding_install_apps_grant">السماح بالتثبيت</string>
-    <string name="onboarding_install_apps_granted">تم السماح بالتثبيت</string>
-    <string name="onboarding_install_apps_not_granted">يمكنك تفعيل ذلك لاحقًا في الإعدادات</string>
-    <string name="onboarding_install_apps_title">تثبيت التطبيقات</string>
     <string name="onboarding_next">التالي</string>
     <string name="onboarding_notifications_description">اسمح بالإشعارات لتتبّع تقدّم عمليات الملفات مثل النسخ والنقل والأرشفة، حتى عندما يكون التطبيق في الخلفية.</string>
     <string name="onboarding_notifications_grant">السماح بالإشعارات</string>

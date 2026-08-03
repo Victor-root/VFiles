@@ -617,15 +617,7 @@
     <string name="about_author_github_title">Urmărește pe GitHub</string>
     <string name="about_author_twitter_title">Urmărește pe Twitter</string>
     <string name="app_name_launcher">Fișiere</string>
-    <string name="about_check_for_update_title">Caută actualizări</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versiunea %1$s: atinge pentru a instala</string>
-    <string name="about_update_available_title">Actualizare disponibilă</string>
-    <string name="about_update_checking">Se verifică…</string>
-    <string name="about_update_download_failed">Descărcare eșuată: atinge pentru a reîncerca</string>
-    <string name="about_update_downloading">Se descarcă actualizarea…</string>
-    <string name="about_update_summary_idle">Atinge pentru a verifica</string>
-    <string name="about_update_up_to_date">Ești la zi</string>
     <string name="color_picker_dynamic_color_label">În funcție de imaginea de fundal</string>
     <string name="color_picker_preset_colors_label">Alte culori</string>
     <string name="navigation_bookmarks_hint_subtitle">Adaugă aici folderele preferate pentru acces rapid</string>
@@ -638,11 +630,6 @@
     <string name="onboarding_files_title">Acces la fișiere</string>
     <string name="onboarding_finish">Începe</string>
     <string name="onboarding_grant">Acordă</string>
-    <string name="onboarding_install_apps_description">Permite-i lui Material Files să instaleze direct fișiere APK. Astfel poți instala aplicații din fișierele descărcate sau primite, fără un program de instalare terț.</string>
-    <string name="onboarding_install_apps_grant">Permite instalarea</string>
-    <string name="onboarding_install_apps_granted">Instalare permisă</string>
-    <string name="onboarding_install_apps_not_granted">Poți activa asta mai târziu în Setări</string>
-    <string name="onboarding_install_apps_title">Instalează aplicații</string>
     <string name="onboarding_next">Înainte</string>
     <string name="onboarding_notifications_description">Permite notificările pentru a urmări progresul operațiilor cu fișiere, precum copierea, mutarea și arhivarea, chiar și când aplicația rulează în fundal.</string>
     <string name="onboarding_notifications_grant">Permite notificările</string>

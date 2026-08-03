@@ -639,15 +639,7 @@
     <string name="about_author_github_title">Sekti GitHub svetainėje</string>
     <string name="about_author_twitter_title">Sekti Twitter svetainėje</string>
     <string name="app_name_launcher">Failai</string>
-    <string name="about_check_for_update_title">Tikrinti, ar yra naujinių</string>
     <string name="about_fork_subtitle">Originalas: Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versija %1$s: palieskite, kad įdiegtumėte</string>
-    <string name="about_update_available_title">Yra naujinys</string>
-    <string name="about_update_checking">Tikrinama…</string>
-    <string name="about_update_download_failed">Atsisiųsti nepavyko: palieskite, kad bandytumėte dar kartą</string>
-    <string name="about_update_downloading">Atsisiunčiamas naujinys…</string>
-    <string name="about_update_summary_idle">Palieskite, kad patikrintumėte</string>
-    <string name="about_update_up_to_date">Naudojate naujausią versiją</string>
     <string name="color_picker_dynamic_color_label">Pagal ekrano foną</string>
     <string name="color_picker_preset_colors_label">Kitos spalvos</string>
     <string name="navigation_bookmarks_hint_subtitle">Pridėkite čia mėgstamus aplankus, kad greitai pasiektumėte</string>
@@ -660,11 +652,6 @@
     <string name="onboarding_files_title">Failų prieiga</string>
     <string name="onboarding_finish">Pradėti</string>
     <string name="onboarding_grant">Suteikti</string>
-    <string name="onboarding_install_apps_description">Leiskite „Material Files“ tiesiogiai diegti APK failus. Taip galėsite diegti programas iš atsisiųstų ar gautų failų be trečiosios šalies diegimo programos.</string>
-    <string name="onboarding_install_apps_grant">Leisti diegimą</string>
-    <string name="onboarding_install_apps_granted">Diegimas leidžiamas</string>
-    <string name="onboarding_install_apps_not_granted">Tai galėsite įjungti vėliau nustatymuose</string>
-    <string name="onboarding_install_apps_title">Diegti programas</string>
     <string name="onboarding_next">Pirmyn</string>
     <string name="onboarding_notifications_description">Leiskite pranešimus, kad galėtumėte stebėti failų operacijų, pvz., kopijavimo, perkėlimo ir archyvavimo, eigą net kai programa veikia fone.</string>
     <string name="onboarding_notifications_grant">Leisti pranešimus</string>

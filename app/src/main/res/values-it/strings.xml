@@ -709,15 +709,7 @@
     <string name="about_author_github_title">Segui su GitHub</string>
     <string name="about_author_twitter_title">Segui su Twitter</string>
     <string name="app_name_launcher">File</string>
-    <string name="about_check_for_update_title">Controlla aggiornamenti</string>
     <string name="about_fork_subtitle">Originale di Hai Zhang</string>
-    <string name="about_update_available_summary_format">Versione %1$s: tocca per installare</string>
-    <string name="about_update_available_title">Aggiornamento disponibile</string>
-    <string name="about_update_checking">Controllo…</string>
-    <string name="about_update_download_failed">Download non riuscito: tocca per riprovare</string>
-    <string name="about_update_downloading">Download dell\'aggiornamento…</string>
-    <string name="about_update_summary_idle">Tocca per controllare</string>
-    <string name="about_update_up_to_date">Sei aggiornato</string>
     <string name="color_picker_dynamic_color_label">In base allo sfondo</string>
     <string name="color_picker_preset_colors_label">Altri colori</string>
     <string name="navigation_bookmarks_hint_subtitle">Aggiungi qui le cartelle preferite per un accesso rapido</string>
@@ -730,11 +722,6 @@
     <string name="onboarding_files_title">Accesso ai file</string>
     <string name="onboarding_finish">Inizia</string>
     <string name="onboarding_grant">Concedi</string>
-    <string name="onboarding_install_apps_description">Consenti a Material Files di installare direttamente i file APK. Così puoi installare app dai file che scarichi o ricevi, senza un programma di installazione di terze parti.</string>
-    <string name="onboarding_install_apps_grant">Consenti installazione</string>
-    <string name="onboarding_install_apps_granted">Installazione consentita</string>
-    <string name="onboarding_install_apps_not_granted">Puoi attivarlo più tardi nelle impostazioni</string>
-    <string name="onboarding_install_apps_title">Installa app</string>
     <string name="onboarding_next">Avanti</string>
     <string name="onboarding_notifications_description">Consenti le notifiche per seguire l\'avanzamento delle operazioni sui file come copie, spostamenti e archivi, anche quando l\'app è in background.</string>
     <string name="onboarding_notifications_grant">Consenti notifiche</string>

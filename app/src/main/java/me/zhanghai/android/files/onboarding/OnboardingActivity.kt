@@ -36,8 +36,7 @@ class OnboardingActivity : AppActivity() {
 
     private val pages = listOf(
         OnboardingPage.FilesAccess,
-        OnboardingPage.Notifications,
-        OnboardingPage.InstallApps
+        OnboardingPage.Notifications
     )
 
     private val requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
@@ -54,7 +53,6 @@ class OnboardingActivity : AppActivity() {
 
         bindCard(binding.cardFiles, OnboardingPage.FilesAccess)
         bindCard(binding.cardNotifications, OnboardingPage.Notifications)
-        bindCard(binding.cardInstall, OnboardingPage.InstallApps)
 
         binding.continueButton.setOnClickListener { finishOnboarding() }
 
@@ -87,7 +85,6 @@ class OnboardingActivity : AppActivity() {
 
         updateCard(binding.cardFiles, OnboardingPage.FilesAccess)
         updateCard(binding.cardNotifications, OnboardingPage.Notifications)
-        updateCard(binding.cardInstall, OnboardingPage.InstallApps)
 
         val requiredGranted = pages.filter { it.isRequired }.all { it.isGranted(this) }
         binding.continueButton.isEnabled = requiredGranted
@@ -132,13 +129,6 @@ class OnboardingActivity : AppActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun requestNotificationPermission() {
         requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-    }
-
-    fun openInstallAppsSettings() {
-        val intent = Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
-            data = Uri.fromParts("package", packageName, null)
-        }
-        requestSystemSettingsLauncher.launch(intent)
     }
 
     // ── pages ─────────────────────────────────────────────────────────────────
@@ -191,24 +181,6 @@ class OnboardingActivity : AppActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     activity.requestNotificationPermission()
                 }
-            }
-        }
-
-        object InstallApps : OnboardingPage(
-            iconRes = R.drawable.install_unknown_apps_icon_white_24dp,
-            titleRes = R.string.onboarding_install_apps_title,
-            descriptionRes = R.string.onboarding_install_apps_description,
-            isRequired = false
-        ) {
-            override fun isGranted(context: Context): Boolean =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.packageManager.canRequestPackageInstalls()
-                } else {
-                    true
-                }
-
-            override fun requestGrant(activity: OnboardingActivity) {
-                activity.openInstallAppsSettings()
             }
         }
     }

@@ -648,15 +648,7 @@
     <string name="about_author_github_title">在 GitHub 上关注</string>
     <string name="about_author_twitter_title">在 Twitter 上关注</string>
     <string name="app_name_launcher">文件</string>
-    <string name="about_check_for_update_title">检查更新</string>
     <string name="about_fork_subtitle">原作者：Hai Zhang</string>
-    <string name="about_update_available_summary_format">版本 %1$s: 点按以安装</string>
-    <string name="about_update_available_title">有可用更新</string>
-    <string name="about_update_checking">正在检查…</string>
-    <string name="about_update_download_failed">下载失败: 点按以重试</string>
-    <string name="about_update_downloading">正在下载更新…</string>
-    <string name="about_update_summary_idle">点按以检查</string>
-    <string name="about_update_up_to_date">已是最新版本</string>
     <string name="color_picker_dynamic_color_label">根据壁纸</string>
     <string name="color_picker_preset_colors_label">其他颜色</string>
     <string name="navigation_bookmarks_hint_subtitle">将常用文件夹添加到此处以便快速访问</string>
@@ -669,11 +661,6 @@
     <string name="onboarding_files_title">文件访问</string>
     <string name="onboarding_finish">开始使用</string>
     <string name="onboarding_grant">授予</string>
-    <string name="onboarding_install_apps_description">允许 Material Files 直接安装 APK 文件。这样您无需第三方安装程序即可从下载或收到的文件安装应用。</string>
-    <string name="onboarding_install_apps_grant">允许安装</string>
-    <string name="onboarding_install_apps_granted">已允许安装</string>
-    <string name="onboarding_install_apps_not_granted">您可以稍后在设置中启用</string>
-    <string name="onboarding_install_apps_title">安装应用</string>
     <string name="onboarding_next">下一步</string>
     <string name="onboarding_notifications_description">允许通知，即可在应用处于后台时跟踪复制、移动和压缩等文件操作的进度。</string>
     <string name="onboarding_notifications_grant">允许通知</string>

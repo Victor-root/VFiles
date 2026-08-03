@@ -25,7 +25,6 @@
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -414,17 +413,6 @@
             <intent-filter>
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
-        </provider>
-
-        <!-- Dedicated provider used only to hand a downloaded APK to the system installer. -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="@string/update_provider_authority"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/update_file_provider_paths" />
         </provider>
 
         <receiver android:name="me.zhanghai.android.files.filejob.FileJobReceiver" />
