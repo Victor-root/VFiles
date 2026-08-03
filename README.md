@@ -71,7 +71,12 @@
 
 ## ⬆️ Updating VFiles
 
-There's no in-app updater and no store listing. To update: open the [Releases page](https://github.com/Victor-root/VFiles/releases), download the latest APK, and install it over your current install. It's signed with the same key each time, so your files and settings are kept. Whichever app opens the downloaded file (browser, file manager) will ask, the first time, for permission to install unknown apps.
+Two ways to get updates:
+
+- **Direct download**: grab the latest APK from the [Releases page](https://github.com/Victor-root/VFiles/releases) and install it over your current install. Signed with the same key every time, so your files and settings are kept.
+- **[Omnify](https://github.com/Victor-root/Omnify)**: my own F-Droid client fork that installs and tracks apps straight from their GitHub repo. Add this repo and it keeps VFiles up to date for you.
+
+Either way, the app opening the file (browser, file manager, or Omnify) will ask, the first time, for permission to install unknown apps.
 
 ## 🗂️ Making VFiles the default system file picker
 

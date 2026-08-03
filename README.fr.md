@@ -58,7 +58,12 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 
 ## ⬆️ Mettre VFiles à jour
 
-Il n'y a pas de système de mise à jour intégré ni de fiche sur un store. Pour mettre à jour : ouvrez la page des [releases](https://github.com/Victor-root/VFiles/releases), téléchargez la dernière APK, et installez-la par-dessus l'installation actuelle. Elle est signée avec la même clé à chaque fois, donc vos fichiers et réglages sont conservés. L'application qui ouvre le fichier téléchargé (navigateur, gestionnaire de fichiers) demandera, la première fois, l'autorisation d'installer des applications inconnues.
+Deux façons de faire :
+
+- **Téléchargement direct** : récupérez la dernière APK sur la page des [releases](https://github.com/Victor-root/VFiles/releases) et installez-la par-dessus votre version actuelle. Toujours signée avec la même clé, donc vos fichiers et réglages sont conservés.
+- **[Omnify](https://github.com/Victor-root/Omnify)** : mon propre fork de client F-Droid, qui installe et suit les applications directement depuis leur dépôt GitHub. Ajoutez ce dépôt et il garde VFiles à jour pour vous.
+
+Dans tous les cas, l'application qui ouvre le fichier (navigateur, gestionnaire de fichiers, ou Omnify) demandera, la première fois, l'autorisation d'installer des applications inconnues.
 
 ## 🗂️ Faire de VFiles le sélecteur de fichiers par défaut du système
 
