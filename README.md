@@ -4,9 +4,22 @@
 
 [![Latest release](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
 
-A personal, improved fork of **[Material Files](https://github.com/zhanghai/MaterialFiles)** by Hai Zhang, an open-source Material Design file manager for Android.
+## 📸 Screenshots
 
-The original repository remains the reference; the sections below describe **only what this fork adds or changes**. For what the app fundamentally *is*, see [About the original app](#about-the-original-app).
+<p align="center"><strong>📱 Mobile</strong></p>
+<p align="center">
+<img width="320" alt="image" src="https://github.com/user-attachments/assets/c353e45d-2251-4956-8dcf-2af6d51d44ea"/>
+<img width="320" alt="image" src="https://github.com/user-attachments/assets/48ec2dc1-b835-43a0-a2cb-ecb9dd563a7d" />
+</p>
+
+<p align="center"><strong>📺 Android TV</strong></p>
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/65e9d19a-099f-4692-96cd-f6286e6e003c"
+    width="720"
+    alt="AdAway Community — Android TV home screen"
+  />
+</p>
 
 ## ✨ What this fork changes
 
