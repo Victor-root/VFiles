@@ -4,6 +4,8 @@
 
 [![Latest release](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![License: GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
 
+[<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://github.com/Victor-root/Omnify)
+
 ## 📸 Screenshots
 
 <p align="center"><strong>📱 Mobile</strong></p>

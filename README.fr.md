@@ -4,6 +4,8 @@
 
 [![Dernière version](https://img.shields.io/github/v/release/Victor-root/VFiles)](https://github.com/Victor-root/VFiles/releases) [![Licence : GPL v3](https://img.shields.io/github/license/Victor-root/VFiles?color=blue)](LICENSE)
 
+[<img src="docs/badges/get-it-on-omnify.svg" alt="Disponible sur Omnify" height="56">](https://github.com/Victor-root/Omnify)
+
 Un fork personnel et amélioré de **[Material Files](https://github.com/zhanghai/MaterialFiles)** de Hai Zhang, un gestionnaire de fichiers Material Design open source pour Android.
 
 Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent **uniquement ce que ce fork ajoute ou modifie**. Pour ce qu'est fondamentalement l'application, voir [À propos de l'application d'origine](#à-propos-de-lapplication-dorigine).
