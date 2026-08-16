@@ -623,7 +623,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Adaugă aici folderele preferate pentru acces rapid</string>
     <string name="navigation_bookmarks_hint_title">Marcaje</string>
     <string name="navigation_bookmarks_hint_toast">Deschide un folder, apoi atinge ⋮ și „Adaugă marcaj”</string>
-    <string name="onboarding_files_description">Material Files are nevoie de permisiunea de a gestiona toate fișierele de pe dispozitiv. Este esențială pentru a răsfoi, copia, muta și organiza fișierele.</string>
+    <string name="onboarding_files_description">%1$s are nevoie de permisiunea de a gestiona toate fișierele de pe dispozitiv. Este esențială pentru a răsfoi, copia, muta și organiza fișierele.</string>
     <string name="onboarding_files_grant">Acordă acces</string>
     <string name="onboarding_files_granted">Acces acordat</string>
     <string name="onboarding_files_not_granted">Acces necesar pentru a folosi aplicația</string>
@@ -640,7 +640,7 @@
     <string name="onboarding_optional">Opțional</string>
     <string name="onboarding_required">Obligatoriu</string>
     <string name="onboarding_welcome_description">Acordă câteva permisiuni pentru cea mai bună experiență. Cele opționale pot fi schimbate mai târziu în Setări.</string>
-    <string name="onboarding_welcome_title">Bine ai venit în Material Files</string>
+    <string name="onboarding_welcome_title">Bine ai venit în %1$s</string>
     <string name="settings_default_apps_ask">Întreabă de fiecare dată</string>
     <string name="settings_default_apps_audio">Audio / Muzică</string>
     <string name="settings_default_apps_image">Imagini</string>

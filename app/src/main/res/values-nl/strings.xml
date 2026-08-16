@@ -684,7 +684,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Voeg hier je favoriete mappen toe voor snelle toegang</string>
     <string name="navigation_bookmarks_hint_title">Bladwijzers</string>
     <string name="navigation_bookmarks_hint_toast">Open een map, tik dan op ⋮ en „Bladwijzer toevoegen”</string>
-    <string name="onboarding_files_description">Material Files heeft toestemming nodig om alle bestanden op je apparaat te beheren. Dit is essentieel om te bladeren, kopiëren, verplaatsen en je bestanden te ordenen.</string>
+    <string name="onboarding_files_description">%1$s heeft toestemming nodig om alle bestanden op je apparaat te beheren. Dit is essentieel om te bladeren, kopiëren, verplaatsen en je bestanden te ordenen.</string>
     <string name="onboarding_files_grant">Toegang verlenen</string>
     <string name="onboarding_files_granted">Toegang verleend</string>
     <string name="onboarding_files_not_granted">Toegang vereist om de app te gebruiken</string>
@@ -701,7 +701,7 @@
     <string name="onboarding_optional">Optioneel</string>
     <string name="onboarding_required">Vereist</string>
     <string name="onboarding_welcome_description">Verleen een paar rechten voor de beste ervaring. Optionele kun je later wijzigen in Instellingen.</string>
-    <string name="onboarding_welcome_title">Welkom bij Material Files</string>
+    <string name="onboarding_welcome_title">Welkom bij %1$s</string>
     <string name="settings_default_apps_ask">Elke keer vragen</string>
     <string name="settings_default_apps_audio">Audio / Muziek</string>
     <string name="settings_default_apps_image">Afbeeldingen</string>

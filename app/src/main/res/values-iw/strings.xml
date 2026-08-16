@@ -746,7 +746,7 @@
     <string name="navigation_bookmarks_hint_subtitle">הוסף כאן את התיקיות המועדפות לגישה מהירה</string>
     <string name="navigation_bookmarks_hint_title">סימניות</string>
     <string name="navigation_bookmarks_hint_toast">פתח תיקייה, הקש על ⋮ ובחר ב“הוספת סימנייה”</string>
-    <string name="onboarding_files_description">Material Files זקוק להרשאה לניהול כל הקבצים במכשיר. ההרשאה חיונית לעיון, העתקה, העברה וארגון של הקבצים.</string>
+    <string name="onboarding_files_description">%1$s זקוק להרשאה לניהול כל הקבצים במכשיר. ההרשאה חיונית לעיון, העתקה, העברה וארגון של הקבצים.</string>
     <string name="onboarding_files_grant">הענק גישה</string>
     <string name="onboarding_files_granted">הגישה הוענקה</string>
     <string name="onboarding_files_not_granted">נדרשת גישה לשימוש באפליקציה</string>
@@ -763,7 +763,7 @@
     <string name="onboarding_optional">אופציונלי</string>
     <string name="onboarding_required">חובה</string>
     <string name="onboarding_welcome_description">הענק כמה הרשאות לחוויה הטובה ביותר. ניתן לשנות את האופציונליות מאוחר יותר בהגדרות.</string>
-    <string name="onboarding_welcome_title">ברוך הבא ל-Material Files</string>
+    <string name="onboarding_welcome_title">ברוך הבא ל-%1$s</string>
     <string name="settings_default_apps_ask">שאל בכל פעם</string>
     <string name="settings_default_apps_audio">אודיו / מוזיקה</string>
     <string name="settings_default_apps_image">תמונות</string>

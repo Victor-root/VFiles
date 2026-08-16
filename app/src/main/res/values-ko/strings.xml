@@ -653,7 +653,7 @@
     <string name="navigation_bookmarks_hint_subtitle">자주 쓰는 폴더를 여기에 추가하여 빠르게 접근하세요</string>
     <string name="navigation_bookmarks_hint_title">북마크</string>
     <string name="navigation_bookmarks_hint_toast">폴더를 연 다음 ⋮ 를 탭하고 “북마크 추가”를 선택하세요</string>
-    <string name="onboarding_files_description">Material Files가 기기의 모든 파일을 관리하려면 권한이 필요합니다. 파일을 탐색, 복사, 이동, 정리하는 데 필수적입니다.</string>
+    <string name="onboarding_files_description">%1$s가 기기의 모든 파일을 관리하려면 권한이 필요합니다. 파일을 탐색, 복사, 이동, 정리하는 데 필수적입니다.</string>
     <string name="onboarding_files_grant">액세스 허용</string>
     <string name="onboarding_files_granted">액세스 허용됨</string>
     <string name="onboarding_files_not_granted">앱을 사용하려면 액세스가 필요합니다</string>
@@ -670,7 +670,7 @@
     <string name="onboarding_optional">선택사항</string>
     <string name="onboarding_required">필수</string>
     <string name="onboarding_welcome_description">최상의 환경을 위해 몇 가지 권한을 허용하세요. 선택 권한은 나중에 설정에서 변경할 수 있습니다.</string>
-    <string name="onboarding_welcome_title">Material Files에 오신 것을 환영합니다</string>
+    <string name="onboarding_welcome_title">%1$s에 오신 것을 환영합니다</string>
     <string name="settings_default_apps_ask">매번 묻기</string>
     <string name="settings_default_apps_audio">오디오 / 음악</string>
     <string name="settings_default_apps_image">이미지</string>

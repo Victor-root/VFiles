@@ -715,7 +715,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Aggiungi qui le cartelle preferite per un accesso rapido</string>
     <string name="navigation_bookmarks_hint_title">Segnalibri</string>
     <string name="navigation_bookmarks_hint_toast">Apri una cartella, poi tocca ⋮ e «Aggiungi segnalibro»</string>
-    <string name="onboarding_files_description">Material Files ha bisogno dell\'autorizzazione per gestire tutti i file del dispositivo. È essenziale per sfogliare, copiare, spostare e organizzare i tuoi file.</string>
+    <string name="onboarding_files_description">%1$s ha bisogno dell\'autorizzazione per gestire tutti i file del dispositivo. È essenziale per sfogliare, copiare, spostare e organizzare i tuoi file.</string>
     <string name="onboarding_files_grant">Concedi accesso</string>
     <string name="onboarding_files_granted">Accesso concesso</string>
     <string name="onboarding_files_not_granted">Accesso necessario per usare l\'app</string>
@@ -732,7 +732,7 @@
     <string name="onboarding_optional">Facoltativo</string>
     <string name="onboarding_required">Obbligatorio</string>
     <string name="onboarding_welcome_description">Concedi alcune autorizzazioni per la migliore esperienza. Quelle facoltative possono essere modificate più tardi nelle impostazioni.</string>
-    <string name="onboarding_welcome_title">Benvenuto in Material Files</string>
+    <string name="onboarding_welcome_title">Benvenuto in %1$s</string>
     <string name="settings_default_apps_ask">Chiedi ogni volta</string>
     <string name="settings_default_apps_audio">Audio / Musica</string>
     <string name="settings_default_apps_image">Immagini</string>

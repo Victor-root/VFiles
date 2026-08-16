@@ -645,7 +645,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Pridėkite čia mėgstamus aplankus, kad greitai pasiektumėte</string>
     <string name="navigation_bookmarks_hint_title">Žymės</string>
     <string name="navigation_bookmarks_hint_toast">Atidarykite aplanką, palieskite ⋮ ir pasirinkite „Pridėti žymę“</string>
-    <string name="onboarding_files_description">„Material Files“ reikia leidimo tvarkyti visus įrenginio failus. Jis būtinas norint naršyti, kopijuoti, perkelti ir tvarkyti failus.</string>
+    <string name="onboarding_files_description">„%1$s“ reikia leidimo tvarkyti visus įrenginio failus. Jis būtinas norint naršyti, kopijuoti, perkelti ir tvarkyti failus.</string>
     <string name="onboarding_files_grant">Suteikti prieigą</string>
     <string name="onboarding_files_granted">Prieiga suteikta</string>
     <string name="onboarding_files_not_granted">Norint naudoti programą, reikia prieigos</string>
@@ -662,7 +662,7 @@
     <string name="onboarding_optional">Pasirinktinai</string>
     <string name="onboarding_required">Privaloma</string>
     <string name="onboarding_welcome_description">Suteikite kelis leidimus, kad patirtis būtų geriausia. Pasirinktinius galėsite pakeisti vėliau nustatymuose.</string>
-    <string name="onboarding_welcome_title">Sveiki atvykę į „Material Files“</string>
+    <string name="onboarding_welcome_title">Sveiki atvykę į „%1$s“</string>
     <string name="settings_default_apps_ask">Klausti kiekvieną kartą</string>
     <string name="settings_default_apps_audio">Garsas / Muzika</string>
     <string name="settings_default_apps_image">Vaizdai</string>

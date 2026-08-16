@@ -715,7 +715,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Añade aquí tus carpetas favoritas para acceder rápido</string>
     <string name="navigation_bookmarks_hint_title">Marcadores</string>
     <string name="navigation_bookmarks_hint_toast">Abre una carpeta, luego toca ⋮ y «Añadir marcador»</string>
-    <string name="onboarding_files_description">Material Files necesita permiso para gestionar todos los archivos de tu dispositivo. Es imprescindible para explorar, copiar, mover y organizar tus archivos.</string>
+    <string name="onboarding_files_description">%1$s necesita permiso para gestionar todos los archivos de tu dispositivo. Es imprescindible para explorar, copiar, mover y organizar tus archivos.</string>
     <string name="onboarding_files_grant">Conceder acceso</string>
     <string name="onboarding_files_granted">Acceso concedido</string>
     <string name="onboarding_files_not_granted">Acceso necesario para usar la app</string>
@@ -732,7 +732,7 @@
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obligatorio</string>
     <string name="onboarding_welcome_description">Concede algunos permisos para una mejor experiencia. Los opcionales se pueden cambiar más tarde en Ajustes.</string>
-    <string name="onboarding_welcome_title">Te damos la bienvenida a Material Files</string>
+    <string name="onboarding_welcome_title">Te damos la bienvenida a %1$s</string>
     <string name="settings_default_apps_ask">Preguntar siempre</string>
     <string name="settings_default_apps_audio">Audio / Música</string>
     <string name="settings_default_apps_image">Imágenes</string>

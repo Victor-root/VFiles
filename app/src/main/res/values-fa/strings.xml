@@ -578,7 +578,7 @@
     <string name="navigation_bookmarks_hint_subtitle">پوشه‌های دلخواه خود را برای دسترسی سریع اینجا اضافه کنید</string>
     <string name="navigation_bookmarks_hint_title">نشانک‌ها</string>
     <string name="navigation_bookmarks_hint_toast">پوشه‌ای را باز کنید، روی ⋮ ضربه بزنید و «افزودن نشانک» را انتخاب کنید</string>
-    <string name="onboarding_files_description">برنامهٔ Material Files برای مدیریت همهٔ فایل‌های دستگاه به اجازه نیاز دارد. این اجازه برای مرور، کپی، انتقال و سازمان‌دهی فایل‌ها ضروری است.</string>
+    <string name="onboarding_files_description">برنامهٔ %1$s برای مدیریت همهٔ فایل‌های دستگاه به اجازه نیاز دارد. این اجازه برای مرور، کپی، انتقال و سازمان‌دهی فایل‌ها ضروری است.</string>
     <string name="onboarding_files_grant">اعطای دسترسی</string>
     <string name="onboarding_files_granted">دسترسی اعطا شد</string>
     <string name="onboarding_files_not_granted">برای استفاده از برنامه به دسترسی نیاز است</string>
@@ -595,7 +595,7 @@
     <string name="onboarding_optional">اختیاری</string>
     <string name="onboarding_required">الزامی</string>
     <string name="onboarding_welcome_description">برای بهترین تجربه چند اجازه بدهید. موارد اختیاری را می‌توانید بعداً در تنظیمات تغییر دهید.</string>
-    <string name="onboarding_welcome_title">به Material Files خوش آمدید</string>
+    <string name="onboarding_welcome_title">به %1$s خوش آمدید</string>
     <string name="settings_default_apps_ask">هر بار بپرس</string>
     <string name="settings_default_apps_audio">صدا / موسیقی</string>
     <string name="settings_default_apps_image">تصاویر</string>

@@ -748,7 +748,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Додайте сюди улюблені папки для швидкого доступу</string>
     <string name="navigation_bookmarks_hint_title">Закладки</string>
     <string name="navigation_bookmarks_hint_toast">Відкрийте папку, торкніться ⋮ і виберіть «Додати закладку»</string>
-    <string name="onboarding_files_description">Material Files потрібен дозвіл на керування всіма файлами на пристрої. Він необхідний для перегляду, копіювання, переміщення та впорядкування файлів.</string>
+    <string name="onboarding_files_description">%1$s потрібен дозвіл на керування всіма файлами на пристрої. Він необхідний для перегляду, копіювання, переміщення та впорядкування файлів.</string>
     <string name="onboarding_files_grant">Надати доступ</string>
     <string name="onboarding_files_granted">Доступ надано</string>
     <string name="onboarding_files_not_granted">Для роботи додатка потрібен доступ</string>
@@ -765,7 +765,7 @@
     <string name="onboarding_optional">Необов’язково</string>
     <string name="onboarding_required">Обов’язково</string>
     <string name="onboarding_welcome_description">Надайте кілька дозволів для найкращої роботи. Необов’язкові можна змінити пізніше в Налаштуваннях.</string>
-    <string name="onboarding_welcome_title">Ласкаво просимо до Material Files</string>
+    <string name="onboarding_welcome_title">Ласкаво просимо до %1$s</string>
     <string name="settings_default_apps_ask">Запитувати щоразу</string>
     <string name="settings_default_apps_audio">Аудіо / Музика</string>
     <string name="settings_default_apps_image">Зображення</string>

@@ -384,7 +384,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Gehitu hemen gogoko karpetak azkar atzitzeko</string>
     <string name="navigation_bookmarks_hint_title">Laster-markak</string>
     <string name="navigation_bookmarks_hint_toast">Ireki karpeta bat, sakatu ⋮ eta hautatu «Gehitu laster-marka»</string>
-    <string name="onboarding_files_description">Material Files-ek baimena behar du gailuko fitxategi guztiak kudeatzeko. Ezinbestekoa da fitxategiak arakatu, kopiatu, lekuz aldatu eta antolatzeko.</string>
+    <string name="onboarding_files_description">%1$s-ek baimena behar du gailuko fitxategi guztiak kudeatzeko. Ezinbestekoa da fitxategiak arakatu, kopiatu, lekuz aldatu eta antolatzeko.</string>
     <string name="onboarding_files_grant">Eman sarbidea</string>
     <string name="onboarding_files_granted">Sarbidea emanda</string>
     <string name="onboarding_files_not_granted">Sarbidea behar da aplikazioa erabiltzeko</string>
@@ -401,7 +401,7 @@
     <string name="onboarding_optional">Aukerakoa</string>
     <string name="onboarding_required">Beharrezkoa</string>
     <string name="onboarding_welcome_description">Eman baimen batzuk esperientzia onena izateko. Aukerakoak geroago alda ditzakezu Ezarpenetan.</string>
-    <string name="onboarding_welcome_title">Ongi etorri Material Files-era</string>
+    <string name="onboarding_welcome_title">Ongi etorri %1$s-era</string>
     <string name="settings_default_apps_ask">Galdetu beti</string>
     <string name="settings_default_apps_audio">Audioa / Musika</string>
     <string name="settings_default_apps_image">Irudiak</string>

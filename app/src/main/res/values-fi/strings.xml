@@ -568,7 +568,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Lisää suosikkikansiosi tähän nopeaa käyttöä varten</string>
     <string name="navigation_bookmarks_hint_title">Kirjanmerkit</string>
     <string name="navigation_bookmarks_hint_toast">Avaa kansio, napauta ⋮ ja valitse ”Lisää kirjanmerkki”</string>
-    <string name="onboarding_files_description">Material Files tarvitsee luvan hallita kaikkia laitteesi tiedostoja. Se on välttämätön tiedostojen selaamiseen, kopioimiseen, siirtämiseen ja järjestämiseen.</string>
+    <string name="onboarding_files_description">%1$s tarvitsee luvan hallita kaikkia laitteesi tiedostoja. Se on välttämätön tiedostojen selaamiseen, kopioimiseen, siirtämiseen ja järjestämiseen.</string>
     <string name="onboarding_files_grant">Myönnä käyttöoikeus</string>
     <string name="onboarding_files_granted">Käyttöoikeus myönnetty</string>
     <string name="onboarding_files_not_granted">Sovelluksen käyttö edellyttää käyttöoikeutta</string>
@@ -585,7 +585,7 @@
     <string name="onboarding_optional">Valinnainen</string>
     <string name="onboarding_required">Pakollinen</string>
     <string name="onboarding_welcome_description">Myönnä muutama lupa parasta kokemusta varten. Valinnaisia voi muuttaa myöhemmin asetuksissa.</string>
-    <string name="onboarding_welcome_title">Tervetuloa – Material Files</string>
+    <string name="onboarding_welcome_title">Tervetuloa – %1$s</string>
     <string name="settings_default_apps_ask">Kysy joka kerta</string>
     <string name="settings_default_apps_audio">Ääni / Musiikki</string>
     <string name="settings_default_apps_image">Kuvat</string>

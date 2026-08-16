@@ -668,7 +668,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Добавете тук любимите си папки за бърз достъп</string>
     <string name="navigation_bookmarks_hint_title">Отметки</string>
     <string name="navigation_bookmarks_hint_toast">Отворете папка, докоснете ⋮ и изберете „Добавяне на отметка“</string>
-    <string name="onboarding_files_description">Material Files се нуждае от разрешение за управление на всички файлове на устройството. То е необходимо за разглеждане, копиране, преместване и подреждане на файловете.</string>
+    <string name="onboarding_files_description">%1$s се нуждае от разрешение за управление на всички файлове на устройството. То е необходимо за разглеждане, копиране, преместване и подреждане на файловете.</string>
     <string name="onboarding_files_grant">Предоставяне на достъп</string>
     <string name="onboarding_files_granted">Достъпът е предоставен</string>
     <string name="onboarding_files_not_granted">За използване на приложението е необходим достъп</string>
@@ -685,7 +685,7 @@
     <string name="onboarding_optional">По избор</string>
     <string name="onboarding_required">Задължително</string>
     <string name="onboarding_welcome_description">Предоставете няколко разрешения за най-добро изживяване. Незадължителните могат да се променят по-късно в Настройки.</string>
-    <string name="onboarding_welcome_title">Добре дошли в Material Files</string>
+    <string name="onboarding_welcome_title">Добре дошли в %1$s</string>
     <string name="settings_default_apps_ask">Питай всеки път</string>
     <string name="settings_default_apps_audio">Аудио / Музика</string>
     <string name="settings_default_apps_image">Изображения</string>

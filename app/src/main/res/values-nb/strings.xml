@@ -684,7 +684,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Legg til favorittmappene dine her for rask tilgang</string>
     <string name="navigation_bookmarks_hint_title">Bokmerker</string>
     <string name="navigation_bookmarks_hint_toast">Åpne en mappe, trykk på ⋮ og velg «Legg til bokmerke»</string>
-    <string name="onboarding_files_description">Material Files trenger tillatelse til å administrere alle filene på enheten din. Det er nødvendig for å bla gjennom, kopiere, flytte og organisere filene dine.</string>
+    <string name="onboarding_files_description">%1$s trenger tillatelse til å administrere alle filene på enheten din. Det er nødvendig for å bla gjennom, kopiere, flytte og organisere filene dine.</string>
     <string name="onboarding_files_grant">Gi tilgang</string>
     <string name="onboarding_files_granted">Tilgang gitt</string>
     <string name="onboarding_files_not_granted">Tilgang kreves for å bruke appen</string>
@@ -701,7 +701,7 @@
     <string name="onboarding_optional">Valgfritt</string>
     <string name="onboarding_required">Påkrevd</string>
     <string name="onboarding_welcome_description">Gi noen tillatelser for den beste opplevelsen. De valgfrie kan endres senere i Innstillinger.</string>
-    <string name="onboarding_welcome_title">Velkommen til Material Files</string>
+    <string name="onboarding_welcome_title">Velkommen til %1$s</string>
     <string name="settings_default_apps_ask">Spør hver gang</string>
     <string name="settings_default_apps_audio">Lyd / Musikk</string>
     <string name="settings_default_apps_image">Bilder</string>

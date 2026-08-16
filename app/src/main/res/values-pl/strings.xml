@@ -746,7 +746,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Dodaj tu ulubione foldery, aby mieć do nich szybki dostęp</string>
     <string name="navigation_bookmarks_hint_title">Zakładki</string>
     <string name="navigation_bookmarks_hint_toast">Otwórz folder, dotknij ⋮ i „Dodaj zakładkę”</string>
-    <string name="onboarding_files_description">Material Files potrzebuje uprawnienia do zarządzania wszystkimi plikami na urządzeniu. Jest ono niezbędne do przeglądania, kopiowania, przenoszenia i porządkowania plików.</string>
+    <string name="onboarding_files_description">%1$s potrzebuje uprawnienia do zarządzania wszystkimi plikami na urządzeniu. Jest ono niezbędne do przeglądania, kopiowania, przenoszenia i porządkowania plików.</string>
     <string name="onboarding_files_grant">Przyznaj dostęp</string>
     <string name="onboarding_files_granted">Dostęp przyznany</string>
     <string name="onboarding_files_not_granted">Dostęp wymagany do korzystania z aplikacji</string>
@@ -763,7 +763,7 @@
     <string name="onboarding_optional">Opcjonalne</string>
     <string name="onboarding_required">Wymagane</string>
     <string name="onboarding_welcome_description">Przyznaj kilka uprawnień, aby uzyskać najlepsze działanie. Opcjonalne można zmienić później w Ustawieniach.</string>
-    <string name="onboarding_welcome_title">Witamy w Material Files</string>
+    <string name="onboarding_welcome_title">Witamy w %1$s</string>
     <string name="settings_default_apps_ask">Pytaj za każdym razem</string>
     <string name="settings_default_apps_audio">Audio / Muzyka</string>
     <string name="settings_default_apps_image">Obrazy</string>

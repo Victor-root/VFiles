@@ -653,7 +653,7 @@
     <string name="navigation_bookmarks_hint_subtitle">よく使うフォルダをここに追加してすばやくアクセス</string>
     <string name="navigation_bookmarks_hint_title">ブックマーク</string>
     <string name="navigation_bookmarks_hint_toast">フォルダを開き、⋮ をタップして「ブックマークに追加」を選択</string>
-    <string name="onboarding_files_description">Material Files がデバイス上のすべてのファイルを管理するには権限が必要です。ファイルの閲覧、コピー、移動、整理に不可欠です。</string>
+    <string name="onboarding_files_description">%1$s がデバイス上のすべてのファイルを管理するには権限が必要です。ファイルの閲覧、コピー、移動、整理に不可欠です。</string>
     <string name="onboarding_files_grant">アクセスを許可</string>
     <string name="onboarding_files_granted">アクセスを許可しました</string>
     <string name="onboarding_files_not_granted">アプリの使用にはアクセスが必要です</string>
@@ -670,7 +670,7 @@
     <string name="onboarding_optional">任意</string>
     <string name="onboarding_required">必須</string>
     <string name="onboarding_welcome_description">最適な体験のためにいくつかの権限を許可してください。任意の権限は後で設定から変更できます。</string>
-    <string name="onboarding_welcome_title">Material Files へようこそ</string>
+    <string name="onboarding_welcome_title">%1$s へようこそ</string>
     <string name="settings_default_apps_ask">毎回確認</string>
     <string name="settings_default_apps_audio">オーディオ / 音楽</string>
     <string name="settings_default_apps_image">画像</string>

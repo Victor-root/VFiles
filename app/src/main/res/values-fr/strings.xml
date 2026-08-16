@@ -742,14 +742,14 @@
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_finish">Commencer</string>
 
-    <string name="onboarding_welcome_title">Bienvenue dans Material Files</string>
+    <string name="onboarding_welcome_title">Bienvenue dans %1$s</string>
     <string name="onboarding_welcome_description">Accordez quelques autorisations pour profiter pleinement de l\'application. Les optionnelles pourront être modifiées plus tard dans les réglages.</string>
     <string name="onboarding_grant">Accorder</string>
     <string name="onboarding_required">Requis</string>
     <string name="onboarding_optional">Optionnel</string>
 
     <string name="onboarding_files_title">Accès aux fichiers</string>
-    <string name="onboarding_files_description">Material Files a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
+    <string name="onboarding_files_description">%1$s a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
     <string name="onboarding_files_grant">Accorder l\'accès</string>
     <string name="onboarding_files_granted">Accès accordé</string>
     <string name="onboarding_files_not_granted">Accès requis pour utiliser l\'application</string>

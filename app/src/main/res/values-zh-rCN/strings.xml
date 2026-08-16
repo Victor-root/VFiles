@@ -654,7 +654,7 @@
     <string name="navigation_bookmarks_hint_subtitle">将常用文件夹添加到此处以便快速访问</string>
     <string name="navigation_bookmarks_hint_title">书签</string>
     <string name="navigation_bookmarks_hint_toast">打开文件夹，然后点按 ⋮ 并选择“添加书签”</string>
-    <string name="onboarding_files_description">Material Files 需要管理设备上所有文件的权限。这对于浏览、复制、移动和整理文件至关重要。</string>
+    <string name="onboarding_files_description">%1$s 需要管理设备上所有文件的权限。这对于浏览、复制、移动和整理文件至关重要。</string>
     <string name="onboarding_files_grant">授予访问权限</string>
     <string name="onboarding_files_granted">已授予访问权限</string>
     <string name="onboarding_files_not_granted">使用应用需要访问权限</string>
@@ -671,7 +671,7 @@
     <string name="onboarding_optional">可选</string>
     <string name="onboarding_required">必需</string>
     <string name="onboarding_welcome_description">授予一些权限以获得最佳体验。可选权限稍后可在设置中更改。</string>
-    <string name="onboarding_welcome_title">欢迎使用 Material Files</string>
+    <string name="onboarding_welcome_title">欢迎使用 %1$s</string>
     <string name="settings_default_apps_ask">每次都询问</string>
     <string name="settings_default_apps_audio">音频 / 音乐</string>
     <string name="settings_default_apps_image">图片</string>

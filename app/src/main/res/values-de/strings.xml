@@ -684,7 +684,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Füge hier deine Lieblingsordner für schnellen Zugriff hinzu</string>
     <string name="navigation_bookmarks_hint_title">Lesezeichen</string>
     <string name="navigation_bookmarks_hint_toast">Öffne einen Ordner, tippe dann auf ⋮ und „Lesezeichen hinzufügen“</string>
-    <string name="onboarding_files_description">Material Files benötigt die Berechtigung, alle Dateien auf deinem Gerät zu verwalten. Das ist zum Durchsuchen, Kopieren, Verschieben und Organisieren deiner Dateien erforderlich.</string>
+    <string name="onboarding_files_description">%1$s benötigt die Berechtigung, alle Dateien auf deinem Gerät zu verwalten. Das ist zum Durchsuchen, Kopieren, Verschieben und Organisieren deiner Dateien erforderlich.</string>
     <string name="onboarding_files_grant">Zugriff erlauben</string>
     <string name="onboarding_files_granted">Zugriff erteilt</string>
     <string name="onboarding_files_not_granted">Zugriff zur Nutzung der App erforderlich</string>
@@ -701,7 +701,7 @@
     <string name="onboarding_optional">Optional</string>
     <string name="onboarding_required">Erforderlich</string>
     <string name="onboarding_welcome_description">Erteile ein paar Berechtigungen für das beste Erlebnis. Optionale kannst du später in den Einstellungen ändern.</string>
-    <string name="onboarding_welcome_title">Willkommen bei Material Files</string>
+    <string name="onboarding_welcome_title">Willkommen bei %1$s</string>
     <string name="settings_default_apps_ask">Jedes Mal fragen</string>
     <string name="settings_default_apps_audio">Audio / Musik</string>
     <string name="settings_default_apps_image">Bilder</string>

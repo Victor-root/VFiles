@@ -624,7 +624,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Afegiu aquí les carpetes preferides per a un accés ràpid</string>
     <string name="navigation_bookmarks_hint_title">Adreces d\'interès</string>
     <string name="navigation_bookmarks_hint_toast">Obriu una carpeta, toqueu ⋮ i «Afegeix adreça d\'interès»</string>
-    <string name="onboarding_files_description">El Material Files necessita permís per gestionar tots els fitxers del dispositiu. És essencial per navegar, copiar, moure i organitzar els fitxers.</string>
+    <string name="onboarding_files_description">El %1$s necessita permís per gestionar tots els fitxers del dispositiu. És essencial per navegar, copiar, moure i organitzar els fitxers.</string>
     <string name="onboarding_files_grant">Concedeix l\'accés</string>
     <string name="onboarding_files_granted">Accés concedit</string>
     <string name="onboarding_files_not_granted">Cal accés per fer servir l\'aplicació</string>
@@ -641,7 +641,7 @@
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obligatori</string>
     <string name="onboarding_welcome_description">Concediu uns quants permisos per a la millor experiència. Els opcionals es poden canviar més tard a Configuració.</string>
-    <string name="onboarding_welcome_title">Us donem la benvinguda al Material Files</string>
+    <string name="onboarding_welcome_title">Us donem la benvinguda al %1$s</string>
     <string name="settings_default_apps_ask">Pregunta cada vegada</string>
     <string name="settings_default_apps_audio">Àudio / Música</string>
     <string name="settings_default_apps_image">Imatges</string>

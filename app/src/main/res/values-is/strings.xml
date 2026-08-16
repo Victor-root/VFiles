@@ -686,7 +686,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Bættu uppáhaldsmöppunum þínum hér við til að fá skjótan aðgang</string>
     <string name="navigation_bookmarks_hint_title">Bókamerki</string>
     <string name="navigation_bookmarks_hint_toast">Opnaðu möppu, ýttu á ⋮ og veldu „Bæta við bókamerki“</string>
-    <string name="onboarding_files_description">Material Files þarf heimild til að stjórna öllum skrám í tækinu þínu. Hún er nauðsynleg til að skoða, afrita, færa og skipuleggja skrárnar þínar.</string>
+    <string name="onboarding_files_description">%1$s þarf heimild til að stjórna öllum skrám í tækinu þínu. Hún er nauðsynleg til að skoða, afrita, færa og skipuleggja skrárnar þínar.</string>
     <string name="onboarding_files_grant">Veita aðgang</string>
     <string name="onboarding_files_granted">Aðgangur veittur</string>
     <string name="onboarding_files_not_granted">Aðgangs er krafist til að nota forritið</string>
@@ -703,7 +703,7 @@
     <string name="onboarding_optional">Valfrjálst</string>
     <string name="onboarding_required">Nauðsynlegt</string>
     <string name="onboarding_welcome_description">Veittu nokkrar heimildir til að fá bestu upplifunina. Hægt er að breyta valfrjálsum síðar í Stillingum.</string>
-    <string name="onboarding_welcome_title">Velkomin í Material Files</string>
+    <string name="onboarding_welcome_title">Velkomin í %1$s</string>
     <string name="settings_default_apps_ask">Spyrja í hvert sinn</string>
     <string name="settings_default_apps_audio">Hljóð / Tónlist</string>
     <string name="settings_default_apps_image">Myndir</string>

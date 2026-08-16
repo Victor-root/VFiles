@@ -51,6 +51,9 @@ class OnboardingActivity : AppActivity() {
         binding = OnboardingActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.welcomeTitleText.text =
+            getString(R.string.onboarding_welcome_title, getString(R.string.app_name))
+
         bindCard(binding.cardFiles, OnboardingPage.FilesAccess)
         bindCard(binding.cardNotifications, OnboardingPage.Notifications)
 
@@ -67,7 +70,7 @@ class OnboardingActivity : AppActivity() {
     private fun bindCard(card: OnboardingPermissionItemBinding, page: OnboardingPage) {
         card.iconImage.setImageResource(page.iconRes)
         card.titleText.setText(page.titleRes)
-        card.descriptionText.setText(page.descriptionRes)
+        card.descriptionText.text = page.getDescription(this)
         card.badgeText.setText(
             if (page.isRequired) R.string.onboarding_required else R.string.onboarding_optional
         )
@@ -139,6 +142,8 @@ class OnboardingActivity : AppActivity() {
         @param:StringRes val descriptionRes: Int,
         val isRequired: Boolean
     ) {
+        open fun getDescription(context: Context): String = context.getString(descriptionRes)
+
         abstract fun isGranted(context: Context): Boolean
         abstract fun requestGrant(activity: OnboardingActivity)
 
@@ -148,6 +153,9 @@ class OnboardingActivity : AppActivity() {
             descriptionRes = R.string.onboarding_files_description,
             isRequired = true
         ) {
+            override fun getDescription(context: Context): String =
+                context.getString(descriptionRes, context.getString(R.string.app_name))
+
             override fun isGranted(context: Context): Boolean =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     Environment.isExternalStorageManager()

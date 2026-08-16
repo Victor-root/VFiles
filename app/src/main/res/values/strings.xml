@@ -838,14 +838,14 @@
     <string name="onboarding_next">Next</string>
     <string name="onboarding_finish">Get started</string>
 
-    <string name="onboarding_welcome_title">Welcome to Material Files</string>
+    <string name="onboarding_welcome_title">Welcome to %1$s</string>
     <string name="onboarding_welcome_description">Grant a few permissions to get the best experience. Optional ones can be changed later in Settings.</string>
     <string name="onboarding_grant">Grant</string>
     <string name="onboarding_required">Required</string>
     <string name="onboarding_optional">Optional</string>
 
     <string name="onboarding_files_title">File access</string>
-    <string name="onboarding_files_description">Material Files needs permission to manage all files on your device. This is essential for browsing, copying, moving and organizing your files.</string>
+    <string name="onboarding_files_description">%1$s needs permission to manage all files on your device. This is essential for browsing, copying, moving and organizing your files.</string>
     <string name="onboarding_files_grant">Grant access</string>
     <string name="onboarding_files_granted">Access granted</string>
     <string name="onboarding_files_not_granted">Access required to use the app</string>

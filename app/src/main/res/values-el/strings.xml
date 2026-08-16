@@ -684,7 +684,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Προσθέστε εδώ τους αγαπημένους σας φακέλους για γρήγορη πρόσβαση</string>
     <string name="navigation_bookmarks_hint_title">Σελιδοδείκτες</string>
     <string name="navigation_bookmarks_hint_toast">Ανοίξτε έναν φάκελο, πατήστε ⋮ και «Προσθήκη σελιδοδείκτη»</string>
-    <string name="onboarding_files_description">Το Material Files χρειάζεται άδεια για τη διαχείριση όλων των αρχείων στη συσκευή σας. Είναι απαραίτητη για περιήγηση, αντιγραφή, μετακίνηση και οργάνωση των αρχείων σας.</string>
+    <string name="onboarding_files_description">Το %1$s χρειάζεται άδεια για τη διαχείριση όλων των αρχείων στη συσκευή σας. Είναι απαραίτητη για περιήγηση, αντιγραφή, μετακίνηση και οργάνωση των αρχείων σας.</string>
     <string name="onboarding_files_grant">Παραχώρηση πρόσβασης</string>
     <string name="onboarding_files_granted">Η πρόσβαση παραχωρήθηκε</string>
     <string name="onboarding_files_not_granted">Απαιτείται πρόσβαση για χρήση της εφαρμογής</string>
@@ -701,7 +701,7 @@
     <string name="onboarding_optional">Προαιρετικό</string>
     <string name="onboarding_required">Απαιτείται</string>
     <string name="onboarding_welcome_description">Παραχωρήστε μερικές άδειες για την καλύτερη εμπειρία. Οι προαιρετικές μπορούν να αλλάξουν αργότερα στις Ρυθμίσεις.</string>
-    <string name="onboarding_welcome_title">Καλώς ορίσατε στο Material Files</string>
+    <string name="onboarding_welcome_title">Καλώς ορίσατε στο %1$s</string>
     <string name="settings_default_apps_ask">Ερώτηση κάθε φορά</string>
     <string name="settings_default_apps_audio">Ήχος / Μουσική</string>
     <string name="settings_default_apps_image">Εικόνες</string>

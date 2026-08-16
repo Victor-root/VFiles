@@ -718,7 +718,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Sem přidejte oblíbené složky pro rychlý přístup</string>
     <string name="navigation_bookmarks_hint_title">Záložky</string>
     <string name="navigation_bookmarks_hint_toast">Otevřete složku, klepněte na ⋮ a zvolte „Přidat záložku“</string>
-    <string name="onboarding_files_description">Material Files potřebuje oprávnění ke správě všech souborů v zařízení. Je nezbytné pro procházení, kopírování, přesouvání a organizaci souborů.</string>
+    <string name="onboarding_files_description">%1$s potřebuje oprávnění ke správě všech souborů v zařízení. Je nezbytné pro procházení, kopírování, přesouvání a organizaci souborů.</string>
     <string name="onboarding_files_grant">Udělit přístup</string>
     <string name="onboarding_files_granted">Přístup udělen</string>
     <string name="onboarding_files_not_granted">K používání aplikace je nutný přístup</string>
@@ -735,7 +735,7 @@
     <string name="onboarding_optional">Volitelné</string>
     <string name="onboarding_required">Povinné</string>
     <string name="onboarding_welcome_description">Udělte několik oprávnění pro nejlepší zážitek. Volitelná lze změnit později v Nastavení.</string>
-    <string name="onboarding_welcome_title">Vítejte v Material Files</string>
+    <string name="onboarding_welcome_title">Vítejte v %1$s</string>
     <string name="settings_default_apps_ask">Vždy se zeptat</string>
     <string name="settings_default_apps_audio">Zvuk / Hudba</string>
     <string name="settings_default_apps_image">Obrázky</string>

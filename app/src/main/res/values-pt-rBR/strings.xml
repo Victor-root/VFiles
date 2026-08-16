@@ -642,7 +642,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Adicione suas pastas favoritas aqui para acesso rápido</string>
     <string name="navigation_bookmarks_hint_title">Favoritos</string>
     <string name="navigation_bookmarks_hint_toast">Abra uma pasta, toque em ⋮ e em «Adicionar favorito»</string>
-    <string name="onboarding_files_description">O Material Files precisa de permissão para gerenciar todos os arquivos do seu dispositivo. Isso é essencial para navegar, copiar, mover e organizar seus arquivos.</string>
+    <string name="onboarding_files_description">O %1$s precisa de permissão para gerenciar todos os arquivos do seu dispositivo. Isso é essencial para navegar, copiar, mover e organizar seus arquivos.</string>
     <string name="onboarding_files_grant">Conceder acesso</string>
     <string name="onboarding_files_granted">Acesso concedido</string>
     <string name="onboarding_files_not_granted">Acesso necessário para usar o app</string>
@@ -659,7 +659,7 @@
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obrigatório</string>
     <string name="onboarding_welcome_description">Conceda algumas permissões para a melhor experiência. As opcionais podem ser alteradas depois nas configurações.</string>
-    <string name="onboarding_welcome_title">Boas-vindas ao Material Files</string>
+    <string name="onboarding_welcome_title">Boas-vindas ao %1$s</string>
     <string name="settings_default_apps_ask">Perguntar sempre</string>
     <string name="settings_default_apps_audio">Áudio / Música</string>
     <string name="settings_default_apps_image">Imagens</string>

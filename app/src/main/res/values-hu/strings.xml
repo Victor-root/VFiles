@@ -585,7 +585,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Adja hozzá itt a kedvenc mappáit a gyors eléréshez</string>
     <string name="navigation_bookmarks_hint_title">Könyvjelzők</string>
     <string name="navigation_bookmarks_hint_toast">Nyisson meg egy mappát, koppintson a ⋮ ikonra, majd a „Könyvjelző hozzáadása” elemre</string>
-    <string name="onboarding_files_description">A Material Files engedélyt kér az eszközön lévő összes fájl kezeléséhez. Ez elengedhetetlen a fájlok böngészéséhez, másolásához, áthelyezéséhez és rendszerezéséhez.</string>
+    <string name="onboarding_files_description">A %1$s engedélyt kér az eszközön lévő összes fájl kezeléséhez. Ez elengedhetetlen a fájlok böngészéséhez, másolásához, áthelyezéséhez és rendszerezéséhez.</string>
     <string name="onboarding_files_grant">Hozzáférés megadása</string>
     <string name="onboarding_files_granted">Hozzáférés megadva</string>
     <string name="onboarding_files_not_granted">Az alkalmazás használatához hozzáférés szükséges</string>
@@ -602,7 +602,7 @@
     <string name="onboarding_optional">Választható</string>
     <string name="onboarding_required">Kötelező</string>
     <string name="onboarding_welcome_description">Adjon meg néhány engedélyt a legjobb élményért. A választhatók később a Beállításokban módosíthatók.</string>
-    <string name="onboarding_welcome_title">Üdvözli a Material Files</string>
+    <string name="onboarding_welcome_title">Üdvözli a %1$s</string>
     <string name="settings_default_apps_ask">Mindig kérdezzen</string>
     <string name="settings_default_apps_audio">Hang / Zene</string>
     <string name="settings_default_apps_image">Képek</string>

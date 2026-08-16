@@ -557,7 +557,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Hızlı erişim için sık kullandığınız klasörleri buraya ekleyin</string>
     <string name="navigation_bookmarks_hint_title">Yer imleri</string>
     <string name="navigation_bookmarks_hint_toast">Bir klasör açın, ardından ⋮ simgesine dokunup “Yer imi ekle”yi seçin</string>
-    <string name="onboarding_files_description">Material Files, cihazınızdaki tüm dosyaları yönetmek için izne ihtiyaç duyar. Dosyalarınıza göz atmak, kopyalamak, taşımak ve düzenlemek için gereklidir.</string>
+    <string name="onboarding_files_description">%1$s, cihazınızdaki tüm dosyaları yönetmek için izne ihtiyaç duyar. Dosyalarınıza göz atmak, kopyalamak, taşımak ve düzenlemek için gereklidir.</string>
     <string name="onboarding_files_grant">Erişim ver</string>
     <string name="onboarding_files_granted">Erişim verildi</string>
     <string name="onboarding_files_not_granted">Uygulamayı kullanmak için erişim gerekli</string>
@@ -574,7 +574,7 @@
     <string name="onboarding_optional">İsteğe bağlı</string>
     <string name="onboarding_required">Gerekli</string>
     <string name="onboarding_welcome_description">En iyi deneyim için birkaç izin verin. İsteğe bağlı olanları daha sonra Ayarlar\'dan değiştirebilirsiniz.</string>
-    <string name="onboarding_welcome_title">Material Files\'a hoş geldiniz</string>
+    <string name="onboarding_welcome_title">%1$s\'a hoş geldiniz</string>
     <string name="settings_default_apps_ask">Her seferinde sor</string>
     <string name="settings_default_apps_audio">Ses / Müzik</string>
     <string name="settings_default_apps_image">Görüntüler</string>

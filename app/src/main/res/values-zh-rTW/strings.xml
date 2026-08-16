@@ -654,7 +654,7 @@
     <string name="navigation_bookmarks_hint_subtitle">將常用資料夾新增到這裡以便快速存取</string>
     <string name="navigation_bookmarks_hint_title">書籤</string>
     <string name="navigation_bookmarks_hint_toast">開啟資料夾，然後輕觸 ⋮ 並選擇「新增書籤」</string>
-    <string name="onboarding_files_description">Material Files 需要管理裝置上所有檔案的權限。這對於瀏覽、複製、移動和整理檔案至關重要。</string>
+    <string name="onboarding_files_description">%1$s 需要管理裝置上所有檔案的權限。這對於瀏覽、複製、移動和整理檔案至關重要。</string>
     <string name="onboarding_files_grant">授予存取權</string>
     <string name="onboarding_files_granted">已授予存取權</string>
     <string name="onboarding_files_not_granted">使用應用程式需要存取權</string>
@@ -671,7 +671,7 @@
     <string name="onboarding_optional">選用</string>
     <string name="onboarding_required">必要</string>
     <string name="onboarding_welcome_description">授予一些權限以獲得最佳體驗。選用權限可稍後在設定中變更。</string>
-    <string name="onboarding_welcome_title">歡迎使用 Material Files</string>
+    <string name="onboarding_welcome_title">歡迎使用 %1$s</string>
     <string name="settings_default_apps_ask">每次都詢問</string>
     <string name="settings_default_apps_audio">音訊 / 音樂</string>
     <string name="settings_default_apps_image">圖片</string>

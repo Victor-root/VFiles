@@ -568,7 +568,7 @@
     <string name="navigation_bookmarks_hint_subtitle">Tambahkan folder favorit di sini untuk akses cepat</string>
     <string name="navigation_bookmarks_hint_title">Markah</string>
     <string name="navigation_bookmarks_hint_toast">Buka folder, lalu ketuk ⋮ dan “Tambah markah”</string>
-    <string name="onboarding_files_description">Material Files memerlukan izin untuk mengelola semua file di perangkat Anda. Ini penting untuk menjelajahi, menyalin, memindahkan, dan menata file Anda.</string>
+    <string name="onboarding_files_description">%1$s memerlukan izin untuk mengelola semua file di perangkat Anda. Ini penting untuk menjelajahi, menyalin, memindahkan, dan menata file Anda.</string>
     <string name="onboarding_files_grant">Beri akses</string>
     <string name="onboarding_files_granted">Akses diberikan</string>
     <string name="onboarding_files_not_granted">Akses diperlukan untuk menggunakan aplikasi</string>
@@ -585,7 +585,7 @@
     <string name="onboarding_optional">Opsional</string>
     <string name="onboarding_required">Wajib</string>
     <string name="onboarding_welcome_description">Beri beberapa izin untuk pengalaman terbaik. Yang opsional dapat diubah nanti di Setelan.</string>
-    <string name="onboarding_welcome_title">Selamat datang di Material Files</string>
+    <string name="onboarding_welcome_title">Selamat datang di %1$s</string>
     <string name="settings_default_apps_ask">Tanya setiap saat</string>
     <string name="settings_default_apps_audio">Audio / Musik</string>
     <string name="settings_default_apps_image">Gambar</string>
