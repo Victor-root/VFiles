@@ -60,10 +60,10 @@ android {
     buildTypes {
         debug {
             // Sign debug builds (the green-triangle install) with the release key too, when
-            // signing.properties is present, so they share a signature with the published release
+            // keystore.properties is present, so they share a signature with the published release
             // APK. Without that shared signature you can't install one over the other without
-            // uninstalling first. Guarded so builds without signing.properties are unaffected.
-            if (rootProject.file('signing.properties').exists()) {
+            // uninstalling first. Guarded so builds without keystore.properties are unaffected.
+            if (rootProject.file('keystore.properties').exists()) {
                 signingConfig signingConfigs.release
             }
         }

@@ -2,7 +2,7 @@ android {
     signingConfigs {
         release {
             def properties
-            def propertiesFile = rootProject.file('signing.properties')
+            def propertiesFile = rootProject.file('keystore.properties')
             if (propertiesFile.exists()) {
                 properties = new Properties()
                 properties.load(propertiesFile.newDataInputStream())

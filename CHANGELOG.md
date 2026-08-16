@@ -94,8 +94,9 @@ Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 - Traduction des ~55 chaînes propres au fork dans une trentaine de langues.
 
 ### Build & infrastructure
-- Les builds debug sont signés avec la clé release lorsque `signing.properties`
-  est présent (pour tester les mises à jour in-app).
+- Les builds debug sont signés avec la clé release lorsque `keystore.properties`
+  est présent, pour pouvoir les installer par-dessus la version publiée sans
+  désinstaller au préalable.
 - Correction d'un crash en mode paysage sur grand écran (tablette).
 
 ---
