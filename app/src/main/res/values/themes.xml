@@ -35,6 +35,16 @@
         <item name="textInputStyle">?textInputOutlinedStyle</item>
         <item name="minTouchTargetSize">0dp</item>
 
+        <!-- Material Components only sets the Material 3 type scale on Theme.Material3.*, so on this
+             Material 2 theme these attributes resolve to nothing and any layout using them falls
+             back to the platform default text size. Map the ones our shared layouts (onboarding,
+             the storage volume dialog) rely on, so they render the same under either theme. -->
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Material3.HeadlineSmall</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Material3.LabelSmall</item>
+
         <item name="colorAppBarSurface">?colorPrimary</item>
         <item name="colorOnAppBarSurface">?colorOnPrimary</item>
     </style>
