@@ -27,6 +27,9 @@ import me.zhanghai.android.files.databinding.OnboardingPermissionItemBinding
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.createIntent
+import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
+import me.zhanghai.android.files.util.isExternalStorageAccessGranted
+import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 class OnboardingActivity : AppActivity() {
 
@@ -123,10 +126,11 @@ class OnboardingActivity : AppActivity() {
     // ── permission launchers (called by pages) ────────────────────────────────
 
     fun openStorageSettings() {
-        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
-                data = Uri.fromParts("package", packageName, null)
-            }
+        // Must follow the same condition as isExternalStorageAccessGranted(), otherwise a device
+        // with no "All files access" page would be sent to a screen that does not exist while
+        // being checked for the permission it was never asked for.
+        val intent = if (Environment::class.supportsExternalStorageManager()) {
+            Environment::class.createManageAppAllFilesAccessPermissionIntent(packageName)
         } else {
             Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                 data = Uri.fromParts("package", packageName, null)
@@ -163,13 +167,7 @@ class OnboardingActivity : AppActivity() {
                 context.getString(descriptionRes, context.getString(R.string.app_name))
 
             override fun isGranted(context: Context): Boolean =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Environment.isExternalStorageManager()
-                } else {
-                    ContextCompat.checkSelfPermission(
-                        context, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED
-                }
+                Environment::class.isExternalStorageAccessGranted()
 
             override fun requestGrant(activity: OnboardingActivity) {
                 activity.openStorageSettings()

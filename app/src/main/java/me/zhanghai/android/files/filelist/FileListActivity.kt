@@ -7,14 +7,11 @@ package me.zhanghai.android.files.filelist
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.commit
 import java8.nio.file.Path
 import me.zhanghai.android.files.app.AppActivity
@@ -23,6 +20,7 @@ import me.zhanghai.android.files.onboarding.OnboardingActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
+import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.valueCompat
 
@@ -33,7 +31,7 @@ class FileListActivity : AppActivity() {
         super.onCreate(savedInstanceState)
 
         if (!Settings.ONBOARDING_COMPLETED.valueCompat) {
-            if (isStorageAlreadyGranted()) {
+            if (Environment::class.isExternalStorageAccessGranted()) {
                 // Existing install with permissions already granted: skip onboarding.
                 Settings.ONBOARDING_COMPLETED.putValue(true)
             } else {
@@ -53,15 +51,6 @@ class FileListActivity : AppActivity() {
                 as FileListFragment
         }
     }
-
-    private fun isStorageAlreadyGranted(): Boolean =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Environment.isExternalStorageManager()
-        } else {
-            ContextCompat.checkSelfPermission(
-                this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (::fragment.isInitialized && event.action == KeyEvent.ACTION_DOWN) {
