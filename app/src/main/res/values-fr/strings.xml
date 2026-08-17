@@ -739,7 +739,6 @@
     <string name="about_author_twitter_title">Suivre sur Twitter</string>
     <string name="app_name_launcher">Fichiers</string>
 
-    <string name="onboarding_next">Suivant</string>
     <string name="onboarding_finish">Commencer</string>
 
     <string name="onboarding_welcome_title">Bienvenue dans %1$s</string>
@@ -750,15 +749,8 @@
 
     <string name="onboarding_files_title">Accès aux fichiers</string>
     <string name="onboarding_files_description">%1$s a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
-    <string name="onboarding_files_grant">Accorder l\'accès</string>
-    <string name="onboarding_files_granted">Accès accordé</string>
-    <string name="onboarding_files_not_granted">Accès requis pour utiliser l\'application</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers (copies, déplacements, archives) même lorsque l\'application est en arrière-plan.</string>
-    <string name="onboarding_notifications_grant">Autoriser les notifications</string>
-    <string name="onboarding_notifications_granted">Notifications autorisées</string>
-    <string name="onboarding_notifications_not_needed">Non requis sur cette version d\'Android</string>
-    <string name="onboarding_notifications_not_granted">Vous pourrez activer cela plus tard dans les réglages</string>
 
 </resources>

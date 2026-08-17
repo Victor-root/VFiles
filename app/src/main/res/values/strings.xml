@@ -835,7 +835,6 @@
     <string name="shortcut_downloads_title" translatable="false">@string/navigation_standard_directory_downloads</string>
     <string name="shortcut_ftp_server_title" translatable="false">@string/ftp_server_title</string>
 
-    <string name="onboarding_next">Next</string>
     <string name="onboarding_finish">Get started</string>
 
     <string name="onboarding_welcome_title">Welcome to %1$s</string>
@@ -846,15 +845,8 @@
 
     <string name="onboarding_files_title">File access</string>
     <string name="onboarding_files_description">%1$s needs permission to manage all files on your device. This is essential for browsing, copying, moving and organizing your files.</string>
-    <string name="onboarding_files_grant">Grant access</string>
-    <string name="onboarding_files_granted">Access granted</string>
-    <string name="onboarding_files_not_granted">Access required to use the app</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Allow notifications to track the progress of file operations such as copies, moves and archives, even when the app is in the background.</string>
-    <string name="onboarding_notifications_grant">Allow notifications</string>
-    <string name="onboarding_notifications_granted">Notifications allowed</string>
-    <string name="onboarding_notifications_not_needed">Not needed on this Android version</string>
-    <string name="onboarding_notifications_not_granted">You can enable this later in Settings</string>
 
 </resources>

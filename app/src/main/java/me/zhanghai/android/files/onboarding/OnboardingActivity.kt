@@ -34,10 +34,8 @@ class OnboardingActivity : AppActivity() {
 
     private var finishing = false
 
-    private val pages = listOf(
-        OnboardingPage.FilesAccess,
-        OnboardingPage.Notifications
-    )
+    // The pages actually shown, paired with the card each one drives.
+    private lateinit var cards: List<Pair<OnboardingPage, OnboardingPermissionItemBinding>>
 
     private val requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { refresh() }
@@ -54,8 +52,18 @@ class OnboardingActivity : AppActivity() {
         binding.welcomeTitleText.text =
             getString(R.string.onboarding_welcome_title, getString(R.string.app_name))
 
-        bindCard(binding.cardFiles, OnboardingPage.FilesAccess)
-        bindCard(binding.cardNotifications, OnboardingPage.Notifications)
+        cards = buildList {
+            add(OnboardingPage.FilesAccess to binding.cardFiles)
+            // POST_NOTIFICATIONS only exists on Android 13+. Below that there is nothing to ask
+            // for, so hide the card rather than show it as already granted, which just reads as a
+            // step the user never took.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                add(OnboardingPage.Notifications to binding.cardNotifications)
+            } else {
+                binding.cardNotifications.root.isVisible = false
+            }
+        }
+        cards.forEach { (page, card) -> bindCard(card, page) }
 
         binding.continueButton.setOnClickListener { finishOnboarding() }
 
@@ -86,16 +94,14 @@ class OnboardingActivity : AppActivity() {
             return
         }
 
-        updateCard(binding.cardFiles, OnboardingPage.FilesAccess)
-        updateCard(binding.cardNotifications, OnboardingPage.Notifications)
+        cards.forEach { (page, card) -> updateCard(card, page) }
 
-        val requiredGranted = pages.filter { it.isRequired }.all { it.isGranted(this) }
-        binding.continueButton.isEnabled = requiredGranted
-
-        // Everything granted: continue straight to the app.
-        if (pages.all { it.isGranted(this) }) {
-            finishOnboarding()
-        }
+        // Only the required pages gate the button; the optional ones can be skipped. Granting the
+        // last permission deliberately does not leave on its own: FileListActivity already skips
+        // this screen when there is nothing to ask for, so an automatic exit here could only ever
+        // happen mid-flow, throwing the user into the file list without them ever confirming.
+        binding.continueButton.isEnabled =
+            cards.none { (page, _) -> page.isRequired && !page.isGranted(this) }
     }
 
     private fun updateCard(card: OnboardingPermissionItemBinding, page: OnboardingPage) {
