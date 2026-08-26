@@ -5,11 +5,14 @@
 
 package me.zhanghai.android.files.settings
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.PreferenceFragmentCompat
 
@@ -58,7 +61,18 @@ class DefaultAppsPreferenceFragment : PreferenceFragmentCompat() {
     private fun showAppPicker(category: FileOpenAppCategory) {
         val context = requireContext()
         val packageManager = context.packageManager
-        val queryIntent = Intent(Intent.ACTION_VIEW).setType(category.queryMimeType)
+        // Query with the same shape of intent the file list actually fires: a content: URI from our
+        // own FileProvider, plus the type (Path.fileProviderUri and Uri.createViewIntent). An
+        // intent carrying a type but no URI only matches filters that declare no URI format at all,
+        // so querying by type alone silently drops every app whose filter is scheme-qualified,
+        // which is how most viewers declare theirs. Those apps open the file perfectly once picked,
+        // they just never showed up here to be picked.
+        val queryUri = Uri.Builder()
+            .scheme(ContentResolver.SCHEME_CONTENT)
+            .authority(BuildConfig.FILE_PROVIDIER_AUTHORITY)
+            .build()
+        val queryIntent = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(queryUri, category.queryMimeType)
         val apps = packageManager.queryIntentActivities(queryIntent, 0)
             .map { it.activityInfo.packageName }
             .distinct()
