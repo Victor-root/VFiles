@@ -1337,7 +1337,11 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                         binding.bottomCreateFileNameEdit.setSelection(
                             0, fileName.asFileName().baseName.length
                         )
-                        binding.bottomCreateFileNameEdit.requestFocus()
+                        // Left unfocused on purpose: the calling app nearly always passes the name
+                        // it wants, so taking focus here only pops the keyboard over the file list
+                        // for a name that is usually kept as is. Touching the field still focuses
+                        // it and brings the keyboard up, and the bottom Toolbar blocks focus from
+                        // reaching the field on its own.
                         viewModel.isCreateFileNameEditInitialized = true
                     }
                     menu.findItem(R.id.action_open).isVisible = false
