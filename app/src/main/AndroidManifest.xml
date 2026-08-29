@@ -25,6 +25,10 @@
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+    <!-- Needed to install an APK from the file list, which is unrelated to the in-app updater that
+         also used to rely on it. Without it the system refuses ACTION_INSTALL_PACKAGE and never
+         even offers "install unknown apps" for this app. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
