@@ -753,4 +753,7 @@
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers (copies, déplacements, archives) même lorsque l\'application est en arrière-plan.</string>
 
+    <string name="onboarding_install_apps_title">Installation d\'applications</string>
+    <string name="onboarding_install_apps_description">Autorisez %1$s à installer directement des fichiers APK. Vous pourrez ainsi installer des applications à partir de fichiers téléchargés ou reçus, sans passer par un installateur tiers.</string>
+
 </resources>

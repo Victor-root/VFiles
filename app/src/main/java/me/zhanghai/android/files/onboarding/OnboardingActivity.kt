@@ -65,6 +65,14 @@ class OnboardingActivity : AppActivity() {
             } else {
                 binding.cardNotifications.root.isVisible = false
             }
+            // canRequestPackageInstalls() only exists on Android 8+. Below that, installing an
+            // APK from the file list needs no special grant, so hide the card instead of showing
+            // it as already granted.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                add(OnboardingPage.InstallApps to binding.cardInstall)
+            } else {
+                binding.cardInstall.root.isVisible = false
+            }
         }
         cards.forEach { (page, card) -> bindCard(card, page) }
 
@@ -144,6 +152,14 @@ class OnboardingActivity : AppActivity() {
         requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun openInstallAppsSettings() {
+        val intent = Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+            data = Uri.fromParts("package", packageName, null)
+        }
+        requestSystemSettingsLauncher.launch(intent)
+    }
+
     // ── pages ─────────────────────────────────────────────────────────────────
 
     sealed class OnboardingPage(
@@ -192,6 +208,29 @@ class OnboardingActivity : AppActivity() {
             override fun requestGrant(activity: OnboardingActivity) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     activity.requestNotificationPermission()
+                }
+            }
+        }
+
+        object InstallApps : OnboardingPage(
+            iconRes = R.drawable.install_unknown_apps_icon_white_24dp,
+            titleRes = R.string.onboarding_install_apps_title,
+            descriptionRes = R.string.onboarding_install_apps_description,
+            isRequired = false
+        ) {
+            override fun getDescription(context: Context): String =
+                context.getString(descriptionRes, context.getString(R.string.app_name))
+
+            override fun isGranted(context: Context): Boolean =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.packageManager.canRequestPackageInstalls()
+                } else {
+                    true
+                }
+
+            override fun requestGrant(activity: OnboardingActivity) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    activity.openInstallAppsSettings()
                 }
             }
         }

@@ -849,4 +849,7 @@
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Allow notifications to track the progress of file operations such as copies, moves and archives, even when the app is in the background.</string>
 
+    <string name="onboarding_install_apps_title">Install apps</string>
+    <string name="onboarding_install_apps_description">Allow %1$s to install APK files directly. This lets you install apps from files you download or receive, without needing a third-party installer.</string>
+
 </resources>
