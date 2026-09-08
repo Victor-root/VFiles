@@ -689,6 +689,9 @@
     <string name="onboarding_finish">Aan de slag</string>
     <string name="onboarding_grant">Verlenen</string>
     <string name="onboarding_notifications_description">Sta meldingen toe om de voortgang van bestandsbewerkingen zoals kopiëren, verplaatsen en archiveren te volgen, ook als de app op de achtergrond draait.</string>
+
+    <string name="onboarding_install_apps_title">Apps installeren</string>
+    <string name="onboarding_install_apps_description">Sta %1$s toe om APK-bestanden rechtstreeks te installeren. Zo kun je apps installeren vanuit gedownloade of ontvangen bestanden, zonder een installatieprogramma van derden nodig te hebben.</string>
     <string name="onboarding_notifications_title">Meldingen</string>
     <string name="onboarding_optional">Optioneel</string>
     <string name="onboarding_required">Vereist</string>

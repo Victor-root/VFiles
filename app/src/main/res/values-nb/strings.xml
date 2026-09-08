@@ -689,6 +689,9 @@
     <string name="onboarding_finish">Kom i gang</string>
     <string name="onboarding_grant">Gi</string>
     <string name="onboarding_notifications_description">Tillat varsler for å følge fremdriften til filoperasjoner som kopiering, flytting og arkivering, selv når appen kjører i bakgrunnen.</string>
+
+    <string name="onboarding_install_apps_title">Installere apper</string>
+    <string name="onboarding_install_apps_description">Tillat %1$s å installere APK-filer direkte. Da kan du installere apper fra filer du laster ned eller mottar, uten å trenge et tredjeparts installasjonsprogram.</string>
     <string name="onboarding_notifications_title">Varsler</string>
     <string name="onboarding_optional">Valgfritt</string>
     <string name="onboarding_required">Påkrevd</string>

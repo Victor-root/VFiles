@@ -753,6 +753,9 @@
     <string name="onboarding_finish">Почати</string>
     <string name="onboarding_grant">Надати</string>
     <string name="onboarding_notifications_description">Дозвольте сповіщення, щоб відстежувати перебіг операцій із файлами (копіювання, переміщення, архівування) навіть коли додаток у фоні.</string>
+
+    <string name="onboarding_install_apps_title">Встановлення додатків</string>
+    <string name="onboarding_install_apps_description">Дозвольте %1$s встановлювати файли APK безпосередньо. Так ви зможете встановлювати додатки із завантажених або отриманих файлів без стороннього інсталятора.</string>
     <string name="onboarding_notifications_title">Сповіщення</string>
     <string name="onboarding_optional">Необов’язково</string>
     <string name="onboarding_required">Обов’язково</string>

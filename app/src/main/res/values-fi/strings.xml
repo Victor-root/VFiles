@@ -573,6 +573,9 @@
     <string name="onboarding_finish">Aloita</string>
     <string name="onboarding_grant">Myönnä</string>
     <string name="onboarding_notifications_description">Salli ilmoitukset, jotta voit seurata tiedostotoimintojen, kuten kopioinnin, siirron ja arkistoinnin, edistymistä, vaikka sovellus olisi taustalla.</string>
+
+    <string name="onboarding_install_apps_title">Sovellusten asentaminen</string>
+    <string name="onboarding_install_apps_description">Salli %1$s asentaa APK-tiedostoja suoraan. Näin voit asentaa sovelluksia lataamistasi tai vastaanottamistasi tiedostoista ilman kolmannen osapuolen asennusohjelmaa.</string>
     <string name="onboarding_notifications_title">Ilmoitukset</string>
     <string name="onboarding_optional">Valinnainen</string>
     <string name="onboarding_required">Pakollinen</string>

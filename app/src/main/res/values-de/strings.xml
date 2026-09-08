@@ -689,6 +689,9 @@
     <string name="onboarding_finish">Loslegen</string>
     <string name="onboarding_grant">Erlauben</string>
     <string name="onboarding_notifications_description">Erlaube Benachrichtigungen, um den Fortschritt von Dateivorgängen wie Kopieren, Verschieben und Archivieren zu verfolgen – auch wenn die App im Hintergrund läuft.</string>
+
+    <string name="onboarding_install_apps_title">Apps installieren</string>
+    <string name="onboarding_install_apps_description">Erlaube %1$s, APK-Dateien direkt zu installieren. So kannst du Apps aus heruntergeladenen oder empfangenen Dateien installieren, ohne einen Installer von Drittanbietern zu benötigen.</string>
     <string name="onboarding_notifications_title">Benachrichtigungen</string>
     <string name="onboarding_optional">Optional</string>
     <string name="onboarding_required">Erforderlich</string>

@@ -562,6 +562,9 @@
     <string name="onboarding_finish">Başla</string>
     <string name="onboarding_grant">Ver</string>
     <string name="onboarding_notifications_description">Uygulama arka plandayken bile kopyalama, taşıma ve arşivleme gibi dosya işlemlerinin ilerleyişini izlemek için bildirimlere izin verin.</string>
+
+    <string name="onboarding_install_apps_title">Uygulama yükleme</string>
+    <string name="onboarding_install_apps_description">%1$s uygulamasının APK dosyalarını doğrudan yüklemesine izin verin. Böylece indirdiğiniz veya aldığınız dosyalardan, üçüncü taraf bir yükleyiciye ihtiyaç duymadan uygulama yükleyebilirsiniz.</string>
     <string name="onboarding_notifications_title">Bildirimler</string>
     <string name="onboarding_optional">İsteğe bağlı</string>
     <string name="onboarding_required">Gerekli</string>

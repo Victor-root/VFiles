@@ -751,6 +751,9 @@
     <string name="onboarding_finish">Rozpocznij</string>
     <string name="onboarding_grant">Przyznaj</string>
     <string name="onboarding_notifications_description">Zezwól na powiadomienia, aby śledzić postęp operacji na plikach, takich jak kopiowanie, przenoszenie i archiwizacja, nawet gdy aplikacja działa w tle.</string>
+
+    <string name="onboarding_install_apps_title">Instalowanie aplikacji</string>
+    <string name="onboarding_install_apps_description">Zezwól aplikacji %1$s na bezpośrednie instalowanie plików APK. Dzięki temu możesz instalować aplikacje z pobranych lub otrzymanych plików bez potrzeby korzystania z instalatora firm trzecich.</string>
     <string name="onboarding_notifications_title">Powiadomienia</string>
     <string name="onboarding_optional">Opcjonalne</string>
     <string name="onboarding_required">Wymagane</string>

@@ -813,6 +813,9 @@
     <string name="onboarding_finish">ابدأ</string>
     <string name="onboarding_grant">منح</string>
     <string name="onboarding_notifications_description">اسمح بالإشعارات لتتبّع تقدّم عمليات الملفات مثل النسخ والنقل والأرشفة، حتى عندما يكون التطبيق في الخلفية.</string>
+
+    <string name="onboarding_install_apps_title">تثبيت التطبيقات</string>
+    <string name="onboarding_install_apps_description">اسمح لتطبيق %1$s بتثبيت ملفات APK مباشرةً. سيتيح لك ذلك تثبيت التطبيقات من الملفات التي تنزّلها أو تستلمها، دون الحاجة إلى مثبِّت من جهة خارجية.</string>
     <string name="onboarding_notifications_title">الإشعارات</string>
     <string name="onboarding_optional">اختياري</string>
     <string name="onboarding_required">مطلوب</string>

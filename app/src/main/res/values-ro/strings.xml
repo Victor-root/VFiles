@@ -628,6 +628,9 @@
     <string name="onboarding_finish">Începe</string>
     <string name="onboarding_grant">Acordă</string>
     <string name="onboarding_notifications_description">Permite notificările pentru a urmări progresul operațiilor cu fișiere, precum copierea, mutarea și arhivarea, chiar și când aplicația rulează în fundal.</string>
+
+    <string name="onboarding_install_apps_title">Instalare aplicații</string>
+    <string name="onboarding_install_apps_description">Permite %1$s să instaleze fișiere APK direct. Astfel poți instala aplicații din fișiere descărcate sau primite, fără a avea nevoie de un instalator terț.</string>
     <string name="onboarding_notifications_title">Notificări</string>
     <string name="onboarding_optional">Opțional</string>
     <string name="onboarding_required">Obligatoriu</string>

@@ -389,6 +389,9 @@
     <string name="onboarding_finish">Hasi</string>
     <string name="onboarding_grant">Eman</string>
     <string name="onboarding_notifications_description">Baimendu jakinarazpenak fitxategi-eragiketen aurrerapena jarraitzeko, hala nola kopiak, lekualdaketak eta artxiboak, aplikazioa atzeko planoan dagoenean ere.</string>
+
+    <string name="onboarding_install_apps_title">Aplikazioak instalatzea</string>
+    <string name="onboarding_install_apps_description">Baimendu %1$s(r)i APK fitxategiak zuzenean instalatzen. Horrela, deskargatutako edo jasotako fitxategietatik aplikazioak instalatu ahalko dituzu, hirugarrenen instalatzailerik behar izan gabe.</string>
     <string name="onboarding_notifications_title">Jakinarazpenak</string>
     <string name="onboarding_optional">Aukerakoa</string>
     <string name="onboarding_required">Beharrezkoa</string>

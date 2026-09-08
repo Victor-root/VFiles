@@ -673,6 +673,9 @@
     <string name="onboarding_finish">Начало</string>
     <string name="onboarding_grant">Предостави</string>
     <string name="onboarding_notifications_description">Разрешете известията, за да следите напредъка на файлови операции като копиране, преместване и архивиране, дори когато приложението е във фонов режим.</string>
+
+    <string name="onboarding_install_apps_title">Инсталиране на приложения</string>
+    <string name="onboarding_install_apps_description">Разрешете на %1$s директно да инсталира APK файлове. Така ще можете да инсталирате приложения от изтеглени или получени файлове, без да ви трябва инсталатор на трета страна.</string>
     <string name="onboarding_notifications_title">Известия</string>
     <string name="onboarding_optional">По избор</string>
     <string name="onboarding_required">Задължително</string>

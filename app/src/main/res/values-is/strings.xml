@@ -691,6 +691,9 @@
     <string name="onboarding_finish">Hefjast handa</string>
     <string name="onboarding_grant">Veita</string>
     <string name="onboarding_notifications_description">Leyfðu tilkynningar til að fylgjast með framvindu skráaaðgerða á borð við afritun, færslu og pökkun, jafnvel þegar forritið er í bakgrunni.</string>
+
+    <string name="onboarding_install_apps_title">Uppsetning forrita</string>
+    <string name="onboarding_install_apps_description">Leyfðu %1$s að setja upp APK-skrár beint. Þannig geturðu sett upp forrit úr skrám sem þú hleður niður eða færð, án þess að þurfa uppsetningarforrit frá þriðja aðila.</string>
     <string name="onboarding_notifications_title">Tilkynningar</string>
     <string name="onboarding_optional">Valfrjálst</string>
     <string name="onboarding_required">Nauðsynlegt</string>

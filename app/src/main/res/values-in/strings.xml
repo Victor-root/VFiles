@@ -573,6 +573,9 @@
     <string name="onboarding_finish">Mulai</string>
     <string name="onboarding_grant">Beri</string>
     <string name="onboarding_notifications_description">Izinkan notifikasi untuk memantau progres operasi file seperti penyalinan, pemindahan, dan pengarsipan, bahkan saat aplikasi berjalan di latar belakang.</string>
+
+    <string name="onboarding_install_apps_title">Instal aplikasi</string>
+    <string name="onboarding_install_apps_description">Izinkan %1$s menginstal file APK secara langsung. Dengan begitu, Anda dapat menginstal aplikasi dari file yang diunduh atau diterima, tanpa memerlukan installer pihak ketiga.</string>
     <string name="onboarding_notifications_title">Notifikasi</string>
     <string name="onboarding_optional">Opsional</string>
     <string name="onboarding_required">Wajib</string>

@@ -629,6 +629,9 @@
     <string name="onboarding_finish">Comença</string>
     <string name="onboarding_grant">Concedeix</string>
     <string name="onboarding_notifications_description">Permet les notificacions per seguir el progrés de les operacions de fitxers com ara còpies, moviments i arxivaments, fins i tot quan l\'aplicació s\'executa en segon pla.</string>
+
+    <string name="onboarding_install_apps_title">Instal·lació d\'aplicacions</string>
+    <string name="onboarding_install_apps_description">Permet que %1$s instal·li fitxers APK directament. Així podràs instal·lar aplicacions a partir de fitxers baixats o rebuts, sense necessitat d\'un instal·lador de tercers.</string>
     <string name="onboarding_notifications_title">Notificacions</string>
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obligatori</string>

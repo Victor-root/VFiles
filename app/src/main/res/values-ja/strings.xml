@@ -658,6 +658,9 @@
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>
     <string name="onboarding_notifications_description">通知を許可すると、アプリがバックグラウンドにあるときでも、コピー・移動・圧縮などのファイル操作の進行状況を確認できます。</string>
+
+    <string name="onboarding_install_apps_title">アプリのインストール</string>
+    <string name="onboarding_install_apps_description">%1$s に APK ファイルを直接インストールする権限を許可します。これにより、サードパーティのインストーラーを使わずに、ダウンロードまたは受信したファイルからアプリをインストールできます。</string>
     <string name="onboarding_notifications_title">通知</string>
     <string name="onboarding_optional">任意</string>
     <string name="onboarding_required">必須</string>

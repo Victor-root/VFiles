@@ -751,6 +751,9 @@
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>
     <string name="onboarding_notifications_description">אפשר התראות כדי לעקוב אחר התקדמות פעולות קבצים כמו העתקה, העברה ויצירת ארכיון, גם כשהאפליקציה פועלת ברקע.</string>
+
+    <string name="onboarding_install_apps_title">התקנת אפליקציות</string>
+    <string name="onboarding_install_apps_description">אפשרו ל-%1$s להתקין קובצי APK ישירות. כך תוכלו להתקין אפליקציות מקבצים שהורדתם או קיבלתם, בלי להזדקק למתקין צד שלישי.</string>
     <string name="onboarding_notifications_title">התראות</string>
     <string name="onboarding_optional">אופציונלי</string>
     <string name="onboarding_required">חובה</string>

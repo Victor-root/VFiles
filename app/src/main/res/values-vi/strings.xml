@@ -552,6 +552,9 @@
     <string name="onboarding_finish">Bắt đầu</string>
     <string name="onboarding_grant">Cấp</string>
     <string name="onboarding_notifications_description">Cho phép thông báo để theo dõi tiến trình các thao tác tệp như sao chép, di chuyển và nén, ngay cả khi ứng dụng chạy nền.</string>
+
+    <string name="onboarding_install_apps_title">Cài đặt ứng dụng</string>
+    <string name="onboarding_install_apps_description">Cho phép %1$s cài đặt trực tiếp các tệp APK. Nhờ đó bạn có thể cài đặt ứng dụng từ các tệp đã tải xuống hoặc nhận được, mà không cần trình cài đặt của bên thứ ba.</string>
     <string name="onboarding_notifications_title">Thông báo</string>
     <string name="onboarding_optional">Tùy chọn</string>
     <string name="onboarding_required">Bắt buộc</string>

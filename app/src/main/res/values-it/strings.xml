@@ -720,6 +720,9 @@
     <string name="onboarding_finish">Inizia</string>
     <string name="onboarding_grant">Concedi</string>
     <string name="onboarding_notifications_description">Consenti le notifiche per seguire l\'avanzamento delle operazioni sui file come copie, spostamenti e archivi, anche quando l\'app è in background.</string>
+
+    <string name="onboarding_install_apps_title">Installazione app</string>
+    <string name="onboarding_install_apps_description">Consenti a %1$s di installare direttamente i file APK. Questo ti permette di installare app dai file scaricati o ricevuti, senza bisogno di un programma di installazione di terze parti.</string>
     <string name="onboarding_notifications_title">Notifiche</string>
     <string name="onboarding_optional">Facoltativo</string>
     <string name="onboarding_required">Obbligatorio</string>

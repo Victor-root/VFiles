@@ -689,6 +689,9 @@
     <string name="onboarding_finish">Ξεκινήστε</string>
     <string name="onboarding_grant">Παραχώρηση</string>
     <string name="onboarding_notifications_description">Επιτρέψτε τις ειδοποιήσεις για να παρακολουθείτε την πρόοδο εργασιών αρχείων, όπως αντιγραφές, μετακινήσεις και αρχειοθετήσεις, ακόμη και όταν η εφαρμογή είναι στο παρασκήνιο.</string>
+
+    <string name="onboarding_install_apps_title">Εγκατάσταση εφαρμογών</string>
+    <string name="onboarding_install_apps_description">Επιτρέψτε στο %1$s να εγκαθιστά απευθείας αρχεία APK. Έτσι μπορείτε να εγκαθιστάτε εφαρμογές από αρχεία που κατεβάζετε ή λαμβάνετε, χωρίς να χρειάζεστε πρόγραμμα εγκατάστασης τρίτου μέρους.</string>
     <string name="onboarding_notifications_title">Ειδοποιήσεις</string>
     <string name="onboarding_optional">Προαιρετικό</string>
     <string name="onboarding_required">Απαιτείται</string>

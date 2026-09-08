@@ -659,6 +659,9 @@
     <string name="onboarding_finish">开始使用</string>
     <string name="onboarding_grant">授予</string>
     <string name="onboarding_notifications_description">允许通知，即可在应用处于后台时跟踪复制、移动和压缩等文件操作的进度。</string>
+
+    <string name="onboarding_install_apps_title">安装应用</string>
+    <string name="onboarding_install_apps_description">允许%1$s直接安装 APK 文件。这样您就可以从下载或接收的文件安装应用，而无需借助第三方安装程序。</string>
     <string name="onboarding_notifications_title">通知</string>
     <string name="onboarding_optional">可选</string>
     <string name="onboarding_required">必需</string>

@@ -583,6 +583,9 @@
     <string name="onboarding_finish">شروع</string>
     <string name="onboarding_grant">اعطا</string>
     <string name="onboarding_notifications_description">اعلان‌ها را مجاز کنید تا پیشرفت عملیات فایل مانند کپی، انتقال و بایگانی را حتی وقتی برنامه در پس‌زمینه است دنبال کنید.</string>
+
+    <string name="onboarding_install_apps_title">نصب برنامه‌ها</string>
+    <string name="onboarding_install_apps_description">به %1$s اجازه دهید فایل‌های APK را مستقیماً نصب کند. این کار به شما امکان می‌دهد بدون نیاز به نصب‌کننده شخص ثالث، برنامه‌ها را از فایل‌های دانلود یا دریافت‌شده نصب کنید.</string>
     <string name="onboarding_notifications_title">اعلان‌ها</string>
     <string name="onboarding_optional">اختیاری</string>
     <string name="onboarding_required">الزامی</string>

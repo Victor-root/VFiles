@@ -650,6 +650,9 @@
     <string name="onboarding_finish">Pradėti</string>
     <string name="onboarding_grant">Suteikti</string>
     <string name="onboarding_notifications_description">Leiskite pranešimus, kad galėtumėte stebėti failų operacijų, pvz., kopijavimo, perkėlimo ir archyvavimo, eigą net kai programa veikia fone.</string>
+
+    <string name="onboarding_install_apps_title">Programų diegimas</string>
+    <string name="onboarding_install_apps_description">Leiskite „%1$s“ tiesiogiai diegti APK failus. Taip galėsite diegti programas iš atsisiųstų ar gautų failų be trečiosios šalies diegimo priemonės.</string>
     <string name="onboarding_notifications_title">Pranešimai</string>
     <string name="onboarding_optional">Pasirinktinai</string>
     <string name="onboarding_required">Privaloma</string>
