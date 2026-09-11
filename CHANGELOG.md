@@ -1,5 +1,12 @@
 # Changelog
 
+## 🚀 v1.8.2 (2026-09-11)
+
+The first-launch screen offers the install-unknown-apps permission again.
+
+### 🐛 Fixed
+- **The first-launch screen asks for the install-unknown-apps permission again:** it was dropped along with the in-app updater it used to serve, but the permission itself stayed necessary for installing an APK from the file list, so nothing offered it anymore after v1.8.1 restored the permission. The optional card is back, in all 32 languages.
+
 ## 🚀 v1.8.1 (2026-08-29)
 
 APK installation working again, a first-launch screen that no longer locks you out on Android TV or ejects you halfway through, every reader listed under Default apps, and no keyboard in the way when saving a file.
