@@ -64,12 +64,11 @@ object LibSuFileServiceLauncher {
                         withTimeout(RootFileService.TIMEOUT_MILLIS) {
                             // Proactively create the shell because RootService doesn't allow us to
                             // handle errors during shell creation.
-                            suspendCancellableCoroutine<Unit> { continuation ->
+                            val shell = suspendCancellableCoroutine<Shell> { continuation ->
                                 // Shell.getShell(GetShellCallback) doesn't allow handling errors.
                                 Shell.EXECUTOR.submit {
                                     try {
-                                        Shell.getShell()
-                                        continuation.resume(Unit)
+                                        continuation.resume(Shell.getShell())
                                     } catch (e: NoShellException) {
                                         continuation.resumeWithException(
                                             RemoteFileSystemException(e)
@@ -77,52 +76,63 @@ object LibSuFileServiceLauncher {
                                     }
                                 }
                             }
-                            suspendCancellableCoroutine { continuation ->
-                                val intent = LibSuFileService::class.createIntent()
-                                val connection = object : ServiceConnection {
-                                    override fun onServiceConnected(
-                                        name: ComponentName,
-                                        service: IBinder
-                                    ) {
-                                        val serviceInterface =
-                                            IRemoteFileService.Stub.asInterface(service)
-                                        continuation.resume(serviceInterface)
-                                    }
+                            try {
+                                suspendCancellableCoroutine { continuation ->
+                                    val intent = LibSuFileService::class.createIntent()
+                                    val connection = object : ServiceConnection {
+                                        override fun onServiceConnected(
+                                            name: ComponentName,
+                                            service: IBinder
+                                        ) {
+                                            val serviceInterface =
+                                                IRemoteFileService.Stub.asInterface(service)
+                                            continuation.resume(serviceInterface)
+                                        }
 
-                                    override fun onServiceDisconnected(name: ComponentName) {
-                                        if (continuation.isActive) {
-                                            continuation.resumeWithException(
-                                                RemoteFileSystemException(
-                                                    "libsu service disconnected"
+                                        override fun onServiceDisconnected(name: ComponentName) {
+                                            if (continuation.isActive) {
+                                                continuation.resumeWithException(
+                                                    RemoteFileSystemException(
+                                                        "libsu service disconnected"
+                                                    )
                                                 )
-                                            )
+                                            }
+                                        }
+
+                                        override fun onBindingDied(name: ComponentName) {
+                                            if (continuation.isActive) {
+                                                continuation.resumeWithException(
+                                                    RemoteFileSystemException("libsu binding died")
+                                                )
+                                            }
+                                        }
+
+                                        override fun onNullBinding(name: ComponentName) {
+                                            if (continuation.isActive) {
+                                                continuation.resumeWithException(
+                                                    RemoteFileSystemException(
+                                                        "libsu binding is null"
+                                                    )
+                                                )
+                                            }
                                         }
                                     }
-
-                                    override fun onBindingDied(name: ComponentName) {
-                                        if (continuation.isActive) {
-                                            continuation.resumeWithException(
-                                                RemoteFileSystemException("libsu binding died")
-                                            )
-                                        }
-                                    }
-
-                                    override fun onNullBinding(name: ComponentName) {
-                                        if (continuation.isActive) {
-                                            continuation.resumeWithException(
-                                                RemoteFileSystemException("libsu binding is null")
-                                            )
+                                    launch(Dispatchers.Main.immediate) {
+                                        RootService.bind(intent, connection)
+                                        continuation.invokeOnCancellation {
+                                            launch(Dispatchers.Main.immediate) {
+                                                RootService.unbind(connection)
+                                            }
                                         }
                                     }
                                 }
-                                launch(Dispatchers.Main.immediate) {
-                                    RootService.bind(intent, connection)
-                                    continuation.invokeOnCancellation {
-                                        launch(Dispatchers.Main.immediate) {
-                                            RootService.unbind(connection)
-                                        }
-                                    }
-                                }
+                            } finally {
+                                // This shell's only job was launching the root service process
+                                // above: every actual file operation afterwards goes through that
+                                // process's own AIDL interface, not through this shell. Without
+                                // closing it, it lingers as an orphaned root process forever, since
+                                // nothing else ever asks it to exit.
+                                shell.close()
                             }
                         }
                     } catch (e: TimeoutCancellationException) {
