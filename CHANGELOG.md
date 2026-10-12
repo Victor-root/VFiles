@@ -1,5 +1,12 @@
 # Changelog
 
+## 🚀 v1.8.3 (2026-10-12)
+
+Root access no longer leaves a hidden process running after each session.
+
+### 🐛 Fixed
+- **A root process piled up after each session:** granting root left a helper shell running in the background, one more every time the app opened, since nothing ever asked it to stop. It is now closed as soon as it has done its job.
+
 ## 🚀 v1.8.2 (2026-09-11)
 
 The first-launch screen offers the install-unknown-apps permission again.
