@@ -6,9 +6,14 @@
 package me.zhanghai.android.files.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.OutputTransformation
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -27,8 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import kotlinx.coroutines.flow.drop
 
 @Composable
 fun ConfirmationDialog(
@@ -57,7 +62,8 @@ fun ConfirmationDialog(
 
 /**
  * A dialog asking for a line of text, with the keyboard shown. [validate] returns an error message
- * that keeps the dialog open, or null to confirm the text, which is trimmed.
+ * that keeps the dialog open, or null to confirm the text, which is trimmed unless [trim] is false.
+ * [neutralButton] goes before the cancel button.
  */
 @Composable
 fun TextFieldDialog(
@@ -69,15 +75,17 @@ fun TextFieldDialog(
     label: String? = null,
     validate: (String) -> String? = { null },
     keyboardType: KeyboardType = KeyboardType.Text,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    extraContent: (@Composable () -> Unit)? = null
+    outputTransformation: OutputTransformation? = null,
+    extraContent: (@Composable () -> Unit)? = null,
+    placeholder: String? = null,
+    trim: Boolean = true,
+    neutralButton: (@Composable () -> Unit)? = null
 ) {
-    var value by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(initialText, initialSelection))
-    }
+    val state = rememberTextFieldState(initialText, initialSelection)
     var error by rememberSaveable { mutableStateOf<String?>(null) }
+    LaunchedEffect(state) { snapshotFlow { state.text }.drop(1).collect { error = null } }
     val confirm = {
-        val text = value.text.trim()
+        val text = if (trim) state.text.trim().toString() else state.text.toString()
         val validationError = validate(text)
         if (validationError != null) {
             error = validationError
@@ -93,32 +101,33 @@ fun TextFieldDialog(
             TextButton(onClick = confirm) { Text(stringResource(android.R.string.ok)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(android.R.string.cancel))
+            Row {
+                neutralButton?.invoke()
+                TextButton(onClick = onDismissRequest) {
+                    Text(stringResource(android.R.string.cancel))
+                }
             }
         },
         title = { Text(title) },
         text = {
-            Column {
+            // The extra content may not fit with the keyboard shown.
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(
-                    value = value,
-                    onValueChange = {
-                        value = it
-                        error = null
-                    },
+                    state = state,
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(focusRequester),
                     label = label?.let { { Text(it) } },
+                    placeholder = placeholder?.let { { Text(it) } },
                     supportingText = error?.let { { Text(it) } },
                     isError = error != null,
-                    visualTransformation = visualTransformation,
+                    outputTransformation = outputTransformation,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = keyboardType,
                         imeAction = ImeAction.Done
                     ),
-                    keyboardActions = KeyboardActions(onDone = { confirm() }),
-                    singleLine = true
+                    onKeyboardAction = { confirm() },
+                    lineLimits = TextFieldLineLimits.SingleLine
                 )
                 extraContent?.invoke()
             }

@@ -23,7 +23,6 @@ import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity
-import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogFragment
 import me.zhanghai.android.files.ui.ScrollingViewOnApplyWindowInsetsListener
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.fadeToVisibilityUnsafe
@@ -112,7 +111,7 @@ class BookmarkDirectoryListFragment : Fragment(), BookmarkDirectoryListAdapter.L
     override fun editBookmarkDirectory(bookmarkDirectory: BookmarkDirectory) {
         startActivitySafe(
             EditBookmarkDirectoryDialogActivity::class.createIntent()
-                .putArgs(EditBookmarkDirectoryDialogFragment.Args(bookmarkDirectory))
+                .putArgs(EditBookmarkDirectoryDialogActivity.Args(bookmarkDirectory))
         )
     }
 
