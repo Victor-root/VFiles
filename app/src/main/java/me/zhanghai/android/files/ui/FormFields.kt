@@ -8,6 +8,7 @@ package me.zhanghai.android.files.ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.TextObfuscationMode
@@ -132,9 +133,10 @@ fun FormTextField(
 @Composable
 fun FormPasswordField(
     field: FormFieldState,
-    label: String,
+    label: String?,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
+    onKeyboardAction: KeyboardActionHandler? = null,
     onTextChange: () -> Unit = { field.errorRes = null }
 ) {
     TextChangeEffect(field, onTextChange)
@@ -145,7 +147,7 @@ fun FormPasswordField(
             .fillMaxWidth()
             .focusRequester(field.focusRequester),
         labelPosition = labelPosition(placeholder),
-        label = { Text(label) },
+        label = label?.let { { Text(it) } },
         placeholder = placeholder?.let { { Text(it) } },
         trailingIcon = {
             IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
@@ -165,6 +167,7 @@ fun FormPasswordField(
         },
         supportingText = field.errorRes?.let { { Text(stringResource(it)) } },
         isError = field.errorRes != null,
+        onKeyboardAction = onKeyboardAction,
         textObfuscationMode = if (isPasswordVisible) {
             TextObfuscationMode.Visible
         } else {

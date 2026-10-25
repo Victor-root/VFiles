@@ -7,7 +7,6 @@ package me.zhanghai.android.files.fileproperties.audio
 
 import android.media.MediaMetadataRetriever
 import android.os.Build
-import java.time.Duration
 import java8.nio.file.Path
 import me.zhanghai.android.files.app.backgroundExecutor
 import me.zhanghai.android.files.compat.METADATA_KEY_SAMPLERATE
@@ -20,6 +19,7 @@ import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.setDataSource
 import me.zhanghai.android.files.util.valueCompat
+import java.time.Duration
 
 class AudioInfoLiveData(path: Path) : PathObserverLiveData<Stateful<AudioInfo>>(path) {
     init {

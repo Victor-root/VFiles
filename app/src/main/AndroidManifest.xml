@@ -65,7 +65,7 @@
             android:name="me.zhanghai.android.files.onboarding.OnboardingActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles" />
 
         <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
@@ -308,17 +308,19 @@
         <activity
             android:name="me.zhanghai.android.files.fileaction.ArchivePasswordDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.filejob.FileJobErrorDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.filejob.FileJobConflictDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.viewer.saveas.SaveAsActivity"

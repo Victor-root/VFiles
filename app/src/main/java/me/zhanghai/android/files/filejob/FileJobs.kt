@@ -510,7 +510,7 @@ private fun FileJob.showErrorDialog(
             suspendCoroutine { continuation ->
                 BackgroundActivityStarter.startActivity(
                     FileJobErrorDialogActivity::class.createIntent().putArgs(
-                        FileJobErrorDialogFragment.Args(
+                        FileJobErrorDialogActivity.Args(
                             title, message, readOnlyFileStore, showAll, positiveButtonText,
                             negativeButtonText, neutralButtonText
                         ) { action, isAll ->
@@ -553,13 +553,13 @@ private fun FileJob.showConflictDialog(
             suspendCoroutine { continuation ->
                 BackgroundActivityStarter.startActivity(
                     FileJobConflictDialogActivity::class.createIntent().putArgs(
-                        FileJobConflictDialogFragment.Args(
+                        FileJobConflictDialogActivity.Args(
                             sourceFile, targetFile, type
                         ) { action, name, all ->
                             continuation.resume(ConflictResult(action, name, all))
                         }
-                    ), FileJobConflictDialogFragment.getTitle(sourceFile, targetFile, service),
-                    FileJobConflictDialogFragment.getMessage(sourceFile, targetFile, type, service),
+                    ), FileJobConflictDialogActivity.getTitle(sourceFile, targetFile, service),
+                    FileJobConflictDialogActivity.getMessage(sourceFile, targetFile, type, service),
                     service
                 )
             }

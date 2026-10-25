@@ -40,10 +40,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filejob.FileJobService
-import me.zhanghai.android.files.fileproperties.CheckboxItem
 import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.provider.common.PosixFileModeBit
+import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
