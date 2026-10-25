@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Tidak ada aplikasi yang bisa memproses tindakan ini</string>
     <string name="open_settings">Buka pengaturan</string>
-    <string name="shortcut_created">Pintasan dibuat</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d byte</item>
@@ -59,8 +58,6 @@
     <string name="storage_permission_rationale_message">Apl membutuhkan izin untuk mengakses berkas. Silakan klik \"IZINKAN\" pada dialog berikutnya</string>
     <string name="storage_permission_permanently_denied_message">Apl membutuhkan izin untuk mengakses berkas. Aktifkan izin \"Penyimpanan\" di dalam pengaturan sistem.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Aplikasi membutuhkan izin untuk mengirimkan notifikasi tentang pemrosesan berkas. Silakan klik \"Izinkan\" pada jendela sistem berikut ini.</string>
-    <string name="notification_permission_permanently_denied_message">Aplikasi membutuhkan izin untuk mengirimkan notifikasi tentang pemrosesan berkas. Izinkan akses \"Notifikasi\" pada pengaturan sistem.</string>
 
     <string name="notification_channel_background_activity_start_name">Tindakan saat di latar belakang</string>
     <string name="notification_channel_background_activity_start_description">Ambil tindakan saat apl berada di latar belakang</string>

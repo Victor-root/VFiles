@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">해당 작업을 위한 애플리케이션이 없습니다</string>
     <string name="open_settings">설정 열기</string>
-    <string name="shortcut_created">바로가기가 생성되었습니다</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d 바이트</item>
@@ -59,8 +58,6 @@
     <string name="storage_permission_rationale_message">파일에 접근하기 위한 권한이 필요합니다. 곧 나타날 대화 상자에서 \'허용\'을 선택해 주세요.</string>
     <string name="storage_permission_permanently_denied_message">파일에 접근하기 위한 권한이 필요합니다. 시스템 설정에서 \'저장용량\' 권한을 허용해 주세요.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">파일 작업과 관련된 알림을 띄우기 위한 권한이 필요합니다. 곧 나타날 대화 상자에서 “허용”을 선택해 주세요.</string>
-    <string name="notification_permission_permanently_denied_message">파일 작업과 관련된 알림을 띄우기 위한 권한이 필요합니다. 시스템 설정에서 “알림” 권한을 허용해 주세요.</string>
 
     <string name="notification_channel_background_activity_start_name">백그라운드에서 작업</string>
     <string name="notification_channel_background_activity_start_description">앱이 백그라운드에 있는 동안 작업합니다</string>

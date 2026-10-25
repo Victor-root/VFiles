@@ -26,8 +26,8 @@ android {
         // Not supporting foreground service timeout yet.
         //noinspection OldTargetApi
         targetSdk = 34
-        versionCode = 44
-        versionName = "1.8.4"
+        versionCode = 45
+        versionName = "2.0.0"
         resValue("string", "app_version", "$versionName ($versionCode)")
         buildConfigField(
             "String", "FILE_PROVIDIER_AUTHORITY", "APPLICATION_ID + \".file_provider\""

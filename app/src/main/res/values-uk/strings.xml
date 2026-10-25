@@ -50,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Для обробки цієї дії не знайдено програми</string>
     <string name="open_settings">Відкрити налаштування</string>
-    <string name="shortcut_created">Скорочення створено</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d байт</item>
@@ -64,8 +63,6 @@
     <string name="storage_permission_rationale_message">Застосунку потрібен дозвіл на керування файлами. Будь ласка, натисніть «Дозволити» у діалозі.</string>
     <string name="storage_permission_permanently_denied_message">Програма потребує дозволу на доступ до файлів. Будь ласка, надайте доступ до «Cховища» в налаштуваннях системи.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Додатку потрібен дозвіл на відправку сповіщень про операції з файлами. Будь ласка, натисніть \"Дозволити\" у діалоговому вікні, що з\'явиться.</string>
-    <string name="notification_permission_permanently_denied_message">Додатку потрібен дозвіл на відправку сповіщень про операції з файлами. Будь ласка, надайте дозвіл \"Сповіщення\" у налаштуваннях системи.</string>
 
     <string name="notification_channel_background_activity_start_name">Фонові дії</string>
     <string name="notification_channel_background_activity_start_description">Робити дії, коли програма у фоновому режимі</string>

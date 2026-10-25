@@ -46,7 +46,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Toiminnalle ei löytynyt sovellusta</string>
     <string name="open_settings">Avaa asetukset</string>
-    <string name="shortcut_created">Pikakuvake luotu</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d tavu</item>

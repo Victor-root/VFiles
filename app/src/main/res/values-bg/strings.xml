@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Не е намерено приложение, което да извърши действието</string>
     <string name="open_settings">Настройки</string>
-    <string name="shortcut_created">Прекият път е създаден</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d байт</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">Необходими са права за достъп до файлове. Докоснете „Разрешаване“ в следващия системен прозорец</string>
     <string name="storage_permission_permanently_denied_message">Необходими са права за достъпа до файлове. Разрешете правото „ХРАНИЛИЩЕ“ в системните настройки.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Необходими са права за изпращане на известия относно действия с файлове. Докоснете „Разрешаване“ в следващия системен прозорец</string>
-    <string name="notification_permission_permanently_denied_message">Необходими са права за изпращане на известия относно действия с файлове. Дайте правото „Известия“ в следващия системен прозорец</string>
 
     <string name="notification_channel_background_activity_start_name">Действия на заден план</string>
     <string name="notification_channel_background_activity_start_description">Изпълняване на действия докато приложението е на заден план</string>

@@ -47,7 +47,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Không tìm thấy ứng dụng nào để xử lý hành động này</string>
     <string name="open_settings">Mở cài đặt</string>
-    <string name="shortcut_created">Đã tạo lối tắt</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d byte</item>

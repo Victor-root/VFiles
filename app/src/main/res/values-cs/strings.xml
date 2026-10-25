@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nebyla nalezena vhodná aplikace pro tuto akci</string>
     <string name="open_settings">Otevřít nastavení</string>
-    <string name="shortcut_created">Zkratka byla vytvořena</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -62,8 +61,6 @@
     <string name="storage_permission_rationale_message">Aplikace vyžaduje povolení přístupu k souborům. V dalším dialogu klikněte na \"POVOLIT\", prosím.</string>
     <string name="storage_permission_permanently_denied_message">Aplikace potřebuje povolení přístupu k souborům. Prosím udělte povolení \"Úložiště\" v nastavení.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Aplikace potřebuje oprávnění pro posílání oznámení o operacích se soubory. Prosíme vyberte \"Povolit\" v následující výzvě systému.</string>
-    <string name="notification_permission_permanently_denied_message">Aplikace potřebuje oprávnění pro posílání oznámení o operacích se soubory. Prosíme udělte oprávnění \"Oznámení\" v nastavení systému.</string>
 
     <string name="notification_channel_background_activity_start_name">Akce probíhají v pozadí</string>
     <string name="notification_channel_background_activity_start_description">Podnikněte kroky, když aplikace běžela na pozadí</string>

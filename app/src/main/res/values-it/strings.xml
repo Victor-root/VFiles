@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nessuna app trovata per gestire l\'azione</string>
     <string name="open_settings">Apri impostazioni</string>
-    <string name="shortcut_created">Scorciatoia creata</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -61,8 +60,6 @@
     <string name="storage_permission_rationale_message">L\'app richiede l\'autorizzazione di accedere ai file. Clicca “CONSENTI” nella prossima finestra.</string>
     <string name="storage_permission_permanently_denied_message">L\'app richiede l\'autorizzazione di accedere ai file. Consenti l\'autorizzazione “Archiviazione” nelle impostazioni di sistema.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">L\'app richiede l\'autorizzazione di mostrare notifiche sulle operazioni sui file. Clicca “CONSENTI” nella prossima finestra.</string>
-    <string name="notification_permission_permanently_denied_message">L\'app richiede l\'autorizzazione di mostrare notifiche sulle operazioni sui file. Concedi l\'autorizzazione “Notifiche” nelle impostazioni di sistema.</string>
 
     <string name="notification_channel_background_activity_start_name">Azioni in secondo piano</string>
     <string name="notification_channel_background_activity_start_description">Esegui azioni mentre l\'app è in secondo piano</string>

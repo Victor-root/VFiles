@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">No se encontró ninguna aplicación para esta acción</string>
     <string name="open_settings">Abrir ajustes</string>
-    <string name="shortcut_created">Acceso directo creado</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -61,8 +60,6 @@
     <string name="storage_permission_rationale_message">La aplicación necesita permiso para acceder a los archivos. Por favor, aprieta “PERMITIR” en el diálogo del sistema.</string>
     <string name="storage_permission_permanently_denied_message">La aplicación necesita permiso para acceder a los archivos. Por favor, concede el permiso de “Almacenamiento” en la configuración del sistema.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Esta app necesita permiso para mostrar notificaciones acerca de las operaciones de los archivos. Por favor presiona “Permitir” en el diálogo del sistema a continuación.</string>
-    <string name="notification_permission_permanently_denied_message">Esta app necesita permiso para mostrar notificaciones acerca de las operaciones de los archivos. Por favor permite el permiso de “Notificaciones” en los ajustes del sistema.</string>
 
     <string name="notification_channel_background_activity_start_name">Acciones en segundo plano</string>
     <string name="notification_channel_background_activity_start_description">Realiza acciones mientras la aplicación está en segundo plano</string>

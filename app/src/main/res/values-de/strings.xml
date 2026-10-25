@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Keine passende Anwendung gefunden</string>
     <string name="open_settings">Einstellungen öffnen</string>
-    <string name="shortcut_created">Verknüpfung erstellt</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d Byte</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">App benötigt Berechtigungen für den Zugriff auf Dateien. Bitte klicken Sie im nächsten Dialog auf \"Erlauben\".</string>
     <string name="storage_permission_permanently_denied_message">App benötigt Berechtigungen für den Zugriff auf Dateien. Bitte erteilen Sie die \"Speicher\"-Berechtigung in den Systemeinstellungen.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Die App benötigt für Benachrichtigungen über Dateivorgänge die erforderlichen Berechtigungen. Bitte klicken Sie im kommenden Systemdialog auf „Zulassen“.</string>
-    <string name="notification_permission_permanently_denied_message">Die App benötigt für Benachrichtigungen über Dateivorgänge die erforderlichen Berechtigungen. Bitte erteilen Sie in den Systemeinstellungen die Berechtigung „Benachrichtigung“.</string>
 
     <string name="notification_channel_background_activity_start_name">Aktionen im Hintergrund</string>
     <string name="notification_channel_background_activity_start_description">Aktionen ausführen während die App im Hintergrund läuft</string>

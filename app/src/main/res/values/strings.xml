@@ -10,6 +10,7 @@
     <string name="app_name">VFiles</string>
     <string name="app_name_launcher">Files</string>
 
+    <string name="clear_query">Clear query</string>
     <string name="close">Close</string>
     <string name="copy">Copy</string>
     <string name="cut">Cut</string>
@@ -54,7 +55,6 @@
     <string name="activity_not_found">No application found to handle this action</string>
     <string name="copied_to_clipboard_format" translatable="false">@string/preference_copied</string>
     <string name="open_settings">Open settings</string>
-    <string name="shortcut_created">Shortcut created</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -66,8 +66,6 @@
     <string name="storage_permission_rationale_message">App needs permission to access files. Please click “ALLOW” in the upcoming system dialog.</string>
     <string name="storage_permission_permanently_denied_message">App needs permission to access files. Please grant the “Storage” permission in system settings.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">App needs permission to post notifications about file operations. Please click “Allow” in the upcoming system dialog.</string>
-    <string name="notification_permission_permanently_denied_message">App needs permission to post notifications about file operations. Please grant the “Notification” permission in system settings.</string>
 
     <string name="notification_channel_background_activity_start_name">Actions while background</string>
     <string name="notification_channel_background_activity_start_description">Take actions while app is in the background</string>
@@ -324,6 +322,7 @@
     <string name="file_list_error_folder_not_found">This folder no longer exists</string>
     <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
     <string name="file_list_error_unknown">Unable to open this folder</string>
+    <string name="file_list_action_create">Create</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Folder</string>
 

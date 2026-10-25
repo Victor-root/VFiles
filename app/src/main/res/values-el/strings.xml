@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Δεν βρέθηκε εφαρμογή για να χειριστεί αυτή την ενέργεια</string>
     <string name="open_settings">Άνοιγμα ρυθμίσεων</string>
-    <string name="shortcut_created">Δημιουργήθηκε συντόμευση</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">Η εφαρμογή χρειάζεται άδεια πρόσβασης στα αρχεία. Παρακαλούμε πατήστε “Αποδοχή” στον διάλογο συστήματος που ακολουθεί.</string>
     <string name="storage_permission_permanently_denied_message">Η εφαρμογή χρειάζεται άδεια πρόσβασης στα αρχεία. Παρακαλούμε παραχωρήστε την άδεια “Αποθηκευτικός Χώρος” στις ρυθμίσεις συστήματος.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Η εφαρμογή χρειάζεται άδεια εμφάνισης ειδοποιήσεων για λειτουργίες αρχείων. Παρακαλούμε πατήστε “Αποδοχή” στον διάλογο συστήματος που ακολουθεί.</string>
-    <string name="notification_permission_permanently_denied_message">Η εφαρμογή χρειάζεται άδεια εμφάνισης ειδοποιήσεων για λειτουργίες αρχείων. Παρακαλούμε παραχωρήστε την άδεια “Ειδοποιήσεις” στις ρυθμίσεις συστήματος.</string>
 
     <string name="notification_channel_background_activity_start_name">Ενέργειες στο παρασκήνιο</string>
     <string name="notification_channel_background_activity_start_description">Να προβαίνει σε ενέργειες ενώ η εφαρμογή βρίσκεται στο παρασκήνιο</string>

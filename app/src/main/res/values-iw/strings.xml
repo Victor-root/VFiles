@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">לא נמצא יישום מתאים לפעולה זו</string>
     <string name="open_settings">פתיחת הגדרות</string>
-    <string name="shortcut_created">נוצר קיצור דרך</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">בייט %1$,d</item>
@@ -62,8 +61,6 @@
     <string name="storage_permission_rationale_message">היישום זקוק להרשאה כדי לגשת לקבצים. יש ללחוץ על \"אפשר\" בתיבת הדו שיח הבאה של המערכת.</string>
     <string name="storage_permission_permanently_denied_message">היישום זקוק להרשאה כדי לגשת לקבצים. יש להעניק הרשאת \"אחסון\" בהגדרות המערכת.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">היישומון צריך הרשאה כדי לפרסם התראות על פעולות קבצים. נא ללחוץ על „הרשאה” בחלונית המערכת שכבר תופיע.</string>
-    <string name="notification_permission_permanently_denied_message">היישומון צריך הרשאה כדי לפרסם התראות על פעולות קבצים. נא להעניק את ההרשאה „התראות” בהגדרות המערכת.</string>
 
     <string name="notification_channel_background_activity_start_name">פעולות ברקע</string>
     <string name="notification_channel_background_activity_start_description">ביצוע פעולות כשהיישום פועל ברקע</string>

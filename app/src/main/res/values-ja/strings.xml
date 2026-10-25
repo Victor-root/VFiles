@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">この操作を処理できるアプリが見つかりません</string>
     <string name="open_settings">設定を開く</string>
-    <string name="shortcut_created">ショートカットを作成しました</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d バイト</item>
@@ -59,8 +58,6 @@
     <string name="storage_permission_rationale_message">ファイルにアクセスするには、アプリに権限が必要です。次に表示されるシステムダイアログで「許可」を選択してください。</string>
     <string name="storage_permission_permanently_denied_message">ファイルにアクセスするには、アプリに権限が必要です。システム設定で「ストレージ」の権限を付与してください。</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">ファイル操作に関する通知を表示するには、アプリに権限が必要です。次に表示されるシステムダイアログで「許可」を選択してください。</string>
-    <string name="notification_permission_permanently_denied_message">ファイル操作に関する通知を表示するには、アプリに権限が必要です。システム設定で「通知」の権限を付与してください。</string>
 
     <string name="notification_channel_background_activity_start_name">バックグラウンド処理</string>
     <string name="notification_channel_background_activity_start_description">バックグラウンドでのアプリの実行です</string>

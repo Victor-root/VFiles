@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">No s\'ha trobat cap aplicació per gestionar aquesta acció</string>
     <string name="open_settings">Obre la configuració</string>
-    <string name="shortcut_created">S\'ha creat una drecera</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">L\'aplicació necessita permís per accedir als fitxers. Feu clic a «PERMET» en el diàleg del sistema.</string>
     <string name="storage_permission_permanently_denied_message">L\'aplicació necessita permís per accedir als fitxers. Si us plau, concedeix el permís “emmagatzematge” a la configuració del sistema.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">L\'aplicació necessita permís per publicar notificacions sobre les operacions dels fitxers. Feu clic a «Permet» en el diàleg del sistema.</string>
-    <string name="notification_permission_permanently_denied_message">L\'aplicació necessita permís per publicar notificacions sobre les operacions dels fitxers. Atorgueu el permís de «Notificació» a la configuració del sistema.</string>
 
     <string name="notification_channel_background_activity_start_name">Accions en segon pla</string>
     <string name="notification_channel_background_activity_start_description">Fes accions mentre l\'aplicació estigui en segon pla</string>

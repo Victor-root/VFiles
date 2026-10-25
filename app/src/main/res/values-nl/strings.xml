@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Er is geen app die deze actie kan uitvoeren</string>
     <string name="open_settings">Instellingen openen</string>
-    <string name="shortcut_created">De snelkoppeling is gemaakt</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">Deze app heeft toegang nodig tot je bestanden. Druk op het volgende schermpje op ‘TOESTAAN’.</string>
     <string name="storage_permission_permanently_denied_message">Deze app heeft toegang nodig tot je bestanden. Verleen het recht ‘Opslag’ in de systeeminstellingen.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Deze app heeft toegang nodig tot je meldingen. Druk op het volgende schermpje op ‘TOESTAAN’.</string>
-    <string name="notification_permission_permanently_denied_message">Deze app heeft toegang nodig tot je meldingen. Verleen het recht ‘Meldingen’ in de systeeminstellingen.</string>
 
     <string name="notification_channel_background_activity_start_name">Achtergrondtaken</string>
     <string name="notification_channel_background_activity_start_description">Neem taken aan terwijl de app op de achtergrond draait</string>

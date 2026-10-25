@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nu a fost găsită o aplicație pentru a gestiona această acțiune</string>
     <string name="open_settings">Deschide setările</string>
-    <string name="shortcut_created">Scurtătură creată</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d octet</item>
@@ -61,8 +60,6 @@
     <string name="storage_permission_rationale_message">Aplicația necesită permisiunea de accesare a fișierelor. Apasă pe \"PERMITE\" în căsuța următoare.</string>
     <string name="storage_permission_permanently_denied_message">Aplicația are nevoie de permisiunea de a accesa fișierele. Acordă permisiunea „Stocare” în setările sistemului.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Aplicația necesită permisiunea de a afișa notificări legate de operațiunile cu fișiere. Vă rugăm să apăsați pe \"Permite\" în fereastra următoare.</string>
-    <string name="notification_permission_permanently_denied_message">Aplicația necesită permisiunea de a afișa notificări legate de operațiunile cu fișiere. Vă rugăm să permiteți afișarea notificărilor în setări.</string>
 
     <string name="notification_channel_background_activity_start_name">Acțiuni în fundal</string>
     <string name="notification_channel_background_activity_start_description">Efectuează acțiuni în timp ce aplicația este în fundal</string>
