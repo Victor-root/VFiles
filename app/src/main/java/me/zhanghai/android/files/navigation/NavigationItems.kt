@@ -279,7 +279,7 @@ private class StorageVolumeItem(
         val uuid = storageVolume.uuidCompat ?: return false
         listener.launchIntent(
             EditStorageVolumeDialogActivity::class.createIntent()
-                .putArgs(EditStorageVolumeDialogFragment.Args(uuid, defaultName(application)))
+                .putArgs(EditStorageVolumeDialogActivity.Args(uuid, defaultName(application)))
         )
         return true
     }
@@ -560,7 +560,7 @@ private class BookmarkDirectoryItem(
     override fun onLongClick(listener: Listener): Boolean {
         listener.launchIntent(
             EditBookmarkDirectoryDialogActivity::class.createIntent()
-                .putArgs(EditBookmarkDirectoryDialogFragment.Args(bookmarkDirectory))
+                .putArgs(EditBookmarkDirectoryDialogActivity.Args(bookmarkDirectory))
         )
         return true
     }
