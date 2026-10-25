@@ -17,7 +17,6 @@ import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.storageManager
 import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.compat.registerReceiverCompat
-import me.zhanghai.android.files.compat.storageVolumesCompat
 
 object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
     init {
@@ -44,7 +43,7 @@ object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
     }
 
     private fun loadValue() {
-        value = storageManager.storageVolumesCompat
+        value = storageManager.storageVolumes
     }
 
     /**
@@ -54,7 +53,7 @@ object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
      * set of volumes actually changed, to avoid needless navigation-drawer rebuilds.
      */
     fun refresh() {
-        val volumes = storageManager.storageVolumesCompat
+        val volumes = storageManager.storageVolumes
         if (value?.map { it.pathCompat } != volumes.map { it.pathCompat }) {
             value = volumes
         }

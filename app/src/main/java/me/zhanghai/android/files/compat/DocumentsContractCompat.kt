@@ -7,7 +7,6 @@ package me.zhanghai.android.files.compat
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.os.Build
 import android.provider.DocumentsContract
 import me.zhanghai.android.files.app.packageManager
 
@@ -45,13 +44,6 @@ object DocumentsContractCompat {
             else -> false
         }
     }
-
-    fun isTreeUri(uri: Uri): Boolean =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            DocumentsContract.isTreeUri(uri)
-        } else {
-            uri.pathSegments.let { it.size >= 2 && it[0] == PATH_TREE }
-        }
 
     fun isChildDocumentsUri(uri: Uri): Boolean {
         val pathSegments = uri.pathSegments

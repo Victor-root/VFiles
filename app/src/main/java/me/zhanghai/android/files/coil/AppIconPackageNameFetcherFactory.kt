@@ -7,8 +7,8 @@ package me.zhanghai.android.files.coil
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import coil.key.Keyer
-import coil.request.Options
+import coil3.key.Keyer
+import coil3.request.Options
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.compat.PackageManagerCompat
 import me.zhanghai.android.files.util.getDimensionPixelSize

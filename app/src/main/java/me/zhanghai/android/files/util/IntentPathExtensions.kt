@@ -87,7 +87,7 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
     return runCatching {
         val documentId = when {
             DocumentsContractCompat.isDocumentUri(this) -> DocumentsContract.getDocumentId(this)
-            DocumentsContractCompat.isTreeUri(this) -> DocumentsContract.getTreeDocumentId(this)
+            DocumentsContract.isTreeUri(this) -> DocumentsContract.getTreeDocumentId(this)
             else -> return@runCatching null
         }
         val colonIndex = documentId.indexOf(':')

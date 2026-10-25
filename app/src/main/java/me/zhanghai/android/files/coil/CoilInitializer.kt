@@ -6,15 +6,15 @@
 package me.zhanghai.android.files.coil
 
 import android.os.Build
-import coil.Coil
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.gif.AnimatedImageDecoder
+import coil3.gif.GifDecoder
+import coil3.svg.SvgDecoder
 import me.zhanghai.android.files.app.application
 
 fun initializeCoil() {
-    Coil.setImageLoader(
+    SingletonImageLoader.setSafe {
         ImageLoader.Builder(application)
             .components {
                 add(AppIconApplicationInfoKeyer())
@@ -25,13 +25,13 @@ fun initializeCoil() {
                 add(PathAttributesFetcher.Factory(application))
                 add(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        ImageDecoderDecoder.Factory()
+                        AnimatedImageDecoder.Factory()
                     } else {
                         GifDecoder.Factory()
                     }
                 )
-                add(SvgDecoder.Factory(false))
+                add(SvgDecoder.Factory(useViewBoundsAsIntrinsicSize = false))
             }
             .build()
-    )
+    }
 }

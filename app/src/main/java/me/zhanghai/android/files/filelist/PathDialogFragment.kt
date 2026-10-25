@@ -34,7 +34,7 @@ abstract class PathDialogFragment : NameDialogFragment() {
     }
 
     private fun String.toPathOrNull(): Path? {
-        val uri = URI::class.createOrLog(toString())
+        val uri = URI::class.createOrLog(this)
             // Also try to accept decoded path.
             ?: Uri.parse(this).let {
                 URI::class.createOrLog(

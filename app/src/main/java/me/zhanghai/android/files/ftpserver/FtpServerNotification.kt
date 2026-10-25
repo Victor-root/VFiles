@@ -7,7 +7,6 @@ package me.zhanghai.android.files.ftpserver
 
 import android.app.PendingIntent
 import android.app.Service
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
@@ -48,10 +47,7 @@ class FtpServerNotification(private val service: Service) {
         val contextText = FtpServerUrl.getUrl()
             ?: service.getString(R.string.ftp_server_notification_text_no_local_inet_address)
         val contentIntent = FtpServerActivity::class.createIntent()
-        var pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            pendingIntentFlags = pendingIntentFlags or PendingIntent.FLAG_IMMUTABLE
-        }
+        val pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         val contentPendingIntent = PendingIntent.getActivity(
             service, FtpServerActivity::class.hashCode(), contentIntent, pendingIntentFlags
         )

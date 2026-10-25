@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.settings
 
 import android.content.Context
+import android.icu.text.ListFormatter
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
@@ -14,7 +15,6 @@ import androidx.annotation.StyleRes
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import me.zhanghai.android.files.compat.ListFormatterCompat
 import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageListActivity
 import me.zhanghai.android.files.util.createIntent
@@ -59,7 +59,8 @@ class StoragesPreference : Preference {
     private fun onStorageListChanged(storages: List<Storage>) {
         val context = context
         val names = storages.filter { it.isVisible }.map { it.getName(context) }
-        val summary = if (names.isNotEmpty()) ListFormatterCompat.format(names) else emptySummary
+        val summary =
+            if (names.isNotEmpty()) ListFormatter.getInstance().format(names) else emptySummary
         setSummary(summary)
     }
 

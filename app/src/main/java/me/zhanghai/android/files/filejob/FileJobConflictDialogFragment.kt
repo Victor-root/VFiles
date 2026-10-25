@@ -21,8 +21,8 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import coil.dispose
-import coil.load
+import coil3.dispose
+import coil3.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize

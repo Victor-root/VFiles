@@ -10,15 +10,16 @@ import android.content.pm.ApplicationInfo
 import android.media.MediaMetadataRetriever
 import android.os.ParcelFileDescriptor
 import androidx.core.graphics.drawable.toDrawable
-import coil.ImageLoader
-import coil.decode.ImageSource
-import coil.fetch.DrawableResult
-import coil.fetch.FetchResult
-import coil.fetch.Fetcher
-import coil.fetch.SourceResult
-import coil.key.Keyer
-import coil.request.Options
-import coil.size.Dimension
+import coil3.ImageLoader
+import coil3.asImage
+import coil3.decode.ImageSource
+import coil3.fetch.FetchResult
+import coil3.fetch.Fetcher
+import coil3.fetch.ImageFetchResult
+import coil3.fetch.SourceFetchResult
+import coil3.key.Keyer
+import coil3.request.Options
+import coil3.size.Dimension
 import java8.nio.file.Path
 import java8.nio.file.attribute.BasicFileAttributes
 import me.zhanghai.android.files.R
@@ -88,8 +89,9 @@ class PathAttributesFetcher(
                     }
                 }
                 if (thumbnail != null) {
-                    return DrawableResult(
-                        thumbnail.toDrawable(options.context.resources), true, path.dataSource
+                    return ImageFetchResult(
+                        thumbnail.toDrawable(options.context.resources).asImage(), true,
+                        path.dataSource
                     )
                 }
             }
@@ -113,8 +115,8 @@ class PathAttributesFetcher(
             }
             mimeType.isImage || mimeType == MimeType.GENERIC -> {
                 val inputStream = path.newInputStream()
-                return SourceResult(
-                    ImageSource(inputStream.source().buffer(), options.context),
+                return SourceFetchResult(
+                    ImageSource(inputStream.source().buffer(), options.fileSystem),
                     if (mimeType != MimeType.GENERIC) mimeType.value else null, path.dataSource
                 )
             }
@@ -129,9 +131,9 @@ class PathAttributesFetcher(
                     null
                 }
                 if (embeddedPicture != null) {
-                    return SourceResult(
+                    return SourceFetchResult(
                         ImageSource(
-                            embeddedPicture.inputStream().source().buffer(), options.context
+                            embeddedPicture.inputStream().source().buffer(), options.fileSystem
                         ), null, path.dataSource
                     )
                 }

@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.settings
 
 import android.content.Context
+import android.icu.text.ListFormatter
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
@@ -14,7 +15,6 @@ import androidx.annotation.StyleRes
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import me.zhanghai.android.files.compat.ListFormatterCompat
 import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.util.createIntent
@@ -57,7 +57,8 @@ class StandardDirectoriesPreference : Preference {
     private fun onStandardDirectoriesChanged(standardDirectories: List<StandardDirectory>) {
         val context = context
         val titles = standardDirectories.filter { it.isEnabled }.map { it.getTitle(context) }
-        val summary = if (titles.isNotEmpty()) ListFormatterCompat.format(titles) else emptySummary
+        val summary =
+            if (titles.isNotEmpty()) ListFormatter.getInstance().format(titles) else emptySummary
         setSummary(summary)
     }
 

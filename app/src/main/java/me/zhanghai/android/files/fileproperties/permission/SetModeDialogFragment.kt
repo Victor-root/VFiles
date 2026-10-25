@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.fileproperties.permission
 
 import android.app.Dialog
+import android.icu.text.ListFormatter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.isVisible
@@ -13,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.compat.ListFormatterCompat
 import me.zhanghai.android.files.databinding.SetModeDialogBinding
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filejob.FileJobService
@@ -123,7 +123,7 @@ class SetModeDialogFragment : AppCompatDialogFragment() {
         return if (checkedNames.isEmpty()) {
             getString(R.string.none)
         } else {
-            ListFormatterCompat.format(checkedNames)
+            ListFormatter.getInstance().format(checkedNames)
         }
     }
 

@@ -11,7 +11,6 @@ import android.os.IBinder
 import android.service.quicksettings.TileService
 import android.view.View
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.core.view.doOnPreDraw
 import me.zhanghai.android.files.hiddenapi.RestrictedHiddenApi
 import me.zhanghai.android.files.util.lazyReflectedField
@@ -51,11 +50,8 @@ fun TileService.doWithStartForegroundServiceAllowed(action: () -> Unit) {
 private const val WindowManager_LayoutParams_TYPE_QS_DIALOG =
     WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW + 35
 
-@delegate:RequiresApi(Build.VERSION_CODES.N)
-@get:RequiresApi(Build.VERSION_CODES.N)
 @RestrictedHiddenApi
 private val tokenField by lazyReflectedField(TileService::class.qualifiedName!!, "mToken")
 
 private val TileService.token: IBinder?
-    @RequiresApi(Build.VERSION_CODES.N)
     get() = tokenField.get(this) as IBinder?

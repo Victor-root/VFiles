@@ -15,7 +15,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.children
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
@@ -251,5 +250,5 @@ fun View.showSoftInput() {
 }
 
 fun View.hideSoftInput() {
-    inputMethodManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
