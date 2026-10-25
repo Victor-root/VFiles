@@ -22,20 +22,6 @@
     </notice>
 
     <notice>
-        <name>FullDraggableDrawer</name>
-        <url>https://github.com/PureWriter/FullDraggableDrawer</url>
-        <copyright>Copyright 2021 Drakeet Xu</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>Stetho</name>
-        <url>https://github.com/facebook/stetho</url>
-        <copyright>Copyright 2015 Facebook Inc.</copyright>
-        <license>BSD 3-Clause License</license>
-    </notice>
-
-    <notice>
         <name>dav4jvm</name>
         <url>https://github.com/bitfireAT/dav4jvm</url>
         <copyright>Copyright 2015 dav4jvm contributors</copyright>
@@ -50,37 +36,9 @@
     </notice>
 
     <notice>
-        <name>Material Shadow 9-Patch</name>
-        <url>https://github.com/h6ah4i/android-materialshadowninepatch</url>
-        <copyright>Copyright 2015 Haruki Hasegawa</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>Advanced RecyclerView</name>
-        <url>https://github.com/h6ah4i/android-advancedrecyclerview</url>
-        <copyright>Copyright 2015 Haruki Hasegawa</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
         <name>SMBJ</name>
         <url>https://github.com/hierynomus/smbj</url>
         <copyright>Copyright 2016 SMBJ Contributors</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>ThreeTenABP</name>
-        <url>https://github.com/JakeWharton/ThreeTenABP</url>
-        <copyright>Copyright 2015 Jake Wharton</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>Floating Action Button Speed Dial</name>
-        <url>https://github.com/leinardi/FloatingActionButtonSpeedDial</url>
-        <copyright>Copyright 2018 Roberto Leinardi</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
 
@@ -96,20 +54,6 @@
         <url>https://commons.apache.org/proper/commons-net/</url>
         <copyright>Copyright 2003 The Apache Software Foundation</copyright>
         <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>Insetter</name>
-        <url>https://github.com/chrisbanes/insetter</url>
-        <copyright>Copyright 2019 Google LLC</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>RikkaX</name>
-        <url>https://github.com/RikkaApps/RikkaX</url>
-        <copyright>Copyright 2017 Rikka</copyright>
-        <license>MIT License</license>
     </notice>
 
     <notice>
@@ -137,20 +81,6 @@
         <name>AppIconLoader</name>
         <url>https://github.com/zhanghai/AppIconLoader</url>
         <copyright>Copyright 2020 Google LLC</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>AndroidFastScroll</name>
-        <url>https://github.com/zhanghai/AndroidFastScroll</url>
-        <copyright>Copyright 2019 Google LLC</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
-        <name>AndroidForegroundCompat</name>
-        <url>https://github.com/google/AndroidForegroundCompat</url>
-        <copyright>Copyright 2019 Google LLC</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
 
@@ -221,6 +151,20 @@
         <name>Apache FtpServer</name>
         <url>https://mina.apache.org/ftpserver-project/index.html</url>
         <copyright>Copyright 2003 The Apache Software Foundation</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Jetpack Compose</name>
+        <url>https://developer.android.com/compose</url>
+        <copyright>Copyright 2019 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
+    <notice>
+        <name>Material Color Utilities</name>
+        <url>https://github.com/jordond/MaterialKolor</url>
+        <copyright>Copyright 2021 Google LLC</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
 
