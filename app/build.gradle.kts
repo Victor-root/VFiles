@@ -229,7 +229,6 @@ dependencies {
     implementation(libs.advrecyclerview)
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)
-    implementation(libs.photoview)
     implementation(libs.preferencex)
     implementation(libs.shizuku.api)
     implementation(libs.simplemenu.preference)
@@ -245,13 +244,12 @@ dependencies {
         exclude(group = "org.bouncycastle", module = "bcprov-jdk18on")
         exclude(group = "org.bouncycastle", module = "bcpkix-jdk18on")
     }
-    implementation(libs.subsampling.scale.image.view)
+    implementation(libs.telephoto.zoomable.image.coil)
     implementation(libs.zhanghai.appiconloader)
     implementation(libs.zhanghai.foregroundcompat)
     implementation(libs.zhanghai.libarchive)
     implementation(libs.zhanghai.libselinux)
     implementation(libs.zhanghai.retrofile)
-    implementation(libs.zhanghai.systemuihelper)
 
     testImplementation(libs.androidx.test.core)
     testImplementation(platform(libs.compose.bom))

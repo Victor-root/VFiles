@@ -35,8 +35,9 @@ class AppColors(
 
 val LocalAppColors = staticCompositionLocalOf<AppColors> { error("No AppColors provided") }
 
+/** [hasDarkSystemBars] is for screens that always draw dark content behind the system bars. */
 @Composable
-fun AppTheme(content: @Composable () -> Unit) {
+fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit) {
     val nightMode by Settings.NIGHT_MODE.observeAsStateCompat()
     val themeColor by Settings.THEME_COLOR.observeAsStateCompat()
     val isBlackNightMode by Settings.BLACK_NIGHT_MODE.observeAsStateCompat()
@@ -46,7 +47,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         appColorScheme(context, themeColor, isDark, isBlackNightMode)
     }
     val appColors = remember(colorScheme, isDark) { colorScheme.toAppColors(isDark) }
-    SystemBarsEffect(appColors)
+    SystemBarsEffect(appColors, hasDarkSystemBars)
     CompositionLocalProvider(LocalAppColors provides appColors) {
         MaterialTheme(colorScheme = colorScheme, content = content)
     }
@@ -62,16 +63,17 @@ private fun ColorScheme.toAppColors(isDark: Boolean): AppColors =
 
 // Status bar icons follow the app bar drawn behind them, navigation bar icons follow the content.
 @Composable
-private fun SystemBarsEffect(appColors: AppColors) {
+private fun SystemBarsEffect(appColors: AppColors, hasDarkSystemBars: Boolean) {
     val activity = LocalActivity.current as? ComponentActivity ?: return
-    val isAppBarDark = appColors.appBarContainer.luminance() < 0.5f
-    DisposableEffect(activity, isAppBarDark, appColors.isDark) {
+    val isStatusBarDark = hasDarkSystemBars || appColors.appBarContainer.luminance() < 0.5f
+    val isNavigationBarDark = hasDarkSystemBars || appColors.isDark
+    DisposableEffect(activity, isStatusBarDark, isNavigationBarDark) {
         activity.enableEdgeToEdge(
             SystemBarStyle.auto(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT) {
-                isAppBarDark
+                isStatusBarDark
             },
             SystemBarStyle.auto(LIGHT_NAVIGATION_BAR_SCRIM, DARK_NAVIGATION_BAR_SCRIM) {
-                appColors.isDark
+                isNavigationBarDark
             }
         )
         onDispose {}
