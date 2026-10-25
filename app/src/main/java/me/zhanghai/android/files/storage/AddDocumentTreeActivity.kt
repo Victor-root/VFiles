@@ -5,19 +5,40 @@
 
 package me.zhanghai.android.files.storage
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.commit
-import me.zhanghai.android.files.app.AppActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.file.asDocumentTreeUriOrNull
+import me.zhanghai.android.files.file.takePersistablePermission
+import me.zhanghai.android.files.util.launchSafe
 
-class AddDocumentTreeActivity : AppActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Calls ensureSubDecor().
-        findViewById<View>(android.R.id.content)
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit { add(android.R.id.content, AddDocumentTreeFragment()) }
+/** Shows no UI but the system picker of the document tree to add. */
+class AddDocumentTreeActivity : ComposeActivity() {
+    @Composable
+    override fun Content() {
+        val openDocumentTreeLauncher =
+            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+                val treeUri = it?.asDocumentTreeUriOrNull()
+                if (treeUri != null) {
+                    treeUri.takePersistablePermission()
+                    Storages.addOrReplace(DocumentTree(null, null, treeUri))
+                }
+                finish()
+            }
+        val context = LocalContext.current
+        var isLaunched by rememberSaveable { mutableStateOf(false) }
+        LaunchedEffect(Unit) {
+            if (!isLaunched) {
+                isLaunched = true
+                openDocumentTreeLauncher.launchSafe(null, context)
+            }
         }
     }
 }
