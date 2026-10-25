@@ -592,7 +592,6 @@
     <string name="settings_locale_title">言語</string>
     <string name="settings_theme_color_title">テーマカラー</string>
     <string name="settings_theme_color_summary">アプリ内で優先して使用する色です</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">夜間モード</string>
     <string-array name="settings_night_mode_entries">
         <item>システム設定に従う</item>

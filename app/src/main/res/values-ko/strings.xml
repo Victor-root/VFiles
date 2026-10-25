@@ -592,7 +592,6 @@
     <string name="settings_locale_title">언어</string>
     <string name="settings_theme_color_title">테마 색상</string>
     <string name="settings_theme_color_summary">앱에서 가장 많이 보이는 색상</string>
-    <string name="settings_material_design_3_title">머티리얼 디자인 3</string>
     <string name="settings_night_mode_title">다크 모드</string>
     <string-array name="settings_night_mode_entries">
         <item>시스템 설정에 따름</item>

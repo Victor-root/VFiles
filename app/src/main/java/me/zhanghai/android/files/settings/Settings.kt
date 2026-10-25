@@ -10,8 +10,6 @@ import android.text.TextUtils
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.application
-import me.zhanghai.android.files.compat.EnvironmentCompat2
 import me.zhanghai.android.files.filelist.FileSortOptions
 import me.zhanghai.android.files.filelist.FileViewType
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
@@ -24,7 +22,6 @@ import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.night.NightMode
-import java.io.File
 
 object Settings {
     val STORAGES: SettingLiveData<List<Storage>> =
@@ -104,11 +101,6 @@ object Settings {
         EnumSettingLiveData(
             R.string.pref_key_theme_color, R.string.pref_default_value_theme_color,
             ThemeColor::class.java
-        )
-
-    val MATERIAL_DESIGN_3: SettingLiveData<Boolean> =
-        BooleanSettingLiveData(
-            R.string.pref_key_material_design_3, R.bool.pref_default_value_material_design_3
         )
 
     val NIGHT_MODE: SettingLiveData<NightMode> =

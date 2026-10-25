@@ -622,7 +622,6 @@
     <string name="settings_locale_title">Γλώσσα</string>
     <string name="settings_theme_color_title">Χρώμα θέματος</string>
     <string name="settings_theme_color_summary">Χρώμα που εμφανίζεται συχνότερα στην εφαρμογή</string>
-    <string name="settings_material_design_3_title">Σχεδίαση Υλικού 3</string>
     <string name="settings_night_mode_title">Νυχτερινή λειτουργία</string>
     <string-array name="settings_night_mode_entries">
         <item>Ακολουθεί το σύστημα</item>

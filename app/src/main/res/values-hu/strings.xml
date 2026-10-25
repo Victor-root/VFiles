@@ -524,7 +524,6 @@
     <string name="settings_locale_title">Nyelv</string>
     <string name="settings_theme_color_title">Téma színe</string>
     <string name="settings_theme_color_summary">A szín, amely a leggyakrabban megjelenik az alkalmazásban</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Éjszakai mód</string>
     <string-array name="settings_night_mode_entries">
         <item>Rendszertéma követése</item>

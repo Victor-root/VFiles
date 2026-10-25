@@ -43,6 +43,10 @@ object CustomThemeHelper {
                 activityEdgeToEdge.remove(activity)
             }
         })
+        // The settings screen is in Compose and doesn't know about the View-based activities.
+        Settings.THEME_COLOR.observeForever { sync() }
+        Settings.BLACK_NIGHT_MODE.observeForever { sync() }
+        Settings.EDGE_TO_EDGE.observeForever { sync() }
     }
 
     fun apply(activity: Activity) {
@@ -61,8 +65,7 @@ object CustomThemeHelper {
     // overriding the system accent. Falls back to the base theme's system-accent colors when the
     // wallpaper color can't be read (older API, or the read failed).
     private fun applyWallpaperDynamicColors(activity: Activity) {
-        if (Settings.THEME_COLOR.valueCompat != ThemeColor.DYNAMIC
-            || !Settings.MATERIAL_DESIGN_3.valueCompat) {
+        if (Settings.THEME_COLOR.valueCompat != ThemeColor.DYNAMIC) {
             return
         }
         val seedColor = activity.wallpaperAccentColor() ?: return
@@ -98,24 +101,16 @@ object CustomThemeHelper {
         val resources = context.resources
         val baseThemeName = resources.getResourceName(baseThemeRes)
         val themeColor = Settings.THEME_COLOR.valueCompat
-        val isMaterial3 = Settings.MATERIAL_DESIGN_3.valueCompat
-        // With Material Design 3, the "dynamic" color follows the system/wallpaper colors, which the
-        // base Material3 theme already applies; so we leave it without a color suffix in that case.
-        val isDynamic = themeColor == ThemeColor.DYNAMIC && isMaterial3
-        // DYNAMIC has no fixed-color theme of its own, so if it somehow ends up selected without
-        // Material Design 3 we fall back to the default color to keep the theme name valid.
-        val effectiveThemeColor =
-            if (themeColor == ThemeColor.DYNAMIC && !isMaterial3) ThemeColor.entries[0] else themeColor
-        val themeColorName = resources.getResourceEntryName(effectiveThemeColor.resourceId)
-        val customThemeName = if (isMaterial3) {
-            val defaultThemeName = resources.getResourceEntryName(R.style.Theme_MaterialFiles)
-            val material3ThemeName =
-                resources.getResourceEntryName(R.style.Theme_MaterialFiles_Material3)
-            baseThemeName.replace(defaultThemeName, material3ThemeName) +
-                if (isDynamic) "" else ".$themeColorName"
-        } else {
-            "$baseThemeName.$themeColorName"
-        } + if (Settings.BLACK_NIGHT_MODE.valueCompat) ".Black" else ""
+        // The "dynamic" color follows the system/wallpaper colors, which the base Material3 theme
+        // already applies; so we leave it without a color suffix in that case.
+        val isDynamic = themeColor == ThemeColor.DYNAMIC
+        val themeColorName = resources.getResourceEntryName(themeColor.resourceId)
+        val defaultThemeName = resources.getResourceEntryName(R.style.Theme_MaterialFiles)
+        val material3ThemeName =
+            resources.getResourceEntryName(R.style.Theme_MaterialFiles_Material3)
+        val customThemeName = baseThemeName.replace(defaultThemeName, material3ThemeName) +
+            (if (isDynamic) "" else ".$themeColorName") +
+            if (Settings.BLACK_NIGHT_MODE.valueCompat) ".Black" else ""
         return resources.getIdentifier(customThemeName, null, null)
     }
 
