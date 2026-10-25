@@ -5,26 +5,57 @@
 
 package me.zhanghai.android.files.storage
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.commit
-import me.zhanghai.android.files.app.AppActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import kotlinx.parcelize.Parcelize
+import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
-import me.zhanghai.android.files.util.putArgs
 
-class EditDeviceStorageDialogActivity : AppActivity() {
-    private val args by args<EditDeviceStorageDialogFragment.Args>()
+class EditDeviceStorageDialogActivity : ComposeActivity() {
+    private val args by args<Args>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    @Composable
+    override fun Content() {
+        EditDeviceStorageDialog(args.deviceStorage, onDismissRequest = ::finish)
+    }
 
-        // Calls ensureSubDecor().
-        findViewById<View>(android.R.id.content)
-        if (savedInstanceState == null) {
-            val fragment = EditDeviceStorageDialogFragment().putArgs(args)
-            supportFragmentManager.commit {
-                add(fragment, EditDeviceStorageDialogFragment::class.java.name)
-            }
-        }
+    @Parcelize
+    class Args(val deviceStorage: DeviceStorage) : ParcelableArgs
+}
+
+@Composable
+private fun EditDeviceStorageDialog(deviceStorage: DeviceStorage, onDismissRequest: () -> Unit) {
+    val context = LocalContext.current
+    val defaultName = deviceStorage.getDefaultName(context)
+    val name = deviceStorage.getName(context)
+    val nameField = rememberFormFieldState(name, TextRange(0, name.length))
+    EditStorageDialog(
+        title = stringResource(R.string.storage_edit_device_storage_title),
+        initialFocusRequester = nameField.focusRequester,
+        onConfirm = {
+            val customName = nameField.text.takeIf { it.isNotEmpty() && it != defaultName }
+            Storages.replace(deviceStorage.copy_(customName = customName))
+            onDismissRequest()
+        },
+        neutralText = stringResource(if (deviceStorage.isVisible) R.string.hide else R.string.show),
+        onNeutral = {
+            Storages.replace(deviceStorage.copy_(isVisible = !deviceStorage.isVisible))
+            onDismissRequest()
+        },
+        onDismissRequest = onDismissRequest
+    ) {
+        FormTextField(
+            field = nameField,
+            label = stringResource(R.string.storage_edit_device_storage_name),
+            placeholder = defaultName
+        )
+        ReadOnlyFormTextField(
+            text = deviceStorage.linuxPath,
+            label = stringResource(R.string.storage_edit_device_storage_path)
+        )
     }
 }
