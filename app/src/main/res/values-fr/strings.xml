@@ -661,7 +661,9 @@
     <string name="ftp_server_anonymous_login_title">Connexion anonyme</string>
     <string name="ftp_server_username_title">Nom d\'utilisateur</string>
     <string name="ftp_server_password_title">Mot de passe</string>
+    <string name="ftp_server_password_summary_empty">Non défini</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Port invalide</string>
     <string name="ftp_server_home_directory_title">Dossier root</string>
     <string name="ftp_server_writable_title">Autoriser l\'écriture</string>
     <string name="settings_title">Réglages</string>

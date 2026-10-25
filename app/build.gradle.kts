@@ -229,7 +229,6 @@ dependencies {
     implementation(libs.advrecyclerview)
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)
-    implementation(libs.preferencex)
     implementation(libs.shizuku.api)
     implementation(libs.simplemenu.preference)
     // Also a dependency of jCIFS-NG.
