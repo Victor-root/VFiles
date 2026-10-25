@@ -9,67 +9,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
-import android.provider.MediaStore
-import android.provider.Settings
 import androidx.core.app.ShareCompat
 import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
-import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.intentType
 import kotlin.reflect.KClass
 
 fun <T : Context> KClass<T>.createIntent(): Intent = Intent(application, java)
-
-fun CharSequence.createSendTextIntent(htmlText: String? = null): Intent =
-    // The context parameter here is only used for passing calling activity information and starting
-    // chooser activity, neither of which we care about.
-    ShareCompat.IntentBuilder(application)
-        .setType(MimeType.TEXT_PLAIN.value)
-        .setText(this)
-        .apply { htmlText?.let { setHtmlText(it) } }
-        .intent
-        // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET is unnecessarily added by ShareCompat.IntentBuilder.
-        .apply {
-            @Suppress("DEPRECATION")
-            removeFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
-        }
-
-fun KClass<Intent>.createLaunchApp(packageName: String): Intent? =
-    packageManager.getLaunchIntentForPackage(packageName)
-
-fun KClass<Intent>.createPickImage(allowMultiple: Boolean = false): Intent =
-    MimeType.IMAGE_ANY.createPickFileIntent(allowMultiple)
-
-fun KClass<Intent>.createPickOrCaptureImageWithChooser(
-    allowPickMultiple: Boolean = false,
-    captureOutputUri: Uri
-): Intent =
-    createPickImage(allowPickMultiple)
-        .withChooser(captureOutputUri.createCaptureImage())
-
-fun KClass<Intent>.createSyncSettings(
-    authorities: Array<out String>? = null,
-    accountTypes: Array<out String>? = null
-): Intent =
-    Intent(Settings.ACTION_SYNC_SETTINGS).apply {
-        if (!authorities.isNullOrEmpty()) {
-            putExtra(Settings.EXTRA_AUTHORITIES, authorities)
-        }
-        if (!accountTypes.isNullOrEmpty()) {
-            putExtra(Settings.EXTRA_ACCOUNT_TYPES, accountTypes)
-        }
-    }
-
-fun KClass<Intent>.createSyncSettingsWithAuthorities(vararg authorities: String) =
-    createSyncSettings(authorities = authorities)
-
-fun KClass<Intent>.createSyncSettingsWithAccountType(vararg accountTypes: String) =
-    createSyncSettings(accountTypes = accountTypes)
-
-fun KClass<Intent>.createViewAppInMarket(packageName: String): Intent =
-    Uri.parse("market://details?id=$packageName").createViewIntent()
 
 // @see com.android.documentsui.inspector.InspectorController.createGeoIntent
 // @see https://developer.android.com/guide/components/intents-common.html#Maps
@@ -81,18 +29,6 @@ fun KClass<Intent>.createViewLocation(latitude: Float, longitude: Float, label: 
 fun <T : Parcelable> Intent.getParcelableExtraSafe(key: String?): T? {
     setExtrasClassLoader(appClassLoader)
     return getParcelableExtra(key)
-}
-
-@Suppress("DEPRECATION")
-fun Intent.getParcelableArrayExtraSafe(key: String?): Array<Parcelable>? {
-    setExtrasClassLoader(appClassLoader)
-    return getParcelableArrayExtra(key)
-}
-
-@Suppress("DEPRECATION")
-fun <T : Parcelable?> Intent.getParcelableArrayListExtraSafe(key: String?): ArrayList<T>? {
-    setExtrasClassLoader(appClassLoader)
-    return getParcelableArrayListExtra(key)
 }
 
 fun Intent.withChooser(title: CharSequence? = null, vararg initialIntents: Intent): Intent =
@@ -174,7 +110,3 @@ fun Uri.createInstallPackageIntent(): Intent =
     Intent(Intent.ACTION_INSTALL_PACKAGE)
         .setDataAndType(this, MimeType.APK.value)
         .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-fun Uri.createCaptureImage(): Intent =
-    Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        .putExtra(MediaStore.EXTRA_OUTPUT, this)

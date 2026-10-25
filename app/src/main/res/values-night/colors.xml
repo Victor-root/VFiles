@@ -17,7 +17,7 @@
 
     <color name="color_surface">@color/color_surface_dark</color>
 
-    <color name="activity_icon_tint">@color/secondary_text_default_material_dark</color>
+    <color name="activity_icon_tint">#b3ffffff</color>
 
     <color name="file_icon_light_blue">#6F9EF3</color>
     <color name="file_icon_blue">#4285F4</color>

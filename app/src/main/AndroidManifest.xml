@@ -57,21 +57,19 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/launcher_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialFiles"
+        android:theme="@style/Theme.VFiles"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
             android:name="me.zhanghai.android.files.onboarding.OnboardingActivity"
             android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.VFiles" />
+            android:label="@string/app_name" />
 
         <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
             android:exported="true"
             android:label="@string/app_name_launcher"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize"
             android:visibleToInstantApps="true"
             tools:ignore="UnusedAttribute">
@@ -211,30 +209,25 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditFtpServerActivity"
             android:label="@string/storage_edit_ftp_server_title_edit"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditSftpServerActivity"
             android:label="@string/storage_edit_sftp_server_title_edit"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.AddLanSmbServerActivity"
-            android:label="@string/storage_add_lan_smb_server_title"
-            android:theme="@style/Theme.VFiles" />
+            android:label="@string/storage_add_lan_smb_server_title" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditSmbServerActivity"
             android:label="@string/storage_edit_smb_server_title_edit"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditWebDavServerActivity"
             android:label="@string/storage_edit_webdav_server_title_edit"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
@@ -251,8 +244,7 @@
             android:name="me.zhanghai.android.files.ftpserver.FtpServerActivity"
             android:exported="true"
             android:label="@string/ftp_server_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="me.zhanghai.android.files.intent.action.MANAGE_FTP_SERVER" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -267,8 +259,7 @@
             android:name="me.zhanghai.android.files.settings.SettingsActivity"
             android:exported="true"
             android:label="@string/settings_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -278,32 +269,27 @@
         <activity
             android:name="me.zhanghai.android.files.storage.StorageListActivity"
             android:label="@string/storage_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.settings.StandardDirectoryListActivity"
             android:label="@string/settings_standard_directory_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.settings.BookmarkDirectoryListActivity"
             android:label="@string/settings_bookmark_directory_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.settings.DefaultAppsActivity"
             android:label="@string/settings_default_apps_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.about.AboutActivity"
             android:label="@string/about_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.VFiles" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.fileaction.ArchivePasswordDialogActivity"
@@ -346,7 +332,6 @@
             android:name="me.zhanghai.android.files.viewer.text.TextEditorActivity"
             android:exported="true"
             android:label="@string/text_editor_title"
-            android:theme="@style/Theme.VFiles"
             android:windowSoftInputMode="adjustResize">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -394,15 +379,6 @@
             </intent-filter>
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-        </service>
-
-        <service
-            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
-            android:enabled="false"
-            android:exported="false">
-            <meta-data
-                android:name="autoStoreLocales"
                 android:value="true" />
         </service>
 

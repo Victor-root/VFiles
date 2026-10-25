@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">غلق</string>
+    <string name="copied_to_clipboard_format">تم نسخ \"%1$s\" إلى الحافظة.</string>
     <string name="copy">نسخ</string>
     <string name="cut">قص</string>
     <string name="default_">الافتراضي</string>

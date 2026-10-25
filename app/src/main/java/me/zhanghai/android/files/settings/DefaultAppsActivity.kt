@@ -27,13 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.SingleChoiceDialog
 import me.zhanghai.android.files.util.observeAsStateCompat
 
-class DefaultAppsActivity : ComposeActivity() {
+class DefaultAppsActivity : AppActivity() {
     @Composable
     override fun Content() {
         DefaultAppsScreen()

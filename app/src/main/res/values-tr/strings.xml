@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Kapat</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" panoya kopyalandı.</string>
     <string name="copy">Kopyala</string>
     <string name="cut">Kes</string>
     <string name="default_">Varsayılan</string>

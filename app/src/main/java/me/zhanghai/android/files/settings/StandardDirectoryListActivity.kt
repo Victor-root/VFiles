@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.getExternalStorageDirectory
@@ -22,7 +22,7 @@ import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.valueCompat
 
-class StandardDirectoryListActivity : ComposeActivity() {
+class StandardDirectoryListActivity : AppActivity() {
     @Composable
     override fun Content() {
         StandardDirectoryListScreen()

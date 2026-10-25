@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Zamknij</string>
+    <string name="copied_to_clipboard_format">Skopiowano „%1$s” do schowka.</string>
     <string name="copy">Kopiuj</string>
     <string name="cut">Wytnij</string>
     <string name="default_">Domyślny</string>

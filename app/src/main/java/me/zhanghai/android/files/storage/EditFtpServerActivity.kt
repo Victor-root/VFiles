@@ -21,7 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.ftp.client.Authority
 import me.zhanghai.android.files.provider.ftp.client.Mode
 import me.zhanghai.android.files.provider.ftp.client.Protocol
@@ -36,7 +36,7 @@ import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 import java.nio.charset.Charset
 
-class EditFtpServerActivity : ComposeActivity() {
+class EditFtpServerActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

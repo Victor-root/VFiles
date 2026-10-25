@@ -51,7 +51,7 @@ import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filelist.FileItemIcon
 import me.zhanghai.android.files.filelist.formatDescription
@@ -67,7 +67,7 @@ import me.zhanghai.android.files.util.readParcelable
  * Asks what to do with a file that already exists at the destination: merge or replace it, skip
  * it, rename the new one, or cancel, optionally for all such files.
  */
-class FileJobConflictDialogActivity : ComposeActivity() {
+class FileJobConflictDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     private var isListenerNotified = false

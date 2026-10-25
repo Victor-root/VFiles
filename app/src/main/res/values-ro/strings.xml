@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Închide</string>
+    <string name="copied_to_clipboard_format">„%1$s” a fost copiat în clipboard.</string>
     <string name="copy">Copiază</string>
     <string name="cut">Decupează</string>
     <string name="default_">Implicit</string>

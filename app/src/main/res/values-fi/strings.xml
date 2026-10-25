@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Sulje</string>
+    <string name="copied_to_clipboard_format">%1$s kopioitiin leikepöydälle.</string>
     <string name="copy">Kopioi</string>
     <string name="cut">Leikkaa</string>
     <string name="default_">Oletus</string>

@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">閉じる</string>
+    <string name="copied_to_clipboard_format">「%1$s」をクリップボードにコピーしました。</string>
     <string name="copy">コピー</string>
     <string name="cut">切り取り</string>
     <string name="default_">デフォルト</string>

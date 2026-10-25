@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderableListState
@@ -45,7 +45,7 @@ import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe
 
-class StorageListActivity : ComposeActivity() {
+class StorageListActivity : AppActivity() {
     @Composable
     override fun Content() {
         StorageListScreen()

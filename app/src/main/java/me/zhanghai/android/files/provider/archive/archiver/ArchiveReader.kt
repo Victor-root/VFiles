@@ -5,11 +5,11 @@
 
 package me.zhanghai.android.files.provider.archive.archiver
 
-import androidx.preference.PreferenceManager
 import java8.nio.channels.SeekableByteChannel
 import java8.nio.charset.StandardCharsets
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.compat.PreferenceManagerCompat
 import me.zhanghai.android.files.provider.common.DelegateForceableSeekableByteChannel
 import me.zhanghai.android.files.provider.common.DelegateInputStream
 import me.zhanghai.android.files.provider.common.DelegateNonForceableSeekableByteChannel
@@ -192,7 +192,7 @@ object ArchiveReader {
             if (isRunningAsRoot) {
                 try {
                     val sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(rootContext)
+                        PreferenceManagerCompat.getDefaultSharedPreferences(rootContext)
                     val key = rootContext.getString(R.string.pref_key_archive_file_name_encoding)
                     val defaultValue = rootContext.getString(
                         R.string.pref_default_value_archive_file_name_encoding

@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Tanca</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" s\'ha copiat al porta-retalls</string>
     <string name="copy">Copia</string>
     <string name="cut">Retalla</string>
     <string name="default_">Per defecte</string>

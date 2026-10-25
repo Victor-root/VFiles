@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Đóng</string>
+    <string name="copied_to_clipboard_format">Đã sao chép \"%1$s\" vào bảng nhớ tạm.</string>
     <string name="copy">Sao chép</string>
     <string name="cut">Cắt</string>
     <string name="default_">Mặc định</string>

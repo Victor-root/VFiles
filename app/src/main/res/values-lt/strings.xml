@@ -10,6 +10,7 @@
     tools:ignore="ImpliedQuantity">
 
     <string name="close">Uždaryti</string>
+    <string name="copied_to_clipboard_format">Suvestinė „%1$s“ nukopijuota į iškarpinę.</string>
     <string name="copy">Kopijuoti</string>
     <string name="cut">Iškirpti</string>
     <string name="default_">Numatytasis</string>

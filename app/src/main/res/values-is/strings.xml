@@ -10,6 +10,7 @@
     tools:ignore="ImpliedQuantity">
 
     <string name="close">Loka</string>
+    <string name="copied_to_clipboard_format">„%1$s“ afritað á klippiborðið.</string>
     <string name="copy">Afrita</string>
     <string name="cut">Klippa</string>
     <string name="default_">Sjálfgefið</string>

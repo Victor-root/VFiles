@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Bezárás</string>
+    <string name="copied_to_clipboard_format">„%1$s” a vágólapra lett másolva.</string>
     <string name="copy">Másolás</string>
     <string name="cut">Kivágás</string>
     <string name="default_">Alapértelmezett</string>

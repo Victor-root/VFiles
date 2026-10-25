@@ -25,7 +25,7 @@ import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.archive.archiveAddPassword
 import me.zhanghai.android.files.provider.archive.archiveFile
 import me.zhanghai.android.files.ui.FormPasswordField
@@ -39,7 +39,7 @@ import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.readParcelable
 
 /** Asks for the password of an archive, and tells whether it was given. */
-class ArchivePasswordDialogActivity : ComposeActivity() {
+class ArchivePasswordDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     private var isListenerNotified = false

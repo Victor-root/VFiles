@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Lukk</string>
+    <string name="copied_to_clipboard_format">«%1$s» er kopiert til utklippstavlen.</string>
     <string name="copy">Kopiér</string>
     <string name="cut">Klipp ut</string>
     <string name="default_">Standard</string>

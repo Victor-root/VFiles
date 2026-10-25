@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Itxi</string>
+    <string name="copied_to_clipboard_format">Arbelean kopiatu da \"%1$s\".</string>
     <string name="copy">Kopiatu</string>
     <string name="cut">Moztu</string>
     <string name="default_">Lehenetsia</string>

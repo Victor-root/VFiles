@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Schließen</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" in Zwischenablage kopiert.</string>
     <string name="copy">Kopieren</string>
     <string name="cut">Ausschneiden</string>
     <string name="default_">Standard</string>

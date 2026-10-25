@@ -21,14 +21,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.asExternalStorageUri
 import me.zhanghai.android.files.provider.document.resolver.ExternalStorageProviderHacks
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 
-class AddStorageDialogActivity : ComposeActivity() {
+class AddStorageDialogActivity : AppActivity() {
     @Composable
     override fun Content() {
         AddStorageDialog(onDismissRequest = ::finish)

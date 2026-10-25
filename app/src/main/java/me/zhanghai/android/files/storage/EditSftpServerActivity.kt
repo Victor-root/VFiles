@@ -30,7 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hierynomus.sshj.common.KeyDecryptionFailedException
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.provider.sftp.client.Authentication
@@ -51,7 +51,7 @@ import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditSftpServerActivity : ComposeActivity() {
+class EditSftpServerActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

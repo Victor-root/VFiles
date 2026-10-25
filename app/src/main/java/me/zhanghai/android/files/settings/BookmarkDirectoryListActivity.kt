@@ -42,7 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.navigation.BookmarkDirectories
@@ -58,7 +58,7 @@ import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 
-class BookmarkDirectoryListActivity : ComposeActivity() {
+class BookmarkDirectoryListActivity : AppActivity() {
     @Composable
     override fun Content() {
         BookmarkDirectoryListScreen()

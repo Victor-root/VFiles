@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.app.clipboardManager
 import me.zhanghai.android.files.compat.getSystemServiceCompat
 import me.zhanghai.android.files.compat.mainExecutorCompat
@@ -51,7 +51,7 @@ import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.requestAddTileService
 import me.zhanghai.android.files.util.showToast
 
-class FtpServerActivity : ComposeActivity() {
+class FtpServerActivity : AppActivity() {
     @Composable
     override fun Content() {
         val state by FtpServerService.stateLiveData.observeAsStateCompat()
