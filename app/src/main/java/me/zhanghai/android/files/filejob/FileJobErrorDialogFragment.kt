@@ -136,7 +136,9 @@ class FileJobErrorDialogFragment : AppCompatDialogFragment() {
 
         if (binding.root.parent == null) {
             val dialog = requireDialog() as AlertDialog
-            val scrollView = dialog.requireViewByIdCompat<NestedScrollView>(R.id.scrollView)
+            val scrollView = dialog.requireViewByIdCompat<NestedScrollView>(
+                androidx.appcompat.R.id.scrollView
+            )
             val linearLayout = scrollView.getChildAt(0) as LinearLayout
             linearLayout.addView(binding.root)
         }

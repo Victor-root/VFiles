@@ -259,7 +259,9 @@ class FileJobConflictDialogFragment : AppCompatDialogFragment() {
         if (binding.root.parent == null) {
             val dialog = requireDialog() as AlertDialog
             dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-            val scrollView = dialog.requireViewByIdCompat<NestedScrollView>(R.id.scrollView)
+            val scrollView = dialog.requireViewByIdCompat<NestedScrollView>(
+                androidx.appcompat.R.id.scrollView
+            )
             val linearLayout = scrollView.getChildAt(0) as LinearLayout
             linearLayout.addView(binding.root)
         }

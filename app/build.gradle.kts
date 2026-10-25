@@ -200,6 +200,7 @@ dependencies {
     implementation(libs.bouncycastle.bcprov)
     implementation(platform(libs.coil.bom))
     implementation(libs.coil)
+    implementation(libs.coil.compose)
     implementation(libs.coil.gif)
     implementation(libs.coil.svg)
     implementation(libs.coil.video)

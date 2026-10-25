@@ -97,7 +97,6 @@ import me.zhanghai.android.files.file.isImage
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
-import me.zhanghai.android.files.fileproperties.FilePropertiesDialogFragment
 import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.NavigationFragment
@@ -1715,9 +1714,7 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
         }
     }
 
-    override fun showPropertiesDialog(file: FileItem) {
-        FilePropertiesDialogFragment.show(file, this)
-    }
+    override fun showPropertiesDialog(file: FileItem) {}
 
     override fun onFileListReachedTop(): Boolean = focusToolbar()
 
