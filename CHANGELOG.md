@@ -1,5 +1,16 @@
 # Changelog
 
+## 🚀 v1.8.4 (2026-10-25)
+
+Edge-to-edge display that works on every screen as soon as it is switched on, and no more root process left behind with Sui.
+
+### 🐛 Fixed
+- **Edge-to-edge applies right away:** switching it on or off only took effect once a screen happened to be rebuilt, leaving a header stuck in place, a header gone for good, or white status bar icons on a white background. Every screen now updates immediately.
+- **The header scrolls away on every list, tablets included:** it leaves as you scroll down and comes back as soon as you scroll up, on the home screen in landscape on tablets too. Server forms keep theirs so their Save and Cancel buttons always stay in view.
+- **Fully transparent system bars in edge-to-edge,** with status and navigation bar icons that follow what is actually behind them, so they stay readable on light and dark backgrounds.
+- **The end of a list is always reachable** in edge-to-edge, and the add button of the storage and bookmark lists no longer slips off screen.
+- **A root process piled up after each session with Sui:** when root was granted through Sui, the privileged process kept running after the app closed, one more every session. It now stops when Sui asks it to.
+
 ## 🚀 v1.8.3 (2026-10-12)
 
 Root access no longer leaves a hidden process running after each session.
