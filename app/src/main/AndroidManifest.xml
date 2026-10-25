@@ -221,7 +221,7 @@
         <activity
             android:name="me.zhanghai.android.files.storage.AddLanSmbServerActivity"
             android:label="@string/storage_add_lan_smb_server_title"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditSmbServerActivity"
