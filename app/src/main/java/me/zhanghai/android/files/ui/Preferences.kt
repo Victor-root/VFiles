@@ -22,6 +22,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
@@ -87,12 +89,14 @@ fun SwitchPreference(
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     summary: String? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    icon: Painter? = null
 ) {
     PreferenceLayout(
         title = title,
         summary = summary,
         enabled = enabled,
+        icon = icon,
         modifier = modifier.toggleable(
             value = checked,
             enabled = enabled,
@@ -265,6 +269,7 @@ private fun PreferenceLayout(
     enabled: Boolean,
     modifier: Modifier = Modifier,
     summaryMaxLines: Int = Int.MAX_VALUE,
+    icon: Painter? = null,
     trailingContent: (@Composable () -> Unit)? = null
 ) {
     Row(
@@ -274,6 +279,15 @@ private fun PreferenceLayout(
             .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        if (icon != null) {
+            Icon(
+                painter = icon,
+                contentDescription = null,
+                modifier = Modifier.alpha(if (enabled) 1f else DISABLED_ALPHA),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.width(32.dp))
+        }
         Column(
             modifier = Modifier
                 .weight(1f)
