@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.filelist
 
+import android.content.Context
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -122,13 +123,12 @@ fun FileListItem(
     ) {
         FileItemIcon(
             file = file,
-            isSelected = isSelected,
-            showsThumbnail = true,
-            onClick = onIconClick,
             modifier = Modifier.padding(
                 start = dimensionResource(R.dimen.screen_edge_margin_minus_4dp),
                 end = dimensionResource(R.dimen.content_start_from_screen_edge_margin_minus_44dp)
-            )
+            ),
+            isSelected = isSelected,
+            onClick = onIconClick
         )
         Column(modifier = Modifier.weight(1f)) {
             FileName(
@@ -204,10 +204,10 @@ fun FileGridItem(
             val iconMargin = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
             FileItemIcon(
                 file = file,
+                modifier = Modifier.padding(start = iconMargin - 4.dp),
                 isSelected = isSelected,
                 showsThumbnail = false,
-                onClick = onIconClick,
-                modifier = Modifier.padding(start = iconMargin - 4.dp)
+                onClick = onIconClick
             )
             Text(
                 text = file.name,
@@ -271,36 +271,42 @@ private fun FileName(name: String, ellipsize: TextUtils.TruncateAt, style: TextS
 private fun fileDescription(file: FileItem): String? {
     val context = LocalContext.current
     return remember(file, context) {
-        val attributes = file.attributes
-        if (attributes.isDirectory) {
-            null
-        } else {
-            val lastModificationTime = attributes.lastModifiedTime().toInstant()
-                .formatShort(context)
-            val size = attributes.fileSize.formatHumanReadable(context)
-            listOf(lastModificationTime, size)
-                .joinToString(context.getString(R.string.file_item_description_separator))
-        }
+        if (file.attributes.isDirectory) null else file.formatDescription(context)
     }
 }
 
+/** The last modification time and the size of a file. */
+fun FileItem.formatDescription(context: Context): String {
+    val lastModificationTime = attributes.lastModifiedTime().toInstant().formatShort(context)
+    val size = attributes.fileSize.formatHumanReadable(context)
+    return listOf(lastModificationTime, size)
+        .joinToString(context.getString(R.string.file_item_description_separator))
+}
+
 /**
- * The type icon of a file with its badges, which selects the file when touched. It isn't on the
- * D-pad focus path, the file is selected with a long press there.
+ * The type icon of a file, or its thumbnail, with its badges. When touched, it calls [onClick] if
+ * any, but it isn't on the D-pad focus path: files are selected with a long press there.
  */
 @Composable
-private fun FileItemIcon(
+fun FileItemIcon(
     file: FileItem,
-    isSelected: Boolean,
-    showsThumbnail: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    showsThumbnail: Boolean = true,
+    onClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = modifier
             .size(48.dp)
-            .focusProperties { canFocus = false }
-            .clickable(interactionSource = null, indication = null, onClick = onClick)
+            .then(
+                if (onClick != null) {
+                    Modifier
+                        .focusProperties { canFocus = false }
+                        .clickable(interactionSource = null, indication = null, onClick = onClick)
+                } else {
+                    Modifier
+                }
+            )
             .padding(4.dp)
     ) {
         var isThumbnailShown by remember(file) { mutableStateOf(false) }

@@ -51,13 +51,13 @@ import java8.nio.file.Path
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filejob.FileJobService
-import me.zhanghai.android.files.fileproperties.CheckboxItem
 import me.zhanghai.android.files.fileproperties.StatefulList
 import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.provider.common.PosixGroup
 import me.zhanghai.android.files.provider.common.PosixUser
 import me.zhanghai.android.files.provider.common.toByteString
+import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.observeAsStateCompat
 

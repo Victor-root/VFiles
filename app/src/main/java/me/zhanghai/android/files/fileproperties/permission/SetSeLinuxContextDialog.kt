@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filejob.FileJobService
-import me.zhanghai.android.files.fileproperties.CheckboxItem
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
+import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
 
