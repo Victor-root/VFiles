@@ -1,0 +1,51 @@
+/*
+ * Copyright (c) 2026 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
+ */
+
+package me.zhanghai.android.files.about
+
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
+import com.github.takahirom.roborazzi.captureRoboImage
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.theme.night.NightMode
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.RuleChain
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.GraphicsMode
+
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+class AboutActivityTest {
+    private val composeTestRule = createAndroidComposeRule<AboutActivity>()
+
+    @get:Rule
+    val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
+
+    @Test
+    fun showsAppInfoAndOpensLicenses() {
+        Settings.NIGHT_MODE.putValue(NightMode.OFF)
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("VFiles").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Version").assertIsDisplayed()
+        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_light.png")
+        composeTestRule.onNodeWithText("Licenses").performClick()
+        composeTestRule.onNodeWithText("Copyright 2018 Hai Zhang", substring = true)
+            .assertExists()
+        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_licenses.png")
+    }
+
+    @Test
+    fun followsNightModeSetting() {
+        Settings.NIGHT_MODE.putValue(NightMode.ON)
+        composeTestRule.waitForIdle()
+        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_dark.png")
+    }
+}

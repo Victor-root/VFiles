@@ -11,11 +11,11 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 
-lateinit var application: Application private set
+lateinit var application: Application internal set
 
 class AppProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        application = context as Application
+        application = context!!.applicationContext as Application
         appInitializers.forEach { it() }
         return true
     }
