@@ -47,5 +47,5 @@ class SmbServer(
         get() = authority.createSmbRootPath().resolve(relativePath)
 
     override fun createEditIntent(): Intent =
-        EditSmbServerActivity::class.createIntent().putArgs(EditSmbServerFragment.Args(this))
+        EditSmbServerActivity::class.createIntent().putArgs(EditSmbServerActivity.Args(this))
 }

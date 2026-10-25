@@ -48,5 +48,5 @@ class SftpServer(
         get() = authority.createSftpRootPath().resolve(relativePath)
 
     override fun createEditIntent(): Intent =
-        EditSftpServerActivity::class.createIntent().putArgs(EditSftpServerFragment.Args(this))
+        EditSftpServerActivity::class.createIntent().putArgs(EditSftpServerActivity.Args(this))
 }

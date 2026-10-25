@@ -47,5 +47,5 @@ class FtpServer(
         get() = authority.createFtpRootPath().resolve(relativePath)
 
     override fun createEditIntent(): Intent =
-        EditFtpServerActivity::class.createIntent().putArgs(EditFtpServerFragment.Args(this))
+        EditFtpServerActivity::class.createIntent().putArgs(EditFtpServerActivity.Args(this))
 }
