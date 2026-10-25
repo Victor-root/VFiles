@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.app
 
-import android.os.Build
 import android.webkit.WebView
 import jcifs.context.SingletonContext
 import me.zhanghai.android.files.BuildConfig
@@ -83,13 +82,11 @@ private fun initializeNightMode() {
 }
 
 private fun createNotificationChannels() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        notificationManager.createNotificationChannels(
-            listOf(
-                backgroundActivityStartNotificationTemplate.channelTemplate,
-                fileJobNotificationTemplate.channelTemplate,
-                ftpServerServiceNotificationTemplate.channelTemplate
-            ).map { it.create(application) }
-        )
-    }
+    notificationManager.createNotificationChannels(
+        listOf(
+            backgroundActivityStartNotificationTemplate.channelTemplate,
+            fileJobNotificationTemplate.channelTemplate,
+            ftpServerServiceNotificationTemplate.channelTemplate
+        ).map { it.create(application) }
+    )
 }

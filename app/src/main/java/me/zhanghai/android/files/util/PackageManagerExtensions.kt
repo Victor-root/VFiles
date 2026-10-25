@@ -21,7 +21,7 @@ fun PackageManager.getPermissionInfoOrNull(permissionName: String, flags: Int): 
 @OptIn(ExperimentalContracts::class)
 private inline fun <T> getPackageManagerInfoOrNull(block: () -> T): T? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return try {
         block()

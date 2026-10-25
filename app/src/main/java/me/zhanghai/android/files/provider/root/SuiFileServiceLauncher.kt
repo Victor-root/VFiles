@@ -9,12 +9,9 @@ import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.IBinder
 import android.os.Parcel
-import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.Keep
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -36,12 +33,8 @@ object SuiFileServiceLauncher {
 
     private var isSuiIntialized = false
 
-    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)
     fun isSuiAvailable(): Boolean {
         synchronized(lock) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                return false
-            }
             if (!isSuiIntialized) {
                 Sui.init(application.packageName)
                 isSuiIntialized = true
@@ -50,7 +43,6 @@ object SuiFileServiceLauncher {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     @Throws(RemoteFileSystemException::class)
     fun launchService(): IRemoteFileService {
         synchronized(lock) {
@@ -151,7 +143,6 @@ object SuiFileServiceLauncher {
 }
 
 @Keep
-@RequiresApi(Build.VERSION_CODES.M)
 class SuiFileServiceInterface : RemoteFileServiceInterface() {
     init {
         RootFileService.main()

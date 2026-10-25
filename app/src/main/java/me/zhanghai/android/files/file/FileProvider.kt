@@ -19,6 +19,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.ParcelFileDescriptor
 import android.os.Process
+import android.os.ProxyFileDescriptorCallback
 import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
@@ -36,8 +37,6 @@ import java8.nio.file.Paths
 import java8.nio.file.StandardOpenOption
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.app.storageManager
-import me.zhanghai.android.files.compat.ProxyFileDescriptorCallbackCompat
-import me.zhanghai.android.files.compat.openProxyFileDescriptorCompat
 import me.zhanghai.android.files.provider.common.InvalidFileNameException
 import me.zhanghai.android.files.provider.common.IsDirectoryException
 import me.zhanghai.android.files.provider.common.force
@@ -203,7 +202,7 @@ class FileProvider : ContentProvider() {
             throw e.toFileNotFoundException()
         }
         return try {
-            storageManager.openProxyFileDescriptorCompat(
+            storageManager.openProxyFileDescriptor(
                 modeBits, ChannelCallback(channel), callbackHandler
             )
         } catch (e: IOException) {
@@ -254,7 +253,7 @@ class FileProvider : ContentProvider() {
 
     private class ChannelCallback(
         private val channel: SeekableByteChannel
-    ) : ProxyFileDescriptorCallbackCompat() {
+    ) : ProxyFileDescriptorCallback() {
         private var offset = 0L
         private var released = false
 

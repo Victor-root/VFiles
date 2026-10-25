@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import me.zhanghai.android.files.compat.getColorCompat
@@ -59,7 +58,6 @@ class NotificationChannelTemplate(
     val lockscreenVisibility: Int? = null,
     val allowBubbles: Boolean? = null
 ) {
-    @RequiresApi(Build.VERSION_CODES.O)
     fun create(context: Context): NotificationChannel =
         NotificationChannel(id, context.getString(nameRes), importance).apply {
             descriptionRes?.let { description = context.getString(it) }

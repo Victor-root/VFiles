@@ -47,7 +47,7 @@ fun Uri.asDocumentTreeUri(): DocumentTreeUri {
 }
 
 private val Uri.isDocumentTreeUri: Boolean
-    get() = DocumentsContractCompat.isTreeUri(this)
+    get() = DocumentsContract.isTreeUri(this)
 
 fun DocumentTreeUri.buildDocumentUri(documentId: String): DocumentUri =
     DocumentsContract.buildDocumentUriUsingTree(value, documentId).asDocumentUri()

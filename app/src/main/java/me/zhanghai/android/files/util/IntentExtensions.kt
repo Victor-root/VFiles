@@ -16,7 +16,6 @@ import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.compat.DocumentsContractCompat
-import me.zhanghai.android.files.compat.removeFlagsCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.intentType
 import kotlin.reflect.KClass
@@ -34,7 +33,7 @@ fun CharSequence.createSendTextIntent(htmlText: String? = null): Intent =
         // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET is unnecessarily added by ShareCompat.IntentBuilder.
         .apply {
             @Suppress("DEPRECATION")
-            removeFlagsCompat(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+            removeFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
         }
 
 fun KClass<Intent>.createLaunchApp(packageName: String): Intent? =
@@ -155,7 +154,7 @@ fun Collection<Uri>.createSendStreamIntent(mimeTypes: Collection<MimeType>): Int
         // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET is unnecessarily added by ShareCompat.IntentBuilder.
         .apply {
             @Suppress("DEPRECATION")
-            removeFlagsCompat(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+            removeFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
         }
 
 fun Uri.createDocumentsUiViewDirectoryIntent(): Intent =

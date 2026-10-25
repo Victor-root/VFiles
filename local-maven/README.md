@@ -4,12 +4,12 @@ A small Maven repository checked into the project so the build does not rely on
 JitPack building a specific pinned commit (JitPack no longer serves an artifact
 for that dav4jvm commit, which broke the build).
 
-It is registered in `app/build.gradle`:
+It is registered in `settings.gradle.kts`:
 
-```groovy
-repositories {
-    maven { url uri("$rootDir/local-maven") }
-    // ...
+```kotlin
+maven {
+    url = uri("local-maven")
+    content { includeGroup("com.github.bitfireAT") }
 }
 ```
 
