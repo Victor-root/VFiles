@@ -5,11 +5,13 @@
 
 package me.zhanghai.android.files.provider.root
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
+import android.os.Parcel
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.Keep
 import androidx.annotation.RequiresApi
@@ -23,9 +25,11 @@ import me.zhanghai.android.files.provider.remote.IRemoteFileService
 import me.zhanghai.android.files.provider.remote.RemoteFileServiceInterface
 import me.zhanghai.android.files.provider.remote.RemoteFileSystemException
 import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuApiConstants
 import rikka.sui.Sui
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.system.exitProcess
 
 object SuiFileServiceLauncher {
     private val lock = Any()
@@ -151,5 +155,30 @@ object SuiFileServiceLauncher {
 class SuiFileServiceInterface : RemoteFileServiceInterface() {
     init {
         RootFileService.main()
+    }
+
+    // Sui only sends this transaction once the app is gone and never kills the process itself, so
+    // without handling it every app session leaves one more root process behind.
+    override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
+        // Let super call data.enforceInterface() exactly once.
+        if (super.onTransact(code, data, reply, flags)) {
+            return true
+        }
+        return if (code == TRANSACTION_destroy) {
+            destroy()
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun destroy() {
+        exitProcess(0)
+    }
+
+    companion object {
+        @Suppress("ConstPropertyName")
+        @SuppressLint("RestrictedApi")
+        private const val TRANSACTION_destroy = ShizukuApiConstants.USER_SERVICE_TRANSACTION_destroy
     }
 }
