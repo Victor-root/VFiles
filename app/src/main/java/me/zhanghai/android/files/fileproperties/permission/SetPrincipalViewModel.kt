@@ -9,13 +9,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import me.zhanghai.android.files.util.SelectionLiveData
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.valueCompat
 
 abstract class SetPrincipalViewModel(
-    private val principalListLiveData: MutableLiveData<Stateful<List<PrincipalItem>>>
+    private val principalListLiveData: MutableLiveData<Stateful<List<PrincipalItem>>>,
+    selectedId: Int
 ) : ViewModel() {
     val principalListStateful: Stateful<List<PrincipalItem>>
         get() = principalListLiveData.valueCompat
@@ -32,7 +32,13 @@ abstract class SetPrincipalViewModel(
     val filteredPrincipalListLiveData: LiveData<Stateful<List<PrincipalItem>>> =
         FilteredPrincipalListLiveData(principalListLiveData, filterLiveData)
 
-    val selectionLiveData = SelectionLiveData<Int>()
+    private val _selectionLiveData = MutableLiveData(selectedId)
+    val selectionLiveData: LiveData<Int>
+        get() = _selectionLiveData
+
+    fun select(id: Int) {
+        _selectionLiveData.value = id
+    }
 
     private class FilteredPrincipalListLiveData(
         private val principalListLiveData: LiveData<Stateful<List<PrincipalItem>>>,
