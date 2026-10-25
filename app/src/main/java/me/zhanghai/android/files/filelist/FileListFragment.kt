@@ -144,7 +144,6 @@ import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.extraPathList
 import me.zhanghai.android.files.util.fadeToVisibilityUnsafe
 import me.zhanghai.android.files.util.findCauseByClass
-import me.zhanghai.android.files.util.getColorByAttr
 import me.zhanghai.android.files.util.getDimensionDp
 import me.zhanghai.android.files.util.getQuantityString
 import me.zhanghai.android.files.util.hasSw600Dp
@@ -232,9 +231,6 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
             .also { binding = it }
             .root
 
-    // window.statusBarColor below is part of the same status-bar-color-sync subsystem documented in
-    // ui/PersistentBarLayout.kt/CoordinatorAppBarLayout.kt: not verifiable here.
-    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -385,17 +381,6 @@ class FileListFragment : Fragment(), BreadcrumbLayout.Listener, FileListAdapter.
                     }
                 }
             })
-        }
-
-        // Tablet (persistent-drawer) layout only: here the app bar lives inside a
-        // LinearLayout(fitsSystemWindows) that consumes the top inset as padding, so, unlike the
-        // phone, where the app bar draws behind a transparent status bar, the status bar area shows
-        // the (white) window background while its icons are tinted for the colored header, leaving
-        // them invisible. There is no sliding drawer to flash white here, so just paint the status
-        // bar to match the app bar; the icon tint already applied by CoordinatorAppBarLayout stays
-        // valid against it.
-        if (binding.persistentDrawerLayout != null) {
-            activity.window.statusBarColor = getColorByAttr(R.attr.colorAppBarSurface)
         }
 
         if (!viewModel.hasTrail) {

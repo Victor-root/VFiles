@@ -5,7 +5,9 @@
   ~ All Rights Reserved.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <me.zhanghai.android.files.ui.PersistentBarLayout
         android:id="@+id/persistentBarLayout"
@@ -13,19 +15,24 @@
         android:layout_width="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:layout_height="match_parent"
+        <!--
+          ~ The app bar spans the full width above the persistent drawer and the file list, and
+          ~ both of them scroll together below it, so the app bar can move away with the content
+          ~ in edge-to-edge like on every other screen.
+          -->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
             <include layout="@layout/file_list_fragment_app_bar_include" />
 
             <me.zhanghai.android.files.ui.PersistentDrawerLayout
                 android:id="@+id/persistentDrawerLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:layout_behavior="me.zhanghai.android.files.ui.FitsSystemWindowsScrollingViewBehavior">
 
                 <me.zhanghai.android.files.ui.NavigationFrameLayout
                     android:id="@+id/navigationFragment"
@@ -36,7 +43,7 @@
 
                 <include layout="@layout/file_list_fragment_content_include" />
             </me.zhanghai.android.files.ui.PersistentDrawerLayout>
-        </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <include layout="@layout/file_list_fragment_bottom_bar_include" />
 

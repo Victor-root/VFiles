@@ -14,6 +14,13 @@
         <attr name="aspectRatio" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="CoordinatorAppBarLayout">
+        <!-- Keeps the app bar in place in edge-to-edge instead of scrolling it away with the
+             content, for screens with actions pinned below the content that would otherwise end up
+             off screen while the app bar is shown. -->
+        <attr name="pinnedInEdgeToEdge" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="NavigationViewExtra">
         <attr name="itemSubtitleTextAppearance" format="reference" />
         <attr name="itemSubtitleTextColor" format="color" />

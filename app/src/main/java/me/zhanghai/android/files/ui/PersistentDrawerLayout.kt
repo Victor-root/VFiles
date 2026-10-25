@@ -44,21 +44,19 @@ class PersistentDrawerLayout @JvmOverloads constructor(
         if (!fitsSystemWindows) {
             return insets
         }
+        // The drawers sit below the app bar, which takes care of the top inset.
         for (child in children) {
             if (isDrawerView(child)) {
                 if (isLeftDrawerView(child)) {
                     child.dispatchApplyWindowInsets(
                         insets.replaceSystemWindowInsets(
-                            insets.systemWindowInsetLeft, insets.systemWindowInsetTop, 0,
-                            insets.systemWindowInsetBottom
+                            insets.systemWindowInsetLeft, 0, 0, insets.systemWindowInsetBottom
                         )
                     )
                 } else {
                     child.dispatchApplyWindowInsets(
                         insets.replaceSystemWindowInsets(
-                            0,
-                            insets.systemWindowInsetTop, insets.systemWindowInsetRight,
-                            insets.systemWindowInsetBottom
+                            0, 0, insets.systemWindowInsetRight, insets.systemWindowInsetBottom
                         )
                     )
                 }

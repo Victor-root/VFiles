@@ -9,7 +9,6 @@
 
 package me.zhanghai.android.files.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
@@ -26,10 +25,7 @@ import androidx.core.view.ScrollingView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior
-import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.layoutInNavigation
-import me.zhanghai.android.files.util.valueCompat
 
 class CoordinatorScrollingLinearLayout : LinearLayout, AttachedBehavior {
     private var bottomInsets: WindowInsets? = null
@@ -117,36 +113,6 @@ class CoordinatorScrollingLinearLayout : LinearLayout, AttachedBehavior {
         }
     }
 
-    override fun getBehavior(): CoordinatorLayout.Behavior<*> = Behavior()
-
-    private class Behavior : ScrollingViewBehavior() {
-        override fun onMeasureChild(
-            parent: CoordinatorLayout,
-            child: View,
-            parentWidthMeasureSpec: Int,
-            widthUsed: Int,
-            parentHeightMeasureSpec: Int,
-            heightUsed: Int
-        ): Boolean {
-            var parentHeightMeasureSpec = parentHeightMeasureSpec
-            @SuppressLint("RestrictedApi")
-            val parentInsets = parent.lastWindowInsets
-            // Edge-to-edge spans the whole window instead: the app bar no longer reserves the top
-            // inset (see CoordinatorAppBarLayout), so this content has to be tall enough to reach
-            // the top of the window once the app bar has scrolled away, and it draws into the
-            // navigation bar rather than stopping above it.
-            if (parentInsets != null && !Settings.EDGE_TO_EDGE.valueCompat) {
-                val parentHeightSize = (MeasureSpec.getSize(parentHeightMeasureSpec)
-                    - parentInsets.systemWindowInsetTop - parentInsets.systemWindowInsetBottom)
-                val parentHeightMode = MeasureSpec.getMode(parentHeightMeasureSpec)
-                parentHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    parentHeightSize, parentHeightMode
-                )
-            }
-            return super.onMeasureChild(
-                parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec,
-                heightUsed
-            )
-        }
-    }
+    override fun getBehavior(): CoordinatorLayout.Behavior<*> =
+        FitsSystemWindowsScrollingViewBehavior()
 }
