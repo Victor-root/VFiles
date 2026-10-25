@@ -80,7 +80,6 @@ licensesdialog = { module = "de.psdev.licensesdialog:licensesdialog", version = 
 materialshadowninepatch = { module = "com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch", version = "1.0.0" }
 advrecyclerview = { module = "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview", version = "1.0.0" }
 mina-core = { module = "org.apache.mina:mina-core", version = "2.2.10" }
-preferencex = { module = "com.takisoft.preferencex:preferencex", version = "1.1.0" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version = "13.1.5" }
 simplemenu-preference = { module = "dev.rikka.rikkax.preference:simplemenu-preference", version = "1.0.3" }
 slf4j-android = { module = "org.slf4j:slf4j-android", version = "1.7.36" }

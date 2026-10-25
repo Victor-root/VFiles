@@ -8,7 +8,6 @@ package me.zhanghai.android.files.settings
 import android.icu.text.ListFormatter
 import android.os.Build
 import android.text.TextUtils
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -30,10 +29,7 @@ import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.ComposeActivity
 import me.zhanghai.android.files.filejob.FileJobService
-import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
-import me.zhanghai.android.files.filelist.toUserFriendlyString
-import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
 import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
 import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.storage.StorageListActivity
@@ -44,7 +40,6 @@ import me.zhanghai.android.files.ui.DialogListPreference
 import me.zhanghai.android.files.ui.DropdownListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
-import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe
@@ -82,7 +77,10 @@ private fun SettingsScreen() {
             )
             FileNameEllipsizePreference()
             PreferenceCategory(stringResource(R.string.settings_behavior_title))
-            DefaultDirectoryPreference()
+            PathPreference(
+                Settings.FILE_LIST_DEFAULT_DIRECTORY,
+                stringResource(R.string.settings_default_directory_title)
+            )
             StoragesPreference()
             StandardDirectoriesPreference()
             BookmarkDirectoriesPreference()
@@ -103,21 +101,6 @@ private fun SettingsScreen() {
             )
         }
     }
-}
-
-@Composable
-private fun SettingSwitchPreference(
-    setting: SettingLiveData<Boolean>,
-    title: String,
-    summary: String? = null
-) {
-    val checked by setting.observeAsStateCompat()
-    SwitchPreference(
-        title = title,
-        checked = checked,
-        onCheckedChange = { setting.putValue(it) },
-        summary = summary
-    )
 }
 
 @Composable
@@ -143,23 +126,6 @@ private fun FileNameEllipsizePreference() {
         entryLabel = { entries[it.ordinal] },
         value = ellipsize,
         onValueChange = { Settings.FILE_NAME_ELLIPSIZE.putValue(it) }
-    )
-}
-
-@Composable
-private fun DefaultDirectoryPreference() {
-    val context = LocalContext.current
-    val path by Settings.FILE_LIST_DEFAULT_DIRECTORY.observeAsStateCompat()
-    val navigationRoots by NavigationRootMapLiveData.observeAsStateCompat()
-    val launcher = rememberLauncherForActivityResult(FileListActivity.OpenDirectoryContract()) {
-        if (it != null) {
-            Settings.FILE_LIST_DEFAULT_DIRECTORY.putValue(it)
-        }
-    }
-    Preference(
-        title = stringResource(R.string.settings_default_directory_title),
-        summary = navigationRoots[path]?.getName(context) ?: path.toUserFriendlyString(),
-        onClick = { launcher.launch(path) }
     )
 }
 
