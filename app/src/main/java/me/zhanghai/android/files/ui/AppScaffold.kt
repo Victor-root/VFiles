@@ -93,6 +93,7 @@ fun AppTopAppBar(
     subtitle: String? = null,
     navigationIcon: @Composable () -> Unit = { NavigateUpButton() },
     actions: @Composable RowScope.() -> Unit = {},
+    colors: TopAppBarColors = appTopAppBarColors(),
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     TopAppBar(
@@ -114,7 +115,7 @@ fun AppTopAppBar(
         modifier = modifier,
         navigationIcon = navigationIcon,
         actions = actions,
-        colors = appTopAppBarColors(),
+        colors = colors,
         scrollBehavior = scrollBehavior
     )
 }

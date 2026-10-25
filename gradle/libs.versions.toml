@@ -80,7 +80,6 @@ licensesdialog = { module = "de.psdev.licensesdialog:licensesdialog", version = 
 materialshadowninepatch = { module = "com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch", version = "1.0.0" }
 advrecyclerview = { module = "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview", version = "1.0.0" }
 mina-core = { module = "org.apache.mina:mina-core", version = "2.2.10" }
-photoview = { module = "com.github.chrisbanes:PhotoView", version = "2.3.0" }
 preferencex = { module = "com.takisoft.preferencex:preferencex", version = "1.1.0" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version = "13.1.5" }
 simplemenu-preference = { module = "dev.rikka.rikkax.preference:simplemenu-preference", version = "1.0.3" }
@@ -90,13 +89,12 @@ slf4j-android = { module = "org.slf4j:slf4j-android", version = "1.7.36" }
 smbj = { module = "com.hierynomus:smbj", version = "0.11.5" }
 speed-dial = { module = "com.leinardi.android:speed-dial", version = "3.3.0" }
 sshj = { module = "com.hierynomus:sshj", version = "0.41.2" }
-subsampling-scale-image-view = { module = "com.davemorrissey.labs:subsampling-scale-image-view-androidx", version = "3.10.0" }
+telephoto-zoomable-image-coil = { module = "me.saket.telephoto:zoomable-image-coil3", version = "0.19.0" }
 zhanghai-appiconloader = { module = "me.zhanghai.android.appiconloader:appiconloader", version = "1.5.0" }
 zhanghai-foregroundcompat = { module = "me.zhanghai.android.foregroundcompat:library", version = "1.0.2" }
 zhanghai-libarchive = { module = "me.zhanghai.android.libarchive:library", version = "1.1.7" }
 zhanghai-libselinux = { module = "me.zhanghai.android.libselinux:library", version = "2.1.1" }
 zhanghai-retrofile = { module = "me.zhanghai.android.retrofile:library", version = "1.2.0" }
-zhanghai-systemuihelper = { module = "me.zhanghai.android.systemuihelper:library", version = "1.0.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

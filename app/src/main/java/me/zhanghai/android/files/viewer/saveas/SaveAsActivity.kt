@@ -7,10 +7,10 @@ package me.zhanghai.android.files.viewer.saveas
 
 import android.os.Bundle
 import android.os.Environment
+import androidx.activity.ComponentActivity
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.filejob.FileJobService
@@ -18,7 +18,7 @@ import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.util.saveAsPath
 import me.zhanghai.android.files.util.showToast
 
-class SaveAsActivity : AppActivity() {
+class SaveAsActivity : ComponentActivity() {
     private val createFileLauncher =
         registerForActivityResult(FileListActivity.CreateFileContract(), ::onCreateFileResult)
 

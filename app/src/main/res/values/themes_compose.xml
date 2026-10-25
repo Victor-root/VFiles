@@ -10,6 +10,11 @@
     <!-- Only configures the window, the content is themed by AppTheme. -->
     <style name="Theme.VFiles" parent="android:Theme.Material.Light.NoActionBar" />
 
+    <!-- For screens that are always dark, like the image viewer. -->
+    <style name="Theme.VFiles.Immersive" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
     <style name="Theme.VFiles.Translucent">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

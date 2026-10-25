@@ -6,7 +6,8 @@
 package me.zhanghai.android.files.viewer.text
 
 import android.content.Context
-import android.os.Parcelable
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.ui.text.TextRange
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import java8.nio.file.Path
@@ -38,6 +39,11 @@ import java.nio.charset.StandardCharsets
 class TextEditorViewModel(file: Path) : ViewModel() {
     private val _file = MutableStateFlow(file)
     val file = _file.asStateFlow()
+
+    // Kept here instead of the saved instance state, which would be too large for long texts.
+    val textFieldState = TextFieldState()
+
+    val isTextChanged = MutableStateFlow(false)
 
     private val _bytesState = MutableStateFlow<DataState<ByteArray>>(DataState.Loading())
 
@@ -110,6 +116,9 @@ class TextEditorViewModel(file: Path) : ViewModel() {
                                 }
                                 currentCoroutineContext().ensureActive()
                                 _textState.value = DataState.Success(text)
+                                if (!isTextChanged.value) {
+                                    setText(text)
+                                }
                             } catch (e: CancellationException) {
                                 e.printStackTrace()
                             } catch (e: Exception) {
@@ -122,8 +131,6 @@ class TextEditorViewModel(file: Path) : ViewModel() {
                 }
         }
     }
-
-    val isTextChanged = MutableStateFlow(false)
 
     private val _writeFileState =
         MutableStateFlow<ActionState<Pair<Path, String>, Unit>>(ActionState.Ready())
@@ -161,16 +168,14 @@ class TextEditorViewModel(file: Path) : ViewModel() {
         }
     }
 
-    private var editTextSavedState: Parcelable? = null
-
-    fun setEditTextSavedState(editTextSavedState: Parcelable?) {
-        this.editTextSavedState = editTextSavedState
-    }
-
-    fun removeEditTextSavedState(): Parcelable? {
-        val savedState = editTextSavedState
-        editTextSavedState = null
-        return savedState
+    // Replaces the text unless it's the same, so that the cursor stays in place after saving.
+    private fun setText(text: String) {
+        if (!textFieldState.text.contentEquals(text)) {
+            textFieldState.edit {
+                replace(0, length, text)
+                selection = TextRange.Zero
+            }
+        }
     }
 
     companion object {

@@ -319,7 +319,7 @@
             android:autoRemoveFromRecents="true"
             android:exported="true"
             android:label="@string/save_as_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent">
+            android:theme="@style/Theme.VFiles.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -338,7 +338,8 @@
             android:name="me.zhanghai.android.files.viewer.text.TextEditorActivity"
             android:exported="true"
             android:label="@string/text_editor_title"
-            android:theme="@style/Theme.MaterialFiles">
+            android:theme="@style/Theme.VFiles"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -358,7 +359,7 @@
             android:name="me.zhanghai.android.files.viewer.image.ImageViewerActivity"
             android:exported="true"
             android:label="@string/image_viewer_title"
-            android:theme="@style/Theme.MaterialFiles.Immersive">
+            android:theme="@style/Theme.VFiles.Immersive">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
