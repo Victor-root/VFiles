@@ -607,7 +607,6 @@
     <string name="settings_locale_title">Език</string>
     <string name="settings_theme_color_title">Цвят на темата</string>
     <string name="settings_theme_color_summary">Цвят, който се ползва най-често в приложението</string>
-    <string name="settings_material_design_3_title">Материален дизайн 3</string>
     <string name="settings_night_mode_title">Нощен режим</string>
     <string-array name="settings_night_mode_entries">
         <item>Спрямо системата</item>

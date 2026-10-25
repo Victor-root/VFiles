@@ -8,9 +8,9 @@ package me.zhanghai.android.files.about
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
-import com.github.takahirom.roborazzi.captureRoboImage
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
+import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.theme.night.NightMode
@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.GraphicsMode
 
+@OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class AboutActivityTest {
@@ -35,17 +36,17 @@ class AboutActivityTest {
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithText("VFiles").assertIsDisplayed()
         composeTestRule.onNodeWithText("Version").assertIsDisplayed()
-        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_light.png")
+        captureScreenRoboImage("build/screenshots/about_light.png")
         composeTestRule.onNodeWithText("Licenses").performClick()
         composeTestRule.onNodeWithText("Copyright 2018 Hai Zhang", substring = true)
             .assertExists()
-        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_licenses.png")
+        captureScreenRoboImage("build/screenshots/about_licenses.png")
     }
 
     @Test
     fun followsNightModeSetting() {
         Settings.NIGHT_MODE.putValue(NightMode.ON)
         composeTestRule.waitForIdle()
-        composeTestRule.onRoot().captureRoboImage("build/screenshots/about_dark.png")
+        captureScreenRoboImage("build/screenshots/about_dark.png")
     }
 }

@@ -622,7 +622,6 @@
     <string name="settings_locale_title">Språk</string>
     <string name="settings_theme_color_title">Temafarge</string>
     <string name="settings_theme_color_summary">Den mest brukte fargen i appen</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Nattmodus</string>
     <string-array name="settings_night_mode_entries">
         <item>Følg systemet</item>

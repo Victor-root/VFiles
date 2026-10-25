@@ -38,6 +38,8 @@ object NightModeHelper {
                     activities -= activity as? AppCompatActivity ?: return
                 }
             })
+        // The settings screen is in Compose and doesn't know about the View-based activities.
+        Settings.NIGHT_MODE.observeForever { sync() }
     }
 
     fun apply(activity: AppCompatActivity) {

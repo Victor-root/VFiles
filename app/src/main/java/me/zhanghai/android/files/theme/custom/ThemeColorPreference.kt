@@ -6,122 +6,65 @@
 package me.zhanghai.android.files.theme.custom
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.os.Build
-import android.util.AttributeSet
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.StyleRes
-import com.takisoft.preferencex.PreferenceFragmentCompat
-import me.zhanghai.android.files.colorpicker.BaseColorPreference
-import me.zhanghai.android.files.colorpicker.ColorPreferenceDialogFragment
-import me.zhanghai.android.files.compat.getColorCompat
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
+import me.zhanghai.android.files.R
+import me.zhanghai.android.files.colorpicker.ColorPickerDialog
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.ui.Preference
+import me.zhanghai.android.files.util.observeAsStateCompat
 
-class ThemeColorPreference : BaseColorPreference {
-    // The order colors are shown in the picker: the "dynamic" (wallpaper) color first, then the
-    // fixed colors. The dynamic color only makes sense on Android 12+, so it is omitted below that.
-    // This display order is intentionally decoupled from ThemeColor's ordinals, which is what gets
-    // persisted, so reordering the picker never changes a saved value.
-    private val entryThemeColors: List<ThemeColor> = buildList {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            add(ThemeColor.DYNAMIC)
-        }
-        addAll(ThemeColor.entries.filter { it != ThemeColor.DYNAMIC })
-    }
-
-    private lateinit var _stringValue: String
-    var stringValue: String
-        get() = _stringValue
-        set(value) {
-            _stringValue = value
-            persistString(value)
-            notifyChanged()
-        }
-
-    // We can't use lateinit for Int.
-    private var initialValue: Int? = null
-    override var value: Int
-        // Deliberately only bind for the initial value, because we are going to restart the
-        // activity upon change and we want to let the activity animation have the correct visual
-        // appearance.
-        @ColorInt
-        get() {
-            var initialValue = initialValue
-            if (initialValue == null) {
-                initialValue = stringValue.toThemeColor().displayColor()
-                this.initialValue = initialValue
-            }
-            return initialValue
-        }
-        set(value) {
-            val index = entryValues.indexOf(value)
-            val themeColor = if (index != -1) entryThemeColors[index] else ThemeColor.entries[0]
-            stringValue = themeColor.ordinal.toString()
-        }
-
-    private lateinit var defaultStringValue: String
-    override val defaultValue: Int
-        @ColorInt
-        get() = defaultStringValue.toThemeColor().displayColor()
-
-    override var entryValues: IntArray
-        private set
-
-    // On Android 12+ the first entry is ThemeColor.DYNAMIC, shown apart in the picker.
-    @get:ColorInt
-    override val leadingDynamicColor: Int?
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ThemeColor.DYNAMIC.displayColor()
-        } else {
-            null
-        }
-
-    private fun String.toThemeColor(): ThemeColor =
-        ThemeColor.entries.getOrElse(toInt()) { ThemeColor.entries[0] }
-
-    // The swatch color shown for a theme color. The "wallpaper" (dynamic) entry reflects the real
-    // wallpaper color instead of the system accent, so it stays correct on OEM skins whose accent
-    // does not follow the wallpaper; it falls back to the resource (system accent) when the
-    // wallpaper color can't be read.
-    @ColorInt
-    private fun ThemeColor.displayColor(): Int =
-        if (this == ThemeColor.DYNAMIC) {
-            context.wallpaperAccentColor() ?: context.getColorCompat(resourceId)
-        } else {
-            context.getColorCompat(resourceId)
-        }
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet?, @AttrRes defStyleAttr: Int) : super(
-        context, attrs, defStyleAttr
+@Composable
+fun ThemeColorPreference() {
+    val context = LocalContext.current
+    val title = stringResource(R.string.settings_theme_color_title)
+    val themeColor by Settings.THEME_COLOR.observeAsStateCompat()
+    var isDialogShown by rememberSaveable { mutableStateOf(false) }
+    Preference(
+        title = title,
+        summary = stringResource(R.string.settings_theme_color_summary),
+        onClick = { isDialogShown = true }
     )
-
-    constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        @AttrRes defStyleAttr: Int,
-        @StyleRes defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
-
-    init {
-        entryValues = entryThemeColors.map { it.displayColor() }.toIntArray()
-    }
-
-    override fun onGetDefaultValue(a: TypedArray, index: Int): Any? =
-        a.getString(index).also { defaultStringValue = it!! }
-
-    override fun onSetInitialValue(defaultValue: Any?) {
-        stringValue = getPersistedString(defaultValue as String?)
-    }
-
-    companion object {
-        init {
-            PreferenceFragmentCompat.registerPreferenceFragment(
-                ThemeColorPreference::class.java, ColorPreferenceDialogFragment::class.java
-            )
+    if (isDialogShown) {
+        // The dynamic (wallpaper) color first, and only on Android 12+ where it makes sense. This
+        // order is independent of the persisted ordinals.
+        val themeColors = remember {
+            buildList {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    add(ThemeColor.DYNAMIC)
+                }
+                addAll(ThemeColor.entries.filter { it != ThemeColor.DYNAMIC })
+            }
         }
+        val colors = remember(context) { themeColors.map { it.displayColor(context) } }
+        val defaultThemeColor = remember(context) {
+            ThemeColor.entries[context.getString(R.string.pref_default_value_theme_color).toInt()]
+        }
+        ColorPickerDialog(
+            title = title,
+            colors = colors,
+            hasLeadingDynamicColor = themeColors.first() == ThemeColor.DYNAMIC,
+            selectedIndex = themeColors.indexOf(themeColor),
+            defaultIndex = themeColors.indexOf(defaultThemeColor),
+            onColorSelected = { Settings.THEME_COLOR.putValue(themeColors[it]) },
+            onDismissRequest = { isDialogShown = false }
+        )
     }
 }
+
+// The wallpaper color is the real one instead of the system accent, which doesn't follow the
+// wallpaper on some OEM skins.
+private fun ThemeColor.displayColor(context: Context): Color =
+    Color(
+        (if (this == ThemeColor.DYNAMIC) context.wallpaperAccentColor() else null)
+            ?: ContextCompat.getColor(context, resourceId)
+    )

@@ -580,7 +580,6 @@
     <string name="settings_locale_title">Idioma</string>
     <string name="settings_theme_color_title">Cor do tema</string>
     <string name="settings_theme_color_summary">Cor que aparece com mais frequência no aplicativo</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Modo noturno</string>
     <string-array name="settings_night_mode_entries">
         <item>Seguir o sistema</item>

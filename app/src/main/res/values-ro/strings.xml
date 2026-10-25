@@ -561,7 +561,6 @@
     <string name="settings_locale_title">Limbă</string>
     <string name="settings_theme_color_title">Culoarea temei</string>
     <string name="settings_theme_color_summary">Culoarea ce apare cel mai frecvent în aplicație</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Mod de noapte</string>
     <string-array name="settings_night_mode_entries">
         <item>Urmează sistemul</item>
