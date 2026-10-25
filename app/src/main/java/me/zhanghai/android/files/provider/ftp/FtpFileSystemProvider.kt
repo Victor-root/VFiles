@@ -5,7 +5,7 @@
 
 package me.zhanghai.android.files.provider.ftp
 
-import android.net.Uri
+import androidx.core.net.toUri
 import java8.nio.channels.FileChannel
 import java8.nio.channels.SeekableByteChannel
 import java8.nio.file.AccessMode
@@ -111,7 +111,7 @@ object FtpFileSystemProvider : FileSystemProvider(), PathObservableProvider, Sea
             val protocol = Protocol.fromScheme(scheme)
             val port = if (port != -1) port else protocol.defaultPort
             val username = userInfo.orEmpty()
-            val queryUri = decodedQueryByteString?.toString()?.let { Uri.parse(it) }
+            val queryUri = decodedQueryByteString?.toString()?.toUri()
             val mode = queryUri?.getQueryParameter(FtpPath.QUERY_PARAMETER_MODE)
                 ?.let { mode -> Mode.entries.first { it.name.equals(mode, true) } }
                 ?: Authority.DEFAULT_MODE

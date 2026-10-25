@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">סגירה</string>
     <string name="copied_to_clipboard_format">\"%1$s\" הועתק ללוח.</string>
     <string name="copy">העתקה</string>
@@ -254,7 +253,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">שגיאה בעת שיחזור הקשר SELinux עבור “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">שגיאה במהלך הכתיבה</string>
     <string name="file_job_write_error_message_format">שגיאה בעת כתיבת “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">אירעה שגיאה בקבלת מידע אודות “%1$s”.</string>
     <string name="file_job_remount_format">הצבה מחדש של “%1$s” כקריאה-כתיבה</string>
     <string name="file_job_remount_loading_format">מציב מחדשאת “%1$s” כקריאה-כתיבה…</string>
     <string name="file_job_remount_success_format">“%1$s” הוצב מחדש כקריאה-כתיבה</string>
@@ -394,7 +392,6 @@
     <string name="file_properties_basic_parent_directory">תיקיית אב</string>
     <string name="file_properties_basic_archive_file">קובץ ארכיון</string>
     <string name="file_properties_basic_archive_entry">ארכיון ריק</string>
-    <string name="file_properties_basic_free_space">שטח פנוי</string>
     <string name="file_properties_permission">הרשאות</string>
     <string name="file_properties_permission_owner">בעלים</string>
     <string name="file_properties_permission_group">קבוצה</string>
@@ -701,7 +698,6 @@
     <string name="settings_default_directory_title">תיקיית ברירת מחדל</string>
     <string name="settings_standard_directories_title">תיקיות סטנדרטיות</string>
     <string name="settings_standard_directories_summary_empty">תיקיות סטנדרטיות לא מופעל</string>
-    <string name="settings_bookmark_directory_screenshots">צילומי מסך</string>
     <string name="settings_bookmark_directories_title">תיקיות סימניות</string>
     <string name="settings_bookmark_directories_summary_empty">אין תיקיות סימניות</string>
     <string name="settings_root_strategy_title">מצב גישת שורש</string>
@@ -731,11 +727,9 @@
     <string name="about_version_title">גירסה</string>
     <string name="about_github_title">הצגה ב-GitHub</string>
     <string name="about_licenses_title">רשיונות</string>
-    <string name="about_privacy_policy_title">מדיניות פרטיות</string>
     <string name="about_author_title">יוצר</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">לעקוב ב-GitHub</string>
-    <string name="about_author_twitter_title">לעקוב בטוויטר</string>
     <string name="app_name_launcher">קבצים</string>
     <string name="about_fork_subtitle">מקור: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">בהתאם לטפט</string>

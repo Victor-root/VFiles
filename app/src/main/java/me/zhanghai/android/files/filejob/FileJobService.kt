@@ -73,17 +73,27 @@ class FileJobService : Service() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        instance = null
-
+    private fun cancelAllJobs() {
         synchronized(runningJobs) {
             while (runningJobs.isNotEmpty()) {
                 runningJobs.removeFirst().value.cancel(true)
             }
             updateWakeWifiLockLocked()
         }
+    }
+
+    // Called when data sync foreground services have run for their daily time limit.
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        cancelAllJobs()
+        stopSelf()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        instance = null
+
+        cancelAllJobs()
     }
 
     // Synchronize on runningJobs to avoid the potential race condition that the lock is

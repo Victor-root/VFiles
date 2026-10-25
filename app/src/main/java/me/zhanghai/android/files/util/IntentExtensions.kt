@@ -10,6 +10,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
 import androidx.core.app.ShareCompat
+import androidx.core.net.toUri
 import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.compat.DocumentsContractCompat
@@ -22,7 +23,7 @@ fun <T : Context> KClass<T>.createIntent(): Intent = Intent(application, java)
 // @see com.android.documentsui.inspector.InspectorController.createGeoIntent
 // @see https://developer.android.com/guide/components/intents-common.html#Maps
 fun KClass<Intent>.createViewLocation(latitude: Float, longitude: Float, label: String): Intent =
-    Uri.parse("geo:0,0?q=$latitude,$longitude(${Uri.encode(label)})").createViewIntent()
+    "geo:0,0?q=$latitude,$longitude(${Uri.encode(label)})".toUri().createViewIntent()
 
 // Generic: no Class<T> available at these call sites for the API-33+ typed replacements.
 @Suppress("DEPRECATION")

@@ -23,9 +23,9 @@ android {
     defaultConfig {
         applicationId = "fr.vroot.vfiles"
         minSdk = 26
-        // Not supporting foreground service timeout yet.
+        // Android 17 needs the local network permission for LAN servers and the FTP server.
         //noinspection OldTargetApi
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 45
         versionName = "2.0.0"
         resValue("string", "app_version", "$versionName ($versionCode)")
@@ -216,8 +216,6 @@ dependencies {
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)
     implementation(libs.shizuku.api)
-    // Also a dependency of jCIFS-NG.
-    implementation(libs.slf4j.android)
     implementation(libs.smbj) {
         // Use the JDK 1.5 to 1.8 flavor of Bouncy Castle like the rest of the app, so that there's
         // only one copy of it.

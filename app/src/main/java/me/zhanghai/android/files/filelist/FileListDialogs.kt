@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.filelist
 
-import android.net.Uri
 import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Row
@@ -29,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import kotlinx.parcelize.Parcelize
@@ -345,7 +345,7 @@ private fun NavigateToPathDialog(
 // Accepts a URI, also in decoded form, or an absolute local path.
 private fun String.toPathOrNull(): Path? {
     val uri = URI::class.createOrLog(this)
-        ?: Uri.parse(this).let {
+        ?: toUri().let {
             URI::class.createOrLog(
                 it.scheme, it.userInfo, it.host, it.port, it.path, it.query, it.fragment
             )

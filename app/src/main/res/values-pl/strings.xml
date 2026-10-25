@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Zamknij</string>
     <string name="copied_to_clipboard_format">Skopiowano „%1$s” do schowka.</string>
     <string name="copy">Kopiuj</string>
@@ -254,7 +253,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Wystąpił błąd podczas przywracania kontekstu SELinux dla „%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Błąd podczas zapisu</string>
     <string name="file_job_write_error_message_format">Wystąpił błąd podczas zapisu „%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Wystąpił błąd podczas pobierania informacji o „%1$s”.</string>
     <string name="file_job_remount_format">Zamontuj ponownie „%1$s” z uprawnieniem do odczytu i zapisu</string>
     <string name="file_job_remount_loading_format">Ponowne montowanie „%1$s” z uprawnieniem do odczytu i zapisu</string>
     <string name="file_job_remount_success_format">„%1$s” został zamontowany ponownie z uprawnieniem do odczytu i zapisu</string>
@@ -394,7 +392,6 @@
     <string name="file_properties_basic_parent_directory">Katalog nadrzędny</string>
     <string name="file_properties_basic_archive_file">Zarchiwizuj plik</string>
     <string name="file_properties_basic_archive_entry">Wpis archiwum</string>
-    <string name="file_properties_basic_free_space">Wolna przestrzeń</string>
     <string name="file_properties_permission">Uprawnienia</string>
     <string name="file_properties_permission_owner">Właściciel</string>
     <string name="file_properties_permission_group">Grupa</string>
@@ -701,7 +698,6 @@
     <string name="settings_default_directory_title">Domyślny katalog</string>
     <string name="settings_standard_directories_title">Standardowe katalogi</string>
     <string name="settings_standard_directories_summary_empty">Nie włączono żadnych standardowych katalogów</string>
-    <string name="settings_bookmark_directory_screenshots">Zrzuty ekranu</string>
     <string name="settings_bookmark_directories_title">Katalogi dodane do zakładek</string>
     <string name="settings_bookmark_directories_summary_empty">Brak katalogów dodanych do zakładek</string>
     <string name="settings_root_strategy_title">Tryb dostępu do roota</string>
@@ -731,11 +727,9 @@
     <string name="about_version_title">Wersja</string>
     <string name="about_github_title">Zobacz na GitHubie</string>
     <string name="about_licenses_title">Licencje</string>
-    <string name="about_privacy_policy_title">Polityka prywatności</string>
     <string name="about_author_title">Autor</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Obserwuj na GitHubie</string>
-    <string name="about_author_twitter_title">Obserwuj na Twitterze</string>
     <string name="app_name_launcher">Pliki</string>
     <string name="about_fork_subtitle">Oryginał: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Na podstawie tapety</string>

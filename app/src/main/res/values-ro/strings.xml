@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Închide</string>
     <string name="copied_to_clipboard_format">„%1$s” a fost copiat în clipboard.</string>
     <string name="copy">Copiază</string>
@@ -233,7 +232,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">A apărut o eroare în timpul schimbării contextului SELinux la \"%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Eroare în timpul scrierii</string>
     <string name="file_job_write_error_message_format">A apărut o eroare în timpul scrierii “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">A apărut o eroare în timpul obținerii informațiilor despre \"%1$s\".</string>
     <string name="file_job_remount_format">Remontează \"%1$s\" cu permisiuni de citire și scriere</string>
     <string name="file_job_remount_loading_format">Se remontează  \"%1$s\" cu permisiuni de citire și scriere…</string>
     <string name="file_job_remount_success_format">\"%1$s\" a fost remontat cu permisiuni de citire și scriere</string>
@@ -351,7 +349,6 @@
     <string name="file_properties_basic_parent_directory">Dosar părinte</string>
     <string name="file_properties_basic_archive_file">Arhivează fișierul</string>
     <string name="file_properties_basic_archive_entry">Articol din arhivă</string>
-    <string name="file_properties_basic_free_space">Spațiu liber</string>
     <string name="file_properties_image">Imagine</string>
     <string name="file_properties_media_dimensions">Dimensiuni</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -580,7 +577,6 @@
     <string name="settings_default_directory_title">Dosar implicit</string>
     <string name="settings_standard_directories_title">Dosare standard</string>
     <string name="settings_standard_directories_summary_empty">Dosarele standard nu sunt pornite</string>
-    <string name="settings_bookmark_directory_screenshots">Captură de ecran</string>
     <string name="settings_bookmark_directories_title">Dosare cu marcaje</string>
     <string name="settings_bookmark_directories_summary_empty">Nu există dosare cu marcaje</string>
     <string name="settings_root_strategy_title">Mod de acces root</string>
@@ -608,11 +604,9 @@
     <string name="about_version_title">Versiune</string>
     <string name="about_github_title">Vizualizează pe GitHub</string>
     <string name="about_licenses_title">Licențe</string>
-    <string name="about_privacy_policy_title">Politică de Confidențialitate</string>
     <string name="about_author_title">Autor</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Urmărește pe GitHub</string>
-    <string name="about_author_twitter_title">Urmărește pe Twitter</string>
     <string name="app_name_launcher">Fișiere</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">În funcție de imaginea de fundal</string>

@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Zavřít</string>
     <string name="copied_to_clipboard_format">Položka %1$s byla zkopírována do schránky.</string>
     <string name="copy">Kopírovat</string>
@@ -254,7 +253,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Nastala chyba při obnově kontextu SELinuxu pro \"%1$s\".\n%2$s</string>
     <string name="file_job_write_error_title">Chyba při zapisování</string>
     <string name="file_job_write_error_message_format">Nastala chyba při zapisování \"%1$s\".\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Nastala chyba při získávání informací o \"%1$s\".</string>
     <string name="file_job_remount_format">Nastavit \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_loading_format">Nastavování \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_success_format">\"%1$s\" bylo nastaveno jako čtení-zápis</string>
@@ -380,7 +378,6 @@
     <string name="file_properties_basic_parent_directory">Mateřská složka</string>
     <string name="file_properties_basic_archive_file">Archivovaný soubor</string>
     <string name="file_properties_basic_archive_entry">Archivovaná položka</string>
-    <string name="file_properties_basic_free_space">Volné místo</string>
     <string name="file_properties_permission">Oprávnění</string>
     <string name="file_properties_permission_owner">Vlastník</string>
     <string name="file_properties_permission_group">Skupina</string>
@@ -673,7 +670,6 @@
     <string name="settings_default_directory_title">Výchozí složka</string>
     <string name="settings_standard_directories_title">Standartní složky</string>
     <string name="settings_standard_directories_summary_empty">Nejsou povoleny žádné standartní složky</string>
-    <string name="settings_bookmark_directory_screenshots">Snímky obrazovky</string>
     <string name="settings_bookmark_directories_title">Založené složky</string>
     <string name="settings_bookmark_directories_summary_empty">Žádné založené složky</string>
     <string name="settings_root_strategy_title">Režim přístupu root</string>
@@ -703,11 +699,9 @@
     <string name="about_version_title">Verze</string>
     <string name="about_github_title">Podívat se na GitHubu</string>
     <string name="about_licenses_title">Licence</string>
-    <string name="about_privacy_policy_title">Zásady ochrany soukromí</string>
     <string name="about_author_title">Autor</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sledovat na GitHubu</string>
-    <string name="about_author_twitter_title">Sledovat na Twitteru</string>
     <string name="app_name_launcher">Soubory</string>
     <string name="about_fork_subtitle">Originál: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Podle tapety</string>

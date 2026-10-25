@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Parcel
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import kotlinx.parcelize.Parceler
 import me.zhanghai.android.files.hiddenapi.RestrictedHiddenApi
 
@@ -38,7 +39,7 @@ object StableUriParceler : Parceler<Uri?> {
         return if (uriString.startsWith(Uri::class.java.name)) {
             readUri(parcel)
         } else {
-            Uri.parse(uriString)
+            uriString.toUri()
         }
     }
 

@@ -163,6 +163,9 @@ class FileJobConflictDialogActivity : AppActivity() {
                                 state = nameState,
                                 modifier = it.fillMaxWidth(),
                                 lineLimits = TextFieldLineLimits.SingleLine,
+                                placeholder = {
+                                    Text(stringResource(R.string.file_job_conflict_name_hint))
+                                },
                                 trailingIcon = {
                                     IconButton(
                                         onClick = { nameState.setTextAndSelectAll(targetFileName) }

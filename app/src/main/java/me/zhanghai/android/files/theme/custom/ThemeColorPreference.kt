@@ -46,9 +46,8 @@ fun ThemeColorPreference() {
             }
         }
         val colors = remember(context) { themeColors.map { it.displayColor(context) } }
-        val defaultThemeColor = remember(context) {
-            ThemeColor.entries[context.getString(R.string.pref_default_value_theme_color).toInt()]
-        }
+        val defaultThemeColor =
+            ThemeColor.entries[stringResource(R.string.pref_default_value_theme_color).toInt()]
         ColorPickerDialog(
             title = title,
             colors = colors,
