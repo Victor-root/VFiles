@@ -18,7 +18,8 @@
         android:background="?colorAppBarSurface"
         android:theme="?actionBarTheme"
         app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/scrollView">
+        app:liftOnScrollTargetViewId="@id/scrollView"
+        app:pinnedInEdgeToEdge="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

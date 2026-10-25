@@ -24,6 +24,9 @@ import me.zhanghai.android.files.util.valueCompat
 
 object CustomThemeHelper {
     private val activityBaseThemes = mutableMapOf<Activity, Int>()
+    // Edge-to-edge is read by views as they inflate and lay out, so an activity has to be recreated
+    // for a change to apply consistently, the same way as a theme change.
+    private val activityEdgeToEdge = mutableMapOf<Activity, Boolean>()
 
     fun initialize(application: Application) {
         application.registerActivityLifecycleCallbacks(object : SimpleActivityLifecycleCallbacks {
@@ -35,6 +38,7 @@ object CustomThemeHelper {
 
             override fun onActivityDestroyed(activity: Activity) {
                 activityBaseThemes.remove(activity)
+                activityEdgeToEdge.remove(activity)
             }
         })
     }
@@ -42,6 +46,7 @@ object CustomThemeHelper {
     fun apply(activity: Activity) {
         val baseThemeRes = activity.themeResIdCompat
         activityBaseThemes[activity] = baseThemeRes
+        activityEdgeToEdge[activity] = Settings.EDGE_TO_EDGE.valueCompat
         val customThemeRes = getCustomThemeRes(baseThemeRes, activity)
         activity.setThemeCompat(customThemeRes)
         applyWallpaperDynamicColors(activity)
@@ -69,9 +74,12 @@ object CustomThemeHelper {
         for ((activity, baseThemeRes) in activityBaseThemes) {
             val currentThemeRes = activity.themeResIdCompat
             val customThemeRes = getCustomThemeRes(baseThemeRes, activity)
-            if (currentThemeRes != customThemeRes) {
+            val isEdgeToEdgeChanged =
+                activityEdgeToEdge[activity] != Settings.EDGE_TO_EDGE.valueCompat
+            if (currentThemeRes != customThemeRes || isEdgeToEdgeChanged) {
                 // Ignore ".Black" theme changes when not in night mode.
-                if (!NightModeHelper.isInNightMode(activity as AppCompatActivity)
+                if (!isEdgeToEdgeChanged
+                    && !NightModeHelper.isInNightMode(activity as AppCompatActivity)
                     && isBlackThemeChange(currentThemeRes, customThemeRes, activity)) {
                     continue
                 }

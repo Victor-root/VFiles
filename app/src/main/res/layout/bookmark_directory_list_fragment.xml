@@ -49,20 +49,24 @@
             android:fitsSystemWindows="true"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical" />
+    </me.zhanghai.android.files.ui.CoordinatorScrollingFrameLayout>
 
-        <!-- Additional layout to receive window insets as margin. -->
-        <FrameLayout
+    <!--
+      ~ Additional layout for CoordinatorLayout to lay out within the window insets. It stays outside
+      ~ the scrolling content so that it remains anchored to the bottom of the window, even while the
+      ~ app bar pushes that content partly off screen in edge-to-edge.
+      -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/screen_edge_margin"
-                android:src="@drawable/add_icon_white_24dp"
-                android:theme="?actionBarTheme" />
-        </FrameLayout>
-    </me.zhanghai.android.files.ui.CoordinatorScrollingFrameLayout>
+            android:layout_margin="@dimen/screen_edge_margin"
+            android:src="@drawable/add_icon_white_24dp"
+            android:theme="?actionBarTheme" />
+    </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

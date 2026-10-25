@@ -9,10 +9,12 @@
 // app bar's content behind the system bars using WindowInsetsCompat padding, not a mechanical
 // substitution, and isn't verifiable without a real device. Left as-is for the default (off) path.
 //
-// With Settings.EDGE_TO_EDGE on, the navigation bar goes transparent and the RecyclerViews below
-// already scroll into it (clipToPadding="false" plus an inset-consuming bottom padding, see
-// CoordinatorScrollingFrameLayout/CoordinatorScrollingLinearLayout), and the app bar's single child
-// gets scroll flags so the header moves away with the content instead of staying pinned.
+// With Settings.EDGE_TO_EDGE on, both system bars go fully transparent and the RecyclerViews below
+// already scroll into the navigation bar (clipToPadding="false" plus an inset-consuming bottom
+// padding, see CoordinatorScrollingFrameLayout/CoordinatorScrollingLinearLayout), and the app bar's
+// single child gets scroll flags so the header moves away with the content instead of staying
+// pinned. The setting is read as views inflate and lay out, so CustomThemeHelper recreates the
+// activities whenever it changes.
 //
 // For the status bar the header has to scroll away *completely*, so the content behind it reaches
 // the top of the window. Two things stand in the way by default, both confirmed against the
@@ -28,12 +30,12 @@
 //    child that does not fit system windows itself down by the top inset, which would just put the
 //    reserved strip straight back.
 // The content then reaches y = 0 through ScrollingViewBehavior, which pins its top to the app bar's
-// bottom edge, once CoordinatorScrollingFrameLayout/CoordinatorScrollingLinearLayout stop shrinking
-// it by the insets.
+// bottom edge, and is exactly as tall as the window (see FitsSystemWindowsScrollingViewBehavior).
 @file:Suppress("DEPRECATION")
 
 package me.zhanghai.android.files.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -51,6 +53,9 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.shape.MaterialShapeDrawable
+import me.zhanghai.android.files.R
+import me.zhanghai.android.files.compat.obtainStyledAttributesCompat
+import me.zhanghai.android.files.compat.use
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.activity
 import me.zhanghai.android.files.util.getColorByAttr
@@ -73,15 +78,24 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
     @ColorInt
     private var lastSystemBarColor: Int? = null
 
+    // Edge-to-edge only: the status bar height, taken over from AppBarLayout in onWindowInsetChanged.
+    private var statusBarHeight = 0
+
+    private var isPinnedInEdgeToEdge = false
+
     constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        readAttributes(attrs, 0)
+    }
 
     constructor(
         context: Context,
         attrs: AttributeSet?,
         @AttrRes defStyleAttr: Int
-    ) : super(context, attrs, defStyleAttr)
+    ) : super(context, attrs, defStyleAttr) {
+        readAttributes(attrs, defStyleAttr)
+    }
 
     init {
         val defaultBackgroundColor = (background as? MaterialShapeDrawable)?.fillColor?.defaultColor
@@ -108,6 +122,13 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    private fun readAttributes(attrs: AttributeSet?, @AttrRes defStyleAttr: Int) {
+        isPinnedInEdgeToEdge = context.obtainStyledAttributesCompat(
+            attrs, R.styleable.CoordinatorAppBarLayout, defStyleAttr, 0
+        ).use { it.getBoolean(R.styleable.CoordinatorAppBarLayout_pinnedInEdgeToEdge, false) }
+    }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
 
@@ -115,7 +136,7 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
             it.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 updateFirstChildClipBounds()
             }
-            if (Settings.EDGE_TO_EDGE.valueCompat) {
+            if (Settings.EDGE_TO_EDGE.valueCompat && !isPinnedInEdgeToEdge) {
                 it.updateLayoutParams<AppBarLayout.LayoutParams> {
                     scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
                         AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
@@ -132,7 +153,8 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         // See the file comment: take the top inset over from AppBarLayout, which would otherwise
         // reserve it as permanently pinned height, and hand it to the first child instead.
         val windowInsets = insets.toWindowInsets()!!
-        applyTopInsetToFirstChild(windowInsets.systemWindowInsetTop)
+        statusBarHeight = windowInsets.systemWindowInsetTop
+        applyTopInsetToFirstChild(statusBarHeight)
         super.onWindowInsetChanged(
             WindowInsetsCompat.toWindowInsetsCompat(
                 windowInsets.replaceSystemWindowInsets(
@@ -186,22 +208,22 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         val window = context.activity?.window ?: return
         val controller = WindowInsetsControllerCompat(window, this)
         if (Settings.EDGE_TO_EDGE.valueCompat) {
-            // Leave the navigation bar transparent so the scrolling content behind it shows through
-            // instead of being covered by a solid color.
-            window.navigationBarColor = Color.TRANSPARENT
+            // Both bars stay fully transparent (the status bar since init) so the content scrolling
+            // behind them shows through, and their icons are tinted for that content instead (the
+            // status bar follows the header too, see updateStatusBarAppearance()), so turn off the
+            // translucent scrim the system would otherwise paint over them.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                // The status bar is transparent too (set in init), and the whole point here is to
-                // see the content scrolling behind it, so turn off the translucent scrim the
-                // system would otherwise paint over it by default.
                 window.isStatusBarContrastEnforced = false
-                // The navigation bar, unlike the status bar, sits over arbitrary scrolling content
-                // at all times rather than over a header we control, so leave its scrim on to keep
-                // the buttons legible.
-                window.isNavigationBarContrastEnforced = true
+                window.isNavigationBarContrastEnforced = false
             }
-            // windowLightNavigationBar (and its programmatic equivalent) require API 26+.
+            // windowLightNavigationBar (and its programmatic equivalent) require API 26+. Before
+            // that the navigation bar icons are always white, so keep the bar black or they would
+            // vanish over a light content.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                window.navigationBarColor = Color.TRANSPARENT
                 controller.isAppearanceLightNavigationBars = contentBackgroundColor.isLight
+            } else {
+                window.navigationBarColor = Color.BLACK
             }
             updateStatusBarAppearance()
         } else {
@@ -226,16 +248,21 @@ class CoordinatorAppBarLayout : FitsSystemWindowsAppBarLayout {
         }
     }
 
-    // Edge-to-edge only: the status bar sits over the header while it's expanded and over the
-    // scrolling content once the header has moved out from under it, so tint its icons for whichever
-    // of the two is actually there.
+    // Edge-to-edge only: the status bar sits over the header while the header still covers it and
+    // over the scrolling content once the header has moved out from under it, so tint its icons for
+    // whichever of the two is actually behind them, switching when the header's bottom edge passes
+    // the middle of the status bar, where the icons are.
     private fun updateStatusBarAppearance() {
         val window = context.activity?.window ?: return
         val headerColor = lastSystemBarColor ?: return
-        val scrollRange = totalScrollRange
-        val isCollapsed = scrollRange > 0 && -offset >= scrollRange / 2
-        WindowInsetsControllerCompat(window, this).isAppearanceLightStatusBars =
-            if (isCollapsed) contentBackgroundColor.isLight else headerColor.isLight
+        val isHeaderBehindStatusBar = height + offset >= statusBarHeight / 2
+        val isLight =
+            if (isHeaderBehindStatusBar) headerColor.isLight else contentBackgroundColor.isLight
+        val controller = WindowInsetsControllerCompat(window, this)
+        // Called on every scroll frame, only touch the system UI when the tint actually changes.
+        if (controller.isAppearanceLightStatusBars != isLight) {
+            controller.isAppearanceLightStatusBars = isLight
+        }
     }
 
     @get:ColorInt
