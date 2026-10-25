@@ -25,6 +25,7 @@
     <string name="loading">Chargement…</string>
     <string name="maybe_later">Peut-être plus tard</string>
     <string name="merge">Fusionner</string>
+    <string name="navigate_up">Revenir en arrière</string>
     <string name="none">Aucun</string>
     <string name="open_navigation_drawer">Ouvrir le tiroir de navigation</string>
     <string name="paste">Coller</string>

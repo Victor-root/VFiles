@@ -297,7 +297,7 @@
             android:name="me.zhanghai.android.files.about.AboutActivity"
             android:label="@string/about_title"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles" />
 
         <activity
             android:name="me.zhanghai.android.files.fileaction.ArchivePasswordDialogActivity"

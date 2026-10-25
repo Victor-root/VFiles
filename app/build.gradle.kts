@@ -8,7 +8,9 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -45,6 +47,7 @@ android {
     buildFeatures {
         aidl = true
         buildConfig = true
+        compose = true
         resValues = true
         viewBinding = true
     }
@@ -59,6 +62,11 @@ android {
     externalNativeBuild {
         cmake {
             path = file("CMakeLists.txt")
+        }
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
     lint {
@@ -135,6 +143,13 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        // Most of the Material 3 app bar and menu APIs are still experimental.
+        optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
+    }
+}
+
 // Always name the assembled APK "VFiles-v<versionName>.apk" so the file name carries the current
 // version. This is the name users see on the GitHub Releases page.
 androidComponents {
@@ -167,6 +182,18 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.material)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.runtime.livedata)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.material.color.utilities)
 
     implementation(libs.androidsvg)
     implementation(libs.bouncycastle.bcpkix)
@@ -225,4 +252,14 @@ dependencies {
     implementation(libs.zhanghai.libselinux)
     implementation(libs.zhanghai.retrofile)
     implementation(libs.zhanghai.systemuihelper)
+
+    testImplementation(libs.androidx.test.core)
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit.rule)
 }

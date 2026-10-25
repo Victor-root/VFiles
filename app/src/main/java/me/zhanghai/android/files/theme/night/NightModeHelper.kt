@@ -27,11 +27,15 @@ object NightModeHelper {
     fun initialize(application: Application) {
         application.registerActivityLifecycleCallbacks(object : SimpleActivityLifecycleCallbacks {
                 override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    check(activity in activities) { "Activity must extend AppActivity: $activity" }
+                    if (activity is AppCompatActivity) {
+                        check(activity in activities) {
+                            "Activity must extend AppActivity: $activity"
+                        }
+                    }
                 }
 
                 override fun onActivityDestroyed(activity: Activity) {
-                    activities -= activity as AppCompatActivity
+                    activities -= activity as? AppCompatActivity ?: return
                 }
             })
     }
@@ -55,8 +59,18 @@ object NightModeHelper {
         }
     }
 
+    // The time-based mode of AppCompat is deprecated, Compose screens implement it in
+    // isNightModeActive().
+    @Suppress("DEPRECATION")
     private val nightMode: Int
-        get() = Settings.NIGHT_MODE.valueCompat.value
+        get() =
+            when (Settings.NIGHT_MODE.valueCompat) {
+                NightMode.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                NightMode.OFF -> AppCompatDelegate.MODE_NIGHT_NO
+                NightMode.ON -> AppCompatDelegate.MODE_NIGHT_YES
+                NightMode.AUTO_TIME -> AppCompatDelegate.MODE_NIGHT_AUTO_TIME
+                NightMode.AUTO_BATTERY -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            }
 
     /*
      * @see androidx.appcompat.app.AppCompatDelegateImpl#updateForNightMode(int, boolean)

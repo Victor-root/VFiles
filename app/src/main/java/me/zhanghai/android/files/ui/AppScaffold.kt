@@ -1,0 +1,148 @@
+/*
+ * Copyright (c) 2026 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
+ */
+
+package me.zhanghai.android.files.ui
+
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import me.zhanghai.android.files.R
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.LocalAppColors
+import me.zhanghai.android.files.util.observeAsStateCompat
+
+/**
+ * A screen with an app bar, following the edge-to-edge setting: when it's on, the content scrolls
+ * behind the navigation bar and has to apply the bottom inset of the padding itself; otherwise the
+ * content stops above the navigation bar.
+ */
+@Composable
+fun AppScaffold(
+    title: String,
+    modifier: Modifier = Modifier,
+    subtitle: String? = null,
+    navigationIcon: @Composable () -> Unit = { NavigateUpButton() },
+    actions: @Composable RowScope.() -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+    content: @Composable (PaddingValues) -> Unit
+) {
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    Scaffold(
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .then(
+                if (isEdgeToEdge) {
+                    Modifier
+                } else {
+                    val navigationBars = WindowInsets.navigationBars
+                        .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+                    Modifier
+                        .windowInsetsPadding(navigationBars)
+                        .consumeWindowInsets(navigationBars)
+                }
+            ),
+        topBar = {
+            AppTopAppBar(
+                title = title,
+                subtitle = subtitle,
+                navigationIcon = navigationIcon,
+                actions = actions,
+                scrollBehavior = scrollBehavior
+            )
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = floatingActionButton,
+        content = content
+    )
+}
+
+@Composable
+fun AppTopAppBar(
+    title: String,
+    modifier: Modifier = Modifier,
+    subtitle: String? = null,
+    navigationIcon: @Composable () -> Unit = { NavigateUpButton() },
+    actions: @Composable RowScope.() -> Unit = {},
+    scrollBehavior: TopAppBarScrollBehavior? = null
+) {
+    TopAppBar(
+        title = {
+            if (subtitle != null) {
+                Column {
+                    Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        text = subtitle,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            } else {
+                Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+        },
+        modifier = modifier,
+        navigationIcon = navigationIcon,
+        actions = actions,
+        colors = appTopAppBarColors(),
+        scrollBehavior = scrollBehavior
+    )
+}
+
+@Composable
+fun appTopAppBarColors(): TopAppBarColors {
+    val appColors = LocalAppColors.current
+    return TopAppBarDefaults.topAppBarColors(
+        containerColor = appColors.appBarContainer,
+        scrolledContainerColor = if (appColors.isDark) {
+            MaterialTheme.colorScheme.surfaceContainer
+        } else {
+            appColors.appBarContainer
+        },
+        navigationIconContentColor = appColors.onAppBar,
+        titleContentColor = appColors.onAppBar,
+        actionIconContentColor = appColors.onAppBar,
+        subtitleContentColor = appColors.onAppBar
+    )
+}
+
+@Composable
+fun NavigateUpButton() {
+    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    IconButton(onClick = { onBackPressedDispatcher?.onBackPressed() }) {
+        Icon(
+            painter = painterResource(R.drawable.arrow_back_icon_white_24dp),
+            contentDescription = stringResource(R.string.navigate_up)
+        )
+    }
+}
