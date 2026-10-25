@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nie znaleziono aplikacji do wykonania tej akcji</string>
     <string name="open_settings">Otwórz ustawienia</string>
-    <string name="shortcut_created">Skrót utworzony</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d bajt</item>
@@ -62,8 +61,6 @@
     <string name="storage_permission_rationale_message">Aplikacja potrzebuje uprawnień dostępu do plików. Kliknij „ZEZWÓL” w następnym oknie dialogowym systemu.</string>
     <string name="storage_permission_permanently_denied_message">Aplikacja potrzebuje uprawnień dostępu do plików. Przyznaj uprawnienie dostępu dla „Pamięć” w ustawieniach systemu.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Aplikacja potrzebuje uprawnień do publikowania powiadomień o operacjach na plikach. Kliknij „Zezwalaj” w następnym oknie dialogowym systemu.</string>
-    <string name="notification_permission_permanently_denied_message">Aplikacja potrzebuje uprawnień do publikowania powiadomień o operacjach na plikach. Należy przyznać uprawnienia „Powiadomienia” w ustawieniach systemu.</string>
 
     <string name="notification_channel_background_activity_start_name">Działania w tle</string>
     <string name="notification_channel_background_activity_start_description">Podejmuj działania, gdy aplikacja działa w tle</string>

@@ -17,6 +17,7 @@ import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
 import me.zhanghai.android.files.provider.archive.archiveRefresh
 import me.zhanghai.android.files.provider.archive.isArchivePath
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.CloseableLiveData
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.valueCompat
@@ -97,8 +98,6 @@ class FileListViewModel : ViewModel() {
         }
 
     val breadcrumbLiveData: LiveData<BreadcrumbData> = BreadcrumbLiveData(trailLiveData)
-    val canNavigateUpBreadcrumb: Boolean
-        get() = breadcrumbLiveData.valueCompat.selectedIndex > 0
 
     private val _viewTypeLiveData = FileViewTypeLiveData(currentPathLiveData)
     val viewTypeLiveData: LiveData<FileViewType> = _viewTypeLiveData
@@ -110,8 +109,6 @@ class FileListViewModel : ViewModel() {
 
     private val _sortOptionsLiveData = FileSortOptionsLiveData(currentPathLiveData)
     val sortOptionsLiveData: LiveData<FileSortOptions> = _sortOptionsLiveData
-    val sortOptions: FileSortOptions
-        get() = _sortOptionsLiveData.valueCompat
 
     fun setSortBy(by: By) = _sortOptionsLiveData.putBy(by)
 
@@ -130,6 +127,32 @@ class FileListViewModel : ViewModel() {
             _viewSortPathSpecificLiveData.putValue(value)
         }
 
+    /**
+     * The files as shown: without hidden files unless they are shown, and sorted unless they are
+     * search results, which stay in the order they are found.
+     */
+    val displayedFileListLiveData: LiveData<List<FileItem>?> = MediatorLiveData<List<FileItem>?>()
+        .apply {
+            fun update() {
+                var files = _fileListLiveData.value?.value
+                val sortOptions = _sortOptionsLiveData.value
+                if (files == null || sortOptions == null) {
+                    value = null
+                    return
+                }
+                if (!Settings.FILE_LIST_SHOW_HIDDEN_FILES.valueCompat) {
+                    files = files.filterNot { it.isHidden }
+                }
+                if (!searchState.isSearching) {
+                    files = files.sortedWith(sortOptions.createComparator())
+                }
+                value = files
+            }
+            addSource(_fileListLiveData) { update() }
+            addSource(_sortOptionsLiveData) { update() }
+            addSource(Settings.FILE_LIST_SHOW_HIDDEN_FILES) { update() }
+        }
+
     private val _pickOptionsLiveData = MutableLiveData<PickOptions?>()
     val pickOptionsLiveData: LiveData<PickOptions?>
         get() = _pickOptionsLiveData
@@ -138,8 +161,6 @@ class FileListViewModel : ViewModel() {
         set(value) {
             _pickOptionsLiveData.value = value
         }
-
-    var isCreateFileNameEditInitialized: Boolean = false
 
     private val _selectedFilesLiveData = MutableLiveData(fileItemSetOf())
     val selectedFilesLiveData: LiveData<FileItemSet>
@@ -152,44 +173,25 @@ class FileListViewModel : ViewModel() {
     }
 
     fun selectFiles(files: FileItemSet, selected: Boolean) {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
-        if (selectedFiles === files) {
-            if (!selected && selectedFiles.isNotEmpty()) {
-                selectedFiles.clear()
-                _selectedFilesLiveData.value = selectedFiles
-            }
-            return
-        }
+        val newSelectedFiles = FileItemSet().apply { addAll(selectedFiles) }
         var changed = false
         for (file in files) {
             changed = changed or if (selected) {
-                selectedFiles.add(file)
+                newSelectedFiles.add(file)
             } else {
-                selectedFiles.remove(file)
+                newSelectedFiles.remove(file)
             }
         }
         if (changed) {
-            _selectedFilesLiveData.value = selectedFiles
+            _selectedFilesLiveData.value = newSelectedFiles
         }
-    }
-
-    fun replaceSelectedFiles(files: FileItemSet) {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
-        if (selectedFiles == files) {
-            return
-        }
-        selectedFiles.clear()
-        selectedFiles.addAll(files)
-        _selectedFilesLiveData.value = selectedFiles
     }
 
     fun clearSelectedFiles() {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
         if (selectedFiles.isEmpty()) {
             return
         }
-        selectedFiles.clear()
-        _selectedFilesLiveData.value = selectedFiles
+        _selectedFilesLiveData.value = fileItemSetOf()
     }
 
     val pasteStateLiveData: LiveData<PasteState> = _pasteStateLiveData
@@ -197,26 +199,24 @@ class FileListViewModel : ViewModel() {
         get() = _pasteStateLiveData.valueCompat
 
     fun addToPasteState(copy: Boolean, files: FileItemSet) {
-        val pasteState = _pasteStateLiveData.valueCompat
-        var changed = false
-        if (pasteState.copy != copy) {
-            changed = pasteState.files.isNotEmpty()
-            pasteState.files.clear()
-            pasteState.copy = copy
+        val pasteState = pasteState
+        val newFiles = FileItemSet()
+        if (pasteState.copy == copy) {
+            newFiles.addAll(pasteState.files)
         }
-        changed = changed or pasteState.files.addAll(files)
+        val changed = newFiles.addAll(files) ||
+            (pasteState.copy != copy && pasteState.files.isNotEmpty())
         if (changed) {
-            _pasteStateLiveData.value = pasteState
+            _pasteStateLiveData.value = PasteState(copy, newFiles)
         }
     }
 
     fun clearPasteState() {
-        val pasteState = _pasteStateLiveData.valueCompat
+        val pasteState = pasteState
         if (pasteState.files.isEmpty()) {
             return
         }
-        pasteState.files.clear()
-        _pasteStateLiveData.value = pasteState
+        _pasteStateLiveData.value = PasteState(pasteState.copy, fileItemSetOf())
     }
 
     private val _isRequestingStorageAccessLiveData = MutableLiveData(false)
@@ -224,13 +224,6 @@ class FileListViewModel : ViewModel() {
         get() = _isRequestingStorageAccessLiveData.valueCompat
         set(value) {
             _isRequestingStorageAccessLiveData.value = value
-        }
-
-    private val _isRequestingNotificationPermissionLiveData = MutableLiveData(false)
-    var isNotificationPermissionRequested: Boolean
-        get() = _isRequestingNotificationPermissionLiveData.valueCompat
-        set(value) {
-            _isRequestingNotificationPermissionLiveData.value = value
         }
 
     override fun onCleared() {

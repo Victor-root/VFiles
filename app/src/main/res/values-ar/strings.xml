@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">لم يتم العثور على تطبيق للتعامل مع هذا الإجراء</string>
     <string name="open_settings">أفتح الإعدادات</string>
-    <string name="shortcut_created">تم إنشاء الاختصار</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="zero">%1$,d بايت</item>
@@ -64,8 +63,6 @@
     <string name="storage_permission_rationale_message">يحتاج التطبيق إلى إذن للوصول إلى الملفات. الرجاء النقر فوق \"السماح\" في مربع حوار النظام القادم.</string>
     <string name="storage_permission_permanently_denied_message">يحتاج التطبيق إلى إذن للوصول إلى الملفات. الرجاء منح إذن \"التخزين\" في إعدادات النظام.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">يحتاج التطبيق إلى إذن لنشر إشعارات حول عمليات الملف. الرجاء النقر فوق \"السماح\" في مربع حوار النظام القادم.</string>
-    <string name="notification_permission_permanently_denied_message">يحتاج التطبيق إلى إذن لنشر إشعارات حول عمليات الملف. يرجى منح إذن \"الإخطار\" في إعدادات النظام.</string>
 
     <string name="notification_channel_background_activity_start_name">الإجراءات أثناء العمل في الخلفية</string>
     <string name="notification_channel_background_activity_start_description">اتخذ إجراءات أثناء عمل التطبيق في الخلفية</string>

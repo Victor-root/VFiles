@@ -48,7 +48,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Fant ingen apper som kan utføre denne handlingen</string>
     <string name="open_settings">Åpne innstillingene</string>
-    <string name="shortcut_created">Snarveien er opprettet</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -60,8 +59,6 @@
     <string name="storage_permission_rationale_message">Appen trenger tilgang til filene. Trykk på «TILLAT» i den kommende systemdialogboksen.</string>
     <string name="storage_permission_permanently_denied_message">Appen trenger tilgang til filene. Gi «Lagring»-tillatelsen i systeminnstillingene.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Appen trenger tillatelse til å sende varsler om filhandlinger. Trykk på «Tillat» i den kommende systemdialogboksen.</string>
-    <string name="notification_permission_permanently_denied_message">Appen trenger tillatelse til å sende varsler om filhandlinger. Gi «Varsler»-tillatelsen i systeminnstillingene.</string>
 
     <string name="notification_channel_background_activity_start_name">Handlinger i bakgrunnen</string>
     <string name="notification_channel_background_activity_start_description">Utfør handlinger mens appen er i bakgrunnen</string>

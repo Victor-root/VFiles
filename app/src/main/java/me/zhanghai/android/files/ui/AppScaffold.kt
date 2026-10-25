@@ -56,21 +56,7 @@ fun AppScaffold(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
-    Scaffold(
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .then(
-                if (isEdgeToEdge) {
-                    Modifier
-                } else {
-                    val navigationBars = WindowInsets.navigationBars
-                        .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
-                    Modifier
-                        .windowInsetsPadding(navigationBars)
-                        .consumeWindowInsets(navigationBars)
-                }
-            ),
+    AppScaffold(
         topBar = {
             AppTopAppBar(
                 title = title,
@@ -80,6 +66,38 @@ fun AppScaffold(
                 scrollBehavior = scrollBehavior
             )
         },
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        floatingActionButton = floatingActionButton,
+        snackbarHostState = snackbarHostState,
+        content = content
+    )
+}
+
+/** A screen with its own [topBar], following the edge-to-edge setting like the one above. */
+@Composable
+fun AppScaffold(
+    topBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    bottomBar: @Composable () -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    content: @Composable (PaddingValues) -> Unit
+) {
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    Scaffold(
+        modifier = modifier.then(
+            if (isEdgeToEdge) {
+                Modifier
+            } else {
+                val navigationBars = WindowInsets.navigationBars
+                    .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+                Modifier
+                    .windowInsetsPadding(navigationBars)
+                    .consumeWindowInsets(navigationBars)
+            }
+        ),
+        topBar = topBar,
+        bottomBar = bottomBar,
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = floatingActionButton,
         content = content

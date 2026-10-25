@@ -50,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Приложение не найдено для обработки данного действия</string>
     <string name="open_settings">Открыть настройки</string>
-    <string name="shortcut_created">Ярлык создан</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d байт</item>
@@ -64,8 +63,6 @@
     <string name="storage_permission_rationale_message">Приложению требуется разрешение для доступа к файлам. Пожалуйста, нажмите «РАЗРЕШИТЬ» в появившемся системном диалоговом окне.</string>
     <string name="storage_permission_permanently_denied_message">Приложению требуется разрешение для доступа к файлам. Пожалуйста, предоставьте разрешение «Хранилище» в настройках системы.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Приложению требуется разрешение на отправку уведомлений об операциях с файлами. Пожалуйста, нажмите “Разрешить” в появившемся диалоговом окне.</string>
-    <string name="notification_permission_permanently_denied_message">Приложению требуется разрешение на отправку уведомлений о файловых операциях. Пожалуйста, предоставьте разрешение на “Уведомления” в системных настройках.</string>
 
     <string name="notification_channel_background_activity_start_name">Действия в фоновом режиме</string>
     <string name="notification_channel_background_activity_start_description">Разрешить действия, пока приложение находится в фоновом режиме</string>

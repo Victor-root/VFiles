@@ -49,7 +49,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">برنامه‌ای برای اداره کردن این کنش یافت نشد</string>
     <string name="open_settings">گشودن تنظیمات</string>
-    <string name="shortcut_created">میان‌بر ایجاد شد</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d بایت</item>

@@ -212,38 +212,6 @@ class EnumSettingLiveData<E : Enum<*>?>(
     }
 }
 
-class ResourceIdSettingLiveData(
-    nameSuffix: String?,
-    @StringRes keyRes: Int,
-    keySuffix: String?,
-    @AnyRes defaultValue: Int
-) : SettingLiveData<Int>(nameSuffix, keyRes, keySuffix, defaultValue) {
-    constructor(@StringRes keyRes: Int, @AnyRes defaultValue: Int) : this(
-        null, keyRes, null, defaultValue
-    )
-
-    init {
-        init()
-    }
-
-    @AnyRes
-    override fun getDefaultValue(@AnyRes defaultValueRes: Int): Int = defaultValueRes
-
-    override fun getValue(
-        sharedPreferences: SharedPreferences,
-        key: String,
-        @AnyRes defaultValue: Int
-    ): Int {
-        val valueString = sharedPreferences.getString(key, null) ?: return defaultValue
-        val value = application.resources.getIdentifier(valueString, null, application.packageName)
-        return if (value != 0) value else defaultValue
-    }
-
-    override fun putValue(sharedPreferences: SharedPreferences, key: String, @AnyRes value: Int) {
-        sharedPreferences.edit { putString(key, application.resources.getResourceName(value)) }
-    }
-}
-
 class ParcelValueSettingLiveData<T>(
     nameSuffix: String?,
     @StringRes keyRes: Int,

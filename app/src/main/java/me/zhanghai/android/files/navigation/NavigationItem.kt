@@ -7,18 +7,14 @@ package me.zhanghai.android.files.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
-import me.zhanghai.android.files.compat.getDrawableCompat
 
 abstract class NavigationItem {
     abstract val id: Long
 
-    fun getIcon(context: Context): Drawable = context.getDrawableCompat(iconRes!!)
-
     @get:DrawableRes
-    protected abstract val iconRes: Int?
+    abstract val iconRes: Int
 
     abstract fun getTitle(context: Context): String
 

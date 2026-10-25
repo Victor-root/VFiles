@@ -36,7 +36,6 @@ import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.file.loadFileItem
 import me.zhanghai.android.files.filelist.OpenFileAsDialogActivity
-import me.zhanghai.android.files.filelist.OpenFileAsDialogFragment
 import me.zhanghai.android.files.provider.archive.archiveFile
 import me.zhanghai.android.files.provider.archive.archiver.ArchiveWriter
 import me.zhanghai.android.files.provider.archive.createArchiveRootPath
@@ -1480,7 +1479,7 @@ class OpenFileJob(
                     if (withChooser) {
                         it.withChooser(
                             OpenFileAsDialogActivity::class.createIntent()
-                                .putArgs(OpenFileAsDialogFragment.Args(file))
+                                .putArgs(OpenFileAsDialogActivity.Args(file))
                         )
                     } else {
                         it

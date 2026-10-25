@@ -22,6 +22,7 @@ import me.zhanghai.android.files.file.DocumentTreeUri
 import me.zhanghai.android.files.file.asExternalStorageUriOrNull
 import me.zhanghai.android.files.file.displayName
 import me.zhanghai.android.files.file.storageVolume
+import me.zhanghai.android.files.filelist.ArchiveType
 import me.zhanghai.android.files.filelist.FileSortOptions
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.StandardDirectorySettings
@@ -629,4 +630,20 @@ private fun readWriteLengthPrefixedValue(oldParcel: Parcel, newParcel: Parcel, b
         newParcel.writeInt(endPosition - startPosition)
         newParcel.setDataPosition(endPosition)
     }
+}
+
+internal fun upgradeAppTo2_0_0() {
+    migrateCreateArchiveTypeSetting2_0_0()
+}
+
+// The archive type used to be stored as the resource name of its radio button.
+private fun migrateCreateArchiveTypeSetting2_0_0() {
+    val key = application.getString(R.string.pref_key_create_archive_type)
+    val oldValue = defaultSharedPreferences.getString(key, null) ?: return
+    val type = when (oldValue.substringAfterLast('/')) {
+        "tarXzRadio" -> ArchiveType.TAR_XZ
+        "sevenZRadio" -> ArchiveType.SEVEN_Z
+        else -> ArchiveType.ZIP
+    }
+    defaultSharedPreferences.edit { putString(key, type.ordinal.toString()) }
 }

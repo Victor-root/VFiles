@@ -43,7 +43,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Ez da aplikaziorik aurkitu ekintza hau burutzeko</string>
     <string name="open_settings">Ireki ezarpenak</string>
-    <string name="shortcut_created">Laster-marka sortuta</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">byte %1$,d</item>

@@ -10,6 +10,7 @@ import android.text.TextUtils
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.filelist.ArchiveType
 import me.zhanghai.android.files.filelist.FileSortOptions
 import me.zhanghai.android.files.filelist.FileViewType
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
@@ -61,8 +62,11 @@ object Settings {
             FileSortOptions(FileSortOptions.By.NAME, FileSortOptions.Order.ASCENDING, true)
         )
 
-    val CREATE_ARCHIVE_TYPE: SettingLiveData<Int> =
-        ResourceIdSettingLiveData(R.string.pref_key_create_archive_type, R.id.zipRadio)
+    val CREATE_ARCHIVE_TYPE: SettingLiveData<ArchiveType> =
+        EnumSettingLiveData(
+            R.string.pref_key_create_archive_type, R.string.pref_default_value_create_archive_type,
+            ArchiveType::class.java
+        )
 
     val FTP_SERVER_ANONYMOUS_LOGIN: SettingLiveData<Boolean> =
         BooleanSettingLiveData(

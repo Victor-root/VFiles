@@ -50,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Não existe uma aplicação para gerir esta ação</string>
     <string name="open_settings">Abrir definições</string>
-    <string name="shortcut_created">Atalho criado</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -63,8 +62,6 @@
     <string name="storage_permission_rationale_message">A aplicação precisa da permissão para aceder aos ficheiros. Clique em “PERMITIR” na próxima caixa de diálogo.</string>
     <string name="storage_permission_permanently_denied_message">A aplicação precisa da permissão para aceder aos ficheiros. Por favor, conceda a permissão de “Armazenamento” nas definições de sistema.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">A aplicação precisa de aceder às notificações para poder mostrar as operações de ficheiros. Toque em \"Permitir\" no próximo ecrã.</string>
-    <string name="notification_permission_permanently_denied_message">A aplicação precisa de aceder às notificações para poder mostrar as operações de ficheiros. Deve conceder a permissão \"Notificação\" nas definições do sistema.</string>
 
     <string name="notification_channel_background_activity_start_name">Ações em segundo plano</string>
     <string name="notification_channel_background_activity_start_description">Executar ações se a aplicação estiver em segundo plano</string>

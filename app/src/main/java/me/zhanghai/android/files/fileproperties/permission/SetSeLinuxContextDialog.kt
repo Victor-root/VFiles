@@ -28,8 +28,8 @@ import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.fileproperties.CheckboxItem
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
-import me.zhanghai.android.files.storage.FormTextField
-import me.zhanghai.android.files.storage.rememberFormFieldState
+import me.zhanghai.android.files.ui.FormTextField
+import me.zhanghai.android.files.ui.rememberFormFieldState
 
 /** Changes or restores the SELinux context of [file], with the keyboard shown. */
 @Composable

@@ -13,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.offset
@@ -23,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -128,13 +131,15 @@ private const val HIDE_DELAY_MILLIS = 1500L
 
 /**
  * A draggable thumb along the end edge of [scrollable], shown while it scrolls or the thumb is
- * dragged. Place it in a Box over the scrollable content, filling it.
+ * dragged. Place it in a Box over the scrollable content, filling it. [popupText] gives the text
+ * of a bubble shown next to the thumb while it's dragged, like the first letter of the names.
  */
 @Composable
 fun FastScroller(
     scrollable: FastScrollable,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues()
+    contentPadding: PaddingValues = PaddingValues(),
+    popupText: (() -> String)? = null
 ) {
     if (!scrollable.canScroll) {
         return
@@ -158,6 +163,30 @@ fun FastScroller(
     ) {
         val density = LocalDensity.current
         val trackHeightPx = with(density) { (maxHeight - THUMB_HEIGHT).toPx() }.coerceAtLeast(1f)
+        if (popupText != null) {
+            AnimatedVisibility(
+                visible = isDragging,
+                modifier = Modifier.align(Alignment.TopEnd),
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                FastScrollerPopup(
+                    text = popupText(),
+                    modifier = Modifier
+                        .padding(end = TOUCH_WIDTH)
+                        .layout { measurable, constraints ->
+                            // The pointed corner of the bubble faces the middle of the thumb.
+                            val placeable = measurable.measure(constraints)
+                            layout(placeable.width, placeable.height) {
+                                val thumbCenterY = scrollable.scrollFraction * trackHeightPx +
+                                    THUMB_HEIGHT.toPx() / 2
+                                val y = (thumbCenterY - placeable.height).coerceAtLeast(0f)
+                                placeable.place(0, y.roundToInt())
+                            }
+                        }
+                )
+            }
+        }
         AnimatedVisibility(
             visible = isVisible,
             modifier = Modifier.align(Alignment.TopEnd),
@@ -207,5 +236,31 @@ fun FastScroller(
                 )
             }
         }
+    }
+}
+
+private val POPUP_SIZE = 64.dp
+
+@Composable
+private fun FastScrollerPopup(text: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .defaultMinSize(POPUP_SIZE, POPUP_SIZE)
+            .background(
+                MaterialTheme.colorScheme.primary,
+                RoundedCornerShape(
+                    topStartPercent = 50, topEndPercent = 50, bottomEndPercent = 0,
+                    bottomStartPercent = 50
+                )
+            )
+            .padding(horizontal = 12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onPrimary,
+            maxLines = 1,
+            style = MaterialTheme.typography.headlineSmall
+        )
     }
 }

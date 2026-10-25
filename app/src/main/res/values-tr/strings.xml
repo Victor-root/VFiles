@@ -46,7 +46,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Bu eylemi gerçekleştirecek uygulama bulunamadı</string>
     <string name="open_settings">Ayarları aç</string>
-    <string name="shortcut_created">Kısayol oluşturuldu</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d bayt</item>

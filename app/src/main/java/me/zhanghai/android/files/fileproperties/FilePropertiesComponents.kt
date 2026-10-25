@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.rememberViewModelStoreOwner
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.storage.ReadOnlyFormTextField
+import me.zhanghai.android.files.ui.ReadOnlyFormTextField
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful

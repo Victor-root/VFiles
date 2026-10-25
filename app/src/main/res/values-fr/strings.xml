@@ -9,6 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity,MissingQuantity">
 
+    <string name="clear_query">Effacer la recherche</string>
     <string name="close">Fermer</string>
     <string name="copy">Copier</string>
     <string name="cut">Couper</string>
@@ -52,7 +53,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Aucune application n’a été trouvée pour gérer cette action</string>
     <string name="open_settings">Ouvrir les réglages</string>
-    <string name="shortcut_created">Raccourci créé</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d octet</item>
@@ -65,8 +65,6 @@
     <string name="storage_permission_rationale_message">L’application a besoin de la permission pour accéder aux fichiers. Veuillez cliquer sur “AUTORISER” dans la boîte de dialogue suivante.</string>
     <string name="storage_permission_permanently_denied_message">L’application a besoin de la permission d’accéder aux fichiers. Veuillez accorder la permission de stockage dans les paramètres du système.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">L’application a besoin la permission pour envoyer des notifications pour les opérations sur les fichiers. Veuillez cliquer sur “AUTORISER” dans la boîte de dialogue suivante.</string>
-    <string name="notification_permission_permanently_denied_message">L’application a besoin de permission pour envoyer des notifications sur les opérations sur les fichiers. Veuillez accorder la permission \"Notification\" dans les paramètres systèmes</string>
 
     <string name="notification_channel_background_activity_start_name">Actions en arrière-plan</string>
     <string name="notification_channel_background_activity_start_description">Maintenir les actions lorsque l’application est en arrière-plan</string>
@@ -343,6 +341,7 @@
     <string name="file_list_error_folder_not_found">Ce dossier n\'existe plus</string>
     <string name="file_list_error_permission_denied">Vous n\'avez pas l\'autorisation d\'ouvrir ce dossier</string>
     <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
+    <string name="file_list_action_create">Créer</string>
     <string name="file_list_action_create_file">Fichier</string>
     <string name="file_list_action_create_directory">Dossier</string>
 

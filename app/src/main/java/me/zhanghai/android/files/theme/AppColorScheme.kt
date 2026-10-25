@@ -6,7 +6,6 @@
 package me.zhanghai.android.files.theme
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.ColorInt
 import androidx.compose.material3.ColorScheme
@@ -23,6 +22,7 @@ import com.materialkolor.scheme.SchemeContent
 import com.materialkolor.scheme.SchemeFidelity
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.custom.wallpaperAccentColor
+import me.zhanghai.android.files.theme.night.withNightMode
 
 fun appColorScheme(
     context: Context,
@@ -30,10 +30,12 @@ fun appColorScheme(
     isDark: Boolean,
     isBlack: Boolean
 ): ColorScheme {
+    // Theme colors have a lighter variant for night mode, which follows the app setting.
+    val nightModeContext = context.withNightMode(isDark)
     val colorScheme = if (themeColor == ThemeColor.DYNAMIC) {
-        dynamicColorScheme(context, isDark)
+        dynamicColorScheme(nightModeContext, isDark)
     } else {
-        themeColorScheme(themeColor.color(context, isDark), isDark)
+        themeColorScheme(ContextCompat.getColor(nightModeContext, themeColor.resourceId), isDark)
     }
     return if (isDark && isBlack) colorScheme.toBlack() else colorScheme
 }
@@ -47,7 +49,9 @@ private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
             SchemeContent(Hct.fromInt(wallpaperColor), isDark, 0.0).toColorScheme()
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
             if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        else -> themeColorScheme(ThemeColor.COLOR_PRIMARY.color(context, isDark), isDark)
+        else -> themeColorScheme(
+            ContextCompat.getColor(context, ThemeColor.COLOR_PRIMARY.resourceId), isDark
+        )
     }
 }
 
@@ -58,17 +62,6 @@ private fun themeColorScheme(@ColorInt color: Int, isDark: Boolean): ColorScheme
     val primary = Color(color)
     val onPrimary = if (primary.luminance() > 0.5f) Color.Black else Color.White
     return colorScheme.copy(primary = primary, onPrimary = onPrimary)
-}
-
-// Theme colors have a lighter variant for night mode, which follows the app setting instead of the
-// system.
-@ColorInt
-private fun ThemeColor.color(context: Context, isDark: Boolean): Int {
-    val configuration = Configuration(context.resources.configuration).apply {
-        uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or
-            if (isDark) Configuration.UI_MODE_NIGHT_YES else Configuration.UI_MODE_NIGHT_NO
-    }
-    return ContextCompat.getColor(context.createConfigurationContext(configuration), resourceId)
 }
 
 private fun DynamicScheme.toColorScheme(): ColorScheme {

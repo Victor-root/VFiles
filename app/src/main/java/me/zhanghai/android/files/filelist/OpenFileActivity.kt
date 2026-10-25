@@ -7,8 +7,8 @@ package me.zhanghai.android.files.filelist
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import java8.nio.file.Path
-import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
@@ -19,7 +19,7 @@ import me.zhanghai.android.files.util.createViewIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.startActivitySafe
 
-class OpenFileActivity : AppActivity() {
+class OpenFileActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
