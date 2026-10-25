@@ -82,7 +82,7 @@ class AddLanSmbServerFragment : Fragment() {
     }
 
     private fun addSmbServer(server: LanSmbServer?) {
-        addSmbServerLauncher.launchSafe(EditSmbServerFragment.Args(host = server?.host), this)
+        addSmbServerLauncher.launchSafe(EditSmbServerActivity.Args(host = server?.host), this)
     }
 
     private fun onAddSmbServerResult(result: Boolean) {

@@ -209,12 +209,14 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditFtpServerActivity"
             android:label="@string/storage_edit_ftp_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditSftpServerActivity"
             android:label="@string/storage_edit_sftp_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.AddLanSmbServerActivity"
@@ -224,12 +226,14 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditSmbServerActivity"
             android:label="@string/storage_edit_smb_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditWebDavServerActivity"
             android:label="@string/storage_edit_webdav_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:theme="@style/Theme.VFiles"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity"

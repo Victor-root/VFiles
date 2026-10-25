@@ -48,5 +48,5 @@ class WebDavServer(
         get() = authority.createWebDavRootPath().resolve(relativePath)
 
     override fun createEditIntent(): Intent =
-        EditWebDavServerActivity::class.createIntent().putArgs(EditWebDavServerFragment.Args(this))
+        EditWebDavServerActivity::class.createIntent().putArgs(EditWebDavServerActivity.Args(this))
 }
