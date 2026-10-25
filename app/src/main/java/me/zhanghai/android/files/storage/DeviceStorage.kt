@@ -30,7 +30,7 @@ sealed class DeviceStorage : Storage() {
 
     override fun createEditIntent(): Intent =
         EditDeviceStorageDialogActivity::class.createIntent()
-            .putArgs(EditDeviceStorageDialogFragment.Args(this))
+            .putArgs(EditDeviceStorageDialogActivity.Args(this))
 
     fun copy_(
         customName: String? = this.customName,

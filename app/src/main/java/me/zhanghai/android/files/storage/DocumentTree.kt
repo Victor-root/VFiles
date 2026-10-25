@@ -66,5 +66,5 @@ data class DocumentTree(
 
     override fun createEditIntent(): Intent =
         EditDocumentTreeDialogActivity::class.createIntent()
-            .putArgs(EditDocumentTreeDialogFragment.Args(this))
+            .putArgs(EditDocumentTreeDialogActivity.Args(this))
 }

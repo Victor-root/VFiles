@@ -40,5 +40,5 @@ data class ExternalStorageShortcut(
 
     override fun createEditIntent(): Intent =
         EditExternalStorageShortcutDialogActivity::class.createIntent()
-            .putArgs(EditExternalStorageShortcutDialogFragment.Args(this))
+            .putArgs(EditExternalStorageShortcutDialogActivity.Args(this))
 }

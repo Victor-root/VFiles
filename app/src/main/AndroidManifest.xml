@@ -184,7 +184,7 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditDeviceStorageDialogActivity"
             android:label="@string/storage_edit_device_storage_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.AddExternalStorageShortcutActivity"
@@ -194,7 +194,7 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditExternalStorageShortcutDialogActivity"
             android:label="@string/storage_edit_external_storage_shortcut_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.AddDocumentTreeActivity"
@@ -204,7 +204,7 @@
         <activity
             android:name="me.zhanghai.android.files.storage.EditDocumentTreeDialogActivity"
             android:label="@string/storage_edit_document_tree_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.storage.EditFtpServerActivity"
