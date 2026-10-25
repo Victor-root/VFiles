@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Itxi</string>
     <string name="copied_to_clipboard_format">Arbelean kopiatu da \"%1$s\".</string>
     <string name="copy">Kopiatu</string>
@@ -198,7 +197,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Errorea gertatu da “%1$s”-ren SELinux testuingurua berrezartzean.\n%2$s</string>
     <string name="file_job_write_error_title">Errorea idaztean</string>
     <string name="file_job_write_error_message_format">Errorea gertatu da “%1$s” idaztean.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Errorea gertatu da “%1$s”-ren informazioa jasotzean.</string>
     <string name="file_job_remount_format">Birmuntatu \"%1$s\" irakurri-idatzi moduan </string>
     <string name="file_job_remount_loading_format">\"%1$s\" irakurri-idatzi moduan birmuntatzen…</string>
     <string name="file_job_remount_success_format">\"%1$s\" irakurri-idatzi moduan birmuntatu da</string>
@@ -285,7 +283,6 @@
     <string name="file_properties_basic_parent_directory">Karpeta gurasoa</string>
     <string name="file_properties_basic_archive_file">Artxibo fitxategia</string>
     <string name="file_properties_basic_archive_entry">Artxibo sarrera</string>
-    <string name="file_properties_basic_free_space">Espazio librea</string>
     <string name="storage_file_system_root_title">Erroa</string>
     <string name="storage_internal_storage">Barne-biltegiratzea</string>
     <string name="navigation_storage_subtitle_format">%1$s libre %2$s guztira</string>
@@ -346,7 +343,6 @@
     <string name="settings_default_directory_title">Lehenetsitako karpeta</string>
     <string name="settings_standard_directories_title">Karpeta estandarrak</string>
     <string name="settings_standard_directories_summary_empty">Ez da karpeta estandarrik gaitu</string>
-    <string name="settings_bookmark_directory_screenshots">Pantaila-argazkiak</string>
     <string name="settings_bookmark_directories_title">Karpeten laster-markak</string>
     <string name="settings_bookmark_directories_summary_empty">Karpeten laster-markarik ez</string>
     <string name="settings_root_strategy_title">Root sarbidea modua</string>
@@ -372,11 +368,9 @@
     <string name="about_version_title">Bertsioa</string>
     <string name="about_github_title">Ikusi GitHub-en</string>
     <string name="about_licenses_title">Lizentziak</string>
-    <string name="about_privacy_policy_title">Pribatutasun gidalerroak</string>
     <string name="about_author_title">Egilea</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Jarraitu GitHub-en</string>
-    <string name="about_author_twitter_title">Jarraitu Twitter-en</string>
     <string name="app_name_launcher">Fitxategiak</string>
     <string name="about_fork_subtitle">Jatorrizkoa: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Horma-paperaren arabera</string>

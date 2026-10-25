@@ -34,7 +34,7 @@ compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-material-color-utilities = { module = "com.materialkolor:material-color-utilities", version = "5.0.1" }
+material-color-utilities = { module = "com.materialkolor:material-color-utilities", version = "6.0.0" }
 
 androidx-test-core = { module = "androidx.test:core-ktx", version = "1.7.0" }
 junit = { module = "junit:junit", version = "4.13.2" }
@@ -68,7 +68,6 @@ libsu-service = { module = "com.github.topjohnwu.libsu:service", version = "6.0.
 # colors.
 mina-core = { module = "org.apache.mina:mina-core", version = "2.2.10" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version = "13.1.5" }
-slf4j-android = { module = "org.slf4j:slf4j-android", version = "1.7.36" }
 # SMBJ 0.12.0 broke anonymous authentication: https://github.com/hierynomus/smbj/issues/792 , and
 # it's still an issue in 0.15.0.
 smbj = { module = "com.hierynomus:smbj", version = "0.11.5" }

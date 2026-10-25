@@ -8,7 +8,6 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity">
-
     <string name="close">Uždaryti</string>
     <string name="copied_to_clipboard_format">Suvestinė „%1$s“ nukopijuota į iškarpinę.</string>
     <string name="copy">Kopijuoti</string>
@@ -250,7 +249,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Įvyko klaida atkuriant SELinux kontekstą „%1$s“.\n%2$s</string>
     <string name="file_job_write_error_title">Klaida rašant</string>
     <string name="file_job_write_error_message_format">Įvyko klaida rašant “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Įvyko klaida gaunant informaciją apie “%1$s”.</string>
     <string name="file_job_remount_format">Permontuoti „%1$s“ kaip skaitymo ir rašymo</string>
     <string name="file_job_remount_loading_format">Permontavimas „%1$s“ kaip skaitymo ir rašymo…</string>
     <string name="file_job_remount_success_format">„%1$s“ buvo permontuotas kaip skaitymo ir rašymo</string>
@@ -373,7 +371,6 @@
     <string name="file_properties_basic_parent_directory">Pirminis aplankas</string>
     <string name="file_properties_basic_archive_file">Archyvo failas</string>
     <string name="file_properties_basic_archive_entry">Archyvo įrašas</string>
-    <string name="file_properties_basic_free_space">Laisvos vietos</string>
     <string name="file_properties_image">Nuotrauka</string>
     <string name="file_properties_media_dimensions">Matmenys</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -603,7 +600,6 @@
     <string name="settings_default_directory_title">Numatytas aplankas</string>
     <string name="settings_standard_directories_title">Standartiniai aplankai</string>
     <string name="settings_standard_directories_summary_empty">Neįjungti jokie standartiniai aplankai</string>
-    <string name="settings_bookmark_directory_screenshots">Ekrano nuotraukos</string>
     <string name="settings_bookmark_directories_title">Pažymėti aplankai</string>
     <string name="settings_bookmark_directories_summary_empty">Nėra pažymėtų aplankų</string>
     <string name="settings_root_strategy_title">Root prieigos režimas</string>
@@ -632,11 +628,9 @@
     <string name="about_version_title">Versija</string>
     <string name="about_github_title">Peržiūrėti GitHub svetainėje</string>
     <string name="about_licenses_title">Licencijos</string>
-    <string name="about_privacy_policy_title">Privatumo Politika</string>
     <string name="about_author_title">Autorius</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sekti GitHub svetainėje</string>
-    <string name="about_author_twitter_title">Sekti Twitter svetainėje</string>
     <string name="app_name_launcher">Failai</string>
     <string name="about_fork_subtitle">Originalas: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Pagal ekrano foną</string>

@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Bezárás</string>
     <string name="copied_to_clipboard_format">„%1$s” a vágólapra lett másolva.</string>
     <string name="copy">Másolás</string>
@@ -206,7 +205,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Hiba történt a(z) „%1$s” SELinux környezetének helyreállításakor.\n%2$s</string>
     <string name="file_job_write_error_title">Hiba az íráskor</string>
     <string name="file_job_write_error_message_format">Hiba történt a(z) „%1$s” írásakor.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Hiba történt a(z) „%1$s” információinak lekérésekor.</string>
     <string name="file_job_remount_format">A(z) „%1$s” újracsatolása írhatóként</string>
     <string name="file_job_remount_loading_format">A(z) „%1$s” újracsatolása írhatóként…</string>
     <string name="file_job_remount_success_format">A(z) „%1$s” újra lett csatolva írhatóként</string>
@@ -317,7 +315,6 @@
     <string name="file_properties_basic_parent_directory"> Szülőmappa</string>
     <string name="file_properties_basic_archive_file">Fájl archiválása</string>
     <string name="file_properties_basic_archive_entry">Bejegyzés archiválása</string>
-    <string name="file_properties_basic_free_space">Szabad hely</string>
     <string name="file_properties_image">Kép</string>
     <string name="file_properties_media_dimensions">Méretek</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -545,7 +542,6 @@
     <string name="settings_default_directory_title">Alapértelmezett mappa</string>
     <string name="settings_standard_directories_title">Szokásos mappák</string>
     <string name="settings_standard_directories_summary_empty">A szokásos mappák nem engedélyezettek</string>
-    <string name="settings_bookmark_directory_screenshots">Képernyőképek</string>
     <string name="settings_bookmark_directories_title">Mappák könyvjelzőzése</string>
     <string name="settings_bookmark_directories_summary_empty">Nincsenek könyvjelzőzött mappák</string>
     <string name="settings_root_strategy_title">Root hozzáférési mód</string>
@@ -572,11 +568,9 @@
     <string name="about_version_title">Verzió</string>
     <string name="about_github_title">Megtekintés a GitHubon</string>
     <string name="about_licenses_title">Licencek</string>
-    <string name="about_privacy_policy_title">Adatvédelmi nyilatkozat</string>
     <string name="about_author_title">Szerző</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Követés a GitHubon</string>
-    <string name="about_author_twitter_title">Követés Twitteren</string>
     <string name="app_name_launcher">Fájlok</string>
     <string name="about_fork_subtitle">Eredeti: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">A háttérkép alapján</string>

@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">關閉</string>
     <string name="copied_to_clipboard_format">已將「%1$s」複製到剪貼簿。</string>
     <string name="copy">複製</string>
@@ -189,7 +188,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">在還原「%1$s」的 SELinux 上下文時發生錯誤。\n%2$s</string>
     <string name="file_job_write_error_title">寫入時發生錯誤</string>
     <string name="file_job_write_error_message_format">在寫入「%1$s」時發生錯誤。\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">在取得「%1$s」的資訊時發生錯誤。</string>
     <string name="file_job_remount_format">重新掛接「%1$s」為讀寫模式</string>
     <string name="file_job_remount_loading_format">正在重新掛接「%1$s」為讀寫模式…</string>
     <string name="file_job_remount_success_format">「%1$s」已被重新掛接為讀寫模式</string>
@@ -305,7 +303,6 @@
     <string name="file_properties_basic_parent_directory">父資料夾</string>
     <string name="file_properties_basic_archive_file">封存檔</string>
     <string name="file_properties_basic_archive_entry">封存條目</string>
-    <string name="file_properties_basic_free_space">可用空間</string>
     <string name="file_properties_permission">權限</string>
     <string name="file_properties_permission_owner">擁有者</string>
     <string name="file_properties_permission_group">群組</string>
@@ -612,7 +609,6 @@
     <string name="settings_default_directory_title">預設資料夾</string>
     <string name="settings_standard_directories_title">標準資料夾</string>
     <string name="settings_standard_directories_summary_empty">未啟用標準資料夾</string>
-    <string name="settings_bookmark_directory_screenshots">螢幕擷取畫面</string>
     <string name="settings_bookmark_directories_title">書籤資料夾</string>
     <string name="settings_bookmark_directories_summary_empty">無書籤資料夾</string>
     <string name="settings_root_strategy_title">Root 存取模式</string>
@@ -639,11 +635,9 @@
     <string name="about_version_title">版本</string>
     <string name="about_github_title">在 GitHub 上查看</string>
     <string name="about_licenses_title">許可證</string>
-    <string name="about_privacy_policy_title">隱私權政策</string>
     <string name="about_author_title">作者</string>
     <string name="about_author_name_title">張海</string>
     <string name="about_author_github_title">在 GitHub 上關注</string>
-    <string name="about_author_twitter_title">在 Twitter 上關注</string>
     <string name="app_name_launcher">檔案</string>
     <string name="about_fork_subtitle">原作者：Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">根據桌布</string>

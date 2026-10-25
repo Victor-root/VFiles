@@ -47,6 +47,11 @@ class FtpServerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
 
+    // Called when data sync foreground services have run for their daily time limit.
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        stopSelf()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 

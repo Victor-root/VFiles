@@ -5,8 +5,7 @@
 
 package me.zhanghai.android.files.ui
 
-import android.content.Context
-import android.net.Uri
+import android.content.res.Resources
 import android.util.Xml
 import androidx.annotation.RawRes
 import androidx.compose.foundation.background
@@ -25,9 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.util.createViewIntent
 import me.zhanghai.android.files.util.startActivitySafe
@@ -42,8 +43,8 @@ private class Notice(
 
 @Composable
 fun LicensesDialog(onDismissRequest: () -> Unit) {
-    val context = LocalContext.current
-    val notices = remember(context) { context.readNotices() }
+    val resources = LocalResources.current
+    val notices = remember(resources) { resources.readNotices() }
     AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
@@ -66,7 +67,7 @@ private fun NoticeItem(notice: Notice) {
         Column(
             modifier = if (notice.url != null) {
                 Modifier.clickable {
-                    context.startActivitySafe(Uri.parse(notice.url).createViewIntent())
+                    context.startActivitySafe(notice.url.toUri().createViewIntent())
                 }
             } else {
                 Modifier
@@ -81,10 +82,11 @@ private fun NoticeItem(notice: Notice) {
                 )
             }
         }
-        val licenseText = remember(notice) {
+        val resources = LocalResources.current
+        val licenseText = remember(notice, resources) {
             listOfNotNull(
                 notice.copyright,
-                notice.licenseRes?.let { context.resources.openRawResource(it).reader().readText() }
+                notice.licenseRes?.let { resources.openRawResource(it).reader().readText() }
             ).joinToString("\n\n")
         }
         Text(
@@ -99,8 +101,8 @@ private fun NoticeItem(notice: Notice) {
     }
 }
 
-private fun Context.readNotices(): List<Notice> =
-    resources.openRawResource(R.raw.licenses).use { inputStream ->
+private fun Resources.readNotices(): List<Notice> =
+    openRawResource(R.raw.licenses).use { inputStream ->
         val parser = Xml.newPullParser().apply { setInput(inputStream, null) }
         val notices = mutableListOf<Notice>()
         var fields = mutableMapOf<String, String>()

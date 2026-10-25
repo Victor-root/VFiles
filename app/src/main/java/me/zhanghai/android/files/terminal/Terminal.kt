@@ -8,7 +8,7 @@ package me.zhanghai.android.files.terminal
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.util.startActivitySafe
 
@@ -22,7 +22,7 @@ object Terminal {
         val intent = Intent()
             .setComponent(componentName)
             .setAction(Intent.ACTION_SEND)
-            .putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
+            .putExtra(Intent.EXTRA_STREAM, path.toUri())
         context.startActivitySafe(intent)
     }
 }

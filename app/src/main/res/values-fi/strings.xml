@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="close">Sulje</string>
     <string name="copied_to_clipboard_format">%1$s kopioitiin leikepöydälle.</string>
     <string name="copy">Kopioi</string>
@@ -197,7 +196,6 @@
     <string name="file_job_restore_selinux_context_error_message_format">Tapahtui virhe palauttaessa SELinux-kontekstia kohteelle “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Virhe kirjoittamisessa</string>
     <string name="file_job_write_error_message_format">Tapahtui virhe kirjoittaessa “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Tapahtui virhe hakiessa tietoa kohteesta “%1$s”.</string>
     <string name="file_job_action_all">Suorita toiminto kaikille tiedostoille</string>
 
     <string name="file_open_apk_message">Tämä tiedosto on Android-asennustiedosto. Haluatko asentaa sen vai nähdä sen sisällön?</string>
@@ -303,7 +301,6 @@
     </plurals>
     <string name="file_properties_basic_last_modification_time">Viimeksi muokattu</string>
     <string name="file_properties_basic_parent_directory">Ylähakemisto</string>
-    <string name="file_properties_basic_free_space">Vapaata tilaa</string>
     <string name="file_properties_image">Kuva</string>
     <string name="file_properties_media_dimensions">Mitat</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -528,7 +525,6 @@
     <string name="settings_default_directory_title">Oletuskansio</string>
     <string name="settings_standard_directories_title">Standardihakemistot</string>
     <string name="settings_standard_directories_summary_empty">Standardihakemistoja ei ole otettu käyttöön</string>
-    <string name="settings_bookmark_directory_screenshots">Kuvakaappaukset</string>
     <string name="settings_bookmark_directories_title">Kirjanmerkkikansiot</string>
     <string name="settings_bookmark_directories_summary_empty">Ei kirjanmerkkikansioita</string>
     <string name="settings_root_strategy_title">Root-käyttöoikeus</string>
@@ -555,11 +551,9 @@
     <string name="about_version_title">Versio</string>
     <string name="about_github_title">Avaa GitHubissa</string>
     <string name="about_licenses_title">Lisenssit</string>
-    <string name="about_privacy_policy_title">Tietosuojaseloste</string>
     <string name="about_author_title">Tekijä</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Seuraa GitHubissa</string>
-    <string name="about_author_twitter_title">Seuraa Twitterissä</string>
     <string name="app_name_launcher">Tiedostot</string>
     <string name="about_fork_subtitle">Alkuperäinen: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Taustakuvan mukaan</string>

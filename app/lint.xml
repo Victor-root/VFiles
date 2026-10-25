@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<lint>
+    <!-- AGP leaves the adaptive icons out of the R class without the v26 qualifier. -->
+    <issue id="ObsoleteSdkInt">
+        <ignore path="src/main/res/mipmap-anydpi-v26" />
+    </issue>
+    <!-- SMBJ is pinned on purpose, see the version catalog. -->
+    <issue id="NewerVersionAvailable">
+        <ignore regexp="com\.hierynomus:smbj" />
+    </issue>
+</lint>

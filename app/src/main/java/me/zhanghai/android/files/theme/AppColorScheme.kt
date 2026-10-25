@@ -16,8 +16,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.core.content.ContextCompat
+import com.materialkolor.dynamiccolor.DynamicScheme
 import com.materialkolor.hct.Hct
-import com.materialkolor.scheme.DynamicScheme
 import com.materialkolor.scheme.SchemeContent
 import com.materialkolor.scheme.SchemeFidelity
 import me.zhanghai.android.files.theme.custom.ThemeColor

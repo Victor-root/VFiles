@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.about
 
-import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -36,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toUri
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
@@ -50,8 +50,8 @@ class AboutActivity : AppActivity() {
     }
 }
 
-private val GITHUB_URI = Uri.parse("https://github.com/Victor-root/VFiles")
-private val AUTHOR_URI = Uri.parse("https://github.com/Victor-root")
+private val GITHUB_URI = "https://github.com/Victor-root/VFiles".toUri()
+private val AUTHOR_URI = "https://github.com/Victor-root".toUri()
 
 @Composable
 private fun AboutScreen() {

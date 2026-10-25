@@ -63,8 +63,7 @@
 
         <activity
             android:name="me.zhanghai.android.files.onboarding.OnboardingActivity"
-            android:exported="false"
-            android:label="@string/app_name" />
+            android:exported="false" />
 
         <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
