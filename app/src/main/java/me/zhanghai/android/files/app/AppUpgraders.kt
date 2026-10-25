@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.StringRes
+import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.edit
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.compat.PreferenceManagerCompat
@@ -36,6 +37,7 @@ import me.zhanghai.android.files.provider.linux.LinuxFileSystem
 import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.provider.sftp.SftpFileSystem
 import me.zhanghai.android.files.provider.smb.SmbFileSystem
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.DocumentTree
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.PrimaryStorageVolume
@@ -634,6 +636,7 @@ private fun readWriteLengthPrefixedValue(oldParcel: Parcel, newParcel: Parcel, b
 
 internal fun upgradeAppTo2_0_0() {
     migrateCreateArchiveTypeSetting2_0_0()
+    migrateLocalesSetting2_0_0()
 }
 
 // The archive type used to be stored as the resource name of its radio button.
@@ -646,4 +649,14 @@ private fun migrateCreateArchiveTypeSetting2_0_0() {
         else -> ArchiveType.ZIP
     }
     defaultSharedPreferences.edit { putString(key, type.ordinal.toString()) }
+}
+
+// The app locales before Android 13 used to be stored by AppCompat, which LocaleManagerCompat
+// still reads.
+private fun migrateLocalesSetting2_0_0() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return
+    }
+    val locales = LocaleManagerCompat.getApplicationLocales(application)
+    Settings.LOCALES.putValue(locales.toLanguageTags())
 }

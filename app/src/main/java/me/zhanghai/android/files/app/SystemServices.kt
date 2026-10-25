@@ -14,7 +14,7 @@ import android.os.PowerManager
 import android.os.storage.StorageManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import androidx.preference.PreferenceManager
+import me.zhanghai.android.files.compat.PreferenceManagerCompat
 import me.zhanghai.android.files.compat.getSystemServiceCompat
 import me.zhanghai.android.files.compat.mainExecutorCompat
 import okhttp3.OkHttpClient
@@ -44,7 +44,7 @@ val clipboardManager: ClipboardManager by lazy {
 val contentResolver: ContentResolver by lazy { application.contentResolver }
 
 val defaultSharedPreferences: SharedPreferences by lazy {
-    PreferenceManager.getDefaultSharedPreferences(application)
+    PreferenceManagerCompat.getDefaultSharedPreferences(application)
 }
 
 val okHttpClient: OkHttpClient by lazy { OkHttpClient() }

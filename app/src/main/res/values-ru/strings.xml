@@ -10,6 +10,7 @@
     tools:ignore="ImpliedQuantity">
 
     <string name="close">Закрыть</string>
+    <string name="copied_to_clipboard_format">Текст \"%1$s\" скопирован в буфер обмена</string>
     <string name="copy">Копировать</string>
     <string name="cut">Вырезать</string>
     <string name="default_">По умолчанию</string>

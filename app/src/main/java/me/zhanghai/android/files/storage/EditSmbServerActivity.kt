@@ -37,7 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hierynomus.smbj.auth.AuthenticationContext
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.smb.client.Authority
 import me.zhanghai.android.files.ui.FormDropdownField
 import me.zhanghai.android.files.ui.FormErrors
@@ -51,7 +51,7 @@ import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditSmbServerActivity : ComposeActivity() {
+class EditSmbServerActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

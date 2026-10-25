@@ -37,13 +37,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.LicensesDialog
 import me.zhanghai.android.files.util.createViewIntent
 import me.zhanghai.android.files.util.startActivitySafe
 
-class AboutActivity : ComposeActivity() {
+class AboutActivity : AppActivity() {
     @Composable
     override fun Content() {
         AboutScreen()

@@ -62,6 +62,10 @@ object Settings {
             FileSortOptions(FileSortOptions.By.NAME, FileSortOptions.Order.ASCENDING, true)
         )
 
+    /** The language tags of the app locales before Android 13, empty to follow the system. */
+    val LOCALES: SettingLiveData<String> =
+        StringSettingLiveData(R.string.pref_key_locales, R.string.pref_default_value_locales)
+
     val CREATE_ARCHIVE_TYPE: SettingLiveData<ArchiveType> =
         EnumSettingLiveData(
             R.string.pref_key_create_archive_type, R.string.pref_default_value_create_archive_type,

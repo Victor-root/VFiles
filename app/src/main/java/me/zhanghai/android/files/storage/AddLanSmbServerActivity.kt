@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
@@ -44,7 +44,7 @@ import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.launchSafe
 import me.zhanghai.android.files.util.observeAsStateCompat
 
-class AddLanSmbServerActivity : ComposeActivity() {
+class AddLanSmbServerActivity : AppActivity() {
     @Composable
     override fun Content() {
         val viewModel = viewModel { AddLanSmbServerViewModel() }

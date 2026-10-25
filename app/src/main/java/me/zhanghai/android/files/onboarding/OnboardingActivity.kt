@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.createIntent
@@ -64,7 +64,7 @@ import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 /** Asks for the permissions the app needs on its first launch, before showing the files. */
-class OnboardingActivity : ComposeActivity() {
+class OnboardingActivity : AppActivity() {
     private var finishing = false
 
     // Incremented when coming back from a permission request, so that grants are checked again.

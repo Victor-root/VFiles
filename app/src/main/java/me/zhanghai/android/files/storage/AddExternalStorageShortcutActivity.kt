@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
@@ -18,7 +18,7 @@ import me.zhanghai.android.files.util.createDocumentsUiViewDirectoryIntent
 import me.zhanghai.android.files.util.showToast
 
 /** Shows no UI, adds the shortcut if the system can open it and finishes. */
-class AddExternalStorageShortcutActivity : ComposeActivity() {
+class AddExternalStorageShortcutActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

@@ -49,7 +49,6 @@ android {
         buildConfig = true
         compose = true
         resValues = true
-        viewBinding = true
     }
     androidResources {
         generateLocaleConfig = true
@@ -168,20 +167,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.drawerlayout)
     implementation(libs.androidx.exifinterface)
-    implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
-    implementation(libs.androidx.preference)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.swiperefreshlayout)
-    implementation(libs.material)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.activity.compose)
@@ -215,23 +206,16 @@ dependencies {
         exclude(group = "com.hierynomus", module = "smbj")
         exclude(group = "org.bouncycastle", module = "bcprov-jdk18on")
     }
-    implementation(libs.drakeet.drawer)
-    implementation(libs.fastscroll)
     implementation(libs.ftpserver.core)
     implementation(libs.guava)
     implementation(libs.guava.listenablefuture)
-    implementation(libs.insetter)
     implementation(libs.jcifs.ng) {
         exclude(group = "org.bouncycastle", module = "bcprov-jdk18on")
     }
     implementation(libs.libsu.service)
-    implementation(libs.licensesdialog)
-    implementation(libs.materialshadowninepatch)
-    implementation(libs.advrecyclerview)
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)
     implementation(libs.shizuku.api)
-    implementation(libs.simplemenu.preference)
     // Also a dependency of jCIFS-NG.
     implementation(libs.slf4j.android)
     implementation(libs.smbj) {
@@ -239,14 +223,12 @@ dependencies {
         // only one copy of it.
         exclude(group = "org.bouncycastle", module = "bcprov-jdk15on")
     }
-    implementation(libs.speed.dial)
     implementation(libs.sshj) {
         exclude(group = "org.bouncycastle", module = "bcprov-jdk18on")
         exclude(group = "org.bouncycastle", module = "bcpkix-jdk18on")
     }
     implementation(libs.telephoto.zoomable.image.coil)
     implementation(libs.zhanghai.appiconloader)
-    implementation(libs.zhanghai.foregroundcompat)
     implementation(libs.zhanghai.libarchive)
     implementation(libs.zhanghai.libselinux)
     implementation(libs.zhanghai.retrofile)

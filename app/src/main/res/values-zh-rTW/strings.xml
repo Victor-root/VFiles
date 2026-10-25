@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">關閉</string>
+    <string name="copied_to_clipboard_format">已將「%1$s」複製到剪貼簿。</string>
     <string name="copy">複製</string>
     <string name="cut">剪下</string>
     <string name="default_">預設</string>

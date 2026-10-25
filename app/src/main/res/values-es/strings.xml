@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Cerrar</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" se ha copiado en el portapapeles.</string>
     <string name="copy">Copiar</string>
     <string name="cut">Cortar</string>
     <string name="default_">Predeterminado</string>

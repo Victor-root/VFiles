@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.ui.ReadOnlyTextField
@@ -28,7 +28,7 @@ import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
 
-class EditBookmarkDirectoryDialogActivity : ComposeActivity() {
+class EditBookmarkDirectoryDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

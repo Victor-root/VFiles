@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">닫기</string>
+    <string name="copied_to_clipboard_format">\'%1$s\'이(가) 클립보드에 복사되었습니다.</string>
     <string name="copy">복사</string>
     <string name="cut">잘라내기</string>
     <string name="default_">기본</string>

@@ -18,6 +18,10 @@
     <string name="pref_key_file_list_view_type">key_file_list_view_type</string>
     <string name="pref_default_value_file_list_view_type">0</string>
     <string name="pref_key_file_list_sort_options">key_file_list_sort_options</string>
+    <!-- The app locales before Android 13, which manages them itself after. -->
+    <string name="pref_key_locales">key_locales</string>
+    <string name="pref_default_value_locales" />
+
     <string name="pref_key_create_archive_type">key_create_archive_type</string>
     <string name="pref_default_value_create_archive_type">0</string>
 

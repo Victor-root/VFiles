@@ -10,6 +10,7 @@
     tools:ignore="ImpliedQuantity">
 
     <string name="close">بستن</string>
+    <string name="copied_to_clipboard_format">«%1$s» در بریده‌دان کپی شد.</string>
     <string name="copy">رونوشت</string>
     <string name="cut">برش</string>
     <string name="default_">پیش‌گزیده</string>

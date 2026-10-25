@@ -14,13 +14,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.asDocumentTreeUriOrNull
 import me.zhanghai.android.files.file.takePersistablePermission
 import me.zhanghai.android.files.util.launchSafe
 
 /** Shows no UI but the system picker of the document tree to add. */
-class AddDocumentTreeActivity : ComposeActivity() {
+class AddDocumentTreeActivity : AppActivity() {
     @Composable
     override fun Content() {
         val openDocumentTreeLauncher =

@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Tutup</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" disalin ke papan klip.</string>
     <string name="copy">Salin</string>
     <string name="cut">Potong</string>
     <string name="default_">Bawaan</string>

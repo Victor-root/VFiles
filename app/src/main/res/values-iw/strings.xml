@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">סגירה</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" הועתק ללוח.</string>
     <string name="copy">העתקה</string>
     <string name="cut">גזירה</string>
     <string name="default_">ברירת מחדל</string>

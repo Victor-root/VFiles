@@ -24,8 +24,6 @@ private val getPathMethod by lazyReflectedMethod(storageVolumeClass, "getPath")
 val StorageVolume.pathCompat: String
     get() = getPathMethod.invoke(this) as String
 
-private val getPathFileMethod by lazyReflectedMethod(storageVolumeClass, "getPathFile")
-
 val StorageVolume.pathFileCompat: File
     get() = File(pathCompat)
 
@@ -46,10 +44,6 @@ fun StorageVolume.getDescriptionCompat(context: Context): String = getDescriptio
 val StorageVolume.isPrimaryCompat: Boolean
     @SuppressLint("NewApi")
     get() = isPrimary
-
-val StorageVolume.isRemovableCompat: Boolean
-    @SuppressLint("NewApi")
-    get() = isRemovable
 
 val StorageVolume.isEmulatedCompat: Boolean
     @SuppressLint("NewApi")

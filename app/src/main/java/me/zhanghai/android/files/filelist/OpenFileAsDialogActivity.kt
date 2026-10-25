@@ -23,7 +23,7 @@ import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeType
 import me.zhanghai.android.files.file.fileProviderUri
@@ -36,7 +36,7 @@ import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.withChooser
 
 /** Opens a file as another type, chosen in a dialog, from the "Open with" chooser. */
-class OpenFileAsDialogActivity : ComposeActivity() {
+class OpenFileAsDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

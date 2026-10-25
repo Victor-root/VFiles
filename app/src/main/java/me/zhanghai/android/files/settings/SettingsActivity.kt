@@ -27,7 +27,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
 import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
@@ -45,7 +45,7 @@ import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe
 import java.nio.charset.Charset
 
-class SettingsActivity : ComposeActivity() {
+class SettingsActivity : AppActivity() {
     @Composable
     override fun Content() {
         SettingsScreen()

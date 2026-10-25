@@ -29,7 +29,7 @@ import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.common.PosixFileStore
 import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.util.ActionState
@@ -48,7 +48,7 @@ import me.zhanghai.android.files.util.showToast
  * Tells about an error of a file job and asks what to do, optionally for all errors. A read-only
  * file store can be remounted as read-write from here.
  */
-class FileJobErrorDialogActivity : ComposeActivity() {
+class FileJobErrorDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     private var isListenerNotified = false

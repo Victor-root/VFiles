@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Zavřít</string>
+    <string name="copied_to_clipboard_format">Položka %1$s byla zkopírována do schránky.</string>
     <string name="copy">Kopírovat</string>
     <string name="cut">Vyjmout</string>
     <string name="default_">Výchozí</string>

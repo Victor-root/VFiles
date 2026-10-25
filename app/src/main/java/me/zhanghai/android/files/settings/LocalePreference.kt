@@ -8,9 +8,7 @@ package me.zhanghai.android.files.settings
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 import androidx.activity.compose.LocalActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.LocaleManagerCompat
-import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.application
@@ -27,7 +24,9 @@ import me.zhanghai.android.files.compat.LocaleConfigCompat
 import me.zhanghai.android.files.ui.DialogListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.util.startActivitySafe
+import me.zhanghai.android.files.util.takeIfNotEmpty
 import me.zhanghai.android.files.util.toList
+import me.zhanghai.android.files.util.valueCompat
 import java.util.Locale
 
 @Composable
@@ -49,7 +48,7 @@ fun LocalePreference() {
             onClick = {
                 context.startActivitySafe(
                     Intent(
-                        Settings.ACTION_APP_LOCALE_SETTINGS,
+                        android.provider.Settings.ACTION_APP_LOCALE_SETTINGS,
                         Uri.fromParts("package", context.packageName, null)
                     )
                 )
@@ -66,20 +65,17 @@ fun LocalePreference() {
             title = title,
             entries = listOf(null) + supportedLocales,
             entryLabel = { it?.sentenceCasedLocalizedDisplayName ?: systemDefault },
-            value = applicationLocale,
+            value = Settings.LOCALES.valueCompat.takeIfNotEmpty()
+                ?.let { Locale.forLanguageTag(it) },
             onValueChange = {
-                val locales = if (it != null) {
-                    LocaleListCompat.create(it)
-                } else {
-                    LocaleListCompat.getEmptyLocaleList()
-                }
-                AppCompatDelegate.setApplicationLocales(locales)
+                Settings.LOCALES.putValue(it?.toLanguageTag().orEmpty())
                 activity?.recreate()
             }
         )
     }
 }
 
+// The locale set in the system settings, from Android 13.
 private val applicationLocale: Locale?
     get() = LocaleManagerCompat.getApplicationLocales(application).toList().firstOrNull()
 

@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Κλείσιμο</string>
+    <string name="copied_to_clipboard_format">Το \"%1$s\" αντιγράφηκε στο πρόχειρο.</string>
     <string name="copy">Αντιγραφή</string>
     <string name="cut">Αποκοπή</string>
     <string name="default_">Προεπιλογή</string>

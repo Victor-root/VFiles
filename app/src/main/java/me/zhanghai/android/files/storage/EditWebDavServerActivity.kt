@@ -21,7 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.webdav.client.AccessTokenAuthentication
 import me.zhanghai.android.files.provider.webdav.client.Authority
 import me.zhanghai.android.files.provider.webdav.client.NoneAuthentication
@@ -37,7 +37,7 @@ import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditWebDavServerActivity : ComposeActivity() {
+class EditWebDavServerActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

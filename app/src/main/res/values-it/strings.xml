@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Chiudi</string>
+    <string name="copied_to_clipboard_format">\"%1$s\"copiato negli appunti.</string>
     <string name="copy">Copia</string>
     <string name="cut">Taglia</string>
     <string name="default_">Predefinito</string>

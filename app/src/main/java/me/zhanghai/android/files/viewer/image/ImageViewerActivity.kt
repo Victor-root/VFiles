@@ -69,7 +69,7 @@ import kotlinx.parcelize.WriteWith
 import me.saket.telephoto.zoomable.coil3.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.provider.common.delete
 import me.zhanghai.android.files.ui.AppTopAppBar
@@ -84,7 +84,7 @@ import me.zhanghai.android.files.util.withChooser
 import java.io.IOException
 import kotlin.math.abs
 
-class ImageViewerActivity : ComposeActivity() {
+class ImageViewerActivity : AppActivity() {
     override val hasDarkSystemBars: Boolean
         get() = true
 

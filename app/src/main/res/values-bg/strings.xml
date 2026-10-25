@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Затваряне</string>
+    <string name="copied_to_clipboard_format">Копирахте „%1$s“ в буферната памет.</string>
     <string name="copy">Копиране</string>
     <string name="cut">Изрязване</string>
     <string name="default_">По подразбиране</string>

@@ -34,7 +34,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.storage.StorageVolumeCustomizations
 import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.ui.TextFieldDialog
@@ -42,7 +42,7 @@ import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.startActivitySafe
 
-class EditStorageVolumeDialogActivity : ComposeActivity() {
+class EditStorageVolumeDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable

@@ -11,6 +11,7 @@
 
     <string name="clear_query">Effacer la recherche</string>
     <string name="close">Fermer</string>
+    <string name="copied_to_clipboard_format">« %1$s » copié dans le presse-papiers.</string>
     <string name="copy">Copier</string>
     <string name="cut">Couper</string>
     <string name="default_">Par défaut</string>

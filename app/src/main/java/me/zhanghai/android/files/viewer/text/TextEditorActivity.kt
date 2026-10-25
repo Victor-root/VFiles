@@ -50,7 +50,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.FastScroller
 import me.zhanghai.android.files.ui.SingleChoiceDialog
@@ -62,7 +62,7 @@ import me.zhanghai.android.files.util.isReady
 import me.zhanghai.android.files.util.showToast
 import java.nio.charset.Charset
 
-class TextEditorActivity : ComposeActivity() {
+class TextEditorActivity : AppActivity() {
     private lateinit var file: Path
 
     override fun onCreate(savedInstanceState: Bundle?) {

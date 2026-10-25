@@ -14,7 +14,7 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import java8.nio.file.Path
 import java8.nio.file.Paths
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.file.extension
@@ -28,7 +28,7 @@ import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import me.zhanghai.android.files.util.valueCompat
 
-class FileListActivity : ComposeActivity() {
+class FileListActivity : AppActivity() {
     private val viewModel by viewModels<FileListViewModel>()
 
     private var isOnboarding = false

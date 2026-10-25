@@ -8,6 +8,7 @@
 <resources>
 
     <string name="close">Sluiten</string>
+    <string name="copied_to_clipboard_format">\'%1$s\' is gekopieerd naar het klembord.</string>
     <string name="copy">Kopiëren</string>
     <string name="cut">Knippen</string>
     <string name="default_">Standaard</string>

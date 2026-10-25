@@ -53,7 +53,7 @@
 
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">No application found to handle this action</string>
-    <string name="copied_to_clipboard_format" translatable="false">@string/preference_copied</string>
+    <string name="copied_to_clipboard_format">“%1$s” copied to clipboard.</string>
     <string name="open_settings">Open settings</string>
 
     <plurals name="size_in_bytes_format">

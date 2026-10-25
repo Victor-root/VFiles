@@ -12,7 +12,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.ComposeActivity
+import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.file.displayName
@@ -23,7 +23,7 @@ import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.takeIfNotEmpty
 
-class EditExternalStorageShortcutDialogActivity : ComposeActivity() {
+class EditExternalStorageShortcutDialogActivity : AppActivity() {
     private val args by args<Args>()
 
     @Composable
