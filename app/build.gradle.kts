@@ -90,15 +90,6 @@ android {
         }
     }
     buildTypes {
-        debug {
-            // Sign debug builds (the green-triangle install) with the release key too, when
-            // keystore.properties is present, so they share a signature with the published release
-            // APK. Without that shared signature you can't install one over the other without
-            // uninstalling first. Guarded so builds without keystore.properties are unaffected.
-            if (rootProject.file("keystore.properties").exists()) {
-                signingConfig = signingConfigs.getByName("release")
-            }
-        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -106,6 +97,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            // Optimized like release, to judge the smoothness of the app on a device. This makes
+            // the build not debuggable, so BuildConfig.DEBUG is false as well.
+            initWith(getByName("release"))
+            // Sign debug builds (the green-triangle install) with the release key too, when
+            // keystore.properties is present, so they share a signature with the published release
+            // APK. Without that shared signature you can't install one over the other without
+            // uninstalling first. Guarded so builds without keystore.properties are unaffected.
+            signingConfig = if (rootProject.file("keystore.properties").exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
     packaging {
