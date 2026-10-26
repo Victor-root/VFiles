@@ -7,28 +7,35 @@ package me.zhanghai.android.files.util
 
 import android.app.Activity
 import android.os.Build
+import android.os.Debug
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.SystemClock
 import android.util.Log
-import android.view.Display
 import android.view.FrameMetrics
 import android.view.Window
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layout
 import me.zhanghai.android.files.BuildConfig
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 
 /**
- * Logs frame timings and recomposition counts once per second while frames are drawn, in debug
- * builds only. Filter logcat with the VFilesPerf tag.
+ * Logs frame timings, missed frames, slow work and recomposition counts once per second while
+ * frames are drawn, in debug builds only. Filter logcat with the VFilesPerf tag.
  */
 object PerfLog {
     private const val TAG = "VFilesPerf"
     private const val NANOS_PER_MILLI = 1_000_000.0
+    private const val SLOW_WORK_NANOS = 3_000_000L
+    // A longer pause between two frames means scrolling stopped, not that frames were missed.
+    private const val MAX_GAP_NANOS = 200_000_000L
 
     private val counts = ConcurrentHashMap<String, AtomicInteger>()
+    private val workNanos = ConcurrentHashMap<String, AtomicLong>()
 
     private val handler by lazy {
         Handler(HandlerThread(TAG).apply { start() }.looper)
@@ -37,7 +44,10 @@ object PerfLog {
     private val frames = mutableListOf<LongArray>()
     private var windowStartMillis = 0L
     private var frameBudgetNanos = 0L
-    private var display: Display? = null
+    private var lastVsyncNanos = 0L
+    private var missedVsyncs = 0
+    private var gcCount = 0L
+    private var gcTimeMillis = 0L
 
     /** Counts a composition of the calling scope under [name]. */
     @Composable
@@ -47,19 +57,45 @@ object PerfLog {
         }
     }
 
+    /** Runs [block], adding its duration to [name] and logging it right away when it's slow. */
+    inline fun <T> time(name: String, block: () -> T): T {
+        if (!BuildConfig.PERF_LOGS) {
+            return block()
+        }
+        val start = System.nanoTime()
+        val result = block()
+        addWork(name, System.nanoTime() - start)
+        return result
+    }
+
+    fun addWork(name: String, nanos: Long) {
+        workNanos.getOrPut(name) { AtomicLong() }.addAndGet(nanos)
+        if (nanos > SLOW_WORK_NANOS) {
+            Log.d(TAG, "slow $name=%.1fms".format(nanos / NANOS_PER_MILLI))
+        }
+    }
+
+    /** Times the measurement of the modified layout, which composes the new items of a lazy list. */
+    fun Modifier.timeMeasure(name: String): Modifier =
+        if (BuildConfig.PERF_LOGS) {
+            layout { measurable, constraints ->
+                val placeable = time(name) { measurable.measure(constraints) }
+                layout(placeable.width, placeable.height) { placeable.place(0, 0) }
+            }
+        } else {
+            this
+        }
+
     fun start(activity: Activity) {
         if (!BuildConfig.PERF_LOGS) {
             return
         }
         @Suppress("DEPRECATION")
-        val display = activity.windowManager.defaultDisplay
-        this.display = display
-        val refreshRate = display.refreshRate
+        val refreshRate = activity.windowManager.defaultDisplay.refreshRate
         frameBudgetNanos = (1_000_000_000 / refreshRate).toLong()
         Log.d(
             TAG, "device=${Build.MANUFACTURER} ${Build.MODEL} sdk=${Build.VERSION.SDK_INT} " +
-                "refreshRate=$refreshRate budget=${frameBudgetNanos / NANOS_PER_MILLI}ms " +
-                "modes=${display.supportedModes.joinToString { "${it.refreshRate}" }}"
+                "refreshRate=$refreshRate budget=${frameBudgetNanos / NANOS_PER_MILLI}ms"
         )
         activity.window.addOnFrameMetricsAvailableListener(::onFrameMetrics, handler)
     }
@@ -67,6 +103,7 @@ object PerfLog {
     private fun onFrameMetrics(window: Window, frameMetrics: FrameMetrics, dropCount: Int) {
         val metrics = longArrayOf(
             frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION),
+            frameMetrics.getMetric(FrameMetrics.UNKNOWN_DELAY_DURATION),
             frameMetrics.getMetric(FrameMetrics.INPUT_HANDLING_DURATION),
             frameMetrics.getMetric(FrameMetrics.ANIMATION_DURATION),
             frameMetrics.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION),
@@ -78,9 +115,18 @@ object PerfLog {
                 frameMetrics.getMetric(FrameMetrics.GPU_DURATION)
             } else {
                 0
-            },
-            dropCount.toLong()
+            }
         )
+        val vsyncNanos = frameMetrics.getMetric(FrameMetrics.INTENDED_VSYNC_TIMESTAMP)
+        val gapNanos = vsyncNanos - lastVsyncNanos
+        if (lastVsyncNanos != 0L && gapNanos < MAX_GAP_NANOS) {
+            missedVsyncs += ((gapNanos + frameBudgetNanos / 2) / frameBudgetNanos - 1).toInt()
+                .coerceAtLeast(0)
+        }
+        lastVsyncNanos = vsyncNanos
+        if (metrics[0] > frameBudgetNanos) {
+            Log.d(TAG, "janky frame " + metrics.format())
+        }
         val now = SystemClock.uptimeMillis()
         if (frames.isEmpty()) {
             windowStartMillis = now
@@ -89,22 +135,35 @@ object PerfLog {
         if (now - windowStartMillis >= 1000) {
             logWindow(now - windowStartMillis)
             frames.clear()
+            missedVsyncs = 0
         }
     }
 
+    private fun LongArray.format(): String =
+        ("total=%.1f unknownDelay=%.1f input=%.1f anim=%.1f layout=%.1f draw=%.1f sync=%.1f " +
+            "command=%.1f swap=%.1f gpu=%.1f")
+            .format(*map { it / NANOS_PER_MILLI }.toTypedArray())
+
     private fun logWindow(durationMillis: Long) {
-        fun average(index: Int) = frames.sumOf { it[index] } / frames.size / NANOS_PER_MILLI
-        val totals = frames.map { it[0] }
-        val janky = totals.count { it > frameBudgetNanos }
+        val averages = LongArray(frames.first().size) { index ->
+            frames.sumOf { it[index] } / frames.size
+        }
+        val janky = frames.count { it[0] > frameBudgetNanos }
+        val newGcCount = Debug.getRuntimeStat("art.gc.gc-count")?.toLongOrNull() ?: 0
+        val newGcTimeMillis = Debug.getRuntimeStat("art.gc.gc-time")?.toLongOrNull() ?: 0
         Log.d(
-            TAG, "refreshRate=${display?.refreshRate} frames=${frames.size} in " +
-                "${durationMillis}ms janky=$janky " +
-                "dropped=${frames.sumOf { it[9] }} " +
-                "total avg=%.1f max=%.1f | input=%.1f anim=%.1f layout=%.1f draw=%.1f sync=%.1f "
-                    .format(average(0), totals.max() / NANOS_PER_MILLI, average(1), average(2),
-                        average(3), average(4), average(5)) +
-                "command=%.1f swap=%.1f gpu=%.1f".format(average(6), average(7), average(8))
+            TAG, "frames=${frames.size} missed=$missedVsyncs in ${durationMillis}ms " +
+                "janky=$janky gc=${newGcCount - gcCount} gcTime=${newGcTimeMillis - gcTimeMillis}ms" +
+                " | avg " + averages.format()
         )
+        gcCount = newGcCount
+        gcTimeMillis = newGcTimeMillis
+        val work = workNanos.entries.filter { it.value.get() > 0 }
+            .sortedBy { it.key }
+            .joinToString { "%s=%.1fms".format(it.key, it.value.getAndSet(0) / NANOS_PER_MILLI) }
+        if (work.isNotEmpty()) {
+            Log.d(TAG, "work: $work")
+        }
         val recompositions = counts.entries.filter { it.value.get() > 0 }
             .sortedBy { it.key }
             .joinToString { "${it.key}=${it.value.getAndSet(0)}" }

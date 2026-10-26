@@ -73,7 +73,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.FrameRateCategory
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
@@ -96,7 +95,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.preferredFrameRate
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
@@ -115,6 +113,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.fileSize
@@ -132,6 +131,7 @@ import me.zhanghai.android.files.ui.asFastScrollable
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.PerfLog
+import me.zhanghai.android.files.util.PerfLog.timeMeasure
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.findCauseByClass
@@ -844,14 +844,7 @@ private fun FileGrid(
             columns = GridCells.Fixed(columnCount),
             modifier = Modifier
                 .fillMaxSize()
-                // Some devices otherwise stay at 60 Hz while scrolling.
-                .preferredFrameRate(
-                    if (gridState.isScrollInProgress) {
-                        FrameRateCategory.High
-                    } else {
-                        FrameRateCategory.Default
-                    }
-                )
+                .timeMeasure("gridMeasure")
                 .focusRequester(focusRequester)
                 .focusRestorer()
                 .onPreviewKeyEvent {
@@ -872,6 +865,7 @@ private fun FileGrid(
                 contentType = { _, _ -> viewType }
             ) { index, file ->
                 PerfLog.Recomposed("gridItem")
+                val itemStart = if (BuildConfig.PERF_LOGS) System.nanoTime() else 0L
                 val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
                 val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
                 val itemModifier = Modifier
@@ -909,6 +903,9 @@ private fun FileGrid(
                             actions = controller,
                             modifier = itemModifier
                         )
+                }
+                if (BuildConfig.PERF_LOGS) {
+                    PerfLog.addWork("itemCompose", System.nanoTime() - itemStart)
                 }
             }
         }
