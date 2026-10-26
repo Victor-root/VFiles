@@ -15,10 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -39,17 +39,20 @@ class AppColors(
 
 val LocalAppColors = staticCompositionLocalOf<AppColors> { error("No AppColors provided") }
 
-// What is drawn behind the status bar when it isn't the app bar, like an open drawer.
-private val LocalStatusBarBackground =
-    staticCompositionLocalOf<MutableState<Color?>> { error("No status bar background provided") }
+// What is drawn behind the status bar when it isn't the app bar, like an open drawer. The last one
+// added wins, so that effects can overlap.
+private val LocalStatusBarBackgrounds =
+    staticCompositionLocalOf<SnapshotStateList<Color>> {
+        error("No status bar backgrounds provided")
+    }
 
 /** Makes the status bar icons follow [color] instead of the app bar while this is composed. */
 @Composable
 fun StatusBarBackgroundEffect(color: Color) {
-    val statusBarBackground = LocalStatusBarBackground.current
-    DisposableEffect(statusBarBackground, color) {
-        statusBarBackground.value = color
-        onDispose { statusBarBackground.value = null }
+    val statusBarBackgrounds = LocalStatusBarBackgrounds.current
+    DisposableEffect(statusBarBackgrounds, color) {
+        statusBarBackgrounds += color
+        onDispose { statusBarBackgrounds.removeAt(statusBarBackgrounds.lastIndexOf(color)) }
     }
 }
 
@@ -69,16 +72,16 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
         appColorScheme(context, themeColor, isDark, isBlackNightMode)
     }
     val appColors = remember(colorScheme, isDark) { colorScheme.toAppColors(isDark) }
-    val statusBarBackground = remember { mutableStateOf<Color?>(null) }
+    val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
     SystemBarsEffect(
-        statusBarBackground.value ?: appColors.appBarContainer, appColors.isDark,
+        statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer, appColors.isDark,
         hasDarkSystemBars
     )
     CompositionLocalProvider(
         LocalContext provides context,
         LocalConfiguration provides context.resources.configuration,
         LocalAppColors provides appColors,
-        LocalStatusBarBackground provides statusBarBackground
+        LocalStatusBarBackgrounds provides statusBarBackgrounds
     ) {
         MaterialTheme(colorScheme = colorScheme, content = content)
     }
