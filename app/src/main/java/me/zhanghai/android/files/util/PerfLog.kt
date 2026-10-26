@@ -19,6 +19,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import me.zhanghai.android.files.BuildConfig
+import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
@@ -125,7 +126,7 @@ object PerfLog {
         }
         lastVsyncNanos = vsyncNanos
         if (metrics[0] > frameBudgetNanos) {
-            Log.d(TAG, "janky frame " + metrics.format())
+            Log.d(TAG, "janky frame " + metrics.format() + " cpuMHz=" + readCpuFrequencies())
         }
         val now = SystemClock.uptimeMillis()
         if (frames.isEmpty()) {
@@ -138,6 +139,19 @@ object PerfLog {
             missedVsyncs = 0
         }
     }
+
+    // The current frequency of each CPU core, to see whether the CPU is slowed down when frames are
+    // late.
+    private fun readCpuFrequencies(): String =
+        (0 until Runtime.getRuntime().availableProcessors()).joinToString("/") {
+            try {
+                val khz = File("/sys/devices/system/cpu/cpu$it/cpufreq/scaling_cur_freq")
+                    .readText().trim().toLong()
+                (khz / 1000).toString()
+            } catch (e: Exception) {
+                "?"
+            }
+        }
 
     private fun LongArray.format(): String =
         ("total=%.1f unknownDelay=%.1f input=%.1f anim=%.1f layout=%.1f draw=%.1f sync=%.1f " +
@@ -154,7 +168,7 @@ object PerfLog {
         Log.d(
             TAG, "frames=${frames.size} missed=$missedVsyncs in ${durationMillis}ms " +
                 "janky=$janky gc=${newGcCount - gcCount} gcTime=${newGcTimeMillis - gcTimeMillis}ms" +
-                " | avg " + averages.format()
+                " | avg " + averages.format() + " cpuMHz=" + readCpuFrequencies()
         )
         gcCount = newGcCount
         gcTimeMillis = newGcTimeMillis
