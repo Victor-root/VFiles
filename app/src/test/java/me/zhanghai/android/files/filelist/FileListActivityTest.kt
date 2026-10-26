@@ -79,6 +79,7 @@ class FileListActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
         Settings.FILE_LIST_VIEW_TYPE.putValue(FileViewType.LIST)
         Settings.FILE_LIST_SHOW_HIDDEN_FILES.putValue(false)
+        Settings.EDGE_TO_EDGE.putValue(false)
         Settings.CREATE_ARCHIVE_TYPE.putValue(ArchiveType.ZIP)
         // Granted, so that the storage access isn't asked for.
         ShadowEnvironment.addExternalDir("external")
@@ -121,17 +122,31 @@ class FileListActivityTest {
         captureScreenRoboImage("build/screenshots/file_list.png")
     }
 
-    @Test
-    fun hidesAppBarWhenScrollingDown() {
+    private fun addManyFiles() {
         for (i in 1..40) {
             TestDocumentsProvider.addFile("zfile$i.txt", "text/plain", 1024)
         }
+    }
+
+    @Test
+    fun hidesAppBarWhenScrollingDownEdgeToEdge() {
+        Settings.EDGE_TO_EDGE.putValue(true)
+        addManyFiles()
         launch()
         composeTestRule.onNodeWithText("notes.txt").performTouchInput { swipeUp() }
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithContentDescription("Search").assertIsNotDisplayed()
         composeTestRule.onAllNodesWithText("zfile", substring = true).onFirst()
             .performTouchInput { swipeDown(endY = centerY + 200f) }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithContentDescription("Search").assertIsDisplayed()
+    }
+
+    @Test
+    fun keepsAppBarWhenScrollingDownNotEdgeToEdge() {
+        addManyFiles()
+        launch()
+        composeTestRule.onNodeWithText("notes.txt").performTouchInput { swipeUp() }
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithContentDescription("Search").assertIsDisplayed()
     }

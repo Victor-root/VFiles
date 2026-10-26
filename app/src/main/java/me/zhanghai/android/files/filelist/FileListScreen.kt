@@ -401,23 +401,33 @@ private fun FileListScaffold(
     val gridState = controller.gridState
     val isScrolled by remember(gridState) { derivedStateOf { gridState.canScrollBackward } }
     val appBarColors = fileListAppBarColors(isScrolled)
-    // On phones, the app bar hides when scrolling down and comes back when scrolling up, except
-    // while selecting or searching.
-    val isAppBarPinned = LocalConfiguration.current.smallestScreenWidthDp >= 600 ||
-        selectedFiles.isNotEmpty() || isSearchViewExpanded
+    // Edge to edge, the app bar hides along with the status bar area when scrolling down, and
+    // comes back when scrolling up, except while selecting or searching.
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val isAppBarPinned = !isEdgeToEdge || selectedFiles.isNotEmpty() || isSearchViewExpanded
     val appBarScrollBehavior =
         TopAppBarDefaults.enterAlwaysScrollBehavior(canScroll = { !isAppBarPinned })
     val appBarState = appBarScrollBehavior.state
     LaunchedEffect(currentPath, isAppBarPinned) { appBarState.heightOffset = 0f }
+    // The status bar icons follow the list once the app bar is mostly gone from behind them.
+    val statusBarHeight = WindowInsets.statusBars.getTop(LocalDensity.current)
+    val isAppBarBehindStatusBar by remember(appBarState, statusBarHeight) {
+        derivedStateOf {
+            appBarState.heightOffset - appBarState.heightOffsetLimit >= statusBarHeight / 2f
+        }
+    }
+    if (!isAppBarBehindStatusBar) {
+        StatusBarBackgroundEffect(MaterialTheme.colorScheme.background)
+    }
     AppScaffold(
         modifier = Modifier.nestedScroll(appBarScrollBehavior.nestedScrollConnection),
         topBar = {
             Surface(color = appBarColors.container, contentColor = appBarColors.content) {
                 Column(
                     modifier = Modifier
-                        .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
                         .hideOnScroll(appBarState)
                         .onFocusChanged { if (it.hasFocus) appBarState.heightOffset = 0f }
+                        .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
                 ) {
                     AnimatedContent(
                         targetState = selectedFiles.isNotEmpty(),
