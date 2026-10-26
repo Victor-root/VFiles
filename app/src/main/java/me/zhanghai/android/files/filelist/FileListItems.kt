@@ -9,6 +9,7 @@ import android.content.Context
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -376,8 +377,15 @@ private fun BoxScope.FileItemBadges(file: FileItem, isSelected: Boolean) {
                 .background(MaterialTheme.colorScheme.surface, CircleShape)
         )
     }
+    // Only composed while it's shown or animating, like DropdownMenu does, since most items are
+    // never selected.
+    val selectedState = remember { MutableTransitionState(isSelected) }
+    selectedState.targetState = isSelected
+    if (!selectedState.currentState && !selectedState.targetState && selectedState.isIdle) {
+        return
+    }
     AnimatedVisibility(
-        visible = isSelected,
+        visibleState = selectedState,
         modifier = Modifier.align(Alignment.BottomEnd),
         enter = fadeIn(),
         exit = fadeOut()
