@@ -81,6 +81,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.key.Key
@@ -997,4 +998,7 @@ private fun Modifier.appearance(time: Animatable<Float, AnimationVector1D>): Mod
         translationY =
             (1 - LinearOutSlowInEasing.transform(millis / APPEARANCE_DURATION_MILLIS)) *
                 APPEARANCE_TRANSLATION_FRACTION * size.height
+        // Fading without an offscreen buffer per item, which costs a lot of GPU time while a
+        // whole list appears.
+        compositingStrategy = CompositingStrategy.ModulateAlpha
     }
