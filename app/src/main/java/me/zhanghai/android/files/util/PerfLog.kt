@@ -50,6 +50,12 @@ object PerfLog {
     private var gcCount = 0L
     private var gcTimeMillis = 0L
 
+    fun log(message: String) {
+        if (BuildConfig.PERF_LOGS) {
+            Log.d(TAG, message)
+        }
+    }
+
     /** Counts a composition of the calling scope under [name]. */
     @Composable
     fun Recomposed(name: String) {
