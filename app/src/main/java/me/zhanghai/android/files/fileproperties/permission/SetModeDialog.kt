@@ -21,7 +21,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +43,7 @@ import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.provider.common.PosixFileModeBit
 import me.zhanghai.android.files.ui.CheckboxItem
+import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable

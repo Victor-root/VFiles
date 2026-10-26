@@ -37,8 +37,28 @@ fun appColorScheme(
     } else {
         themeColorScheme(ContextCompat.getColor(nightModeContext, themeColor.resourceId), isDark)
     }
-    return if (isDark && isBlack) colorScheme.toBlack() else colorScheme
+    val neutralColorScheme = colorScheme.withNeutralText(isDark)
+    return if (isDark && isBlack) neutralColorScheme.toBlack() else neutralColorScheme
 }
+
+// Text is plain black or white, and grey when secondary, instead of tinted with the theme color.
+private fun ColorScheme.withNeutralText(isDark: Boolean): ColorScheme =
+    if (isDark) {
+        copy(
+            onBackground = Color.White,
+            onSurface = Color.White,
+            onSurfaceVariant = NEUTRAL_SECONDARY_TEXT_DARK
+        )
+    } else {
+        copy(
+            onBackground = Color.Black,
+            onSurface = Color.Black,
+            onSurfaceVariant = NEUTRAL_SECONDARY_TEXT_LIGHT
+        )
+    }
+
+private val NEUTRAL_SECONDARY_TEXT_LIGHT = Color(0xFF5F6368)
+private val NEUTRAL_SECONDARY_TEXT_DARK = Color(0xFFBDC1C6)
 
 // OEM skins (e.g. ColorOS) may report a fixed system accent that ignores the wallpaper, so the
 // scheme is seeded from the real wallpaper color when it can be read, like the system does.

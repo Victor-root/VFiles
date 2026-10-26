@@ -143,11 +143,7 @@ fun appTopAppBarColors(): TopAppBarColors {
     val appColors = LocalAppColors.current
     return TopAppBarDefaults.topAppBarColors(
         containerColor = appColors.appBarContainer,
-        scrolledContainerColor = if (appColors.isDark) {
-            MaterialTheme.colorScheme.surfaceContainer
-        } else {
-            appColors.appBarContainer
-        },
+        scrolledContainerColor = appColors.appBarContainer,
         navigationIconContentColor = appColors.onAppBar,
         titleContentColor = appColors.onAppBar,
         actionIconContentColor = appColors.onAppBar,

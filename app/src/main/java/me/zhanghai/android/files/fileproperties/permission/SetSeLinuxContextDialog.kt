@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,6 +28,7 @@ import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.ui.FormTextField
+import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.ui.rememberFormFieldState
 
 /** Changes or restores the SELinux context of [file], with the keyboard shown. */

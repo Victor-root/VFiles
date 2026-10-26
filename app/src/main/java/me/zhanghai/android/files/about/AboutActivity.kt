@@ -96,7 +96,6 @@ private fun AboutScreen() {
                 Text(
                     text = stringResource(R.string.about_author_title),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.titleSmall
                 )
                 AboutItem(

@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +39,7 @@ import me.zhanghai.android.files.ui.DialogListPreference
 import me.zhanghai.android.files.ui.DropdownListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
+import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe

@@ -28,7 +28,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -41,6 +40,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -54,7 +54,6 @@ fun PreferenceCategory(title: String, modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 8.dp),
-        color = MaterialTheme.colorScheme.primary,
         style = MaterialTheme.typography.titleSmall
     )
 }
@@ -162,11 +161,7 @@ fun <T> DropdownListPreference(
                     text = {
                         Text(
                             text = entryLabel(entry),
-                            color = if (isSelected) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                LocalContentColor.current
-                            }
+                            fontWeight = if (isSelected) FontWeight.Bold else null
                         )
                     },
                     onClick = {
