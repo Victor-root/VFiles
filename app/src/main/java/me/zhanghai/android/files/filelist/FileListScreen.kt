@@ -129,6 +129,7 @@ import me.zhanghai.android.files.ui.SpeedDialScrim
 import me.zhanghai.android.files.ui.asFastScrollable
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
+import me.zhanghai.android.files.util.PerfLog
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.findCauseByClass
@@ -143,6 +144,7 @@ private val GRID_COLUMN_MIN_WIDTH = 180.dp
 
 @Composable
 fun FileListScreen(controller: FileListController, viewModel: FileListViewModel) {
+    PerfLog.Recomposed("FileListScreen")
     // These are computed once observed, so there's nothing to show for the first frame.
     val currentPath = viewModel.currentPathLiveData.observeAsState().value ?: return
     val breadcrumbData = viewModel.breadcrumbLiveData.observeAsState().value ?: return
@@ -398,6 +400,7 @@ private fun FileListScaffold(
     persistentDrawer: (@Composable (Modifier) -> Unit)?,
     isPersistentDrawerOpen: Boolean
 ) {
+    PerfLog.Recomposed("FileListScaffold")
     val gridState = controller.gridState
     val isScrolled by remember(gridState) { derivedStateOf { gridState.canScrollBackward } }
     val appBarColors = fileListAppBarColors(isScrolled)
@@ -422,6 +425,7 @@ private fun FileListScaffold(
     AppScaffold(
         modifier = Modifier.nestedScroll(appBarScrollBehavior.nestedScrollConnection),
         topBar = {
+            PerfLog.Recomposed("topBar")
             Surface(color = appBarColors.container, contentColor = appBarColors.content) {
                 Column(
                     modifier = Modifier
@@ -504,6 +508,7 @@ private fun FileListScaffold(
             )
         }
     ) { contentPadding ->
+        PerfLog.Recomposed("scaffoldContent")
         Row(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
             if (persistentDrawer != null) {
                 AnimatedVisibility(
@@ -575,6 +580,7 @@ private fun FileListMainAppBar(
     onNavigationIconClick: () -> Unit,
     navigationIconFocusRequester: FocusRequester
 ) {
+    PerfLog.Recomposed("FileListMainAppBar")
     FileListTopAppBar(
         title = fileListTitle(pickOptions, controller),
         subtitle = fileListSubtitle(fileListStateful, isSearching),
@@ -723,6 +729,7 @@ private fun FileListContent(
     onLeftEdgeReached: () -> Unit,
     focusRequester: FocusRequester
 ) {
+    PerfLog.Recomposed("FileListContent")
     val hasFiles = !fileListStateful.value.isNullOrEmpty()
     val isLoading = fileListStateful is Loading
     PullToRefreshBox(
@@ -813,6 +820,7 @@ private fun FileGrid(
     onLeftEdgeReached: () -> Unit,
     focusRequester: FocusRequester
 ) {
+    PerfLog.Recomposed("FileGrid")
     val context = LocalContext.current
     val nameEllipsize by Settings.FILE_NAME_ELLIPSIZE.observeAsStateCompat()
     val isAnimationEnabled by Settings.FILE_LIST_ANIMATION.observeAsStateCompat()
@@ -853,6 +861,7 @@ private fun FileGrid(
                 key = { _, file -> file.path.toString() },
                 contentType = { _, _ -> viewType }
             ) { index, file ->
+                PerfLog.Recomposed("gridItem")
                 val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
                 val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
                 val itemModifier = Modifier
