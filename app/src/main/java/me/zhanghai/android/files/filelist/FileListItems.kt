@@ -68,6 +68,7 @@ import me.zhanghai.android.files.file.iconRes
 import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.isEncrypted
+import me.zhanghai.android.files.util.PerfLog
 
 /** What the menu of a file can do. */
 interface FileItemActions {
@@ -109,6 +110,7 @@ fun FileListItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
+    PerfLog.Recomposed("FileListItem")
     val focusRequesters = remember { FileItemFocusRequesters() }
     Row(
         modifier = modifier
@@ -174,6 +176,7 @@ fun FileGridItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
+    PerfLog.Recomposed("FileGridItem")
     val focusRequesters = remember { FileItemFocusRequesters() }
     val shape = RoundedCornerShape(12.dp)
     Column(
@@ -295,6 +298,7 @@ fun FileItemIcon(
     showsThumbnail: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
+    PerfLog.Recomposed("FileItemIcon")
     Box(
         modifier = modifier
             .size(48.dp)
@@ -463,6 +467,7 @@ private fun FileItemMenuButton(
     focusRequesters: FileItemFocusRequesters,
     modifier: Modifier = Modifier
 ) {
+    PerfLog.Recomposed("FileItemMenuButton")
     var isMenuShown by remember { mutableStateOf(false) }
     Box(modifier = modifier) {
         IconButton(

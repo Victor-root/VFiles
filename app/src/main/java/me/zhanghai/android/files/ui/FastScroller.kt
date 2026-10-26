@@ -13,8 +13,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.zhanghai.android.files.util.PerfLog
 import kotlin.math.roundToInt
 
 /** What a fast scroller needs to know about a scrollable container. */
@@ -141,6 +142,7 @@ fun FastScroller(
     contentPadding: PaddingValues = PaddingValues(),
     popupText: (() -> String)? = null
 ) {
+    PerfLog.Recomposed("FastScroller")
     if (!scrollable.canScroll) {
         return
     }

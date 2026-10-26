@@ -97,11 +97,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            buildConfigField("boolean", "PERF_LOGS", "false")
         }
         debug {
             // Optimized like release, to judge the smoothness of the app on a device. This makes
             // the build not debuggable, so BuildConfig.DEBUG is false as well.
             initWith(getByName("release"))
+            // BuildConfig.DEBUG is false here, so debug logs check this instead.
+            buildConfigField("boolean", "PERF_LOGS", "true")
             // Sign debug builds (the green-triangle install) with the release key too, when
             // keystore.properties is present, so they share a signature with the published release
             // APK. Without that shared signature you can't install one over the other without

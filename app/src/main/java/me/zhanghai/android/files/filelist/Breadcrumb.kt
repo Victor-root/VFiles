@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.util.PerfLog
 
 private const val UNSELECTED_ALPHA = 0.7f
 
@@ -57,6 +58,7 @@ fun Breadcrumb(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
+    PerfLog.Recomposed("Breadcrumb")
     val context = LocalContext.current
     val listState = rememberLazyListState()
     var hasScrolled by remember { mutableStateOf(false) }

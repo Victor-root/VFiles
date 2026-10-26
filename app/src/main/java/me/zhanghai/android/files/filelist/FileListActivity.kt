@@ -21,6 +21,7 @@ import me.zhanghai.android.files.file.extension
 import me.zhanghai.android.files.onboarding.OnboardingActivity
 import me.zhanghai.android.files.provider.archive.createArchiveRootPath
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.util.PerfLog
 import me.zhanghai.android.files.util.asFileNameOrNull
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
@@ -46,6 +47,7 @@ class FileListActivity : AppActivity() {
         }
         // Sets the content, which is composed after this method.
         super.onCreate(savedInstanceState)
+        PerfLog.start(this)
 
         if (isOnboarding) {
             startActivity(OnboardingActivity::class.createIntent())
