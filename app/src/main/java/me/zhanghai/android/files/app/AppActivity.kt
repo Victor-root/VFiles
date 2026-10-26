@@ -20,6 +20,8 @@ import me.zhanghai.android.files.util.valueCompat
 abstract class AppActivity : ComponentActivity() {
     private var appliedLocales: String? = null
 
+    private var framePerformanceHint: FramePerformanceHint? = null
+
     // The system applies the app locales on Android 13+, and we do it ourselves before.
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(newBase)
@@ -39,6 +41,17 @@ abstract class AppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent { AppTheme(hasDarkSystemBars) { Content() } }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            framePerformanceHint = FramePerformanceHint(window)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            framePerformanceHint?.close()
+        }
     }
 
     /** Whether the screen always draws dark content behind the system bars. */
