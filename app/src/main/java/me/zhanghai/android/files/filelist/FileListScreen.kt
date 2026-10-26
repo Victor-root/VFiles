@@ -875,7 +875,7 @@ private fun FileGrid(
                     val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
                     val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
                     val itemModifier = Modifier
-                        .then(appearanceTime?.let { Modifier.appearance(it) } ?: Modifier)
+                        .itemLayer(appearanceTime)
                         .onFocusChanged {
                             if (it.isFocused) {
                                 focusedIndex = index
@@ -961,7 +961,7 @@ private class ListAppearance(isEnabled: Boolean) {
 }
 
 // The time since the item started to appear, from 0 to the duration of the animation, or null for
-// an item that appears without animation, which then needs no layer of its own.
+// an item that appears without animation.
 @Composable
 private fun rememberAppearanceTime(
     appearance: ListAppearance,
@@ -989,9 +989,11 @@ private fun rememberAppearanceTime(
     return time
 }
 
-private fun Modifier.appearance(time: Animatable<Float, AnimationVector1D>): Modifier =
+// Each item has a layer of its own, so that scrolling only moves the layers instead of drawing their
+// content again, which takes long on slow CPU cores because of the text.
+private fun Modifier.itemLayer(appearanceTime: Animatable<Float, AnimationVector1D>?): Modifier =
     graphicsLayer {
-        val millis = time.value
+        val millis = appearanceTime?.value ?: return@graphicsLayer
         alpha = LinearOutSlowInEasing.transform(
             (millis / APPEARANCE_ALPHA_DURATION_MILLIS).coerceAtMost(1f)
         )
