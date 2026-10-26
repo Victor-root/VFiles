@@ -874,7 +874,7 @@ private fun FileGrid(
                     val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
                     val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
                     val itemModifier = Modifier
-                        .appearance(appearanceTime)
+                        .then(appearanceTime?.let { Modifier.appearance(it) } ?: Modifier)
                         .onFocusChanged {
                             if (it.isFocused) {
                                 focusedIndex = index
@@ -959,31 +959,31 @@ private class ListAppearance(isEnabled: Boolean) {
     }
 }
 
-// The time since the item started to appear, from 0 to the duration of the animation.
+// The time since the item started to appear, from 0 to the duration of the animation, or null for
+// an item that appears without animation, which then needs no layer of its own.
 @Composable
 private fun rememberAppearanceTime(
     appearance: ListAppearance,
     gridState: LazyGridState,
     index: Int
-): Animatable<Float, AnimationVector1D> {
+): Animatable<Float, AnimationVector1D>? {
     val isAppearing = remember(appearance) { appearance.isStarting }
-    val time = remember(appearance) {
-        Animatable(if (isAppearing) 0f else APPEARANCE_DURATION_MILLIS.toFloat())
+    if (!isAppearing) {
+        return null
     }
-    if (isAppearing) {
-        LaunchedEffect(time) {
-            val endOnScroll = launch {
-                snapshotFlow { gridState.isScrollInProgress }.first { it }
-                time.snapTo(APPEARANCE_DURATION_MILLIS.toFloat())
-            }
-            val position = (index - gridState.firstVisibleItemIndex).coerceAtLeast(0)
-            delay((position * APPEARANCE_STAGGER_MILLIS).toLong())
-            time.animateTo(
-                APPEARANCE_DURATION_MILLIS.toFloat(),
-                tween(APPEARANCE_DURATION_MILLIS, easing = LinearEasing)
-            )
-            endOnScroll.cancel()
+    val time = remember(appearance) { Animatable(0f) }
+    LaunchedEffect(time) {
+        val endOnScroll = launch {
+            snapshotFlow { gridState.isScrollInProgress }.first { it }
+            time.snapTo(APPEARANCE_DURATION_MILLIS.toFloat())
         }
+        val position = (index - gridState.firstVisibleItemIndex).coerceAtLeast(0)
+        delay((position * APPEARANCE_STAGGER_MILLIS).toLong())
+        time.animateTo(
+            APPEARANCE_DURATION_MILLIS.toFloat(),
+            tween(APPEARANCE_DURATION_MILLIS, easing = LinearEasing)
+        )
+        endOnScroll.cancel()
     }
     return time
 }

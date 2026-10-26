@@ -70,6 +70,7 @@ import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.isEncrypted
 import me.zhanghai.android.files.ui.cachedIconPainter
 import me.zhanghai.android.files.util.PerfLog
+import me.zhanghai.android.files.util.PerfLog.timeMeasure
 
 /** What the menu of a file can do. */
 interface FileItemActions {
@@ -115,52 +116,61 @@ fun FileListItem(
     val focusRequesters = remember { FileItemFocusRequesters() }
     Row(
         modifier = modifier
+            .timeMeasure("itemMeasure")
             .fillMaxWidth()
             .height(72.dp)
             .background(selectedBackgroundColor(isSelected))
             .focusRequester(focusRequesters.item)
             .focusProperties { right = focusRequesters.menu }
             .combinedClickable(enabled = isEnabled, onClick = onClick, onLongClick = onLongClick)
-            .alpha(if (isEnabled) 1f else DISABLED_ALPHA),
+            .disabledAlpha(isEnabled),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        FileItemIcon(
-            file = file,
-            modifier = Modifier.padding(
-                start = dimensionResource(R.dimen.screen_edge_margin_minus_4dp),
-                end = dimensionResource(R.dimen.content_start_from_screen_edge_margin_minus_44dp)
-            ),
-            isSelected = isSelected,
-            onClick = onIconClick
-        )
-        Column(modifier = Modifier.weight(1f)) {
-            FileName(
-                name = file.name,
-                ellipsize = nameEllipsize,
-                style = MaterialTheme.typography.bodyLarge
+        PerfLog.time("item.icon") {
+            FileItemIcon(
+                file = file,
+                modifier = Modifier.padding(
+                    start = dimensionResource(R.dimen.screen_edge_margin_minus_4dp),
+                    end = dimensionResource(
+                        R.dimen.content_start_from_screen_edge_margin_minus_44dp
+                    )
+                ),
+                isSelected = isSelected,
+                onClick = onIconClick
             )
-            val description = fileDescription(file)
-            if (description != null) {
-                Text(
-                    text = description,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium
+        }
+        PerfLog.time("item.text") {
+            Column(modifier = Modifier.weight(1f)) {
+                FileName(
+                    name = file.name,
+                    ellipsize = nameEllipsize,
+                    style = MaterialTheme.typography.bodyLarge
                 )
+                val description = fileDescription(file)
+                if (description != null) {
+                    Text(
+                        text = description,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
         }
-        FileItemMenuButton(
-            file = file,
-            isEnabled = isEnabled,
-            isPicking = isPicking,
-            actions = actions,
-            focusRequesters = focusRequesters,
-            modifier = Modifier.padding(
-                start = dimensionResource(MENU_BUTTON_MARGIN_START),
-                end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp_at_least_8dp)
+        PerfLog.time("item.menu") {
+            FileItemMenuButton(
+                file = file,
+                isEnabled = isEnabled,
+                isPicking = isPicking,
+                actions = actions,
+                focusRequesters = focusRequesters,
+                modifier = Modifier.padding(
+                    start = dimensionResource(MENU_BUTTON_MARGIN_START),
+                    end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp_at_least_8dp)
+                )
             )
-        )
+        }
     }
 }
 
@@ -188,7 +198,7 @@ fun FileGridItem(
             .focusRequester(focusRequesters.item)
             .focusProperties { right = focusRequesters.menu }
             .combinedClickable(enabled = isEnabled, onClick = onClick, onLongClick = onLongClick)
-            .alpha(if (isEnabled) 1f else DISABLED_ALPHA)
+            .disabledAlpha(isEnabled)
     ) {
         // The margins are from the edges of the cell, outside the 4dp padding above.
         val thumbnailMargin = dimensionResource(R.dimen.screen_edge_margin) - 4.dp
@@ -232,6 +242,10 @@ fun FileGridItem(
         }
     }
 }
+
+// Only disabled items get a layer for their alpha.
+private fun Modifier.disabledAlpha(isEnabled: Boolean): Modifier =
+    if (isEnabled) this else alpha(DISABLED_ALPHA)
 
 @Composable
 private fun selectedBackgroundColor(isSelected: Boolean): Color =
