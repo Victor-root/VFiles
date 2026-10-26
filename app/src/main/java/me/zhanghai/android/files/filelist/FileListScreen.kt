@@ -28,11 +28,16 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -49,6 +54,8 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -67,6 +74,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
@@ -80,6 +88,8 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -90,6 +100,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
@@ -125,6 +136,7 @@ import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import java.util.Locale
+import kotlin.math.roundToInt
 
 private const val SEARCH_DEBOUNCE_MILLIS = 1000L
 private val GRID_COLUMN_MIN_WIDTH = 180.dp
@@ -389,10 +401,24 @@ private fun FileListScaffold(
     val gridState = controller.gridState
     val isScrolled by remember(gridState) { derivedStateOf { gridState.canScrollBackward } }
     val appBarColors = fileListAppBarColors(isScrolled)
+    // On phones, the app bar hides when scrolling down and comes back when scrolling up, except
+    // while selecting or searching.
+    val isAppBarPinned = LocalConfiguration.current.smallestScreenWidthDp >= 600 ||
+        selectedFiles.isNotEmpty() || isSearchViewExpanded
+    val appBarScrollBehavior =
+        TopAppBarDefaults.enterAlwaysScrollBehavior(canScroll = { !isAppBarPinned })
+    val appBarState = appBarScrollBehavior.state
+    LaunchedEffect(currentPath, isAppBarPinned) { appBarState.heightOffset = 0f }
     AppScaffold(
+        modifier = Modifier.nestedScroll(appBarScrollBehavior.nestedScrollConnection),
         topBar = {
             Surface(color = appBarColors.container, contentColor = appBarColors.content) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
+                        .hideOnScroll(appBarState)
+                        .onFocusChanged { if (it.hasFocus) appBarState.heightOffset = 0f }
+                ) {
                     AnimatedContent(
                         targetState = selectedFiles.isNotEmpty(),
                         transitionSpec = { fadeIn() togetherWith fadeOut() }
@@ -510,6 +536,19 @@ private fun FileListScaffold(
         }
     }
 }
+
+// Shrinks the content from its top as the state's height offset goes down to its limit.
+private fun Modifier.hideOnScroll(state: TopAppBarState): Modifier =
+    clipToBounds().layout { measurable, constraints ->
+        val placeable =
+            measurable.measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
+        val heightOffsetLimit = -placeable.height.toFloat()
+        if (state.heightOffsetLimit != heightOffsetLimit) {
+            state.heightOffsetLimit = heightOffsetLimit
+        }
+        val height = (placeable.height + state.heightOffset).roundToInt().coerceAtLeast(0)
+        layout(placeable.width, height) { placeable.place(0, height - placeable.height) }
+    }
 
 @Composable
 private fun FileListMainAppBar(

@@ -20,10 +20,10 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.HorizontalDivider
@@ -122,7 +122,9 @@ fun FileListTopAppBar(
         },
         navigationIcon = navigationIcon,
         actions = actions,
-        colors = topAppBarColors(colors)
+        colors = topAppBarColors(colors),
+        // The status bar padding is above the part that hides on scroll.
+        windowInsets = TopAppBarDefaults.windowInsets.only(WindowInsetsSides.Horizontal)
     )
 }
 
@@ -179,7 +181,8 @@ fun FileListSearchAppBar(
             }
             actions()
         },
-        colors = topAppBarColors(colors)
+        colors = topAppBarColors(colors),
+        windowInsets = TopAppBarDefaults.windowInsets.only(WindowInsetsSides.Horizontal)
     )
     LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
 }
@@ -216,7 +219,8 @@ fun FileListSelectionAppBar(
                 SelectionActions(selectedFiles, currentPath, controller)
             }
         },
-        colors = topAppBarColors(colors)
+        colors = topAppBarColors(colors),
+        windowInsets = TopAppBarDefaults.windowInsets.only(WindowInsetsSides.Horizontal)
     )
 }
 

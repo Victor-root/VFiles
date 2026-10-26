@@ -107,14 +107,18 @@ private fun SystemBarsEffect(
             SystemBarStyle.auto(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT) {
                 isStatusBarDark
             },
-            SystemBarStyle.auto(LIGHT_NAVIGATION_BAR_SCRIM, DARK_NAVIGATION_BAR_SCRIM) {
-                isNavigationBarDark
+            // An explicit style, unlike auto(), keeps the system from adding its own scrim to the
+            // three-button navigation bar, so it's fully transparent like before.
+            if (isNavigationBarDark) {
+                SystemBarStyle.dark(AndroidColor.TRANSPARENT)
+            } else {
+                // Android 8.0 can't draw dark navigation bar icons, so they need a dark scrim.
+                SystemBarStyle.light(AndroidColor.TRANSPARENT, DARK_NAVIGATION_BAR_SCRIM)
             }
         )
         onDispose {}
     }
 }
 
-// The scrims enableEdgeToEdge() uses by default for the three-button navigation bar.
-private val LIGHT_NAVIGATION_BAR_SCRIM = AndroidColor.argb(0xE6, 0xFF, 0xFF, 0xFF)
+// The scrim enableEdgeToEdge() uses by default for the three-button navigation bar.
 private val DARK_NAVIGATION_BAR_SCRIM = AndroidColor.argb(0x80, 0x1B, 0x1B, 0x1B)
