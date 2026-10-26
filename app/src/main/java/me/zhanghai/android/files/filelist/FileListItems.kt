@@ -68,6 +68,7 @@ import me.zhanghai.android.files.file.iconRes
 import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.isEncrypted
+import me.zhanghai.android.files.ui.cachedIconPainter
 import me.zhanghai.android.files.util.PerfLog
 
 /** What the menu of a file can do. */
@@ -316,7 +317,7 @@ fun FileItemIcon(
         var isThumbnailShown by remember(file) { mutableStateOf(false) }
         if (!isThumbnailShown) {
             Image(
-                painter = painterResource(file.mimeType.iconRes),
+                painter = cachedIconPainter(file.mimeType.iconRes, 24.dp),
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)
@@ -353,7 +354,7 @@ private fun BoxScope.FileItemBadges(file: FileItem, isSelected: Boolean) {
     val badgeIconRes = fileBadgeIconRes(file)
     if (badgeIconRes != null) {
         Image(
-            painter = painterResource(badgeIconRes),
+            painter = cachedIconPainter(badgeIconRes, 18.dp),
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -374,7 +375,7 @@ private fun BoxScope.FileItemBadges(file: FileItem, isSelected: Boolean) {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = painterResource(R.drawable.check_icon_white_24dp),
+                painter = cachedIconPainter(R.drawable.check_icon_white_24dp, 14.dp),
                 contentDescription = null,
                 modifier = Modifier.size(14.dp),
                 tint = MaterialTheme.colorScheme.onPrimary
@@ -427,7 +428,7 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
             )
             return@Box
         }
-        val iconPainter = painterResource(file.mimeType.iconRes)
+        val iconPainter = cachedIconPainter(file.mimeType.iconRes, 40.dp)
         val supportsThumbnail = remember(file) { file.supportsThumbnail }
         // The thumbnail of an APK is its app icon, shown in place of the type icon.
         if (supportsThumbnail && file.mimeType.isApk) {
@@ -482,7 +483,7 @@ private fun FileItemMenuButton(
             enabled = isEnabled
         ) {
             Icon(
-                painter = painterResource(R.drawable.more_vertical_icon_white_24dp),
+                painter = cachedIconPainter(R.drawable.more_vertical_icon_white_24dp, 24.dp),
                 contentDescription = stringResource(R.string.more_options),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )

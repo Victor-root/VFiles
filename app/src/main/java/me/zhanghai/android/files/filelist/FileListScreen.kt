@@ -59,6 +59,7 @@ import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -124,6 +125,8 @@ import me.zhanghai.android.files.storage.StorageVolumeListLiveData
 import me.zhanghai.android.files.theme.StatusBarBackgroundEffect
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.ui.IconBitmapCache
+import me.zhanghai.android.files.ui.LocalIconBitmapCache
 import me.zhanghai.android.files.ui.SpeedDial
 import me.zhanghai.android.files.ui.SpeedDialAction
 import me.zhanghai.android.files.ui.SpeedDialScrim
@@ -832,93 +835,96 @@ private fun FileGrid(
     }
     LaunchedEffect(appearance) { appearance.stopStarting() }
     var focusedIndex by remember { mutableIntStateOf(-1) }
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val columnCount = when (viewType) {
-            FileViewType.LIST -> 1
-            FileViewType.GRID -> (maxWidth / GRID_COLUMN_MIN_WIDTH).toInt().coerceAtLeast(2)
-        }
-        val contentPadding = PaddingValues(
-            bottom = bottomPadding + dimensionResource(R.dimen.list_bottom_padding_with_fab)
-        )
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(columnCount),
-            modifier = Modifier
-                .fillMaxSize()
-                .timeMeasure("gridMeasure")
-                .focusRequester(focusRequester)
-                .focusRestorer()
-                .onPreviewKeyEvent {
-                    val isLeftEdge = it.type == KeyEventType.KeyDown &&
-                        it.key == Key.DirectionLeft && focusedIndex != -1 &&
-                        focusedIndex % columnCount == 0
-                    if (isLeftEdge) {
-                        onLeftEdgeReached()
-                    }
-                    isLeftEdge
-                },
-            state = gridState,
-            contentPadding = contentPadding
-        ) {
-            itemsIndexed(
-                files,
-                key = { _, file -> file.path.toString() },
-                contentType = { _, _ -> viewType }
-            ) { index, file ->
-                PerfLog.Recomposed("gridItem")
-                val itemStart = if (BuildConfig.PERF_LOGS) System.nanoTime() else 0L
-                val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
-                val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
-                val itemModifier = Modifier
-                    .appearance(appearanceTime)
-                    .onFocusChanged {
-                        if (it.isFocused) {
-                            focusedIndex = index
-                        } else if (focusedIndex == index) {
-                            focusedIndex = -1
+    val iconBitmapCache = remember(context) { IconBitmapCache(context) }
+    CompositionLocalProvider(LocalIconBitmapCache provides iconBitmapCache) {
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val columnCount = when (viewType) {
+                FileViewType.LIST -> 1
+                FileViewType.GRID -> (maxWidth / GRID_COLUMN_MIN_WIDTH).toInt().coerceAtLeast(2)
+            }
+            val contentPadding = PaddingValues(
+                bottom = bottomPadding + dimensionResource(R.dimen.list_bottom_padding_with_fab)
+            )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columnCount),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .timeMeasure("gridMeasure")
+                    .focusRequester(focusRequester)
+                    .focusRestorer()
+                    .onPreviewKeyEvent {
+                        val isLeftEdge = it.type == KeyEventType.KeyDown &&
+                            it.key == Key.DirectionLeft && focusedIndex != -1 &&
+                            focusedIndex % columnCount == 0
+                        if (isLeftEdge) {
+                            onLeftEdgeReached()
                         }
+                        isLeftEdge
+                    },
+                state = gridState,
+                contentPadding = contentPadding
+            ) {
+                itemsIndexed(
+                    files,
+                    key = { _, file -> file.path.toString() },
+                    contentType = { _, _ -> viewType }
+                ) { index, file ->
+                    PerfLog.Recomposed("gridItem")
+                    val itemStart = if (BuildConfig.PERF_LOGS) System.nanoTime() else 0L
+                    val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
+                    val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
+                    val itemModifier = Modifier
+                        .appearance(appearanceTime)
+                        .onFocusChanged {
+                            if (it.isFocused) {
+                                focusedIndex = index
+                            } else if (focusedIndex == index) {
+                                focusedIndex = -1
+                            }
+                        }
+                    when (viewType) {
+                        FileViewType.LIST ->
+                            FileListItem(
+                                file = file,
+                                isSelected = file in selectedFiles,
+                                isEnabled = isEnabled,
+                                isPicking = pickOptions != null,
+                                nameEllipsize = nameEllipsize,
+                                onClick = { controller.onFileClick(file) },
+                                onLongClick = { controller.onFileLongClick(file) },
+                                onIconClick = { controller.toggleFileSelection(file) },
+                                actions = controller,
+                                modifier = itemModifier
+                            )
+                        FileViewType.GRID ->
+                            FileGridItem(
+                                file = file,
+                                isSelected = file in selectedFiles,
+                                isEnabled = isEnabled,
+                                isPicking = pickOptions != null,
+                                onClick = { controller.onFileClick(file) },
+                                onLongClick = { controller.onFileLongClick(file) },
+                                onIconClick = { controller.toggleFileSelection(file) },
+                                actions = controller,
+                                modifier = itemModifier
+                            )
                     }
-                when (viewType) {
-                    FileViewType.LIST ->
-                        FileListItem(
-                            file = file,
-                            isSelected = file in selectedFiles,
-                            isEnabled = isEnabled,
-                            isPicking = pickOptions != null,
-                            nameEllipsize = nameEllipsize,
-                            onClick = { controller.onFileClick(file) },
-                            onLongClick = { controller.onFileLongClick(file) },
-                            onIconClick = { controller.toggleFileSelection(file) },
-                            actions = controller,
-                            modifier = itemModifier
-                        )
-                    FileViewType.GRID ->
-                        FileGridItem(
-                            file = file,
-                            isSelected = file in selectedFiles,
-                            isEnabled = isEnabled,
-                            isPicking = pickOptions != null,
-                            onClick = { controller.onFileClick(file) },
-                            onLongClick = { controller.onFileLongClick(file) },
-                            onIconClick = { controller.toggleFileSelection(file) },
-                            actions = controller,
-                            modifier = itemModifier
-                        )
-                }
-                if (BuildConfig.PERF_LOGS) {
-                    PerfLog.addWork("itemCompose", System.nanoTime() - itemStart)
+                    if (BuildConfig.PERF_LOGS) {
+                        PerfLog.addWork("itemCompose", System.nanoTime() - itemStart)
+                    }
                 }
             }
+            FastScroller(
+                scrollable = gridState.asFastScrollable(),
+                modifier = Modifier.align(Alignment.TopEnd),
+                contentPadding = contentPadding,
+                popupText = {
+                    files.getOrNull(gridState.firstVisibleItemIndex)
+                        ?.getPopupText(sortOptions, context)
+                        .orEmpty()
+                }
+            )
         }
-        FastScroller(
-            scrollable = gridState.asFastScrollable(),
-            modifier = Modifier.align(Alignment.TopEnd),
-            contentPadding = contentPadding,
-            popupText = {
-                files.getOrNull(gridState.firstVisibleItemIndex)
-                    ?.getPopupText(sortOptions, context)
-                    .orEmpty()
-            }
-        )
     }
 }
 
