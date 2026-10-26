@@ -84,7 +84,6 @@ fun FileJobProgressButton(modifier: Modifier = Modifier) {
                 )
                 Text(
                     text = progresses.size.toString(),
-                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.labelSmall
                 )
@@ -134,7 +133,6 @@ private fun FileJobProgressPopover(progresses: List<FileJobProgress>) {
             Text(
                 text = stringResource(R.string.file_job_progress_title),
                 modifier = Modifier.padding(bottom = 4.dp),
-                color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium
             )
             for (progress in progresses) {

@@ -9,7 +9,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -71,7 +70,15 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
     val colorScheme = remember(context, themeColor, isDark, isBlackNightMode) {
         appColorScheme(context, themeColor, isDark, isBlackNightMode)
     }
-    val appColors = remember(colorScheme, isDark) { colorScheme.toAppColors(isDark) }
+    // The app bar keeps the theme color of light mode in dark mode too.
+    val appColors = remember(context, themeColor, colorScheme, isDark) {
+        val lightColorScheme = if (isDark) {
+            appColorScheme(context, themeColor, isDark = false, isBlack = false)
+        } else {
+            colorScheme
+        }
+        AppColors(isDark, lightColorScheme.primary, lightColorScheme.onPrimary)
+    }
     val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
     SystemBarsEffect(
         statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer, appColors.isDark,
@@ -86,14 +93,6 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
         MaterialTheme(colorScheme = colorScheme, content = content)
     }
 }
-
-// The app bar takes the theme color in light mode, and the surface color in dark mode.
-private fun ColorScheme.toAppColors(isDark: Boolean): AppColors =
-    if (isDark) {
-        AppColors(isDark, surface, onSurface)
-    } else {
-        AppColors(isDark, primary, onPrimary)
-    }
 
 // Status bar icons follow what is drawn behind them, navigation bar icons follow the content.
 @Composable

@@ -27,7 +27,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,6 +55,7 @@ import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filelist.FileItemIcon
 import me.zhanghai.android.files.filelist.formatDescription
 import me.zhanghai.android.files.ui.CheckboxItem
+import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.RemoteCallback
 import me.zhanghai.android.files.util.args

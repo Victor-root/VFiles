@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.SystemClock
 import android.util.Log
+import android.view.Display
 import android.view.FrameMetrics
 import android.view.Window
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ object PerfLog {
     private val frames = mutableListOf<LongArray>()
     private var windowStartMillis = 0L
     private var frameBudgetNanos = 0L
+    private var display: Display? = null
 
     /** Counts a composition of the calling scope under [name]. */
     @Composable
@@ -50,12 +52,14 @@ object PerfLog {
             return
         }
         @Suppress("DEPRECATION")
-        val refreshRate = activity.windowManager.defaultDisplay.refreshRate
+        val display = activity.windowManager.defaultDisplay
+        this.display = display
+        val refreshRate = display.refreshRate
         frameBudgetNanos = (1_000_000_000 / refreshRate).toLong()
         Log.d(
             TAG, "device=${Build.MANUFACTURER} ${Build.MODEL} sdk=${Build.VERSION.SDK_INT} " +
                 "refreshRate=$refreshRate budget=${frameBudgetNanos / NANOS_PER_MILLI}ms " +
-                "hwAccelerated=${activity.window.decorView.isHardwareAccelerated}"
+                "modes=${display.supportedModes.joinToString { "${it.refreshRate}" }}"
         )
         activity.window.addOnFrameMetricsAvailableListener(::onFrameMetrics, handler)
     }
@@ -93,7 +97,8 @@ object PerfLog {
         val totals = frames.map { it[0] }
         val janky = totals.count { it > frameBudgetNanos }
         Log.d(
-            TAG, "frames=${frames.size} in ${durationMillis}ms janky=$janky " +
+            TAG, "refreshRate=${display?.refreshRate} frames=${frames.size} in " +
+                "${durationMillis}ms janky=$janky " +
                 "dropped=${frames.sumOf { it[9] }} " +
                 "total avg=%.1f max=%.1f | input=%.1f anim=%.1f layout=%.1f draw=%.1f sync=%.1f "
                     .format(average(0), totals.max() / NANOS_PER_MILLI, average(1), average(2),
