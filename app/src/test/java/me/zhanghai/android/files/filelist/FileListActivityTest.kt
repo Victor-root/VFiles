@@ -16,6 +16,7 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
@@ -25,6 +26,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -33,6 +35,8 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.requestFocus
+import androidx.compose.ui.test.swipeDown
+import androidx.compose.ui.test.swipeUp
 import androidx.core.content.getSystemService
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -115,6 +119,21 @@ class FileListActivityTest {
         composeTestRule.onNodeWithText("Projects").assertIsDisplayed()
         composeTestRule.onNodeWithText("photo.jpg").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/file_list.png")
+    }
+
+    @Test
+    fun hidesAppBarWhenScrollingDown() {
+        for (i in 1..40) {
+            TestDocumentsProvider.addFile("zfile$i.txt", "text/plain", 1024)
+        }
+        launch()
+        composeTestRule.onNodeWithText("notes.txt").performTouchInput { swipeUp() }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithContentDescription("Search").assertIsNotDisplayed()
+        composeTestRule.onAllNodesWithText("zfile", substring = true).onFirst()
+            .performTouchInput { swipeDown(endY = centerY + 200f) }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithContentDescription("Search").assertIsDisplayed()
     }
 
     @Test
