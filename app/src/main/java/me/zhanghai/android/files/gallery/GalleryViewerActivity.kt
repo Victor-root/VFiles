@@ -89,6 +89,7 @@ import me.saket.telephoto.zoomable.rememberZoomableImageState
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.asFileSize
+import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.MediaViewerError
 import me.zhanghai.android.files.ui.MediaViewerSystemUiEffect
 import me.zhanghai.android.files.ui.MediaViewerTopAppBar
@@ -242,10 +243,14 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
             enter = fadeIn() + slideInVertically { -it },
             exit = fadeOut() + slideOutVertically { -it }
         ) {
+            // Opaque in the color of the app bar, like the bar of actions.
+            val appColors = LocalAppColors.current
             val dateTime = Instant.ofEpochMilli(currentMedia.dateTaken)
                 .atZone(ZoneId.systemDefault())
             val locale = LocalConfiguration.current.locales[0]
             MediaViewerTopAppBar(
+                containerColor = appColors.appBarContainer,
+                contentColor = appColors.onAppBar,
                 title = DateTimeFormatter.ofPattern(
                     DateFormat.getBestDateTimePattern(locale, "dMMMMyyyy"), locale
                 ).format(dateTime),
@@ -303,7 +308,7 @@ private fun GalleryViewerBottomBar(
             .focusRequester(focusRequester)
             .focusGroup()
             .fillMaxWidth()
-            .background(BAR_COLOR)
+            .background(LocalAppColors.current.appBarContainer)
             .windowInsetsPadding(WindowInsets.navigationBars)
             .height(BOTTOM_BAR_HEIGHT),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -334,7 +339,7 @@ private fun GalleryViewerAction(iconRes: Int, contentDescription: String, onClic
         Icon(
             painter = painterResource(iconRes),
             contentDescription = contentDescription,
-            tint = Color.White
+            tint = LocalAppColors.current.onAppBar
         )
     }
 }
