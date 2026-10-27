@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -162,7 +163,11 @@ private fun NavigationItemRow(
     val subtitle = remember(item, context, subtitleKey) { item.getSubtitle(context) }
     val colorScheme = MaterialTheme.colorScheme
     val appColors = LocalAppColors.current
-    val contentColor = if (item.isHeader) colorScheme.onSurfaceVariant else colorScheme.onSurface
+    val contentColor = when {
+        isChecked -> appColors.onAppBar
+        item.isHeader -> colorScheme.onSurfaceVariant
+        else -> colorScheme.onSurface
+    }
     Surface(
         modifier = modifier
             .padding(horizontal = 12.dp)
@@ -180,7 +185,8 @@ private fun NavigationItemRow(
                 }
             ),
         shape = CircleShape,
-        color = if (isChecked) appColors.highlightContainer else Color.Transparent,
+        // The current item has the color of the app bar.
+        color = if (isChecked) appColors.appBarContainer else Color.Transparent,
         contentColor = contentColor
     ) {
         Row(
@@ -197,7 +203,10 @@ private fun NavigationItemRow(
                 painter = painterResource(item.iconRes),
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
-                tint = item.iconColor?.getColor(appColors.isDark)
+                // On the app bar color, the icon takes the variant for its background.
+                tint = item.iconColor?.getColor(
+                    if (isChecked) appColors.onAppBar.luminance() > 0.5f else appColors.isDark
+                )
                     ?: if (isChecked) contentColor else colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.width(12.dp))
