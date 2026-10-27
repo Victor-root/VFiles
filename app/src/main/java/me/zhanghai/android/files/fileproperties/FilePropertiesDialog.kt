@@ -35,7 +35,6 @@ import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.file.isAudio
 import me.zhanghai.android.files.file.isImage
 import me.zhanghai.android.files.file.isVideo
-import me.zhanghai.android.files.filelist.name
 import me.zhanghai.android.files.fileproperties.apk.FilePropertiesApkTab
 import me.zhanghai.android.files.fileproperties.audio.FilePropertiesAudioTab
 import me.zhanghai.android.files.fileproperties.basic.FilePropertiesBasicTab

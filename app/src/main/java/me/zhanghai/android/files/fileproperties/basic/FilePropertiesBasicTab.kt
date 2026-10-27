@@ -29,7 +29,6 @@ import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.file.fileSize
 import me.zhanghai.android.files.file.formatLong
 import me.zhanghai.android.files.filelist.getMimeTypeName
-import me.zhanghai.android.files.filelist.name
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.fileproperties.FilePropertiesFileViewModel
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem

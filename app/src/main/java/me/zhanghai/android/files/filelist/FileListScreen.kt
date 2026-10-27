@@ -139,6 +139,7 @@ import me.zhanghai.android.files.util.findCauseByClass
 import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
+import java.util.IdentityHashMap
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -826,6 +827,8 @@ private fun FileGrid(
     }
     LaunchedEffect(appearance) { appearance.stopStarting() }
     var focusedIndex by remember { mutableIntStateOf(-1) }
+    // Formatted once per list, instead of each time an item scrolls back into view.
+    val descriptions = remember(files, context) { IdentityHashMap<FileItem, String>() }
     val iconBitmapCache = remember(context) { IconBitmapCache(context) }
     CompositionLocalProvider(LocalIconBitmapCache provides iconBitmapCache) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -861,15 +864,18 @@ private fun FileGrid(
                 ) { index, file ->
                     val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
                     val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
-                    val itemModifier = Modifier
-                        .itemLayer(appearanceTime)
-                        .onFocusChanged {
-                            if (it.isFocused) {
-                                focusedIndex = index
-                            } else if (focusedIndex == index) {
-                                focusedIndex = -1
+                    // Remembered so that items whose data didn't change can skip recomposition.
+                    val itemModifier = remember(appearanceTime, index) {
+                        Modifier
+                            .itemLayer(appearanceTime)
+                            .onFocusChanged {
+                                if (it.isFocused) {
+                                    focusedIndex = index
+                                } else if (focusedIndex == index) {
+                                    focusedIndex = -1
+                                }
                             }
-                        }
+                    }
                     when (viewType) {
                         FileViewType.LIST ->
                             FileListItem(
@@ -878,6 +884,11 @@ private fun FileGrid(
                                 isEnabled = isEnabled,
                                 isPicking = pickOptions != null,
                                 nameEllipsize = nameEllipsize,
+                                description = if (file.attributes.isDirectory) {
+                                    null
+                                } else {
+                                    descriptions.getOrPut(file) { file.formatDescription(context) }
+                                },
                                 onClick = { controller.onFileClick(file) },
                                 onLongClick = { controller.onFileLongClick(file) },
                                 onIconClick = { controller.toggleFileSelection(file) },
@@ -935,7 +946,8 @@ private const val APPEARANCE_TRANSLATION_FRACTION = 0.25f
  * Scrolling ends the animation.
  */
 private class ListAppearance(isEnabled: Boolean) {
-    var isStarting by mutableStateOf(isEnabled)
+    // Not observed: the items only read it when they're first composed.
+    var isStarting = isEnabled
         private set
 
     suspend fun stopStarting() {

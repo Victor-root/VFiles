@@ -30,9 +30,6 @@ import me.zhanghai.android.files.util.isMediaMetadataRetrieverCompatible
 import me.zhanghai.android.files.util.valueCompat
 import java.text.CollationKey
 
-val FileItem.name: String
-    get() = path.name
-
 val FileItem.baseName: String
     get() = if (attributes.isDirectory) name else name.asFileName().baseName
 

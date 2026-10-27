@@ -20,7 +20,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.layout.LazyLayoutCacheWindow
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +34,7 @@ import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -112,7 +115,7 @@ class FileListController(
         val state = savedInstanceState?.let {
             BundleCompat.getParcelable(it, KEY_STATE, State::class.java)
         }
-        gridState = LazyGridState(state?.scrollIndex ?: 0, state?.scrollOffset ?: 0)
+        gridState = createGridState(state?.scrollIndex ?: 0, state?.scrollOffset ?: 0)
         dialog = state?.dialog
         // Only used when picking where to create a file, which comes with a name.
         val createFileName = state?.createFileName ?: viewModel.pickOptions?.fileName ?: ""
@@ -815,6 +818,18 @@ class FileListController(
         private val KEY_STATE = "${FileListController::class.java.name}.state"
 
         private const val IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX = 1000
+
+        private val GRID_CACHE_WINDOW = 360.dp
+
+        // Items are composed a bit ahead while scrolling, and kept a bit after leaving the
+        // screen, so that fewer of them are composed in the frames where they appear.
+        @OptIn(ExperimentalFoundationApi::class)
+        private fun createGridState(scrollIndex: Int, scrollOffset: Int): LazyGridState =
+            LazyGridState(
+                LazyLayoutCacheWindow(ahead = GRID_CACHE_WINDOW, behind = GRID_CACHE_WINDOW),
+                scrollIndex,
+                scrollOffset
+            )
     }
 
     @Parcelize

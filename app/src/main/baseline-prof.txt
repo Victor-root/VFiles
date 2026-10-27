@@ -1,0 +1,4 @@
+# The code of the app, compiled ahead of time on install, so that the file list doesn't run
+# interpreted until the system compiles it in the background.
+Lme/zhanghai/android/files/**;
+HSPLme/zhanghai/android/files/**->**(**)**
