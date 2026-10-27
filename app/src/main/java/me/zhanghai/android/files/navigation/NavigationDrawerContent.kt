@@ -47,7 +47,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
-import me.zhanghai.android.files.util.PerfLog
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
@@ -70,7 +69,6 @@ fun NavigationDrawerContent(
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues()
 ) {
-    PerfLog.Recomposed("NavigationDrawerContent")
     val context = LocalContext.current
     val items by NavigationItemListLiveData.observeAsStateCompat()
     val currentOnNavigateTo by rememberUpdatedState(onNavigateTo)
