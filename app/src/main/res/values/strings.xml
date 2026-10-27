@@ -706,11 +706,34 @@
     <string name="storage_volume_default_name_usb">USB drive</string>
     <string name="storage_volume_default_name_sd_card">SD card</string>
     <string name="storage_volume_partition_numbered">Partition %1$d</string>
+    <string name="navigation_gallery" translatable="false">@string/gallery_title</string>
     <string name="navigation_ftp_server" translatable="false">@string/ftp_server_title</string>
     <string name="navigation_settings" translatable="false">@string/settings_title</string>
     <string name="navigation_about" translatable="false">@string/about_title</string>
 
     <string name="archive_viewer_title">Archive viewer</string>
+    <string name="gallery_title">Gallery</string>
+    <string name="gallery_photos">Photos</string>
+    <string name="gallery_albums">Albums</string>
+    <string name="gallery_today">Today</string>
+    <string name="gallery_yesterday">Yesterday</string>
+    <string name="gallery_empty">No photos or videos</string>
+    <string name="gallery_access_denied">Allow access to files to see your photos and videos</string>
+    <string name="gallery_allow_access">Allow</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d item</item>
+        <item quantity="other">%1$,d items</item>
+    </plurals>
+    <string name="gallery_selection_title_format" translatable="false">@string/file_list_select_title_format</string>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Delete this item?</item>
+        <item quantity="other">Delete these %1$,d items?</item>
+    </plurals>
+    <string name="gallery_details">Details</string>
+    <string name="gallery_details_date">Date</string>
+    <string name="gallery_show_in_folder">Show in folder</string>
+    <string name="gallery_play">Play</string>
+    <string name="gallery_pause">Pause</string>
     <string name="image_viewer_title">Image viewer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="image_viewer_delete_message_format" translatable="false">@string/file_delete_message_file_format</string>

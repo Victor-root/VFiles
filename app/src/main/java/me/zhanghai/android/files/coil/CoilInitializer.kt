@@ -12,6 +12,8 @@ import coil3.gif.AnimatedImageDecoder
 import coil3.gif.GifDecoder
 import coil3.svg.SvgDecoder
 import me.zhanghai.android.files.app.application
+import me.zhanghai.android.files.gallery.GalleryMediaKeyer
+import me.zhanghai.android.files.gallery.GalleryThumbnailFetcher
 
 fun initializeCoil() {
     SingletonImageLoader.setSafe {
@@ -23,6 +25,8 @@ fun initializeCoil() {
                 add(AppIconPackageNameFetcherFactory(application))
                 add(PathAttributesKeyer())
                 add(PathAttributesFetcher.Factory(application))
+                add(GalleryMediaKeyer())
+                add(GalleryThumbnailFetcher.Factory(application))
                 add(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         AnimatedImageDecoder.Factory()

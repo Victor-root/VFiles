@@ -57,6 +57,7 @@ value class MimeType(val value: String) : Parcelable {
         val IMAGE_ANY = "image/*".asMimeType()
         val IMAGE_GIF = "image/gif".asMimeType()
         val IMAGE_SVG_XML = "image/svg+xml".asMimeType()
+        val VIDEO_ANY = "video/*".asMimeType()
         val PDF = "application/pdf".asMimeType()
         val TEXT_PLAIN = "text/plain".asMimeType()
         val GENERIC = "application/octet-stream".asMimeType()
