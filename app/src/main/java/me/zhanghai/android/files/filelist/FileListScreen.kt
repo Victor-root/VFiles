@@ -63,11 +63,9 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -84,7 +82,6 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.InputMode
@@ -94,10 +91,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -118,8 +112,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import java8.nio.file.AccessDeniedException
 import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -144,6 +136,8 @@ import me.zhanghai.android.files.ui.SpeedDial
 import me.zhanghai.android.files.ui.SpeedDialAction
 import me.zhanghai.android.files.ui.SpeedDialScrim
 import me.zhanghai.android.files.ui.asFastScrollable
+import me.zhanghai.android.files.ui.hideOnScroll
+import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
@@ -155,7 +149,6 @@ import me.zhanghai.android.files.util.showToast
 import java.util.IdentityHashMap
 import java.util.Locale
 import kotlin.math.max
-import kotlin.math.roundToInt
 
 private const val SEARCH_DEBOUNCE_MILLIS = 1000L
 private const val EXIT_BACK_TIMEOUT_MILLIS = 2000L
@@ -479,40 +472,15 @@ private fun FileListScaffold(
     val isAppBarPinned =
         !isListBehindAppBar || selectedFiles.isNotEmpty() || isSearchViewExpanded
     val speedDialFocusRequester = remember { FocusRequester() }
-    val appBarCoroutineScope = rememberCoroutineScope()
-    val appBarState = remember { AppBarScrollState(appBarCoroutineScope) }
-    appBarState.isEnabled = !isAppBarPinned
-    LaunchedEffect(currentPath, isAppBarPinned) { appBarState.offset = 0f }
-    // Scrolling up with the fast scroller doesn't go through nested scrolling.
-    LaunchedEffect(gridState, appBarState) {
-        var lastIndex = 0
-        var lastOffset = 0
-        snapshotFlow { gridState.firstVisibleItemIndex to gridState.firstVisibleItemScrollOffset }
-            .collect { (index, offset) ->
-                val isScrolledUp = index < lastIndex || index == lastIndex && offset < lastOffset
-                if (isScrolledUp && gridState.isScrollInProgress) {
-                    appBarState.show()
-                }
-                lastIndex = index
-                lastOffset = offset
-            }
-    }
-    // The status bar icons follow the list once the app bar is mostly gone from behind them.
-    val statusBarHeight = WindowInsets.statusBars.getTop(LocalDensity.current)
-    val isAppBarBehindStatusBar by remember(appBarState, statusBarHeight) {
-        derivedStateOf { appBarState.height + appBarState.offset >= statusBarHeight / 2f }
-    }
-    if (!isAppBarBehindStatusBar) {
-        StatusBarBackgroundEffect(MaterialTheme.colorScheme.background)
-    }
+    val appBarState = rememberAppBarScrollState(gridState, isEnabled = !isAppBarPinned)
+    LaunchedEffect(currentPath) { appBarState.offset = 0f }
     AppScaffold(
         modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
         isContentBehindTopBar = true,
         topBar = {
             Surface(
                 modifier = Modifier
-                    .hideOnScroll(appBarState)
-                    .onFocusChanged { if (it.hasFocus) appBarState.offset = 0f },
+                    .hideOnScroll(appBarState),
                 color = appBarColors.container,
                 contentColor = appBarColors.content
             ) {
@@ -656,65 +624,6 @@ private fun FileListScaffold(
         }
     }
 }
-
-/**
- * How far an app bar hiding on scroll has moved up, from 0 to minus its height. It moves by as much
- * as the content scrolls, like the content pushed it.
- */
-@Stable
-private class AppBarScrollState(private val coroutineScope: CoroutineScope) {
-    var isEnabled = true
-
-    var height by mutableFloatStateOf(0f)
-
-    var offset by mutableFloatStateOf(0f)
-
-    private var showJob: Job? = null
-
-    // The app bar hides along with the list, and comes back entirely as soon as it's scrolled up.
-    val nestedScrollConnection = object : NestedScrollConnection {
-        override fun onPostScroll(
-            consumed: Offset,
-            available: Offset,
-            source: NestedScrollSource
-        ): Offset {
-            if (!isEnabled) {
-                return Offset.Zero
-            }
-            if (consumed.y < 0) {
-                showJob?.cancel()
-                showJob = null
-                offset = (offset + consumed.y).coerceIn(-height, 0f)
-            } else if (consumed.y > 0) {
-                show()
-            }
-            return Offset.Zero
-        }
-    }
-
-    fun show() {
-        if (!isEnabled || offset >= 0 || showJob != null) {
-            return
-        }
-        showJob = coroutineScope.launch {
-            animate(offset, 0f) { value, _ -> offset = value }
-            showJob = null
-        }
-    }
-}
-
-// Moves the app bar up by the offset of the state, without changing its size.
-private fun Modifier.hideOnScroll(state: AppBarScrollState): Modifier =
-    layout { measurable, constraints ->
-        val placeable = measurable.measure(constraints)
-        val height = placeable.height.toFloat()
-        if (state.height != height) {
-            state.height = height
-        }
-        layout(placeable.width, placeable.height) {
-            placeable.place(0, state.offset.roundToInt())
-        }
-    }
 
 @Composable
 private fun FileListMainAppBar(

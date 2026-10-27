@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +19,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,10 +36,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -59,10 +61,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -73,13 +78,18 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import coil3.compose.AsyncImage
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.NavigateUpButton
+import me.zhanghai.android.files.ui.hideOnScroll
+import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isTelevision
+import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
@@ -111,9 +121,11 @@ private fun GalleryScreen(state: GalleryState?) {
     var selectedIds by rememberSaveable(stateSaver = SelectedIdsSaver) {
         mutableStateOf(emptySet())
     }
-    // Kept while another tab or an album is shown, like the gallery of a phone.
+    // Kept while another tab or an album is shown, like the gallery of a phone, while each album
+    // has its own.
     val photosGridState = rememberLazyGridState()
     val albumsGridState = rememberLazyGridState()
+    val albumGridState = key(albumId) { rememberLazyGridState() }
     // The album to focus again once it's closed, on a D-pad.
     var albumIdToFocus by remember { mutableStateOf<Long?>(null) }
     val currentAlbumId = albumId
@@ -145,6 +157,19 @@ private fun GalleryScreen(state: GalleryState?) {
         clearSelection()
     }
     val isTelevision = remember(context) { context.isTelevision }
+    // Edge to edge, the app bar hides when scrolling down like in the file list, except while
+    // selecting, or on a TV, where the media focused with the D-pad must never be behind it.
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val isContentBehindTopBar = isEdgeToEdge && !isTelevision
+    val gridState = when {
+        album != null -> albumGridState
+        tab == GalleryTab.PHOTOS -> photosGridState
+        else -> albumsGridState
+    }
+    val appBarState = rememberAppBarScrollState(
+        gridState, isEnabled = isContentBehindTopBar && selectedMedia.isEmpty()
+    )
+    LaunchedEffect(tab, currentAlbumId) { appBarState.offset = 0f }
     // On a D-pad, the media are focused rather than the tabs once they are shown, and again when
     // the focused one is gone, like when opening or closing an album.
     val contentFocusRequester = remember { FocusRequester() }
@@ -164,41 +189,55 @@ private fun GalleryScreen(state: GalleryState?) {
     BackHandler(enabled = selectedMedia.isNotEmpty(), onBack = clearSelection)
 
     AppScaffold(
+        modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
+        isContentBehindTopBar = true,
         topBar = {
-            if (selectedMedia.isNotEmpty()) {
-                GallerySelectionAppBar(
-                    count = selectedMedia.size,
-                    onClose = clearSelection,
-                    onShare = { context.shareGalleryMedia(selectedMedia) },
-                    onDelete = { deleteMedia(selectedMedia) },
-                    onSelectAll = { selectedIds = media.mapTo(mutableSetOf()) { it.id } }
-                )
-            } else {
-                AppTopAppBar(
-                    title = album?.name ?: stringResource(R.string.gallery_title),
-                    navigationIcon = {
-                        if (album != null) {
-                            IconButton(onClick = closeAlbum) {
-                                Icon(
-                                    painter = painterResource(R.drawable.arrow_back_icon_white_24dp),
-                                    contentDescription = stringResource(R.string.navigate_up)
-                                )
+            Box(modifier = Modifier.hideOnScroll(appBarState)) {
+                if (selectedMedia.isNotEmpty()) {
+                    GallerySelectionAppBar(
+                        count = selectedMedia.size,
+                        onClose = clearSelection,
+                        onShare = { context.shareGalleryMedia(selectedMedia) },
+                        onDelete = { deleteMedia(selectedMedia) },
+                        onSelectAll = { selectedIds = media.mapTo(mutableSetOf()) { it.id } }
+                    )
+                } else {
+                    AppTopAppBar(
+                        title = album?.name ?: stringResource(R.string.gallery_title),
+                        navigationIcon = {
+                            if (album != null) {
+                                IconButton(onClick = closeAlbum) {
+                                    Icon(
+                                        painter = painterResource(
+                                            R.drawable.arrow_back_icon_white_24dp
+                                        ),
+                                        contentDescription = stringResource(R.string.navigate_up)
+                                    )
+                                }
+                            } else {
+                                NavigateUpButton()
                             }
-                        } else {
-                            NavigateUpButton()
+                        },
+                        actions = {
+                            if (album == null && !isTelevision) {
+                                GalleryTabSwitch(tab = tab, onTabChange = onTabChange)
+                            }
                         }
-                    }
-                )
-            }
-        },
-        bottomBar = {
-            if (album == null && !isTelevision) {
-                GalleryNavigationBar(tab = tab, onTabChange = onTabChange)
+                    )
+                }
             }
         }
-    ) { contentPadding ->
+    ) { scaffoldPadding ->
+        val appBarHeight = scaffoldPadding.calculateTopPadding()
+        val layoutDirection = LocalLayoutDirection.current
+        val contentPadding = PaddingValues(
+            start = scaffoldPadding.calculateStartPadding(layoutDirection),
+            top = if (isContentBehindTopBar) appBarHeight else 0.dp,
+            end = scaffoldPadding.calculateEndPadding(layoutDirection),
+            bottom = scaffoldPadding.calculateBottomPadding()
+        )
         // On a TV, the tabs are on the side where the D-pad reaches them from any row.
-        Row {
+        Row(modifier = Modifier.padding(top = if (isContentBehindTopBar) 0.dp else appBarHeight)) {
             if (album == null && isTelevision) {
                 GalleryNavigationRail(tab = tab, onTabChange = onTabChange)
             }
@@ -219,7 +258,6 @@ private fun GalleryScreen(state: GalleryState?) {
                         if (media.isEmpty()) {
                             GalleryEmpty()
                         } else {
-                            // Each album has its own scroll position.
                             key(currentAlbumId) {
                                 GalleryMediaGrid(
                                     media = media,
@@ -233,11 +271,7 @@ private fun GalleryScreen(state: GalleryState?) {
                                     },
                                     onMediaLongClick = { toggleSelection(listOf(it)) },
                                     onSectionClick = toggleSelection,
-                                    gridState = if (album != null) {
-                                        rememberLazyGridState()
-                                    } else {
-                                        photosGridState
-                                    },
+                                    gridState = gridState,
                                     contentPadding = contentPadding
                                 )
                             }
@@ -246,7 +280,7 @@ private fun GalleryScreen(state: GalleryState?) {
                         GalleryAlbumGrid(
                             albums = state.albums,
                             onAlbumClick = { albumId = it.id },
-                            gridState = albumsGridState,
+                            gridState = gridState,
                             albumIdToFocus = albumIdToFocus,
                             onAlbumFocused = { albumIdToFocus = null },
                             contentPadding = contentPadding
@@ -312,15 +346,33 @@ private val GalleryTab.labelRes: Int
             GalleryTab.ALBUMS -> R.string.gallery_albums
         }
 
+// A switch in the app bar, which leaves the whole height to the media unlike a bottom bar.
 @Composable
-private fun GalleryNavigationBar(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
-    NavigationBar {
-        for (item in GalleryTab.entries) {
-            NavigationBarItem(
+private fun GalleryTabSwitch(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
+    val appColors = LocalAppColors.current
+    val colors = SegmentedButtonDefaults.colors(
+        activeContainerColor = appColors.onAppBar,
+        activeContentColor = appColors.appBarContainer,
+        activeBorderColor = appColors.onAppBar,
+        inactiveContainerColor = Color.Transparent,
+        inactiveContentColor = appColors.onAppBar,
+        inactiveBorderColor = appColors.onAppBar
+    )
+    SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(end = 12.dp)) {
+        GalleryTab.entries.forEachIndexed { index, item ->
+            SegmentedButton(
                 selected = item == tab,
                 onClick = { onTabChange(item) },
-                icon = { Icon(painterResource(item.iconRes), null) },
-                label = { Text(stringResource(item.labelRes)) }
+                shape = SegmentedButtonDefaults.itemShape(index, GalleryTab.entries.size),
+                colors = colors,
+                icon = {},
+                label = {
+                    Icon(
+                        painter = painterResource(item.iconRes),
+                        contentDescription = stringResource(item.labelRes),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             )
         }
     }
@@ -379,7 +431,7 @@ private fun GalleryAlbumGrid(
         state = gridState,
         contentPadding = PaddingValues(
             start = 16.dp,
-            top = 16.dp,
+            top = contentPadding.calculateTopPadding() + 16.dp,
             end = 16.dp,
             bottom = contentPadding.calculateBottomPadding() + 16.dp
         ),
@@ -476,7 +528,10 @@ private fun Context.createAccessSettingsIntent(): Intent =
     if (Environment::class.supportsExternalStorageManager()) {
         Environment::class.createManageAppAllFilesAccessPermissionIntent(packageName)
     } else {
-        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null))
+        Intent(
+            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", packageName, null)
+        )
     }
 
 @Composable

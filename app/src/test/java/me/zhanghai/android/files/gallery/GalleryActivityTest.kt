@@ -61,6 +61,7 @@ class GalleryActivityTest {
     @Before
     fun setUp() {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
+        Settings.EDGE_TO_EDGE.putValue(false)
         TestMediaStoreProvider.install(temporaryFolder.newFolder())
         GalleryLiveData.reload()
     }
@@ -103,9 +104,17 @@ class GalleryActivityTest {
     }
 
     @Test
+    fun showsPhotosBehindAppBarEdgeToEdge() {
+        Settings.EDGE_TO_EDGE.putValue(true)
+        launch()
+        composeTestRule.onNodeWithText("Today").assertIsDisplayed()
+        captureScreenRoboImage("build/screenshots/gallery_edge_to_edge.png")
+    }
+
+    @Test
     fun showsAlbums() {
         launch()
-        composeTestRule.onNodeWithText("Albums").performClick()
+        composeTestRule.onNodeWithContentDescription("Albums").performClick()
         composeTestRule.onNodeWithText("Camera").assertIsDisplayed()
         composeTestRule.onNodeWithText("9 items").assertIsDisplayed()
         composeTestRule.onNodeWithText("Screenshots").assertIsDisplayed()
