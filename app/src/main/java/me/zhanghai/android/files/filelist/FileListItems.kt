@@ -44,12 +44,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -89,6 +89,8 @@ interface FileItemActions {
 }
 
 private const val SELECTED_ALPHA = 0.12f
+private val GRID_ITEM_SHAPE = RoundedCornerShape(12.dp)
+private val GRID_THUMBNAIL_SHAPE = RoundedCornerShape(8.dp)
 private const val DISABLED_ALPHA = 0.38f
 private const val STROKE_ALPHA = 0.12f
 
@@ -106,6 +108,7 @@ fun FileListItem(
     isEnabled: Boolean,
     isPicking: Boolean,
     nameEllipsize: TextUtils.TruncateAt,
+    description: String?,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     onIconClick: () -> Unit,
@@ -139,7 +142,6 @@ fun FileListItem(
                 ellipsize = nameEllipsize,
                 style = MaterialTheme.typography.bodyLarge
             )
-            val description = fileDescription(file)
             if (description != null) {
                 Text(
                     text = description,
@@ -178,7 +180,7 @@ fun FileGridItem(
     modifier: Modifier = Modifier
 ) {
     val focusRequesters = remember { FileItemFocusRequesters() }
-    val shape = RoundedCornerShape(12.dp)
+    val shape = GRID_ITEM_SHAPE
     Column(
         modifier = modifier
             .padding(4.dp)
@@ -273,15 +275,6 @@ private fun FileName(name: String, ellipsize: TextUtils.TruncateAt, style: TextS
     }
 }
 
-// The last modification time and the size of a file, or nothing for a directory.
-@Composable
-private fun fileDescription(file: FileItem): String? {
-    val context = LocalContext.current
-    return remember(file, context) {
-        if (file.attributes.isDirectory) null else file.formatDescription(context)
-    }
-}
-
 /** The last modification time and the size of a file. */
 fun FileItem.formatDescription(context: Context): String {
     val lastModificationTime = attributes.lastModifiedTime().toInstant().formatShort(context)
@@ -316,16 +309,20 @@ fun FileItemIcon(
             )
             .padding(4.dp)
     ) {
+        // Read when drawing only, so that a loaded thumbnail doesn't recompose the item.
         var isThumbnailShown by remember(file) { mutableStateOf(false) }
-        if (!isThumbnailShown) {
-            Image(
-                painter = cachedIconPainter(file.mimeType.iconRes, 24.dp),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.Center)
-            )
-        }
+        Image(
+            painter = cachedIconPainter(file.mimeType.iconRes, 24.dp),
+            contentDescription = null,
+            modifier = Modifier
+                .size(24.dp)
+                .align(Alignment.Center)
+                .drawWithContent {
+                    if (!isThumbnailShown) {
+                        drawContent()
+                    }
+                }
+        )
         val supportsThumbnail = remember(file) { file.supportsThumbnail }
         if (showsThumbnail && supportsThumbnail) {
             AsyncImage(
@@ -411,7 +408,7 @@ private fun fileBadgeIconRes(file: FileItem): Int? {
 // A folder outline for directories, otherwise the thumbnail of the file, or its type icon.
 @Composable
 private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
-    val shape = RoundedCornerShape(8.dp)
+    val shape = GRID_THUMBNAIL_SHAPE
     val isDirectory = file.attributes.isDirectory
     Box(
         modifier = modifier
@@ -451,9 +448,17 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
             return@Box
         }
         var isThumbnailShown by remember(file) { mutableStateOf(false) }
-        if (!isThumbnailShown) {
-            Image(painter = iconPainter, contentDescription = null, modifier = Modifier.size(40.dp))
-        }
+        Image(
+            painter = iconPainter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(40.dp)
+                .drawWithContent {
+                    if (!isThumbnailShown) {
+                        drawContent()
+                    }
+                }
+        )
         if (supportsThumbnail) {
             AsyncImage(
                 model = file.path to file.attributes,
