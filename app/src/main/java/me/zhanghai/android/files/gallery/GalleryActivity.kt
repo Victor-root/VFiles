@@ -13,16 +13,19 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -34,21 +37,32 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.key
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -65,7 +79,7 @@ import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.NavigateUpButton
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
-
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
@@ -97,8 +111,11 @@ private fun GalleryScreen(state: GalleryState?) {
     var selectedIds by rememberSaveable(stateSaver = SelectedIdsSaver) {
         mutableStateOf(emptySet())
     }
-    // Kept while the albums are shown, like the gallery of a phone.
+    // Kept while another tab or an album is shown, like the gallery of a phone.
     val photosGridState = rememberLazyGridState()
+    val albumsGridState = rememberLazyGridState()
+    // The album to focus again once it's closed, on a D-pad.
+    var albumIdToFocus by remember { mutableStateOf<Long?>(null) }
     val currentAlbumId = albumId
     val album = currentAlbumId?.let { state?.getAlbum(it) }
     // An album whose media are all gone is closed.
@@ -119,8 +136,31 @@ private fun GalleryScreen(state: GalleryState?) {
         val ids = items.map { it.id }
         selectedIds = if (selectedIds.containsAll(ids)) selectedIds - ids else selectedIds + ids
     }
+    val closeAlbum = {
+        albumIdToFocus = albumId
+        albumId = null
+    }
+    val onTabChange = { newTab: GalleryTab ->
+        tab = newTab
+        clearSelection()
+    }
+    val isTelevision = remember(context) { context.isTelevision }
+    // On a D-pad, the media are focused rather than the tabs once they are shown, and again when
+    // the focused one is gone, like when opening or closing an album.
+    val contentFocusRequester = remember { FocusRequester() }
+    var contentHasFocus by remember { mutableStateOf(false) }
+    val inputModeManager = LocalInputModeManager.current
+    LaunchedEffect(state == null, state?.isAccessDenied, currentAlbumId) {
+        if (state != null && inputModeManager.inputMode == InputMode.Keyboard) {
+            // Lets the grids lay out their first items, and an album focus itself.
+            withFrameNanos {}
+            if (!contentHasFocus) {
+                contentFocusRequester.requestFocus()
+            }
+        }
+    }
     // Declared in increasing priority.
-    BackHandler(enabled = album != null) { albumId = null }
+    BackHandler(enabled = album != null, onBack = closeAlbum)
     BackHandler(enabled = selectedMedia.isNotEmpty(), onBack = clearSelection)
 
     AppScaffold(
@@ -138,7 +178,7 @@ private fun GalleryScreen(state: GalleryState?) {
                     title = album?.name ?: stringResource(R.string.gallery_title),
                     navigationIcon = {
                         if (album != null) {
-                            IconButton(onClick = { albumId = null }) {
+                            IconButton(onClick = closeAlbum) {
                                 Icon(
                                     painter = painterResource(R.drawable.arrow_back_icon_white_24dp),
                                     contentDescription = stringResource(R.string.navigate_up)
@@ -152,56 +192,67 @@ private fun GalleryScreen(state: GalleryState?) {
             }
         },
         bottomBar = {
-            if (album == null) {
-                GalleryNavigationBar(
-                    tab = tab,
-                    onTabChange = {
-                        tab = it
-                        clearSelection()
-                    }
-                )
+            if (album == null && !isTelevision) {
+                GalleryNavigationBar(tab = tab, onTabChange = onTabChange)
             }
         }
     ) { contentPadding ->
-        when {
-            state == null ->
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            state.isAccessDenied -> GalleryAccessDenied()
-            album != null || tab == GalleryTab.PHOTOS ->
-                if (media.isEmpty()) {
-                    GalleryEmpty()
-                } else {
-                    // Each album has its own scroll position.
-                    key(currentAlbumId) {
-                        GalleryMediaGrid(
-                            media = media,
-                            selectedIds = selectedIds,
-                            onMediaClick = {
-                                if (selectedIds.isNotEmpty()) {
-                                    toggleSelection(listOf(it))
-                                } else {
-                                    context.openGalleryViewer(album?.id, it)
-                                }
-                            },
-                            onMediaLongClick = { toggleSelection(listOf(it)) },
-                            onSectionClick = toggleSelection,
-                            gridState = if (album != null) {
-                                rememberLazyGridState()
-                            } else {
-                                photosGridState
-                            },
+        // On a TV, the tabs are on the side where the D-pad reaches them from any row.
+        Row {
+            if (album == null && isTelevision) {
+                GalleryNavigationRail(tab = tab, onTabChange = onTabChange)
+            }
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(contentFocusRequester)
+                    .onFocusChanged { contentHasFocus = it.hasFocus }
+                    .focusGroup()
+            ) {
+                when {
+                    state == null ->
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator()
+                        }
+                    state.isAccessDenied -> GalleryAccessDenied()
+                    album != null || tab == GalleryTab.PHOTOS ->
+                        if (media.isEmpty()) {
+                            GalleryEmpty()
+                        } else {
+                            // Each album has its own scroll position.
+                            key(currentAlbumId) {
+                                GalleryMediaGrid(
+                                    media = media,
+                                    selectedIds = selectedIds,
+                                    onMediaClick = {
+                                        if (selectedIds.isNotEmpty()) {
+                                            toggleSelection(listOf(it))
+                                        } else {
+                                            context.openGalleryViewer(album?.id, it)
+                                        }
+                                    },
+                                    onMediaLongClick = { toggleSelection(listOf(it)) },
+                                    onSectionClick = toggleSelection,
+                                    gridState = if (album != null) {
+                                        rememberLazyGridState()
+                                    } else {
+                                        photosGridState
+                                    },
+                                    contentPadding = contentPadding
+                                )
+                            }
+                        }
+                    else ->
+                        GalleryAlbumGrid(
+                            albums = state.albums,
+                            onAlbumClick = { albumId = it.id },
+                            gridState = albumsGridState,
+                            albumIdToFocus = albumIdToFocus,
+                            onAlbumFocused = { albumIdToFocus = null },
                             contentPadding = contentPadding
                         )
-                    }
                 }
-            else ->
-                GalleryAlbumGrid(
-                    albums = state.albums,
-                    onAlbumClick = { albumId = it.id },
-                    contentPadding = contentPadding
-                )
+            }
         }
     }
 }
@@ -247,21 +298,66 @@ private fun GallerySelectionAppBar(
     )
 }
 
+private val GalleryTab.iconRes: Int
+    get() =
+        when (this) {
+            GalleryTab.PHOTOS -> R.drawable.image_icon_white_24dp
+            GalleryTab.ALBUMS -> R.drawable.gallery_icon_white_24dp
+        }
+
+private val GalleryTab.labelRes: Int
+    get() =
+        when (this) {
+            GalleryTab.PHOTOS -> R.string.gallery_photos
+            GalleryTab.ALBUMS -> R.string.gallery_albums
+        }
+
 @Composable
 private fun GalleryNavigationBar(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
     NavigationBar {
-        NavigationBarItem(
-            selected = tab == GalleryTab.PHOTOS,
-            onClick = { onTabChange(GalleryTab.PHOTOS) },
-            icon = { Icon(painterResource(R.drawable.image_icon_white_24dp), null) },
-            label = { Text(stringResource(R.string.gallery_photos)) }
-        )
-        NavigationBarItem(
-            selected = tab == GalleryTab.ALBUMS,
-            onClick = { onTabChange(GalleryTab.ALBUMS) },
-            icon = { Icon(painterResource(R.drawable.gallery_icon_white_24dp), null) },
-            label = { Text(stringResource(R.string.gallery_albums)) }
-        )
+        for (item in GalleryTab.entries) {
+            NavigationBarItem(
+                selected = item == tab,
+                onClick = { onTabChange(item) },
+                icon = { Icon(painterResource(item.iconRes), null) },
+                label = { Text(stringResource(item.labelRes)) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun GalleryNavigationRail(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
+    // The D-pad enters the tabs on the current one, but not when the screen is shown, where the
+    // media are focused first instead.
+    val selectedFocusRequester = remember { FocusRequester() }
+    NavigationRail(
+        modifier = Modifier
+            .focusProperties {
+                onEnter = {
+                    if (requestedFocusDirection == FocusDirection.Enter) {
+                        cancelFocusChange()
+                    } else {
+                        selectedFocusRequester.requestFocus()
+                    }
+                }
+            }
+            .focusGroup()
+    ) {
+        for (item in GalleryTab.entries) {
+            val isSelected = item == tab
+            NavigationRailItem(
+                selected = isSelected,
+                onClick = { onTabChange(item) },
+                icon = { Icon(painterResource(item.iconRes), null) },
+                modifier = if (isSelected) {
+                    Modifier.focusRequester(selectedFocusRequester)
+                } else {
+                    Modifier
+                },
+                label = { Text(stringResource(item.labelRes)) }
+            )
+        }
     }
 }
 
@@ -272,11 +368,15 @@ private val ALBUM_SHAPE = RoundedCornerShape(16.dp)
 private fun GalleryAlbumGrid(
     albums: List<GalleryAlbum>,
     onAlbumClick: (GalleryAlbum) -> Unit,
+    gridState: LazyGridState,
+    albumIdToFocus: Long?,
+    onAlbumFocused: () -> Unit,
     contentPadding: PaddingValues
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(ALBUM_MIN_WIDTH),
         modifier = Modifier.fillMaxSize(),
+        state = gridState,
         contentPadding = PaddingValues(
             start = 16.dp,
             top = 16.dp,
@@ -287,16 +387,38 @@ private fun GalleryAlbumGrid(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(albums, key = { it.id }) { album ->
-            GalleryAlbumItem(album = album, onClick = { onAlbumClick(album) })
+            GalleryAlbumItem(
+                album = album,
+                isToFocus = album.id == albumIdToFocus,
+                onFocused = onAlbumFocused,
+                onClick = { onAlbumClick(album) }
+            )
         }
     }
 }
 
 @Composable
-private fun GalleryAlbumItem(album: GalleryAlbum, onClick: () -> Unit) {
+private fun GalleryAlbumItem(
+    album: GalleryAlbum,
+    isToFocus: Boolean,
+    onFocused: () -> Unit,
+    onClick: () -> Unit
+) {
+    val focusRequester = remember { FocusRequester() }
+    if (isToFocus) {
+        LaunchedEffect(focusRequester) {
+            focusRequester.requestFocus()
+            onFocused()
+        }
+    }
+    var isFocused by remember { mutableStateOf(false) }
+    val scale by animateFocusedScale(isFocused)
     Column(
         modifier = Modifier
+            .focusedScale(isFocused) { scale }
             .clip(ALBUM_SHAPE)
+            .focusRequester(focusRequester)
+            .onFocusChanged { isFocused = it.isFocused }
             .clickable(onClick = onClick)
             .padding(bottom = 4.dp)
     ) {
@@ -307,7 +429,8 @@ private fun GalleryAlbumItem(album: GalleryAlbum, onClick: () -> Unit) {
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .clip(ALBUM_SHAPE)
-                .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                .focusedBorder(isFocused, MaterialTheme.colorScheme.primary, ALBUM_SHAPE),
             contentScale = ContentScale.Crop
         )
         Text(
