@@ -8,6 +8,7 @@ package me.zhanghai.android.files.settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import java8.nio.file.Path
 import me.zhanghai.android.files.filelist.FileListActivity
@@ -22,7 +23,8 @@ fun SettingSwitchPreference(
     setting: SettingLiveData<Boolean>,
     title: String,
     summary: String? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    icon: Painter? = null
 ) {
     val checked by setting.observeAsStateCompat()
     SwitchPreference(
@@ -30,13 +32,19 @@ fun SettingSwitchPreference(
         checked = checked,
         onCheckedChange = { setting.putValue(it) },
         summary = summary,
-        enabled = enabled
+        enabled = enabled,
+        icon = icon
     )
 }
 
 /** A folder, picked in the file list. */
 @Composable
-fun PathPreference(setting: SettingLiveData<Path>, title: String, enabled: Boolean = true) {
+fun PathPreference(
+    setting: SettingLiveData<Path>,
+    title: String,
+    enabled: Boolean = true,
+    icon: Painter? = null
+) {
     val context = LocalContext.current
     val path by setting.observeAsStateCompat()
     val navigationRoots by NavigationRootMapLiveData.observeAsStateCompat()
@@ -49,6 +57,7 @@ fun PathPreference(setting: SettingLiveData<Path>, title: String, enabled: Boole
         title = title,
         summary = navigationRoots[path]?.getName(context) ?: path.toUserFriendlyString(),
         enabled = enabled,
+        icon = icon,
         onClick = { launcher.launch(path) }
     )
 }

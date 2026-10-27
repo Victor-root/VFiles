@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
@@ -65,21 +66,25 @@ private fun SettingsScreen() {
             ThemeColorPreference()
             NightModePreference()
             SettingSwitchPreference(
-                Settings.BLACK_NIGHT_MODE, stringResource(R.string.settings_black_night_mode)
+                Settings.BLACK_NIGHT_MODE, stringResource(R.string.settings_black_night_mode),
+                icon = painterResource(R.drawable.dark_mode_icon_white_24dp)
             )
             SettingSwitchPreference(
                 Settings.FILE_LIST_ANIMATION,
-                stringResource(R.string.settings_file_list_animation_title)
+                stringResource(R.string.settings_file_list_animation_title),
+                icon = painterResource(R.drawable.animation_icon_white_24dp)
             )
             SettingSwitchPreference(
                 Settings.EDGE_TO_EDGE, stringResource(R.string.settings_edge_to_edge_title),
-                stringResource(R.string.settings_edge_to_edge_summary)
+                stringResource(R.string.settings_edge_to_edge_summary),
+                icon = painterResource(R.drawable.fullscreen_icon_white_24dp)
             )
             FileNameEllipsizePreference()
             PreferenceCategory(stringResource(R.string.settings_behavior_title))
             PathPreference(
                 Settings.FILE_LIST_DEFAULT_DIRECTORY,
-                stringResource(R.string.settings_default_directory_title)
+                stringResource(R.string.settings_default_directory_title),
+                icon = painterResource(R.drawable.home_icon_white_24dp)
             )
             StoragesPreference()
             StandardDirectoriesPreference()
@@ -92,12 +97,14 @@ private fun SettingsScreen() {
                 SettingSwitchPreference(
                     Settings.SHOW_PDF_THUMBNAIL_PRE_28,
                     stringResource(R.string.settings_show_pdf_thumbnail_pre_28_title),
-                    stringResource(R.string.settings_show_pdf_thumbnail_pre_28_summary)
+                    stringResource(R.string.settings_show_pdf_thumbnail_pre_28_summary),
+                    icon = painterResource(R.drawable.document_icon_white_24dp)
                 )
             }
             SettingSwitchPreference(
                 Settings.READ_REMOTE_FILES_FOR_THUMBNAIL,
-                stringResource(R.string.settings_read_remote_files_for_thumbnail_title)
+                stringResource(R.string.settings_read_remote_files_for_thumbnail_title),
+                icon = painterResource(R.drawable.image_icon_white_24dp)
             )
         }
     }
@@ -109,6 +116,7 @@ private fun NightModePreference() {
     val entries = stringArrayResource(R.array.settings_night_mode_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_night_mode_title),
+        icon = painterResource(R.drawable.night_mode_icon_white_24dp),
         entries = NightMode.entries,
         entryLabel = { entries[it.ordinal] },
         value = nightMode,
@@ -128,6 +136,7 @@ private fun FileNameEllipsizePreference() {
     val entries = stringArrayResource(R.array.settings_file_name_ellipsize_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_file_name_ellipsize_title),
+        icon = painterResource(R.drawable.more_horizontal_icon_white_24dp),
         entries = FILE_NAME_ELLIPSIZE_ENTRIES,
         entryLabel = { entries[it.ordinal] },
         value = ellipsize,
@@ -142,6 +151,7 @@ private fun StoragesPreference() {
     val names = storages.filter { it.isVisible }.map { it.getName(context) }
     Preference(
         title = stringResource(R.string.settings_storages_title),
+        icon = painterResource(R.drawable.sd_card_icon_white_24dp),
         summary = names.formatListOr(stringResource(R.string.settings_storages_summary_empty)),
         summaryMaxLines = 2,
         onClick = { context.startActivitySafe(StorageListActivity::class.createIntent()) }
@@ -155,6 +165,7 @@ private fun StandardDirectoriesPreference() {
     val titles = standardDirectories.filter { it.isEnabled }.map { it.getTitle(context) }
     Preference(
         title = stringResource(R.string.settings_standard_directories_title),
+        icon = painterResource(R.drawable.folder_icon_control_normal_24dp),
         summary = titles.formatListOr(
             stringResource(R.string.settings_standard_directories_summary_empty)
         ),
@@ -170,6 +181,7 @@ private fun BookmarkDirectoriesPreference() {
     val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.observeAsStateCompat()
     Preference(
         title = stringResource(R.string.settings_bookmark_directories_title),
+        icon = painterResource(R.drawable.bookmark_icon_white_24dp),
         summary = bookmarkDirectories.map { it.name }.formatListOr(
             stringResource(R.string.settings_bookmark_directories_summary_empty)
         ),
@@ -187,6 +199,7 @@ private fun DefaultAppsPreference() {
     val context = LocalContext.current
     Preference(
         title = stringResource(R.string.settings_default_apps_title),
+        icon = painterResource(R.drawable.apps_icon_white_24dp),
         summary = stringResource(R.string.settings_default_apps_summary),
         onClick = { context.startActivitySafe(DefaultAppsActivity::class.createIntent()) }
     )
@@ -200,6 +213,7 @@ private fun RootStrategyPreference() {
     var runningJobCountToConfirm by rememberSaveable { mutableStateOf<Int?>(null) }
     BottomSheetListPreference(
         title = stringResource(R.string.settings_root_strategy_title),
+        icon = painterResource(R.drawable.security_icon_white_24dp),
         entries = RootStrategy.entries,
         entryLabel = { entries[it.ordinal] },
         value = rootStrategy,
@@ -248,6 +262,7 @@ private fun ArchiveFileNameEncodingPreference() {
     val charsets = remember { Charset.availableCharsets() }
     DialogListPreference(
         title = stringResource(R.string.settings_archive_file_name_encoding_title),
+        icon = painterResource(R.drawable.archive_icon_control_normal_24dp),
         entries = charsets.keys.toList(),
         entryLabel = { charsets[it]?.displayName() ?: it },
         value = encoding,
@@ -261,6 +276,7 @@ private fun OpenApkDefaultActionPreference() {
     val entries = stringArrayResource(R.array.settings_open_apk_default_action_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_open_apk_default_action_title),
+        icon = painterResource(R.drawable.install_unknown_apps_icon_white_24dp),
         entries = OpenApkDefaultAction.entries,
         entryLabel = { entries[it.ordinal] },
         value = action,

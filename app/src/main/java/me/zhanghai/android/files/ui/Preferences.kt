@@ -73,6 +73,7 @@ fun Preference(
     summary: String? = null,
     summaryMaxLines: Int = Int.MAX_VALUE,
     enabled: Boolean = true,
+    icon: Painter? = null,
     onClick: (() -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null
 ) {
@@ -81,6 +82,7 @@ fun Preference(
         summary = summary,
         summaryMaxLines = summaryMaxLines,
         enabled = enabled,
+        icon = icon,
         modifier = modifier.then(
             if (onClick != null) Modifier.clickable(enabled = enabled, onClick = onClick)
             else Modifier
@@ -123,7 +125,8 @@ fun <T> BottomSheetListPreference(
     value: T,
     onValueChange: (T) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    icon: Painter? = null
 ) {
     var isSheetShown by rememberSaveable { mutableStateOf(false) }
     BottomSheetListPreference(
@@ -135,7 +138,8 @@ fun <T> BottomSheetListPreference(
         isSheetShown = isSheetShown,
         onSheetShownChange = { isSheetShown = it },
         modifier = modifier,
-        enabled = enabled
+        enabled = enabled,
+        icon = icon
     )
 }
 
@@ -149,13 +153,15 @@ fun <T> BottomSheetListPreference(
     isSheetShown: Boolean,
     onSheetShownChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    icon: Painter? = null
 ) {
     Preference(
         title = title,
         modifier = modifier,
         summary = entryLabel(value),
         enabled = enabled,
+        icon = icon,
         onClick = { onSheetShownChange(true) }
     )
     if (isSheetShown) {
@@ -239,7 +245,8 @@ fun <T> DialogListPreference(
     value: T,
     onValueChange: (T) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    icon: Painter? = null
 ) {
     var isDialogShown by rememberSaveable { mutableStateOf(false) }
     Preference(
@@ -247,6 +254,7 @@ fun <T> DialogListPreference(
         modifier = modifier,
         summary = entryLabel(value),
         enabled = enabled,
+        icon = icon,
         onClick = { isDialogShown = true }
     )
     if (isDialogShown) {
@@ -333,7 +341,7 @@ private fun PreferenceLayout(
                 painter = icon,
                 contentDescription = null,
                 modifier = Modifier.alpha(if (enabled) 1f else DISABLED_ALPHA),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.width(32.dp))
         }

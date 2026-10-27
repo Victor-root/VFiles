@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.LocaleManagerCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -33,6 +34,7 @@ import java.util.Locale
 fun LocalePreference() {
     val title = stringResource(R.string.settings_locale_title)
     val systemDefault = stringResource(R.string.system_default)
+    val icon = painterResource(R.drawable.translate_icon_white_24dp)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         // Prefer using the system setting because it has better support for locales, and refresh
         // when coming back from it.
@@ -45,6 +47,7 @@ fun LocalePreference() {
         Preference(
             title = title,
             summary = locale?.sentenceCasedLocalizedDisplayName ?: systemDefault,
+            icon = icon,
             onClick = {
                 context.startActivitySafe(
                     Intent(
@@ -65,6 +68,7 @@ fun LocalePreference() {
             title = title,
             entries = listOf(null) + supportedLocales,
             entryLabel = { it?.sentenceCasedLocalizedDisplayName ?: systemDefault },
+            icon = icon,
             value = Settings.LOCALES.valueCompat.takeIfNotEmpty()
                 ?.let { Locale.forLanguageTag(it) },
             onValueChange = {
