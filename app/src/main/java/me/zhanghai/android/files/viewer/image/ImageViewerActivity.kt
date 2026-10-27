@@ -71,9 +71,9 @@ import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.provider.common.delete
 import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.ConfirmationDialog
+import me.zhanghai.android.files.ui.MenuDivider
+import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
-import me.zhanghai.android.files.ui.SheetDivider
-import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.util.ParcelableListParceler
 import me.zhanghai.android.files.util.createSendImageIntent
 import me.zhanghai.android.files.util.extraPath
@@ -182,7 +182,7 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
                 },
                 actions = {
                     OverflowMenu { dismiss ->
-                        SheetItem(
+                        MenuItem(
                             R.drawable.share_icon_control_normal_24dp,
                             stringResource(R.string.share)
                         ) {
@@ -192,8 +192,8 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
                                 .withChooser()
                             context.startActivitySafe(intent)
                         }
-                        SheetDivider()
-                        SheetItem(
+                        MenuDivider()
+                        MenuItem(
                             R.drawable.delete_icon_control_normal_24dp,
                             stringResource(R.string.delete)
                         ) {

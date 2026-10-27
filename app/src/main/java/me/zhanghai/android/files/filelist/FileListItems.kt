@@ -67,9 +67,9 @@ import me.zhanghai.android.files.file.iconRes
 import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.isEncrypted
-import me.zhanghai.android.files.ui.ActionBottomSheet
-import me.zhanghai.android.files.ui.SheetDivider
-import me.zhanghai.android.files.ui.SheetItem
+import me.zhanghai.android.files.ui.MenuDivider
+import me.zhanghai.android.files.ui.MenuItem
+import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.cachedIconPainter
 import me.zhanghai.android.files.util.PerfLog
 import me.zhanghai.android.files.util.PerfLog.timeMeasure
@@ -493,9 +493,15 @@ private fun FileItemMenuButton(
 ) {
     PerfLog.Recomposed("FileItemMenuButton")
     var isMenuShown by remember { mutableStateOf(false) }
+    // Composing the menu of every item costs much while scrolling, so it's only composed once
+    // opened, and then kept for its closing animation.
+    var hasMenuBeenShown by remember { mutableStateOf(false) }
     Box(modifier = modifier) {
         IconButton(
-            onClick = { isMenuShown = true },
+            onClick = {
+                hasMenuBeenShown = true
+                isMenuShown = true
+            },
             modifier = Modifier
                 .focusRequester(focusRequesters.menu)
                 .focusProperties {
@@ -511,10 +517,11 @@ private fun FileItemMenuButton(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        if (isMenuShown) {
-            ActionBottomSheet(onDismissRequest = { isMenuShown = false }, title = file.name) {
-                FileItemMenuItems(file, isPicking, actions, it)
-            }
+        if (hasMenuBeenShown) {
+            RoundedDropdownMenu(
+                expanded = isMenuShown,
+                onDismissRequest = { isMenuShown = false }
+            ) { FileItemMenuItems(file, isPicking, actions) { isMenuShown = false } }
         }
     }
 }
@@ -528,7 +535,7 @@ private fun FileItemMenuItems(
 ) {
     @Composable
     fun Item(@DrawableRes iconRes: Int, title: String, onClick: (FileItem) -> Unit) {
-        SheetItem(iconRes, title) {
+        MenuItem(iconRes, title) {
             dismiss()
             onClick(file)
         }
@@ -542,7 +549,7 @@ private fun FileItemMenuItems(
         actions::openFileWith
     )
     if (!isPicking || !isReadOnly) {
-        SheetDivider()
+        MenuDivider()
     }
     if (!isPicking && !isReadOnly) {
         Item(
@@ -567,7 +574,7 @@ private fun FileItemMenuItems(
         )
     }
     if (file.isArchiveFile || !isArchivePath) {
-        SheetDivider()
+        MenuDivider()
     }
     if (file.isArchiveFile) {
         Item(
@@ -581,7 +588,7 @@ private fun FileItemMenuItems(
             stringResource(R.string.file_item_action_archive), actions::showCreateArchiveDialog
         )
     }
-    SheetDivider()
+    MenuDivider()
     Item(
         R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share),
         actions::shareFile
@@ -590,7 +597,7 @@ private fun FileItemMenuItems(
         R.drawable.copy_path_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_copy_path), actions::copyPath
     )
-    SheetDivider()
+    MenuDivider()
     if (file.attributes.isDirectory) {
         Item(
             R.drawable.bookmark_icon_control_normal_24dp,
@@ -601,7 +608,7 @@ private fun FileItemMenuItems(
         R.drawable.shortcut_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_create_shortcut), actions::createShortcut
     )
-    SheetDivider()
+    MenuDivider()
     Item(
         R.drawable.information_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_properties), actions::showPropertiesDialog
