@@ -15,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import me.zhanghai.android.files.R
@@ -32,6 +33,7 @@ fun ThemeColorPreference() {
     Preference(
         title = title,
         summary = stringResource(R.string.settings_theme_color_summary),
+        icon = painterResource(R.drawable.palette_icon_white_24dp),
         onClick = { isDialogShown = true }
     )
     if (isDialogShown) {
