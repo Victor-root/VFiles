@@ -71,8 +71,6 @@ import me.zhanghai.android.files.ui.MenuDivider
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.cachedIconPainter
-import me.zhanghai.android.files.util.PerfLog
-import me.zhanghai.android.files.util.PerfLog.timeMeasure
 
 /** What the menu of a file can do. */
 interface FileItemActions {
@@ -114,11 +112,9 @@ fun FileListItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
-    PerfLog.Recomposed("FileListItem")
     val focusRequesters = remember { FileItemFocusRequesters() }
     Row(
         modifier = modifier
-            .timeMeasure("itemMeasure")
             .fillMaxWidth()
             .height(72.dp)
             .background(selectedBackgroundColor(isSelected))
@@ -128,51 +124,43 @@ fun FileListItem(
             .disabledAlpha(isEnabled),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PerfLog.time("item.icon") {
-            FileItemIcon(
-                file = file,
-                modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.screen_edge_margin_minus_4dp),
-                    end = dimensionResource(
-                        R.dimen.content_start_from_screen_edge_margin_minus_44dp
-                    )
-                ),
-                isSelected = isSelected,
-                onClick = onIconClick
+        FileItemIcon(
+            file = file,
+            modifier = Modifier.padding(
+                start = dimensionResource(R.dimen.screen_edge_margin_minus_4dp),
+                end = dimensionResource(R.dimen.content_start_from_screen_edge_margin_minus_44dp)
+            ),
+            isSelected = isSelected,
+            onClick = onIconClick
+        )
+        Column(modifier = Modifier.weight(1f)) {
+            FileName(
+                name = file.name,
+                ellipsize = nameEllipsize,
+                style = MaterialTheme.typography.bodyLarge
             )
-        }
-        PerfLog.time("item.text") {
-            Column(modifier = Modifier.weight(1f)) {
-                FileName(
-                    name = file.name,
-                    ellipsize = nameEllipsize,
-                    style = MaterialTheme.typography.bodyLarge
+            val description = fileDescription(file)
+            if (description != null) {
+                Text(
+                    text = description,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyMedium
                 )
-                val description = fileDescription(file)
-                if (description != null) {
-                    Text(
-                        text = description,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
             }
         }
-        PerfLog.time("item.menu") {
-            FileItemMenuButton(
-                file = file,
-                isEnabled = isEnabled,
-                isPicking = isPicking,
-                actions = actions,
-                focusRequesters = focusRequesters,
-                modifier = Modifier.padding(
-                    start = dimensionResource(MENU_BUTTON_MARGIN_START),
-                    end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp_at_least_8dp)
-                )
+        FileItemMenuButton(
+            file = file,
+            isEnabled = isEnabled,
+            isPicking = isPicking,
+            actions = actions,
+            focusRequesters = focusRequesters,
+            modifier = Modifier.padding(
+                start = dimensionResource(MENU_BUTTON_MARGIN_START),
+                end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp_at_least_8dp)
             )
-        }
+        )
     }
 }
 
@@ -189,7 +177,6 @@ fun FileGridItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
-    PerfLog.Recomposed("FileGridItem")
     val focusRequesters = remember { FileItemFocusRequesters() }
     val shape = RoundedCornerShape(12.dp)
     Column(
@@ -315,7 +302,6 @@ fun FileItemIcon(
     showsThumbnail: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
-    PerfLog.Recomposed("FileItemIcon")
     Box(
         modifier = modifier
             .size(48.dp)
@@ -491,7 +477,6 @@ private fun FileItemMenuButton(
     focusRequesters: FileItemFocusRequesters,
     modifier: Modifier = Modifier
 ) {
-    PerfLog.Recomposed("FileItemMenuButton")
     var isMenuShown by remember { mutableStateOf(false) }
     // Composing the menu of every item costs much while scrolling, so it's only composed once
     // opened, and then kept for its closing animation.
