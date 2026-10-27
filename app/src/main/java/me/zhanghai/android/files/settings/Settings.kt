@@ -127,6 +127,11 @@ object Settings {
             R.string.pref_key_file_list_animation, R.bool.pref_default_value_file_list_animation
         )
 
+    val DOUBLE_BACK_TO_EXIT: SettingLiveData<Boolean> =
+        BooleanSettingLiveData(
+            R.string.pref_key_double_back_to_exit, R.bool.pref_default_value_double_back_to_exit
+        )
+
     val EDGE_TO_EDGE: SettingLiveData<Boolean> =
         BooleanSettingLiveData(
             R.string.pref_key_edge_to_edge, R.bool.pref_default_value_edge_to_edge

@@ -317,6 +317,7 @@
     <string name="file_list_paste_extract_title_format">Extracting %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extract here</string>
     <string name="file_list_empty">No files</string>
+    <string name="file_list_press_back_again_to_exit">Press back again to exit</string>
     <string name="file_list_error_folder_not_found">This folder no longer exists</string>
     <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
     <string name="file_list_error_unknown">Unable to open this folder</string>
@@ -767,6 +768,7 @@
     </string-array>
     <string name="settings_black_night_mode">Black night mode</string>
     <string name="settings_file_list_animation_title">File list animation</string>
+    <string name="settings_double_back_to_exit_title">Press back twice to exit</string>
     <string name="settings_edge_to_edge_title">Edge-to-edge display</string>
     <string name="settings_edge_to_edge_summary">Content scrolls behind the status and navigation bars</string>
     <string name="settings_file_name_ellipsize_title">Display long file name</string>

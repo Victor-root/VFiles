@@ -51,6 +51,8 @@ import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,6 +63,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import org.robolectric.shadows.ShadowEnvironment
+import org.robolectric.shadows.ShadowToast
 
 @OptIn(ExperimentalRoborazziApi::class, ExperimentalTestApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -308,6 +311,7 @@ class FileListActivityTest {
     }
 
     @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
     fun movesRightFromFileMenuToSpeedDialWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
@@ -320,6 +324,18 @@ class FileListActivityTest {
 
     @Test
     @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun movesUpFromSpeedDialToFilesWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val speedDial = composeTestRule.onNodeWithContentDescription("Create")
+        speedDial.requestFocus()
+        // Back to the list rather than to the app bar.
+        speedDial.performKeyInput { pressKey(Key.DirectionUp) }
+        composeTestRule.onNodeWithText("photo.jpg").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
     fun focusesNavigationIconInEmptyFolderWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
@@ -328,6 +344,18 @@ class FileListActivityTest {
         empty.performKeyInput { pressKey(Key.DirectionCenter) }
         waitForText("No files")
         composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+    }
+
+    @Test
+    fun exitsWithBackPressedTwice() {
+        val scenario = launch()
+        scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        assertEquals("Press back again to exit", ShadowToast.getTextOfLatestToast())
+        scenario.onActivity {
+            assertFalse(it.isFinishing)
+            it.onBackPressedDispatcher.onBackPressed()
+            assertTrue(it.isFinishing)
+        }
     }
 
     @Test
