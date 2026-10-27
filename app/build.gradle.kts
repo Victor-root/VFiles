@@ -188,6 +188,8 @@ dependencies {
     implementation(libs.compose.runtime.livedata)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
+    // Shows the composables in the system traces of Android Studio.
+    debugImplementation(libs.compose.runtime.tracing)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.material.color.utilities)
 
