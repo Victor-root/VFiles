@@ -54,8 +54,8 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -115,6 +115,7 @@ import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -456,6 +457,7 @@ private fun FileListScaffold(
     }
     AppScaffold(
         modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
+        isContentBehindTopBar = true,
         topBar = {
             Surface(
                 modifier = Modifier
@@ -817,21 +819,18 @@ private fun FileListContent(
     val context = LocalContext.current
     val iconBitmapCache = remember(context) { IconBitmapCache(context) }
     val pullToRefreshState = rememberPullToRefreshState()
+    val isTelevision = remember(context) { context.isTelevision }
     // The list scrolls behind the app bar, so what's shown over it is moved below the app bar.
-    PullToRefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = controller::refresh,
-        modifier = Modifier.fillMaxSize(),
-        state = pullToRefreshState,
-        indicator = {
-            PullToRefreshDefaults.Indicator(
-                state = pullToRefreshState,
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            // Pulling needs touch, and D-pad scrolling shouldn't start one on TVs.
+            .pullToRefresh(
                 isRefreshing = isRefreshing,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = topPadding)
+                state = pullToRefreshState,
+                enabled = !isTelevision,
+                onRefresh = controller::refresh
             )
-        }
     ) {
         if (files != null) {
             FileGrid(
@@ -884,6 +883,13 @@ private fun FileListContent(
         ) {
             FileListMessage(R.drawable.file_icon_240dp, stringResource(R.string.file_list_empty))
         }
+        PullToRefreshDefaults.Indicator(
+            state = pullToRefreshState,
+            isRefreshing = isRefreshing,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = topPadding)
+        )
     }
 }
 
@@ -1063,6 +1069,10 @@ private class ListAppearance(isEnabled: Boolean) {
     // first one started to appear.
     private val time = Animatable(0f)
 
+    // Set when scrolling, which shows all the items at once. Unlike snapping the clock to its end,
+    // it can't be lost when the animation is canceled at the same time.
+    private var isEnded by mutableStateOf(false)
+
     // The first visible item appears first, and the last one composed while starting appears last.
     private var firstIndex = 0
     private var lastIndex = 0
@@ -1088,7 +1098,8 @@ private class ListAppearance(isEnabled: Boolean) {
         coroutineScope {
             val endOnScroll = launch {
                 snapshotFlow { gridState.isScrollInProgress }.first { it }
-                time.snapTo(durationMillis.toFloat())
+                isEnded = true
+                this@coroutineScope.cancel()
             }
             time.animateTo(
                 durationMillis.toFloat(), tween(durationMillis, easing = LinearEasing)
@@ -1099,8 +1110,12 @@ private class ListAppearance(isEnabled: Boolean) {
 
     /** How long ago the item at [index] started to appear, up to the duration of its animation. */
     fun getItemTime(index: Int): Float =
-        (time.value - (index - firstIndex).coerceAtLeast(0) * APPEARANCE_STAGGER_MILLIS)
-            .coerceIn(0f, APPEARANCE_DURATION_MILLIS.toFloat())
+        if (isEnded) {
+            APPEARANCE_DURATION_MILLIS.toFloat()
+        } else {
+            (time.value - (index - firstIndex).coerceAtLeast(0) * APPEARANCE_STAGGER_MILLIS)
+                .coerceIn(0f, APPEARANCE_DURATION_MILLIS.toFloat())
+        }
 }
 
 // Each item has a layer of its own, so that scrolling only moves the layers instead of drawing
