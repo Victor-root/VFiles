@@ -20,6 +20,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -99,25 +100,27 @@ class OnboardingActivity : AppActivity() {
         val grantedPages = remember(grantCheckCount) { pages.filter { it.isGranted(context) } }
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+                // Kept above the cards, so that moving the focus down to them with a D-pad doesn't
+                // scroll it away.
+                Text(
+                    text = stringResource(
+                        R.string.onboarding_welcome_title, stringResource(R.string.app_name)
+                    ),
+                    modifier = Modifier.padding(start = 24.dp, top = 48.dp, end = 24.dp),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = stringResource(R.string.onboarding_welcome_description),
+                    modifier = Modifier.padding(start = 24.dp, top = 8.dp, end = 24.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
+                )
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState())
-                        .padding(start = 24.dp, top = 48.dp, end = 24.dp, bottom = 8.dp)
+                        .padding(start = 24.dp, top = 32.dp, end = 24.dp, bottom = 8.dp)
                 ) {
-                    Text(
-                        text = stringResource(
-                            R.string.onboarding_welcome_title, stringResource(R.string.app_name)
-                        ),
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Text(
-                        text = stringResource(R.string.onboarding_welcome_description),
-                        modifier = Modifier.padding(bottom = 32.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
                     for (page in pages) {
                         PermissionCard(
                             page = page,
@@ -259,68 +262,81 @@ private fun PermissionCard(
             .padding(bottom = 12.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    modifier = Modifier
-                        .size(44.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(page.iconRes),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(1.dp)
-                ) {
-                    Text(
-                        text = stringResource(page.titleRes),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    Text(
-                        text = stringResource(
-                            if (page.isRequired) {
-                                R.string.onboarding_required
-                            } else {
-                                R.string.onboarding_optional
-                            }
-                        ),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                    Text(
-                        text = remember(page, context) { page.getDescription(context) },
-                        modifier = Modifier.padding(top = 5.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-                if (isGranted) {
-                    Icon(
-                        painter = painterResource(R.drawable.check_icon_white_24dp),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .size(32.dp)
-                            .padding(4.dp),
-                        tint = colorResource(android.R.color.holo_green_dark)
-                    )
+        // On wide screens like TVs, the button is next to the text, so that the cards are short
+        // enough for the whole screen to fit without scrolling the title away.
+        BoxWithConstraints {
+            val isWide = maxWidth >= WIDE_CARD_MIN_WIDTH
+            val grantButton = @Composable { modifier: Modifier ->
+                OutlinedButton(onClick = onGrant, modifier = modifier) {
+                    Text(stringResource(R.string.onboarding_grant))
                 }
             }
-            if (!isGranted) {
-                OutlinedButton(
-                    onClick = onGrant,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(top = 12.dp)
-                ) { Text(stringResource(R.string.onboarding_grant)) }
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .background(MaterialTheme.colorScheme.primary, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(page.iconRes),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(1.dp)
+                    ) {
+                        Text(
+                            text = stringResource(page.titleRes),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = stringResource(
+                                if (page.isRequired) {
+                                    R.string.onboarding_required
+                                } else {
+                                    R.string.onboarding_optional
+                                }
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Text(
+                            text = remember(page, context) { page.getDescription(context) },
+                            modifier = Modifier.padding(top = 5.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                    if (isGranted) {
+                        Icon(
+                            painter = painterResource(R.drawable.check_icon_white_24dp),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(32.dp)
+                                .padding(4.dp),
+                            tint = colorResource(android.R.color.holo_green_dark)
+                        )
+                    } else if (isWide) {
+                        grantButton(Modifier.padding(start = 16.dp))
+                    }
+                }
+                if (!isGranted && !isWide) {
+                    grantButton(
+                        Modifier
+                            .align(Alignment.End)
+                            .padding(top = 12.dp)
+                    )
+                }
             }
         }
     }
 }
+
+private val WIDE_CARD_MIN_WIDTH = 600.dp
