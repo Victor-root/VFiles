@@ -34,23 +34,25 @@ import kotlin.math.abs
 
 private val APP_BAR_COLOR = Color.Black.copy(alpha = 0.5f)
 
-/** A translucent app bar over the media, with white content. */
+/** An app bar over the media, translucent with white content unless given other colors. */
 @Composable
 fun MediaViewerTopAppBar(
     title: String,
     subtitle: String?,
-    actions: @Composable RowScope.() -> Unit
+    actions: @Composable RowScope.() -> Unit,
+    containerColor: Color = APP_BAR_COLOR,
+    contentColor: Color = Color.White
 ) {
     AppTopAppBar(
         title = title,
         subtitle = subtitle,
         actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = APP_BAR_COLOR,
-            navigationIconContentColor = Color.White,
-            titleContentColor = Color.White,
-            actionIconContentColor = Color.White,
-            subtitleContentColor = Color.White
+            containerColor = containerColor,
+            navigationIconContentColor = contentColor,
+            titleContentColor = contentColor,
+            actionIconContentColor = contentColor,
+            subtitleContentColor = contentColor
         )
     )
 }
