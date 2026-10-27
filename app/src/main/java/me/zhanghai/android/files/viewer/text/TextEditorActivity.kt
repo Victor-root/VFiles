@@ -23,8 +23,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -52,6 +50,8 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.ui.OverflowMenu
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.SingleChoiceDialog
 import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.ui.asFastScrollable
@@ -132,32 +132,21 @@ private fun TextEditorScreen(viewModel: TextEditorViewModel, onFinish: () -> Uni
                     contentDescription = stringResource(R.string.save)
                 )
             }
-            var isMenuShown by remember { mutableStateOf(false) }
-            IconButton(onClick = { isMenuShown = true }) {
-                Icon(
-                    painter = painterResource(R.drawable.more_vertical_icon_white_24dp),
-                    contentDescription = stringResource(R.string.more_options)
-                )
-            }
-            DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.reload)) },
-                    onClick = {
-                        isMenuShown = false
-                        if (isTextChanged) {
-                            isReloadDialogShown = true
-                        } else {
-                            viewModel.reload()
-                        }
+            OverflowMenu { dismiss ->
+                SheetItem(
+                    R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.reload)
+                ) {
+                    dismiss()
+                    if (isTextChanged) {
+                        isReloadDialogShown = true
+                    } else {
+                        viewModel.reload()
                     }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.text_editor_encoding)) },
-                    onClick = {
-                        isMenuShown = false
-                        isEncodingDialogShown = true
-                    }
-                )
+                }
+                SheetItem(null, stringResource(R.string.text_editor_encoding)) {
+                    dismiss()
+                    isEncodingDialogShown = true
+                }
             }
         }
     ) { contentPadding ->

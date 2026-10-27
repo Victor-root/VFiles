@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +37,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.ui.ActionBottomSheet
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.util.PerfLog
 
 private const val UNSELECTED_ALPHA = 0.7f
@@ -121,29 +121,26 @@ fun Breadcrumb(
                         )
                     }
                 }
-                DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-                    DropdownMenuItem(
-                        text = {
-                            Text(stringResource(R.string.file_list_breadcrumb_action_copy_path))
-                        },
-                        onClick = {
-                            isMenuShown = false
+                if (isMenuShown) {
+                    ActionBottomSheet(
+                        onDismissRequest = { isMenuShown = false },
+                        title = data.nameProducers[index](context)
+                    ) { dismiss ->
+                        SheetItem(
+                            R.drawable.copy_path_icon_control_normal_24dp,
+                            stringResource(R.string.file_list_breadcrumb_action_copy_path)
+                        ) {
+                            dismiss()
                             onCopyPath(path)
                         }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                stringResource(
-                                    R.string.file_list_breadcrumb_action_open_in_new_task
-                                )
-                            )
-                        },
-                        onClick = {
-                            isMenuShown = false
+                        SheetItem(
+                            R.drawable.new_window_icon_control_normal_24dp,
+                            stringResource(R.string.file_list_breadcrumb_action_open_in_new_task)
+                        ) {
+                            dismiss()
                             onOpenInNewTask(path)
                         }
-                    )
+                    }
                 }
             }
         }

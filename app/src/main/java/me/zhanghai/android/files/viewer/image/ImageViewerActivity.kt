@@ -25,10 +25,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -74,6 +71,9 @@ import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.provider.common.delete
 import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.ConfirmationDialog
+import me.zhanghai.android.files.ui.OverflowMenu
+import me.zhanghai.android.files.ui.SheetDivider
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.util.ParcelableListParceler
 import me.zhanghai.android.files.util.createSendImageIntent
 import me.zhanghai.android.files.util.extraPath
@@ -181,34 +181,25 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
                     null
                 },
                 actions = {
-                    var isMenuShown by remember { mutableStateOf(false) }
-                    IconButton(onClick = { isMenuShown = true }) {
-                        Icon(
-                            painter = painterResource(R.drawable.more_vertical_icon_white_24dp),
-                            contentDescription = stringResource(R.string.more_options)
-                        )
-                    }
-                    DropdownMenu(
-                        expanded = isMenuShown,
-                        onDismissRequest = { isMenuShown = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.delete)) },
-                            onClick = {
-                                isMenuShown = false
-                                pathToDelete = currentPath
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.share)) },
-                            onClick = {
-                                isMenuShown = false
-                                val intent = currentPath.fileProviderUri.createSendImageIntent()
-                                    .apply { extraPath = currentPath }
-                                    .withChooser()
-                                context.startActivitySafe(intent)
-                            }
-                        )
+                    OverflowMenu { dismiss ->
+                        SheetItem(
+                            R.drawable.share_icon_control_normal_24dp,
+                            stringResource(R.string.share)
+                        ) {
+                            dismiss()
+                            val intent = currentPath.fileProviderUri.createSendImageIntent()
+                                .apply { extraPath = currentPath }
+                                .withChooser()
+                            context.startActivitySafe(intent)
+                        }
+                        SheetDivider()
+                        SheetItem(
+                            R.drawable.delete_icon_control_normal_24dp,
+                            stringResource(R.string.delete)
+                        ) {
+                            dismiss()
+                            pathToDelete = currentPath
+                        }
                     }
                 }
             )

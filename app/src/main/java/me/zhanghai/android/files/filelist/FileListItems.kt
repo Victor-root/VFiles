@@ -31,8 +31,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -69,6 +67,9 @@ import me.zhanghai.android.files.file.iconRes
 import me.zhanghai.android.files.file.isApk
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.isEncrypted
+import me.zhanghai.android.files.ui.ActionBottomSheet
+import me.zhanghai.android.files.ui.SheetDivider
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.cachedIconPainter
 import me.zhanghai.android.files.util.PerfLog
 import me.zhanghai.android.files.util.PerfLog.timeMeasure
@@ -492,15 +493,9 @@ private fun FileItemMenuButton(
 ) {
     PerfLog.Recomposed("FileItemMenuButton")
     var isMenuShown by remember { mutableStateOf(false) }
-    // Composing the menu of every item costs much while scrolling, so it's only composed once
-    // opened, and then kept for its closing animation.
-    var hasMenuBeenShown by remember { mutableStateOf(false) }
     Box(modifier = modifier) {
         IconButton(
-            onClick = {
-                hasMenuBeenShown = true
-                isMenuShown = true
-            },
+            onClick = { isMenuShown = true },
             modifier = Modifier
                 .focusRequester(focusRequesters.menu)
                 .focusProperties {
@@ -516,9 +511,9 @@ private fun FileItemMenuButton(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        if (hasMenuBeenShown) {
-            DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-                FileItemMenuItems(file, isPicking, actions) { isMenuShown = false }
+        if (isMenuShown) {
+            ActionBottomSheet(onDismissRequest = { isMenuShown = false }, title = file.name) {
+                FileItemMenuItems(file, isPicking, actions, it)
             }
         }
     }
@@ -529,12 +524,12 @@ private fun FileItemMenuItems(
     file: FileItem,
     isPicking: Boolean,
     actions: FileItemActions,
-    onDismissRequest: () -> Unit
+    dismiss: () -> Unit
 ) {
     @Composable
     fun Item(@DrawableRes iconRes: Int, title: String, onClick: (FileItem) -> Unit) {
-        MenuItem(iconRes, title) {
-            onDismissRequest()
+        SheetItem(iconRes, title) {
+            dismiss()
             onClick(file)
         }
     }
@@ -546,6 +541,9 @@ private fun FileItemMenuItems(
         stringResource(R.string.file_item_action_open_with),
         actions::openFileWith
     )
+    if (!isPicking || !isReadOnly) {
+        SheetDivider()
+    }
     if (!isPicking && !isReadOnly) {
         Item(
             R.drawable.cut_icon_control_normal_24dp, stringResource(R.string.cut), actions::cutFile
@@ -560,13 +558,16 @@ private fun FileItemMenuItems(
     }
     if (!isReadOnly) {
         Item(
-            R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete),
-            actions::confirmDeleteFile
-        )
-        Item(
             R.drawable.rename_icon_control_normal_24dp, stringResource(R.string.rename),
             actions::showRenameFileDialog
         )
+        Item(
+            R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete),
+            actions::confirmDeleteFile
+        )
+    }
+    if (file.isArchiveFile || !isArchivePath) {
+        SheetDivider()
     }
     if (file.isArchiveFile) {
         Item(
@@ -580,6 +581,7 @@ private fun FileItemMenuItems(
             stringResource(R.string.file_item_action_archive), actions::showCreateArchiveDialog
         )
     }
+    SheetDivider()
     Item(
         R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share),
         actions::shareFile
@@ -588,6 +590,7 @@ private fun FileItemMenuItems(
         R.drawable.copy_path_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_copy_path), actions::copyPath
     )
+    SheetDivider()
     if (file.attributes.isDirectory) {
         Item(
             R.drawable.bookmark_icon_control_normal_24dp,
@@ -598,26 +601,9 @@ private fun FileItemMenuItems(
         R.drawable.shortcut_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_create_shortcut), actions::createShortcut
     )
+    SheetDivider()
     Item(
         R.drawable.information_icon_control_normal_24dp,
         stringResource(R.string.file_item_action_properties), actions::showPropertiesDialog
-    )
-}
-
-/** A menu item with its icon, as in the menus of the file list. */
-@Composable
-fun MenuItem(
-    @DrawableRes iconRes: Int,
-    title: String,
-    enabled: Boolean = true,
-    trailingIcon: (@Composable () -> Unit)? = null,
-    onClick: () -> Unit
-) {
-    DropdownMenuItem(
-        text = { Text(title) },
-        onClick = onClick,
-        leadingIcon = { Icon(painter = painterResource(iconRes), contentDescription = null) },
-        trailingIcon = trailingIcon,
-        enabled = enabled
     )
 }
