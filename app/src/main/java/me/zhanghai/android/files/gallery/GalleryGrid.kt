@@ -8,6 +8,7 @@ package me.zhanghai.android.files.gallery
 import android.content.Context
 import android.text.format.DateFormat
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,8 +41,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,18 +52,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.FastScrollable
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.util.isTelevision
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -69,6 +77,8 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 private val THUMBNAIL_MIN_WIDTH = 96.dp
+// Seen from afar on a TV.
+private val TELEVISION_THUMBNAIL_MIN_WIDTH = 144.dp
 private val THUMBNAIL_SPACING = 2.dp
 private const val MIN_COLUMN_COUNT = 2
 private val MAX_COLUMN_MIN_WIDTH = 48.dp
@@ -91,8 +101,11 @@ fun GalleryMediaGrid(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
-        val defaultColumnCount = (maxWidth / THUMBNAIL_MIN_WIDTH).toInt().coerceAtLeast(3)
+        val thumbnailMinWidth =
+            if (isTelevision) TELEVISION_THUMBNAIL_MIN_WIDTH else THUMBNAIL_MIN_WIDTH
+        val defaultColumnCount = (maxWidth / thumbnailMinWidth).toInt().coerceAtLeast(3)
         val maxColumnCount = (maxWidth / MAX_COLUMN_MIN_WIDTH).toInt()
             .coerceAtLeast(defaultColumnCount)
         val currentMaxColumnCount by rememberUpdatedState(maxColumnCount)
@@ -297,6 +310,27 @@ private fun GalleryGridHeader(
     }
 }
 
+private const val FOCUSED_SCALE = 1.08f
+private val FOCUSED_BORDER_WIDTH = 3.dp
+
+/** The scale of an item growing while focused, which stands out more than an overlay on photos. */
+@Composable
+internal fun animateFocusedScale(isFocused: Boolean): State<Float> =
+    animateFloatAsState(if (isFocused) FOCUSED_SCALE else 1f)
+
+/** Draws a focused item grown by [scale] above its neighbors. */
+internal fun Modifier.focusedScale(isFocused: Boolean, scale: () -> Float): Modifier =
+    zIndex(if (isFocused) 1f else 0f)
+        .graphicsLayer {
+            val currentScale = scale()
+            scaleX = currentScale
+            scaleY = currentScale
+        }
+
+/** Outlines a focused item in the accent color. */
+internal fun Modifier.focusedBorder(isFocused: Boolean, color: Color, shape: Shape): Modifier =
+    if (isFocused) border(FOCUSED_BORDER_WIDTH, color, shape) else this
+
 private val SELECTED_INSET = 12.dp
 private val SELECTED_CORNER_RADIUS = 12.dp
 private val VIDEO_LABEL_SHADOW = Shadow(Color.Black.copy(alpha = 0.6f), blurRadius = 4f)
@@ -314,8 +348,11 @@ private fun GalleryThumbnail(
     // A selected item shrinks with rounded corners, like in the gallery of a phone.
     val inset by animateDpAsState(if (isSelected) SELECTED_INSET else 0.dp)
     val cornerRadius by animateDpAsState(if (isSelected) SELECTED_CORNER_RADIUS else 0.dp)
+    var isFocused by remember { mutableStateOf(false) }
+    val scale by animateFocusedScale(isFocused)
     Box(
         modifier = modifier
+            .focusedScale(isFocused) { scale }
             .aspectRatio(1f)
             .background(
                 if (isSelected) {
@@ -324,16 +361,19 @@ private fun GalleryThumbnail(
                     Color.Transparent
                 }
             )
+            .onFocusChanged { isFocused = it.isFocused }
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
     ) {
+        val shape = RoundedCornerShape(cornerRadius)
         AsyncImage(
             model = media,
             contentDescription = media.displayName,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(inset)
-                .clip(RoundedCornerShape(cornerRadius))
-                .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                .clip(shape)
+                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+                .focusedBorder(isFocused, MaterialTheme.colorScheme.primary, shape),
             contentScale = ContentScale.Crop
         )
         if (media.isVideo) {

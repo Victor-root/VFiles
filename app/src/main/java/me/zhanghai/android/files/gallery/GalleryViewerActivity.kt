@@ -7,6 +7,7 @@ package me.zhanghai.android.files.gallery
 
 import android.text.format.DateFormat
 import android.text.format.DateUtils
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -14,6 +15,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,10 +52,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -70,6 +74,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
@@ -123,6 +128,8 @@ class GalleryViewerActivity : AppActivity() {
 // The height of the bar of actions at the bottom, above which the controls of videos are.
 private val BOTTOM_BAR_HEIGHT = 64.dp
 private val BAR_COLOR = Color.Black.copy(alpha = 0.5f)
+// Stands out on the bars, where the usual overlay is hard to see.
+private val FOCUSED_COLOR = Color.White.copy(alpha = 0.3f)
 
 @Composable
 private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long) {
@@ -150,26 +157,57 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
     var isDetailsShown by rememberSaveable { mutableStateOf(false) }
     val deleteMedia = rememberGalleryMediaDeleter(onDeleted = {})
     val coroutineScope = rememberCoroutineScope()
+    // Only the settled video has a player, which plays it from the start.
+    val settledMedia = media[pagerState.settledPage.coerceIn(media.indices)]
+    val player = if (settledMedia.isVideo) rememberGalleryVideoPlayer(settledMedia) else null
     val focusRequester = remember { FocusRequester() }
+    var isFocused by remember { mutableStateOf(false) }
+    var isControlFocused by remember { mutableStateOf(false) }
+    val bottomBarFocusRequester = remember { FocusRequester() }
     MediaViewerSystemUiEffect(isUiShown)
+    // On a remote, back from the controls goes back to the media.
+    BackHandler(enabled = isControlFocused) { focusRequester.requestFocus() }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            // A remote's left and right keys go to the previous and next media.
             .focusRequester(focusRequester)
+            .onFocusChanged {
+                isFocused = it.isFocused
+                isControlFocused = it.hasFocus && !it.isFocused
+            }
             .onKeyEvent {
-                if (it.type != KeyEventType.KeyDown) {
+                if (!isFocused || it.type != KeyEventType.KeyDown) {
                     return@onKeyEvent false
                 }
-                val page = when (it.key) {
-                    Key.DirectionLeft -> pagerState.currentPage - 1
-                    Key.DirectionRight -> pagerState.currentPage + 1
+                when (it.key) {
+                    // A remote's left and right keys go to the previous and next media.
+                    Key.DirectionLeft, Key.DirectionRight -> {
+                        val page = pagerState.currentPage +
+                            if (it.key == Key.DirectionLeft) -1 else 1
+                        if (page in media.indices) {
+                            coroutineScope.launch { pagerState.animateScrollToPage(page) }
+                        }
+                    }
+                    // Its center key plays or pauses a video, and shows or hides the bars of a
+                    // photo, like a tap.
+                    Key.DirectionCenter, Key.Enter, Key.NumPadEnter, Key.MediaPlayPause ->
+                        if (player != null) {
+                            player.playOrPause()
+                        } else {
+                            isUiShown = !isUiShown
+                        }
+                    // Its down key goes to the actions.
+                    Key.DirectionDown -> {
+                        isUiShown = true
+                        coroutineScope.launch {
+                            // Lets the bars appear.
+                            withFrameNanos {}
+                            bottomBarFocusRequester.requestFocus()
+                        }
+                    }
                     else -> return@onKeyEvent false
-                }
-                if (page in media.indices) {
-                    coroutineScope.launch { pagerState.animateScrollToPage(page) }
                 }
                 true
             }
@@ -190,7 +228,7 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
             if (pageMedia.isVideo) {
                 GalleryVideoPage(
                     media = pageMedia,
-                    isCurrent = page == pagerState.settledPage,
+                    player = player.takeIf { pageMedia == settledMedia },
                     isControlsShown = isUiShown,
                     onClick = toggleUi,
                     modifier = pageModifier
@@ -239,6 +277,7 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
             exit = fadeOut() + slideOutVertically { it }
         ) {
             GalleryViewerBottomBar(
+                focusRequester = bottomBarFocusRequester,
                 onShare = { context.shareGalleryMedia(listOf(currentMedia)) },
                 onDetails = { isDetailsShown = true },
                 onDelete = { deleteMedia(listOf(currentMedia)) }
@@ -253,9 +292,16 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
 }
 
 @Composable
-private fun GalleryViewerBottomBar(onShare: () -> Unit, onDetails: () -> Unit, onDelete: () -> Unit) {
+private fun GalleryViewerBottomBar(
+    focusRequester: FocusRequester,
+    onShare: () -> Unit,
+    onDetails: () -> Unit,
+    onDelete: () -> Unit
+) {
     Row(
         modifier = Modifier
+            .focusRequester(focusRequester)
+            .focusGroup()
             .fillMaxWidth()
             .background(BAR_COLOR)
             .windowInsetsPadding(WindowInsets.navigationBars)
@@ -278,7 +324,13 @@ private fun GalleryViewerBottomBar(onShare: () -> Unit, onDetails: () -> Unit, o
 
 @Composable
 private fun GalleryViewerAction(iconRes: Int, contentDescription: String, onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
+    var isFocused by remember { mutableStateOf(false) }
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier
+            .onFocusChanged { isFocused = it.isFocused }
+            .background(if (isFocused) FOCUSED_COLOR else Color.Transparent, CircleShape)
+    ) {
         Icon(
             painter = painterResource(iconRes),
             contentDescription = contentDescription,
@@ -329,9 +381,31 @@ private fun GalleryPhotoPage(media: GalleryMedia, onClick: () -> Unit, modifier:
 }
 
 @Composable
+private fun rememberGalleryVideoPlayer(media: GalleryMedia): ExoPlayer {
+    val context = LocalContext.current
+    val player = remember(context, media) {
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(MediaItem.fromUri(media.uri))
+            prepare()
+            playWhenReady = true
+        }
+    }
+    DisposableEffect(player) { onDispose { player.release() } }
+    // Paused when leaving the app.
+    LifecycleStartEffect(player) { onStopOrDispose { player.pause() } }
+    return player
+}
+
+// Like the play and pause button, from the start again once ended.
+@androidx.annotation.OptIn(UnstableApi::class)
+private fun ExoPlayer.playOrPause() {
+    Util.handlePlayPauseButtonAction(this)
+}
+
+@Composable
 private fun GalleryVideoPage(
     media: GalleryMedia,
-    isCurrent: Boolean,
+    player: ExoPlayer?,
     isControlsShown: Boolean,
     onClick: () -> Unit,
     modifier: Modifier
@@ -342,9 +416,8 @@ private fun GalleryVideoPage(
             .clickable(interactionSource = null, indication = null, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        // Only the current video has a player, which plays it from the start.
-        if (isCurrent) {
-            GalleryVideoPlayer(media, isControlsShown)
+        if (player != null) {
+            GalleryVideoPlayer(media, player, isControlsShown)
         } else {
             GalleryVideoThumbnail(media)
         }
@@ -364,18 +437,7 @@ private fun GalleryVideoThumbnail(media: GalleryMedia) {
 // Lint checks the unstable APIs of Media3 against the opt-in of AndroidX.
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-private fun GalleryVideoPlayer(media: GalleryMedia, isControlsShown: Boolean) {
-    val context = LocalContext.current
-    val player = remember(context, media) {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(media.uri))
-            prepare()
-            playWhenReady = true
-        }
-    }
-    DisposableEffect(player) { onDispose { player.release() } }
-    // Paused when leaving the app.
-    LifecycleStartEffect(player) { onStopOrDispose { player.pause() } }
+private fun GalleryVideoPlayer(media: GalleryMedia, player: ExoPlayer, isControlsShown: Boolean) {
     Box(modifier = Modifier.fillMaxSize()) {
         // A texture view, unlike a surface view, follows the transition between pages.
         ContentFrame(
@@ -404,12 +466,14 @@ private const val PROGRESS_TICK_INTERVAL_MILLIS = 200L
 private fun GalleryVideoControls(player: ExoPlayer) {
     Box(modifier = Modifier.fillMaxSize()) {
         val playPauseState = rememberPlayPauseButtonState(player)
+        var isPlayPauseFocused by remember { mutableStateOf(false) }
         IconButton(
             onClick = playPauseState::onClick,
             modifier = Modifier
                 .align(Alignment.Center)
                 .size(72.dp)
-                .background(BAR_COLOR, CircleShape),
+                .onFocusChanged { isPlayPauseFocused = it.isFocused }
+                .background(if (isPlayPauseFocused) FOCUSED_COLOR else BAR_COLOR, CircleShape),
             enabled = playPauseState.isEnabled
         ) {
             Icon(
@@ -448,12 +512,18 @@ private fun GalleryVideoControls(player: ExoPlayer) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             GalleryVideoTime((fraction * durationMillis).toLong())
+            var isSliderFocused by remember { mutableStateOf(false) }
             Slider(
                 value = fraction.coerceIn(0f, 1f),
                 onValueChange = { seekFraction = it },
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 12.dp),
+                    .padding(horizontal = 4.dp)
+                    .onFocusChanged { isSliderFocused = it.hasFocus }
+                    .background(
+                        if (isSliderFocused) FOCUSED_COLOR else Color.Transparent, CircleShape
+                    )
+                    .padding(horizontal = 8.dp),
                 onValueChangeFinished = {
                     seekFraction?.let { player.seekTo((it * durationMillis).toLong()) }
                     seekFraction = null
