@@ -7,14 +7,18 @@ package me.zhanghai.android.files.ui
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -74,7 +79,11 @@ fun AppScaffold(
     )
 }
 
-/** A screen with its own [topBar], following the edge-to-edge setting like the one above. */
+/**
+ * A screen with its own [topBar], following the edge-to-edge setting like the one above. The
+ * content is placed below the top bar, unless [isContentBehindTopBar], when it gets the height of
+ * the top bar in the top of its padding instead.
+ */
 @Composable
 fun AppScaffold(
     topBar: @Composable () -> Unit,
@@ -82,6 +91,7 @@ fun AppScaffold(
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    isContentBehindTopBar: Boolean = false,
     content: @Composable (PaddingValues) -> Unit
 ) {
     val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
@@ -102,9 +112,25 @@ fun AppScaffold(
         topBar = topBar,
         bottomBar = bottomBar,
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        floatingActionButton = floatingActionButton,
-        content = content
-    )
+        floatingActionButton = floatingActionButton
+    ) { contentPadding ->
+        if (isContentBehindTopBar) {
+            content(contentPadding)
+        } else {
+            // A scrolling container behind the top bar keeps a D-pad from moving the focus down
+            // from the top bar to the content, and the top bar hides that part anyway.
+            val layoutDirection = LocalLayoutDirection.current
+            Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+                content(
+                    PaddingValues(
+                        start = contentPadding.calculateStartPadding(layoutDirection),
+                        end = contentPadding.calculateEndPadding(layoutDirection),
+                        bottom = contentPadding.calculateBottomPadding()
+                    )
+                )
+            }
+        }
+    }
 }
 
 @Composable
