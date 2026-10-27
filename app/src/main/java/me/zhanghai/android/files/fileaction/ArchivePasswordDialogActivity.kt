@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -28,7 +29,6 @@ import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.provider.archive.archiveAddPassword
 import me.zhanghai.android.files.provider.archive.archiveFile
 import me.zhanghai.android.files.ui.FormPasswordField
-import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.ui.rememberFormFieldState
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.ParcelableParceler

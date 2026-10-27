@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.colorpicker
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,7 +45,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.ui.TextButton
 
 /**
  * Picks one of [colors] by index. When [hasLeadingDynamicColor], the first color is the one based
@@ -107,6 +108,7 @@ fun ColorPickerDialog(
                     )
                 }
                 FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement =
                         Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -122,15 +124,19 @@ fun ColorPickerDialog(
     )
 }
 
+// The checked color gets a ring of the theme color around it, apart from it, and a check mark.
 @Composable
 private fun ColorSwatch(color: Color, isChecked: Boolean, onClick: () -> Unit) {
+    val ringColor by animateColorAsState(
+        if (isChecked) MaterialTheme.colorScheme.primary else Color.Transparent
+    )
     Box(
         modifier = Modifier
-            .size(48.dp)
+            .size(SWATCH_SIZE)
             .clip(CircleShape)
             .selectable(selected = isChecked, role = Role.RadioButton, onClick = onClick)
-            .border(2.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
-            .padding(6.dp)
+            .border(SWATCH_RING_WIDTH, ringColor, CircleShape)
+            .padding(SWATCH_RING_WIDTH + SWATCH_RING_GAP)
             .background(color, CircleShape),
         contentAlignment = Alignment.Center
     ) {
@@ -138,9 +144,13 @@ private fun ColorSwatch(color: Color, isChecked: Boolean, onClick: () -> Unit) {
             Icon(
                 painter = painterResource(R.drawable.check_icon_white_24dp),
                 contentDescription = null,
-                modifier = Modifier.size(28.dp),
+                modifier = Modifier.size(20.dp),
                 tint = if (color.luminance() > 0.5f) Color.Black else Color.White
             )
         }
     }
 }
+
+private val SWATCH_SIZE = 52.dp
+private val SWATCH_RING_WIDTH = 3.dp
+private val SWATCH_RING_GAP = 3.dp

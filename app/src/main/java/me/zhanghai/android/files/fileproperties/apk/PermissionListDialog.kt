@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,7 +28,6 @@ import me.zhanghai.android.files.app.clipboardManager
 import me.zhanghai.android.files.compat.protectionCompat
 import me.zhanghai.android.files.fileproperties.StatefulList
 import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
-import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.util.copyText
 import me.zhanghai.android.files.util.observeAsStateCompat
 import java.util.Locale

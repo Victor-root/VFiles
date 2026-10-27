@@ -18,6 +18,7 @@ import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
@@ -43,7 +44,6 @@ import me.zhanghai.android.files.fileproperties.image.FilePropertiesImageTab
 import me.zhanghai.android.files.fileproperties.permission.FilePropertiesPermissionTab
 import me.zhanghai.android.files.fileproperties.video.FilePropertiesVideoTab
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
-import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.util.isGetPackageArchiveInfoCompatible
 import me.zhanghai.android.files.util.isMediaMetadataRetrieverCompatible
 
