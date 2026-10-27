@@ -492,9 +492,15 @@ private fun FileItemMenuButton(
 ) {
     PerfLog.Recomposed("FileItemMenuButton")
     var isMenuShown by remember { mutableStateOf(false) }
+    // Composing the menu of every item costs much while scrolling, so it's only composed once
+    // opened, and then kept for its closing animation.
+    var hasMenuBeenShown by remember { mutableStateOf(false) }
     Box(modifier = modifier) {
         IconButton(
-            onClick = { isMenuShown = true },
+            onClick = {
+                hasMenuBeenShown = true
+                isMenuShown = true
+            },
             modifier = Modifier
                 .focusRequester(focusRequesters.menu)
                 .focusProperties {
@@ -510,8 +516,10 @@ private fun FileItemMenuButton(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-            FileItemMenuItems(file, isPicking, actions) { isMenuShown = false }
+        if (hasMenuBeenShown) {
+            DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
+                FileItemMenuItems(file, isPicking, actions) { isMenuShown = false }
+            }
         }
     }
 }
