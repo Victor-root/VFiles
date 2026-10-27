@@ -33,7 +33,8 @@ import android.graphics.Color as AndroidColor
 class AppColors(
     val isDark: Boolean,
     val appBarContainer: Color,
-    val onAppBar: Color
+    val onAppBar: Color,
+    val highlightContainer: Color
 )
 
 val LocalAppColors = staticCompositionLocalOf<AppColors> { error("No AppColors provided") }
@@ -77,7 +78,10 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
         } else {
             colorScheme
         }
-        AppColors(isDark, lightColorScheme.primary, lightColorScheme.onPrimary)
+        AppColors(
+            isDark, lightColorScheme.primary, lightColorScheme.onPrimary,
+            vividContainerColor(lightColorScheme.primary, isDark)
+        )
     }
     val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
     SystemBarsEffect(

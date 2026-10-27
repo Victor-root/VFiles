@@ -220,11 +220,7 @@ fun FastScroller(
                         .width(THUMB_WIDTH)
                         .fillMaxHeight()
                         .background(
-                            if (isDragging) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            },
+                            MaterialTheme.colorScheme.primary,
                             RoundedCornerShape(THUMB_WIDTH / 2)
                         )
                 )

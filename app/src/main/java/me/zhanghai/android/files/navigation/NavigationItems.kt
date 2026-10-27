@@ -416,6 +416,9 @@ private class StandardDirectoryItem(
         @DrawableRes
         get() = standardDirectory.iconRes
 
+    override val iconColor: NavigationIconColor?
+        get() = standardDirectory.iconColor
+
     override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
 
     override fun onLongClick(listener: Listener): Boolean {
@@ -463,27 +466,33 @@ private val defaultStandardDirectories: List<StandardDirectory>
 private val DEFAULT_STANDARD_DIRECTORIES = listOf(
     StandardDirectory(
         R.drawable.camera_icon_white_24dp, R.string.navigation_standard_directory_dcim,
-        Environment.DIRECTORY_DCIM, true
+        Environment.DIRECTORY_DCIM, true,
+        NavigationIconColor.TEAL
     ),
     StandardDirectory(
         R.drawable.document_icon_white_24dp, R.string.navigation_standard_directory_documents,
-        Environment.DIRECTORY_DOCUMENTS, true
+        Environment.DIRECTORY_DOCUMENTS, true,
+        NavigationIconColor.GREY
     ),
     StandardDirectory(
         R.drawable.image_icon_white_24dp, R.string.navigation_standard_directory_pictures,
-        Environment.DIRECTORY_PICTURES, true
+        Environment.DIRECTORY_PICTURES, true,
+        NavigationIconColor.BLUE
     ),
     StandardDirectory(
         R.drawable.audio_icon_white_24dp, R.string.navigation_standard_directory_music,
-        Environment.DIRECTORY_MUSIC, true
+        Environment.DIRECTORY_MUSIC, true,
+        NavigationIconColor.ORANGE
     ),
     StandardDirectory(
         R.drawable.download_icon_white_24dp, R.string.navigation_standard_directory_downloads,
-        Environment.DIRECTORY_DOWNLOADS, true
+        Environment.DIRECTORY_DOWNLOADS, true,
+        NavigationIconColor.GREEN
     ),
     StandardDirectory(
         R.drawable.video_icon_white_24dp, R.string.navigation_standard_directory_movies,
-        Environment.DIRECTORY_MOVIES, true
+        Environment.DIRECTORY_MOVIES, true,
+        NavigationIconColor.PURPLE
     ),
     StandardDirectory(
         R.drawable.alarm_icon_white_24dp, R.string.navigation_standard_directory_alarms,
