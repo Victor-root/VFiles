@@ -432,6 +432,20 @@ private fun FileListScaffold(
     val appBarState = remember { AppBarScrollState(appBarCoroutineScope) }
     appBarState.isEnabled = !isAppBarPinned
     LaunchedEffect(currentPath, isAppBarPinned) { appBarState.offset = 0f }
+    // Scrolling up with the fast scroller doesn't go through nested scrolling.
+    LaunchedEffect(gridState, appBarState) {
+        var lastIndex = 0
+        var lastOffset = 0
+        snapshotFlow { gridState.firstVisibleItemIndex to gridState.firstVisibleItemScrollOffset }
+            .collect { (index, offset) ->
+                val isScrolledUp = index < lastIndex || index == lastIndex && offset < lastOffset
+                if (isScrolledUp && gridState.isScrollInProgress) {
+                    appBarState.show()
+                }
+                lastIndex = index
+                lastOffset = offset
+            }
+    }
     // The status bar icons follow the list once the app bar is mostly gone from behind them.
     val statusBarHeight = WindowInsets.statusBars.getTop(LocalDensity.current)
     val isAppBarBehindStatusBar by remember(appBarState, statusBarHeight) {
@@ -601,13 +615,20 @@ private class AppBarScrollState(private val coroutineScope: CoroutineScope) {
                 showJob?.cancel()
                 showJob = null
                 offset = (offset + consumed.y).coerceIn(-height, 0f)
-            } else if (consumed.y > 0 && offset < 0 && showJob == null) {
-                showJob = coroutineScope.launch {
-                    animate(offset, 0f) { value, _ -> offset = value }
-                    showJob = null
-                }
+            } else if (consumed.y > 0) {
+                show()
             }
             return Offset.Zero
+        }
+    }
+
+    fun show() {
+        if (!isEnabled || offset >= 0 || showJob != null) {
+            return
+        }
+        showJob = coroutineScope.launch {
+            animate(offset, 0f) { value, _ -> offset = value }
+            showJob = null
         }
     }
 }
