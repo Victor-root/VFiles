@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.settings
 
+import android.text.TextUtils
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
@@ -67,6 +68,13 @@ class SettingsActivityTest {
         composeTestRule.onNodeWithText("On").performClick()
         assertEquals(NightMode.ON, Settings.NIGHT_MODE.value)
         composeTestRule.onNodeWithText("On").assertIsDisplayed()
+    }
+
+    @Test
+    fun fileNameEllipsizeMenuUpdatesSetting() {
+        composeTestRule.onNodeWithText("Display long file name").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Marquee").performClick()
+        assertEquals(TextUtils.TruncateAt.MARQUEE, Settings.FILE_NAME_ELLIPSIZE.value)
     }
 
     @Test
