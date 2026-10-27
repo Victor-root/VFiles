@@ -109,7 +109,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import java8.nio.file.AccessDeniedException
 import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
@@ -232,32 +235,56 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             is Loading -> {}
         }
     }
-    // On a D-pad, the focus goes back to the list in a newly opened folder, or to the app bar when
-    // the folder is empty.
-    val isFileListLoaded = fileListStateful is Success
-    LaunchedEffect(currentPath, isFileListLoaded) {
-        if (!isFileListLoaded || !isKeyboardMode || drawerState.isOpen) {
-            return@LaunchedEffect
-        }
-        if (hasFiles) {
+    val currentHasFiles by rememberUpdatedState(hasFiles)
+    // On a D-pad, the focus goes to the list, or to the drawer button in an empty folder.
+    val focusContent = {
+        if (currentHasFiles) {
             listFocusRequester.requestFocus()
         } else {
             navigationIconFocusRequester.requestFocus()
         }
     }
+    // It moves there in a newly opened folder.
+    val isFileListLoaded = fileListStateful is Success
+    LaunchedEffect(currentPath, isFileListLoaded) {
+        if (!isFileListLoaded || !isKeyboardMode || drawerState.isOpen) {
+            return@LaunchedEffect
+        }
+        focusContent()
+    }
 
-    val currentHasFiles by rememberUpdatedState(hasFiles)
     LaunchedEffect(drawerState) {
         snapshotFlow { drawerState.targetValue }.drop(1).collect {
-            val isKeyboardInput = inputModeManager.inputMode == InputMode.Keyboard
             if (it == DrawerValue.Open) {
                 drawerSubtitleKey++
-                if (isKeyboardInput) {
+                if (inputModeManager.inputMode == InputMode.Keyboard) {
                     drawerFocusRequest++
                 }
-            } else if (isKeyboardInput && currentHasFiles) {
-                listFocusRequester.requestFocus()
             }
+        }
+    }
+    // Only once the drawer is closed, since its items keep the focus while it closes, which
+    // doesn't happen until coming back when it was closed to open another screen.
+    LaunchedEffect(drawerState) {
+        snapshotFlow { drawerState.currentValue }.drop(1).collect {
+            if (it == DrawerValue.Closed && inputModeManager.inputMode == InputMode.Keyboard) {
+                focusContent()
+            }
+        }
+    }
+    // Whenever nothing is focused on a D-pad, like when the focused file went away with its folder,
+    // or when coming back from another screen.
+    var hasFocus by remember { mutableStateOf(false) }
+    val currentIsFileListLoaded by rememberUpdatedState(isFileListLoaded)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner, drawerState) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            snapshotFlow { !hasFocus && currentIsFileListLoaded && drawerState.isClosed }
+                .collect {
+                    if (it && inputModeManager.inputMode == InputMode.Keyboard) {
+                        focusContent()
+                    }
+                }
         }
     }
 
@@ -319,7 +346,11 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
         )
     }
 
-    Box(modifier = Modifier.onKeyEvent(controller::onKeyShortcut)) {
+    Box(
+        modifier = Modifier
+            .onFocusChanged { hasFocus = it.hasFocus }
+            .onKeyEvent(controller::onKeyShortcut)
+    ) {
         if (hasPersistentDrawer) {
             screen()
         } else {
@@ -429,6 +460,7 @@ private fun FileListScaffold(
     val isListBehindAppBar = isEdgeToEdge && persistentDrawer == null && !isTelevision
     val isAppBarPinned =
         !isListBehindAppBar || selectedFiles.isNotEmpty() || isSearchViewExpanded
+    val speedDialFocusRequester = remember { FocusRequester() }
     val appBarCoroutineScope = rememberCoroutineScope()
     val appBarState = remember { AppBarScrollState(appBarCoroutineScope) }
     appBarState.isEnabled = !isAppBarPinned
@@ -526,6 +558,7 @@ private fun FileListScaffold(
         floatingActionButton = {
             SpeedDial(
                 isExpanded = isSpeedDialExpanded,
+                buttonModifier = Modifier.focusRequester(speedDialFocusRequester),
                 onExpandedChange = onSpeedDialExpandedChange,
                 iconRes = R.drawable.add_icon_white_24dp,
                 contentDescription = stringResource(R.string.file_list_action_create),
@@ -572,6 +605,10 @@ private fun FileListScaffold(
                     topPadding = if (isListBehindAppBar) appBarHeight else 0.dp,
                     bottomPadding = contentPadding.calculateBottomPadding(),
                     onLeftEdgeReached = onFileListLeftEdgeReached,
+                    // On a D-pad, up from the first row goes to the drawer button rather than to
+                    // the button right above it, and right from a menu at the end goes to the add button.
+                    onTopEdgeReached = { navigationIconFocusRequester.requestFocus() },
+                    onRightEdgeReached = { speedDialFocusRequester.requestFocus() },
                     focusRequester = listFocusRequester
                 )
                 SpeedDialScrim(
@@ -810,6 +847,8 @@ private fun FileListContent(
     topPadding: Dp,
     bottomPadding: Dp,
     onLeftEdgeReached: () -> Unit,
+    onTopEdgeReached: () -> Unit,
+    onRightEdgeReached: () -> Unit,
     focusRequester: FocusRequester
 ) {
     val hasFiles = !fileListStateful.value.isNullOrEmpty()
@@ -847,6 +886,8 @@ private fun FileListContent(
                 topPadding = topPadding,
                 bottomPadding = bottomPadding,
                 onLeftEdgeReached = onLeftEdgeReached,
+                onTopEdgeReached = onTopEdgeReached,
+                onRightEdgeReached = onRightEdgeReached,
                 focusRequester = focusRequester
             )
         }
@@ -930,6 +971,8 @@ private fun FileGrid(
     topPadding: Dp,
     bottomPadding: Dp,
     onLeftEdgeReached: () -> Unit,
+    onTopEdgeReached: () -> Unit,
+    onRightEdgeReached: () -> Unit,
     focusRequester: FocusRequester
 ) {
     val context = LocalContext.current
@@ -940,7 +983,9 @@ private fun FileGrid(
         ListAppearance(isAnimationEnabled)
     }
     LaunchedEffect(appearance) { appearance.animate(gridState) }
+    // The item focused as a whole, and the one with the focus in it, like on its menu button.
     var focusedIndex by remember { mutableIntStateOf(-1) }
+    var focusedWithinIndex by remember { mutableIntStateOf(-1) }
     // Formatted once per list, instead of each time an item scrolls back into view.
     val descriptions = remember(files, context) { IdentityHashMap<FileItem, String>() }
     CompositionLocalProvider(LocalIconBitmapCache provides iconBitmapCache) {
@@ -960,13 +1005,21 @@ private fun FileGrid(
                     .focusRequester(focusRequester)
                     .focusRestorer()
                     .onPreviewKeyEvent {
-                        val isLeftEdge = it.type == KeyEventType.KeyDown &&
-                            it.key == Key.DirectionLeft && focusedIndex != -1 &&
-                            focusedIndex % columnCount == 0
-                        if (isLeftEdge) {
-                            onLeftEdgeReached()
+                        if (it.type != KeyEventType.KeyDown) {
+                            return@onPreviewKeyEvent false
                         }
-                        isLeftEdge
+                        when {
+                            it.key == Key.DirectionLeft && focusedIndex != -1 &&
+                                focusedIndex % columnCount == 0 -> onLeftEdgeReached()
+                            it.key == Key.DirectionUp && focusedIndex != -1 &&
+                                focusedIndex < columnCount -> onTopEdgeReached()
+                            it.key == Key.DirectionRight && focusedIndex == -1 &&
+                                focusedWithinIndex != -1 &&
+                                focusedWithinIndex % columnCount == columnCount - 1 ->
+                                onRightEdgeReached()
+                            else -> return@onPreviewKeyEvent false
+                        }
+                        true
                     },
                 state = gridState,
                 contentPadding = contentPadding
@@ -989,6 +1042,11 @@ private fun FileGrid(
                                     focusedIndex = index
                                 } else if (focusedIndex == index) {
                                     focusedIndex = -1
+                                }
+                                if (it.hasFocus) {
+                                    focusedWithinIndex = index
+                                } else if (focusedWithinIndex == index) {
+                                    focusedWithinIndex = -1
                                 }
                             }
                     }
