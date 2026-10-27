@@ -116,13 +116,19 @@ private fun NightModePreference() {
     )
 }
 
+// TextUtils.TruncateAt also has a hidden value at runtime, which isn't offered.
+private val FILE_NAME_ELLIPSIZE_ENTRIES = listOf(
+    TextUtils.TruncateAt.START, TextUtils.TruncateAt.MIDDLE, TextUtils.TruncateAt.END,
+    TextUtils.TruncateAt.MARQUEE
+)
+
 @Composable
 private fun FileNameEllipsizePreference() {
     val ellipsize by Settings.FILE_NAME_ELLIPSIZE.observeAsStateCompat()
     val entries = stringArrayResource(R.array.settings_file_name_ellipsize_entries)
     DropdownListPreference(
         title = stringResource(R.string.settings_file_name_ellipsize_title),
-        entries = TextUtils.TruncateAt.entries,
+        entries = FILE_NAME_ELLIPSIZE_ENTRIES,
         entryLabel = { entries[it.ordinal] },
         value = ellipsize,
         onValueChange = { Settings.FILE_NAME_ELLIPSIZE.putValue(it) }
