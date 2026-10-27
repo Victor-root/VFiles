@@ -59,6 +59,7 @@ import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
 import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
 import me.zhanghai.android.files.provider.archive.isArchivePath
+import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.MenuDivider
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
@@ -312,13 +313,6 @@ private fun SelectionActions(
             dismiss()
             controller.selectAllFiles()
         }
-    }
-}
-
-@Composable
-fun ActionButton(iconRes: Int, contentDescription: String, onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
-        Icon(painter = painterResource(iconRes), contentDescription = contentDescription)
     }
 }
 
