@@ -28,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -53,7 +54,6 @@ import me.zhanghai.android.files.ui.FastScroller
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.SingleChoiceDialog
-import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.ui.asFastScrollable
 import me.zhanghai.android.files.util.ActionState
 import me.zhanghai.android.files.util.DataState
