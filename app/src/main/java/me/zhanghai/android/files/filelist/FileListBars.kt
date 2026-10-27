@@ -25,8 +25,6 @@ import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -61,6 +59,10 @@ import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
 import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
 import me.zhanghai.android.files.provider.archive.isArchivePath
+import me.zhanghai.android.files.ui.ActionTopSheet
+import me.zhanghai.android.files.ui.OverflowMenu
+import me.zhanghai.android.files.ui.SheetDivider
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.appTopAppBarColors
 import me.zhanghai.android.files.util.valueCompat
 
@@ -237,7 +239,7 @@ private fun PickSelectionActions(pickOptions: PickOptions, controller: FileListC
     }
     if (pickOptions.allowMultiple) {
         OverflowMenu { dismiss ->
-            MenuItem(
+            SheetItem(
                 R.drawable.select_all_icon_control_normal_24dp, stringResource(R.string.select_all)
             ) {
                 dismiss()
@@ -276,8 +278,10 @@ private fun SelectionActions(
         }
     }
     OverflowMenu { dismiss ->
-        if (selectedFiles.all { it.isArchiveFile }) {
-            MenuItem(
+        val canExtract = selectedFiles.all { it.isArchiveFile }
+        val canArchive = !currentPath.fileSystem.isReadOnly
+        if (canExtract) {
+            SheetItem(
                 R.drawable.extract_icon_control_normal_24dp,
                 stringResource(R.string.file_list_select_action_extract)
             ) {
@@ -285,8 +289,8 @@ private fun SelectionActions(
                 controller.extractFiles(selectedFiles)
             }
         }
-        if (!currentPath.fileSystem.isReadOnly) {
-            MenuItem(
+        if (canArchive) {
+            SheetItem(
                 R.drawable.archive_icon_control_normal_24dp,
                 stringResource(R.string.file_list_select_action_archive)
             ) {
@@ -294,11 +298,15 @@ private fun SelectionActions(
                 controller.showCreateArchiveDialog(selectedFiles)
             }
         }
-        MenuItem(R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share)) {
+        if (canExtract || canArchive) {
+            SheetDivider()
+        }
+        SheetItem(R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share)) {
             dismiss()
             controller.shareFiles(selectedFiles)
         }
-        MenuItem(
+        SheetDivider()
+        SheetItem(
             R.drawable.select_all_icon_control_normal_24dp, stringResource(R.string.select_all)
         ) {
             dismiss()
@@ -314,20 +322,6 @@ fun ActionButton(iconRes: Int, contentDescription: String, onClick: () -> Unit) 
     }
 }
 
-/** An overflow button opening a menu, whose items get a function closing it. */
-@Composable
-fun OverflowMenu(content: @Composable (dismiss: () -> Unit) -> Unit) {
-    var isMenuShown by remember { mutableStateOf(false) }
-    Box {
-        ActionButton(
-            R.drawable.more_vertical_icon_white_24dp, stringResource(R.string.more_options)
-        ) { isMenuShown = true }
-        DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-            content { isMenuShown = false }
-        }
-    }
-}
-
 /** The menu choosing how the files are shown and sorted. */
 @Composable
 fun ViewSortMenuButton(
@@ -337,12 +331,12 @@ fun ViewSortMenuButton(
     viewModel: FileListViewModel
 ) {
     var isMenuShown by remember { mutableStateOf(false) }
-    Box {
-        ActionButton(
-            R.drawable.sort_icon_control_normal_24dp,
-            stringResource(R.string.file_list_action_view_sort)
-        ) { isMenuShown = true }
-        DropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
+    ActionButton(
+        R.drawable.sort_icon_control_normal_24dp,
+        stringResource(R.string.file_list_action_view_sort)
+    ) { isMenuShown = true }
+    if (isMenuShown) {
+        ActionTopSheet(onDismissRequest = { isMenuShown = false }) { dismiss ->
             @Composable
             fun Item(
                 iconRes: Int,
@@ -351,10 +345,10 @@ fun ViewSortMenuButton(
                 isChecked: Boolean,
                 onClick: () -> Unit
             ) {
-                MenuItem(
+                SheetItem(
                     iconRes = iconRes,
                     title = stringResource(titleRes),
-                    trailingIcon = {
+                    trailingContent = {
                         if (isRadio) {
                             RadioButton(selected = isChecked, onClick = null)
                         } else {
@@ -362,7 +356,7 @@ fun ViewSortMenuButton(
                         }
                     }
                 ) {
-                    isMenuShown = false
+                    dismiss()
                     onClick()
                 }
             }
@@ -375,10 +369,11 @@ fun ViewSortMenuButton(
                 R.drawable.view_grid_icon_control_normal_24dp, R.string.file_list_action_view_grid,
                 true, viewType == FileViewType.GRID
             ) { viewModel.viewType = FileViewType.GRID }
-            HorizontalDivider()
+            SheetDivider()
             for ((by, iconRes, titleRes) in SORT_BY_ITEMS) {
                 Item(iconRes, titleRes, true, sortOptions.by == by) { viewModel.setSortBy(by) }
             }
+            SheetDivider()
             Item(
                 R.drawable.sort_order_icon_control_normal_24dp,
                 R.string.file_list_action_sort_order_ascending, false,
@@ -393,7 +388,7 @@ fun ViewSortMenuButton(
                 R.string.file_list_action_sort_directories_first, false,
                 sortOptions.isDirectoriesFirst
             ) { viewModel.setSortDirectoriesFirst(!sortOptions.isDirectoriesFirst) }
-            HorizontalDivider()
+            SheetDivider()
             Item(
                 R.drawable.tune_icon_control_normal_24dp,
                 R.string.file_list_action_view_sort_path_specific, false, isViewSortPathSpecific
@@ -427,15 +422,12 @@ fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolea
     OverflowMenu { dismiss ->
         @Composable
         fun Item(iconRes: Int, titleRes: Int, enabled: Boolean = true, onClick: () -> Unit) {
-            MenuItem(iconRes, stringResource(titleRes), enabled) {
+            SheetItem(iconRes, stringResource(titleRes), enabled) {
                 dismiss()
                 onClick()
             }
         }
 
-        Item(R.drawable.new_window_icon_control_normal_24dp, R.string.file_list_action_new_task) {
-            controller.newTask()
-        }
         Item(R.drawable.arrow_up_icon_control_normal_24dp, R.string.file_list_action_navigate_up) {
             controller.navigateUp()
         }
@@ -443,19 +435,24 @@ fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolea
             R.drawable.navigate_to_icon_control_normal_24dp, R.string.file_list_action_navigate_to
         ) { controller.showNavigateToPathDialog() }
         Item(R.drawable.refresh_icon_control_normal_24dp, R.string.refresh) { controller.refresh() }
+        Item(R.drawable.new_window_icon_control_normal_24dp, R.string.file_list_action_new_task) {
+            controller.newTask()
+        }
+        SheetDivider()
         if (controller.canSelectAll) {
             Item(R.drawable.select_all_icon_control_normal_24dp, R.string.select_all) {
                 controller.selectAllFiles()
             }
         }
-        MenuItem(
+        SheetItem(
             iconRes = R.drawable.visibility_icon_control_normal_24dp,
             title = stringResource(R.string.file_list_action_show_hidden_files),
-            trailingIcon = { Checkbox(checked = showHiddenFiles, onCheckedChange = null) }
+            trailingContent = { Checkbox(checked = showHiddenFiles, onCheckedChange = null) }
         ) {
             dismiss()
             controller.toggleShowHiddenFiles()
         }
+        SheetDivider()
         Item(R.drawable.share_icon_control_normal_24dp, R.string.share) {
             controller.shareCurrentDirectory()
         }
@@ -466,6 +463,7 @@ fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolea
             R.drawable.terminal_icon_control_normal_24dp,
             R.string.file_list_action_open_in_terminal, controller.canOpenInTerminal
         ) { controller.openInTerminal() }
+        SheetDivider()
         Item(
             R.drawable.bookmark_icon_control_normal_24dp, R.string.file_list_action_add_bookmark
         ) { controller.addCurrentDirectoryBookmark() }

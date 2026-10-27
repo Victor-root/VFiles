@@ -989,8 +989,8 @@ private fun rememberAppearanceTime(
     return time
 }
 
-// Each item has a layer of its own, so that scrolling only moves the layers instead of drawing their
-// content again, which takes long on slow CPU cores because of the text.
+// Each item has a layer of its own, so that scrolling only moves the layers instead of drawing
+// their content again, which takes long on slow CPU cores because of the text.
 private fun Modifier.itemLayer(appearanceTime: Animatable<Float, AnimationVector1D>?): Modifier =
     graphicsLayer {
         val millis = appearanceTime?.value ?: return@graphicsLayer

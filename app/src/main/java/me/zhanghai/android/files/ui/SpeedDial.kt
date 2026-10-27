@@ -8,10 +8,12 @@ package me.zhanghai.android.files.ui
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.expandVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -44,6 +47,10 @@ class SpeedDialAction(
 
 private const val SCRIM_ALPHA = 0.32f
 private const val EXPANDED_ROTATION = 135f
+private const val ACTION_DURATION_MILLIS = 150
+private const val ACTION_STAGGER_MILLIS = 40
+private const val ACTION_INITIAL_SCALE = 0.6f
+private val ACTION_TRANSFORM_ORIGIN = TransformOrigin(1f, 1f)
 
 /** Dims the content behind an expanded speed dial, and collapses it when touched. */
 @Composable
@@ -81,20 +88,26 @@ fun SpeedDial(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AnimatedVisibility(
-            visible = isExpanded,
-            enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
-            exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+        // Each action grows out of the button, the closest one first.
+        for ((index, action) in actions.withIndex()) {
+            val delayMillis = (actions.lastIndex - index) * ACTION_STAGGER_MILLIS
+            AnimatedVisibility(
+                visible = isExpanded,
+                enter = fadeIn(tween(ACTION_DURATION_MILLIS, delayMillis)) +
+                    scaleIn(
+                        tween(ACTION_DURATION_MILLIS, delayMillis),
+                        ACTION_INITIAL_SCALE,
+                        ACTION_TRANSFORM_ORIGIN
+                    ) +
+                    slideInVertically(tween(ACTION_DURATION_MILLIS, delayMillis)) { it / 2 },
+                exit = fadeOut(tween(ACTION_DURATION_MILLIS)) +
+                    scaleOut(
+                        tween(ACTION_DURATION_MILLIS), ACTION_INITIAL_SCALE, ACTION_TRANSFORM_ORIGIN
+                    )
             ) {
-                for (action in actions) {
-                    SpeedDialActionItem(action) {
-                        onExpandedChange(false)
-                        action.onClick()
-                    }
+                SpeedDialActionItem(action) {
+                    onExpandedChange(false)
+                    action.onClick()
                 }
             }
         }

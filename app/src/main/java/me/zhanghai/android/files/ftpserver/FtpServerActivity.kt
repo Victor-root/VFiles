@@ -10,14 +10,10 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -31,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.app.clipboardManager
@@ -41,9 +35,11 @@ import me.zhanghai.android.files.compat.mainExecutorCompat
 import me.zhanghai.android.files.settings.PathPreference
 import me.zhanghai.android.files.settings.SettingSwitchPreference
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.ui.ActionBottomSheet
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
+import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.util.copyText
@@ -137,46 +133,32 @@ private fun UrlPreference() {
         FtpServerUrl.getUrl()
     }
     var isMenuShown by rememberSaveable { mutableStateOf(false) }
-    Box {
-        val showMenu = {
-            if (url != null) {
-                isMenuShown = true
-            }
+    val showMenu = {
+        if (url != null) {
+            isMenuShown = true
         }
-        Preference(
-            title = stringResource(R.string.ftp_server_url_title),
-            modifier = Modifier.combinedClickable(onLongClick = showMenu, onClick = showMenu),
-            summary = url ?: stringResource(R.string.ftp_server_url_summary_no_local_inet_address)
-        )
-        DropdownMenu(
-            expanded = isMenuShown && url != null,
-            onDismissRequest = { isMenuShown = false },
-            offset = DpOffset(16.dp, 0.dp)
-        ) {
-            if (url != null) {
-                Text(
-                    text = url,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.titleSmall
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.ftp_server_url_menu_copy_url)) },
-                    onClick = {
-                        isMenuShown = false
-                        clipboardManager.copyText(url, context)
-                    }
-                )
-                if (!isAnonymousLogin && password.isNotEmpty()) {
-                    DropdownMenuItem(
-                        text = {
-                            Text(stringResource(R.string.ftp_server_url_menu_copy_password))
-                        },
-                        onClick = {
-                            isMenuShown = false
-                            clipboardManager.copyText(password, context)
-                        }
-                    )
+    }
+    Preference(
+        title = stringResource(R.string.ftp_server_url_title),
+        modifier = Modifier.combinedClickable(onLongClick = showMenu, onClick = showMenu),
+        summary = url ?: stringResource(R.string.ftp_server_url_summary_no_local_inet_address)
+    )
+    if (isMenuShown && url != null) {
+        ActionBottomSheet(onDismissRequest = { isMenuShown = false }, title = url) { dismiss ->
+            SheetItem(
+                R.drawable.copy_icon_control_normal_24dp,
+                stringResource(R.string.ftp_server_url_menu_copy_url)
+            ) {
+                dismiss()
+                clipboardManager.copyText(url, context)
+            }
+            if (!isAnonymousLogin && password.isNotEmpty()) {
+                SheetItem(
+                    R.drawable.copy_icon_control_normal_24dp,
+                    stringResource(R.string.ftp_server_url_menu_copy_password)
+                ) {
+                    dismiss()
+                    clipboardManager.copyText(password, context)
                 }
             }
         }
