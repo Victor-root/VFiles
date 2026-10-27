@@ -7,7 +7,9 @@ package me.zhanghai.android.files.filelist
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.SystemClock
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
@@ -155,6 +157,7 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 private const val SEARCH_DEBOUNCE_MILLIS = 1000L
+private const val EXIT_BACK_TIMEOUT_MILLIS = 2000L
 private val GRID_COLUMN_MIN_WIDTH = 180.dp
 
 @Composable
@@ -362,6 +365,20 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
         FileListDialogHost(dialog, controller) { controller.dialog = null }
     }
 
+    // At the start of the app, back has to be pressed twice in a row to leave it.
+    val isDoubleBackToExit by Settings.DOUBLE_BACK_TO_EXIT.observeAsStateCompat()
+    var lastBackTime by remember { mutableStateOf<Long?>(null) }
+    val activity = LocalActivity.current
+    BackHandler(enabled = isDoubleBackToExit && pickOptions == null) {
+        val time = SystemClock.uptimeMillis()
+        val isBackAgain = lastBackTime.let { it != null && time - it < EXIT_BACK_TIMEOUT_MILLIS }
+        if (activity?.isTaskRoot != true || isBackAgain) {
+            activity?.finish()
+        } else {
+            lastBackTime = time
+            context.showToast(R.string.file_list_press_back_again_to_exit)
+        }
+    }
     // Declared last, in increasing priority.
     BackHandler(enabled = breadcrumbData.selectedIndex > 0) { viewModel.navigateUp() }
     BackHandler(enabled = isSearchViewExpanded) { controller.collapseSearch() }
@@ -558,7 +575,15 @@ private fun FileListScaffold(
         floatingActionButton = {
             SpeedDial(
                 isExpanded = isSpeedDialExpanded,
-                buttonModifier = Modifier.focusRequester(speedDialFocusRequester),
+                // On a D-pad, up from the collapsed button goes back to the list rather than to
+                // the app bar.
+                buttonModifier = Modifier
+                    .focusRequester(speedDialFocusRequester)
+                    .focusProperties {
+                        if (!isSpeedDialExpanded && !fileListStateful.value.isNullOrEmpty()) {
+                            up = listFocusRequester
+                        }
+                    },
                 onExpandedChange = onSpeedDialExpandedChange,
                 iconRes = R.drawable.add_icon_white_24dp,
                 contentDescription = stringResource(R.string.file_list_action_create),

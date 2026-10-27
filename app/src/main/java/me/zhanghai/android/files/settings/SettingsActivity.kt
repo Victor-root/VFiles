@@ -86,6 +86,11 @@ private fun SettingsScreen() {
                 stringResource(R.string.settings_default_directory_title),
                 icon = painterResource(R.drawable.home_icon_white_24dp)
             )
+            SettingSwitchPreference(
+                Settings.DOUBLE_BACK_TO_EXIT,
+                stringResource(R.string.settings_double_back_to_exit_title),
+                icon = painterResource(R.drawable.arrow_back_icon_white_24dp)
+            )
             StoragesPreference()
             StandardDirectoriesPreference()
             BookmarkDirectoriesPreference()

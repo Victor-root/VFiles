@@ -75,7 +75,7 @@ data class PrimaryStorageVolume(
 
     override val iconRes: Int
         @DrawableRes
-        get() = R.drawable.device_mobile_icon_white_24dp
+        get() = R.drawable.internal_storage_icon_white_24dp
 
     override fun getDefaultName(context: Context): String =
         context.getString(R.string.storage_internal_storage)

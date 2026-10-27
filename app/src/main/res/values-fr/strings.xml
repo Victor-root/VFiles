@@ -337,6 +337,7 @@
     <string name="file_list_paste_extract_title_format">Extraire %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extraire ici</string>
     <string name="file_list_empty">Pas de fichiers</string>
+    <string name="file_list_press_back_again_to_exit">Appuyez à nouveau sur retour pour quitter</string>
     <string name="file_list_error_folder_not_found">Ce dossier n\'existe plus</string>
     <string name="file_list_error_permission_denied">Vous n\'avez pas l\'autorisation d\'ouvrir ce dossier</string>
     <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
@@ -680,6 +681,7 @@
     </string-array>
     <string name="settings_black_night_mode">Mode nuit noire</string>
     <string name="settings_file_list_animation_title">Animation de liste de fichiers</string>
+    <string name="settings_double_back_to_exit_title">Appuyer deux fois sur retour pour quitter</string>
     <string name="settings_edge_to_edge_title">Affichage bord à bord</string>
     <string name="settings_edge_to_edge_summary">Le contenu défile derrière la barre d\'état et la barre de navigation</string>
     <string name="settings_file_name_ellipsize_title">Affichage du nom de fichier</string>
