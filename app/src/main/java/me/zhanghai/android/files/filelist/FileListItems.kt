@@ -32,9 +32,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,15 +45,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -93,6 +102,8 @@ private val GRID_ITEM_SHAPE = RoundedCornerShape(12.dp)
 private val GRID_THUMBNAIL_SHAPE = RoundedCornerShape(8.dp)
 private const val DISABLED_ALPHA = 0.38f
 private const val STROKE_ALPHA = 0.12f
+private val ICON_SIZE = 24.dp
+private val MENU_BUTTON_SIZE = 40.dp
 
 private val MENU_BUTTON_MARGIN_START =
     R.dimen.content_start_from_screen_edge_margin_minus_36dp_considering_at_least_8dp
@@ -295,6 +306,9 @@ fun FileItemIcon(
     showsThumbnail: Boolean = true,
     onClick: (() -> Unit)? = null
 ) {
+    // Read when drawing only, so that a loaded thumbnail doesn't recompose the item.
+    var isThumbnailShown by remember(file) { mutableStateOf(false) }
+    val iconPainter = cachedIconPainter(file.mimeType.iconRes, ICON_SIZE)
     Box(
         modifier = modifier
             .size(48.dp)
@@ -308,21 +322,15 @@ fun FileItemIcon(
                 }
             )
             .padding(4.dp)
-    ) {
-        // Read when drawing only, so that a loaded thumbnail doesn't recompose the item.
-        var isThumbnailShown by remember(file) { mutableStateOf(false) }
-        Image(
-            painter = cachedIconPainter(file.mimeType.iconRes, 24.dp),
-            contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
-                .align(Alignment.Center)
-                .drawWithContent {
-                    if (!isThumbnailShown) {
-                        drawContent()
-                    }
+            // Drawn by the box rather than by an image of its own, since there's one per row.
+            .drawBehind {
+                if (!isThumbnailShown) {
+                    val iconSize = ICON_SIZE.toPx()
+                    val inset = (size.width - iconSize) / 2
+                    translate(inset, inset) { with(iconPainter) { draw(Size(iconSize, iconSize)) } }
                 }
-        )
+            }
+    ) {
         val supportsThumbnail = remember(file) { file.supportsThumbnail }
         if (showsThumbnail && supportsThumbnail) {
             AsyncImage(
@@ -486,27 +494,39 @@ private fun FileItemMenuButton(
     // Composing the menu of every item costs much while scrolling, so it's only composed once
     // opened, and then kept for its closing animation.
     var hasMenuBeenShown by remember { mutableStateOf(false) }
+    val iconPainter = cachedIconPainter(R.drawable.more_vertical_icon_white_24dp, ICON_SIZE)
+    val iconColorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant)
+    val contentDescription = stringResource(R.string.more_options)
     Box(modifier = modifier) {
-        IconButton(
-            onClick = {
-                hasMenuBeenShown = true
-                isMenuShown = true
-            },
+        // Built like an IconButton with an Icon, with fewer nodes since there's one per row.
+        Box(
             modifier = Modifier
                 .focusRequester(focusRequesters.menu)
                 .focusProperties {
                     left = focusRequesters.item
                     up = focusRequesters.item
                     down = focusRequesters.item
-                },
-            enabled = isEnabled
-        ) {
-            Icon(
-                painter = cachedIconPainter(R.drawable.more_vertical_icon_white_24dp, 24.dp),
-                contentDescription = stringResource(R.string.more_options),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+                }
+                .minimumInteractiveComponentSize()
+                .size(MENU_BUTTON_SIZE)
+                .clip(CircleShape)
+                .clickable(
+                    enabled = isEnabled,
+                    role = Role.Button,
+                    interactionSource = null,
+                    indication = ripple()
+                ) {
+                    hasMenuBeenShown = true
+                    isMenuShown = true
+                }
+                .semantics { this.contentDescription = contentDescription }
+                .paint(
+                    iconPainter,
+                    sizeToIntrinsics = false,
+                    contentScale = ContentScale.Inside,
+                    colorFilter = iconColorFilter
+                )
+        )
         if (hasMenuBeenShown) {
             RoundedDropdownMenu(
                 expanded = isMenuShown,
