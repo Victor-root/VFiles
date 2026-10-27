@@ -13,6 +13,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
@@ -112,6 +113,8 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import java8.nio.file.AccessDeniedException
 import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -425,7 +428,8 @@ private fun FileListScaffold(
     val isListBehindAppBar = isEdgeToEdge && persistentDrawer == null && !isTelevision
     val isAppBarPinned =
         !isListBehindAppBar || selectedFiles.isNotEmpty() || isSearchViewExpanded
-    val appBarState = remember { AppBarScrollState() }
+    val appBarCoroutineScope = rememberCoroutineScope()
+    val appBarState = remember { AppBarScrollState(appBarCoroutineScope) }
     appBarState.isEnabled = !isAppBarPinned
     LaunchedEffect(currentPath, isAppBarPinned) { appBarState.offset = 0f }
     // The status bar icons follow the list once the app bar is mostly gone from behind them.
@@ -574,21 +578,34 @@ private fun FileListScaffold(
  * as the content scrolls, like the content pushed it.
  */
 @Stable
-private class AppBarScrollState {
+private class AppBarScrollState(private val coroutineScope: CoroutineScope) {
     var isEnabled = true
 
     var height by mutableFloatStateOf(0f)
 
     var offset by mutableFloatStateOf(0f)
 
+    private var showJob: Job? = null
+
+    // The app bar hides along with the list, and comes back entirely as soon as it's scrolled up.
     val nestedScrollConnection = object : NestedScrollConnection {
         override fun onPostScroll(
             consumed: Offset,
             available: Offset,
             source: NestedScrollSource
         ): Offset {
-            if (isEnabled) {
+            if (!isEnabled) {
+                return Offset.Zero
+            }
+            if (consumed.y < 0) {
+                showJob?.cancel()
+                showJob = null
                 offset = (offset + consumed.y).coerceIn(-height, 0f)
+            } else if (consumed.y > 0 && offset < 0 && showJob == null) {
+                showJob = coroutineScope.launch {
+                    animate(offset, 0f) { value, _ -> offset = value }
+                    showJob = null
+                }
             }
             return Offset.Zero
         }
