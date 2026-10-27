@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.ui
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -91,7 +92,9 @@ fun AppScaffold(
             } else {
                 val navigationBars = WindowInsets.navigationBars
                     .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+                // The navigation bar has the color of the app bar.
                 Modifier
+                    .background(LocalAppColors.current.appBarContainer)
                     .windowInsetsPadding(navigationBars)
                     .consumeWindowInsets(navigationBars)
             }
