@@ -7,6 +7,7 @@ package me.zhanghai.android.files.ui
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,10 +33,16 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -120,7 +127,22 @@ fun AppScaffold(
             // A scrolling container behind the top bar keeps a D-pad from moving the focus down
             // from the top bar to the content, and the top bar hides that part anyway.
             val layoutDirection = LocalLayoutDirection.current
-            Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+            // On a D-pad, the content is focused first rather than the app bar.
+            val contentFocusRequester = remember { FocusRequester() }
+            val inputModeManager = LocalInputModeManager.current
+            LaunchedEffect(contentFocusRequester) {
+                if (inputModeManager.inputMode == InputMode.Keyboard) {
+                    // Lets lazy lists lay out their first items.
+                    withFrameNanos {}
+                    contentFocusRequester.requestFocus()
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .padding(top = contentPadding.calculateTopPadding())
+                    .focusRequester(contentFocusRequester)
+                    .focusGroup()
+            ) {
                 content(
                     PaddingValues(
                         start = contentPadding.calculateStartPadding(layoutDirection),

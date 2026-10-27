@@ -575,13 +575,17 @@ private fun FileListScaffold(
         floatingActionButton = {
             SpeedDial(
                 isExpanded = isSpeedDialExpanded,
-                // On a D-pad, up from the collapsed button goes back to the list rather than to
-                // the app bar.
+                // On a D-pad, up and left from the collapsed button go back to the list rather
+                // than to the app bar, and there's nothing on its right.
                 buttonModifier = Modifier
                     .focusRequester(speedDialFocusRequester)
                     .focusProperties {
-                        if (!isSpeedDialExpanded && !fileListStateful.value.isNullOrEmpty()) {
-                            up = listFocusRequester
+                        right = FocusRequester.Cancel
+                        if (!fileListStateful.value.isNullOrEmpty()) {
+                            left = listFocusRequester
+                            if (!isSpeedDialExpanded) {
+                                up = listFocusRequester
+                            }
                         }
                     },
                 onExpandedChange = onSpeedDialExpandedChange,

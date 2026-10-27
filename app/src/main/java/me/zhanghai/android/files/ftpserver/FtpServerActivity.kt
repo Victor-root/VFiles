@@ -24,7 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import me.zhanghai.android.files.R
@@ -77,7 +79,8 @@ internal fun FtpServerScreen(state: FtpServerService.State) {
             SettingSwitchPreference(
                 Settings.FTP_SERVER_ANONYMOUS_LOGIN,
                 stringResource(R.string.ftp_server_anonymous_login_title),
-                enabled = isConfigurable
+                enabled = isConfigurable,
+                icon = painterResource(R.drawable.people_icon_control_normal_24dp)
             )
             UsernamePreference(enabled = isConfigurable && !isAnonymousLogin)
             PasswordPreference(enabled = isConfigurable && !isAnonymousLogin)
@@ -85,12 +88,14 @@ internal fun FtpServerScreen(state: FtpServerService.State) {
             PathPreference(
                 Settings.FTP_SERVER_HOME_DIRECTORY,
                 stringResource(R.string.ftp_server_home_directory_title),
-                enabled = isConfigurable
+                enabled = isConfigurable,
+                icon = painterResource(R.drawable.directory_icon_white_24dp)
             )
             SettingSwitchPreference(
                 Settings.FTP_SERVER_WRITABLE,
                 stringResource(R.string.ftp_server_writable_title),
-                enabled = isConfigurable
+                enabled = isConfigurable,
+                icon = painterResource(R.drawable.rename_icon_control_normal_24dp)
             )
         }
     }
@@ -102,6 +107,7 @@ private fun StatePreference(state: FtpServerService.State, isStartingOrRunning: 
     SwitchPreference(
         title = stringResource(R.string.ftp_server_state_title),
         checked = isStartingOrRunning,
+        icon = painterResource(R.drawable.ftp_server_icon_white_24dp),
         // Intentionally not disabled while starting or stopping: on Android TV a disabled row
         // loses D-pad focus, and toggle() ignores clicks then.
         onCheckedChange = { FtpServerService.toggle(context) },
@@ -141,6 +147,7 @@ private fun UrlPreference() {
     Preference(
         title = stringResource(R.string.ftp_server_url_title),
         modifier = Modifier.combinedClickable(onLongClick = showMenu, onClick = showMenu),
+        icon = painterResource(R.drawable.link_icon_white_24dp),
         summary = url ?: stringResource(R.string.ftp_server_url_summary_no_local_inet_address)
     )
     if (isMenuShown && url != null) {
@@ -171,6 +178,7 @@ private fun AddTilePreference() {
     val context = LocalContext.current
     Preference(
         title = stringResource(R.string.ftp_server_add_tile_title),
+        icon = painterResource(R.drawable.add_icon_white_24dp),
         onClick = { requestAddTile(context) }
     )
 }
@@ -200,6 +208,7 @@ private fun UsernamePreference(enabled: Boolean) {
     val defaultUsername = stringResource(R.string.pref_default_value_ftp_server_username)
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_username_title),
+        icon = painterResource(R.drawable.person_icon_white_24dp),
         summary = username,
         enabled = enabled,
         initialText = username,
@@ -212,6 +221,7 @@ private fun PasswordPreference(enabled: Boolean) {
     val password by Settings.FTP_SERVER_PASSWORD.observeAsStateCompat()
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_password_title),
+        icon = painterResource(R.drawable.key_icon_white_24dp),
         summary = if (password.isNotEmpty()) {
             PASSWORD_MASK_CHAR.toString().repeat(password.length)
         } else {
@@ -234,6 +244,7 @@ private fun PortPreference(enabled: Boolean) {
     val errorInvalid = stringResource(R.string.ftp_server_port_error_invalid)
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_port_title),
+        icon = painterResource(R.drawable.port_icon_white_24dp),
         summary = port.toString(),
         enabled = enabled,
         initialText = port.toString(),
@@ -246,6 +257,7 @@ private fun PortPreference(enabled: Boolean) {
 @Composable
 private fun TextFieldPreference(
     title: String,
+    icon: Painter,
     summary: String,
     enabled: Boolean,
     initialText: String,
@@ -259,6 +271,7 @@ private fun TextFieldPreference(
         title = title,
         summary = summary,
         enabled = enabled,
+        icon = icon,
         onClick = { isDialogShown = true }
     )
     if (isDialogShown) {

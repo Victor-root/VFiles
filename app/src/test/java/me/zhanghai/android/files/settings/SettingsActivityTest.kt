@@ -20,6 +20,7 @@ import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.requestFocus
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.test.AppProviderRule
@@ -50,6 +51,16 @@ class SettingsActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.FOLLOW_SYSTEM)
         Settings.BLACK_NIGHT_MODE.putValue(false)
         Settings.THEME_COLOR.putValue(ThemeColor.COLOR_PRIMARY)
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun focusesFirstSettingWithDpad() {
+        // Like when opening the settings with a D-pad.
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        composeTestRule.activityRule.scenario.recreate()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Language").assertIsFocused()
     }
 
     @Test
