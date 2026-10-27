@@ -37,28 +37,58 @@ fun appColorScheme(
     } else {
         themeColorScheme(ContextCompat.getColor(nightModeContext, themeColor.resourceId), isDark)
     }
-    val neutralColorScheme = colorScheme.withNeutralText(isDark)
+    val neutralColorScheme = colorScheme.withNeutralColors(isDark)
     return if (isDark && isBlack) neutralColorScheme.toBlack() else neutralColorScheme
 }
 
-// Text is plain black or white, and grey when secondary, instead of tinted with the theme color.
-private fun ColorScheme.withNeutralText(isDark: Boolean): ColorScheme =
+// Backgrounds, surfaces and text are white, black and greys, instead of tinted with the theme
+// color, which is kept for the app bar and the controls.
+private fun ColorScheme.withNeutralColors(isDark: Boolean): ColorScheme =
     if (isDark) {
         copy(
+            background = NEUTRAL_DARK_SURFACE,
             onBackground = Color.White,
+            surface = NEUTRAL_DARK_SURFACE,
             onSurface = Color.White,
-            onSurfaceVariant = NEUTRAL_SECONDARY_TEXT_DARK
+            surfaceVariant = Color(0xFF3C4043),
+            onSurfaceVariant = Color(0xFFBDC1C6),
+            surfaceTint = Color.Transparent,
+            inverseSurface = Color(0xFFE8EAED),
+            inverseOnSurface = Color(0xFF202124),
+            outline = Color(0xFF9AA0A6),
+            outlineVariant = Color(0xFF3C4043),
+            surfaceBright = Color(0xFF3C4043),
+            surfaceDim = NEUTRAL_DARK_SURFACE,
+            surfaceContainerLowest = Color(0xFF0E0E0F),
+            surfaceContainerLow = Color(0xFF1B1B1C),
+            surfaceContainer = Color(0xFF202124),
+            surfaceContainerHigh = Color(0xFF2A2B2D),
+            surfaceContainerHighest = Color(0xFF35363A)
         )
     } else {
         copy(
+            background = Color.White,
             onBackground = Color.Black,
+            surface = Color.White,
             onSurface = Color.Black,
-            onSurfaceVariant = NEUTRAL_SECONDARY_TEXT_LIGHT
+            surfaceVariant = Color(0xFFE8EAED),
+            onSurfaceVariant = Color(0xFF5F6368),
+            surfaceTint = Color.Transparent,
+            inverseSurface = Color(0xFF303134),
+            inverseOnSurface = Color(0xFFF1F3F4),
+            outline = Color(0xFF80868B),
+            outlineVariant = Color(0xFFDADCE0),
+            surfaceBright = Color.White,
+            surfaceDim = Color(0xFFDADCE0),
+            surfaceContainerLowest = Color.White,
+            surfaceContainerLow = Color(0xFFF8F9FA),
+            surfaceContainer = Color(0xFFF1F3F4),
+            surfaceContainerHigh = Color(0xFFECEDEF),
+            surfaceContainerHighest = Color(0xFFE8EAED)
         )
     }
 
-private val NEUTRAL_SECONDARY_TEXT_LIGHT = Color(0xFF5F6368)
-private val NEUTRAL_SECONDARY_TEXT_DARK = Color(0xFFBDC1C6)
+private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
 
 // OEM skins (e.g. ColorOS) may report a fixed system accent that ignores the wallpaper, so the
 // scheme is seeded from the real wallpaper color when it can be read, like the system does.
