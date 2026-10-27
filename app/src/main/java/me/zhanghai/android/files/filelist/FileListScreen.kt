@@ -606,7 +606,8 @@ private fun FileListScaffold(
                     bottomPadding = contentPadding.calculateBottomPadding(),
                     onLeftEdgeReached = onFileListLeftEdgeReached,
                     // On a D-pad, up from the first row goes to the drawer button rather than to
-                    // the button right above it, and right from a menu at the end goes to the add button.
+                    // the button right above it, and right from a menu at the end goes to the add
+                    // button.
                     onTopEdgeReached = { navigationIconFocusRequester.requestFocus() },
                     onRightEdgeReached = { speedDialFocusRequester.requestFocus() },
                     focusRequester = listFocusRequester
