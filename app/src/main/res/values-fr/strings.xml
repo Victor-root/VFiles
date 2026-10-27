@@ -628,6 +628,27 @@
     <string name="storage_volume_default_name_sd_card">Carte SD</string>
     <string name="storage_volume_partition_numbered">Partition %1$d</string>
     <string name="archive_viewer_title">Visionneuse d\'archives</string>
+    <string name="gallery_title">Galerie</string>
+    <string name="gallery_photos">Photos</string>
+    <string name="gallery_albums">Albums</string>
+    <string name="gallery_today">Aujourd\'hui</string>
+    <string name="gallery_yesterday">Hier</string>
+    <string name="gallery_empty">Aucune photo ni vidéo</string>
+    <string name="gallery_access_denied">Autorisez l\'accès aux fichiers pour voir vos photos et vidéos</string>
+    <string name="gallery_allow_access">Autoriser</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d élément</item>
+        <item quantity="other">%1$,d éléments</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Supprimer cet élément ?</item>
+        <item quantity="other">Supprimer ces %1$,d éléments ?</item>
+    </plurals>
+    <string name="gallery_details">Détails</string>
+    <string name="gallery_details_date">Date</string>
+    <string name="gallery_show_in_folder">Afficher dans le dossier</string>
+    <string name="gallery_play">Lire</string>
+    <string name="gallery_pause">Pause</string>
     <string name="image_viewer_title">Visionneuse d\'images</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Enregistrer sous</string>
