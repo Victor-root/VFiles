@@ -11,7 +11,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -113,6 +112,7 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import java8.nio.file.AccessDeniedException
 import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
@@ -144,6 +144,7 @@ import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import java.util.IdentityHashMap
 import java.util.Locale
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 private const val SEARCH_DEBOUNCE_MILLIS = 1000L
@@ -769,6 +770,9 @@ private fun FileListContent(
     val hasFiles = !fileListStateful.value.isNullOrEmpty()
     val isLoading = fileListStateful is Loading
     val isRefreshing = isLoading && (hasFiles || isSearching)
+    // Kept from a folder to the next one, unlike the grid which is gone while a folder loads.
+    val context = LocalContext.current
+    val iconBitmapCache = remember(context) { IconBitmapCache(context) }
     val pullToRefreshState = rememberPullToRefreshState()
     // The list scrolls behind the app bar, so what's shown over it is moved below the app bar.
     PullToRefreshBox(
@@ -797,6 +801,7 @@ private fun FileListContent(
                 selectedFiles = selectedFiles,
                 isSearching = isSearching,
                 gridState = gridState,
+                iconBitmapCache = iconBitmapCache,
                 topPadding = topPadding,
                 bottomPadding = bottomPadding,
                 onLeftEdgeReached = onLeftEdgeReached,
@@ -872,6 +877,7 @@ private fun FileGrid(
     selectedFiles: FileItemSet,
     isSearching: Boolean,
     gridState: LazyGridState,
+    iconBitmapCache: IconBitmapCache,
     topPadding: Dp,
     bottomPadding: Dp,
     onLeftEdgeReached: () -> Unit,
@@ -884,11 +890,10 @@ private fun FileGrid(
     val appearance = remember(currentPath, isSearching, viewType, sortOptions) {
         ListAppearance(isAnimationEnabled)
     }
-    LaunchedEffect(appearance) { appearance.stopStarting() }
+    LaunchedEffect(appearance) { appearance.animate(gridState) }
     var focusedIndex by remember { mutableIntStateOf(-1) }
     // Formatted once per list, instead of each time an item scrolls back into view.
     val descriptions = remember(files, context) { IdentityHashMap<FileItem, String>() }
-    val iconBitmapCache = remember(context) { IconBitmapCache(context) }
     CompositionLocalProvider(LocalIconBitmapCache provides iconBitmapCache) {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val columnCount = when (viewType) {
@@ -923,11 +928,13 @@ private fun FileGrid(
                     contentType = { _, _ -> viewType }
                 ) { index, file ->
                     val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
-                    val appearanceTime = rememberAppearanceTime(appearance, gridState, index)
+                    val itemAppearance = remember(appearance) {
+                        appearance.takeIf { it.startItem(index) }
+                    }
                     // Remembered so that items whose data didn't change can skip recomposition.
-                    val itemModifier = remember(appearanceTime, index) {
+                    val itemModifier = remember(itemAppearance, index) {
                         Modifier
-                            .itemLayer(appearanceTime)
+                            .itemLayer(itemAppearance, index)
                             .onFocusChanged {
                                 if (it.isFocused) {
                                     focusedIndex = index
@@ -1007,49 +1014,57 @@ private const val APPEARANCE_TRANSLATION_FRACTION = 0.25f
  */
 private class ListAppearance(isEnabled: Boolean) {
     // Not observed: the items only read it when they're first composed.
-    var isStarting = isEnabled
-        private set
+    private var isStarting = isEnabled
 
-    suspend fun stopStarting() {
-        withFrameNanos {}
-        isStarting = false
-    }
-}
+    // A single clock for all the items, instead of an animation each, in milliseconds since the
+    // first one started to appear.
+    private val time = Animatable(0f)
 
-// The time since the item started to appear, from 0 to the duration of the animation, or null for
-// an item that appears without animation.
-@Composable
-private fun rememberAppearanceTime(
-    appearance: ListAppearance,
-    gridState: LazyGridState,
-    index: Int
-): Animatable<Float, AnimationVector1D>? {
-    val isAppearing = remember(appearance) { appearance.isStarting }
-    if (!isAppearing) {
-        return null
-    }
-    val time = remember(appearance) { Animatable(0f) }
-    LaunchedEffect(time) {
-        val endOnScroll = launch {
-            snapshotFlow { gridState.isScrollInProgress }.first { it }
-            time.snapTo(APPEARANCE_DURATION_MILLIS.toFloat())
+    // The first visible item appears first, and the last one composed while starting appears last.
+    private var firstIndex = 0
+    private var lastIndex = 0
+
+    /** Whether the item at [index], composed now, appears with the animation. */
+    fun startItem(index: Int): Boolean {
+        if (isStarting) {
+            lastIndex = max(lastIndex, index)
         }
-        val position = (index - gridState.firstVisibleItemIndex).coerceAtLeast(0)
-        delay((position * APPEARANCE_STAGGER_MILLIS).toLong())
-        time.animateTo(
-            APPEARANCE_DURATION_MILLIS.toFloat(),
-            tween(APPEARANCE_DURATION_MILLIS, easing = LinearEasing)
-        )
-        endOnScroll.cancel()
+        return isStarting
     }
-    return time
+
+    suspend fun animate(gridState: LazyGridState) {
+        // The items laid out in the first frame are composed once it's over.
+        withFrameNanos {}
+        if (!isStarting) {
+            return
+        }
+        isStarting = false
+        firstIndex = gridState.firstVisibleItemIndex
+        val durationMillis = APPEARANCE_DURATION_MILLIS +
+            (lastIndex - firstIndex).coerceAtLeast(0) * APPEARANCE_STAGGER_MILLIS
+        coroutineScope {
+            val endOnScroll = launch {
+                snapshotFlow { gridState.isScrollInProgress }.first { it }
+                time.snapTo(durationMillis.toFloat())
+            }
+            time.animateTo(
+                durationMillis.toFloat(), tween(durationMillis, easing = LinearEasing)
+            )
+            endOnScroll.cancel()
+        }
+    }
+
+    /** How long ago the item at [index] started to appear, up to the duration of its animation. */
+    fun getItemTime(index: Int): Float =
+        (time.value - (index - firstIndex).coerceAtLeast(0) * APPEARANCE_STAGGER_MILLIS)
+            .coerceIn(0f, APPEARANCE_DURATION_MILLIS.toFloat())
 }
 
 // Each item has a layer of its own, so that scrolling only moves the layers instead of drawing
 // their content again, which takes long on slow CPU cores because of the text.
-private fun Modifier.itemLayer(appearanceTime: Animatable<Float, AnimationVector1D>?): Modifier =
+private fun Modifier.itemLayer(appearance: ListAppearance?, index: Int): Modifier =
     graphicsLayer {
-        val millis = appearanceTime?.value ?: return@graphicsLayer
+        val millis = appearance?.getItemTime(index) ?: return@graphicsLayer
         alpha = LinearOutSlowInEasing.transform(
             (millis / APPEARANCE_ALPHA_DURATION_MILLIS).coerceAtMost(1f)
         )
