@@ -54,16 +54,18 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,12 +77,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.InputMode
@@ -90,6 +92,8 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
@@ -102,7 +106,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
@@ -407,31 +410,38 @@ private fun FileListScaffold(
     val isScrolled by remember(gridState) { derivedStateOf { gridState.canScrollBackward } }
     val appBarColors = fileListAppBarColors(isScrolled)
     // Edge to edge, the app bar hides along with the status bar area when scrolling down, and
-    // comes back when scrolling up, except while selecting or searching.
+    // comes back when scrolling up, except while selecting or searching, next to a persistent
+    // drawer, or on a TV, where the items focused with the D-pad must never be behind it.
     val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
-    val isAppBarPinned = !isEdgeToEdge || selectedFiles.isNotEmpty() || isSearchViewExpanded
-    val appBarScrollBehavior =
-        TopAppBarDefaults.enterAlwaysScrollBehavior(canScroll = { !isAppBarPinned })
-    val appBarState = appBarScrollBehavior.state
-    LaunchedEffect(currentPath, isAppBarPinned) { appBarState.heightOffset = 0f }
+    val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
+    // The list then scrolls behind the app bar, so that it only moves instead of resizing the list.
+    val isListBehindAppBar = isEdgeToEdge && persistentDrawer == null && !isTelevision
+    val isAppBarPinned =
+        !isListBehindAppBar || selectedFiles.isNotEmpty() || isSearchViewExpanded
+    val appBarState = remember { AppBarScrollState() }
+    appBarState.isEnabled = !isAppBarPinned
+    LaunchedEffect(currentPath, isAppBarPinned) { appBarState.offset = 0f }
     // The status bar icons follow the list once the app bar is mostly gone from behind them.
     val statusBarHeight = WindowInsets.statusBars.getTop(LocalDensity.current)
     val isAppBarBehindStatusBar by remember(appBarState, statusBarHeight) {
-        derivedStateOf {
-            appBarState.heightOffset - appBarState.heightOffsetLimit >= statusBarHeight / 2f
-        }
+        derivedStateOf { appBarState.height + appBarState.offset >= statusBarHeight / 2f }
     }
     if (!isAppBarBehindStatusBar) {
         StatusBarBackgroundEffect(MaterialTheme.colorScheme.background)
     }
     AppScaffold(
-        modifier = Modifier.nestedScroll(appBarScrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
         topBar = {
-            Surface(color = appBarColors.container, contentColor = appBarColors.content) {
+            Surface(
+                modifier = Modifier
+                    .hideOnScroll(appBarState)
+                    .onFocusChanged { if (it.hasFocus) appBarState.offset = 0f },
+                color = appBarColors.container,
+                contentColor = appBarColors.content
+            ) {
                 Column(
                     modifier = Modifier
-                        .hideOnScroll(appBarState)
-                        .onFocusChanged { if (it.hasFocus) appBarState.heightOffset = 0f }
                         .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
                 ) {
                     AnimatedContent(
@@ -470,10 +480,9 @@ private fun FileListScaffold(
                                 )
                         }
                     }
-                    val context = LocalContext.current
                     Breadcrumb(
                         data = breadcrumbData,
-                        isReadOnly = remember(context) { context.isTelevision },
+                        isReadOnly = isTelevision,
                         onNavigateTo = controller::navigateTo,
                         onCopyPath = controller::copyPath,
                         onOpenInNewTask = controller::openInNewTask,
@@ -509,7 +518,8 @@ private fun FileListScaffold(
             )
         }
     ) { contentPadding ->
-        Row(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+        val appBarHeight = contentPadding.calculateTopPadding()
+        Row(modifier = Modifier.padding(top = if (isListBehindAppBar) 0.dp else appBarHeight)) {
             if (persistentDrawer != null) {
                 AnimatedVisibility(
                     visible = isPersistentDrawerOpen,
@@ -533,6 +543,7 @@ private fun FileListScaffold(
                     selectedFiles = selectedFiles,
                     isSearching = isSearching,
                     gridState = gridState,
+                    topPadding = if (isListBehindAppBar) appBarHeight else 0.dp,
                     bottomPadding = contentPadding.calculateBottomPadding(),
                     onLeftEdgeReached = onFileListLeftEdgeReached,
                     focusRequester = listFocusRequester
@@ -552,17 +563,43 @@ private fun FileListScaffold(
     }
 }
 
-// Shrinks the content from its top as the state's height offset goes down to its limit.
-private fun Modifier.hideOnScroll(state: TopAppBarState): Modifier =
-    clipToBounds().layout { measurable, constraints ->
-        val placeable =
-            measurable.measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
-        val heightOffsetLimit = -placeable.height.toFloat()
-        if (state.heightOffsetLimit != heightOffsetLimit) {
-            state.heightOffsetLimit = heightOffsetLimit
+/**
+ * How far an app bar hiding on scroll has moved up, from 0 to minus its height. It moves by as much
+ * as the content scrolls, like the content pushed it.
+ */
+@Stable
+private class AppBarScrollState {
+    var isEnabled = true
+
+    var height by mutableFloatStateOf(0f)
+
+    var offset by mutableFloatStateOf(0f)
+
+    val nestedScrollConnection = object : NestedScrollConnection {
+        override fun onPostScroll(
+            consumed: Offset,
+            available: Offset,
+            source: NestedScrollSource
+        ): Offset {
+            if (isEnabled) {
+                offset = (offset + consumed.y).coerceIn(-height, 0f)
+            }
+            return Offset.Zero
         }
-        val height = (placeable.height + state.heightOffset).roundToInt().coerceAtLeast(0)
-        layout(placeable.width, height) { placeable.place(0, height - placeable.height) }
+    }
+}
+
+// Moves the app bar up by the offset of the state, without changing its size.
+private fun Modifier.hideOnScroll(state: AppBarScrollState): Modifier =
+    layout { measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        val height = placeable.height.toFloat()
+        if (state.height != height) {
+            state.height = height
+        }
+        layout(placeable.width, placeable.height) {
+            placeable.place(0, state.offset.roundToInt())
+        }
     }
 
 @Composable
@@ -724,16 +761,30 @@ private fun FileListContent(
     selectedFiles: FileItemSet,
     isSearching: Boolean,
     gridState: LazyGridState,
+    topPadding: Dp,
     bottomPadding: Dp,
     onLeftEdgeReached: () -> Unit,
     focusRequester: FocusRequester
 ) {
     val hasFiles = !fileListStateful.value.isNullOrEmpty()
     val isLoading = fileListStateful is Loading
+    val isRefreshing = isLoading && (hasFiles || isSearching)
+    val pullToRefreshState = rememberPullToRefreshState()
+    // The list scrolls behind the app bar, so what's shown over it is moved below the app bar.
     PullToRefreshBox(
-        isRefreshing = isLoading && (hasFiles || isSearching),
+        isRefreshing = isRefreshing,
         onRefresh = controller::refresh,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        state = pullToRefreshState,
+        indicator = {
+            PullToRefreshDefaults.Indicator(
+                state = pullToRefreshState,
+                isRefreshing = isRefreshing,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = topPadding)
+            )
+        }
     ) {
         if (files != null) {
             FileGrid(
@@ -746,6 +797,7 @@ private fun FileListContent(
                 selectedFiles = selectedFiles,
                 isSearching = isSearching,
                 gridState = gridState,
+                topPadding = topPadding,
                 bottomPadding = bottomPadding,
                 onLeftEdgeReached = onLeftEdgeReached,
                 focusRequester = focusRequester
@@ -753,7 +805,9 @@ private fun FileListContent(
         }
         AnimatedVisibility(
             visible = isLoading && !(hasFiles || isSearching),
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = topPadding),
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -763,7 +817,9 @@ private fun FileListContent(
             ?.takeIf { !hasFiles }
         AnimatedContent(
             targetState = errorRes,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = topPadding),
             transitionSpec = { fadeIn() togetherWith fadeOut() }
         ) {
             if (it != null) {
@@ -772,7 +828,9 @@ private fun FileListContent(
         }
         AnimatedVisibility(
             visible = fileListStateful is Success && !hasFiles,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = topPadding),
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -814,6 +872,7 @@ private fun FileGrid(
     selectedFiles: FileItemSet,
     isSearching: Boolean,
     gridState: LazyGridState,
+    topPadding: Dp,
     bottomPadding: Dp,
     onLeftEdgeReached: () -> Unit,
     focusRequester: FocusRequester
@@ -837,6 +896,7 @@ private fun FileGrid(
                 FileViewType.GRID -> (maxWidth / GRID_COLUMN_MIN_WIDTH).toInt().coerceAtLeast(2)
             }
             val contentPadding = PaddingValues(
+                top = topPadding,
                 bottom = bottomPadding + dimensionResource(R.dimen.list_bottom_padding_with_fab)
             )
             LazyVerticalGrid(
