@@ -81,7 +81,8 @@ fun SpeedDial(
     @DrawableRes iconRes: Int,
     contentDescription: String,
     actions: List<SpeedDialAction>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    buttonModifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
@@ -114,6 +115,7 @@ fun SpeedDial(
         val rotation by animateFloatAsState(if (isExpanded) EXPANDED_ROTATION else 0f)
         FloatingActionButton(
             onClick = { onExpandedChange(!isExpanded) },
+            modifier = buttonModifier,
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary
         ) {

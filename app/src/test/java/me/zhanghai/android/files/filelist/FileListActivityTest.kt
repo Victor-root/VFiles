@@ -58,6 +58,7 @@ import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import org.robolectric.shadows.ShadowEnvironment
 
@@ -294,6 +295,39 @@ class FileListActivityTest {
         projects.performKeyInput { pressKey(Key.DirectionLeft) }
         composeTestRule.waitForIdle()
         captureScreenRoboImage("build/screenshots/file_list_drawer_dpad.png")
+    }
+
+    @Test
+    fun movesUpFromFirstFileToNavigationIconWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val empty = composeTestRule.onNodeWithText("Empty")
+        empty.requestFocus()
+        empty.performKeyInput { pressKey(Key.DirectionUp) }
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+    }
+
+    @Test
+    fun movesRightFromFileMenuToSpeedDialWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val projects = composeTestRule.onNodeWithText("Projects")
+        projects.requestFocus()
+        projects.performKeyInput { pressKey(Key.DirectionRight) }
+        onMenuButtonOf("Projects").performKeyInput { pressKey(Key.DirectionRight) }
+        composeTestRule.onNodeWithContentDescription("Create").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun focusesNavigationIconInEmptyFolderWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val empty = composeTestRule.onNodeWithText("Empty")
+        empty.requestFocus()
+        empty.performKeyInput { pressKey(Key.DirectionCenter) }
+        waitForText("No files")
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
     }
 
     @Test
