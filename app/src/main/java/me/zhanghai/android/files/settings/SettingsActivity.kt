@@ -35,8 +35,8 @@ import me.zhanghai.android.files.storage.StorageListActivity
 import me.zhanghai.android.files.theme.custom.ThemeColorPreference
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.ui.AppScaffold
+import me.zhanghai.android.files.ui.BottomSheetListPreference
 import me.zhanghai.android.files.ui.DialogListPreference
-import me.zhanghai.android.files.ui.DropdownListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
 import me.zhanghai.android.files.ui.TextButton
@@ -107,7 +107,7 @@ private fun SettingsScreen() {
 private fun NightModePreference() {
     val nightMode by Settings.NIGHT_MODE.observeAsStateCompat()
     val entries = stringArrayResource(R.array.settings_night_mode_entries)
-    DropdownListPreference(
+    BottomSheetListPreference(
         title = stringResource(R.string.settings_night_mode_title),
         entries = NightMode.entries,
         entryLabel = { entries[it.ordinal] },
@@ -126,7 +126,7 @@ private val FILE_NAME_ELLIPSIZE_ENTRIES = listOf(
 private fun FileNameEllipsizePreference() {
     val ellipsize by Settings.FILE_NAME_ELLIPSIZE.observeAsStateCompat()
     val entries = stringArrayResource(R.array.settings_file_name_ellipsize_entries)
-    DropdownListPreference(
+    BottomSheetListPreference(
         title = stringResource(R.string.settings_file_name_ellipsize_title),
         entries = FILE_NAME_ELLIPSIZE_ENTRIES,
         entryLabel = { entries[it.ordinal] },
@@ -196,22 +196,22 @@ private fun DefaultAppsPreference() {
 private fun RootStrategyPreference() {
     val rootStrategy by Settings.ROOT_STRATEGY.observeAsStateCompat()
     val entries = stringArrayResource(R.array.settings_root_strategy_entries)
-    var isMenuShown by rememberSaveable { mutableStateOf(false) }
+    var isSheetShown by rememberSaveable { mutableStateOf(false) }
     var runningJobCountToConfirm by rememberSaveable { mutableStateOf<Int?>(null) }
-    DropdownListPreference(
+    BottomSheetListPreference(
         title = stringResource(R.string.settings_root_strategy_title),
         entries = RootStrategy.entries,
         entryLabel = { entries[it.ordinal] },
         value = rootStrategy,
         onValueChange = { Settings.ROOT_STRATEGY.putValue(it) },
-        isMenuShown = isMenuShown,
-        onMenuShownChange = {
+        isSheetShown = isSheetShown,
+        onSheetShownChange = {
             // Changing it with file operations running may make them fail.
             val jobCount = FileJobService.runningJobCount
             if (it && jobCount != 0) {
                 runningJobCountToConfirm = jobCount
             } else {
-                isMenuShown = it
+                isSheetShown = it
             }
         }
     )
@@ -224,7 +224,7 @@ private fun RootStrategyPreference() {
                 TextButton(
                     onClick = {
                         dismiss()
-                        isMenuShown = true
+                        isSheetShown = true
                     }
                 ) { Text(stringResource(android.R.string.ok)) }
             },
@@ -259,7 +259,7 @@ private fun ArchiveFileNameEncodingPreference() {
 private fun OpenApkDefaultActionPreference() {
     val action by Settings.OPEN_APK_DEFAULT_ACTION.observeAsStateCompat()
     val entries = stringArrayResource(R.array.settings_open_apk_default_action_entries)
-    DropdownListPreference(
+    BottomSheetListPreference(
         title = stringResource(R.string.settings_open_apk_default_action_title),
         entries = OpenApkDefaultAction.entries,
         entryLabel = { entries[it.ordinal] },

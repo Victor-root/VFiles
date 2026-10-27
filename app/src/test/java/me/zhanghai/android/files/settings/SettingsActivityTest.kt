@@ -64,8 +64,10 @@ class SettingsActivityTest {
     @Test
     fun nightModeMenuUpdatesSetting() {
         composeTestRule.onNodeWithText("Night mode").performClick()
+        composeTestRule.waitForIdle()
         captureScreenRoboImage("build/screenshots/settings_night_mode_menu.png")
         composeTestRule.onNodeWithText("On").performClick()
+        composeTestRule.waitForIdle()
         assertEquals(NightMode.ON, Settings.NIGHT_MODE.value)
         composeTestRule.onNodeWithText("On").assertIsDisplayed()
     }
@@ -74,6 +76,7 @@ class SettingsActivityTest {
     fun fileNameEllipsizeMenuUpdatesSetting() {
         composeTestRule.onNodeWithText("Display long file name").performScrollTo().performClick()
         composeTestRule.onNodeWithText("Marquee").performClick()
+        composeTestRule.waitForIdle()
         assertEquals(TextUtils.TruncateAt.MARQUEE, Settings.FILE_NAME_ELLIPSIZE.value)
     }
 
