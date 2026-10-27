@@ -16,6 +16,9 @@ abstract class NavigationItem {
     @get:DrawableRes
     abstract val iconRes: Int
 
+    // The icon is tinted like the title when there's no color for it.
+    open val iconColor: NavigationIconColor? = null
+
     abstract fun getTitle(context: Context): String
 
     open fun getSubtitle(context: Context): String? = null

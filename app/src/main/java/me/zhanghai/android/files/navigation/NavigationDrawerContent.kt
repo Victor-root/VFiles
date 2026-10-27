@@ -47,6 +47,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
+import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
@@ -160,11 +161,8 @@ private fun NavigationItemRow(
     // Reads the free space for storages.
     val subtitle = remember(item, context, subtitleKey) { item.getSubtitle(context) }
     val colorScheme = MaterialTheme.colorScheme
-    val contentColor = when {
-        isChecked -> colorScheme.onSecondaryContainer
-        item.isHeader -> colorScheme.onSurfaceVariant
-        else -> colorScheme.onSurface
-    }
+    val appColors = LocalAppColors.current
+    val contentColor = if (item.isHeader) colorScheme.onSurfaceVariant else colorScheme.onSurface
     Surface(
         modifier = modifier
             .padding(horizontal = 12.dp)
@@ -182,7 +180,7 @@ private fun NavigationItemRow(
                 }
             ),
         shape = CircleShape,
-        color = if (isChecked) colorScheme.secondaryContainer else Color.Transparent,
+        color = if (isChecked) appColors.highlightContainer else Color.Transparent,
         contentColor = contentColor
     ) {
         Row(
@@ -199,7 +197,8 @@ private fun NavigationItemRow(
                 painter = painterResource(item.iconRes),
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
-                tint = if (isChecked) contentColor else colorScheme.onSurfaceVariant
+                tint = item.iconColor?.getColor(appColors.isDark)
+                    ?: if (isChecked) contentColor else colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column {

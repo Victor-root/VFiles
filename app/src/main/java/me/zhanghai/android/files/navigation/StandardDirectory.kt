@@ -12,6 +12,7 @@ import androidx.annotation.StringRes
 @ConsistentCopyVisibility
 data class StandardDirectory internal constructor(
     @param:DrawableRes val iconRes: Int,
+    val iconColor: NavigationIconColor?,
     @param:StringRes private val titleRes: Int,
     private val customTitle: String?,
     val relativePath: String,
@@ -21,8 +22,9 @@ data class StandardDirectory internal constructor(
         @DrawableRes iconRes: Int,
         @StringRes titleRes: Int,
         relativePath: String,
-        enabled: Boolean
-    ) : this(iconRes, titleRes, null, relativePath, enabled)
+        enabled: Boolean,
+        iconColor: NavigationIconColor? = null
+    ) : this(iconRes, iconColor, titleRes, null, relativePath, enabled)
 
     val id: Long
         get() = relativePath.hashCode().toLong()
@@ -34,7 +36,9 @@ data class StandardDirectory internal constructor(
         if (!customTitle.isNullOrEmpty()) customTitle else context.getString(titleRes)
 
     fun withSettings(settings: StandardDirectorySettings): StandardDirectory =
-        StandardDirectory(iconRes, titleRes, settings.customTitle, relativePath, settings.isEnabled)
+        StandardDirectory(
+            iconRes, iconColor, titleRes, settings.customTitle, relativePath, settings.isEnabled
+        )
 
     fun toSettings(): StandardDirectorySettings =
         StandardDirectorySettings(relativePath, customTitle, isEnabled)

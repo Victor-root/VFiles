@@ -15,6 +15,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import com.materialkolor.dynamiccolor.DynamicScheme
 import com.materialkolor.hct.Hct
@@ -23,6 +24,7 @@ import com.materialkolor.scheme.SchemeFidelity
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.custom.wallpaperAccentColor
 import me.zhanghai.android.files.theme.night.withNightMode
+import kotlin.math.max
 
 fun appColorScheme(
     context: Context,
@@ -89,6 +91,22 @@ private fun ColorScheme.withNeutralColors(isDark: Boolean): ColorScheme =
     }
 
 private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
+
+private const val VIVID_CHROMA = 48.0
+private const val VIVID_LIGHT_TONE = 80.0
+private const val VIVID_DARK_TONE = 30.0
+
+/**
+ * A vivid background of the hue of [color], behind black text in light mode and white text in dark
+ * mode, for what's highlighted. Containers of the scheme are too pale for that with dark colors.
+ */
+fun vividContainerColor(color: Color, isDark: Boolean): Color {
+    val hct = Hct.fromInt(color.toArgb())
+    // A grey has no hue to make vivid.
+    val chroma = if (hct.chroma < 5.0) hct.chroma else max(hct.chroma, VIVID_CHROMA)
+    val tone = if (isDark) VIVID_DARK_TONE else VIVID_LIGHT_TONE
+    return Color(Hct.from(hct.hue, chroma, tone).toInt())
+}
 
 // OEM skins (e.g. ColorOS) may report a fixed system accent that ignores the wallpaper, so the
 // scheme is seeded from the real wallpaper color when it can be read, like the system does.
