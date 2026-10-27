@@ -336,6 +336,20 @@ class FileListActivityTest {
 
     @Test
     @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun movesSidewaysFromSpeedDialWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val speedDial = composeTestRule.onNodeWithContentDescription("Create")
+        speedDial.requestFocus()
+        // Nothing is on its right, and the list is on its left, rather than the app bar.
+        speedDial.performKeyInput { pressKey(Key.DirectionRight) }
+        speedDial.assertIsFocused()
+        speedDial.performKeyInput { pressKey(Key.DirectionLeft) }
+        composeTestRule.onNodeWithText("photo.jpg").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
     fun focusesNavigationIconInEmptyFolderWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
