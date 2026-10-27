@@ -16,20 +16,12 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,22 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import coil3.request.ImageRequest
 import java8.nio.file.Path
 import kotlinx.coroutines.launch
@@ -69,11 +53,14 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.provider.common.delete
-import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.ConfirmationDialog
+import me.zhanghai.android.files.ui.MediaViewerError
+import me.zhanghai.android.files.ui.MediaViewerSystemUiEffect
+import me.zhanghai.android.files.ui.MediaViewerTopAppBar
 import me.zhanghai.android.files.ui.MenuDivider
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
+import me.zhanghai.android.files.ui.depthPageTransition
 import me.zhanghai.android.files.util.ParcelableListParceler
 import me.zhanghai.android.files.util.createSendImageIntent
 import me.zhanghai.android.files.util.extraPath
@@ -82,7 +69,6 @@ import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.withChooser
 import java.io.IOException
-import kotlin.math.abs
 
 class ImageViewerActivity : AppActivity() {
     override val hasDarkSystemBars: Boolean
@@ -112,8 +98,6 @@ class ImageViewerActivity : AppActivity() {
 @Parcelize
 private class PathList(val paths: @WriteWith<ParcelableListParceler> List<Path>) : Parcelable
 
-private val APP_BAR_COLOR = Color.Black.copy(alpha = 0.5f)
-
 @Composable
 private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
     val context = LocalContext.current
@@ -125,7 +109,7 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
     var pathToDelete by remember { mutableStateOf<Path?>(null) }
     val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
-    SystemUiEffect(isSystemUiShown)
+    MediaViewerSystemUiEffect(isSystemUiShown)
 
     Box(
         modifier = Modifier
@@ -170,7 +154,7 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
             exit = fadeOut() + slideOutVertically { -it }
         ) {
             val currentPath = paths[pagerState.currentPage.coerceIn(paths.indices)]
-            ImageViewerTopAppBar(
+            MediaViewerTopAppBar(
                 title = currentPath.fileName.toString(),
                 subtitle = if (paths.size > 1) {
                     stringResource(
@@ -232,43 +216,6 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
 }
 
 @Composable
-private fun ImageViewerTopAppBar(
-    title: String,
-    subtitle: String?,
-    actions: @Composable RowScope.() -> Unit
-) {
-    AppTopAppBar(
-        title = title,
-        subtitle = subtitle,
-        actions = actions,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = APP_BAR_COLOR,
-            navigationIconContentColor = Color.White,
-            titleContentColor = Color.White,
-            actionIconContentColor = Color.White,
-            subtitleContentColor = Color.White
-        )
-    )
-}
-
-@Composable
-private fun SystemUiEffect(isShown: Boolean) {
-    val activity = LocalActivity.current ?: return
-    val view = LocalView.current
-    DisposableEffect(isShown) {
-        WindowCompat.getInsetsController(activity.window, view).apply {
-            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            if (isShown) {
-                show(WindowInsetsCompat.Type.systemBars())
-            } else {
-                hide(WindowInsetsCompat.Type.systemBars())
-            }
-        }
-        onDispose {}
-    }
-}
-
-@Composable
 private fun ImageViewerPage(path: Path, modifier: Modifier, onClick: () -> Unit) {
     val context = LocalContext.current
     var error by remember(path) { mutableStateOf<Throwable?>(null) }
@@ -288,7 +235,7 @@ private fun ImageViewerPage(path: Path, modifier: Modifier, onClick: () -> Unit)
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val currentError = error
         if (currentError != null) {
-            ImageViewerError(currentError)
+            MediaViewerError(currentError)
         } else {
             ZoomableAsyncImage(
                 model = request,
@@ -303,42 +250,3 @@ private fun ImageViewerPage(path: Path, modifier: Modifier, onClick: () -> Unit)
         }
     }
 }
-
-@Composable
-private fun ImageViewerError(throwable: Throwable) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(
-            painter = painterResource(R.drawable.error_icon_white_240dp),
-            contentDescription = null,
-            modifier = Modifier.size(240.dp),
-            tint = Color.White.copy(alpha = 0.7f)
-        )
-        Text(
-            text = throwable.toString(),
-            modifier = Modifier.padding(16.dp),
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-private const val MIN_SCALE = 0.75f
-
-// The page on the right fades and shrinks behind the current one, like a stack.
-private fun Modifier.depthPageTransition(pagerState: PagerState, page: Int): Modifier =
-    graphicsLayer {
-        val position = (page - pagerState.currentPage) - pagerState.currentPageOffsetFraction
-        when {
-            position <= 0f -> {
-                alpha = if (position < -1f) 0f else 1f
-            }
-            position <= 1f -> {
-                alpha = 1 - position
-                translationX = size.width * -position
-                val scale = MIN_SCALE + (1 - MIN_SCALE) * (1 - abs(position))
-                scaleX = scale
-                scaleY = scale
-            }
-            else -> alpha = 0f
-        }
-    }
