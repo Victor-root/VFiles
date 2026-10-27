@@ -50,8 +50,8 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
-import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.SingleChoiceDialog
 import me.zhanghai.android.files.ui.TextButton
 import me.zhanghai.android.files.ui.asFastScrollable
@@ -133,7 +133,7 @@ private fun TextEditorScreen(viewModel: TextEditorViewModel, onFinish: () -> Uni
                 )
             }
             OverflowMenu { dismiss ->
-                SheetItem(
+                MenuItem(
                     R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.reload)
                 ) {
                     dismiss()
@@ -143,7 +143,7 @@ private fun TextEditorScreen(viewModel: TextEditorViewModel, onFinish: () -> Uni
                         viewModel.reload()
                     }
                 }
-                SheetItem(null, stringResource(R.string.text_editor_encoding)) {
+                MenuItem(null, stringResource(R.string.text_editor_encoding)) {
                     dismiss()
                     isEncodingDialogShown = true
                 }

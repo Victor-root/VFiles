@@ -6,86 +6,39 @@
 package me.zhanghai.android.files.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusGroup
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
-import androidx.core.view.WindowCompat
 import kotlinx.coroutines.launch
-import me.zhanghai.android.files.R
-import kotlin.math.roundToInt
 
-private const val SCRIM_ALPHA = 0.32f
 private const val DISABLED_ALPHA = 0.38f
-private const val TOP_SHEET_MAX_HEIGHT_FRACTION = 0.6f
-private const val TOP_SHEET_DISMISS_FRACTION = 0.3f
-// In pixels per second.
-private const val TOP_SHEET_DISMISS_VELOCITY = 1000f
 
 /**
  * A sheet of actions sliding up from the bottom of the screen, with an optional [title]. Its
@@ -108,127 +61,6 @@ fun ActionBottomSheet(
             modifier = Modifier.padding(bottom = 16.dp),
             content = { content(dismiss) }
         )
-    }
-}
-
-/**
- * A sheet of actions sliding down from the top of the screen, for the menus of the app bar. Its
- * content gets a function closing it.
- */
-@Composable
-fun ActionTopSheet(
-    onDismissRequest: () -> Unit,
-    content: @Composable ColumnScope.(dismiss: () -> Unit) -> Unit
-) {
-    val visibleState = remember { MutableTransitionState(false).apply { targetState = true } }
-    // Removed once its closing animation is done.
-    if (visibleState.isIdle && !visibleState.currentState && !visibleState.targetState) {
-        LaunchedEffect(visibleState) { onDismissRequest() }
-    }
-    val dismiss = { visibleState.targetState = false }
-    Dialog(
-        onDismissRequest = dismiss,
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false, decorFitsSystemWindows = false
-        )
-    ) {
-        val containerColor = BottomSheetDefaults.ContainerColor
-        // The scrim below fades in with the sheet instead of the dim of the dialog window, and the
-        // status bar icons are drawn over the sheet.
-        val view = LocalView.current
-        val window = (view.parent as? DialogWindowProvider)?.window
-        LaunchedEffect(window, containerColor) {
-            if (window != null) {
-                window.setDimAmount(0f)
-                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                    containerColor.luminance() > 0.5f
-            }
-        }
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            AnimatedVisibility(visibleState = visibleState, enter = fadeIn(), exit = fadeOut()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.scrim.copy(alpha = SCRIM_ALPHA))
-                        .clickable(interactionSource = null, indication = null, onClick = dismiss)
-                )
-            }
-            AnimatedVisibility(
-                visibleState = visibleState,
-                enter = slideInVertically { -it },
-                exit = slideOutVertically { -it }
-            ) {
-                TopSheetSurface(
-                    containerColor = containerColor,
-                    maxHeight = maxHeight * TOP_SHEET_MAX_HEIGHT_FRACTION,
-                    onDismissRequest = dismiss
-                ) {
-                    ActionSheetContent(
-                        title = null,
-                        modifier = Modifier
-                            .weight(1f, fill = false)
-                            .padding(top = 8.dp),
-                        content = { content(dismiss) }
-                    )
-                }
-            }
-        }
-    }
-}
-
-// The sheet follows its handle when dragged up, and closes once dragged far enough.
-@Composable
-private fun TopSheetSurface(
-    containerColor: Color,
-    maxHeight: Dp,
-    onDismissRequest: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    val coroutineScope = rememberCoroutineScope()
-    val dragOffset = remember { Animatable(0f) }
-    var height by remember { mutableIntStateOf(0) }
-    Surface(
-        modifier = Modifier
-            .heightIn(max = maxHeight)
-            .onSizeChanged { height = it.height }
-            .offset { IntOffset(0, dragOffset.value.roundToInt()) },
-        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
-        color = containerColor,
-        tonalElevation = BottomSheetDefaults.Elevation
-    ) {
-        Column(
-            modifier = Modifier.windowInsetsPadding(
-                WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            content()
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .draggable(
-                        state = rememberDraggableState { delta ->
-                            coroutineScope.launch {
-                                dragOffset.snapTo((dragOffset.value + delta).coerceAtMost(0f))
-                            }
-                        },
-                        orientation = Orientation.Vertical,
-                        onDragStopped = { velocity ->
-                            if (
-                                -dragOffset.value > height * TOP_SHEET_DISMISS_FRACTION ||
-                                -velocity > TOP_SHEET_DISMISS_VELOCITY
-                            ) {
-                                onDismissRequest()
-                            } else {
-                                dragOffset.animateTo(0f)
-                            }
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                BottomSheetDefaults.DragHandle()
-            }
-        }
     }
 }
 
@@ -297,28 +129,5 @@ fun SheetItem(
             Spacer(modifier = Modifier.width(16.dp))
             trailingContent()
         }
-    }
-}
-
-/** A line between the groups of actions of a sheet. */
-@Composable
-fun SheetDivider() {
-    HorizontalDivider(modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp))
-}
-
-/**
- * An overflow button in an app bar, opening a top sheet whose content gets a function closing it.
- */
-@Composable
-fun OverflowMenu(content: @Composable ColumnScope.(dismiss: () -> Unit) -> Unit) {
-    var isMenuShown by remember { mutableStateOf(false) }
-    IconButton(onClick = { isMenuShown = true }) {
-        Icon(
-            painter = painterResource(R.drawable.more_vertical_icon_white_24dp),
-            contentDescription = stringResource(R.string.more_options)
-        )
-    }
-    if (isMenuShown) {
-        ActionTopSheet(onDismissRequest = { isMenuShown = false }, content = content)
     }
 }
