@@ -61,6 +61,7 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
     val nightMode by Settings.NIGHT_MODE.observeAsStateCompat()
     val themeColor by Settings.THEME_COLOR.observeAsStateCompat()
     val isBlackNightMode by Settings.BLACK_NIGHT_MODE.observeAsStateCompat()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
     val isDark = nightMode.isNightModeActive()
     val baseContext = LocalContext.current
     val baseConfiguration = LocalConfiguration.current
@@ -81,7 +82,9 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
     }
     val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
     SystemBarsEffect(
-        statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer, appColors.isDark,
+        statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer,
+        // Unless edge to edge, the navigation bar is drawn over the color of the app bar.
+        if (isEdgeToEdge) appColors.isDark else appColors.appBarContainer.luminance() < 0.5f,
         hasDarkSystemBars
     )
     CompositionLocalProvider(
@@ -98,12 +101,12 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
 @Composable
 private fun SystemBarsEffect(
     statusBarBackground: Color,
-    isDark: Boolean,
+    isNavigationBarBackgroundDark: Boolean,
     hasDarkSystemBars: Boolean
 ) {
     val activity = LocalActivity.current as? ComponentActivity ?: return
     val isStatusBarDark = hasDarkSystemBars || statusBarBackground.luminance() < 0.5f
-    val isNavigationBarDark = hasDarkSystemBars || isDark
+    val isNavigationBarDark = hasDarkSystemBars || isNavigationBarBackgroundDark
     DisposableEffect(activity, isStatusBarDark, isNavigationBarDark) {
         activity.enableEdgeToEdge(
             SystemBarStyle.auto(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT) {
