@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -73,43 +72,33 @@ fun ScrollState.asFastScrollable(): FastScrollable =
         }
     }
 
-fun LazyListState.asFastScrollable(): FastScrollable =
-    object : FastScrollable {
-        override val scrollFraction: Float
-            get() {
-                val layoutInfo = layoutInfo
-                val lastIndex = layoutInfo.totalItemsCount - layoutInfo.visibleItemsInfo.size
-                if (lastIndex <= 0) {
-                    return 0f
-                }
-                val firstItemSize = layoutInfo.visibleItemsInfo.firstOrNull()?.size ?: 1
-                return ((firstVisibleItemIndex + firstVisibleItemScrollOffset.toFloat() /
-                    firstItemSize) / lastIndex).coerceIn(0f, 1f)
-            }
-
-        override val canScroll: Boolean
-            get() = canScrollForward || canScrollBackward
-
-        override val isScrollInProgress: Boolean
-            get() = this@asFastScrollable.isScrollInProgress
-
-        override suspend fun scrollToFraction(fraction: Float) {
-            val layoutInfo = layoutInfo
-            val lastIndex = layoutInfo.totalItemsCount - layoutInfo.visibleItemsInfo.size
-            scrollToItem((fraction * lastIndex.coerceAtLeast(0)).roundToInt())
-        }
-    }
-
+// The items are assumed to be the same height, so that the scroll position is known in pixels and
+// the thumb moves smoothly instead of jumping from row to row.
 fun LazyGridState.asFastScrollable(): FastScrollable =
     object : FastScrollable {
-        override val scrollFraction: Float
+        private val columnCount: Int
+            get() = layoutInfo.maxSpan.coerceAtLeast(1)
+
+        private val rowHeight: Int
+            get() = layoutInfo.visibleItemsInfo.firstOrNull()?.size?.height ?: 0
+
+        private val maxScrollOffset: Int
             get() {
                 val layoutInfo = layoutInfo
-                val lastIndex = layoutInfo.totalItemsCount - layoutInfo.visibleItemsInfo.size
-                if (lastIndex <= 0) {
+                val rowCount = (layoutInfo.totalItemsCount + columnCount - 1) / columnCount
+                return layoutInfo.beforeContentPadding + rowCount * rowHeight +
+                    layoutInfo.afterContentPadding - layoutInfo.viewportSize.height
+            }
+
+        override val scrollFraction: Float
+            get() {
+                val maxScrollOffset = maxScrollOffset
+                if (maxScrollOffset <= 0) {
                     return 0f
                 }
-                return (firstVisibleItemIndex.toFloat() / lastIndex).coerceIn(0f, 1f)
+                val scrollOffset =
+                    firstVisibleItemIndex / columnCount * rowHeight + firstVisibleItemScrollOffset
+                return (scrollOffset.toFloat() / maxScrollOffset).coerceIn(0f, 1f)
             }
 
         override val canScroll: Boolean
@@ -119,9 +108,14 @@ fun LazyGridState.asFastScrollable(): FastScrollable =
             get() = this@asFastScrollable.isScrollInProgress
 
         override suspend fun scrollToFraction(fraction: Float) {
-            val layoutInfo = layoutInfo
-            val lastIndex = layoutInfo.totalItemsCount - layoutInfo.visibleItemsInfo.size
-            scrollToItem((fraction * lastIndex.coerceAtLeast(0)).roundToInt())
+            val rowHeight = rowHeight
+            if (rowHeight <= 0) {
+                return
+            }
+            val scrollOffset = (fraction * maxScrollOffset.coerceAtLeast(0)).roundToInt()
+            scrollToItem(
+                scrollOffset / rowHeight * columnCount, scrollOffset % rowHeight
+            )
         }
     }
 
@@ -166,40 +160,40 @@ fun FastScroller(
         val density = LocalDensity.current
         val trackHeightPx = with(density) { (maxHeight - THUMB_HEIGHT).toPx() }.coerceAtLeast(1f)
         if (popupText != null) {
+            // Moved as a whole, since the fade clips what's drawn outside of its bounds.
             AnimatedVisibility(
                 visible = isDragging,
-                modifier = Modifier.align(Alignment.TopEnd),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .layout { measurable, constraints ->
+                        // The pointed corner of the bubble faces the middle of the thumb.
+                        val placeable = measurable.measure(constraints)
+                        layout(placeable.width, placeable.height) {
+                            val thumbCenterY = scrollable.scrollFraction * trackHeightPx +
+                                THUMB_HEIGHT.toPx() / 2
+                            val y = (thumbCenterY - placeable.height).coerceAtLeast(0f)
+                            placeable.place(0, y.roundToInt())
+                        }
+                    },
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
                 FastScrollerPopup(
                     text = popupText(),
-                    modifier = Modifier
-                        .padding(end = TOUCH_WIDTH)
-                        .layout { measurable, constraints ->
-                            // The pointed corner of the bubble faces the middle of the thumb.
-                            val placeable = measurable.measure(constraints)
-                            layout(placeable.width, placeable.height) {
-                                val thumbCenterY = scrollable.scrollFraction * trackHeightPx +
-                                    THUMB_HEIGHT.toPx() / 2
-                                val y = (thumbCenterY - placeable.height).coerceAtLeast(0f)
-                                placeable.place(0, y.roundToInt())
-                            }
-                        }
+                    modifier = Modifier.padding(end = TOUCH_WIDTH)
                 )
             }
         }
         AnimatedVisibility(
             visible = isVisible,
-            modifier = Modifier.align(Alignment.TopEnd),
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .offset { IntOffset(0, (scrollable.scrollFraction * trackHeightPx).roundToInt()) },
             enter = fadeIn(),
             exit = fadeOut()
         ) {
             Box(
                 modifier = Modifier
-                    .offset {
-                        IntOffset(0, (scrollable.scrollFraction * trackHeightPx).roundToInt())
-                    }
                     .size(TOUCH_WIDTH, THUMB_HEIGHT)
                     .pointerInput(scrollable, trackHeightPx) {
                         var fraction = 0f
