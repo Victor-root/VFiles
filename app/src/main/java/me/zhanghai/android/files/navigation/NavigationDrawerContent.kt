@@ -74,9 +74,12 @@ fun NavigationDrawerContent(
     val currentOnNavigateTo by rememberUpdatedState(onNavigateTo)
     val currentOnNavigateToRoot by rememberUpdatedState(onNavigateToRoot)
     val currentOnCloseDrawer by rememberUpdatedState(onCloseDrawer)
-    val listener = remember(context, currentPath) {
+    val currentPathState = rememberUpdatedState(currentPath)
+    // Kept from a folder to the next one, so that only the items checked or unchecked recompose.
+    val listener = remember(context) {
         object : NavigationItem.Listener {
-            override val currentPath: Path = currentPath
+            override val currentPath: Path
+                get() = currentPathState.value
 
             override fun navigateTo(path: Path) {
                 currentOnNavigateTo(path)
@@ -129,6 +132,7 @@ fun NavigationDrawerContent(
             } else {
                 NavigationItemRow(
                     item = item,
+                    isChecked = item.isChecked(listener),
                     listener = listener,
                     subtitleKey = subtitleKey,
                     modifier = if (index == focusedIndex) {
@@ -146,12 +150,12 @@ fun NavigationDrawerContent(
 @Composable
 private fun NavigationItemRow(
     item: NavigationItem,
+    isChecked: Boolean,
     listener: NavigationItem.Listener,
     subtitleKey: Any?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val isChecked = item.isChecked(listener)
     val title = remember(item, context) { item.getTitle(context) }
     // Reads the free space for storages.
     val subtitle = remember(item, context, subtitleKey) { item.getSubtitle(context) }
