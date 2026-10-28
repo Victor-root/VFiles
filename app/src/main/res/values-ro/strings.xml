@@ -636,6 +636,29 @@
     <string name="video_player_title">Player video</string>
     <string name="play">Redă</string>
     <string name="pause">Pauză</string>
+    <string name="music_title">Muzică</string>
+    <string name="music_tracks">Melodii</string>
+    <string name="music_albums">Albume</string>
+    <string name="music_artists">Artiști</string>
+    <string name="music_empty">Nicio melodie</string>
+    <string name="music_access_denied">Permite accesul la fișiere pentru a-ți vedea muzica</string>
+    <string name="music_shuffle_all">Redă tot aleatoriu</string>
+    <string name="music_unknown_artist">Artist necunoscut</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d melodie</item>
+        <item quantity="few">%1$,d melodii</item>
+        <item quantity="other">%1$,d de melodii</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="few">%1$,d albume</item>
+        <item quantity="other">%1$,d de albume</item>
+    </plurals>
+    <string name="music_player_title">Player de muzică</string>
+    <string name="music_shuffle">Aleatoriu</string>
+    <string name="music_repeat">Repetă</string>
+    <string name="music_previous">Anterior</string>
+    <string name="music_next">Următor</string>
     <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvează ca</string>
@@ -702,6 +725,7 @@
     <string name="settings_standard_directories_title">Dosare standard</string>
     <string name="settings_standard_directories_summary_empty">Dosarele standard nu sunt pornite</string>
     <string name="settings_standard_directory_gallery_summary">Fotografiile și videoclipurile de pe dispozitiv</string>
+    <string name="settings_standard_directory_music_summary">Melodiile de pe dispozitiv</string>
     <string name="settings_bookmark_directories_title">Dosare cu marcaje</string>
     <string name="settings_bookmark_directories_summary_empty">Nu există dosare cu marcaje</string>
     <string name="settings_root_strategy_title">Mod de acces root</string>

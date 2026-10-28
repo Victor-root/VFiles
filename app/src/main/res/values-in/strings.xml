@@ -572,6 +572,25 @@
     <string name="video_player_title">Pemutar video</string>
     <string name="play">Putar</string>
     <string name="pause">Jeda</string>
+    <string name="music_title">Musik</string>
+    <string name="music_tracks">Lagu</string>
+    <string name="music_albums">Album</string>
+    <string name="music_artists">Artis</string>
+    <string name="music_empty">Tidak ada musik</string>
+    <string name="music_access_denied">Izinkan akses ke berkas untuk melihat musik Anda</string>
+    <string name="music_shuffle_all">Acak semua</string>
+    <string name="music_unknown_artist">Artis tidak dikenal</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d lagu</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Pemutar musik</string>
+    <string name="music_shuffle">Acak</string>
+    <string name="music_repeat">Ulangi</string>
+    <string name="music_previous">Sebelumnya</string>
+    <string name="music_next">Berikutnya</string>
     <string name="image_viewer_title">Penampil gambar</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Simpan sebagai</string>
@@ -638,6 +657,7 @@
     <string name="settings_standard_directories_title">Folder standar</string>
     <string name="settings_standard_directories_summary_empty">Tidak ada folder standar yang diaktifkan</string>
     <string name="settings_standard_directory_gallery_summary">Foto dan video di perangkat</string>
+    <string name="settings_standard_directory_music_summary">Lagu di perangkat</string>
     <string name="settings_bookmark_directories_title">Folder bookmark</string>
     <string name="settings_bookmark_directories_summary_empty">Tidak ada folder bookmark</string>
     <string name="settings_root_strategy_title">Mode akses root</string>

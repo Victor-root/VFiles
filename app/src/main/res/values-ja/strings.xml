@@ -573,6 +573,25 @@
     <string name="video_player_title">動画プレーヤー</string>
     <string name="play">再生</string>
     <string name="pause">一時停止</string>
+    <string name="music_title">音楽</string>
+    <string name="music_tracks">曲</string>
+    <string name="music_albums">アルバム</string>
+    <string name="music_artists">アーティスト</string>
+    <string name="music_empty">音楽はありません</string>
+    <string name="music_access_denied">音楽を表示するにはファイルへのアクセスを許可してください</string>
+    <string name="music_shuffle_all">すべてシャッフル</string>
+    <string name="music_unknown_artist">不明なアーティスト</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d 曲</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">アルバム %1$,d 枚</item>
+    </plurals>
+    <string name="music_player_title">音楽プレーヤー</string>
+    <string name="music_shuffle">シャッフル</string>
+    <string name="music_repeat">リピート</string>
+    <string name="music_previous">前へ</string>
+    <string name="music_next">次へ</string>
     <string name="image_viewer_title">画像ビューアー</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">保存</string>
@@ -639,6 +658,7 @@
     <string name="settings_standard_directories_title">標準フォルダ</string>
     <string name="settings_standard_directories_summary_empty">標準フォルダが有効化されていません</string>
     <string name="settings_standard_directory_gallery_summary">端末内の写真と動画</string>
+    <string name="settings_standard_directory_music_summary">端末内の曲</string>
     <string name="settings_bookmark_directories_title">ブックマークフォルダ</string>
     <string name="settings_bookmark_directories_summary_empty">ブックマークフォルダがありません</string>
     <string name="settings_root_strategy_title">Root アクセスモード</string>

@@ -605,6 +605,27 @@
     <string name="video_player_title">Videospeler</string>
     <string name="play">Afspelen</string>
     <string name="pause">Pauzeren</string>
+    <string name="music_title">Muziek</string>
+    <string name="music_tracks">Nummers</string>
+    <string name="music_albums">Albums</string>
+    <string name="music_artists">Artiesten</string>
+    <string name="music_empty">Geen muziek</string>
+    <string name="music_access_denied">Geef toegang tot bestanden om je muziek te zien</string>
+    <string name="music_shuffle_all">Alles shuffelen</string>
+    <string name="music_unknown_artist">Onbekende artiest</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d nummer</item>
+        <item quantity="other">%1$,d nummers</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d albums</item>
+    </plurals>
+    <string name="music_player_title">Muziekspeler</string>
+    <string name="music_shuffle">Shuffle</string>
+    <string name="music_repeat">Herhalen</string>
+    <string name="music_previous">Vorige</string>
+    <string name="music_next">Volgende</string>
     <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Opslaan als</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Standaardmappen</string>
     <string name="settings_standard_directories_summary_empty">Geen standaardmappen ingesteld</string>
     <string name="settings_standard_directory_gallery_summary">Foto\'s en video\'s op het apparaat</string>
+    <string name="settings_standard_directory_music_summary">Nummers op het apparaat</string>
     <string name="settings_bookmark_directories_title">Bladwijzermappen</string>
     <string name="settings_bookmark_directories_summary_empty">Geen bladwijzermappen</string>
     <string name="settings_root_strategy_title">Roottoegangsmodus</string>

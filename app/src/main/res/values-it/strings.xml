@@ -637,6 +637,29 @@
     <string name="video_player_title">Lettore video</string>
     <string name="play">Riproduci</string>
     <string name="pause">Pausa</string>
+    <string name="music_title">Musica</string>
+    <string name="music_tracks">Brani</string>
+    <string name="music_albums">Album</string>
+    <string name="music_artists">Artisti</string>
+    <string name="music_empty">Nessuna musica</string>
+    <string name="music_access_denied">Consenti l\'accesso ai file per vedere la tua musica</string>
+    <string name="music_shuffle_all">Tutto in ordine casuale</string>
+    <string name="music_unknown_artist">Artista sconosciuto</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d brano</item>
+        <item quantity="many">%1$,d brani</item>
+        <item quantity="other">%1$,d brani</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="many">%1$,d album</item>
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Lettore musicale</string>
+    <string name="music_shuffle">Casuale</string>
+    <string name="music_repeat">Ripeti</string>
+    <string name="music_previous">Precedente</string>
+    <string name="music_next">Successivo</string>
     <string name="image_viewer_title">Visualizzatore di immagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salva come</string>
@@ -703,6 +726,7 @@
     <string name="settings_standard_directories_title">Cartelle standard</string>
     <string name="settings_standard_directories_summary_empty">Nessuna cartella standard attivata</string>
     <string name="settings_standard_directory_gallery_summary">Foto e video del dispositivo</string>
+    <string name="settings_standard_directory_music_summary">Brani del dispositivo</string>
     <string name="settings_bookmark_directories_title">Cartelle segnalibri</string>
     <string name="settings_bookmark_directories_summary_empty">Nessuna cartella per segnalibri</string>
     <string name="settings_root_strategy_title">Modalità di accesso root</string>

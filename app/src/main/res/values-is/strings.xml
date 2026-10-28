@@ -607,6 +607,27 @@
     <string name="video_player_title">Myndspilari</string>
     <string name="play">Spila</string>
     <string name="pause">Hlé</string>
+    <string name="music_title">Tónlist</string>
+    <string name="music_tracks">Lög</string>
+    <string name="music_albums">Albúm</string>
+    <string name="music_artists">Flytjendur</string>
+    <string name="music_empty">Engin tónlist</string>
+    <string name="music_access_denied">Leyfðu aðgang að skrám til að sjá tónlistina þína</string>
+    <string name="music_shuffle_all">Stokka allt</string>
+    <string name="music_unknown_artist">Óþekktur flytjandi</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d lag</item>
+        <item quantity="other">%1$,d lög</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d albúm</item>
+        <item quantity="other">%1$,d albúm</item>
+    </plurals>
+    <string name="music_player_title">Tónlistarspilari</string>
+    <string name="music_shuffle">Stokka</string>
+    <string name="music_repeat">Endurtaka</string>
+    <string name="music_previous">Fyrra</string>
+    <string name="music_next">Næsta</string>
     <string name="image_viewer_title">Myndaskoðari</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Vista sem</string>
@@ -673,6 +694,7 @@
     <string name="settings_standard_directories_title">Staðlaðar möppur</string>
     <string name="settings_standard_directories_summary_empty">Engar staðlaðar möppur virkjaðar</string>
     <string name="settings_standard_directory_gallery_summary">Ljósmyndir og myndskeið tækisins</string>
+    <string name="settings_standard_directory_music_summary">Lög tækisins</string>
     <string name="settings_bookmark_directories_title">Bókamerkjamöppur</string>
     <string name="settings_bookmark_directories_summary_empty">Engar bókamerkjamöppur</string>
     <string name="settings_root_strategy_title">Hamur kerfisstjóraaðgangs</string>

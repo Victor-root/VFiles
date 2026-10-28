@@ -667,6 +667,31 @@
     <string name="video_player_title">Vaizdo grotuvas</string>
     <string name="play">Leisti</string>
     <string name="pause">Pristabdyti</string>
+    <string name="music_title">Muzika</string>
+    <string name="music_tracks">Dainos</string>
+    <string name="music_albums">Albumai</string>
+    <string name="music_artists">Atlikėjai</string>
+    <string name="music_empty">Nėra muzikos</string>
+    <string name="music_access_denied">Leiskite pasiekti failus, kad matytumėte muziką</string>
+    <string name="music_shuffle_all">Maišyti viską</string>
+    <string name="music_unknown_artist">Nežinomas atlikėjas</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d daina</item>
+        <item quantity="few">%1$,d dainos</item>
+        <item quantity="many">%1$,d dainų</item>
+        <item quantity="other">%1$,d dainos</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d albumas</item>
+        <item quantity="few">%1$,d albumai</item>
+        <item quantity="many">%1$,d albumų</item>
+        <item quantity="other">%1$,d albumo</item>
+    </plurals>
+    <string name="music_player_title">Muzikos grotuvas</string>
+    <string name="music_shuffle">Maišyti</string>
+    <string name="music_repeat">Kartoti</string>
+    <string name="music_previous">Ankstesnis</string>
+    <string name="music_next">Kitas</string>
     <string name="image_viewer_title">Nuotraukų žiūryklė</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Išsaugoti kaip</string>
@@ -733,6 +758,7 @@
     <string name="settings_standard_directories_title">Standartiniai aplankai</string>
     <string name="settings_standard_directories_summary_empty">Neįjungti jokie standartiniai aplankai</string>
     <string name="settings_standard_directory_gallery_summary">Įrenginio nuotraukos ir vaizdo įrašai</string>
+    <string name="settings_standard_directory_music_summary">Įrenginio dainos</string>
     <string name="settings_bookmark_directories_title">Pažymėti aplankai</string>
     <string name="settings_bookmark_directories_summary_empty">Nėra pažymėtų aplankų</string>
     <string name="settings_root_strategy_title">Root prieigos režimas</string>

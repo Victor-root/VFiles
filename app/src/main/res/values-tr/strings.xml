@@ -601,6 +601,27 @@
     <string name="video_player_title">Video oynatıcı</string>
     <string name="play">Oynat</string>
     <string name="pause">Duraklat</string>
+    <string name="music_title">Müzik</string>
+    <string name="music_tracks">Şarkılar</string>
+    <string name="music_albums">Albümler</string>
+    <string name="music_artists">Sanatçılar</string>
+    <string name="music_empty">Müzik yok</string>
+    <string name="music_access_denied">Müziğinizi görmek için dosyalara erişime izin verin</string>
+    <string name="music_shuffle_all">Tümünü karıştır</string>
+    <string name="music_unknown_artist">Bilinmeyen sanatçı</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d şarkı</item>
+        <item quantity="other">%1$,d şarkı</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d albüm</item>
+        <item quantity="other">%1$,d albüm</item>
+    </plurals>
+    <string name="music_player_title">Müzik çalar</string>
+    <string name="music_shuffle">Karıştır</string>
+    <string name="music_repeat">Tekrarla</string>
+    <string name="music_previous">Önceki</string>
+    <string name="music_next">Sonraki</string>
     <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Farklı kaydet</string>
@@ -667,6 +688,7 @@
     <string name="settings_standard_directories_title">Standart klasörler</string>
     <string name="settings_standard_directories_summary_empty">Hiçbir standart klasör etkinleştirilmedi</string>
     <string name="settings_standard_directory_gallery_summary">Cihazın fotoğrafları ve videoları</string>
+    <string name="settings_standard_directory_music_summary">Cihazın şarkıları</string>
     <string name="settings_bookmark_directories_title">Yer işareti klasörleri</string>
     <string name="settings_bookmark_directories_summary_empty">Yer işareti klasörü yok</string>
     <string name="settings_root_strategy_title">Kök erişim modu</string>
