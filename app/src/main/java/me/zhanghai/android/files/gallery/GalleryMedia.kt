@@ -45,15 +45,3 @@ data class GalleryAlbum(
     val cover: GalleryMedia
         get() = media.first()
 }
-
-/** Like 1:23, or 1:02:03 from an hour, like the galleries of phones. */
-fun formatDuration(millis: Long): String {
-    val seconds = millis / 1000
-    val hours = seconds / 3600
-    val minutes = seconds / 60 % 60
-    return if (hours > 0) {
-        "%d:%02d:%02d".format(hours, minutes, seconds % 60)
-    } else {
-        "%d:%02d".format(minutes, seconds % 60)
-    }
-}

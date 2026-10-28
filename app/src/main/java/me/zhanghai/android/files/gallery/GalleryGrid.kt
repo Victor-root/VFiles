@@ -69,6 +69,7 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.FastScrollable
 import me.zhanghai.android.files.ui.FastScroller
 import me.zhanghai.android.files.util.isTelevision
+import me.zhanghai.android.files.viewer.video.formatDuration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId

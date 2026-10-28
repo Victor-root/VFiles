@@ -30,7 +30,10 @@ enum class FileOpenAppCategory(
         R.string.image_viewer_title
     ),
     AUDIO(R.string.settings_default_apps_audio, "audio/*", { it.isAudio }),
-    VIDEO(R.string.settings_default_apps_video, "video/*", { it.isVideo }),
+    VIDEO(
+        R.string.settings_default_apps_video, "video/*", { it.isVideo },
+        R.string.video_player_title
+    ),
     PDF(R.string.settings_default_apps_pdf, "application/pdf", { it.isPdf }),
     TEXT(R.string.settings_default_apps_text, "text/*", { it.value.startsWith("text/") });
 

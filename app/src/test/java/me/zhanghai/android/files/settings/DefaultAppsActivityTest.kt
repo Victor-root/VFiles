@@ -107,8 +107,9 @@ class DefaultAppsActivityTest {
 
     @Test
     fun asksEveryTimeWithoutBuiltInViewer() {
-        // Audio, videos, PDF and text.
-        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(4)
+        // Audio, PDF and text, while videos open with the video player of the app.
+        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(3)
+        composeTestRule.onNodeWithText("Video player").assertIsDisplayed()
     }
 
     companion object {
