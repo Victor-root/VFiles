@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 import me.zhanghai.android.files.R
 
 /** The text of a form field, with an error shown under it until its text changes. */
@@ -198,8 +199,9 @@ fun FormPasswordField(
 private val FIELD_INTO_VIEW_MARGIN = 8.dp
 
 /**
- * Shows the whole field with its border and supporting text once focused, and again as the
- * keyboard opens, instead of only the line with the cursor, like the text field does by itself.
+ * Shows the whole field with its border and supporting text above the keyboard once focused, and
+ * again as the keyboard opens, instead of only the line with the cursor, like the text field does
+ * by itself.
  */
 @Composable
 private fun Modifier.wholeFieldIntoViewWhenFocused(): Modifier {
@@ -212,7 +214,8 @@ private fun Modifier.wholeFieldIntoViewWhenFocused(): Modifier {
         if (!hasFocus) {
             return@LaunchedEffect
         }
-        snapshotFlow { imeInsets.getBottom(density) }.collectLatest {
+        // Only while the keyboard is shown, since the field brings itself into view otherwise.
+        snapshotFlow { imeInsets.getBottom(density) }.filter { it > 0 }.collectLatest {
             val margin = with(density) { FIELD_INTO_VIEW_MARGIN.toPx() }
             bringIntoViewRequester.bringIntoView(
                 Rect(0f, 0f, size.width.toFloat(), size.height + margin)
