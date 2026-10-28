@@ -209,6 +209,7 @@ private fun EditSmbServerScreen(
         FormTextField(
             field = hostField,
             label = stringResource(R.string.storage_edit_smb_server_host),
+            placeholder = stringResource(R.string.storage_edit_smb_server_host_placeholder),
             keyboardType = KeyboardType.Uri
         )
         FormTextField(
