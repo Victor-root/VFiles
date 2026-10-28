@@ -624,6 +624,11 @@
     <string name="music_repeat">تکرار</string>
     <string name="music_previous">قبلی</string>
     <string name="music_next">بعدی</string>
+    <string name="pdf_viewer_title">نمایشگر PDF</string>
+    <string name="pdf_viewer_go_to_page">رفتن به صفحه</string>
+    <string name="pdf_viewer_page_hint_format">صفحه، از ۱ تا %1$,d</string>
+    <string name="pdf_viewer_page_error">چنین صفحه‌ای وجود ندارد</string>
+    <string name="pdf_viewer_password_protected">این PDF با گذرواژه محافظت شده است که پشتیبانی نمی‌شود</string>
     <string name="image_viewer_title">نمایشگر تصویر</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">ذخیره به عنوان</string>

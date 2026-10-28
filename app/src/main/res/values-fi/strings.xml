@@ -759,5 +759,10 @@
     <string name="music_repeat">Uudelleentoisto</string>
     <string name="music_previous">Edellinen</string>
     <string name="music_next">Seuraava</string>
+    <string name="pdf_viewer_title">PDF-katselija</string>
+    <string name="pdf_viewer_go_to_page">Siirry sivulle</string>
+    <string name="pdf_viewer_page_hint_format">Sivu, 1–%1$,d</string>
+    <string name="pdf_viewer_page_error">Sivua ei ole olemassa</string>
+    <string name="pdf_viewer_password_protected">Tämä PDF on suojattu salasanalla, mitä ei tueta</string>
     <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
 </resources>

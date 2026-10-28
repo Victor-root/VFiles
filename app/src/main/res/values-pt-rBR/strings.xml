@@ -661,6 +661,11 @@
     <string name="music_repeat">Repetir</string>
     <string name="music_previous">Anterior</string>
     <string name="music_next">Próxima</string>
+    <string name="pdf_viewer_title">Visualizador de PDF</string>
+    <string name="pdf_viewer_go_to_page">Ir para a página</string>
+    <string name="pdf_viewer_page_hint_format">Página, de 1 a %1$,d</string>
+    <string name="pdf_viewer_page_error">Página inexistente</string>
+    <string name="pdf_viewer_password_protected">Este PDF é protegido por senha, o que não é suportado</string>
     <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvar como</string>

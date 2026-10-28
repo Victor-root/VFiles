@@ -760,5 +760,10 @@
     <string name="music_repeat">Errepikatu</string>
     <string name="music_previous">Aurrekoa</string>
     <string name="music_next">Hurrengoa</string>
+    <string name="pdf_viewer_title">PDF ikuslea</string>
+    <string name="pdf_viewer_go_to_page">Joan orrira</string>
+    <string name="pdf_viewer_page_hint_format">Orria, 1 eta %1$,d artean</string>
+    <string name="pdf_viewer_page_error">Ez dago orri hori</string>
+    <string name="pdf_viewer_password_protected">PDF hau pasahitzez babestuta dago, eta hori ez da onartzen</string>
     <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

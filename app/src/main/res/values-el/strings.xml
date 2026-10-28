@@ -626,6 +626,11 @@
     <string name="music_repeat">Επανάληψη</string>
     <string name="music_previous">Προηγούμενο</string>
     <string name="music_next">Επόμενο</string>
+    <string name="pdf_viewer_title">Προβολέας PDF</string>
+    <string name="pdf_viewer_go_to_page">Μετάβαση σε σελίδα</string>
+    <string name="pdf_viewer_page_hint_format">Σελίδα, από 1 έως %1$,d</string>
+    <string name="pdf_viewer_page_error">Η σελίδα δεν υπάρχει</string>
+    <string name="pdf_viewer_password_protected">Αυτό το PDF προστατεύεται από κωδικό, κάτι που δεν υποστηρίζεται</string>
     <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Αποθήκευση ως</string>

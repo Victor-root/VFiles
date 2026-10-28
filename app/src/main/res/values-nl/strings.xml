@@ -626,6 +626,11 @@
     <string name="music_repeat">Herhalen</string>
     <string name="music_previous">Vorige</string>
     <string name="music_next">Volgende</string>
+    <string name="pdf_viewer_title">PDF-weergave</string>
+    <string name="pdf_viewer_go_to_page">Ga naar pagina</string>
+    <string name="pdf_viewer_page_hint_format">Pagina, van 1 tot %1$,d</string>
+    <string name="pdf_viewer_page_error">Deze pagina bestaat niet</string>
+    <string name="pdf_viewer_password_protected">Deze PDF is beveiligd met een wachtwoord, wat niet wordt ondersteund</string>
     <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Opslaan als</string>
