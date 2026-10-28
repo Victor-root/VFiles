@@ -197,11 +197,18 @@ class GalleryActivityTest {
         pressKey(Key.DirectionCenter)
         composeTestRule.onNodeWithContentDescription("Share").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/gallery_tv_viewer.png")
-        // Nothing in them is ever focused.
-        for (key in listOf(Key.DirectionDown, Key.DirectionUp, Key.DirectionDown)) {
-            pressKey(key)
-            composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
-        }
+        // Up goes to the actions, which go only between them, and down goes back to the media.
+        pressKey(Key.DirectionUp)
+        composeTestRule.onNodeWithContentDescription("Share").assertIsFocused()
+        pressKey(Key.DirectionLeft)
+        composeTestRule.onNodeWithContentDescription("Share").assertIsFocused()
+        pressKey(Key.DirectionRight)
+        composeTestRule.onNodeWithContentDescription("More options").assertIsFocused()
+        pressKey(Key.DirectionDown)
+        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
+        // Nothing else in the bars is focused.
+        pressKey(Key.DirectionDown)
+        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
         // Right goes to the next media.
         pressKey(Key.DirectionRight)
         composeTestRule.onNode(isSelected()).assertContentDescriptionEquals("IMG_today_1.png")

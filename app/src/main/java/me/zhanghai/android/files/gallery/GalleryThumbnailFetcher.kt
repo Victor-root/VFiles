@@ -76,7 +76,11 @@ class GalleryThumbnailFetcher(
             }
         }
 
-        override fun create(data: GalleryMedia, options: Options, imageLoader: ImageLoader): Fetcher =
+        override fun create(
+            data: GalleryMedia,
+            options: Options,
+            imageLoader: ImageLoader
+        ): Fetcher =
             GalleryThumbnailFetcher(data, options, imageLoader, context, videoFrameFetcherFactory)
     }
 
