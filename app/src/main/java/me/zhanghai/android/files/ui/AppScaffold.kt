@@ -47,6 +47,8 @@ import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.paneTitle
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.settings.Settings
@@ -79,7 +81,11 @@ fun AppScaffold(
                 scrollBehavior = scrollBehavior
             )
         },
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            // Announced by accessibility services when the screen is shown, like the title of an
+            // activity.
+            .semantics { paneTitle = title }
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         floatingActionButton = floatingActionButton,
         snackbarHostState = snackbarHostState,
         content = content

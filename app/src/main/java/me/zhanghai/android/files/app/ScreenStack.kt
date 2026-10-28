@@ -94,6 +94,8 @@ internal fun ScreenStack(rootContent: @Composable () -> Unit) {
     val inputModeManager = LocalInputModeManager.current
     // The screens shown, which also include the ones closing while they animate out.
     val states = remember {
+        // Like the screens closing when the activity was recreated, whose view models remain.
+        viewModelStores.retain(entries.mapTo(mutableSetOf()) { it.id })
         entries.map { ScreenEntryState(it, parentLifecycle, isEntered = true) }
             .toMutableStateList()
     }
@@ -103,12 +105,13 @@ internal fun ScreenStack(rootContent: @Composable () -> Unit) {
             val newIds = newEntries.mapTo(mutableSetOf()) { it.id }
             for (state in states.filter { !it.isLeaving && it.entry.id !in newIds }) {
                 state.isLeaving = true
+                // Its state is kept while it's shown closing, but isn't saved anymore.
+                saveableStateHolder.removeState(state.entry.id)
                 coroutineScope.launch {
                     if (!state.isDialog) {
                         state.progress.animateTo(0f, tween(TRANSITION_DURATION_MILLIS))
                     }
                     states -= state
-                    saveableStateHolder.removeState(state.entry.id)
                     viewModelStores.remove(state.entry.id)
                     state.lifecycleOwner.destroy()
                 }
@@ -140,7 +143,7 @@ internal fun ScreenStack(rootContent: @Composable () -> Unit) {
                     // since they are still shown and could otherwise get it while it animates in.
                     withFrameNanos {}
                     withFrameNanos {}
-                    if (state.hasFocus) {
+                    if (state.hasFocus || state.isLeaving) {
                         return@launch
                     }
                     val isFocused = inputModeManager.inputMode == InputMode.Keyboard &&
@@ -152,22 +155,36 @@ internal fun ScreenStack(rootContent: @Composable () -> Unit) {
             }
         }
     }
-    // The screens below the last one entirely shown over them are hidden, and those below one
-    // opening over them can't take the focus anymore, like when a drawer closing focuses its
-    // screen.
-    val coveringIndex = states.indexOfLast { !it.isLeaving && !it.isDialog && it.isEntered }
+    // The screens below one entirely shown over them are hidden, and stay so while they close with
+    // it, like when several screens close at once. Those below one opening over them, and those
+    // closing, can't take the focus anymore, like when a drawer closing focuses its screen.
     val openingIndex = states.indexOfLast { !it.isLeaving && !it.isDialog }
     val topIndex = states.indexOfLast { !it.isLeaving }
+    // Composed before the screens, so that their own handlers come first. It closes the last
+    // screen opened right away, so that a quick second back closes the one below it.
+    BackHandler(enabled = entries.size > 1) {
+        if (entries.size > 1) {
+            entries.removeAt(entries.lastIndex)
+        } else {
+            activity.finish()
+        }
+    }
     Layout(
         content = {
             for ((index, state) in states.withIndex()) {
-                val isHidden = index < coveringIndex
+                val isHidden = (index + 1..states.lastIndex).any {
+                    val aboveState = states[it]
+                    !aboveState.isDialog && aboveState.isEntered &&
+                        (!aboveState.isLeaving || state.isLeaving)
+                }
+                // A closing screen is stopped like a finishing activity, so that it neither handles
+                // back nor affects the system bars anymore.
                 val maxLifecycleState = when {
-                    isHidden -> Lifecycle.State.CREATED
+                    isHidden || state.isLeaving -> Lifecycle.State.CREATED
                     index == topIndex -> Lifecycle.State.RESUMED
                     else -> Lifecycle.State.STARTED
                 }
-                val isCovered = index < openingIndex
+                val isCovered = state.isLeaving || index < openingIndex
                 key(state.entry.id) {
                     val navigator = remember { Navigator(entries, state.entry.id, activity) }
                     ScreenEntryContent(
@@ -200,8 +217,9 @@ private fun ScreenEntryContent(
         state.isCovered = isCovered
         state.lifecycleOwner.maxState = maxLifecycleState
     }
-    LaunchedEffect(isHidden) {
-        if (!isHidden && state.hasSavedFocus) {
+    // As soon as the screen over it closes, even while it was still opening.
+    LaunchedEffect(isCovered) {
+        if (!isCovered && state.hasSavedFocus) {
             state.hasSavedFocus = false
             // Lets it be laid out again first.
             withFrameNanos {}
@@ -223,9 +241,6 @@ private fun ScreenEntryContent(
                 LocalViewModelStoreOwner provides viewModelStoreOwner
             ) {
                 saveableStateHolder.SaveableStateProvider(state.entry.id) {
-                    if (destination != null) {
-                        BackHandler(enabled = !state.isLeaving) { navigator.goBack() }
-                    }
                     Layout(
                         content = { destination?.Content() ?: rootContent() },
                         modifier = Modifier
@@ -349,6 +364,12 @@ internal class ScreenViewModelStores : ViewModel() {
 
     fun remove(id: String) {
         stores.remove(id)?.clear()
+    }
+
+    fun retain(ids: Set<String>) {
+        for (id in stores.keys - ids) {
+            remove(id)
+        }
     }
 
     override fun onCleared() {
