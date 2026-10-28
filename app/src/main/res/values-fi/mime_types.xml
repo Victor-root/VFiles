@@ -13,6 +13,7 @@
     <string name="file_type_name_calendar">%1$s kalenteri</string>
     <string name="file_type_name_certificate">%1$s sertifikaatti</string>
     <string name="file_type_name_code">%1$s dokumentti</string>
+    <string name="file_type_name_contact">Sähköinen käyntikortti</string>
     <string name="file_type_name_directory">Kansio</string>
     <string name="file_type_name_document">%1$s dokumentti</string>
     <string name="file_type_name_ebook">%1$s e-kirja</string>
@@ -28,4 +29,10 @@
     <string name="file_type_name_video">%1$s video</string>
     <string name="file_type_name_word">Word-dokumentti</string>
     <string name="file_type_name_powerpoint">PowerPoint-esitys</string>
-    <string name="file_type_name_excel">Excel-laskentataulukko</string></resources>
+    <string name="file_type_name_excel">Excel-laskentataulukko</string>
+    <string name="file_type_name_posix_character_device">Merkkilaite</string>
+    <string name="file_type_name_posix_block_device">Lohkolaite</string>
+    <string name="file_type_name_posix_fifo">Putki</string>
+    <string name="file_type_name_posix_symbolic_link">Linkki</string>
+    <string name="file_type_name_posix_socket">Pistoke</string>
+    <string name="file_type_name_posix_symbolic_link_broken">Linkki (rikki)</string></resources>

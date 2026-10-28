@@ -23,6 +23,8 @@
     <string name="loading">Ładowanie…</string>
     <string name="maybe_later">Może później</string>
     <string name="merge">Scal</string>
+    <string name="more_options">Więcej opcji</string>
+    <string name="navigate_up">Przejdź w górę</string>
     <string name="none">Żaden</string>
     <string name="open_navigation_drawer">Otwórz szufladę nawigacji</string>
     <string name="paste">Wklej</string>
@@ -360,9 +362,11 @@
     <string name="file_list_paste_extract_title_format">Rozpakowywanie %1$,d</string>
     <string name="file_list_paste_action_extract_here">Wypakuj tutaj</string>
     <string name="file_list_empty">Brak plików</string>
+    <string name="file_list_press_back_again_to_exit">Naciśnij Wstecz ponownie, aby wyjść</string>
     <string name="file_list_error_folder_not_found">Ten folder już nie istnieje</string>
     <string name="file_list_error_permission_denied">Nie masz uprawnień do otwarcia tego folderu</string>
     <string name="file_list_error_unknown">Nie można otworzyć tego folderu</string>
+    <string name="file_list_action_create">Utwórz</string>
     <string name="file_list_action_create_file">Plik</string>
     <string name="file_list_action_create_directory">Katalog</string>
 
@@ -571,6 +575,7 @@
     <string name="storage_edit_smb_server_title_edit">Edytuj serwer SMB</string>
     <string name="storage_edit_smb_server_title_add">Dodaj serwer SMB</string>
     <string name="storage_edit_smb_server_host">Nazwa hosta</string>
+    <string name="storage_edit_smb_server_host_placeholder">Adres IP lub nazwa sieciowa serwera, np. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Wprowadź nazwę hosta</string>
     <string name="storage_edit_smb_server_host_error_invalid">Nieprawidłowa nazwa hosta</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -638,6 +643,32 @@
     <string name="navigation_edit_bookmark_directory_name">Nazwa</string>
     <string name="navigation_edit_bookmark_directory_path">Ścieżka</string>
     <string name="archive_viewer_title">Przeglądarka archiwum</string>
+    <string name="gallery_title">Galeria</string>
+    <string name="gallery_photos">Zdjęcia</string>
+    <string name="gallery_albums">Albumy</string>
+    <string name="gallery_today">Dzisiaj</string>
+    <string name="gallery_yesterday">Wczoraj</string>
+    <string name="gallery_empty">Brak zdjęć i filmów</string>
+    <string name="gallery_access_denied">Zezwól na dostęp do plików, aby zobaczyć swoje zdjęcia i filmy</string>
+    <string name="gallery_allow_access">Zezwól</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d element</item>
+        <item quantity="few">%1$,d elementy</item>
+        <item quantity="many">%1$,d elementów</item>
+        <item quantity="other">%1$,d elementów</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Usunąć ten element?</item>
+        <item quantity="few">Usunąć te %1$,d elementy?</item>
+        <item quantity="many">Usunąć te %1$,d elementów?</item>
+        <item quantity="other">Usunąć te %1$,d elementów?</item>
+    </plurals>
+    <string name="gallery_details">Szczegóły</string>
+    <string name="gallery_details_date">Data</string>
+    <string name="gallery_show_in_folder">Pokaż w katalogu</string>
+    <string name="video_player_title">Odtwarzacz wideo</string>
+    <string name="video_player_play">Odtwórz</string>
+    <string name="video_player_pause">Wstrzymaj</string>
     <string name="image_viewer_title">Przeglądarka zdjęć</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Zapisz jako</string>
@@ -669,7 +700,9 @@
     <string name="ftp_server_anonymous_login_title">Logowanie anonimowe</string>
     <string name="ftp_server_username_title">Nazwa użytkownika</string>
     <string name="ftp_server_password_title">Hasło</string>
+    <string name="ftp_server_password_summary_empty">Nie ustawiono</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Nieprawidłowy port</string>
     <string name="ftp_server_home_directory_title">Katalog główny</string>
     <string name="ftp_server_writable_title">Zezwól na zapis</string>
     <string name="settings_title">Ustawienia</string>
@@ -687,6 +720,9 @@
     </string-array>
     <string name="settings_black_night_mode">Czarny motyw ciemny</string>
     <string name="settings_file_list_animation_title">Animacja listy plików</string>
+    <string name="settings_double_back_to_exit_title">Naciśnij dwukrotnie Wstecz, aby wyjść</string>
+    <string name="settings_edge_to_edge_title">Wyświetlanie od krawędzi do krawędzi</string>
+    <string name="settings_edge_to_edge_summary">Treść przewija się pod paskiem stanu i paskiem nawigacji</string>
     <string name="settings_file_name_ellipsize_title">Wyświetlanie długiej nazwy pliku</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Skrócona na początku</item>
@@ -698,6 +734,7 @@
     <string name="settings_default_directory_title">Domyślny katalog</string>
     <string name="settings_standard_directories_title">Standardowe katalogi</string>
     <string name="settings_standard_directories_summary_empty">Nie włączono żadnych standardowych katalogów</string>
+    <string name="settings_standard_directory_gallery_summary">Zdjęcia i filmy na urządzeniu</string>
     <string name="settings_bookmark_directories_title">Katalogi dodane do zakładek</string>
     <string name="settings_bookmark_directories_summary_empty">Brak katalogów dodanych do zakładek</string>
     <string name="settings_root_strategy_title">Tryb dostępu do roota</string>
@@ -731,6 +768,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Obserwuj na GitHubie</string>
     <string name="app_name_launcher">Pliki</string>
+    <string name="clear_query">Wyczyść zapytanie</string>
     <string name="about_fork_subtitle">Oryginał: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Na podstawie tapety</string>
     <string name="color_picker_preset_colors_label">Inne kolory</string>
@@ -745,6 +783,7 @@
 
     <string name="onboarding_install_apps_title">Instalowanie aplikacji</string>
     <string name="onboarding_install_apps_description">Zezwól aplikacji %1$s na bezpośrednie instalowanie plików APK. Dzięki temu możesz instalować aplikacje z pobranych lub otrzymanych plików bez potrzeby korzystania z instalatora firm trzecich.</string>
+    <string name="reorder_drag_handle">Przenieś</string>
     <string name="onboarding_notifications_title">Powiadomienia</string>
     <string name="onboarding_optional">Opcjonalne</string>
     <string name="onboarding_required">Wymagane</string>

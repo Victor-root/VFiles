@@ -25,6 +25,8 @@
     <string name="loading">Загрузка…</string>
     <string name="maybe_later">Возможно позже</string>
     <string name="merge">Объединить</string>
+    <string name="more_options">Другие параметры</string>
+    <string name="navigate_up">Перейти вверх</string>
     <string name="none">Нет</string>
     <string name="open_navigation_drawer">Открыть боковое меню</string>
     <string name="paste">Вставить</string>
@@ -362,9 +364,11 @@
     <string name="file_list_paste_extract_title_format">Извлечение %1$,d</string>
     <string name="file_list_paste_action_extract_here">Извлечь здесь</string>
     <string name="file_list_empty">Нет файлов</string>
+    <string name="file_list_press_back_again_to_exit">Нажмите «Назад» ещё раз для выхода</string>
     <string name="file_list_error_folder_not_found">Эта папка больше не существует</string>
     <string name="file_list_error_permission_denied">У вас нет разрешения на открытие этой папки</string>
     <string name="file_list_error_unknown">Не удалось открыть эту папку</string>
+    <string name="file_list_action_create">Создать</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>
 
@@ -573,6 +577,7 @@
     <string name="storage_edit_smb_server_title_edit">Редактировать SMB-сервер</string>
     <string name="storage_edit_smb_server_title_add">Добавить SMB-сервер</string>
     <string name="storage_edit_smb_server_host">Имя хоста</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP-адрес или сетевое имя сервера, например 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Введите имя хоста</string>
     <string name="storage_edit_smb_server_host_error_invalid">Неверное имя хоста</string>
     <string name="storage_edit_smb_server_port">Порт</string>
@@ -640,6 +645,32 @@
     <string name="navigation_edit_bookmark_directory_name">Имя</string>
     <string name="navigation_edit_bookmark_directory_path">Путь</string>
     <string name="archive_viewer_title">Просмотрщик архивов</string>
+    <string name="gallery_title">Галерея</string>
+    <string name="gallery_photos">Фото</string>
+    <string name="gallery_albums">Альбомы</string>
+    <string name="gallery_today">Сегодня</string>
+    <string name="gallery_yesterday">Вчера</string>
+    <string name="gallery_empty">Нет фото и видео</string>
+    <string name="gallery_access_denied">Разрешите доступ к файлам, чтобы видеть свои фото и видео</string>
+    <string name="gallery_allow_access">Разрешить</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d элемент</item>
+        <item quantity="few">%1$,d элемента</item>
+        <item quantity="many">%1$,d элементов</item>
+        <item quantity="other">%1$,d элементов</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Удалить %1$,d элемент?</item>
+        <item quantity="few">Удалить эти %1$,d элемента?</item>
+        <item quantity="many">Удалить эти %1$,d элементов?</item>
+        <item quantity="other">Удалить эти %1$,d элементов?</item>
+    </plurals>
+    <string name="gallery_details">Подробности</string>
+    <string name="gallery_details_date">Дата</string>
+    <string name="gallery_show_in_folder">Показать в папке</string>
+    <string name="video_player_title">Видеоплеер</string>
+    <string name="video_player_play">Воспроизвести</string>
+    <string name="video_player_pause">Пауза</string>
     <string name="image_viewer_title">Просмотрщик изображений</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Сохранить как</string>
@@ -671,7 +702,9 @@
     <string name="ftp_server_anonymous_login_title">Анонимный вход</string>
     <string name="ftp_server_username_title">Имя пользователя</string>
     <string name="ftp_server_password_title">Пароль</string>
+    <string name="ftp_server_password_summary_empty">Не задан</string>
     <string name="ftp_server_port_title">Порт</string>
+    <string name="ftp_server_port_error_invalid">Неверный порт</string>
     <string name="ftp_server_home_directory_title">Корневой каталог</string>
     <string name="ftp_server_writable_title">Разрешить запись</string>
     <string name="settings_title">Настройки</string>
@@ -689,6 +722,9 @@
     </string-array>
     <string name="settings_black_night_mode">Ночная тема</string>
     <string name="settings_file_list_animation_title">Анимация списка файлов</string>
+    <string name="settings_double_back_to_exit_title">Выход двойным нажатием «Назад»</string>
+    <string name="settings_edge_to_edge_title">Отображение от края до края</string>
+    <string name="settings_edge_to_edge_summary">Содержимое прокручивается под строкой состояния и панелью навигации</string>
     <string name="settings_file_name_ellipsize_title">Отображать длинные имена файлов</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Многоточие в начале</item>
@@ -700,6 +736,7 @@
     <string name="settings_default_directory_title">Папка по умолчанию</string>
     <string name="settings_standard_directories_title">Стандартные папки</string>
     <string name="settings_standard_directories_summary_empty">Стандартные папки не включены</string>
+    <string name="settings_standard_directory_gallery_summary">Фото и видео на устройстве</string>
     <string name="settings_bookmark_directories_title">Закладки папок</string>
     <string name="settings_bookmark_directories_summary_empty">Нет закладок папок</string>
     <string name="settings_root_strategy_title">Root-доступ</string>
@@ -733,6 +770,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Подписаться на GitHub</string>
     <string name="app_name_launcher">Файлы</string>
+    <string name="clear_query">Очистить запрос</string>
     <string name="about_fork_subtitle">Оригинал: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">На основе обоев</string>
     <string name="color_picker_preset_colors_label">Другие цвета</string>
@@ -747,6 +785,7 @@
 
     <string name="onboarding_install_apps_title">Установка приложений</string>
     <string name="onboarding_install_apps_description">Разрешите %1$s устанавливать APK-файлы напрямую. Так вы сможете устанавливать приложения из скачанных или полученных файлов без стороннего установщика.</string>
+    <string name="reorder_drag_handle">Переместить</string>
     <string name="onboarding_notifications_title">Уведомления</string>
     <string name="onboarding_optional">Необязательно</string>
     <string name="onboarding_required">Обязательно</string>

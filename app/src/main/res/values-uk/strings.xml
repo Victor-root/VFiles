@@ -25,6 +25,8 @@
     <string name="loading">Завантаження…</string>
     <string name="maybe_later">Може пізніше</string>
     <string name="merge">Об\'єднати</string>
+    <string name="more_options">Інші параметри</string>
+    <string name="navigate_up">Перейти вгору</string>
     <string name="none">Жодного</string>
     <string name="open_navigation_drawer">Відкрити панель навігації</string>
     <string name="paste">Вставити</string>
@@ -362,9 +364,11 @@
     <string name="file_list_paste_extract_title_format">Видобування %1$,d</string>
     <string name="file_list_paste_action_extract_here">Видобути тут</string>
     <string name="file_list_empty">Нема файлів</string>
+    <string name="file_list_press_back_again_to_exit">Натисніть «Назад» ще раз, щоб вийти</string>
     <string name="file_list_error_folder_not_found">Ця папка більше не існує</string>
     <string name="file_list_error_permission_denied">У вас немає дозволу відкрити цю папку</string>
     <string name="file_list_error_unknown">Не вдалося відкрити цю папку</string>
+    <string name="file_list_action_create">Створити</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Тека</string>
 
@@ -573,6 +577,7 @@
     <string name="storage_edit_smb_server_title_edit">Змінити SMB-сервер</string>
     <string name="storage_edit_smb_server_title_add">Додати SMB-сервер</string>
     <string name="storage_edit_smb_server_host">Назва хоста</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP-адреса або мережева назва сервера, наприклад 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Уведіть назву хоста</string>
     <string name="storage_edit_smb_server_host_error_invalid">Недійсна назва хоста</string>
     <string name="storage_edit_smb_server_port">Порт</string>
@@ -640,6 +645,32 @@
     <string name="navigation_edit_bookmark_directory_name">Назва</string>
     <string name="navigation_edit_bookmark_directory_path">Шлях</string>
     <string name="archive_viewer_title">Переглядач архівів</string>
+    <string name="gallery_title">Галерея</string>
+    <string name="gallery_photos">Фото</string>
+    <string name="gallery_albums">Альбоми</string>
+    <string name="gallery_today">Сьогодні</string>
+    <string name="gallery_yesterday">Учора</string>
+    <string name="gallery_empty">Немає фото та відео</string>
+    <string name="gallery_access_denied">Надайте доступ до файлів, щоб бачити свої фото та відео</string>
+    <string name="gallery_allow_access">Дозволити</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d елемент</item>
+        <item quantity="few">%1$,d елементи</item>
+        <item quantity="many">%1$,d елементів</item>
+        <item quantity="other">%1$,d елементів</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Видалити %1$,d елемент?</item>
+        <item quantity="few">Видалити ці %1$,d елементи?</item>
+        <item quantity="many">Видалити ці %1$,d елементів?</item>
+        <item quantity="other">Видалити ці %1$,d елементів?</item>
+    </plurals>
+    <string name="gallery_details">Відомості</string>
+    <string name="gallery_details_date">Дата</string>
+    <string name="gallery_show_in_folder">Показати в теці</string>
+    <string name="video_player_title">Відеоплеєр</string>
+    <string name="video_player_play">Відтворити</string>
+    <string name="video_player_pause">Пауза</string>
     <string name="image_viewer_title">Переглядач зображень</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Зберегти як</string>
@@ -671,7 +702,9 @@
     <string name="ftp_server_anonymous_login_title">Анонімний вхід</string>
     <string name="ftp_server_username_title">Імʼя користувача</string>
     <string name="ftp_server_password_title">Пароль</string>
+    <string name="ftp_server_password_summary_empty">Не встановлено</string>
     <string name="ftp_server_port_title">Порт</string>
+    <string name="ftp_server_port_error_invalid">Недійсний порт</string>
     <string name="ftp_server_home_directory_title">Тека Root</string>
     <string name="ftp_server_writable_title">Дозволити запис</string>
     <string name="settings_title">Налаштування</string>
@@ -689,6 +722,9 @@
     </string-array>
     <string name="settings_black_night_mode">Чорний нічний режим</string>
     <string name="settings_file_list_animation_title">Анімація списку файлів</string>
+    <string name="settings_double_back_to_exit_title">Вихід подвійним натисканням «Назад»</string>
+    <string name="settings_edge_to_edge_title">Відображення від краю до краю</string>
+    <string name="settings_edge_to_edge_summary">Вміст прокручується під рядком стану та панеллю навігації</string>
     <string name="settings_file_name_ellipsize_title">Відображати довгі назви файлів</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Еліпсувати початок</item>
@@ -700,6 +736,7 @@
     <string name="settings_default_directory_title">Типова тека</string>
     <string name="settings_standard_directories_title">Стандартні теки</string>
     <string name="settings_standard_directories_summary_empty">Нема ввімкнених стандартних тек</string>
+    <string name="settings_standard_directory_gallery_summary">Фото та відео на пристрої</string>
     <string name="settings_bookmark_directories_title">Теки закладок</string>
     <string name="settings_bookmark_directories_summary_empty">Нема тек закладок</string>
     <string name="settings_root_strategy_title">Режим доступу root</string>
@@ -733,6 +770,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Стежити на GitHub</string>
     <string name="app_name_launcher">Файли</string>
+    <string name="clear_query">Очистити запит</string>
     <string name="about_fork_subtitle">Оригінал: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">На основі шпалер</string>
     <string name="color_picker_preset_colors_label">Інші кольори</string>
@@ -747,6 +785,7 @@
 
     <string name="onboarding_install_apps_title">Встановлення додатків</string>
     <string name="onboarding_install_apps_description">Дозвольте %1$s встановлювати файли APK безпосередньо. Так ви зможете встановлювати додатки із завантажених або отриманих файлів без стороннього інсталятора.</string>
+    <string name="reorder_drag_handle">Перемістити</string>
     <string name="onboarding_notifications_title">Сповіщення</string>
     <string name="onboarding_optional">Необов’язково</string>
     <string name="onboarding_required">Обов’язково</string>
