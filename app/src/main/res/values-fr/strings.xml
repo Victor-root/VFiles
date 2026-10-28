@@ -548,6 +548,7 @@
     <string name="storage_edit_smb_server_title_edit">Modifier le serveur SMB</string>
     <string name="storage_edit_smb_server_title_add">Ajouter un serveur SMB</string>
     <string name="storage_edit_smb_server_host">Nom d\'hôte</string>
+    <string name="storage_edit_smb_server_host_placeholder">Adresse IP ou nom réseau du serveur, ex. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Entrez un nom d\'hôte</string>
     <string name="storage_edit_smb_server_host_error_invalid">Nom d\'hôte invalide</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -555,7 +556,7 @@
     <string name="storage_edit_smb_server_path">Chemin</string>
     <string name="storage_edit_smb_server_path_placeholder">Peut être laissé vide</string>
     <string name="storage_edit_smb_server_name">Nom</string>
-    <string name="storage_edit_smb_server_name_placeholder">Utiliser le nom d\'hôte</string>
+    <string name="storage_edit_smb_server_name_placeholder">Affiché dans le menu, le nom d\'hôte par défaut</string>
     <string name="storage_edit_smb_server_authentication_type">Identification</string>
     <string-array name="storage_edit_smb_server_authentication_type_entries">
         <item>Mot de passe</item>

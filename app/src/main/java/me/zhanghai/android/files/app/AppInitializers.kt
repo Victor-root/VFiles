@@ -45,17 +45,19 @@ private fun initializeWebViewDebugging() {
     }
 }
 
+/** The configuration of jCIFS, which scanning the LAN for SMB servers adjusts too. */
+fun createJcifsProperties(): Properties =
+    Properties().apply {
+        setProperty("jcifs.netbios.cachePolicy", "0")
+        setProperty("jcifs.smb.client.maxVersion", "SMB1")
+    }
+
 private fun initializeFileSystemProviders() {
     FileSystemProviders.install()
     FileSystemProviders.overflowWatchEvents = true
     // SingletonContext.init() calls NameServiceClientImpl.initCache() which connects to network.
     backgroundExecutor.execute {
-        SingletonContext.init(
-            Properties().apply {
-                setProperty("jcifs.netbios.cachePolicy", "0")
-                setProperty("jcifs.smb.client.maxVersion", "SMB1")
-            }
-        )
+        SingletonContext.init(createJcifsProperties())
     }
     FtpClient.authenticator = FtpServerAuthenticator
     SftpClient.authenticator = SftpServerAuthenticator

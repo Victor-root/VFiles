@@ -7,7 +7,10 @@
 
 package me.zhanghai.android.files.storage
 
-import jcifs.context.SingletonContext
+import jcifs.CIFSContext
+import jcifs.CIFSException
+import jcifs.config.PropertyConfiguration
+import jcifs.context.BaseContext
 import jcifs.smb.SmbException
 import jcifs.smb.SmbFile
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +22,7 @@ import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import me.zhanghai.android.files.app.backgroundExecutor
+import me.zhanghai.android.files.app.createJcifsProperties
 import me.zhanghai.android.files.util.CloseableLiveData
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
@@ -44,16 +48,21 @@ class LanSmbServerListLiveData : CloseableLiveData<Stateful<List<LanSmbServer>>>
         cancelLoadingValue()
         value = Loading(value?.value)
         loadFuture = backgroundExecutor.submit {
+            val context = createScanContext()
             try {
                 val newServerSet = mutableSetOf<LanSmbServer>()
-                Executors.newFixedThreadPool(60).asCoroutineDispatcher().use { dispatcher ->
+                // Every address of the subnet is queried at once, since each one that has no
+                // server only answers with a timeout, and each query blocks a thread meanwhile.
+                Executors.newCachedThreadPool().asCoroutineDispatcher().use { dispatcher ->
                     runBlocking(dispatcher) {
                         val serverChannel = produce {
                             launch {
-                                getServersByComputerBrowserService().consumeEach { send(it) }
+                                getServersByComputerBrowserService(context).consumeEach {
+                                    send(it)
+                                }
                             }
                             launch {
-                                getServersByScanningSubnet().consumeEach { send(it) }
+                                getServersByScanningSubnet(context).consumeEach { send(it) }
                             }
                         }
                         serverChannel.consumeEach {
@@ -72,9 +81,31 @@ class LanSmbServerListLiveData : CloseableLiveData<Stateful<List<LanSmbServer>>>
                 postValue(Success(newServers))
             } catch (e: Exception) {
                 postValue(Failure(valueCompat.value, e))
+            } finally {
+                try {
+                    context.close()
+                } catch (e: CIFSException) {
+                    e.printStackTrace()
+                }
             }
         }
     }
+
+    // Servers on the LAN answer in milliseconds, so waiting as long as for connecting to one would
+    // only make the scan slower.
+    private fun createScanContext(): CIFSContext =
+        BaseContext(
+            PropertyConfiguration(
+                createJcifsProperties().apply {
+                    setProperty("jcifs.netbios.retryTimeout", SCAN_TIMEOUT_MILLIS.toString())
+                    setProperty("jcifs.smb.client.connTimeout", SCAN_TIMEOUT_MILLIS.toString())
+                    setProperty("jcifs.smb.client.soTimeout", SCAN_TIMEOUT_MILLIS.toString())
+                    setProperty(
+                        "jcifs.smb.client.responseTimeout", SCAN_TIMEOUT_MILLIS.toString()
+                    )
+                }
+            )
+        )
 
     // If a computer running recent Windows 10 is elected the master browser, it won't actually
     // provide the service to others (jCIFS-NG NetServerEnumIterator gets
@@ -83,18 +114,18 @@ class LanSmbServerListLiveData : CloseableLiveData<Stateful<List<LanSmbServer>>>
     // https://social.technet.microsoft.com/Forums/en-US/bd0af6aa-51ec-477a-8c81-888a4e60bd94/master-browser-service-broken-after-creator-update#2c6b9e65-da8a-4e41-a2cb-db086443ef87
     // https://docs.microsoft.com/en-nz/windows-server/storage/file-server/troubleshoot/smbv1-not-installed-by-default-in-windows
     private fun CoroutineScope.getServersByComputerBrowserService(
+        context: CIFSContext
     ): ReceiveChannel<LanSmbServer> =
         produce {
             launch {
-                @Suppress("DEPRECATION")
-                val lan = SmbFile("smb://")
+                val lan = SmbFile("smb://", context)
                 val domains = try {
                     lan.listFiles()
                 } catch (e: SmbException) {
                     e.printStackTrace()
                     return@launch
                 }
-                val nameServiceClient = SingletonContext.getInstance().nameServiceClient
+                val nameServiceClient = context.nameServiceClient
                 for (domain in domains) {
                     launch {
                         val servers = try {
@@ -121,14 +152,16 @@ class LanSmbServerListLiveData : CloseableLiveData<Stateful<List<LanSmbServer>>>
             }
         }
 
-    private fun CoroutineScope.getServersByScanningSubnet(): ReceiveChannel<LanSmbServer> =
+    private fun CoroutineScope.getServersByScanningSubnet(
+        context: CIFSContext
+    ): ReceiveChannel<LanSmbServer> =
         produce {
             launch {
                 val localAddress = InetAddress::class.getLocalAddress()
                 if (localAddress !is Inet4Address || !localAddress.isSiteLocalAddress) {
                     return@launch
                 }
-                val nameServiceClient = SingletonContext.getInstance().nameServiceClient
+                val nameServiceClient = context.nameServiceClient
                 for (address in localAddress.getSubnetAddresses()) {
                     launch {
                         val nbtAddresses = try {
@@ -166,5 +199,9 @@ class LanSmbServerListLiveData : CloseableLiveData<Stateful<List<LanSmbServer>>>
     private fun cancelLoadingValue() {
         loadFuture?.cancel(true)
         loadFuture = null
+    }
+
+    companion object {
+        private const val SCAN_TIMEOUT_MILLIS = 1000
     }
 }
