@@ -136,7 +136,7 @@ class GalleryViewerActivity : AppActivity() {
 
 // The height of the bar of actions at the bottom, and of the carousel above them, above which the
 // controls of videos are.
-private val BOTTOM_BAR_HEIGHT = 64.dp
+private val BOTTOM_BAR_HEIGHT = 48.dp
 private val CAROUSEL_ITEM_SIZE = 40.dp
 private val CAROUSEL_PADDING_TOP = 8.dp
 private val CAROUSEL_HEIGHT = CAROUSEL_ITEM_SIZE + CAROUSEL_PADDING_TOP
