@@ -38,6 +38,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import me.zhanghai.android.files.theme.LocalAppColors
 
 class SpeedDialAction(
     @param:DrawableRes val iconRes: Int,
@@ -151,10 +152,12 @@ private fun SpeedDialActionItem(action: SpeedDialAction, onClick: () -> Unit) {
                 style = MaterialTheme.typography.labelLarge
             )
         }
+        // In the colors of the app bar, which stand out more than the secondary ones.
+        val appColors = LocalAppColors.current
         SmallFloatingActionButton(
             onClick = onClick,
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            containerColor = appColors.appBarContainer,
+            contentColor = appColors.onAppBar
         ) {
             Icon(painter = painterResource(action.iconRes), contentDescription = null)
         }
