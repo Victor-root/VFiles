@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -193,6 +194,9 @@ fun FastScroller(
             Box(
                 modifier = Modifier
                     .size(TOUCH_WIDTH, THUMB_HEIGHT)
+                    // Lets the thumb be grabbed at the very edge, where the back gesture would
+                    // take the touch otherwise.
+                    .systemGestureExclusion()
                     .pointerInput(scrollable, trackHeightPx) {
                         var fraction = 0f
                         detectVerticalDragGestures(
