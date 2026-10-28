@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.navigation
 
-import androidx.compose.runtime.collectAsState
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -33,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
@@ -124,7 +125,8 @@ fun NavigationDrawerContent(
         checkedItemFocusRequester.requestFocus()
     }
     LazyColumn(
-        modifier = modifier,
+        // Focuses the item focused before again, like when coming back to the drawer.
+        modifier = modifier.focusRestorer(),
         state = listState,
         contentPadding = PaddingValues(
             top = contentPadding.calculateTopPadding() + 8.dp,

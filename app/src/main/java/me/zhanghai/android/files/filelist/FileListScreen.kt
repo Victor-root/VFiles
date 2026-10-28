@@ -184,6 +184,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     var drawerSubtitleKey by remember { mutableIntStateOf(0) }
     var drawerFocusRequest by remember { mutableIntStateOf(0) }
     val listFocusRequester = remember { FocusRequester() }
+    val drawerFocusRequester = remember { FocusRequester() }
     val navigationIconFocusRequester = remember { FocusRequester() }
     var isSpeedDialExpanded by rememberSaveable { mutableStateOf(false) }
     val searchQueryState = rememberTextFieldState(viewModel.searchViewQuery)
@@ -284,6 +285,18 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
                 }
         }
     }
+    // Or the drawer item focused before when the drawer stayed open, like when coming back from a
+    // screen opened from it.
+    LaunchedEffect(lifecycleOwner, drawerState) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            snapshotFlow { !hasFocus && drawerState.isOpen }
+                .collect {
+                    if (it && inputModeManager.inputMode == InputMode.Keyboard) {
+                        drawerFocusRequester.requestFocus()
+                    }
+                }
+        }
+    }
 
     val openDrawer = {
         if (hasPersistentDrawer) {
@@ -301,7 +314,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             onCloseDrawer = closeDrawer,
             subtitleKey = drawerSubtitleKey,
             focusCheckedItemRequest = drawerFocusRequest,
-            modifier = modifier
+            modifier = modifier.focusRequester(drawerFocusRequester)
         )
     }
 

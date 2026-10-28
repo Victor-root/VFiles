@@ -415,6 +415,31 @@ class FileListActivityTest {
     }
 
     @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun comesBackToDrawerItemWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val projects = composeTestRule.onNodeWithText("Projects")
+        projects.requestFocus()
+        projects.performKeyInput { pressKey(Key.DirectionLeft) }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNode(
+            hasScrollToNodeAction() and hasAnyDescendant(hasText("Internal storage"))
+        ).performScrollToNode(hasText("Add storage"))
+        val addStorage = composeTestRule.onNodeWithText("Add storage")
+        addStorage.requestFocus()
+        addStorage.performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        // The drawer stays open below the screen opened from the dialog.
+        composeTestRule.onNodeWithText("SFTP server").performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Add SFTP server").assertIsDisplayed()
+        scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Add storage").assertIsFocused()
+    }
+
+    @Test
     fun exitsWithBackPressedTwice() {
         val scenario = launch()
         scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
