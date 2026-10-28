@@ -242,7 +242,7 @@ private fun PickSelectionActions(pickOptions: PickOptions, controller: FileListC
         }
     }
     if (pickOptions.allowMultiple) {
-        OverflowMenu { dismiss ->
+        OverflowMenu(controller.overflowMenuRequests) { dismiss ->
             MenuItem(
                 R.drawable.select_all_icon_control_normal_24dp, stringResource(R.string.select_all)
             ) {
@@ -281,7 +281,7 @@ private fun SelectionActions(
             controller.confirmDeleteFiles(selectedFiles)
         }
     }
-    OverflowMenu { dismiss ->
+    OverflowMenu(controller.overflowMenuRequests) { dismiss ->
         val canExtract = selectedFiles.all { it.isArchiveFile }
         val canArchive = !currentPath.fileSystem.isReadOnly
         if (canExtract) {
@@ -417,7 +417,7 @@ private val SORT_BY_ITEMS = listOf(
 /** The overflow menu of the current folder. */
 @Composable
 fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolean) {
-    OverflowMenu { dismiss ->
+    OverflowMenu(controller.overflowMenuRequests) { dismiss ->
         @Composable
         fun Item(iconRes: Int, titleRes: Int, enabled: Boolean = true, onClick: () -> Unit) {
             MenuItem(iconRes, stringResource(titleRes), enabled) {

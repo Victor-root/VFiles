@@ -41,6 +41,8 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.BundleCompat
 import java8.nio.file.Path
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.application
@@ -106,6 +108,14 @@ class FileListController(
     val gridState: LazyGridState
 
     var dialog: FileListDialog? by mutableStateOf(null)
+
+    private val _overflowMenuRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    /** Opens the overflow menu of the app bar shown, if it has one. */
+    val overflowMenuRequests: SharedFlow<Unit> = _overflowMenuRequests
+
+    fun showOverflowMenu() {
+        _overflowMenuRequests.tryEmit(Unit)
+    }
 
     /** The name of the file to create when picking where to create a file. */
     val createFileNameState: TextFieldState
