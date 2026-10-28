@@ -78,8 +78,8 @@ import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.AppTopAppBar
+import me.zhanghai.android.files.ui.HideOnScrollTopBar
 import me.zhanghai.android.files.ui.NavigateUpButton
-import me.zhanghai.android.files.ui.hideOnScroll
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
@@ -187,7 +187,7 @@ private fun GalleryScreen(state: GalleryState?) {
         modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
         isContentBehindTopBar = true,
         topBar = {
-            Box(modifier = Modifier.hideOnScroll(appBarState)) {
+            HideOnScrollTopBar(appBarState) {
                 if (selectedMedia.isNotEmpty()) {
                     GallerySelectionAppBar(
                         count = selectedMedia.size,

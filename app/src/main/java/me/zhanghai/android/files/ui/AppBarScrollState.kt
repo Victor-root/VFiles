@@ -6,8 +6,12 @@
 package me.zhanghai.android.files.ui
 
 import androidx.compose.animation.core.animate
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -115,10 +119,32 @@ fun rememberAppBarScrollState(gridState: LazyGridState, isEnabled: Boolean): App
 }
 
 /**
+ * An app bar hiding on scroll with [state], above a scrim behind the status bar. The status bar
+ * icons follow the background once the app bar is hidden, and the scrim keeps them readable over
+ * any content scrolling behind them, like dark photos.
+ */
+@Composable
+fun HideOnScrollTopBar(state: AppBarScrollState, content: @Composable () -> Unit) {
+    Box {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .windowInsetsTopHeight(WindowInsets.statusBars)
+                .background(
+                    MaterialTheme.colorScheme.background.copy(alpha = STATUS_BAR_SCRIM_ALPHA)
+                )
+        )
+        Box(modifier = Modifier.hideOnScroll(state)) { content() }
+    }
+}
+
+private const val STATUS_BAR_SCRIM_ALPHA = 0.85f
+
+/**
  * Moves the app bar up by the offset of [state], without changing its size, and shows it again
  * when focused.
  */
-fun Modifier.hideOnScroll(state: AppBarScrollState): Modifier =
+private fun Modifier.hideOnScroll(state: AppBarScrollState): Modifier =
     layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
         val height = placeable.height.toFloat()
