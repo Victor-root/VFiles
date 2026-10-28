@@ -14,7 +14,8 @@ enum class NavigationIconColor(private val light: Color, private val dark: Color
     ORANGE(Color(0xFFFB8C00), Color(0xFFFFB74D)),
     GREEN(Color(0xFF43A047), Color(0xFF81C784)),
     PURPLE(Color(0xFF8E24AA), Color(0xFFCE93D8)),
-    TEAL(Color(0xFF00897B), Color(0xFF4DB6AC));
+    TEAL(Color(0xFF00897B), Color(0xFF4DB6AC)),
+    PINK(Color(0xFFD81B60), Color(0xFFF48FB1));
 
     fun getColor(isDark: Boolean): Color = if (isDark) dark else light
 }

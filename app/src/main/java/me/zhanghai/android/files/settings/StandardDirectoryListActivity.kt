@@ -41,7 +41,11 @@ private fun StandardDirectoryListScreen() {
                     title = it.getTitle(context),
                     checked = it.isEnabled,
                     onCheckedChange = { isEnabled -> setStandardDirectoryEnabled(it, isEnabled) },
-                    summary = getExternalStorageDirectory(it.relativePath),
+                    summary = if (it.isGallery) {
+                        stringResource(R.string.settings_standard_directory_gallery_summary)
+                    } else {
+                        getExternalStorageDirectory(it.relativePath)
+                    },
                     icon = painterResource(it.iconRes)
                 )
             }

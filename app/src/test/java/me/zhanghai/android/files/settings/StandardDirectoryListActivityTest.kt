@@ -25,6 +25,7 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.pressKey
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.StandardDirectorySettings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
@@ -68,6 +69,17 @@ class StandardDirectoryListActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.ON)
         composeTestRule.waitForIdle()
         captureScreenRoboImage("build/screenshots/standard_directory_list_dark.png")
+    }
+
+    @Test
+    fun showsGalleryFirst() {
+        composeTestRule.onNodeWithText("Gallery").assertIsOn()
+        composeTestRule.onNodeWithText("Photos and videos of the device").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Gallery").performClick()
+        assertEquals(
+            listOf(StandardDirectorySettings(StandardDirectory.GALLERY_KEY, null, false)),
+            Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat
+        )
     }
 
     @Test
