@@ -101,6 +101,9 @@ class AddStorageActivitiesTest {
         val storage = Settings.STORAGES.valueCompat.single() as ExternalStorageShortcut
         assertEquals("Android/data", storage.customName)
         assertEquals(androidDataUri, storage.uri)
+        // The app can't grant the files app of the system a permission it doesn't have itself.
+        val flags = storage.createIntent().flags
+        assertEquals(0, flags and Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
     @Test

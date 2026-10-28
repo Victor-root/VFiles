@@ -94,9 +94,13 @@ fun Collection<Uri>.createSendStreamIntent(mimeTypes: Collection<MimeType>): Int
             removeFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
         }
 
+// The files app of the system can read any directory, unlike this app which can't grant it the
+// permission for directories like Android/data and would crash trying to.
 fun Uri.createDocumentsUiViewDirectoryIntent(): Intent =
-    createViewIntent(MimeType.DIRECTORY)
-        .apply { DocumentsContractCompat.getDocumentsUiPackage()?.let { setPackage(it) } }
+    createViewIntent(MimeType.DIRECTORY).apply {
+        removeFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        DocumentsContractCompat.getDocumentsUiPackage()?.let { setPackage(it) }
+    }
 
 fun Uri.createViewIntent(): Intent = Intent(Intent.ACTION_VIEW, this)
 
