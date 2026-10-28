@@ -6,7 +6,11 @@
 package me.zhanghai.android.files.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -37,10 +41,17 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import me.zhanghai.android.files.R
 
@@ -113,6 +124,7 @@ fun FormTextField(
         state = field.textFieldState,
         modifier = modifier
             .fillMaxWidth()
+            .wholeFieldIntoViewWhenFocused()
             .focusRequester(field.focusRequester),
         labelPosition = labelPosition(placeholder),
         label = { Text(label) },
@@ -145,6 +157,7 @@ fun FormPasswordField(
         state = field.textFieldState,
         modifier = modifier
             .fillMaxWidth()
+            .wholeFieldIntoViewWhenFocused()
             .focusRequester(field.focusRequester),
         labelPosition = labelPosition(placeholder),
         label = label?.let { { Text(it) } },
@@ -174,6 +187,36 @@ fun FormPasswordField(
             TextObfuscationMode.RevealLastTyped
         }
     )
+}
+
+// Below the field, so that it doesn't end right at the edge of what is shown.
+private val FIELD_INTO_VIEW_MARGIN = 8.dp
+
+/**
+ * Shows the whole field with its border and supporting text once focused, and again as the
+ * keyboard opens, instead of only the line with the cursor, like the text field does by itself.
+ */
+@Composable
+private fun Modifier.wholeFieldIntoViewWhenFocused(): Modifier {
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    var size by remember { mutableStateOf(IntSize.Zero) }
+    var hasFocus by remember { mutableStateOf(false) }
+    val imeInsets = WindowInsets.ime
+    val density = LocalDensity.current
+    LaunchedEffect(hasFocus) {
+        if (!hasFocus) {
+            return@LaunchedEffect
+        }
+        snapshotFlow { imeInsets.getBottom(density) }.collectLatest {
+            val margin = with(density) { FIELD_INTO_VIEW_MARGIN.toPx() }
+            bringIntoViewRequester.bringIntoView(
+                Rect(0f, 0f, size.width.toFloat(), size.height + margin)
+            )
+        }
+    }
+    return bringIntoViewRequester(bringIntoViewRequester)
+        .onSizeChanged { size = it }
+        .onFocusChanged { hasFocus = it.hasFocus }
 }
 
 /** A read-only text field, whose text can still be focused and selected. */
