@@ -23,6 +23,8 @@
     <string name="loading">正在加载…</string>
     <string name="maybe_later">以后再说</string>
     <string name="merge">合并</string>
+    <string name="more_options">更多选项</string>
+    <string name="navigate_up">向上导航</string>
     <string name="none">无</string>
     <string name="open_navigation_drawer">打开抽屉式导航栏</string>
     <string name="paste">粘贴</string>
@@ -274,9 +276,11 @@
     <string name="file_list_paste_extract_title_format">提取 %1$,d</string>
     <string name="file_list_paste_action_extract_here">提取到此处</string>
     <string name="file_list_empty">无文件</string>
+    <string name="file_list_press_back_again_to_exit">再按一次返回键退出</string>
     <string name="file_list_error_folder_not_found">此文件夹已不存在</string>
     <string name="file_list_error_permission_denied">您没有权限打开此文件夹</string>
     <string name="file_list_error_unknown">无法打开此文件夹</string>
+    <string name="file_list_action_create">创建</string>
     <string name="file_list_action_create_file">文件</string>
     <string name="file_list_action_create_directory">文件夹</string>
 
@@ -480,6 +484,7 @@
     <string name="storage_edit_smb_server_title_edit">编辑 SMB 服务器</string>
     <string name="storage_edit_smb_server_title_add">添加 SMB 服务器</string>
     <string name="storage_edit_smb_server_host">主机名</string>
+    <string name="storage_edit_smb_server_host_placeholder">服务器的 IP 地址或网络名称，例如 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">输入主机名</string>
     <string name="storage_edit_smb_server_host_error_invalid">无效主机名</string>
     <string name="storage_edit_smb_server_port">端口</string>
@@ -548,6 +553,26 @@
     <string name="navigation_edit_bookmark_directory_path">路径</string>
 
     <string name="archive_viewer_title">归档文件查看器</string>
+    <string name="gallery_title">图库</string>
+    <string name="gallery_photos">照片</string>
+    <string name="gallery_albums">相册</string>
+    <string name="gallery_today">今天</string>
+    <string name="gallery_yesterday">昨天</string>
+    <string name="gallery_empty">没有照片或视频</string>
+    <string name="gallery_access_denied">允许访问文件以查看您的照片和视频</string>
+    <string name="gallery_allow_access">允许</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="other">%1$,d 项</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="other">删除这 %1$,d 项？</item>
+    </plurals>
+    <string name="gallery_details">详细信息</string>
+    <string name="gallery_details_date">日期</string>
+    <string name="gallery_show_in_folder">在文件夹中显示</string>
+    <string name="video_player_title">视频播放器</string>
+    <string name="video_player_play">播放</string>
+    <string name="video_player_pause">暂停</string>
     <string name="image_viewer_title">图片查看器</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">另存为</string>
@@ -579,7 +604,9 @@
     <string name="ftp_server_anonymous_login_title">匿名登录</string>
     <string name="ftp_server_username_title">用户名</string>
     <string name="ftp_server_password_title">密码</string>
+    <string name="ftp_server_password_summary_empty">未设置</string>
     <string name="ftp_server_port_title">端口</string>
+    <string name="ftp_server_port_error_invalid">无效端口</string>
     <string name="ftp_server_home_directory_title">根文件夹</string>
     <string name="ftp_server_writable_title">允许写入</string>
 
@@ -598,6 +625,9 @@
     </string-array>
     <string name="settings_black_night_mode">黑色夜间模式</string>
     <string name="settings_file_list_animation_title">文件列表动画</string>
+    <string name="settings_double_back_to_exit_title">按两次返回键退出</string>
+    <string name="settings_edge_to_edge_title">边到边显示</string>
+    <string name="settings_edge_to_edge_summary">内容在状态栏和导航栏后方滚动</string>
     <string name="settings_file_name_ellipsize_title">显示长文件名</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>省略开头</item>
@@ -609,6 +639,7 @@
     <string name="settings_default_directory_title">默认文件夹</string>
     <string name="settings_standard_directories_title">标准文件夹</string>
     <string name="settings_standard_directories_summary_empty">未启用标准文件夹</string>
+    <string name="settings_standard_directory_gallery_summary">设备上的照片和视频</string>
     <string name="settings_bookmark_directories_title">书签文件夹</string>
     <string name="settings_bookmark_directories_summary_empty">无书签文件夹</string>
     <string name="settings_root_strategy_title">Root 访问模式</string>
@@ -639,6 +670,7 @@
     <string name="about_author_name_title">张海</string>
     <string name="about_author_github_title">在 GitHub 上关注</string>
     <string name="app_name_launcher">文件</string>
+    <string name="clear_query">清除查询</string>
     <string name="about_fork_subtitle">原作者：Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">根据壁纸</string>
     <string name="color_picker_preset_colors_label">其他颜色</string>
@@ -653,6 +685,7 @@
 
     <string name="onboarding_install_apps_title">安装应用</string>
     <string name="onboarding_install_apps_description">允许%1$s直接安装 APK 文件。这样您就可以从下载或接收的文件安装应用，而无需借助第三方安装程序。</string>
+    <string name="reorder_drag_handle">移动</string>
     <string name="onboarding_notifications_title">通知</string>
     <string name="onboarding_optional">可选</string>
     <string name="onboarding_required">必需</string>

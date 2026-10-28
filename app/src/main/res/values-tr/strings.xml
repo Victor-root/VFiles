@@ -23,7 +23,10 @@
     <string name="loading">Yükleniyor…</string>
     <string name="maybe_later">Belki sonra</string>
     <string name="merge">Birleştir</string>
+    <string name="more_options">Diğer seçenekler</string>
+    <string name="navigate_up">Yukarı git</string>
     <string name="none">Hiçbiri</string>
+    <string name="open_navigation_drawer">Gezinme çekmecesini aç</string>
     <string name="paste">Yapıştır</string>
     <string name="refresh">Yenile</string>
     <string name="reload">Yeniden yükle</string>
@@ -40,6 +43,7 @@
     <string name="show">Göster</string>
     <string name="skip">Atla</string>
     <string name="stop">Durdur</string>
+    <string name="system_default">Sistem varsayılanı</string>
     <string name="unknown">Bilinmiyor</string>
     <string name="view">Görüntüle</string>
 
@@ -62,6 +66,9 @@
     <string name="notification_channel_file_job_description">Dosya işlemlerini görüntüle ve yönet</string>
     <string name="notification_channel_ftp_server_name">FTP sunucusu</string>
     <string name="notification_channel_ftp_server_description">FTP sunucusunu görüntüle ve yönet</string>
+    <string name="file_action_archive_password_title">Şifre gerekli</string>
+    <string name="file_action_archive_password_message_format">“%1$s” şifre korumalı.</string>
+    <string name="file_action_archive_password_error_empty">Şifre boş olamaz</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">%1$,d dosya sıkıştırılmaya hazırlanıyor (%2$s)</item>
@@ -224,17 +231,40 @@
     <string name="file_name_error_empty">Dosya adı boş olamaz</string>
     <string name="file_name_error_invalid">Geçersiz dosya adı</string>
     <string name="file_name_error_already_exists">Bu isimde bir dosya zaten mevcut</string>
+    <string name="file_replace_message_format">“%1$s” değiştirilsin mi?</string>
     <string name="file_delete_message_file_format">“%1$s” silinsin mi?</string>
     <string name="file_delete_message_directory_format">“%1$s” klasörü ve içeriği silinsin mi?</string>
+    <plurals name="file_delete_message_multiple_files_format">
+        <item quantity="one">%1$,d dosya silinsin mi?</item>
+        <item quantity="other">%1$,d dosya silinsin mi?</item>
+    </plurals>
+    <plurals name="file_delete_message_multiple_directories_format">
+        <item quantity="one">%1$,d klasör ve içeriği silinsin mi?</item>
+        <item quantity="other">%1$,d klasör ve içerikleri silinsin mi?</item>
+    </plurals>
+    <plurals name="file_delete_message_multiple_mixed_format">
+        <item quantity="one">%1$,d öge silinsin mi?</item>
+        <item quantity="other">%1$,d öge silinsin mi?</item>
+    </plurals>
     <string name="file_create_archive_title">Arşiv oluştur</string>
     <string name="file_create_archive_type_zip">.zip</string>
     <string name="file_create_archive_type_tar_xz">.tar.xz</string>
     <string name="file_create_archive_type_7z">.7z</string>
+    <string name="file_create_archive_password">Şifre (isteğe bağlı)</string>
     <string name="file_add_bookmark_success">Yer işareti eklendi</string>
     <string name="file_create_file_title">Yeni dosya</string>
     <string name="file_create_directory_title">Yeni klasör</string>
 
     <string name="file_list_title">Dosyalar</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Bir dosya seçin</item>
+        <item quantity="other">Dosyaları seçin</item>
+    </plurals>
+    <string name="file_list_title_create_file">Dosyayı kaydet</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Bir klasör seçin</item>
+        <item quantity="other">Klasörleri seçin</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d klasör</item>
         <item quantity="other">%1$,d klasör</item>
@@ -244,28 +274,40 @@
         <item quantity="other">%1$,d dosya</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
+    <string name="file_list_path_error_empty">Yol boş olamaz</string>
+    <string name="file_list_path_error_invalid">Geçersiz yol</string>
+    <string name="file_list_action_view_sort">Görünüm ve sıralama</string>
+    <string name="file_list_action_view_list">Liste</string>
+    <string name="file_list_action_view_grid">Izgara</string>
     <string name="file_list_action_sort_by_name">İsim</string>
     <string name="file_list_action_sort_by_type">Tür</string>
     <string name="file_list_action_sort_by_size">Boyut</string>
     <string name="file_list_action_sort_by_last_modified">Son düzenleme</string>
     <string name="file_list_action_sort_order_ascending">Artan</string>
     <string name="file_list_action_sort_directories_first">Önce klasörler</string>
+    <string name="file_list_action_view_sort_path_specific">Yalnızca bu klasör için</string>
     <string name="file_list_action_new_task">Yeni pencere</string>
     <string name="file_list_action_navigate_up">Yukarı git</string>
+    <string name="file_list_action_navigate_to">Git</string>
     <string name="file_list_action_show_hidden_files">Gizli dosyaları göster</string>
     <string name="file_list_action_copy_path">Yolu kopyala</string>
     <string name="file_list_action_open_in_terminal">Terminalde aç</string>
     <string name="file_list_action_add_bookmark">Yer işareti ekle</string>
     <string name="file_list_action_create_shortcut">Kısayol oluştur</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Yeni pencerede aç</string>
+    <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Dosya adı</string>
+    <string name="file_list_open_current_directory_format">“%1$s” seç</string>
     <string name="file_list_paste_move_title_format">%1$,d taşınıyor</string>
     <string name="file_list_paste_copy_title_format">%1$,d kopyalanıyor</string>
     <string name="file_list_paste_extract_title_format">%1$,d çıkartılıyor</string>
     <string name="file_list_paste_action_extract_here">Buraya çıkart</string>
     <string name="file_list_empty">Dosya yok</string>
+    <string name="file_list_press_back_again_to_exit">Çıkmak için tekrar geri tuşuna basın</string>
     <string name="file_list_error_folder_not_found">Bu klasör artık mevcut değil</string>
     <string name="file_list_error_permission_denied">Bu klasörü açma izniniz yok</string>
     <string name="file_list_error_unknown">Bu klasör açılamıyor</string>
+    <string name="file_list_action_create">Oluştur</string>
     <string name="file_list_action_create_file">Dosya</string>
     <string name="file_list_action_create_directory">Klasör</string>
 
@@ -293,6 +335,39 @@
     <string name="file_properties_basic_parent_directory">Ana Klasör</string>
     <string name="file_properties_basic_archive_file">Arşiv dosyası</string>
     <string name="file_properties_basic_archive_entry">Arşiv Girdisi</string>
+    <string name="file_properties_permission">İzinler</string>
+    <string name="file_properties_permission_owner">Sahip</string>
+    <string name="file_properties_permission_group">Grup</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Sahibi değiştir</string>
+    <string name="file_properties_permission_set_group_title">Grubu değiştir</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Bir ad veya kimlik girin</string>
+    <string name="file_properties_permission_set_principal_system">Sistem</string>
+    <string name="file_properties_permission_mode">Mod</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Modu değiştir</string>
+    <string name="file_properties_permission_set_mode_others">Diğerleri</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Okuma</item>
+        <item>Yazma</item>
+        <item>Çalıştırma</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Okuma</item>
+        <item>Yazma</item>
+        <item>Arama</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Özel</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">İçerilen dosyalara “Çalıştırma” ekleme</string>
+    <string name="file_properties_permission_selinux_context">SELinux bağlamı</string>
+    <string name="file_properties_permission_set_selinux_context_title">SELinux bağlamını değiştir</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Geri yükle</string>
+    <string name="file_properties_permission_recursive">İçerilen dosyalara uygula</string>
     <string name="file_properties_image">Görüntü</string>
     <string name="file_properties_media_dimensions">Boyutlar</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -347,6 +422,12 @@
     <string name="file_properties_apk_signature_digests">İmzalar</string>
     <string name="file_properties_apk_signature_digests_empty">Uygun imza bulunamadı</string>
     <string name="file_properties_apk_past_signature_digests">Eski imzalar</string>
+    <string name="file_properties_checksum">Sağlama toplamları</string>
+    <string name="file_properties_checksum_compare">Karşılaştır</string>
+    <string name="file_properties_checksum_compare_placeholder">Herhangi bir sağlama toplamı</string>
+    <string name="file_properties_checksum_compare_match_format">%1$s sağlama toplamıyla eşleşiyor</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">%1$s sağlama toplamının başıyla eşleşiyor</string>
+    <string name="file_properties_checksum_compare_no_match">Eşleşen sağlama toplamı bulunamadı</string>
     <string name="storage_file_system_root_title">Kök</string>
     <string name="storage_internal_storage">Dahili depolama</string>
     <string name="storage_list_title">Depolama</string>
@@ -356,9 +437,15 @@
     <string name="storage_add_storage_ftp_server">FTP sunucu</string>
     <string name="storage_add_storage_sftp_server">SFTP sunucusu</string>
     <string name="storage_add_storage_smb_server">SMB sunucusu</string>
+    <string name="storage_add_storage_webdav_server">WebDAV sunucusu</string>
     <string name="storage_edit_device_storage_title">Aygıt depolamasını düzenle</string>
     <string name="storage_edit_device_storage_name">İsim</string>
     <string name="storage_edit_device_storage_path">Yol</string>
+    <string name="storage_add_external_storage_shortcut_title">Harici depolama kısayolu ekle</string>
+    <string name="storage_edit_external_storage_shortcut_title">Harici depolama kısayolunu düzenle</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Depolama birimi</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Bir depolama birimi girin</string>
+    <string name="storage_edit_external_storage_shortcut_path">Yol</string>
     <string name="storage_add_document_tree_title">Harici depolama ekle</string>
     <string name="storage_edit_document_tree_title">Harici depolamayı düzenle</string>
     <string name="storage_edit_document_tree_name">İsim</string>
@@ -415,6 +502,9 @@
     <string name="storage_edit_sftp_server_private_key_open_file">Dosya aç</string>
     <string name="storage_edit_sftp_server_private_key_error_empty">Bir özel anahtar gir</string>
     <string name="storage_edit_sftp_server_private_key_error_invalid">Geçersiz özel anahtar</string>
+    <string name="storage_edit_sftp_server_private_key_password">Özel anahtar şifresi</string>
+    <string name="storage_edit_sftp_server_private_key_password_placeholder">Boş bırakılabilir</string>
+    <string name="storage_edit_sftp_server_private_key_password_error_invalid">Geçersiz özel anahtar şifresi</string>
     <string name="storage_edit_sftp_server_connect_and_add">Bağlan ve ekle</string>
     <string name="storage_edit_sftp_server_add">Ekle</string>
     <string name="storage_add_lan_smb_server_loading">SMB sunucuları aranıyor…</string>
@@ -422,6 +512,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB sunucusunu düzenle</string>
     <string name="storage_edit_smb_server_title_add">SMB sunucusu ekle</string>
     <string name="storage_edit_smb_server_host">Hostname</string>
+    <string name="storage_edit_smb_server_host_placeholder">Sunucunun IP adresi veya ağ adı, örn. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Hostname gir</string>
     <string name="storage_edit_smb_server_host_error_invalid">Geçersiz cihaz adı</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -444,6 +535,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">SMB3 şifreleme desteğini etkinleştirir. Bazı sunucular tarafından gereklidir; desteklenmediğinde şifrelenmemiş SMB\'ye geri döner.</string>
     <string name="storage_edit_smb_server_connect_and_add">Bağlan ve ekle</string>
     <string name="storage_edit_smb_server_add">Ekle</string>
+    <string name="storage_edit_webdav_server_title_edit">WebDAV sunucusunu düzenle</string>
+    <string name="storage_edit_webdav_server_title_add">WebDAV sunucusu ekle</string>
+    <string name="storage_edit_webdav_server_host">Hostname</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Hostname gir</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Geçersiz hostname</string>
+    <string name="storage_edit_webdav_server_port">Port</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Geçersiz port</string>
+    <string name="storage_edit_webdav_server_path">Yol</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Boş bırakılabilir</string>
+    <string name="storage_edit_webdav_server_name">İsim</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Hostname kullan</string>
+    <string name="storage_edit_webdav_server_protocol">Protokol</string>
+    <string name="storage_edit_webdav_server_authentication_type">Doğrulama</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Şifre</item>
+        <item>Erişim belirteci</item>
+        <item>Hiçbiri</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Kullanıcı adı</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Bir kullanıcı adı gir</string>
+    <string name="storage_edit_webdav_server_password">Şifre</string>
+    <string name="storage_edit_webdav_server_access_token">Erişim belirteci</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Bir erişim belirteci gir</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Bağlan ve ekle</string>
+    <string name="storage_edit_webdav_server_add">Ekle</string>
     <string name="navigation_storage_subtitle_format">%2$s alandan %1$s boş</string>
     <string name="navigation_add_storage">Depolama ekle…</string>
     <string name="navigation_standard_directory_alarms">Alarmlar</string>
@@ -463,8 +579,33 @@
     <string name="navigation_edit_bookmark_directory_name">İsim</string>
     <string name="navigation_edit_bookmark_directory_path">Yol</string>
     <string name="archive_viewer_title">Arşiv görüntüleyici</string>
+    <string name="gallery_title">Galeri</string>
+    <string name="gallery_photos">Fotoğraflar</string>
+    <string name="gallery_albums">Albümler</string>
+    <string name="gallery_today">Bugün</string>
+    <string name="gallery_yesterday">Dün</string>
+    <string name="gallery_empty">Fotoğraf veya video yok</string>
+    <string name="gallery_access_denied">Fotoğraflarınızı ve videolarınızı görmek için dosyalara erişime izin verin</string>
+    <string name="gallery_allow_access">İzin ver</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d öge</item>
+        <item quantity="other">%1$,d öge</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Bu öge silinsin mi?</item>
+        <item quantity="other">Bu %1$,d öge silinsin mi?</item>
+    </plurals>
+    <string name="gallery_details">Ayrıntılar</string>
+    <string name="gallery_details_date">Tarih</string>
+    <string name="gallery_show_in_folder">Klasörde göster</string>
+    <string name="video_player_title">Video oynatıcı</string>
+    <string name="video_player_play">Oynat</string>
+    <string name="video_player_pause">Duraklat</string>
     <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Farklı kaydet</string>
+    <string name="save_as_error">Dosya kaydedilirken hata oluştu</string>
+    <string name="save_as_success_format">“%1$s”, “%2$s” konumuna kaydedildi</string>
     <string name="text_editor_title">Metin düzenleyici</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -480,17 +621,25 @@
     <string name="ftp_server_state_summary_stopping">Durduruluyor…</string>
     <string name="ftp_server_state_summary_stopped">Başlatılmadı</string>
     <string name="ftp_server_url_title">URL</string>
+    <string name="ftp_server_url_summary_no_local_inet_address">Yerel IP adresi bilinmiyor</string>
     <string name="ftp_server_url_menu_copy_url">URL\'yi kopyala</string>
     <string name="ftp_server_url_menu_copy_password">Şifreyi kopyala</string>
+    <string name="ftp_server_add_tile_title">Hızlı Ayarlar\'a ekle</string>
+    <string name="ftp_server_add_tile_result_added">“FTP sunucusu” Hızlı Ayarlar\'a eklendi</string>
+    <string name="ftp_server_add_tile_result_already_added">“FTP sunucusu” zaten Hızlı Ayarlar\'a eklenmiş</string>
+    <string name="ftp_server_add_tile_result_error">“FTP sunucusu” Hızlı Ayarlar\'a eklenirken hata oluştu</string>
     <string name="ftp_server_configuration_title">Yapılandırma</string>
     <string name="ftp_server_anonymous_login_title">Anonim oturum açma</string>
     <string name="ftp_server_username_title">Kullanıcı adı</string>
     <string name="ftp_server_password_title">Şifre</string>
+    <string name="ftp_server_password_summary_empty">Ayarlanmadı</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Geçersiz port</string>
     <string name="ftp_server_home_directory_title">Kök klasör</string>
     <string name="ftp_server_writable_title">Yazmaya izin ver</string>
     <string name="settings_title">Ayarlar</string>
     <string name="settings_interface_title">Arayüz</string>
+    <string name="settings_locale_title">Dil</string>
     <string name="settings_theme_color_title">Tema rengi</string>
     <string name="settings_theme_color_summary">Uygulamada en sık görünen renk</string>
     <string name="settings_night_mode_title">Gece modu</string>
@@ -503,6 +652,9 @@
     </string-array>
     <string name="settings_black_night_mode">Siyah gece modu</string>
     <string name="settings_file_list_animation_title">Dosya listesi animasyonu</string>
+    <string name="settings_double_back_to_exit_title">Çıkmak için geri tuşuna iki kez basın</string>
+    <string name="settings_edge_to_edge_title">Kenardan kenara ekran</string>
+    <string name="settings_edge_to_edge_summary">İçerik, durum ve gezinme çubuklarının arkasından kayar</string>
     <string name="settings_file_name_ellipsize_title">Uzun dosya adı görüntüle</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Baştan kısalt</item>
@@ -514,6 +666,7 @@
     <string name="settings_default_directory_title">Varsayılan klasör</string>
     <string name="settings_standard_directories_title">Standart klasörler</string>
     <string name="settings_standard_directories_summary_empty">Hiçbir standart klasör etkinleştirilmedi</string>
+    <string name="settings_standard_directory_gallery_summary">Cihazın fotoğrafları ve videoları</string>
     <string name="settings_bookmark_directories_title">Yer işareti klasörleri</string>
     <string name="settings_bookmark_directories_summary_empty">Yer işareti klasörü yok</string>
     <string name="settings_root_strategy_title">Kök erişim modu</string>
@@ -533,6 +686,7 @@
         <item>İçeriği görüntüle</item>
         <item>Ne yapılacağını sor</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">PDF belgeleri için küçük resim göster</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Uygulamayı Android\'in eski versiyonlarında kararsız yapabilir</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Küçük resim için uzak dosyaları okuyun</string>
 
@@ -544,6 +698,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">GitHub\'da takip edin</string>
     <string name="app_name_launcher">Dosyalar</string>
+    <string name="clear_query">Sorguyu temizle</string>
     <string name="about_fork_subtitle">Orijinali: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Duvar kâğıdına göre</string>
     <string name="color_picker_preset_colors_label">Diğer renkler</string>
@@ -558,6 +713,7 @@
 
     <string name="onboarding_install_apps_title">Uygulama yükleme</string>
     <string name="onboarding_install_apps_description">%1$s uygulamasının APK dosyalarını doğrudan yüklemesine izin verin. Böylece indirdiğiniz veya aldığınız dosyalardan, üçüncü taraf bir yükleyiciye ihtiyaç duymadan uygulama yükleyebilirsiniz.</string>
+    <string name="reorder_drag_handle">Taşı</string>
     <string name="onboarding_notifications_title">Bildirimler</string>
     <string name="onboarding_optional">İsteğe bağlı</string>
     <string name="onboarding_required">Gerekli</string>

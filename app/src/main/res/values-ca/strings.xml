@@ -23,6 +23,8 @@
     <string name="loading">S\'està carregant...</string>
     <string name="maybe_later">Potser més tard</string>
     <string name="merge">Combina</string>
+    <string name="more_options">Més opcions</string>
+    <string name="navigate_up">Navega cap amunt</string>
     <string name="none">Cap</string>
     <string name="open_navigation_drawer">Obre el calaix de navegació</string>
     <string name="paste">Enganxa</string>
@@ -232,6 +234,7 @@
     <string name="file_name_error_empty">El nom del fitxer no pot estar buit</string>
     <string name="file_name_error_invalid">El nom del fitxer no és vàlid</string>
     <string name="file_name_error_already_exists">Ja existeix un fitxer amb aquest nom</string>
+    <string name="file_replace_message_format">Voleu reemplaçar «%1$s»?</string>
     <string name="file_delete_message_file_format">Voleu suprimir «%1$s»?</string>
     <string name="file_delete_message_directory_format">Voleu suprimir la carpeta «%1$s» i el seu contingut?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -256,6 +259,15 @@
     <string name="file_create_directory_title">Carpeta nova</string>
 
     <string name="file_list_title">Fitxers</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Seleccioneu un fitxer</item>
+        <item quantity="other">Seleccioneu fitxers</item>
+    </plurals>
+    <string name="file_list_title_create_file">Desa el fitxer</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Seleccioneu una carpeta</item>
+        <item quantity="other">Seleccioneu carpetes</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d carpeta</item>
         <item quantity="other">%1$,d carpetes</item>
@@ -287,14 +299,18 @@
     <string name="file_list_action_create_shortcut">Crea una drecera</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Obre en una finestra nova</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Nom del fitxer</string>
+    <string name="file_list_open_current_directory_format">Selecciona «%1$s»</string>
     <string name="file_list_paste_move_title_format">S\'està movent %1$,d</string>
     <string name="file_list_paste_copy_title_format">S\'està copiant %1$,d</string>
     <string name="file_list_paste_extract_title_format">S\'està extraient %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extreu aquí</string>
     <string name="file_list_empty">No hi ha cap fitxer</string>
+    <string name="file_list_press_back_again_to_exit">Torneu a prémer Enrere per sortir</string>
     <string name="file_list_error_folder_not_found">Aquesta carpeta ja no existeix</string>
     <string name="file_list_error_permission_denied">No teniu permís per obrir aquesta carpeta</string>
     <string name="file_list_error_unknown">No s\'ha pogut obrir aquesta carpeta</string>
+    <string name="file_list_action_create">Crea</string>
     <string name="file_list_action_create_file">Fitxer</string>
     <string name="file_list_action_create_directory">Carpeta</string>
 
@@ -322,6 +338,39 @@
     <string name="file_properties_basic_parent_directory">Carpeta pare</string>
     <string name="file_properties_basic_archive_file">Fitxer de l\'arxiu</string>
     <string name="file_properties_basic_archive_entry">Entrada del fitxer</string>
+    <string name="file_properties_permission">Permisos</string>
+    <string name="file_properties_permission_owner">Propietari</string>
+    <string name="file_properties_permission_group">Grup</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Canvia el propietari</string>
+    <string name="file_properties_permission_set_group_title">Canvia el grup</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Introduïu un nom o un ID</string>
+    <string name="file_properties_permission_set_principal_system">Sistema</string>
+    <string name="file_properties_permission_mode">Mode</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Canvia el mode</string>
+    <string name="file_properties_permission_set_mode_others">Altres</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Lectura</item>
+        <item>Escriptura</item>
+        <item>Execució</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Lectura</item>
+        <item>Escriptura</item>
+        <item>Cerca</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Especial</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">No afegeixis «Execució» als fitxers continguts</string>
+    <string name="file_properties_permission_selinux_context">Context de SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_title">Canvia el context de SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Restaura</string>
+    <string name="file_properties_permission_recursive">Aplica als fitxers continguts</string>
     <string name="file_properties_image">Imatge</string>
     <string name="file_properties_media_dimensions">Dimensions</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -376,6 +425,12 @@
     <string name="file_properties_apk_signature_digests">Signatures</string>
     <string name="file_properties_apk_signature_digests_empty">No hi ha cap signatura vàlida</string>
     <string name="file_properties_apk_past_signature_digests">Signatures antigues</string>
+    <string name="file_properties_checksum">Sumes de verificació</string>
+    <string name="file_properties_checksum_compare">Compara</string>
+    <string name="file_properties_checksum_compare_placeholder">Qualsevol suma de verificació</string>
+    <string name="file_properties_checksum_compare_match_format">Coincideix amb la suma de verificació %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Coincideix amb el prefix de la suma de verificació %1$s</string>
+    <string name="file_properties_checksum_compare_no_match">No s\'ha trobat cap suma de verificació coincident</string>
     <string name="storage_file_system_root_title">Arrel</string>
     <string name="storage_internal_storage">Emmagatzematge intern</string>
     <string name="storage_list_title">Emmagatzematge</string>
@@ -389,6 +444,11 @@
     <string name="storage_edit_device_storage_title">Edita l\'emmagatzematge del dispositiu</string>
     <string name="storage_edit_device_storage_name">Nom</string>
     <string name="storage_edit_device_storage_path">Camí</string>
+    <string name="storage_add_external_storage_shortcut_title">Afegeix una drecera d\'emmagatzematge extern</string>
+    <string name="storage_edit_external_storage_shortcut_title">Edita la drecera d\'emmagatzematge extern</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Volum d\'emmagatzematge</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Introduïu un volum d\'emmagatzematge</string>
+    <string name="storage_edit_external_storage_shortcut_path">Camí</string>
     <string name="storage_add_document_tree_title">Afegeix un emmagatzematge extern</string>
     <string name="storage_edit_document_tree_title">Edita l\'emmagatzematge extern</string>
     <string name="storage_edit_document_tree_name">Nom</string>
@@ -455,6 +515,7 @@
     <string name="storage_edit_smb_server_title_edit">Edita el servidor SMB</string>
     <string name="storage_edit_smb_server_title_add">Afegeix un servidor SMB</string>
     <string name="storage_edit_smb_server_host">Nom d\'amfitrió</string>
+    <string name="storage_edit_smb_server_host_placeholder">Adreça IP o nom de xarxa del servidor, com ara 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Introduïu un nom d\'amfitrió</string>
     <string name="storage_edit_smb_server_host_error_invalid">El nom d\'amfitrió no és vàlid</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -522,8 +583,33 @@
     <string name="navigation_edit_bookmark_directory_name">Nom</string>
     <string name="navigation_edit_bookmark_directory_path">Camí</string>
     <string name="archive_viewer_title">Visor d\'arxius</string>
+    <string name="gallery_title">Galeria</string>
+    <string name="gallery_photos">Fotos</string>
+    <string name="gallery_albums">Àlbums</string>
+    <string name="gallery_today">Avui</string>
+    <string name="gallery_yesterday">Ahir</string>
+    <string name="gallery_empty">No hi ha fotos ni vídeos</string>
+    <string name="gallery_access_denied">Permeteu l\'accés als fitxers per veure les vostres fotos i vídeos</string>
+    <string name="gallery_allow_access">Permet</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d element</item>
+        <item quantity="other">%1$,d elements</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Voleu suprimir aquest element?</item>
+        <item quantity="other">Voleu suprimir aquests %1$,d elements?</item>
+    </plurals>
+    <string name="gallery_details">Detalls</string>
+    <string name="gallery_details_date">Data</string>
+    <string name="gallery_show_in_folder">Mostra a la carpeta</string>
+    <string name="video_player_title">Reproductor de vídeo</string>
+    <string name="video_player_play">Reprodueix</string>
+    <string name="video_player_pause">Pausa</string>
     <string name="image_viewer_title">Visor d\'imatges</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Desa com a</string>
+    <string name="save_as_error">S\'ha produït un error en desar el fitxer</string>
+    <string name="save_as_success_format">S\'ha desat «%1$s» a «%2$s»</string>
     <string name="text_editor_title">Editor de text</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -550,7 +636,9 @@
     <string name="ftp_server_anonymous_login_title">Inici de sessió anònim</string>
     <string name="ftp_server_username_title">Nom d\'usuari</string>
     <string name="ftp_server_password_title">Contrasenya</string>
+    <string name="ftp_server_password_summary_empty">No definida</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">El port no és vàlid</string>
     <string name="ftp_server_home_directory_title">Carpeta arrel</string>
     <string name="ftp_server_writable_title">Permet l\'escriptura</string>
     <string name="settings_title">Configuració</string>
@@ -568,6 +656,9 @@
     </string-array>
     <string name="settings_black_night_mode">Mode nocturn negre</string>
     <string name="settings_file_list_animation_title">Animació de la llista de fitxers</string>
+    <string name="settings_double_back_to_exit_title">Prem Enrere dues vegades per sortir</string>
+    <string name="settings_edge_to_edge_title">Pantalla de vora a vora</string>
+    <string name="settings_edge_to_edge_summary">El contingut es desplaça per sota de les barres d\'estat i de navegació</string>
     <string name="settings_file_name_ellipsize_title">Mostra el nom de fitxer llarg</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Escurça el principi</item>
@@ -579,6 +670,7 @@
     <string name="settings_default_directory_title">Carpeta predeterminada</string>
     <string name="settings_standard_directories_title">Carpetes estàndard</string>
     <string name="settings_standard_directories_summary_empty">No hi ha cap carpeta estàndard activada</string>
+    <string name="settings_standard_directory_gallery_summary">Fotos i vídeos del dispositiu</string>
     <string name="settings_bookmark_directories_title">Carpetes de marcadors</string>
     <string name="settings_bookmark_directories_summary_empty">No hi ha cap carpeta de marcadors</string>
     <string name="settings_root_strategy_title">Mode d\'accés root</string>
@@ -598,6 +690,7 @@
         <item>Mostra el contingut</item>
         <item>Demana què fer</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Mostra la miniatura dels documents PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pot fer que l\'aplicació sigui inestable en versions anteriors d\'Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Lectura remota de miniatures</string>
 
@@ -609,6 +702,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Segueix a GitHub</string>
     <string name="app_name_launcher">Fitxers</string>
+    <string name="clear_query">Esborra la cerca</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Segons el fons de pantalla</string>
     <string name="color_picker_preset_colors_label">Altres colors</string>
@@ -623,6 +717,7 @@
 
     <string name="onboarding_install_apps_title">Instal·lació d\'aplicacions</string>
     <string name="onboarding_install_apps_description">Permet que %1$s instal·li fitxers APK directament. Així podràs instal·lar aplicacions a partir de fitxers baixats o rebuts, sense necessitat d\'un instal·lador de tercers.</string>
+    <string name="reorder_drag_handle">Mou</string>
     <string name="onboarding_notifications_title">Notificacions</string>
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obligatori</string>

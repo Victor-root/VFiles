@@ -23,6 +23,8 @@
     <string name="loading">Ladataan…</string>
     <string name="maybe_later">Ehkä myöhemmin</string>
     <string name="merge">Yhdistä</string>
+    <string name="more_options">Lisää vaihtoehtoja</string>
+    <string name="navigate_up">Siirry ylös</string>
     <string name="none">Ei mitään</string>
     <string name="open_navigation_drawer">Avaa navigointipalkki</string>
     <string name="paste">Liitä</string>
@@ -43,6 +45,7 @@
     <string name="stop">Pysäytä</string>
     <string name="system_default">Järjestelmän oletus</string>
     <string name="unknown">Tuntematon</string>
+    <string name="view">Näytä</string>
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Toiminnalle ei löytynyt sovellusta</string>
     <string name="open_settings">Avaa asetukset</string>
@@ -62,6 +65,9 @@
     <string name="notification_channel_file_job_description">Näytä ja hallinnoi tiedostotoimintoja</string>
     <string name="notification_channel_ftp_server_name">FTP-palvelin</string>
     <string name="notification_channel_ftp_server_description">Näytä ja hallinnoi FTP-palvelinta</string>
+    <string name="file_action_archive_password_title">Salasana vaaditaan</string>
+    <string name="file_action_archive_password_message_format">“%1$s” on suojattu salasanalla.</string>
+    <string name="file_action_archive_password_error_empty">Salasana ei voi olla tyhjä</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Valmistaudutaan pakkaamaan %1$,d tiedosto (%2$s)</item>
@@ -172,6 +178,9 @@
     <string name="file_job_replace_target_name">Alkuperäinen tiedosto</string>
     <string name="file_job_replace_source_name">Korvataan tiedostolla</string>
     <string name="file_job_merge_title_format">Yhdistetäänkö kansio “%1$s”?</string>
+    <string name="file_job_merge_copy_message_format">Yhdistäminen pyytää vahvistuksen ennen kuin kansiossa korvataan tiedostoja, jotka ovat ristiriidassa kopioitavien tiedostojen kanssa.</string>
+    <string name="file_job_merge_extract_message_format">Yhdistäminen pyytää vahvistuksen ennen kuin kansiossa korvataan tiedostoja, jotka ovat ristiriidassa purettavien tiedostojen kanssa.</string>
+    <string name="file_job_merge_move_message_format">Yhdistäminen pyytää vahvistuksen ennen kuin kansiossa korvataan tiedostoja, jotka ovat ristiriidassa siirrettävien tiedostojen kanssa.</string>
     <string name="file_job_merge_target_name">Alkuperäinen kansio</string>
     <string name="file_job_merge_source_name">Yhdistä kansioon</string>
     <string name="file_job_conflict_show_name">Valitse uusi nimi kohteelle</string>
@@ -192,10 +201,17 @@
     <string name="file_job_set_owner_error_message_format">Tapahtui virhe vaihtaessa omistajaa “%1$s”.\n%2$s</string>
     <string name="file_job_set_group_error_title_format">Virhe ryhmän vaihtamisessa kohteelle “%1$s”</string>
     <string name="file_job_set_group_error_message_format">Tapahtui virhe vaihtaessa ryhmäksi “%1$s”.\n%2$s</string>
+    <string name="file_job_set_mode_error_title_format">Virhe kohteen “%1$s” tilaa vaihtaessa</string>
+    <string name="file_job_set_mode_error_message_format">Tapahtui virhe vaihtaessa tilaksi “%1$s”.\n%2$s</string>
+    <string name="file_job_set_selinux_context_error_title_format">Virhe kohteen “%1$s” SELinux-kontekstia muuttaessa</string>
+    <string name="file_job_set_selinux_context_error_message_format">Tapahtui virhe muuttaessa SELinux-kontekstiksi “%1$s”.\n%2$s</string>
     <string name="file_job_restore_selinux_context_error_title">Virhe SE-Linux-kontekstin palauttamisessa</string>
     <string name="file_job_restore_selinux_context_error_message_format">Tapahtui virhe palauttaessa SELinux-kontekstia kohteelle “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Virhe kirjoittamisessa</string>
     <string name="file_job_write_error_message_format">Tapahtui virhe kirjoittaessa “%1$s”.\n%2$s</string>
+    <string name="file_job_remount_format">Liitä “%1$s” uudelleen luku- ja kirjoitustilassa</string>
+    <string name="file_job_remount_loading_format">Liitetään “%1$s” uudelleen luku- ja kirjoitustilassa…</string>
+    <string name="file_job_remount_success_format">“%1$s” on liitetty uudelleen luku- ja kirjoitustilassa</string>
     <string name="file_job_action_all">Suorita toiminto kaikille tiedostoille</string>
 
     <string name="file_open_apk_message">Tämä tiedosto on Android-asennustiedosto. Haluatko asentaa sen vai nähdä sen sisällön?</string>
@@ -214,6 +230,7 @@
     <string name="file_name_error_empty">Tiedostonimi ei voi olla tyhjä</string>
     <string name="file_name_error_invalid">Virheellinen tiedostonimi</string>
     <string name="file_name_error_already_exists">Samanniminen tiedosto on jo olemassa</string>
+    <string name="file_replace_message_format">Korvataanko “%1$s”?</string>
     <string name="file_delete_message_file_format">Poistetaanko “%1$s”?</string>
     <string name="file_delete_message_directory_format">Poistetaanko kansio “%1$s” sisältöineen?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -232,11 +249,21 @@
     <string name="file_create_archive_type_zip">.zip</string>
     <string name="file_create_archive_type_tar_xz">.tar.xz</string>
     <string name="file_create_archive_type_7z">.7z</string>
+    <string name="file_create_archive_password">Salasana (valinnainen)</string>
     <string name="file_add_bookmark_success">Kirjanmerkki lisätty</string>
     <string name="file_create_file_title">Uusi tiedosto</string>
     <string name="file_create_directory_title">Uusi kansio</string>
 
     <string name="file_list_title">Tiedostot</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Valitse tiedosto</item>
+        <item quantity="other">Valitse tiedostot</item>
+    </plurals>
+    <string name="file_list_title_create_file">Tallenna tiedosto</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Valitse kansio</item>
+        <item quantity="other">Valitse kansiot</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d kansio</item>
         <item quantity="other">%1$,d kansiota</item>
@@ -268,14 +295,18 @@
     <string name="file_list_action_create_shortcut">Luo pikakuvake</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Avaa uudessa ikkunassa</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Tiedostonimi</string>
+    <string name="file_list_open_current_directory_format">Valitse “%1$s”</string>
     <string name="file_list_paste_move_title_format">Siirretään %1$,d</string>
     <string name="file_list_paste_copy_title_format">Kopioidaan %1$,d</string>
     <string name="file_list_paste_extract_title_format">Puretaan %1$,d</string>
     <string name="file_list_paste_action_extract_here">Pura tähän</string>
     <string name="file_list_empty">Ei tiedostoja</string>
+    <string name="file_list_press_back_again_to_exit">Poistu painamalla takaisin uudelleen</string>
     <string name="file_list_error_folder_not_found">Tätä kansiota ei ole enää olemassa</string>
     <string name="file_list_error_permission_denied">Sinulla ei ole oikeutta avata tätä kansiota</string>
     <string name="file_list_error_unknown">Kansiota ei voi avata</string>
+    <string name="file_list_action_create">Luo</string>
     <string name="file_list_action_create_file">Tiedosto</string>
     <string name="file_list_action_create_directory">Kansio</string>
 
@@ -301,6 +332,41 @@
     </plurals>
     <string name="file_properties_basic_last_modification_time">Viimeksi muokattu</string>
     <string name="file_properties_basic_parent_directory">Ylähakemisto</string>
+    <string name="file_properties_basic_archive_file">Arkistotiedosto</string>
+    <string name="file_properties_basic_archive_entry">Arkiston kohde</string>
+    <string name="file_properties_permission">Käyttöoikeudet</string>
+    <string name="file_properties_permission_owner">Omistaja</string>
+    <string name="file_properties_permission_group">Ryhmä</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Vaihda omistaja</string>
+    <string name="file_properties_permission_set_group_title">Vaihda ryhmä</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Syötä nimi tai tunnus</string>
+    <string name="file_properties_permission_set_principal_system">Järjestelmä</string>
+    <string name="file_properties_permission_mode">Tila</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Vaihda tila</string>
+    <string name="file_properties_permission_set_mode_others">Muut</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Luku</item>
+        <item>Kirjoitus</item>
+        <item>Suoritus</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Luku</item>
+        <item>Kirjoitus</item>
+        <item>Haku</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Erikoisoikeudet</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Älä lisää “Suoritus”-oikeutta sisältyville tiedostoille</string>
+    <string name="file_properties_permission_selinux_context">SELinux-konteksti</string>
+    <string name="file_properties_permission_set_selinux_context_title">Muuta SELinux-kontekstia</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Palauta</string>
+    <string name="file_properties_permission_recursive">Käytä sisältyviin tiedostoihin</string>
     <string name="file_properties_image">Kuva</string>
     <string name="file_properties_media_dimensions">Mitat</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -316,6 +382,7 @@
     <string name="file_properties_image_shutter_speed">Suljinnopeus</string>
     <string name="file_properties_image_focal_length">Polttoväli</string>
     <string name="file_properties_image_focal_length_format">%1$.2f mm</string>
+    <string name="file_properties_image_photographic_sensitivity">ISO-herkkyys</string>
     <string name="file_properties_image_photographic_sensitivity_format">ISO %1$d</string>
     <string name="file_properties_image_software">Ohjelmisto</string>
     <string name="file_properties_image_description">Kuvaus</string>
@@ -354,6 +421,12 @@
     <string name="file_properties_apk_signature_digests">Allerkirjoitukset</string>
     <string name="file_properties_apk_signature_digests_empty">Ei kelvollisia allekirjoituksia</string>
     <string name="file_properties_apk_past_signature_digests">Vanhat allekirjoitukset</string>
+    <string name="file_properties_checksum">Tarkistussummat</string>
+    <string name="file_properties_checksum_compare">Vertaa</string>
+    <string name="file_properties_checksum_compare_placeholder">Mikä tahansa tarkistussumma</string>
+    <string name="file_properties_checksum_compare_match_format">Vastaa %1$s-tarkistussummaa</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Vastaa %1$s-tarkistussumman alkua</string>
+    <string name="file_properties_checksum_compare_no_match">Vastaavaa tarkistussummaa ei löytynyt</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Sisäinen tallennustila</string>
     <string name="storage_list_title">Tallennustila</string>
@@ -363,9 +436,15 @@
     <string name="storage_add_storage_ftp_server">FTP-palvelin</string>
     <string name="storage_add_storage_sftp_server">SFTP-palvelin</string>
     <string name="storage_add_storage_smb_server">SMB-palvelin</string>
+    <string name="storage_add_storage_webdav_server">WebDAV-palvelin</string>
     <string name="storage_edit_device_storage_title">Muokkaa laitteen tallennustilaa</string>
     <string name="storage_edit_device_storage_name">Nimi</string>
     <string name="storage_edit_device_storage_path">polku</string>
+    <string name="storage_add_external_storage_shortcut_title">Lisää ulkoisen tallennustilan pikakuvake</string>
+    <string name="storage_edit_external_storage_shortcut_title">Muokkaa ulkoisen tallennustilan pikakuvaketta</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Tallennusasema</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Syötä tallennusasema</string>
+    <string name="storage_edit_external_storage_shortcut_path">Polku</string>
     <string name="storage_add_document_tree_title">Lisää ulkoinen tallennustila</string>
     <string name="storage_edit_document_tree_title">Muokkaa ulkoista tallennustilaa</string>
     <string name="storage_edit_document_tree_name">Nimi</string>
@@ -432,6 +511,7 @@
     <string name="storage_edit_smb_server_title_edit">Muokkaa SMB-palvelinta</string>
     <string name="storage_edit_smb_server_title_add">Lisää SMB-palvelin</string>
     <string name="storage_edit_smb_server_host">Isäntänimi</string>
+    <string name="storage_edit_smb_server_host_placeholder">Palvelimen IP-osoite tai verkkonimi, esim. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Syötä isäntänimi</string>
     <string name="storage_edit_smb_server_host_error_invalid">Virheellinen isäntänimi</string>
     <string name="storage_edit_smb_server_port">Portti</string>
@@ -454,6 +534,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">Ottaa käyttöön SMB3-salauksen tuen. Jotkin palvelimet vaativat sen; palaa salaamattomaan SMB-yhteyteen, jos sitä ei tueta.</string>
     <string name="storage_edit_smb_server_connect_and_add">Yhdistä ja lisää</string>
     <string name="storage_edit_smb_server_add">Lisää</string>
+    <string name="storage_edit_webdav_server_title_edit">Muokkaa WebDAV-palvelinta</string>
+    <string name="storage_edit_webdav_server_title_add">Lisää WebDAV-palvelin</string>
+    <string name="storage_edit_webdav_server_host">Isäntänimi</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Syötä isäntänimi</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Virheellinen isäntänimi</string>
+    <string name="storage_edit_webdav_server_port">Portti</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Virheellinen portti</string>
+    <string name="storage_edit_webdav_server_path">Polku</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Voidaan jättää tyhjäksi</string>
+    <string name="storage_edit_webdav_server_name">Nimi</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Käytä isäntänimeä</string>
+    <string name="storage_edit_webdav_server_protocol">Protokolla</string>
+    <string name="storage_edit_webdav_server_authentication_type">Tunnistautuminen</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Salasana</item>
+        <item>Käyttöoikeustunnus</item>
+        <item>Ei mitään</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Käyttäjänimi</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Syötä käyttäjänimi</string>
+    <string name="storage_edit_webdav_server_password">Salasana</string>
+    <string name="storage_edit_webdav_server_access_token">Käyttöoikeustunnus</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Syötä käyttöoikeustunnus</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Yhdistä ja lisää</string>
+    <string name="storage_edit_webdav_server_add">Lisää</string>
     <string name="navigation_storage_subtitle_format">%1$s/%2$s vapaana</string>
     <string name="navigation_add_storage">Lisää tallennustila…</string>
     <string name="navigation_standard_directory_alarms">Hälytykset</string>
@@ -469,10 +574,14 @@
     <string name="navigation_standard_directory_qq">QQ</string>
     <string name="navigation_standard_directory_tim">TIM</string>
     <string name="navigation_standard_directory_wechat">WeChat</string>
+    <string name="navigation_edit_bookmark_directory_title">Kirjanmerkkikansio</string>
     <string name="navigation_edit_bookmark_directory_name">Nimi</string>
     <string name="navigation_edit_bookmark_directory_path">Polku</string>
     <string name="image_viewer_title">Kuvan katselija</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Tallenna nimellä</string>
+    <string name="save_as_error">Virhe tiedoston tallentamisessa</string>
+    <string name="save_as_success_format">“%1$s” tallennettiin kohteeseen “%2$s”</string>
     <string name="text_editor_title">Tekstieditori</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -492,11 +601,16 @@
     <string name="ftp_server_url_menu_copy_url">Kopioi URL</string>
     <string name="ftp_server_url_menu_copy_password">Kopioi salasana</string>
     <string name="ftp_server_add_tile_title">Lisää pika-asetuksiin</string>
+    <string name="ftp_server_add_tile_result_added">“FTP-palvelin” lisättiin pika-asetuksiin</string>
+    <string name="ftp_server_add_tile_result_already_added">“FTP-palvelin” on jo lisätty pika-asetuksiin</string>
+    <string name="ftp_server_add_tile_result_error">Virhe lisättäessä “FTP-palvelin” pika-asetuksiin</string>
     <string name="ftp_server_configuration_title">Asetukset</string>
     <string name="ftp_server_anonymous_login_title">Anonyymi kirjautuminen</string>
     <string name="ftp_server_username_title">Käyttäjänimi</string>
     <string name="ftp_server_password_title">Salasana</string>
+    <string name="ftp_server_password_summary_empty">Ei asetettu</string>
     <string name="ftp_server_port_title">Portti</string>
+    <string name="ftp_server_port_error_invalid">Virheellinen portti</string>
     <string name="ftp_server_home_directory_title">Juurihakemisto</string>
     <string name="ftp_server_writable_title">Salli kirjoittaminen</string>
     <string name="settings_title">Asetukset</string>
@@ -514,6 +628,9 @@
     </string-array>
     <string name="settings_black_night_mode">Musta yöteema</string>
     <string name="settings_file_list_animation_title">Tiedostolistan anmiaatioita</string>
+    <string name="settings_double_back_to_exit_title">Poistu painamalla takaisin kahdesti</string>
+    <string name="settings_edge_to_edge_title">Reunasta reunaan -näkymä</string>
+    <string name="settings_edge_to_edge_summary">Sisältö vierii tila- ja navigointipalkkien alle</string>
     <string name="settings_file_name_ellipsize_title">Näytä pitkä tiedostonimi</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Lyhennä alusta</item>
@@ -525,6 +642,7 @@
     <string name="settings_default_directory_title">Oletuskansio</string>
     <string name="settings_standard_directories_title">Standardihakemistot</string>
     <string name="settings_standard_directories_summary_empty">Standardihakemistoja ei ole otettu käyttöön</string>
+    <string name="settings_standard_directory_gallery_summary">Laitteen kuvat ja videot</string>
     <string name="settings_bookmark_directories_title">Kirjanmerkkikansiot</string>
     <string name="settings_bookmark_directories_summary_empty">Ei kirjanmerkkikansioita</string>
     <string name="settings_root_strategy_title">Root-käyttöoikeus</string>
@@ -544,6 +662,7 @@
         <item>Näytä sisältö</item>
         <item>Kysy, mikä toiminto suoritetaan</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Näytä PDF-dokumenttien esikatselukuvat</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Saattaa aiheuttaa sovelluksen epävakauden vanhemmilla Android-versioilla</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Hae esikatselukuvat etätiedostoista</string>
 
@@ -555,6 +674,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Seuraa GitHubissa</string>
     <string name="app_name_launcher">Tiedostot</string>
+    <string name="clear_query">Tyhjennä haku</string>
     <string name="about_fork_subtitle">Alkuperäinen: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Taustakuvan mukaan</string>
     <string name="color_picker_preset_colors_label">Muut värit</string>
@@ -569,6 +689,7 @@
 
     <string name="onboarding_install_apps_title">Sovellusten asentaminen</string>
     <string name="onboarding_install_apps_description">Salli %1$s asentaa APK-tiedostoja suoraan. Näin voit asentaa sovelluksia lataamistasi tai vastaanottamistasi tiedostoista ilman kolmannen osapuolen asennusohjelmaa.</string>
+    <string name="reorder_drag_handle">Siirrä</string>
     <string name="onboarding_notifications_title">Ilmoitukset</string>
     <string name="onboarding_optional">Valinnainen</string>
     <string name="onboarding_required">Pakollinen</string>
@@ -592,5 +713,28 @@
     <string name="storage_volume_icon_usb">USB-asema</string>
     <string name="storage_volume_name">Nimi</string>
     <string name="storage_volume_partition_numbered">Osio %1$d</string>
+    <string name="archive_viewer_title">Arkiston katselija</string>
+    <string name="gallery_title">Galleria</string>
+    <string name="gallery_photos">Kuvat</string>
+    <string name="gallery_albums">Albumit</string>
+    <string name="gallery_today">Tänään</string>
+    <string name="gallery_yesterday">Eilen</string>
+    <string name="gallery_empty">Ei kuvia tai videoita</string>
+    <string name="gallery_access_denied">Salli tiedostojen käyttö nähdäksesi kuvasi ja videosi</string>
+    <string name="gallery_allow_access">Salli</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d kohde</item>
+        <item quantity="other">%1$,d kohdetta</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Poistetaanko tämä kohde?</item>
+        <item quantity="other">Poistetaanko nämä %1$,d kohdetta?</item>
+    </plurals>
+    <string name="gallery_details">Tiedot</string>
+    <string name="gallery_details_date">Päivämäärä</string>
+    <string name="gallery_show_in_folder">Näytä kansiossa</string>
+    <string name="video_player_title">Videosoitin</string>
+    <string name="video_player_play">Toista</string>
+    <string name="video_player_pause">Tauko</string>
     <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
 </resources>

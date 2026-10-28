@@ -23,6 +23,8 @@
     <string name="loading">Bezig met laden…</string>
     <string name="maybe_later">Misschien later</string>
     <string name="merge">Samenvoegen</string>
+    <string name="more_options">Meer opties</string>
+    <string name="navigate_up">Omhoog navigeren</string>
     <string name="none">Geen</string>
     <string name="open_navigation_drawer">Navigatiemenu openen</string>
     <string name="paste">Plakken</string>
@@ -304,9 +306,11 @@
     <string name="file_list_paste_extract_title_format">Bezig met uitpakken van %1$,d</string>
     <string name="file_list_paste_action_extract_here">Hier uitpakken</string>
     <string name="file_list_empty">Geen bestanden</string>
+    <string name="file_list_press_back_again_to_exit">Druk nogmaals op Terug om af te sluiten</string>
     <string name="file_list_error_folder_not_found">Deze map bestaat niet meer</string>
     <string name="file_list_error_permission_denied">Je hebt geen toestemming om deze map te openen</string>
     <string name="file_list_error_unknown">Kan deze map niet openen</string>
+    <string name="file_list_action_create">Maken</string>
     <string name="file_list_action_create_file">Bestand</string>
     <string name="file_list_action_create_directory">Map</string>
 
@@ -511,6 +515,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB-server bewerken</string>
     <string name="storage_edit_smb_server_title_add">SMB-server toevoegen</string>
     <string name="storage_edit_smb_server_host">Hostnaam</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP-adres of netwerknaam van de server, bijv. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Voer een hostnaam in</string>
     <string name="storage_edit_smb_server_host_error_invalid">Ongeldige hostnaam</string>
     <string name="storage_edit_smb_server_port">Poort</string>
@@ -578,6 +583,28 @@
     <string name="navigation_edit_bookmark_directory_name">Naam</string>
     <string name="navigation_edit_bookmark_directory_path">Locatie</string>
     <string name="archive_viewer_title">Archiefweergave</string>
+    <string name="gallery_title">Galerij</string>
+    <string name="gallery_photos">Foto\'s</string>
+    <string name="gallery_albums">Albums</string>
+    <string name="gallery_today">Vandaag</string>
+    <string name="gallery_yesterday">Gisteren</string>
+    <string name="gallery_empty">Geen foto\'s of video\'s</string>
+    <string name="gallery_access_denied">Geef toegang tot bestanden om je foto\'s en video\'s te zien</string>
+    <string name="gallery_allow_access">Toestaan</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d item</item>
+        <item quantity="other">%1$,d items</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Dit item verwijderen?</item>
+        <item quantity="other">Deze %1$,d items verwijderen?</item>
+    </plurals>
+    <string name="gallery_details">Details</string>
+    <string name="gallery_details_date">Datum</string>
+    <string name="gallery_show_in_folder">Tonen in map</string>
+    <string name="video_player_title">Videospeler</string>
+    <string name="video_player_play">Afspelen</string>
+    <string name="video_player_pause">Pauzeren</string>
     <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Opslaan als</string>
@@ -609,7 +636,9 @@
     <string name="ftp_server_anonymous_login_title">Anoniem inloggen</string>
     <string name="ftp_server_username_title">Gebruikersnaam</string>
     <string name="ftp_server_password_title">Wachtwoord</string>
+    <string name="ftp_server_password_summary_empty">Niet ingesteld</string>
     <string name="ftp_server_port_title">Poort</string>
+    <string name="ftp_server_port_error_invalid">Ongeldige poort</string>
     <string name="ftp_server_home_directory_title">Hoofdmap</string>
     <string name="ftp_server_writable_title">Wegschrijven toestaan</string>
     <string name="settings_title">Instellingen</string>
@@ -627,6 +656,9 @@
     </string-array>
     <string name="settings_black_night_mode">Nachtmodus</string>
     <string name="settings_file_list_animation_title">Animatie tonen in bestandslijst</string>
+    <string name="settings_double_back_to_exit_title">Twee keer op Terug drukken om af te sluiten</string>
+    <string name="settings_edge_to_edge_title">Schermvullende weergave</string>
+    <string name="settings_edge_to_edge_summary">Inhoud scrolt achter de status- en navigatiebalk</string>
     <string name="settings_file_name_ellipsize_title">Lange bestandsnamen tonen</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Ellips toevoegen aan begin van naam</item>
@@ -638,6 +670,7 @@
     <string name="settings_default_directory_title">Standaardmap</string>
     <string name="settings_standard_directories_title">Standaardmappen</string>
     <string name="settings_standard_directories_summary_empty">Geen standaardmappen ingesteld</string>
+    <string name="settings_standard_directory_gallery_summary">Foto\'s en video\'s op het apparaat</string>
     <string name="settings_bookmark_directories_title">Bladwijzermappen</string>
     <string name="settings_bookmark_directories_summary_empty">Geen bladwijzermappen</string>
     <string name="settings_root_strategy_title">Roottoegangsmodus</string>
@@ -669,6 +702,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Volgen op GitHub</string>
     <string name="app_name_launcher">Bestanden</string>
+    <string name="clear_query">Zoekopdracht wissen</string>
     <string name="about_fork_subtitle">Origineel door Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Op basis van achtergrond</string>
     <string name="color_picker_preset_colors_label">Andere kleuren</string>
@@ -683,6 +717,7 @@
 
     <string name="onboarding_install_apps_title">Apps installeren</string>
     <string name="onboarding_install_apps_description">Sta %1$s toe om APK-bestanden rechtstreeks te installeren. Zo kun je apps installeren vanuit gedownloade of ontvangen bestanden, zonder een installatieprogramma van derden nodig te hebben.</string>
+    <string name="reorder_drag_handle">Verplaatsen</string>
     <string name="onboarding_notifications_title">Meldingen</string>
     <string name="onboarding_optional">Optioneel</string>
     <string name="onboarding_required">Vereist</string>
