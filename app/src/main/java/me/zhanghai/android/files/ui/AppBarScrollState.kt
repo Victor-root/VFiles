@@ -116,7 +116,21 @@ class AppBarScrollState(
  * long as [isEnabled], for content scrolling behind it edge to edge.
  */
 @Composable
-fun rememberAppBarScrollState(gridState: LazyGridState, isEnabled: Boolean): AppBarScrollState {
+fun rememberAppBarScrollState(gridState: LazyGridState, isEnabled: Boolean): AppBarScrollState =
+    rememberAppBarScrollState(isEnabled) {
+        gridState.firstVisibleItemIndex to gridState.firstVisibleItemScrollOffset
+    }
+
+/**
+ * Like for a grid, for content whose [firstVisibleItem] gives the index and the scroll offset of
+ * the first item visible, like lists.
+ */
+@Composable
+fun rememberAppBarScrollState(
+    isEnabled: Boolean,
+    firstVisibleItem: () -> Pair<Int, Int>
+): AppBarScrollState {
+    val currentFirstVisibleItem by rememberUpdatedState(firstVisibleItem)
     val coroutineScope = rememberCoroutineScope()
     val statusBarContentLayer = rememberGraphicsLayer()
     val state = remember { AppBarScrollState(coroutineScope, statusBarContentLayer) }
@@ -124,10 +138,10 @@ fun rememberAppBarScrollState(gridState: LazyGridState, isEnabled: Boolean): App
     LaunchedEffect(isEnabled) { state.offset = 0f }
     // Scrolling up with the fast scroller doesn't go through nested scrolling, and its jumps may be
     // over before they are seen here, so any move up shows the app bar.
-    LaunchedEffect(gridState, state) {
+    LaunchedEffect(state) {
         var lastIndex = 0
         var lastOffset = 0
-        snapshotFlow { gridState.firstVisibleItemIndex to gridState.firstVisibleItemScrollOffset }
+        snapshotFlow { currentFirstVisibleItem() }
             .collect { (index, offset) ->
                 val isScrolledUp = index < lastIndex || index == lastIndex && offset < lastOffset
                 if (isScrolledUp) {
