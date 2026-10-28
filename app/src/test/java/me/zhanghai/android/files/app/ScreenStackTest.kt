@@ -233,6 +233,64 @@ class ScreenStackTest {
         pressBack()
         composeTestRule.onNodeWithText("Root count 0").assertIsFocused()
     }
+
+    @Test
+    @OptIn(ExperimentalTestApi::class)
+    fun restoresFocusWhenGoingBackWhileOpening() {
+        show()
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        val rootButton = composeTestRule.onNodeWithText("Root count 0")
+        rootButton.performSemanticsAction(SemanticsActions.RequestFocus)
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.runOnIdle { navigators.getValue("Root").navigate(TestDestination("A")) }
+        // Before the screen opened is entirely shown.
+        composeTestRule.mainClock.advanceTimeBy(100)
+        composeTestRule.runOnUiThread {
+            composeTestRule.activity.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule.mainClock.autoAdvance = true
+        composeTestRule.waitForIdle()
+        assertFalse(isShown("A"))
+        rootButton.assertIsFocused()
+    }
+
+    @Test
+    fun goingBackSeveralScreensDoesNotShowTheOnesBetween() {
+        show()
+        navigate("Root", TestDestination("A"))
+        navigate("A", TestDestination("B"))
+        val lifecycleA = lifecycles.getValue("A")
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.runOnIdle { navigators.getValue("B").goBack(2) }
+        // While B closes, A closes with it without being shown again.
+        composeTestRule.mainClock.advanceTimeBy(100)
+        assertFalse(isShown("A"))
+        assertEquals(Lifecycle.State.CREATED, lifecycleA.currentState)
+        composeTestRule.mainClock.autoAdvance = true
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Root screen").assertIsDisplayed()
+        assertEquals(Lifecycle.State.DESTROYED, lifecycleA.currentState)
+        assertEquals(Lifecycle.State.RESUMED, lifecycles.getValue("Root").currentState)
+    }
+
+    @Test
+    fun quickSecondBackReachesTheScreenBelow() {
+        show()
+        navigate("Root", TestDestination("A"))
+        navigate("A", TestDestination("B"))
+        composeTestRule.mainClock.autoAdvance = false
+        composeTestRule.runOnUiThread {
+            composeTestRule.activity.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule.mainClock.advanceTimeByFrame()
+        composeTestRule.runOnUiThread {
+            composeTestRule.activity.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule.mainClock.autoAdvance = true
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Root screen").assertIsDisplayed()
+        assertFalse(isShown("A"))
+    }
 }
 
 @RunWith(RobolectricTestRunner::class)
@@ -267,6 +325,25 @@ class ScreenStackRecreationTest {
             scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
             InstrumentationRegistry.getInstrumentation().waitForIdleSync()
             assertTrue(viewModelA.isCleared)
+        }
+    }
+
+    @Test
+    fun backHandlersOfTheScreenStillComeFirstAfterTheAppWasInTheBackground() {
+        ActivityScenario.launch(TestActivity::class.java).use { scenario ->
+            InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+            scenario.onActivity {
+                navigators.getValue("Root")
+                    .navigate(TestDestination("A", hasBackHandler = true))
+            }
+            InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+            scenario.moveToState(Lifecycle.State.CREATED)
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+            scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+            InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+            // Handled by the screen instead of closing it.
+            assertEquals(Lifecycle.State.RESUMED, lifecycles.getValue("A").currentState)
         }
     }
 }
