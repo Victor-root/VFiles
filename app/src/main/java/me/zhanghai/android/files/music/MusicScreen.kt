@@ -39,6 +39,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
@@ -65,15 +68,20 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AlbumCard
 import me.zhanghai.android.files.ui.AppBarTabSwitch
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.Cover
+import me.zhanghai.android.files.ui.HideOnScrollTopBar
 import me.zhanghai.android.files.ui.MediaLibraryAccessDenied
 import me.zhanghai.android.files.ui.MediaLibraryMessage
 import me.zhanghai.android.files.ui.NavigateUpButton
 import me.zhanghai.android.files.ui.formatDuration
+import me.zhanghai.android.files.ui.rememberAppBarScrollState
+import me.zhanghai.android.files.ui.sampleStatusBarContent
+import me.zhanghai.android.files.util.isTelevision
 
 /** The songs of the device, by title, album and artist, like the music player of a phone. */
 @Parcelize
@@ -112,6 +120,7 @@ internal fun MusicScreen(state: MusicState?) {
     val tracksListState = rememberLazyListState()
     val albumsGridState = rememberLazyGridState()
     val artistsListState = rememberLazyListState()
+    val detailListState = key(albumId, artistId) { rememberLazyListState() }
     // What to focus again once an album or an artist is closed, on a D-pad.
     var idToFocus by remember { mutableStateOf<Long?>(null) }
     val closeDetail = {
@@ -133,39 +142,62 @@ internal fun MusicScreen(state: MusicState?) {
             }
         }
     }
+    // Edge to edge, the app bar hides when scrolling down like in the gallery, except on a TV,
+    // where the item focused with the D-pad must never be behind it.
+    val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
+    val isContentBehindTopBar = isEdgeToEdge && !isTelevision
+    val appBarState = rememberAppBarScrollState(isEnabled = isContentBehindTopBar) {
+        when {
+            album != null || artist != null -> detailListState.firstVisibleItem
+            tab == MusicTab.TRACKS -> tracksListState.firstVisibleItem
+            tab == MusicTab.ALBUMS ->
+                albumsGridState.firstVisibleItemIndex to
+                    albumsGridState.firstVisibleItemScrollOffset
+            else -> artistsListState.firstVisibleItem
+        }
+    }
+    LaunchedEffect(tab, albumId, artistId) { appBarState.offset = 0f }
     BackHandler(enabled = album != null || artist != null, onBack = closeDetail)
     val play: (List<MusicTrack>, Int, Boolean) -> Unit = { tracks, index, shuffle ->
         player?.playTracks(tracks, index, shuffle)
     }
 
     AppScaffold(
+        modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
+        isContentBehindTopBar = true,
         topBar = {
-            AppTopAppBar(
-                title = album?.name ?: artist?.name ?: stringResource(R.string.music_title),
-                navigationIcon = {
-                    if (album != null || artist != null) {
-                        IconButton(onClick = closeDetail) {
-                            Icon(
-                                painter = painterResource(R.drawable.arrow_back_icon_white_24dp),
-                                contentDescription = stringResource(R.string.navigate_up)
+            HideOnScrollTopBar(appBarState) {
+                AppTopAppBar(
+                    title = album?.name ?: artist?.name ?: stringResource(R.string.music_title),
+                    navigationIcon = {
+                        if (album != null || artist != null) {
+                            IconButton(onClick = closeDetail) {
+                                Icon(
+                                    painter = painterResource(
+                                        R.drawable.arrow_back_icon_white_24dp
+                                    ),
+                                    contentDescription = stringResource(R.string.navigate_up)
+                                )
+                            }
+                        } else {
+                            NavigateUpButton()
+                        }
+                    },
+                    actions = {
+                        if (album == null && artist == null) {
+                            AppBarTabSwitch(
+                                tabs = MusicTab.entries,
+                                selectedTab = tab,
+                                onTabChange = { tab = it },
+                                iconRes = { it.iconRes },
+                                label = { stringResource(it.labelRes) }
                             )
                         }
-                    } else {
-                        NavigateUpButton()
                     }
-                },
-                actions = {
-                    if (album == null && artist == null) {
-                        AppBarTabSwitch(
-                            tabs = MusicTab.entries,
-                            selectedTab = tab,
-                            onTabChange = { tab = it },
-                            iconRes = { it.iconRes },
-                            label = { stringResource(it.labelRes) }
-                        )
-                    }
-                }
-            )
+                )
+            }
         },
         bottomBar = {
             if (player != null) {
@@ -179,14 +211,20 @@ internal fun MusicScreen(state: MusicState?) {
             }
         }
     ) { contentPadding ->
+        val appBarHeight = contentPadding.calculateTopPadding()
         Box(
             modifier = Modifier
+                .padding(top = if (isContentBehindTopBar) 0.dp else appBarHeight)
+                .sampleStatusBarContent(appBarState)
                 .focusRequester(contentFocusRequester)
                 .onFocusChanged { contentHasFocus = it.hasFocus }
                 // Focuses the song focused before again, like when coming back from the player.
                 .focusRestorer()
         ) {
-            val listPadding = PaddingValues(bottom = contentPadding.calculateBottomPadding())
+            val listPadding = PaddingValues(
+                top = if (isContentBehindTopBar) appBarHeight else 0.dp,
+                bottom = contentPadding.calculateBottomPadding()
+            )
             when {
                 state == null ->
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -204,9 +242,7 @@ internal fun MusicScreen(state: MusicState?) {
                     )
                 album != null || artist != null -> {
                     val tracks = album?.tracks ?: artist!!.tracks
-                    key(albumId, artistId) {
-                        TrackList(tracks, rememberLazyListState(), listPadding, play)
-                    }
+                    TrackList(tracks, detailListState, listPadding, play)
                 }
                 tab == MusicTab.TRACKS ->
                     TrackList(state.tracks, tracksListState, listPadding, play)
@@ -232,6 +268,9 @@ internal fun MusicScreen(state: MusicState?) {
         }
     }
 }
+
+private val LazyListState.firstVisibleItem: Pair<Int, Int>
+    get() = firstVisibleItemIndex to firstVisibleItemScrollOffset
 
 @Composable
 private fun TrackList(
@@ -308,7 +347,7 @@ private fun AlbumGrid(
         state = gridState,
         contentPadding = PaddingValues(
             start = 16.dp,
-            top = 16.dp,
+            top = contentPadding.calculateTopPadding() + 16.dp,
             end = 16.dp,
             bottom = contentPadding.calculateBottomPadding() + 16.dp
         ),
