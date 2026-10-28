@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "VFiles"
 include(":app")
+include(":baselineprofile")
