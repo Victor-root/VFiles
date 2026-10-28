@@ -130,13 +130,13 @@ import me.zhanghai.android.files.theme.StatusBarBackgroundEffect
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.ui.HideOnScrollTopBar
 import me.zhanghai.android.files.ui.IconBitmapCache
 import me.zhanghai.android.files.ui.LocalIconBitmapCache
 import me.zhanghai.android.files.ui.SpeedDial
 import me.zhanghai.android.files.ui.SpeedDialAction
 import me.zhanghai.android.files.ui.SpeedDialScrim
 import me.zhanghai.android.files.ui.asFastScrollable
-import me.zhanghai.android.files.ui.hideOnScroll
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
@@ -478,63 +478,64 @@ private fun FileListScaffold(
         modifier = Modifier.nestedScroll(appBarState.nestedScrollConnection),
         isContentBehindTopBar = true,
         topBar = {
-            Surface(
-                modifier = Modifier
-                    .hideOnScroll(appBarState),
-                color = appBarColors.container,
-                contentColor = appBarColors.content
-            ) {
-                Column(
-                    modifier = Modifier
-                        .windowInsetsPadding(WindowInsets.statusBars.only(WindowInsetsSides.Top))
+            HideOnScrollTopBar(appBarState) {
+                Surface(
+                    color = appBarColors.container,
+                    contentColor = appBarColors.content
                 ) {
-                    AnimatedContent(
-                        targetState = selectedFiles.isNotEmpty(),
-                        transitionSpec = { fadeIn() togetherWith fadeOut() }
-                    ) { isSelecting ->
-                        when {
-                            isSelecting ->
-                                FileListSelectionAppBar(
-                                    selectedFiles, pickOptions, currentPath, controller,
-                                    appBarColors
-                                )
-                            isSearchViewExpanded ->
-                                FileListSearchAppBar(
-                                    queryState = searchQueryState,
-                                    colors = appBarColors,
-                                    onSearch = {
-                                        viewModel.search(searchQueryState.text.toString())
-                                    },
-                                    onCollapse = controller::collapseSearch
-                                ) { FileListOverflowMenu(controller, showHiddenFiles) }
-                            else ->
-                                FileListMainAppBar(
-                                    controller = controller,
-                                    viewModel = viewModel,
-                                    fileListStateful = fileListStateful,
-                                    isSearching = isSearching,
-                                    viewType = viewType,
-                                    sortOptions = sortOptions,
-                                    isViewSortPathSpecific = isViewSortPathSpecific,
-                                    pickOptions = pickOptions,
-                                    showHiddenFiles = showHiddenFiles,
-                                    colors = appBarColors,
-                                    onNavigationIconClick = onNavigationIconClick,
-                                    navigationIconFocusRequester = navigationIconFocusRequester
-                                )
-                        }
-                    }
-                    Breadcrumb(
-                        data = breadcrumbData,
-                        isReadOnly = isTelevision,
-                        onNavigateTo = controller::navigateTo,
-                        onCopyPath = controller::copyPath,
-                        onOpenInNewTask = controller::openInNewTask,
-                        contentPadding = PaddingValues(
-                            start = dimensionResource(R.dimen.content_start_margin_minus_12dp),
-                            end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
+                    Column(
+                        modifier = Modifier.windowInsetsPadding(
+                            WindowInsets.statusBars.only(WindowInsetsSides.Top)
                         )
-                    )
+                    ) {
+                        AnimatedContent(
+                            targetState = selectedFiles.isNotEmpty(),
+                            transitionSpec = { fadeIn() togetherWith fadeOut() }
+                        ) { isSelecting ->
+                            when {
+                                isSelecting ->
+                                    FileListSelectionAppBar(
+                                        selectedFiles, pickOptions, currentPath, controller,
+                                        appBarColors
+                                    )
+                                isSearchViewExpanded ->
+                                    FileListSearchAppBar(
+                                        queryState = searchQueryState,
+                                        colors = appBarColors,
+                                        onSearch = {
+                                            viewModel.search(searchQueryState.text.toString())
+                                        },
+                                        onCollapse = controller::collapseSearch
+                                    ) { FileListOverflowMenu(controller, showHiddenFiles) }
+                                else ->
+                                    FileListMainAppBar(
+                                        controller = controller,
+                                        viewModel = viewModel,
+                                        fileListStateful = fileListStateful,
+                                        isSearching = isSearching,
+                                        viewType = viewType,
+                                        sortOptions = sortOptions,
+                                        isViewSortPathSpecific = isViewSortPathSpecific,
+                                        pickOptions = pickOptions,
+                                        showHiddenFiles = showHiddenFiles,
+                                        colors = appBarColors,
+                                        onNavigationIconClick = onNavigationIconClick,
+                                        navigationIconFocusRequester = navigationIconFocusRequester
+                                    )
+                            }
+                        }
+                        Breadcrumb(
+                            data = breadcrumbData,
+                            isReadOnly = isTelevision,
+                            onNavigateTo = controller::navigateTo,
+                            onCopyPath = controller::copyPath,
+                            onOpenInNewTask = controller::openInNewTask,
+                            contentPadding = PaddingValues(
+                                start = dimensionResource(R.dimen.content_start_margin_minus_12dp),
+                                end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
+                            )
+                        )
+                    }
                 }
             }
         },
