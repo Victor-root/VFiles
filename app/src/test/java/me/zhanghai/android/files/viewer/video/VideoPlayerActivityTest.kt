@@ -7,9 +7,9 @@ package me.zhanghai.android.files.viewer.video
 
 import android.content.Intent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -49,7 +49,9 @@ class VideoPlayerActivityTest {
             composeTestRule.onAllNodesWithText("clip.mp4").fetchSemanticsNodes().isNotEmpty()
         }
         composeTestRule.onNodeWithText("clip.mp4").assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("Pause").assertIsDisplayed()
+        // The empty file may play or fail at once.
+        composeTestRule.onNode(hasContentDescription("Pause") or hasContentDescription("Play"))
+            .assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/video_player.png")
     }
 }

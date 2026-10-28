@@ -90,7 +90,7 @@ class ReorderableListState internal constructor(
             // The dragged item jumps to its new position, compensate so that it stays under the
             // finger.
             draggedItemOffset += draggedItem.offset - targetItem.offset
-            onMove(draggedItem.index, targetItem.index)
+            moveItem(draggedItem.index, targetItem.index)
         }
         val layoutInfo = lazyListState.layoutInfo
         scrollSpeed = when {
@@ -123,7 +123,7 @@ class ReorderableListState internal constructor(
                 val index = draggedItemInfo?.index ?: return true
                 val targetIndex = index + if (event.key == Key.DirectionUp) -1 else 1
                 if (targetIndex in 0..<layoutInfo.totalItemsCount) {
-                    onMove(index, targetIndex)
+                    moveItem(index, targetIndex)
                     // Keeps the moved item in view.
                     val firstVisibleIndex = layoutInfo.visibleItemsInfo.first().index
                     val lastVisibleIndex = layoutInfo.visibleItemsInfo.last().index
@@ -139,6 +139,18 @@ class ReorderableListState internal constructor(
             else -> return false
         }
         return true
+    }
+
+    // A lazy list keeps its first visible item in place, so it would scroll along with that item
+    // when it moves, taking the dragged item away from the finger.
+    private fun moveItem(fromIndex: Int, toIndex: Int) {
+        val firstVisibleIndex = lazyListState.firstVisibleItemIndex
+        if (fromIndex == firstVisibleIndex || toIndex == firstVisibleIndex) {
+            lazyListState.requestScrollToItem(
+                firstVisibleIndex, lazyListState.firstVisibleItemScrollOffset
+            )
+        }
+        onMove(fromIndex, toIndex)
     }
 
     internal fun onDragEnd() {
