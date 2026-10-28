@@ -9,9 +9,15 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotFocused
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.isFocused
+import androidx.compose.ui.test.isSelected
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onAllNodesWithContentDescription
@@ -22,6 +28,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import androidx.test.core.app.ActivityScenario
@@ -146,7 +153,10 @@ class GalleryActivityTest {
         launchViewer()
         composeTestRule.onNodeWithContentDescription("Share").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/gallery_viewer.png")
-        composeTestRule.onNodeWithContentDescription("Details").performClick()
+        // Details and delete are in the menu.
+        composeTestRule.onNodeWithContentDescription("More options").performClick()
+        composeTestRule.onNodeWithText("Delete").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Details").performClick()
         waitForText("IMG_today_0.png")
         captureScreenRoboImage("build/screenshots/gallery_viewer_details.png")
     }
@@ -159,14 +169,12 @@ class GalleryActivityTest {
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithContentDescription("IMG_today_0.png").assertIsFocused()
         captureScreenRoboImage("build/screenshots/gallery_tv.png")
-        // The tabs are on the left.
-        pressKey(Key.DirectionLeft)
-        composeTestRule.onNodeWithText("Photos").assertIsFocused()
-        pressKey(Key.DirectionDown)
+        // The tabs are in the app bar.
+        val albumsTab = composeTestRule.onNodeWithContentDescription("Albums")
+        albumsTab.performSemanticsAction(SemanticsActions.RequestFocus)
         pressKey(Key.DirectionCenter)
-        composeTestRule.onNodeWithText("Albums").assertIsFocused()
-        pressKey(Key.DirectionRight)
-        composeTestRule.onNodeWithText("Camera").assertIsFocused()
+        albumsTab.assertIsFocused().assertIsSelected()
+        composeTestRule.onNodeWithText("Camera").performSemanticsAction(SemanticsActions.RequestFocus)
         pressKey(Key.DirectionRight)
         composeTestRule.onNodeWithText("Screenshots").assertIsFocused()
         captureScreenRoboImage("build/screenshots/gallery_tv_albums.png")
@@ -187,18 +195,23 @@ class GalleryActivityTest {
             composeTestRule.onAllNodesWithContentDescription("Share").fetchSemanticsNodes()
                 .isNotEmpty()
         }
-        // Down goes to the actions, and back goes back to the photo.
+        // Down goes to the current media of the carousel, up to the actions, and back goes back
+        // to the photo.
+        val currentCarouselItem = composeTestRule.onNode(isSelected())
         pressKey(Key.DirectionDown)
-        composeTestRule.onNodeWithContentDescription("Share").assertIsFocused()
+        currentCarouselItem.assertIsFocused()
         pressKey(Key.DirectionRight)
-        composeTestRule.onNodeWithContentDescription("Details").assertIsFocused()
+        composeTestRule.onAllNodes(isFocused()).assertCountEquals(1)
+        currentCarouselItem.assertIsNotFocused()
         captureScreenRoboImage("build/screenshots/gallery_tv_viewer.png")
+        pressKey(Key.DirectionUp)
+        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(1)
         scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithContentDescription("Details").assertIsNotFocused()
+        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
         scenario.onActivity { assertFalse(it.isFinishing) }
         // The center key hides the bars of a photo.
         pressKey(Key.DirectionCenter)
-        composeTestRule.onNodeWithContentDescription("Details").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Share").assertDoesNotExist()
     }
 }

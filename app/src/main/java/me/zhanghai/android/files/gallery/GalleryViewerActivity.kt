@@ -15,7 +15,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -77,6 +76,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.LifecycleStartEffect
@@ -98,6 +99,7 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.theme.LocalAppColors
+import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.MediaViewerError
 import me.zhanghai.android.files.ui.MediaViewerSystemUiEffect
 import me.zhanghai.android.files.ui.MediaViewerTopAppBar
@@ -134,12 +136,10 @@ class GalleryViewerActivity : AppActivity() {
     class Args(val albumId: Long?, val mediaId: Long) : ParcelableArgs
 }
 
-// The height of the bar of actions at the bottom, and of the carousel above them, above which the
-// controls of videos are.
-private val BOTTOM_BAR_HEIGHT = 48.dp
+// The height of the carousel at the bottom, above which the controls of videos are.
 private val CAROUSEL_ITEM_SIZE = 40.dp
-private val CAROUSEL_PADDING_TOP = 8.dp
-private val CAROUSEL_HEIGHT = CAROUSEL_ITEM_SIZE + CAROUSEL_PADDING_TOP
+private val CAROUSEL_PADDING = 6.dp
+private val CAROUSEL_HEIGHT = CAROUSEL_ITEM_SIZE + CAROUSEL_PADDING * 2
 private val BAR_COLOR = Color.Black.copy(alpha = 0.5f)
 // Stands out on the bars, where the usual overlay is hard to see.
 private val FOCUSED_COLOR = Color.White.copy(alpha = 0.3f)
@@ -176,7 +176,7 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
     val focusRequester = remember { FocusRequester() }
     var isFocused by remember { mutableStateOf(false) }
     var isControlFocused by remember { mutableStateOf(false) }
-    val bottomBarFocusRequester = remember { FocusRequester() }
+    val carouselFocusRequester = remember { FocusRequester() }
     MediaViewerSystemUiEffect(isUiShown)
     // On a remote, back from the controls goes back to the media.
     BackHandler(enabled = isControlFocused) { focusRequester.requestFocus() }
@@ -211,13 +211,13 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                         } else {
                             isUiShown = !isUiShown
                         }
-                    // Its down key goes to the actions.
+                    // Its down key goes to the carousel.
                     Key.DirectionDown -> {
                         isUiShown = true
                         coroutineScope.launch {
                             // Lets the bars appear.
                             withFrameNanos {}
-                            bottomBarFocusRequester.requestFocus()
+                            carouselFocusRequester.requestFocus()
                         }
                     }
                     else -> return@onKeyEvent false
@@ -264,6 +264,9 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                 ).format(dateTime),
                 subtitle = DateFormat.getTimeFormat(context).format(currentMedia.dateTaken),
                 actions = {
+                    ActionButton(
+                        R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share)
+                    ) { context.shareGalleryMedia(listOf(currentMedia)) }
                     OverflowMenu { dismiss ->
                         MenuItem(
                             R.drawable.open_with_icon_control_normal_24dp,
@@ -279,6 +282,20 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                             dismiss()
                             context.showGalleryMediaInFolder(currentMedia)
                         }
+                        MenuItem(
+                            R.drawable.information_icon_white_24dp,
+                            stringResource(R.string.gallery_details)
+                        ) {
+                            dismiss()
+                            isDetailsShown = true
+                        }
+                        MenuItem(
+                            R.drawable.delete_icon_control_normal_24dp,
+                            stringResource(R.string.delete)
+                        ) {
+                            dismiss()
+                            deleteMedia(listOf(currentMedia))
+                        }
                     }
                 }
             )
@@ -289,14 +306,11 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
             enter = fadeIn() + slideInVertically { it },
             exit = fadeOut() + slideOutVertically { it }
         ) {
-            GalleryViewerBottomBar(
+            GalleryViewerCarousel(
                 media = media,
                 currentIndex = pagerState.currentPage,
-                onCarouselClick = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
-                focusRequester = bottomBarFocusRequester,
-                onShare = { context.shareGalleryMedia(listOf(currentMedia)) },
-                onDetails = { isDetailsShown = true },
-                onDelete = { deleteMedia(listOf(currentMedia)) }
+                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
+                currentFocusRequester = carouselFocusRequester
             )
         }
     }
@@ -307,39 +321,21 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
     }
 }
 
-@Composable
-private fun GalleryViewerBottomBar(
-    media: List<GalleryMedia>,
-    currentIndex: Int,
-    onCarouselClick: (Int) -> Unit,
-    focusRequester: FocusRequester,
-    onShare: () -> Unit,
-    onDetails: () -> Unit,
-    onDelete: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(LocalAppColors.current.appBarContainer)
-            .windowInsetsPadding(WindowInsets.navigationBars)
-    ) {
-        GalleryViewerCarousel(media, currentIndex, onCarouselClick)
-        GalleryViewerActions(focusRequester, onShare, onDetails, onDelete)
-    }
-}
-
 // The media around the current one, small under the media which already has the bars over it.
 @Composable
 private fun GalleryViewerCarousel(
     media: List<GalleryMedia>,
     currentIndex: Int,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit,
+    currentFocusRequester: FocusRequester
 ) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()
+            .background(LocalAppColors.current.appBarContainer)
+            .windowInsetsPadding(WindowInsets.navigationBars)
             .height(CAROUSEL_HEIGHT)
-            .padding(top = CAROUSEL_PADDING_TOP)
+            .padding(vertical = CAROUSEL_PADDING)
     ) {
         // Any media can be in the middle, where the current one is.
         val sidePadding = (maxWidth - CAROUSEL_ITEM_SIZE) / 2
@@ -357,10 +353,16 @@ private fun GalleryViewerCarousel(
             horizontalArrangement = Arrangement.spacedBy(CAROUSEL_ITEM_SPACING)
         ) {
             itemsIndexed(media, key = { _, item -> item.id }) { index, item ->
+                val isCurrent = index == currentIndex
                 GalleryViewerCarouselItem(
                     media = item,
-                    isCurrent = index == currentIndex,
-                    onClick = { onClick(index) }
+                    isCurrent = isCurrent,
+                    onClick = { onClick(index) },
+                    modifier = if (isCurrent) {
+                        Modifier.focusRequester(currentFocusRequester)
+                    } else {
+                        Modifier
+                    }
                 )
             }
         }
@@ -371,13 +373,18 @@ private val CAROUSEL_ITEM_SPACING = 4.dp
 private val CAROUSEL_ITEM_SHAPE = RoundedCornerShape(6.dp)
 
 @Composable
-private fun GalleryViewerCarouselItem(media: GalleryMedia, isCurrent: Boolean, onClick: () -> Unit) {
+private fun GalleryViewerCarouselItem(
+    media: GalleryMedia,
+    isCurrent: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var isFocused by remember { mutableStateOf(false) }
     val onAppBar = LocalAppColors.current.onAppBar
     AsyncImage(
         model = media,
         contentDescription = null,
-        modifier = Modifier
+        modifier = modifier
             .size(CAROUSEL_ITEM_SIZE)
             .graphicsLayer { alpha = if (isCurrent || isFocused) 1f else CAROUSEL_OTHER_ALPHA }
             .clip(CAROUSEL_ITEM_SHAPE)
@@ -385,6 +392,7 @@ private fun GalleryViewerCarouselItem(media: GalleryMedia, isCurrent: Boolean, o
             .background(onAppBar.copy(alpha = CAROUSEL_PLACEHOLDER_ALPHA))
             .focusedBorder(isCurrent || isFocused, onAppBar, CAROUSEL_ITEM_SHAPE)
             .onFocusChanged { isFocused = it.isFocused }
+            .semantics { selected = isCurrent }
             .clickable(onClick = onClick),
         contentScale = ContentScale.Crop
     )
@@ -392,52 +400,6 @@ private fun GalleryViewerCarouselItem(media: GalleryMedia, isCurrent: Boolean, o
 
 private const val CAROUSEL_OTHER_ALPHA = 0.6f
 private const val CAROUSEL_PLACEHOLDER_ALPHA = 0.2f
-
-@Composable
-private fun GalleryViewerActions(
-    focusRequester: FocusRequester,
-    onShare: () -> Unit,
-    onDetails: () -> Unit,
-    onDelete: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .focusRequester(focusRequester)
-            .focusGroup()
-            .fillMaxWidth()
-            .height(BOTTOM_BAR_HEIGHT),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        GalleryViewerAction(
-            R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share), onShare
-        )
-        GalleryViewerAction(
-            R.drawable.information_icon_white_24dp, stringResource(R.string.gallery_details),
-            onDetails
-        )
-        GalleryViewerAction(
-            R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete), onDelete
-        )
-    }
-}
-
-@Composable
-private fun GalleryViewerAction(iconRes: Int, contentDescription: String, onClick: () -> Unit) {
-    var isFocused by remember { mutableStateOf(false) }
-    IconButton(
-        onClick = onClick,
-        modifier = Modifier
-            .onFocusChanged { isFocused = it.isFocused }
-            .background(if (isFocused) FOCUSED_COLOR else Color.Transparent, CircleShape)
-    ) {
-        Icon(
-            painter = painterResource(iconRes),
-            contentDescription = contentDescription,
-            tint = LocalAppColors.current.onAppBar
-        )
-    }
-}
 
 @Composable
 private fun GalleryPhotoPage(media: GalleryMedia, onClick: () -> Unit, modifier: Modifier) {
@@ -608,9 +570,7 @@ private fun GalleryVideoControls(player: ExoPlayer) {
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(
-                    start = 16.dp, end = 16.dp, bottom = BOTTOM_BAR_HEIGHT + CAROUSEL_HEIGHT
-                ),
+                .padding(start = 16.dp, end = 16.dp, bottom = CAROUSEL_HEIGHT),
             verticalAlignment = Alignment.CenterVertically
         ) {
             GalleryVideoTime((fraction * durationMillis).toLong())

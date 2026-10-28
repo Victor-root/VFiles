@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -36,8 +35,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -56,9 +53,7 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -219,7 +214,7 @@ private fun GalleryScreen(state: GalleryState?) {
                             }
                         },
                         actions = {
-                            if (album == null && !isTelevision) {
+                            if (album == null) {
                                 GalleryTabSwitch(tab = tab, onTabChange = onTabChange)
                             }
                         }
@@ -236,56 +231,50 @@ private fun GalleryScreen(state: GalleryState?) {
             end = scaffoldPadding.calculateEndPadding(layoutDirection),
             bottom = scaffoldPadding.calculateBottomPadding()
         )
-        // On a TV, the tabs are on the side where the D-pad reaches them from any row.
-        Row(modifier = Modifier.padding(top = if (isContentBehindTopBar) 0.dp else appBarHeight)) {
-            if (album == null && isTelevision) {
-                GalleryNavigationRail(tab = tab, onTabChange = onTabChange)
-            }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .focusRequester(contentFocusRequester)
-                    .onFocusChanged { contentHasFocus = it.hasFocus }
-                    .focusGroup()
-            ) {
-                when {
-                    state == null ->
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator()
+        Box(
+            modifier = Modifier
+                .padding(top = if (isContentBehindTopBar) 0.dp else appBarHeight)
+                .focusRequester(contentFocusRequester)
+                .onFocusChanged { contentHasFocus = it.hasFocus }
+                .focusGroup()
+        ) {
+            when {
+                state == null ->
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                state.isAccessDenied -> GalleryAccessDenied()
+                album != null || tab == GalleryTab.PHOTOS ->
+                    if (media.isEmpty()) {
+                        GalleryEmpty()
+                    } else {
+                        key(currentAlbumId) {
+                            GalleryMediaGrid(
+                                media = media,
+                                selectedIds = selectedIds,
+                                onMediaClick = {
+                                    if (selectedIds.isNotEmpty()) {
+                                        toggleSelection(listOf(it))
+                                    } else {
+                                        context.openGalleryViewer(album?.id, it)
+                                    }
+                                },
+                                onMediaLongClick = { toggleSelection(listOf(it)) },
+                                onSectionClick = toggleSelection,
+                                gridState = gridState,
+                                contentPadding = contentPadding
+                            )
                         }
-                    state.isAccessDenied -> GalleryAccessDenied()
-                    album != null || tab == GalleryTab.PHOTOS ->
-                        if (media.isEmpty()) {
-                            GalleryEmpty()
-                        } else {
-                            key(currentAlbumId) {
-                                GalleryMediaGrid(
-                                    media = media,
-                                    selectedIds = selectedIds,
-                                    onMediaClick = {
-                                        if (selectedIds.isNotEmpty()) {
-                                            toggleSelection(listOf(it))
-                                        } else {
-                                            context.openGalleryViewer(album?.id, it)
-                                        }
-                                    },
-                                    onMediaLongClick = { toggleSelection(listOf(it)) },
-                                    onSectionClick = toggleSelection,
-                                    gridState = gridState,
-                                    contentPadding = contentPadding
-                                )
-                            }
-                        }
-                    else ->
-                        GalleryAlbumGrid(
-                            albums = state.albums,
-                            onAlbumClick = { albumId = it.id },
-                            gridState = gridState,
-                            albumIdToFocus = albumIdToFocus,
-                            onAlbumFocused = { albumIdToFocus = null },
-                            contentPadding = contentPadding
-                        )
-                }
+                    }
+                else ->
+                    GalleryAlbumGrid(
+                        albums = state.albums,
+                        onAlbumClick = { albumId = it.id },
+                        gridState = gridState,
+                        albumIdToFocus = albumIdToFocus,
+                        onAlbumFocused = { albumIdToFocus = null },
+                        contentPadding = contentPadding
+                    )
             }
         }
     }
@@ -373,41 +362,6 @@ private fun GalleryTabSwitch(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit)
                         modifier = Modifier.size(20.dp)
                     )
                 }
-            )
-        }
-    }
-}
-
-@Composable
-private fun GalleryNavigationRail(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
-    // The D-pad enters the tabs on the current one, but not when the screen is shown, where the
-    // media are focused first instead.
-    val selectedFocusRequester = remember { FocusRequester() }
-    NavigationRail(
-        modifier = Modifier
-            .focusProperties {
-                onEnter = {
-                    if (requestedFocusDirection == FocusDirection.Enter) {
-                        cancelFocusChange()
-                    } else {
-                        selectedFocusRequester.requestFocus()
-                    }
-                }
-            }
-            .focusGroup()
-    ) {
-        for (item in GalleryTab.entries) {
-            val isSelected = item == tab
-            NavigationRailItem(
-                selected = isSelected,
-                onClick = { onTabChange(item) },
-                icon = { Icon(painterResource(item.iconRes), null) },
-                modifier = if (isSelected) {
-                    Modifier.focusRequester(selectedFocusRequester)
-                } else {
-                    Modifier
-                },
-                label = { Text(stringResource(item.labelRes)) }
             )
         }
     }
