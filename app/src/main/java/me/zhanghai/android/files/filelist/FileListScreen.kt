@@ -261,8 +261,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             }
         }
     }
-    // Only once the drawer is closed, since its items keep the focus while it closes, which
-    // doesn't happen until coming back when it was closed to open another screen.
+    // Only once the drawer is closed, since its items keep the focus while it closes.
     LaunchedEffect(drawerState) {
         snapshotFlow { drawerState.currentValue }.drop(1).collect {
             if (it == DrawerValue.Closed && inputModeManager.inputMode == InputMode.Keyboard) {

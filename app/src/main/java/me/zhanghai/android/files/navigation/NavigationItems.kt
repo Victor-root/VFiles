@@ -141,7 +141,6 @@ private class IntentStorageItem(
 
     override fun onClick(listener: Listener) {
         listener.launchIntent(storage.createIntent()!!)
-        listener.closeNavigationDrawer()
     }
 
     override fun onLongClick(listener: Listener): Boolean {
@@ -413,7 +412,6 @@ private class GalleryItem(private val standardDirectory: StandardDirectory) : Na
 
     override fun onClick(listener: Listener) {
         listener.navigate(GalleryDestination)
-        listener.closeNavigationDrawer()
     }
 
     override fun onLongClick(listener: Listener): Boolean {
@@ -656,6 +654,5 @@ private class DestinationMenuItem(
 
     override fun onClick(listener: Listener) {
         listener.navigate(destination)
-        listener.closeNavigationDrawer()
     }
 }

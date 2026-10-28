@@ -409,9 +409,8 @@ class FileListActivityTest {
             it.onBackPressedDispatcher.onBackPressed()
         }
         composeTestRule.waitForIdle()
-        // The drawer closed meanwhile, and the file focused before is focused again.
-        composeTestRule.onNodeWithText("notes.txt").assertIsDisplayed()
-        projects.assertIsFocused()
+        // The drawer stayed open, with its item focused before focused again.
+        settings.assertIsDisplayed().assertIsFocused()
     }
 
     @Test
