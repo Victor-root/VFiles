@@ -8,6 +8,7 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.roborazzi)
@@ -154,6 +155,13 @@ kotlin {
     }
 }
 
+// The profile is generated with ":app:generateBaselineProfile" on a connected device (see
+// baselineprofile/README.md), and kept in the main source set so that debug builds, which are
+// optimized like release ones, use it too.
+baselineProfile {
+    mergeIntoMain = true
+}
+
 // Always name the assembled APK "VFiles-v<versionName>.apk" so the file name carries the current
 // version. This is the name users see on the GitHub Releases page.
 androidComponents {
@@ -174,6 +182,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
+    // Installs the baseline profile when the app isn't installed from a store doing it.
+    implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime)
@@ -239,6 +249,8 @@ dependencies {
     implementation(libs.zhanghai.libarchive)
     implementation(libs.zhanghai.libselinux)
     implementation(libs.zhanghai.retrofile)
+
+    baselineProfile(project(":baselineprofile"))
 
     testImplementation(libs.androidx.test.core)
     testImplementation(platform(libs.compose.bom))
