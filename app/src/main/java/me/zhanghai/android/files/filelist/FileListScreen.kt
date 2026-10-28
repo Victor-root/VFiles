@@ -338,8 +338,9 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             isSpeedDialExpanded = isSpeedDialExpanded,
             onSpeedDialExpandedChange = { isSpeedDialExpanded = it },
             onNavigationIconClick = { openDrawer() },
-            // A D-pad left from a file in the first column opens the drawer.
-            onFileListLeftEdgeReached = {
+            // A D-pad left from a file in the first column, or from the drawer button like in an
+            // empty folder, opens the drawer.
+            onLeftEdgeReached = {
                 if (!hasPersistentDrawer) {
                     openDrawer()
                 }
@@ -464,7 +465,7 @@ private fun FileListScaffold(
     isSpeedDialExpanded: Boolean,
     onSpeedDialExpandedChange: (Boolean) -> Unit,
     onNavigationIconClick: () -> Unit,
-    onFileListLeftEdgeReached: () -> Unit,
+    onLeftEdgeReached: () -> Unit,
     listFocusRequester: FocusRequester,
     navigationIconFocusRequester: FocusRequester,
     persistentDrawer: (@Composable (Modifier) -> Unit)?,
@@ -532,6 +533,7 @@ private fun FileListScaffold(
                                         showHiddenFiles = showHiddenFiles,
                                         colors = appBarColors,
                                         onNavigationIconClick = onNavigationIconClick,
+                                        onNavigationIconLeftKey = onLeftEdgeReached,
                                         navigationIconFocusRequester = navigationIconFocusRequester
                                     )
                             }
@@ -619,7 +621,7 @@ private fun FileListScaffold(
                     gridState = gridState,
                     topPadding = if (isListBehindAppBar) appBarHeight else 0.dp,
                     bottomPadding = contentPadding.calculateBottomPadding(),
-                    onLeftEdgeReached = onFileListLeftEdgeReached,
+                    onLeftEdgeReached = onLeftEdgeReached,
                     // On a D-pad, up from the first row goes to the drawer button rather than to
                     // the button right above it, and right from a menu at the end goes to the add
                     // button.
@@ -655,6 +657,7 @@ private fun FileListMainAppBar(
     showHiddenFiles: Boolean,
     colors: FileListAppBarColors,
     onNavigationIconClick: () -> Unit,
+    onNavigationIconLeftKey: () -> Unit,
     navigationIconFocusRequester: FocusRequester
 ) {
     val context = LocalContext.current
@@ -679,7 +682,16 @@ private fun FileListMainAppBar(
             } else {
                 IconButton(
                     onClick = onNavigationIconClick,
-                    modifier = Modifier.focusRequester(navigationIconFocusRequester)
+                    modifier = Modifier
+                        .focusRequester(navigationIconFocusRequester)
+                        .onKeyEvent {
+                            val isLeft = it.type == KeyEventType.KeyDown &&
+                                it.key == Key.DirectionLeft
+                            if (isLeft) {
+                                onNavigationIconLeftKey()
+                            }
+                            isLeft
+                        }
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.menu_icon_control_normal_24dp),

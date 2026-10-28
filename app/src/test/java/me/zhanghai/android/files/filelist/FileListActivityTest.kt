@@ -17,6 +17,7 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
@@ -381,7 +382,14 @@ class FileListActivityTest {
         empty.requestFocus()
         empty.performKeyInput { pressKey(Key.DirectionCenter) }
         waitForText("No files")
-        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+        val navigationIcon = composeTestRule.onNodeWithContentDescription("Open navigation drawer")
+        navigationIcon.assertIsFocused()
+        // Left opens the drawer from there too.
+        composeTestRule.onNodeWithText("Internal storage").assertIsNotDisplayed()
+        navigationIcon.performKeyInput { pressKey(Key.DirectionLeft) }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Internal storage").assertIsDisplayed()
+        navigationIcon.assertIsNotFocused()
     }
 
     @Test
