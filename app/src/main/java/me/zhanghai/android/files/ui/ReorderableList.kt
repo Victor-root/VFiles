@@ -88,8 +88,14 @@ class ReorderableListState internal constructor(
         }
         if (targetItem != null) {
             // The dragged item jumps to its new position, compensate so that it stays under the
-            // finger.
-            draggedItemOffset += draggedItem.offset - targetItem.offset
+            // finger. Moving down, it ends where the target ended, which differs from where the
+            // target started when they aren't as tall.
+            val newOffset = if (targetItem.index > draggedItem.index) {
+                targetItem.offset + targetItem.size - draggedItem.size
+            } else {
+                targetItem.offset
+            }
+            draggedItemOffset += draggedItem.offset - newOffset
             moveItem(draggedItem.index, targetItem.index)
         }
         val layoutInfo = lazyListState.layoutInfo
