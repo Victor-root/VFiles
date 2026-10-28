@@ -243,14 +243,10 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
             enter = fadeIn() + slideInVertically { -it },
             exit = fadeOut() + slideOutVertically { -it }
         ) {
-            // Opaque in the color of the app bar, like the bar of actions.
-            val appColors = LocalAppColors.current
             val dateTime = Instant.ofEpochMilli(currentMedia.dateTaken)
                 .atZone(ZoneId.systemDefault())
             val locale = LocalConfiguration.current.locales[0]
             MediaViewerTopAppBar(
-                containerColor = appColors.appBarContainer,
-                contentColor = appColors.onAppBar,
                 title = DateTimeFormatter.ofPattern(
                     DateFormat.getBestDateTimePattern(locale, "dMMMMyyyy"), locale
                 ).format(dateTime),

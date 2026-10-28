@@ -28,31 +28,29 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.theme.LocalAppColors
 import kotlin.math.abs
 
 // The pieces shared by the full screen viewers of photos and videos.
 
-private val APP_BAR_COLOR = Color.Black.copy(alpha = 0.5f)
-
-/** An app bar over the media, translucent with white content unless given other colors. */
+/** An app bar over the media, opaque in the color of the app bar of the other screens. */
 @Composable
 fun MediaViewerTopAppBar(
     title: String,
     subtitle: String?,
-    actions: @Composable RowScope.() -> Unit,
-    containerColor: Color = APP_BAR_COLOR,
-    contentColor: Color = Color.White
+    actions: @Composable RowScope.() -> Unit
 ) {
+    val appColors = LocalAppColors.current
     AppTopAppBar(
         title = title,
         subtitle = subtitle,
         actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = containerColor,
-            navigationIconContentColor = contentColor,
-            titleContentColor = contentColor,
-            actionIconContentColor = contentColor,
-            subtitleContentColor = contentColor
+            containerColor = appColors.appBarContainer,
+            navigationIconContentColor = appColors.onAppBar,
+            titleContentColor = appColors.onAppBar,
+            actionIconContentColor = appColors.onAppBar,
+            subtitleContentColor = appColors.onAppBar
         )
     )
 }

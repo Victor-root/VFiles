@@ -401,7 +401,31 @@ private val standardDirectoryItems: List<NavigationItem>
     get() =
         StandardDirectoriesLiveData.valueCompat
             .filter { it.isEnabled }
-            .map { StandardDirectoryItem(it) }
+            .map { if (it.isGallery) GalleryItem(it) else StandardDirectoryItem(it) }
+
+private class GalleryItem(private val standardDirectory: StandardDirectory) : NavigationItem() {
+    override val id: Long
+        get() = standardDirectory.id
+
+    override val iconRes: Int
+        @DrawableRes
+        get() = standardDirectory.iconRes
+
+    override val iconColor: NavigationIconColor?
+        get() = standardDirectory.iconColor
+
+    override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
+
+    override fun onClick(listener: Listener) {
+        listener.launchIntent(GalleryActivity::class.createIntent())
+        listener.closeNavigationDrawer()
+    }
+
+    override fun onLongClick(listener: Listener): Boolean {
+        listener.launchIntent(StandardDirectoryListActivity::class.createIntent())
+        return true
+    }
+}
 
 private class StandardDirectoryItem(
     private val standardDirectory: StandardDirectory
@@ -465,6 +489,11 @@ private val defaultStandardDirectories: List<StandardDirectory>
 
 // @see android.os.Environment#STANDARD_DIRECTORIES
 private val DEFAULT_STANDARD_DIRECTORIES = listOf(
+    StandardDirectory(
+        R.drawable.gallery_icon_white_24dp, R.string.navigation_gallery,
+        StandardDirectory.GALLERY_KEY, true,
+        NavigationIconColor.PINK
+    ),
     StandardDirectory(
         R.drawable.camera_icon_white_24dp, R.string.navigation_standard_directory_dcim,
         Environment.DIRECTORY_DCIM, true,
@@ -577,12 +606,8 @@ private class BookmarkDirectoryItem(
 }
 
 private val menuItems: List<NavigationItem>
-    @Size(4)
+    @Size(3)
     get() = listOf(
-        IntentMenuItem(
-            R.drawable.gallery_icon_white_24dp, R.string.navigation_gallery,
-            GalleryActivity::class.createIntent()
-        ),
         IntentMenuItem(
             R.drawable.ftp_server_icon_white_24dp, R.string.navigation_ftp_server,
             FtpServerActivity::class.createIntent()

@@ -715,6 +715,7 @@
     <string name="settings_behavior_title">Comportement</string>
     <string name="settings_default_directory_title">Dossier par défaut</string>
     <string name="settings_standard_directories_title">Dossiers standard</string>
+    <string name="settings_standard_directory_gallery_summary">Photos et vidéos de l\'appareil</string>
     <string name="settings_standard_directories_summary_empty">Aucuns dossiers standard activés</string>
     <string name="settings_bookmark_directories_title">Dossiers de marque-pages</string>
     <string name="settings_bookmark_directories_summary_empty">Pas de dossiers de marque-pages</string>
