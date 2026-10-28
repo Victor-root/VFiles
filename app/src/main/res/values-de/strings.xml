@@ -605,6 +605,27 @@
     <string name="video_player_title">Videoplayer</string>
     <string name="play">Abspielen</string>
     <string name="pause">Pause</string>
+    <string name="music_title">Musik</string>
+    <string name="music_tracks">Titel</string>
+    <string name="music_albums">Alben</string>
+    <string name="music_artists">Interpreten</string>
+    <string name="music_empty">Keine Musik</string>
+    <string name="music_access_denied">Erlaube den Zugriff auf Dateien, um deine Musik zu sehen</string>
+    <string name="music_shuffle_all">Alle zufällig abspielen</string>
+    <string name="music_unknown_artist">Unbekannter Interpret</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d Titel</item>
+        <item quantity="other">%1$,d Titel</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d Album</item>
+        <item quantity="other">%1$,d Alben</item>
+    </plurals>
+    <string name="music_player_title">Musikplayer</string>
+    <string name="music_shuffle">Zufallswiedergabe</string>
+    <string name="music_repeat">Wiederholen</string>
+    <string name="music_previous">Zurück</string>
+    <string name="music_next">Weiter</string>
     <string name="image_viewer_title">Bildbetrachter</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Speichern als</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Standardordner</string>
     <string name="settings_standard_directories_summary_empty">Keine Standardordner aktiviert</string>
     <string name="settings_standard_directory_gallery_summary">Fotos und Videos des Geräts</string>
+    <string name="settings_standard_directory_music_summary">Titel des Geräts</string>
     <string name="settings_bookmark_directories_title">Lesezeichenordner</string>
     <string name="settings_bookmark_directories_summary_empty">Keine Lesezeichenordner</string>
     <string name="settings_root_strategy_title">Root Zugriffsmodus</string>

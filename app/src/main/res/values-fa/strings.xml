@@ -603,6 +603,27 @@
     <string name="video_player_title">پخش‌کنندهٔ ویدیو</string>
     <string name="play">پخش</string>
     <string name="pause">مکث</string>
+    <string name="music_title">موسیقی</string>
+    <string name="music_tracks">آهنگ‌ها</string>
+    <string name="music_albums">آلبوم‌ها</string>
+    <string name="music_artists">هنرمندان</string>
+    <string name="music_empty">بدون موسیقی</string>
+    <string name="music_access_denied">برای دیدن موسیقی‌هایتان، اجازهٔ دسترسی به پرونده‌ها را بدهید</string>
+    <string name="music_shuffle_all">پخش تصادفی همه</string>
+    <string name="music_unknown_artist">هنرمند ناشناس</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d آهنگ</item>
+        <item quantity="other">%1$,d آهنگ</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d آلبوم</item>
+        <item quantity="other">%1$,d آلبوم</item>
+    </plurals>
+    <string name="music_player_title">پخش‌کنندهٔ موسیقی</string>
+    <string name="music_shuffle">پخش تصادفی</string>
+    <string name="music_repeat">تکرار</string>
+    <string name="music_previous">قبلی</string>
+    <string name="music_next">بعدی</string>
     <string name="image_viewer_title">نمایشگر تصویر</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">ذخیره به عنوان</string>
@@ -669,6 +690,7 @@
     <string name="settings_standard_directories_title">شاخه‌های استاندارد</string>
     <string name="settings_standard_directories_summary_empty">هیچ شاخهٔ استانداردی به کار انداخته نشده است</string>
     <string name="settings_standard_directory_gallery_summary">عکس‌ها و ویدیوهای افزاره</string>
+    <string name="settings_standard_directory_music_summary">آهنگ‌های افزاره</string>
     <string name="settings_bookmark_directories_title">شاخه‌های نشان شده</string>
     <string name="settings_bookmark_directories_summary_empty">بدون شاخهٔ نشان شده</string>
     <string name="settings_root_strategy_title">حالت دسترسی ریشه</string>

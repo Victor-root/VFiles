@@ -605,6 +605,27 @@
     <string name="video_player_title">Видеоплейър</string>
     <string name="play">Пускане</string>
     <string name="pause">Пауза</string>
+    <string name="music_title">Музика</string>
+    <string name="music_tracks">Песни</string>
+    <string name="music_albums">Албуми</string>
+    <string name="music_artists">Изпълнители</string>
+    <string name="music_empty">Няма музика</string>
+    <string name="music_access_denied">Разрешете достъп до файловете, за да виждате музиката си</string>
+    <string name="music_shuffle_all">Разбъркване на всички</string>
+    <string name="music_unknown_artist">Неизвестен изпълнител</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d песен</item>
+        <item quantity="other">%1$,d песни</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d албум</item>
+        <item quantity="other">%1$,d албума</item>
+    </plurals>
+    <string name="music_player_title">Музикален плейър</string>
+    <string name="music_shuffle">Разбъркване</string>
+    <string name="music_repeat">Повторение</string>
+    <string name="music_previous">Предишна</string>
+    <string name="music_next">Следваща</string>
     <string name="image_viewer_title">Преглед на изображение</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Запазване като</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Стандартни папки</string>
     <string name="settings_standard_directories_summary_empty">Няма стандартни папки</string>
     <string name="settings_standard_directory_gallery_summary">Снимки и видеоклипове на устройството</string>
+    <string name="settings_standard_directory_music_summary">Песни на устройството</string>
     <string name="settings_bookmark_directories_title">Отметнати папки</string>
     <string name="settings_bookmark_directories_summary_empty">Няма отметнати папки</string>
     <string name="settings_root_strategy_title">Достъп от суперпотребителя</string>

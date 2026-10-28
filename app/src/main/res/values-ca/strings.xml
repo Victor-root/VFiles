@@ -605,6 +605,27 @@
     <string name="video_player_title">Reproductor de vídeo</string>
     <string name="play">Reprodueix</string>
     <string name="pause">Pausa</string>
+    <string name="music_title">Música</string>
+    <string name="music_tracks">Cançons</string>
+    <string name="music_albums">Àlbums</string>
+    <string name="music_artists">Artistes</string>
+    <string name="music_empty">No hi ha música</string>
+    <string name="music_access_denied">Permeteu l\'accés als fitxers per veure la vostra música</string>
+    <string name="music_shuffle_all">Reprodueix-ho tot aleatòriament</string>
+    <string name="music_unknown_artist">Artista desconegut</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d cançó</item>
+        <item quantity="other">%1$,d cançons</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d àlbum</item>
+        <item quantity="other">%1$,d àlbums</item>
+    </plurals>
+    <string name="music_player_title">Reproductor de música</string>
+    <string name="music_shuffle">Aleatori</string>
+    <string name="music_repeat">Repeteix</string>
+    <string name="music_previous">Anterior</string>
+    <string name="music_next">Següent</string>
     <string name="image_viewer_title">Visor d\'imatges</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Desa com a</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Carpetes estàndard</string>
     <string name="settings_standard_directories_summary_empty">No hi ha cap carpeta estàndard activada</string>
     <string name="settings_standard_directory_gallery_summary">Fotos i vídeos del dispositiu</string>
+    <string name="settings_standard_directory_music_summary">Cançons del dispositiu</string>
     <string name="settings_bookmark_directories_title">Carpetes de marcadors</string>
     <string name="settings_bookmark_directories_summary_empty">No hi ha cap carpeta de marcadors</string>
     <string name="settings_root_strategy_title">Mode d\'accés root</string>

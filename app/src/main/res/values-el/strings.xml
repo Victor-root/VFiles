@@ -605,6 +605,27 @@
     <string name="video_player_title">Πρόγραμμα αναπαραγωγής βίντεο</string>
     <string name="play">Αναπαραγωγή</string>
     <string name="pause">Παύση</string>
+    <string name="music_title">Μουσική</string>
+    <string name="music_tracks">Τραγούδια</string>
+    <string name="music_albums">Άλμπουμ</string>
+    <string name="music_artists">Καλλιτέχνες</string>
+    <string name="music_empty">Δεν υπάρχει μουσική</string>
+    <string name="music_access_denied">Επιτρέψτε την πρόσβαση στα αρχεία για να βλέπετε τη μουσική σας</string>
+    <string name="music_shuffle_all">Τυχαία αναπαραγωγή όλων</string>
+    <string name="music_unknown_artist">Άγνωστος καλλιτέχνης</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d τραγούδι</item>
+        <item quantity="other">%1$,d τραγούδια</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d άλμπουμ</item>
+        <item quantity="other">%1$,d άλμπουμ</item>
+    </plurals>
+    <string name="music_player_title">Πρόγραμμα αναπαραγωγής μουσικής</string>
+    <string name="music_shuffle">Τυχαία σειρά</string>
+    <string name="music_repeat">Επανάληψη</string>
+    <string name="music_previous">Προηγούμενο</string>
+    <string name="music_next">Επόμενο</string>
     <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Αποθήκευση ως</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Τυπικοί φάκελοι</string>
     <string name="settings_standard_directories_summary_empty">Χωρίς ενεργούς τυπικούς φακέλους</string>
     <string name="settings_standard_directory_gallery_summary">Φωτογραφίες και βίντεο της συσκευής</string>
+    <string name="settings_standard_directory_music_summary">Τραγούδια της συσκευής</string>
     <string name="settings_bookmark_directories_title">Φάκελοι σελιδοδείκτες</string>
     <string name="settings_bookmark_directories_summary_empty">Χωρίς φακέλους σελιδοδείκτες</string>
     <string name="settings_root_strategy_title">Λειτουργία πρόσβασης ρίζας</string>
