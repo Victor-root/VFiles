@@ -81,6 +81,7 @@ import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.HideOnScrollTopBar
 import me.zhanghai.android.files.ui.NavigateUpButton
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
+import me.zhanghai.android.files.ui.sampleStatusBarContent
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isTelevision
@@ -237,6 +238,7 @@ private fun GalleryScreen(state: GalleryState?) {
         Box(
             modifier = Modifier
                 .padding(top = if (isContentBehindTopBar) 0.dp else appBarHeight)
+                .sampleStatusBarContent(appBarState)
                 .focusRequester(contentFocusRequester)
                 .onFocusChanged { contentHasFocus = it.hasFocus }
                 .focusGroup()

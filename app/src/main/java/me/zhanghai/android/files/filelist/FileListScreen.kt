@@ -138,6 +138,7 @@ import me.zhanghai.android.files.ui.SpeedDialAction
 import me.zhanghai.android.files.ui.SpeedDialScrim
 import me.zhanghai.android.files.ui.asFastScrollable
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
+import me.zhanghai.android.files.ui.sampleStatusBarContent
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
@@ -577,7 +578,11 @@ private fun FileListScaffold(
         }
     ) { contentPadding ->
         val appBarHeight = contentPadding.calculateTopPadding()
-        Row(modifier = Modifier.padding(top = if (isListBehindAppBar) 0.dp else appBarHeight)) {
+        Row(
+            modifier = Modifier
+                .padding(top = if (isListBehindAppBar) 0.dp else appBarHeight)
+                .sampleStatusBarContent(appBarState)
+        ) {
             if (persistentDrawer != null) {
                 AnimatedVisibility(
                     visible = isPersistentDrawerOpen,
