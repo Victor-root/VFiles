@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -49,9 +48,9 @@ import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity
 import me.zhanghai.android.files.ui.AppScaffold
+import me.zhanghai.android.files.ui.ReorderDragHandle
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
-import me.zhanghai.android.files.ui.reorderDragHandle
 import me.zhanghai.android.files.ui.reorderableItem
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.observeAsStateCompat
@@ -180,14 +179,10 @@ private fun BookmarkDirectoryItem(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-        Icon(
-            painter = painterResource(R.drawable.drag_handle_icon_white_24dp),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(start = 4.dp, end = 4.dp)
-                .size(48.dp)
-                .reorderDragHandle(reorderableListState, key)
-                .padding(12.dp),
+        ReorderDragHandle(
+            state = reorderableListState,
+            key = key,
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
             tint = iconTint
         )
     }

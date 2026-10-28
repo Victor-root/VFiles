@@ -50,6 +50,7 @@
     <string name="pref_key_file_name_ellipsize">key_file_name_ellipsize</string>
     <string name="pref_default_value_file_name_ellipsize">1</string>
     <string name="pref_key_standard_directory_settings">key_standard_directories</string>
+    <string name="pref_key_standard_directory_order">key_standard_directory_order</string>
     <string name="pref_key_bookmark_directories">key_bookmark_directories</string>
     <string name="pref_key_storage_volume_customizations">key_storage_volume_customizations</string>
     <string name="pref_key_file_open_default_apps">key_file_open_default_apps</string>

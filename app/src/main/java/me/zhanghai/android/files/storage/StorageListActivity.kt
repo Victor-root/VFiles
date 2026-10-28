@@ -37,9 +37,9 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AppScaffold
+import me.zhanghai.android.files.ui.ReorderDragHandle
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
-import me.zhanghai.android.files.ui.reorderDragHandle
 import me.zhanghai.android.files.ui.reorderableItem
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.observeAsStateCompat
@@ -146,13 +146,7 @@ private fun StorageItem(
             Icon(painter = painterResource(storage.iconRes), contentDescription = null)
         },
         trailingContent = {
-            Icon(
-                painter = painterResource(R.drawable.drag_handle_icon_white_24dp),
-                contentDescription = null,
-                modifier = Modifier
-                    .reorderDragHandle(reorderableListState, storage.id)
-                    .padding(12.dp)
-            )
+            ReorderDragHandle(state = reorderableListState, key = storage.id)
         }
     )
 }

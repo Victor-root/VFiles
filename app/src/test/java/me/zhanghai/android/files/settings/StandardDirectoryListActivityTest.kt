@@ -16,6 +16,7 @@ import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -25,8 +26,10 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.pressKey
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.StandardDirectorySettings
+import me.zhanghai.android.files.navigation.standardDirectories
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.night.NightMode
@@ -53,6 +56,7 @@ class StandardDirectoryListActivityTest {
     fun resetSettings() {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
         Settings.STANDARD_DIRECTORY_SETTINGS.putValue(emptyList())
+        Settings.STANDARD_DIRECTORY_ORDER.putValue(emptyList())
     }
 
     private fun scrollTo(text: String): SemanticsNodeInteraction {
@@ -96,6 +100,46 @@ class StandardDirectoryListActivityTest {
         assertEquals(
             listOf(StandardDirectorySettings(Environment.DIRECTORY_ALARMS, null, false)),
             Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat
+        )
+    }
+
+    @Test
+    fun dpadReordersStandardDirectories() {
+        composeTestRule.runOnUiThread { composeTestRule.activity.leaveTouchMode() }
+        composeTestRule.onAllNodesWithContentDescription("Move")[1]
+            .performSemanticsAction(SemanticsActions.RequestFocus)
+        val root = composeTestRule.onRoot()
+        // The center key picks DCIM up, down moves it, and the center key puts it down.
+        root.performKeyInput { pressKey(Key.DirectionCenter) }
+        root.performKeyInput { pressKey(Key.DirectionDown) }
+        root.performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        assertEquals(
+            listOf(
+                StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
+                Environment.DIRECTORY_DCIM
+            ),
+            StandardDirectoriesLiveData.valueCompat.take(3).map { it.key }
+        )
+        captureScreenRoboImage("build/screenshots/standard_directory_list_reordered.png")
+    }
+
+    @Test
+    fun keepsNewStandardDirectoryInPlaceWhenReordered() {
+        // DCIM moved below Documents, before Pictures was added.
+        Settings.STANDARD_DIRECTORY_ORDER.putValue(
+            listOf(
+                StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
+                Environment.DIRECTORY_DCIM, Environment.DIRECTORY_MUSIC
+            )
+        )
+        assertEquals(
+            listOf(
+                StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
+                Environment.DIRECTORY_PICTURES, Environment.DIRECTORY_DCIM,
+                Environment.DIRECTORY_MUSIC
+            ),
+            standardDirectories.take(5).map { it.key }
         )
     }
 

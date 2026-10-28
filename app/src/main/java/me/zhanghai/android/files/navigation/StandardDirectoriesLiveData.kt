@@ -13,6 +13,7 @@ object StandardDirectoriesLiveData : MediatorLiveData<List<StandardDirectory>>()
         // Initialize value before we have any active observer.
         loadValue()
         addSource(Settings.STANDARD_DIRECTORY_SETTINGS) { loadValue() }
+        addSource(Settings.STANDARD_DIRECTORY_ORDER) { loadValue() }
     }
 
     private fun loadValue() {

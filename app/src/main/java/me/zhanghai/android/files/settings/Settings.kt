@@ -146,6 +146,11 @@ object Settings {
     val STANDARD_DIRECTORY_SETTINGS: SettingLiveData<List<StandardDirectorySettings>> =
         ParcelValueSettingLiveData(R.string.pref_key_standard_directory_settings, emptyList())
 
+    // The keys of the standard directories in the order chosen by the user, or empty for the
+    // default one.
+    val STANDARD_DIRECTORY_ORDER: SettingLiveData<List<String>> =
+        ParcelValueSettingLiveData(R.string.pref_key_standard_directory_order, emptyList())
+
     val BOOKMARK_DIRECTORIES: SettingLiveData<List<BookmarkDirectory>> =
         ParcelValueSettingLiveData(R.string.pref_key_bookmark_directories, emptyList())
 

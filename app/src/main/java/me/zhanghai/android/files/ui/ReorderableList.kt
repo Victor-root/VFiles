@@ -5,10 +5,19 @@
 
 package me.zhanghai.android.files.ui
 
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -20,11 +29,23 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import me.zhanghai.android.files.R
 
 /**
  * Lets the items of a lazy list be reordered by dragging their handle. Items move as soon as the
@@ -41,6 +62,10 @@ class ReorderableListState internal constructor(
     private var draggedItemOffset by mutableFloatStateOf(0f)
 
     internal var scrollSpeed by mutableFloatStateOf(0f)
+        private set
+
+    // An item picked up with a D-pad, which moves without scrolling frame by frame.
+    internal var isMovingWithKeys by mutableStateOf(false)
         private set
 
     internal fun onDragStart(key: Any) {
@@ -77,8 +102,48 @@ class ReorderableListState internal constructor(
         } / 4
     }
 
+    // A D-pad picks the item up, moves it by one with each key, and puts it down.
+    internal fun onKeyEvent(event: KeyEvent, key: Any): Boolean {
+        if (event.type != KeyEventType.KeyDown) {
+            return false
+        }
+        when (event.key) {
+            Key.DirectionCenter, Key.Enter, Key.NumPadEnter ->
+                if (draggedItemKey == key) {
+                    onDragEnd()
+                } else {
+                    onDragStart(key)
+                    isMovingWithKeys = true
+                }
+            Key.DirectionUp, Key.DirectionDown -> {
+                if (draggedItemKey != key) {
+                    return false
+                }
+                val layoutInfo = lazyListState.layoutInfo
+                val index = draggedItemInfo?.index ?: return true
+                val targetIndex = index + if (event.key == Key.DirectionUp) -1 else 1
+                if (targetIndex in 0..<layoutInfo.totalItemsCount) {
+                    onMove(index, targetIndex)
+                    // Keeps the moved item in view.
+                    val firstVisibleIndex = layoutInfo.visibleItemsInfo.first().index
+                    val lastVisibleIndex = layoutInfo.visibleItemsInfo.last().index
+                    if (targetIndex <= firstVisibleIndex) {
+                        lazyListState.requestScrollToItem(targetIndex)
+                    } else if (targetIndex >= lastVisibleIndex) {
+                        lazyListState.requestScrollToItem(
+                            firstVisibleIndex + targetIndex - lastVisibleIndex + 1
+                        )
+                    }
+                }
+            }
+            else -> return false
+        }
+        return true
+    }
+
     internal fun onDragEnd() {
         draggedItemKey = null
+        isMovingWithKeys = false
         draggedItemOffset = 0f
         scrollSpeed = 0f
     }
@@ -103,8 +168,8 @@ fun rememberReorderableListState(
     val state = remember(lazyListState) {
         ReorderableListState(lazyListState) { from, to -> currentOnMove(from, to) }
     }
-    // Scrolls when the dragged item reaches an edge of the list.
-    val isDragging = state.draggedItemKey != null
+    // Scrolls when the item dragged with a pointer reaches an edge of the list.
+    val isDragging = state.draggedItemKey != null && !state.isMovingWithKeys
     LaunchedEffect(state, isDragging) {
         while (isDragging) {
             withFrameNanos {}
@@ -133,8 +198,40 @@ fun Modifier.reorderableItem(state: ReorderableListState, key: Any): Modifier {
     )
 }
 
-/** Makes this element the handle that drags the item with [key]. */
-fun Modifier.reorderDragHandle(state: ReorderableListState, key: Any): Modifier =
+/**
+ * The handle that drags the item with [key], or moves it with a D-pad: the center key picks the item
+ * up or puts it down, and up and down move it meanwhile.
+ */
+@Composable
+fun ReorderDragHandle(
+    state: ReorderableListState,
+    key: Any,
+    modifier: Modifier = Modifier,
+    tint: Color = LocalContentColor.current
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    Icon(
+        painter = painterResource(R.drawable.drag_handle_icon_white_24dp),
+        contentDescription = stringResource(R.string.reorder_drag_handle),
+        modifier = modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .reorderDragHandle(state, key)
+            .onFocusChanged {
+                // Puts the item down when the D-pad leaves it.
+                if (!it.isFocused && state.draggedItemKey == key) {
+                    state.onDragEnd()
+                }
+            }
+            .onKeyEvent { state.onKeyEvent(it, key) }
+            .focusable(interactionSource = interactionSource)
+            .indication(interactionSource, ripple())
+            .padding(12.dp),
+        tint = tint
+    )
+}
+
+private fun Modifier.reorderDragHandle(state: ReorderableListState, key: Any): Modifier =
     pointerInput(state, key) {
         detectDragGestures(
             onDragStart = { state.onDragStart(key) },

@@ -776,4 +776,5 @@
 
     <string name="onboarding_install_apps_title">Installation d\'applications</string>
     <string name="onboarding_install_apps_description">Autorisez %1$s à installer directement des fichiers APK. Vous pourrez ainsi installer des applications à partir de fichiers téléchargés ou reçus, sans passer par un installateur tiers.</string>
+    <string name="reorder_drag_handle">Déplacer</string>
 </resources>
