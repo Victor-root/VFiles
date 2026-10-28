@@ -137,13 +137,15 @@ private suspend fun ProducerScope<LanSmbServer>.sendServersByScanningSubnet(
     }
 }
 
-private fun Inet4Address.getSubnetAddresses(): Sequence<Inet4Address> =
+// Without the addresses of the network and of its broadcast, which a server may answer too, like
+// with its name again.
+internal fun Inet4Address.getSubnetAddresses(): Sequence<Inet4Address> =
     sequence {
         val addressBytes = address
         for (i in 0..99) {
             for (j in 0..2) {
                 val lastBit = 100 * j + i
-                if (lastBit > 255) {
+                if (lastBit !in 1..254) {
                     continue
                 }
                 addressBytes[3] = lastBit.toByte()
