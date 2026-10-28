@@ -370,11 +370,14 @@ class FileListController(
     }
 
     // If the user picked a default app for this file's category (Settings > Default apps), open it
-    // directly with that app instead of asking, but only when the app can actually handle the file,
-    // otherwise fall back to the normal handling.
+    // directly with that app instead of asking, or else with the viewer of this app when there's
+    // one, but only when the app can actually handle the file, otherwise fall back to the normal
+    // handling.
     private fun applyDefaultAppPackage(intent: Intent, mimeType: MimeType) {
         val category = FileOpenAppCategory.forMimeType(mimeType) ?: return
-        val packageName = FileOpenDefaultApps.getPackage(category) ?: return
+        val packageName = FileOpenDefaultApps.getPackage(category)
+            ?: activity.packageName.takeIf { category.builtInViewerTitleRes != null }
+            ?: return
         val canHandle = Intent(intent).setPackage(packageName)
             .resolveActivity(activity.packageManager) != null
         if (canHandle) {

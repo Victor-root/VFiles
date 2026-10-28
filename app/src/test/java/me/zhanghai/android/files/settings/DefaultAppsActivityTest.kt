@@ -10,11 +10,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isSelectable
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
@@ -83,7 +85,8 @@ class DefaultAppsActivityTest {
     @Test
     fun picksAppForCategory() {
         composeTestRule.onNodeWithText("Images").performClick()
-        composeTestRule.onNode(hasText("Ask every time") and isSelectable()).assertIsSelected()
+        // Images open with the viewer of the app by default.
+        composeTestRule.onNode(hasText("Image viewer") and isSelectable()).assertIsSelected()
         captureScreenRoboImage("build/screenshots/default_apps_picker.png")
         composeTestRule.onNode(hasText("Gallery") and isSelectable()).performClick()
         assertEquals(GALLERY_PACKAGE, FileOpenDefaultApps.getPackage(FileOpenAppCategory.IMAGE))
@@ -93,12 +96,19 @@ class DefaultAppsActivityTest {
     }
 
     @Test
-    fun askEveryTimeClearsApp() {
+    fun builtInViewerClearsApp() {
         FileOpenDefaultApps.setPackage(FileOpenAppCategory.IMAGE, GALLERY_PACKAGE)
         composeTestRule.onNodeWithText("Gallery").assertIsDisplayed()
         composeTestRule.onNodeWithText("Images").performClick()
-        composeTestRule.onNode(hasText("Ask every time") and isSelectable()).performClick()
+        composeTestRule.onNode(hasText("Image viewer") and isSelectable()).performClick()
         assertEquals(null, FileOpenDefaultApps.getPackage(FileOpenAppCategory.IMAGE))
+        composeTestRule.onNodeWithText("Image viewer").assertIsDisplayed()
+    }
+
+    @Test
+    fun asksEveryTimeWithoutBuiltInViewer() {
+        // Audio, videos, PDF and text.
+        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(4)
     }
 
     companion object {

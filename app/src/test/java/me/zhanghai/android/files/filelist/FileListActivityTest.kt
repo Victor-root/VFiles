@@ -201,6 +201,15 @@ class FileListActivityTest {
     }
 
     @Test
+    fun opensImageWithImageViewer() {
+        val scenario = launch()
+        composeTestRule.onNodeWithText("photo.jpg").performClick()
+        scenario.onActivity {
+            assertEquals(it.packageName, shadowOf(it).nextStartedActivity.`package`)
+        }
+    }
+
+    @Test
     fun selectsFiles() {
         launch()
         composeTestRule.onNodeWithText("notes.txt").performTouchInput { longClick() }
