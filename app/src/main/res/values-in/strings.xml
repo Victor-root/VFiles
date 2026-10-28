@@ -591,6 +591,11 @@
     <string name="music_repeat">Ulangi</string>
     <string name="music_previous">Sebelumnya</string>
     <string name="music_next">Berikutnya</string>
+    <string name="pdf_viewer_title">Penampil PDF</string>
+    <string name="pdf_viewer_go_to_page">Buka halaman</string>
+    <string name="pdf_viewer_page_hint_format">Halaman, dari 1 sampai %1$,d</string>
+    <string name="pdf_viewer_page_error">Halaman tidak ada</string>
+    <string name="pdf_viewer_password_protected">PDF ini dilindungi sandi, yang tidak didukung</string>
     <string name="image_viewer_title">Penampil gambar</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Simpan sebagai</string>

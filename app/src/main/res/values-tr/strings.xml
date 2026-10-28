@@ -622,6 +622,11 @@
     <string name="music_repeat">Tekrarla</string>
     <string name="music_previous">Önceki</string>
     <string name="music_next">Sonraki</string>
+    <string name="pdf_viewer_title">PDF görüntüleyici</string>
+    <string name="pdf_viewer_go_to_page">Sayfaya git</string>
+    <string name="pdf_viewer_page_hint_format">Sayfa, 1 ile %1$,d arası</string>
+    <string name="pdf_viewer_page_error">Böyle bir sayfa yok</string>
+    <string name="pdf_viewer_password_protected">Bu PDF şifre korumalı ve bu desteklenmiyor</string>
     <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Farklı kaydet</string>

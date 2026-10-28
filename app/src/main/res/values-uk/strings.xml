@@ -696,6 +696,11 @@
     <string name="music_repeat">Повтор</string>
     <string name="music_previous">Попередній</string>
     <string name="music_next">Наступний</string>
+    <string name="pdf_viewer_title">Переглядач PDF</string>
+    <string name="pdf_viewer_go_to_page">Перейти до сторінки</string>
+    <string name="pdf_viewer_page_hint_format">Сторінка, від 1 до %1$,d</string>
+    <string name="pdf_viewer_page_error">Такої сторінки немає</string>
+    <string name="pdf_viewer_password_protected">Цей PDF захищений паролем, що не підтримується</string>
     <string name="image_viewer_title">Переглядач зображень</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Зберегти як</string>

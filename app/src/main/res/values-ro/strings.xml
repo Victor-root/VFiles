@@ -659,6 +659,11 @@
     <string name="music_repeat">Repetă</string>
     <string name="music_previous">Anterior</string>
     <string name="music_next">Următor</string>
+    <string name="pdf_viewer_title">Vizualizator PDF</string>
+    <string name="pdf_viewer_go_to_page">Salt la pagină</string>
+    <string name="pdf_viewer_page_hint_format">Pagina, de la 1 la %1$,d</string>
+    <string name="pdf_viewer_page_error">Pagina nu există</string>
+    <string name="pdf_viewer_password_protected">Acest PDF este protejat de o parolă, ceea ce nu este acceptat</string>
     <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvează ca</string>

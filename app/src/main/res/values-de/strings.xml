@@ -626,6 +626,11 @@
     <string name="music_repeat">Wiederholen</string>
     <string name="music_previous">Zurück</string>
     <string name="music_next">Weiter</string>
+    <string name="pdf_viewer_title">PDF-Betrachter</string>
+    <string name="pdf_viewer_go_to_page">Gehe zu Seite</string>
+    <string name="pdf_viewer_page_hint_format">Seite, von 1 bis %1$,d</string>
+    <string name="pdf_viewer_page_error">Diese Seite gibt es nicht</string>
+    <string name="pdf_viewer_password_protected">Dieses PDF ist passwortgeschützt, was nicht unterstützt wird</string>
     <string name="image_viewer_title">Bildbetrachter</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Speichern als</string>

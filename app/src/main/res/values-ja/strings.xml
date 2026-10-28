@@ -592,6 +592,11 @@
     <string name="music_repeat">リピート</string>
     <string name="music_previous">前へ</string>
     <string name="music_next">次へ</string>
+    <string name="pdf_viewer_title">PDF ビューアー</string>
+    <string name="pdf_viewer_go_to_page">ページへ移動</string>
+    <string name="pdf_viewer_page_hint_format">ページ (1～%1$,d)</string>
+    <string name="pdf_viewer_page_error">そのページはありません</string>
+    <string name="pdf_viewer_password_protected">この PDF はパスワードで保護されているため、開けません</string>
     <string name="image_viewer_title">画像ビューアー</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">保存</string>

@@ -628,6 +628,11 @@
     <string name="music_repeat">Endurtaka</string>
     <string name="music_previous">Fyrra</string>
     <string name="music_next">Næsta</string>
+    <string name="pdf_viewer_title">PDF-skoðari</string>
+    <string name="pdf_viewer_go_to_page">Fara á síðu</string>
+    <string name="pdf_viewer_page_hint_format">Síða, frá 1 til %1$,d</string>
+    <string name="pdf_viewer_page_error">Þessi síða er ekki til</string>
+    <string name="pdf_viewer_password_protected">Þetta PDF er varið með lykilorði, sem er ekki stutt</string>
     <string name="image_viewer_title">Myndaskoðari</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Vista sem</string>

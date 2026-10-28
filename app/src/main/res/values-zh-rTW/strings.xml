@@ -592,6 +592,11 @@
     <string name="music_repeat">重複播放</string>
     <string name="music_previous">上一首</string>
     <string name="music_next">下一首</string>
+    <string name="pdf_viewer_title">PDF 檢視器</string>
+    <string name="pdf_viewer_go_to_page">跳至頁面</string>
+    <string name="pdf_viewer_page_hint_format">頁碼，1 到 %1$,d</string>
+    <string name="pdf_viewer_page_error">沒有這一頁</string>
+    <string name="pdf_viewer_password_protected">此 PDF 受密碼保護，目前不支援</string>
     <string name="image_viewer_title">圖片檢視器</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">另存為</string>

@@ -694,6 +694,11 @@
     <string name="music_repeat">חזרה</string>
     <string name="music_previous">הקודם</string>
     <string name="music_next">הבא</string>
+    <string name="pdf_viewer_title">מציג PDF</string>
+    <string name="pdf_viewer_go_to_page">מעבר לעמוד</string>
+    <string name="pdf_viewer_page_hint_format">עמוד, מ־1 עד %1$,d</string>
+    <string name="pdf_viewer_page_error">אין עמוד כזה</string>
+    <string name="pdf_viewer_password_protected">קובץ PDF זה מוגן בסיסמה, דבר שאינו נתמך</string>
     <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>

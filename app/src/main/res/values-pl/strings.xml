@@ -694,6 +694,11 @@
     <string name="music_repeat">Powtarzaj</string>
     <string name="music_previous">Poprzedni</string>
     <string name="music_next">Następny</string>
+    <string name="pdf_viewer_title">Przeglądarka PDF</string>
+    <string name="pdf_viewer_go_to_page">Przejdź do strony</string>
+    <string name="pdf_viewer_page_hint_format">Strona, od 1 do %1$,d</string>
+    <string name="pdf_viewer_page_error">Nie ma takiej strony</string>
+    <string name="pdf_viewer_password_protected">Ten plik PDF jest chroniony hasłem, co nie jest obsługiwane</string>
     <string name="image_viewer_title">Przeglądarka zdjęć</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Zapisz jako</string>
