@@ -295,6 +295,7 @@ fun <T> SingleChoiceDialog(
             val listState = rememberLazyListState(
                 initialFirstVisibleItemIndex = selectedIndex.coerceAtLeast(0)
             )
+            val selectedEntryFocusRequester = remember { FocusRequester() }
             LazyColumn(state = listState) {
                 itemsIndexed(entries) { index, entry ->
                     val isSelected = index == selectedIndex
@@ -302,6 +303,13 @@ fun <T> SingleChoiceDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 48.dp)
+                            .then(
+                                if (isSelected) {
+                                    Modifier.focusRequester(selectedEntryFocusRequester)
+                                } else {
+                                    Modifier
+                                }
+                            )
                             .selectable(
                                 selected = isSelected,
                                 role = Role.RadioButton,
@@ -314,6 +322,10 @@ fun <T> SingleChoiceDialog(
                         Text(text = entryLabel(entry), style = MaterialTheme.typography.bodyLarge)
                     }
                 }
+            }
+            // On a D-pad, the current choice is focused first, rather than the cancel button.
+            if (selectedIndex != -1) {
+                LaunchedEffect(Unit) { selectedEntryFocusRequester.requestFocus() }
             }
         }
     )

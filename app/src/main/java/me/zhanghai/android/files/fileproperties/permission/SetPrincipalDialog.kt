@@ -37,8 +37,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -124,6 +127,7 @@ fun SetPrincipalDialog(
         var isRecursive by rememberSaveable { mutableStateOf(false) }
         val listState = rememberLazyListState()
         var hasScrolledToSelection by rememberSaveable { mutableStateOf(false) }
+        val selectedPrincipalFocusRequester = remember { FocusRequester() }
         LaunchedEffect(principalListStateful) {
             val principals = (principalListStateful as? Success)?.value
             if (principals == null || hasScrolledToSelection) {
@@ -132,6 +136,9 @@ fun SetPrincipalDialog(
             val index = principals.indexOfFirst { it.id == selectedId }
             if (index != -1) {
                 listState.scrollToItem(index)
+                // Lets the item be composed, so that it's focused first on a D-pad.
+                withFrameNanos {}
+                selectedPrincipalFocusRequester.requestFocus()
             }
             hasScrolledToSelection = true
         }
@@ -191,11 +198,17 @@ fun SetPrincipalDialog(
                             .padding(top = 8.dp),
                         state = listState
                     ) { principal ->
+                        val isSelected = principal.id == selectedId
                         PrincipalListItem(
                             principal = principal,
                             principalIconRes = principalIconRes,
-                            isSelected = principal.id == selectedId,
-                            onClick = { viewModel.select(principal.id) }
+                            isSelected = isSelected,
+                            onClick = { viewModel.select(principal.id) },
+                            modifier = if (isSelected) {
+                                Modifier.focusRequester(selectedPrincipalFocusRequester)
+                            } else {
+                                Modifier
+                            }
                         )
                     }
                     if (file.attributes.isDirectory) {
@@ -216,10 +229,11 @@ private fun PrincipalListItem(
     principal: PrincipalItem,
     @DrawableRes principalIconRes: Int,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 64.dp)
             .selectable(selected = isSelected, role = Role.RadioButton, onClick = onClick),

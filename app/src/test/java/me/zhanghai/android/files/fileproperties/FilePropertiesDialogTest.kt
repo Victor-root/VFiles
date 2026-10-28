@@ -223,6 +223,30 @@ class FilePropertiesDialogTest {
     }
 
     @Test
+    fun setPrincipalDialogFocusesCurrentPrincipalWithDpad() {
+        val file = posixFileItem(addTextFile("notes.txt", ""), PosixFileType.REGULAR_FILE)
+        val principals = (0..49).map { PrincipalItem(it, "user$it", emptyList(), emptyList()) }
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        setContent {
+            SetPrincipalDialog(
+                file = file,
+                titleRes = R.string.file_properties_permission_set_owner_title,
+                principalIconRes = R.drawable.person_icon_control_normal_24dp,
+                principalId = 42,
+                createViewModel = {
+                    object : SetPrincipalViewModel({ principals }, 42) {}
+                },
+                setPrincipal = { _, _, _ -> },
+                onDismissRequest = {}
+            )
+        }
+        composeTestRule.waitForBackgroundWork {
+            composeTestRule.onAllNodesWithText("user42 (42)").fetchSemanticsNodes().isNotEmpty()
+        }
+        composeTestRule.onNodeWithText("user42 (42)").assertIsSelected().assertIsFocused()
+    }
+
+    @Test
     fun setPrincipalDialogFiltersAndPicksPrincipal() {
         val file = posixFileItem(addTextFile("folder", ""), PosixFileType.DIRECTORY)
         val principals = listOf(

@@ -31,13 +31,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.res.painterResource
@@ -84,6 +88,14 @@ fun ColorPickerDialog(
         },
         title = { Text(title) },
         text = {
+            val selectedColorFocusRequester = remember { FocusRequester() }
+            val swatchModifier = { index: Int ->
+                if (index == selectedIndex) {
+                    Modifier.focusRequester(selectedColorFocusRequester)
+                } else {
+                    Modifier
+                }
+            }
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -99,7 +111,9 @@ fun ColorPickerDialog(
                             modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        ColorSwatch(colors[0], checkedIndex == 0) { checkedIndex = 0 }
+                        ColorSwatch(colors[0], checkedIndex == 0, swatchModifier(0)) {
+                            checkedIndex = 0
+                        }
                     }
                     HorizontalDivider()
                     Text(
@@ -114,24 +128,31 @@ fun ColorPickerDialog(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     for (index in firstPresetIndex..colors.lastIndex) {
-                        ColorSwatch(colors[index], checkedIndex == index) {
+                        ColorSwatch(colors[index], checkedIndex == index, swatchModifier(index)) {
                             checkedIndex = index
                         }
                     }
                 }
             }
+            // On a D-pad, the current color is focused first, rather than the buttons.
+            LaunchedEffect(Unit) { selectedColorFocusRequester.requestFocus() }
         }
     )
 }
 
 // The checked color gets a ring of the theme color around it, apart from it, and a check mark.
 @Composable
-private fun ColorSwatch(color: Color, isChecked: Boolean, onClick: () -> Unit) {
+private fun ColorSwatch(
+    color: Color,
+    isChecked: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     val ringColor by animateColorAsState(
         if (isChecked) MaterialTheme.colorScheme.primary else Color.Transparent
     )
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(SWATCH_SIZE)
             .clip(CircleShape)
             .selectable(selected = isChecked, role = Role.RadioButton, onClick = onClick)
