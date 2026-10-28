@@ -8,6 +8,7 @@ package me.zhanghai.android.files.filelist
 import android.content.Context
 import android.content.res.Configuration
 import android.os.SystemClock
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContent
@@ -120,6 +121,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.fileSize
@@ -213,6 +215,9 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
 
     val hasFiles = !fileListStateful.value.isNullOrEmpty()
     LaunchedEffect(fileListStateful) {
+        logFocus(
+            "files: ${fileListStateful::class.simpleName}, ${fileListStateful.value?.size} files"
+        )
         when (fileListStateful) {
             is Failure -> {
                 fileListStateful.throwable.printStackTrace()
@@ -237,14 +242,20 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     // On a D-pad, the focus goes to the list, or to the drawer button in an empty folder.
     val focusContent = {
         if (currentHasFiles) {
-            listFocusRequester.requestFocus()
+            val isFocused = listFocusRequester.requestFocus()
+            logFocus("focusContent: list, requested=$isFocused")
         } else {
-            navigationIconFocusRequester.requestFocus()
+            val isFocused = navigationIconFocusRequester.requestFocus()
+            logFocus("focusContent: navigation icon, requested=$isFocused")
         }
     }
     // It moves there in a newly opened folder.
     val isFileListLoaded = fileListStateful is Success
     LaunchedEffect(currentPath, isFileListLoaded) {
+        logFocus(
+            "folder effect: path=$currentPath loaded=$isFileListLoaded keyboard=$isKeyboardMode " +
+                "drawer=${drawerState.currentValue}->${drawerState.targetValue}"
+        )
         if (!isFileListLoaded || !isKeyboardMode || drawerState.isOpen) {
             return@LaunchedEffect
         }
@@ -264,6 +275,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     // Only once the drawer is closed, since its items keep the focus while it closes.
     LaunchedEffect(drawerState) {
         snapshotFlow { drawerState.currentValue }.drop(1).collect {
+            logFocus("drawer settled: $it, input=${inputModeManager.inputMode}")
             if (it == DrawerValue.Closed && inputModeManager.inputMode == InputMode.Keyboard) {
                 focusContent()
             }
@@ -278,6 +290,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             snapshotFlow { !hasFocus && currentIsFileListLoaded && drawerState.isClosed }
                 .collect {
+                    logFocus("no focus effect: $it")
                     if (it && inputModeManager.inputMode == InputMode.Keyboard) {
                         focusContent()
                     }
@@ -290,6 +303,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             snapshotFlow { !hasFocus && drawerState.isOpen }
                 .collect {
+                    logFocus("no focus in open drawer effect: $it")
                     if (it && inputModeManager.inputMode == InputMode.Keyboard) {
                         drawerFocusRequester.requestFocus()
                     }
@@ -313,7 +327,9 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             onCloseDrawer = closeDrawer,
             subtitleKey = drawerSubtitleKey,
             focusCheckedItemRequest = drawerFocusRequest,
-            modifier = modifier.focusRequester(drawerFocusRequester)
+            modifier = modifier
+                .focusRequester(drawerFocusRequester)
+                .onFocusChanged { logFocus("drawer focus: ${it.hasFocus}") }
         )
     }
 
@@ -358,7 +374,14 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
 
     Box(
         modifier = Modifier
-            .onFocusChanged { hasFocus = it.hasFocus }
+            .onFocusChanged {
+                hasFocus = it.hasFocus
+                logFocus("screen focus: ${it.hasFocus}")
+            }
+            .onPreviewKeyEvent {
+                logFocus("key: ${it.key} ${it.type}")
+                false
+            }
             .onKeyEvent(controller::onKeyShortcut)
     ) {
         if (hasPersistentDrawer) {
@@ -392,6 +415,13 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     BackHandler(enabled = selectedFiles.isNotEmpty()) { controller.clearSelectedFiles() }
     BackHandler(enabled = isSpeedDialExpanded) { isSpeedDialExpanded = false }
     BackHandler(enabled = !hasPersistentDrawer && drawerState.isOpen) { closeDrawer() }
+}
+
+// Temporary, to find why the focus gets lost in an empty folder opened from the drawer on TV.
+private fun logFocus(message: String) {
+    if (BuildConfig.BUILD_TYPE == "debug") {
+        Log.d("VFilesFocus", message)
+    }
 }
 
 private val DRAWER_MAX_WIDTH = 320.dp
@@ -684,6 +714,7 @@ private fun FileListMainAppBar(
                     onClick = onNavigationIconClick,
                     modifier = Modifier
                         .focusRequester(navigationIconFocusRequester)
+                        .onFocusChanged { logFocus("navigation icon focus: ${it.isFocused}") }
                         .onKeyEvent {
                             val isLeft = it.type == KeyEventType.KeyDown &&
                                 it.key == Key.DirectionLeft
