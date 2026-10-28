@@ -62,6 +62,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -181,6 +182,7 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
     var isFocused by remember { mutableStateOf(false) }
     var isControlFocused by remember { mutableStateOf(false) }
     val carouselFocusRequester = remember { FocusRequester() }
+    val shareFocusRequester = remember { FocusRequester() }
     MediaViewerSystemUiEffect(isUiShown)
     // On a remote, back from the controls goes back to the media.
     BackHandler(enabled = isControlFocused) { focusRequester.requestFocus() }
@@ -218,9 +220,13 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                         } else {
                             isUiShown = !isUiShown
                         }
-                    // Its down key goes to the carousel, except on a TV where nothing else is
-                    // focused.
-                    Key.DirectionUp -> if (!isTelevision) return@onKeyEvent false
+                    // Its up key goes to the actions on a TV, where nothing else is focused, and
+                    // its down key goes to the carousel elsewhere.
+                    Key.DirectionUp -> if (!isTelevision) {
+                        return@onKeyEvent false
+                    } else if (isUiShown) {
+                        shareFocusRequester.requestFocus()
+                    }
                     Key.DirectionDown -> if (!isTelevision) {
                         isUiShown = true
                         coroutineScope.launch {
@@ -273,37 +279,55 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                 ).format(dateTime),
                 subtitle = DateFormat.getTimeFormat(context).format(currentMedia.dateTaken),
                 actions = {
-                    ActionButton(
-                        R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share)
-                    ) { context.shareGalleryMedia(listOf(currentMedia)) }
-                    OverflowMenu { dismiss ->
-                        MenuItem(
-                            R.drawable.open_with_icon_control_normal_24dp,
-                            stringResource(R.string.file_item_action_open_with)
-                        ) {
-                            dismiss()
-                            context.openGalleryMediaWith(currentMedia)
+                    // On a TV, the D-pad goes only between these actions, and back down to the
+                    // media.
+                    Row(
+                        modifier = if (isTelevision) {
+                            Modifier.focusProperties { down = focusRequester }
+                        } else {
+                            Modifier
                         }
-                        MenuItem(
-                            R.drawable.folder_icon_control_normal_24dp,
-                            stringResource(R.string.gallery_show_in_folder)
-                        ) {
-                            dismiss()
-                            context.showGalleryMediaInFolder(currentMedia)
-                        }
-                        MenuItem(
-                            R.drawable.information_icon_white_24dp,
-                            stringResource(R.string.gallery_details)
-                        ) {
-                            dismiss()
-                            isDetailsShown = true
-                        }
-                        MenuItem(
-                            R.drawable.delete_icon_control_normal_24dp,
-                            stringResource(R.string.delete)
-                        ) {
-                            dismiss()
-                            deleteMedia(listOf(currentMedia))
+                    ) {
+                        ActionButton(
+                            R.drawable.share_icon_control_normal_24dp,
+                            stringResource(R.string.share),
+                            modifier = Modifier
+                                .focusRequester(shareFocusRequester)
+                                .focusProperties {
+                                    if (isTelevision) {
+                                        left = FocusRequester.Cancel
+                                    }
+                                }
+                        ) { context.shareGalleryMedia(listOf(currentMedia)) }
+                        OverflowMenu { dismiss ->
+                            MenuItem(
+                                R.drawable.open_with_icon_control_normal_24dp,
+                                stringResource(R.string.file_item_action_open_with)
+                            ) {
+                                dismiss()
+                                context.openGalleryMediaWith(currentMedia)
+                            }
+                            MenuItem(
+                                R.drawable.folder_icon_control_normal_24dp,
+                                stringResource(R.string.gallery_show_in_folder)
+                            ) {
+                                dismiss()
+                                context.showGalleryMediaInFolder(currentMedia)
+                            }
+                            MenuItem(
+                                R.drawable.information_icon_white_24dp,
+                                stringResource(R.string.gallery_details)
+                            ) {
+                                dismiss()
+                                isDetailsShown = true
+                            }
+                            MenuItem(
+                                R.drawable.delete_icon_control_normal_24dp,
+                                stringResource(R.string.delete)
+                            ) {
+                                dismiss()
+                                deleteMedia(listOf(currentMedia))
+                            }
                         }
                     }
                 }

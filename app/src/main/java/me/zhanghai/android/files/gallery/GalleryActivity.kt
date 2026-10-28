@@ -310,15 +310,16 @@ private fun GallerySelectionAppBar(
         },
         actions = {
             ActionButton(
-                R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share), onShare
+                R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share),
+                onClick = onShare
             )
             ActionButton(
                 R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete),
-                onDelete
+                onClick = onDelete
             )
             ActionButton(
                 R.drawable.select_all_icon_control_normal_24dp, stringResource(R.string.select_all),
-                onSelectAll
+                onClick = onSelectAll
             )
         }
     )
