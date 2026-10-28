@@ -36,7 +36,8 @@
     <bool name="pref_default_value_ftp_server_writable">true</bool>
 
     <string name="pref_key_theme_color">key_theme_color</string>
-    <string name="pref_default_value_theme_color">0</string>
+    <!-- Index of ThemeColor.MATERIAL_RED. -->
+    <string name="pref_default_value_theme_color">1</string>
     <string name="pref_key_night_mode">key_night_mode</string>
     <string name="pref_default_value_night_mode">0</string>
     <string name="pref_key_black_night_mode">key_black_night_mode</string>

@@ -138,7 +138,7 @@ class SettingsActivityTest {
         captureScreenRoboImage("build/screenshots/settings_theme_color.png")
         composeTestRule.onNodeWithText("Default").performClick()
         composeTestRule.onNodeWithText("OK").performClick()
-        // The default is the wallpaper color on Android 12+.
-        assertEquals(ThemeColor.DYNAMIC, Settings.THEME_COLOR.value)
+        // The default is red, even where the wallpaper color is available.
+        assertEquals(ThemeColor.MATERIAL_RED, Settings.THEME_COLOR.value)
     }
 }
