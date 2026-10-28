@@ -181,7 +181,6 @@ internal fun MusicScreen(state: MusicState?) {
     ) { contentPadding ->
         Box(
             modifier = Modifier
-                .padding(top = contentPadding.calculateTopPadding())
                 .focusRequester(contentFocusRequester)
                 .onFocusChanged { contentHasFocus = it.hasFocus }
                 // Focuses the song focused before again, like when coming back from the player.
