@@ -29,7 +29,7 @@ abstract class FileJob {
             service.showToast(e.toString())
         } finally {
             service.notificationManager.cancel(id)
-            FileJobProgressLiveData.remove(id)
+            FileJobProgresses.remove(id)
         }
     }
 

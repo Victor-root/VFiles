@@ -9,7 +9,7 @@ import me.zhanghai.android.files.provider.linux.syscall.Syscall.endgrent
 import me.zhanghai.android.files.provider.linux.syscall.Syscall.getgrent
 import me.zhanghai.android.files.provider.linux.syscall.Syscall.setgrent
 
-class GroupListLiveData : PrincipalListLiveData() {
+object GroupListLoader : PrincipalListLoader() {
     override val androidPrincipals: MutableList<PrincipalItem>
         @Throws(Exception::class)
         get() {

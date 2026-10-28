@@ -27,7 +27,6 @@ import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import me.zhanghai.android.files.util.toList
-import me.zhanghai.android.files.util.valueCompat
 import java.util.Locale
 
 @Composable
@@ -69,7 +68,7 @@ fun LocalePreference() {
             entries = listOf(null) + supportedLocales,
             entryLabel = { it?.sentenceCasedLocalizedDisplayName ?: systemDefault },
             icon = icon,
-            value = Settings.LOCALES.valueCompat.takeIfNotEmpty()
+            value = Settings.LOCALES.value.takeIfNotEmpty()
                 ?.let { Locale.forLanguageTag(it) },
             onValueChange = {
                 Settings.LOCALES.putValue(it?.toLanguageTag().orEmpty())

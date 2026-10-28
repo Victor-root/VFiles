@@ -69,7 +69,7 @@ class GalleryActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
         Settings.EDGE_TO_EDGE.putValue(false)
         TestMediaStoreProvider.install(temporaryFolder.newFolder())
-        GalleryLiveData.reload()
+        Gallery.reload()
     }
 
     private fun launch(): ActivityScenario<GalleryActivity> =
@@ -190,7 +190,7 @@ class GalleryActivityTest {
     fun viewerMovesWithDpadOnTelevision() {
         setUpTelevision()
         launchViewer()
-        composeTestRule.waitForBackgroundWork { GalleryLiveData.value != null }
+        composeTestRule.waitForBackgroundWork { Gallery.value != null }
         composeTestRule.waitForIdle()
         // The bars are hidden at first, and the center key shows or hides them.
         composeTestRule.onNodeWithContentDescription("Share").assertDoesNotExist()

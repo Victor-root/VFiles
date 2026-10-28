@@ -24,7 +24,6 @@ import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -81,7 +80,7 @@ class EditBookmarkDirectoryDialogActivityTest {
         launch()
         composeTestRule.onNode(hasSetTextAction()).performTextReplacement("Work")
         composeTestRule.onNodeWithText("OK").performClick()
-        assertEquals("Work", Settings.BOOKMARK_DIRECTORIES.valueCompat.single().customName)
+        assertEquals("Work", Settings.BOOKMARK_DIRECTORIES.value.single().customName)
         assertTrue(activity.isFinishing)
     }
 
@@ -90,7 +89,7 @@ class EditBookmarkDirectoryDialogActivityTest {
         launch()
         composeTestRule.onNode(hasSetTextAction()).performTextReplacement("Download")
         composeTestRule.onNodeWithText("OK").performClick()
-        assertEquals(null, Settings.BOOKMARK_DIRECTORIES.valueCompat.single().customName)
+        assertEquals(null, Settings.BOOKMARK_DIRECTORIES.value.single().customName)
     }
 
     @Test
@@ -107,14 +106,14 @@ class EditBookmarkDirectoryDialogActivityTest {
         )
         composeTestRule.onNodeWithText("/storage/emulated/0/Music").assertIsDisplayed()
         composeTestRule.onNodeWithText("OK").performClick()
-        assertEquals(newPath, Settings.BOOKMARK_DIRECTORIES.valueCompat.single().path)
+        assertEquals(newPath, Settings.BOOKMARK_DIRECTORIES.value.single().path)
     }
 
     @Test
     fun removesBookmarkDirectory() {
         launch()
         composeTestRule.onNodeWithText("Remove").performClick()
-        assertEquals(emptyList<BookmarkDirectory>(), Settings.BOOKMARK_DIRECTORIES.valueCompat)
+        assertEquals(emptyList<BookmarkDirectory>(), Settings.BOOKMARK_DIRECTORIES.value)
         assertTrue(activity.isFinishing)
     }
 
@@ -123,7 +122,7 @@ class EditBookmarkDirectoryDialogActivityTest {
         launch()
         composeTestRule.onNode(hasSetTextAction()).performTextReplacement("Work")
         composeTestRule.onNodeWithText("Cancel").performClick()
-        assertEquals(listOf(bookmarkDirectory), Settings.BOOKMARK_DIRECTORIES.valueCompat)
+        assertEquals(listOf(bookmarkDirectory), Settings.BOOKMARK_DIRECTORIES.value)
         assertTrue(activity.isFinishing)
     }
 }

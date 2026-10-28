@@ -33,7 +33,6 @@ import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.getArgs
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -106,7 +105,7 @@ class BookmarkDirectoryListActivityTest {
             intent, Activity.RESULT_OK, Intent().apply { extraPath = path }
         )
         composeTestRule.onNodeWithText("Delta").assertIsDisplayed()
-        assertEquals(path, Settings.BOOKMARK_DIRECTORIES.valueCompat.last().path)
+        assertEquals(path, Settings.BOOKMARK_DIRECTORIES.value.last().path)
     }
 
     @Test
@@ -121,7 +120,7 @@ class BookmarkDirectoryListActivityTest {
         composeTestRule.waitForIdle()
         assertEquals(
             listOf("Beta", "Alpha", "Gamma"),
-            Settings.BOOKMARK_DIRECTORIES.valueCompat.map { it.name }
+            Settings.BOOKMARK_DIRECTORIES.value.map { it.name }
         )
     }
 

@@ -28,14 +28,13 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
-import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
+import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.StandardDirectorySettings
 import me.zhanghai.android.files.navigation.standardDirectories
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.night.NightMode
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -88,7 +87,7 @@ class StandardDirectoryListActivityTest {
         composeTestRule.onNodeWithText("Gallery").performClick()
         assertEquals(
             listOf(StandardDirectorySettings(StandardDirectory.GALLERY_KEY, null, false)),
-            Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat
+            Settings.STANDARD_DIRECTORY_SETTINGS.value
         )
     }
 
@@ -99,13 +98,13 @@ class StandardDirectoryListActivityTest {
         node.assertIsOn()
         assertEquals(
             listOf(StandardDirectorySettings(Environment.DIRECTORY_ALARMS, null, true)),
-            Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat
+            Settings.STANDARD_DIRECTORY_SETTINGS.value
         )
         node.performClick()
         node.assertIsOff()
         assertEquals(
             listOf(StandardDirectorySettings(Environment.DIRECTORY_ALARMS, null, false)),
-            Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat
+            Settings.STANDARD_DIRECTORY_SETTINGS.value
         )
     }
 
@@ -122,7 +121,7 @@ class StandardDirectoryListActivityTest {
         composeTestRule.waitForIdle()
         assertEquals(
             listOf(Environment.DIRECTORY_DCIM, StandardDirectory.GALLERY_KEY),
-            StandardDirectoriesLiveData.valueCompat.take(2).map { it.key }
+            StandardDirectories.value.take(2).map { it.key }
         )
         // The list stays at its top rather than following the first item.
         composeTestRule.onNodeWithText("DCIM").assertIsDisplayed()
@@ -144,7 +143,7 @@ class StandardDirectoryListActivityTest {
                 StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
                 Environment.DIRECTORY_DCIM
             ),
-            StandardDirectoriesLiveData.valueCompat.take(3).map { it.key }
+            StandardDirectories.value.take(3).map { it.key }
         )
         captureScreenRoboImage("build/screenshots/standard_directory_list_reordered.png")
     }

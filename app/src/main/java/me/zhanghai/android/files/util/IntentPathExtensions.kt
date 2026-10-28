@@ -16,7 +16,7 @@ import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.compat.directoryCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.uuidCompat
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.createOrLog
 import java.io.File
 import java.io.Serializable
@@ -96,7 +96,7 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
         }
         val rootId = documentId.substring(0, colonIndex)
         val relativePath = documentId.substring(colonIndex + 1)
-        val directory = StorageVolumeListLiveData.valueCompat.firstNotNullOfOrNull { storageVolume ->
+        val directory = StorageVolumeList.value.firstNotNullOfOrNull { storageVolume ->
             val volumeRootId = if (storageVolume.isPrimaryCompat) {
                 DocumentsContractCompat.EXTERNAL_STORAGE_PRIMARY_EMULATED_ROOT_ID
             } else {

@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.settings
 
+import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
-import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
+import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.getExternalStorageDirectory
 import me.zhanghai.android.files.navigation.moveStandardDirectory
@@ -31,8 +32,6 @@ import me.zhanghai.android.files.ui.ReorderDragHandle
 import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
-import me.zhanghai.android.files.util.observeAsStateCompat
-import me.zhanghai.android.files.util.valueCompat
 
 class StandardDirectoryListActivity : AppActivity() {
     @Composable
@@ -44,7 +43,7 @@ class StandardDirectoryListActivity : AppActivity() {
 @Composable
 private fun StandardDirectoryListScreen() {
     val context = LocalContext.current
-    val standardDirectories by StandardDirectoriesLiveData.observeAsStateCompat()
+    val standardDirectories by StandardDirectories.flow.collectAsState()
     AppScaffold(title = stringResource(R.string.settings_standard_directory_list_title)) {
         contentPadding ->
         val lazyListState = rememberLazyListState()
@@ -92,7 +91,7 @@ private fun StandardDirectoryListScreen() {
 }
 
 private fun setStandardDirectoryEnabled(standardDirectory: StandardDirectory, isEnabled: Boolean) {
-    val settingsList = Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat.toMutableList()
+    val settingsList = Settings.STANDARD_DIRECTORY_SETTINGS.value.toMutableList()
     val index = settingsList.indexOfFirst { it.id == standardDirectory.key }
     if (index != -1) {
         settingsList[index] = settingsList[index].copy(isEnabled = isEnabled)

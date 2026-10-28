@@ -27,7 +27,6 @@ import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.asFileName
 import me.zhanghai.android.files.util.isGetPackageArchiveInfoCompatible
 import me.zhanghai.android.files.util.isMediaMetadataRetrieverCompatible
-import me.zhanghai.android.files.util.valueCompat
 import java.text.CollationKey
 
 val FileItem.baseName: String
@@ -60,7 +59,7 @@ val FileItem.supportsThumbnail: Boolean
         }
         if (path.isRemotePath) {
             val shouldReadRemotePath = !path.isFtpPath
-                && Settings.READ_REMOTE_FILES_FOR_THUMBNAIL.valueCompat
+                && Settings.READ_REMOTE_FILES_FOR_THUMBNAIL.value
             if (!shouldReadRemotePath) {
                 return false
             }
@@ -71,7 +70,7 @@ val FileItem.supportsThumbnail: Boolean
             mimeType.isMedia && path.isMediaMetadataRetrieverCompatible -> true
             mimeType.isPdf && (path.isLinuxPath || path.isDocumentPath) ->
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
-                    || Settings.SHOW_PDF_THUMBNAIL_PRE_28.valueCompat
+                    || Settings.SHOW_PDF_THUMBNAIL_PRE_28.value
             else -> false
         }
     }

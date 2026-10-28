@@ -35,7 +35,6 @@ import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Before
@@ -86,7 +85,7 @@ class FtpServerActivityTest {
         composeTestRule.onNodeWithText("Password").assertIsNotEnabled()
         composeTestRule.onNodeWithText("Port").assertIsEnabled()
         composeTestRule.onNodeWithText("Anonymous login").performClick()
-        assertEquals(false, Settings.FTP_SERVER_ANONYMOUS_LOGIN.valueCompat)
+        assertEquals(false, Settings.FTP_SERVER_ANONYMOUS_LOGIN.value)
         composeTestRule.onNodeWithText("Username").assertIsEnabled()
         composeTestRule.onNodeWithText("Password").assertIsEnabled()
     }
@@ -103,17 +102,17 @@ class FtpServerActivityTest {
     fun emptyUsernameFallsBackToDefault() {
         Settings.FTP_SERVER_ANONYMOUS_LOGIN.putValue(false)
         editText("Username", "alice")
-        assertEquals("alice", Settings.FTP_SERVER_USERNAME.valueCompat)
+        assertEquals("alice", Settings.FTP_SERVER_USERNAME.value)
         composeTestRule.onNodeWithText("alice").assertIsDisplayed()
         editText("Username", "")
-        assertEquals("admin", Settings.FTP_SERVER_USERNAME.valueCompat)
+        assertEquals("admin", Settings.FTP_SERVER_USERNAME.value)
     }
 
     @Test
     fun passwordIsMaskedAndKeptAsTyped() {
         Settings.FTP_SERVER_ANONYMOUS_LOGIN.putValue(false)
         editText("Password", " secret")
-        assertEquals(" secret", Settings.FTP_SERVER_PASSWORD.valueCompat)
+        assertEquals(" secret", Settings.FTP_SERVER_PASSWORD.value)
         composeTestRule.onNodeWithText("•".repeat(7)).assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/ftp_server_password.png")
     }
@@ -128,7 +127,7 @@ class FtpServerActivityTest {
         captureScreenRoboImage("build/screenshots/ftp_server_port_invalid.png")
         textField.performTextReplacement("2222")
         composeTestRule.onNodeWithText("OK").performClick()
-        assertEquals(2222, Settings.FTP_SERVER_PORT.valueCompat)
+        assertEquals(2222, Settings.FTP_SERVER_PORT.value)
         composeTestRule.onNodeWithText("2222").assertIsDisplayed()
     }
 
@@ -144,7 +143,7 @@ class FtpServerActivityTest {
             intent, Activity.RESULT_OK, Intent().apply { extraPath = path }
         )
         composeTestRule.waitForIdle()
-        assertEquals(path, Settings.FTP_SERVER_HOME_DIRECTORY.valueCompat)
+        assertEquals(path, Settings.FTP_SERVER_HOME_DIRECTORY.value)
     }
 
     @Test
@@ -172,7 +171,7 @@ class FtpServerActivityTest {
         root.performKeyInput { pressKey(Key.DirectionDown) }
         composeTestRule.onNodeWithText("Anonymous login").assertIsFocused()
         root.performKeyInput { pressKey(Key.DirectionCenter) }
-        assertEquals(false, Settings.FTP_SERVER_ANONYMOUS_LOGIN.valueCompat)
+        assertEquals(false, Settings.FTP_SERVER_ANONYMOUS_LOGIN.value)
     }
 
     private fun editText(title: String, text: String) {

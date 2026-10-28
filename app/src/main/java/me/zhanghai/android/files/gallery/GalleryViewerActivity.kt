@@ -43,7 +43,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +73,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.exoplayer.ExoPlayer
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -112,7 +112,7 @@ class GalleryViewerActivity : AppActivity() {
 
     @Composable
     override fun Content() {
-        val state = GalleryLiveData.observeAsState().value ?: return
+        val state = Gallery.flow.collectAsStateWithLifecycle().value ?: return
         val albumId = args.albumId
         val media = if (albumId != null) state.getAlbum(albumId)?.media.orEmpty() else state.media
         if (media.isEmpty()) {

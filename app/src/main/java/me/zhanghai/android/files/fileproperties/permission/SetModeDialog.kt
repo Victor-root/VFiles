@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.icu.text.ListFormatter
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -44,14 +45,13 @@ import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.provider.common.PosixFileModeBit
 import me.zhanghai.android.files.ui.CheckboxItem
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun SetModeDialog(file: FileItem, onDismissRequest: () -> Unit) {
     ViewModelStoreScope {
         val fileMode = (file.attributes as PosixFileAttributes).mode()!!
         val viewModel = viewModel { SetModeViewModel(fileMode) }
-        val mode by viewModel.modeLiveData.observeAsStateCompat()
+        val mode by viewModel.modeFlow.collectAsStateWithLifecycle()
         val isDirectory = file.attributes.isDirectory
         var isRecursive by rememberSaveable { mutableStateOf(false) }
         var isUppercaseX by rememberSaveable { mutableStateOf(true) }

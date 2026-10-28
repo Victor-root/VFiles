@@ -33,7 +33,6 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
-import androidx.lifecycle.MutableLiveData
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
@@ -66,7 +65,6 @@ import me.zhanghai.android.files.test.TestFileContentProvider
 import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.AppTheme
 import me.zhanghai.android.files.theme.night.NightMode
-import me.zhanghai.android.files.util.Success
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -240,11 +238,14 @@ class FilePropertiesDialogTest {
                 principalIconRes = R.drawable.person_icon_control_normal_24dp,
                 principalId = 0,
                 createViewModel = {
-                    object : SetPrincipalViewModel(MutableLiveData(Success(principals)), 0) {}
+                    object : SetPrincipalViewModel({ principals }, 0) {}
                 },
                 setPrincipal = { _, principal, recursive -> picked = principal to recursive },
                 onDismissRequest = {}
             )
+        }
+        composeTestRule.waitForBackgroundWork {
+            composeTestRule.onAllNodesWithText("root (0)").fetchSemanticsNodes().isNotEmpty()
         }
         composeTestRule.onNodeWithText("root (0)").assertIsSelected()
         composeTestRule.onNodeWithText("Example").assertIsDisplayed()

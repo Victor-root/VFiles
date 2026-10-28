@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +32,6 @@ import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.SingleChoiceDialog
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 class DefaultAppsActivity : AppActivity() {
     @Composable
@@ -43,7 +43,7 @@ class DefaultAppsActivity : AppActivity() {
 @Composable
 private fun DefaultAppsScreen() {
     val context = LocalContext.current
-    val defaultApps by Settings.FILE_OPEN_DEFAULT_APPS.observeAsStateCompat()
+    val defaultApps by Settings.FILE_OPEN_DEFAULT_APPS.flow.collectAsState()
     // Refresh in case a chosen app was uninstalled while we were away.
     var resumeCount by remember { mutableIntStateOf(0) }
     LifecycleResumeEffect(Unit) {

@@ -5,27 +5,26 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import me.zhanghai.android.files.provider.common.PosixFileModeBit
 import me.zhanghai.android.files.util.toEnumSet
-import me.zhanghai.android.files.util.valueCompat
 
 class SetModeViewModel(mode: Set<PosixFileModeBit>) : ViewModel() {
-    private val _modeLiveData: MutableLiveData<Set<PosixFileModeBit>> = MutableLiveData(mode)
-    val modeLiveData: LiveData<Set<PosixFileModeBit>>
-        get() = _modeLiveData
+    private val _modeFlow = MutableStateFlow(mode)
+    val modeFlow: StateFlow<Set<PosixFileModeBit>>
+        get() = _modeFlow
     val mode: Set<PosixFileModeBit>
-        get() = _modeLiveData.valueCompat
+        get() = _modeFlow.value
 
     fun toggleModeBit(modeBit: PosixFileModeBit) {
-        val mode = _modeLiveData.valueCompat.toEnumSet()
+        val mode = _modeFlow.value.toEnumSet()
         if (modeBit in mode) {
             mode -= modeBit
         } else {
             mode += modeBit
         }
-        _modeLiveData.value = mode
+        _modeFlow.value = mode
     }
 }

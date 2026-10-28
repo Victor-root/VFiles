@@ -5,64 +5,56 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import me.zhanghai.android.files.util.Stateful
+import me.zhanghai.android.files.util.StatefulLoader
 import me.zhanghai.android.files.util.Success
-import me.zhanghai.android.files.util.valueCompat
 
 abstract class SetPrincipalViewModel(
-    private val principalListLiveData: MutableLiveData<Stateful<List<PrincipalItem>>>,
+    loadPrincipals: () -> List<PrincipalItem>,
     selectedId: Int
 ) : ViewModel() {
+    private val loader = StatefulLoader(viewModelScope, loadPrincipals).apply { load() }
     val principalListStateful: Stateful<List<PrincipalItem>>
-        get() = principalListLiveData.valueCompat
+        get() = loader.value
 
-    private val filterLiveData = MutableLiveData("")
+    private val filterFlow = MutableStateFlow("")
     var filter: String
-        get() = filterLiveData.valueCompat
+        get() = filterFlow.value
         set(value) {
-            if (filterLiveData.valueCompat != value) {
-                filterLiveData.value = value
-            }
+            filterFlow.value = value
         }
 
-    val filteredPrincipalListLiveData: LiveData<Stateful<List<PrincipalItem>>> =
-        FilteredPrincipalListLiveData(principalListLiveData, filterLiveData)
+    val filteredPrincipalListFlow: StateFlow<Stateful<List<PrincipalItem>>> =
+        combine(loader.flow, filterFlow, ::filterPrincipals)
+            .stateIn(viewModelScope, SharingStarted.Eagerly, loader.value)
 
-    private val _selectionLiveData = MutableLiveData(selectedId)
-    val selectionLiveData: LiveData<Int>
-        get() = _selectionLiveData
+    private val _selectionFlow = MutableStateFlow(selectedId)
+    val selectionFlow: StateFlow<Int>
+        get() = _selectionFlow
 
     fun select(id: Int) {
-        _selectionLiveData.value = id
+        _selectionFlow.value = id
     }
 
-    private class FilteredPrincipalListLiveData(
-        private val principalListLiveData: LiveData<Stateful<List<PrincipalItem>>>,
-        private val filterLiveData: LiveData<String>
-    ) : MediatorLiveData<Stateful<List<PrincipalItem>>>() {
-        init {
-            addSource(principalListLiveData) { loadValue() }
-            addSource(filterLiveData) { loadValue() }
+    private fun filterPrincipals(
+        principalListStateful: Stateful<List<PrincipalItem>>,
+        filter: String
+    ): Stateful<List<PrincipalItem>> =
+        if (principalListStateful is Success && filter.isNotEmpty()) {
+            Success(principalListStateful.value.filter { it.applyFilter(filter) })
+        } else {
+            principalListStateful
         }
 
-        private fun loadValue() {
-            var principalListStateful = principalListLiveData.valueCompat
-            val filter = filterLiveData.valueCompat
-            if (principalListStateful is Success && filter.isNotEmpty()) {
-                principalListStateful = Success(
-                    principalListStateful.value.filter { it.applyFilter(filter) }
-                )
-            }
-            value = principalListStateful
-        }
-
-        private fun PrincipalItem.applyFilter(filter: String): Boolean =
-            (filter in id.toString() || (name != null && filter in name)
-                || applicationInfos.any { filter in it.packageName }
-                || applicationLabels.any { filter in it })
-    }
+    private fun PrincipalItem.applyFilter(filter: String): Boolean =
+        (filter in id.toString() || (name != null && filter in name)
+            || applicationInfos.any { filter in it.packageName }
+            || applicationLabels.any { filter in it })
 }

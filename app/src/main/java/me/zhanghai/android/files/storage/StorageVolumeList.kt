@@ -12,13 +12,27 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.storage.StorageVolume
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.storageManager
 import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.compat.registerReceiverCompat
 
-object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
+/** The storage volumes of the device, updated as they are mounted and unmounted. */
+object StorageVolumeList {
+    // Not a state flow, which would drop a volume changing state only, since volumes are equal when
+    // their paths are.
+    private val _flow = MutableSharedFlow<List<StorageVolume>>(
+        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val flow: SharedFlow<List<StorageVolume>>
+        get() = _flow
+
+    val value: List<StorageVolume>
+        get() = _flow.replayCache.single()
+
     init {
         loadValue()
         application.registerReceiverCompat(
@@ -43,7 +57,7 @@ object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
     }
 
     private fun loadValue() {
-        value = storageManager.storageVolumes
+        _flow.tryEmit(storageManager.storageVolumes)
     }
 
     /**
@@ -54,8 +68,8 @@ object StorageVolumeListLiveData : LiveData<List<StorageVolume>>() {
      */
     fun refresh() {
         val volumes = storageManager.storageVolumes
-        if (value?.map { it.pathCompat } != volumes.map { it.pathCompat }) {
-            value = volumes
+        if (value.map { it.pathCompat } != volumes.map { it.pathCompat }) {
+            _flow.tryEmit(volumes)
         }
     }
 }

@@ -13,19 +13,18 @@ import android.net.ConnectivityManager
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.RuntimeBroadcastReceiver
 import me.zhanghai.android.files.util.getLocalAddress
-import me.zhanghai.android.files.util.valueCompat
 import java.net.InetAddress
 
 object FtpServerUrl {
     fun getUrl(): String? {
         val localAddress = InetAddress::class.getLocalAddress() ?: return null
-        val username = if (!Settings.FTP_SERVER_ANONYMOUS_LOGIN.valueCompat) {
-            Settings.FTP_SERVER_USERNAME.valueCompat
+        val username = if (!Settings.FTP_SERVER_ANONYMOUS_LOGIN.value) {
+            Settings.FTP_SERVER_USERNAME.value
         } else {
             null
         }
         val host = localAddress.hostAddress
-        val port = Settings.FTP_SERVER_PORT.valueCompat
+        val port = Settings.FTP_SERVER_PORT.value
         return "ftp://${if (username != null) "$username@" else ""}$host:$port/"
     }
 

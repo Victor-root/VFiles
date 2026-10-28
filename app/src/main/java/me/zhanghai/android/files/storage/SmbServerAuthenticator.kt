@@ -8,7 +8,6 @@ package me.zhanghai.android.files.storage
 import me.zhanghai.android.files.provider.smb.client.Authenticator
 import me.zhanghai.android.files.provider.smb.client.Authority
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 
 object SmbServerAuthenticator : Authenticator {
     private val transientServers = mutableSetOf<SmbServer>()
@@ -16,7 +15,7 @@ object SmbServerAuthenticator : Authenticator {
     override fun getPassword(authority: Authority): String? {
         val server = synchronized(transientServers) {
             transientServers.find { it.authority == authority }
-        } ?: Settings.STORAGES.valueCompat.find {
+        } ?: Settings.STORAGES.value.find {
             it is SmbServer && it.authority == authority
         } as SmbServer?
         return server?.password

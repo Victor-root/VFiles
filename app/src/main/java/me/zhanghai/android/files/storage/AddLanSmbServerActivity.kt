@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
@@ -42,13 +43,12 @@ import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.launchSafe
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 class AddLanSmbServerActivity : AppActivity() {
     @Composable
     override fun Content() {
         val viewModel = viewModel { AddLanSmbServerViewModel() }
-        val lanSmbServerList by viewModel.lanSmbServerListLiveData.observeAsStateCompat()
+        val lanSmbServerList by viewModel.lanSmbServerListFlow.collectAsStateWithLifecycle()
         LaunchedEffect(lanSmbServerList) {
             (lanSmbServerList as? Failure)?.throwable?.printStackTrace()
         }

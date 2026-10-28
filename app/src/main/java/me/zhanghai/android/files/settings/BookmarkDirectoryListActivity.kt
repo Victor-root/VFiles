@@ -31,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,7 +54,6 @@ import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
 import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 
@@ -67,7 +67,7 @@ class BookmarkDirectoryListActivity : AppActivity() {
 @Composable
 private fun BookmarkDirectoryListScreen() {
     val context = LocalContext.current
-    val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.observeAsStateCompat()
+    val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.flow.collectAsState()
     val openPathLauncher =
         rememberLauncherForActivityResult(FileListActivity.OpenDirectoryContract()) {
             if (it != null) {

@@ -5,21 +5,18 @@
 
 package me.zhanghai.android.files.fileproperties.apk
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import java8.nio.file.Path
+import kotlinx.coroutines.flow.StateFlow
+import me.zhanghai.android.files.fileproperties.pathStatefulLoader
 import me.zhanghai.android.files.util.Stateful
 
 class FilePropertiesApkTabViewModel(path: Path) : ViewModel() {
-    private val _apkInfoLiveData = ApkInfoLiveData(path)
-    val apkInfoLiveData: LiveData<Stateful<ApkInfo>>
-        get() = _apkInfoLiveData
+    private val loader = pathStatefulLoader(path) { loadApkInfo(path) }
+    val apkInfoFlow: StateFlow<Stateful<ApkInfo>>
+        get() = loader.flow
 
     fun reload() {
-        _apkInfoLiveData.loadValue()
-    }
-
-    override fun onCleared() {
-        _apkInfoLiveData.close()
+        loader.load()
     }
 }

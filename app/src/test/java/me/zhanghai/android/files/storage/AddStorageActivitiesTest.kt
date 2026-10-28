@@ -31,7 +31,6 @@ import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.getArgs
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -89,7 +88,7 @@ class AddStorageActivitiesTest {
                 .getString(R.string.activity_not_found),
             ShadowToast.getTextOfLatestToast()
         )
-        assertTrue(Settings.STORAGES.valueCompat.isEmpty())
+        assertTrue(Settings.STORAGES.value.isEmpty())
     }
 
     @Test
@@ -98,7 +97,7 @@ class AddStorageActivitiesTest {
         val scenario = launch(externalStorageShortcutIntent())
         composeTestRule.waitForIdle()
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
-        val storage = Settings.STORAGES.valueCompat.single() as ExternalStorageShortcut
+        val storage = Settings.STORAGES.value.single() as ExternalStorageShortcut
         assertEquals("Android/data", storage.customName)
         assertEquals(androidDataUri, storage.uri)
         // The app can't grant the files app of the system a permission it doesn't have itself.
@@ -121,7 +120,7 @@ class AddStorageActivitiesTest {
             )
         }
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
-        val storage = Settings.STORAGES.valueCompat.single() as DocumentTree
+        val storage = Settings.STORAGES.value.single() as DocumentTree
         assertEquals(treeUri, storage.uri.value)
         assertEquals(null, storage.customName)
     }

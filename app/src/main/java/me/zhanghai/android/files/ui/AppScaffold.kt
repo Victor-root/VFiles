@@ -34,6 +34,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
@@ -50,7 +51,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.LocalAppColors
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 /**
  * A screen with an app bar, following the edge-to-edge setting: when it's on, the content scrolls
@@ -101,7 +101,7 @@ fun AppScaffold(
     isContentBehindTopBar: Boolean = false,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
     Scaffold(
         modifier = modifier.then(
             if (isEdgeToEdge) {

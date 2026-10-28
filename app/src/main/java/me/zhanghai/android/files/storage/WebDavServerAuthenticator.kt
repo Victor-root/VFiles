@@ -9,7 +9,6 @@ import me.zhanghai.android.files.provider.webdav.client.Authentication
 import me.zhanghai.android.files.provider.webdav.client.Authenticator
 import me.zhanghai.android.files.provider.webdav.client.Authority
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 
 object WebDavServerAuthenticator : Authenticator {
     private val transientServers = mutableSetOf<WebDavServer>()
@@ -17,7 +16,7 @@ object WebDavServerAuthenticator : Authenticator {
     override fun getAuthentication(authority: Authority): Authentication? {
         val server = synchronized(transientServers) {
             transientServers.find { it.authority == authority }
-        } ?: Settings.STORAGES.valueCompat.find {
+        } ?: Settings.STORAGES.value.find {
             it is WebDavServer && it.authority == authority
         } as WebDavServer?
         return server?.authentication

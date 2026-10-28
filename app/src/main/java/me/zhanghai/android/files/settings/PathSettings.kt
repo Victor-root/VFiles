@@ -15,14 +15,14 @@ object PathSettings {
     private const val NAME_SUFFIX = "path"
 
     @Suppress("UNCHECKED_CAST")
-    fun getFileListViewType(path: Path): SettingLiveData<FileViewType?> =
-        EnumSettingLiveData(
+    fun getFileListViewType(path: Path): Setting<FileViewType?> =
+        EnumSetting(
             NAME_SUFFIX, R.string.pref_key_file_list_view_type, path.toString(),
             ResourcesCompat.ID_NULL, FileViewType::class.java
-        ) as SettingLiveData<FileViewType?>
+        ) as Setting<FileViewType?>
 
-    fun getFileListSortOptions(path: Path): SettingLiveData<FileSortOptions?> =
-        ParcelValueSettingLiveData(
+    fun getFileListSortOptions(path: Path): Setting<FileSortOptions?> =
+        ParcelValueSetting(
             NAME_SUFFIX, R.string.pref_key_file_list_sort_options, path.toString(), null
         )
 }

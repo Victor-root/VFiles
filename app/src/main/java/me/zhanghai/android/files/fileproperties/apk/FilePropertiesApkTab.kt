@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.apk
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,12 +20,11 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.compat.longVersionCodeCompat
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun FilePropertiesApkTab(path: Path) {
     val viewModel = viewModel { FilePropertiesApkTabViewModel(path) }
-    val stateful by viewModel.apkInfoLiveData.observeAsStateCompat()
+    val stateful by viewModel.apkInfoFlow.collectAsStateWithLifecycle()
     var isPermissionListDialogShown by rememberSaveable { mutableStateOf(false) }
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { apkInfo ->
         FilePropertiesItem(R.string.file_properties_apk_label, apkInfo.label)

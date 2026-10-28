@@ -15,7 +15,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.AppTheme
-import me.zhanghai.android.files.util.valueCompat
 
 abstract class AppActivity : ComponentActivity() {
     private var appliedLocales: String? = null
@@ -25,7 +24,7 @@ abstract class AppActivity : ComponentActivity() {
         super.attachBaseContext(newBase)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            val locales = Settings.LOCALES.valueCompat
+            val locales = Settings.LOCALES.value
             appliedLocales = locales
             if (locales.isNotEmpty()) {
                 applyOverrideConfiguration(
@@ -48,7 +47,7 @@ abstract class AppActivity : ComponentActivity() {
         super.onResume()
 
         val appliedLocales = appliedLocales
-        if (appliedLocales != null && Settings.LOCALES.valueCompat != appliedLocales) {
+        if (appliedLocales != null && Settings.LOCALES.value != appliedLocales) {
             recreate()
         }
     }

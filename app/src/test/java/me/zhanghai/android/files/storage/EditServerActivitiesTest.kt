@@ -39,7 +39,6 @@ import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -92,7 +91,7 @@ class EditServerActivitiesTest {
         composeTestRule.onNodeWithText("Enter a hostname").assertDoesNotExist()
         composeTestRule.onNodeWithText("Add").performClick()
         composeTestRule.onNodeWithText("Invalid hostname").assertIsDisplayed()
-        assertTrue(Settings.STORAGES.valueCompat.isEmpty())
+        assertTrue(Settings.STORAGES.value.isEmpty())
         assertEquals(Lifecycle.State.RESUMED, scenario.state)
     }
 
@@ -130,7 +129,7 @@ class EditServerActivitiesTest {
         textField("Name").assert(hasText("user@192.168.1.2"))
         composeTestRule.onNodeWithText("Add").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        val server = Settings.STORAGES.valueCompat.single() as FtpServer
+        val server = Settings.STORAGES.value.single() as FtpServer
         assertEquals(
             FtpAuthority(Protocol.FTPS, "192.168.1.2", 990, "user", Mode.PASSIVE, "UTF-8"),
             server.authority
@@ -165,7 +164,7 @@ class EditServerActivitiesTest {
         textField("My FTP").performTextReplacement("")
         composeTestRule.onNodeWithText("Save").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        val savedServer = Settings.STORAGES.valueCompat.single() as FtpServer
+        val savedServer = Settings.STORAGES.value.single() as FtpServer
         assertEquals(server.id, savedServer.id)
         assertEquals(null, savedServer.customName)
         assertEquals(server.authority, savedServer.authority)
@@ -187,7 +186,7 @@ class EditServerActivitiesTest {
         textField("user").assertIsDisplayed()
         composeTestRule.onNodeWithText("Remove").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        assertTrue(Settings.STORAGES.valueCompat.isEmpty())
+        assertTrue(Settings.STORAGES.value.isEmpty())
     }
 
     @Test
@@ -218,7 +217,7 @@ class EditServerActivitiesTest {
         // Editing the private key password also clears the private key error.
         textField("Private key password").performTextReplacement("password")
         composeTestRule.onNodeWithText("Invalid private key").assertDoesNotExist()
-        assertTrue(Settings.STORAGES.valueCompat.isEmpty())
+        assertTrue(Settings.STORAGES.value.isEmpty())
     }
 
     @Test
@@ -238,7 +237,7 @@ class EditServerActivitiesTest {
         textField("2222").performTextReplacement("")
         composeTestRule.onNodeWithText("Save").performClick()
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
-        val savedServer = Settings.STORAGES.valueCompat.single() as SftpServer
+        val savedServer = Settings.STORAGES.value.single() as SftpServer
         assertEquals(SftpAuthority("example.com", 22, "user"), savedServer.authority)
         assertEquals(PasswordAuthentication("pw"), savedServer.authentication)
     }
@@ -261,7 +260,7 @@ class EditServerActivitiesTest {
         encryptNode.performClick()
         composeTestRule.onNodeWithText("Save").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        val savedServer = Settings.STORAGES.valueCompat.single() as SmbServer
+        val savedServer = Settings.STORAGES.value.single() as SmbServer
         assertEquals(
             SmbAuthority("nas", 445, guest.username, guest.domain, true), savedServer.authority
         )
@@ -282,7 +281,7 @@ class EditServerActivitiesTest {
         captureScreenRoboImage("build/screenshots/storage_edit_smb_server_add.png")
         composeTestRule.onNodeWithText("Add").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        val savedServer = Settings.STORAGES.valueCompat.single() as SmbServer
+        val savedServer = Settings.STORAGES.value.single() as SmbServer
         assertEquals(
             SmbAuthority("nas", 445, "user", "WORKGROUP", false), savedServer.authority
         )
@@ -307,7 +306,7 @@ class EditServerActivitiesTest {
         ).performTextReplacement("token")
         composeTestRule.onNodeWithText("Add").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
-        val savedServer = Settings.STORAGES.valueCompat.single() as WebDavServer
+        val savedServer = Settings.STORAGES.value.single() as WebDavServer
         assertEquals(
             WebDavAuthority(WebDavProtocol.DAVS, "dav.example.com", 443, ""),
             savedServer.authority

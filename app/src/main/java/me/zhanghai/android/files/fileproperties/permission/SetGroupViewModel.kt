@@ -5,4 +5,5 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
-class SetGroupViewModel(selectedId: Int) : SetPrincipalViewModel(GroupListLiveData(), selectedId)
+class SetGroupViewModel(selectedId: Int) :
+    SetPrincipalViewModel(GroupListLoader::loadPrincipals, selectedId)

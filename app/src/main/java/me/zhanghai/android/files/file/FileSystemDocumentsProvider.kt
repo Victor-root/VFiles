@@ -28,7 +28,6 @@ import me.zhanghai.android.files.provider.common.moveTo
 import me.zhanghai.android.files.provider.common.newDirectoryStream
 import me.zhanghai.android.files.provider.common.readAttributes
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 import me.zhanghai.android.files.util.withoutPenaltyDeathOnNetwork
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -49,7 +48,7 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     override fun queryRoots(projection: Array<out String>?): Cursor {
         val context = context!!
         val cursor = MatrixCursor(projection ?: DEFAULT_ROOT_PROJECTION)
-        for (storage in Settings.STORAGES.valueCompat) {
+        for (storage in Settings.STORAGES.value) {
             if (!storage.isVisible) {
                 continue
             }

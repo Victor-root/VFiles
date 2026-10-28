@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.navigation
 
+import androidx.compose.runtime.collectAsState
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -49,7 +50,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
 import me.zhanghai.android.files.theme.LocalAppColors
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
 
@@ -72,7 +72,7 @@ fun NavigationDrawerContent(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val context = LocalContext.current
-    val items by NavigationItemListLiveData.observeAsStateCompat()
+    val items by NavigationItemList.flow.collectAsState()
     val currentOnNavigateTo by rememberUpdatedState(onNavigateTo)
     val currentOnNavigateToRoot by rememberUpdatedState(onNavigateToRoot)
     val currentOnCloseDrawer by rememberUpdatedState(onCloseDrawer)

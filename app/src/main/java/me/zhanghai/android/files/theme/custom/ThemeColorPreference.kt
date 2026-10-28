@@ -8,6 +8,7 @@ package me.zhanghai.android.files.theme.custom
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,13 +23,12 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.colorpicker.ColorPickerDialog
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.Preference
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun ThemeColorPreference() {
     val context = LocalContext.current
     val title = stringResource(R.string.settings_theme_color_title)
-    val themeColor by Settings.THEME_COLOR.observeAsStateCompat()
+    val themeColor by Settings.THEME_COLOR.flow.collectAsState()
     var isDialogShown by rememberSaveable { mutableStateOf(false) }
     Preference(
         title = title,

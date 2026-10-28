@@ -48,7 +48,6 @@ import me.zhanghai.android.files.util.isGetPackageArchiveInfoCompatible
 import me.zhanghai.android.files.util.isMediaMetadataRetrieverCompatible
 import me.zhanghai.android.files.util.runWithCancellationSignal
 import me.zhanghai.android.files.util.setDataSource
-import me.zhanghai.android.files.util.valueCompat
 import okio.buffer
 import okio.source
 import java.io.Closeable
@@ -98,7 +97,7 @@ class PathAttributesFetcher(
             if (path.isRemotePath) {
                 // FTP doesn't support random access and requires one connection per parallel read.
                 val shouldReadRemotePath = !path.isFtpPath
-                    && Settings.READ_REMOTE_FILES_FOR_THUMBNAIL.valueCompat
+                    && Settings.READ_REMOTE_FILES_FOR_THUMBNAIL.value
                 if (!shouldReadRemotePath) {
                     error("Cannot read $path for thumbnail")
                 }

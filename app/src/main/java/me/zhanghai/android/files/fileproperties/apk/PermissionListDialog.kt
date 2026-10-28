@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.apk
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.content.pm.PermissionInfo
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,6 @@ import me.zhanghai.android.files.compat.protectionCompat
 import me.zhanghai.android.files.fileproperties.StatefulList
 import me.zhanghai.android.files.fileproperties.ViewModelStoreScope
 import me.zhanghai.android.files.util.copyText
-import me.zhanghai.android.files.util.observeAsStateCompat
 import java.util.Locale
 
 /** The permissions requested by an APK, whose names are copied on long click. */
@@ -37,7 +37,7 @@ import java.util.Locale
 fun PermissionListDialog(permissionNames: Array<String>, onDismissRequest: () -> Unit) {
     ViewModelStoreScope {
         val viewModel = viewModel { PermissionListViewModel(permissionNames) }
-        val permissionListStateful by viewModel.permissionListLiveData.observeAsStateCompat()
+        val permissionListStateful by viewModel.permissionListFlow.collectAsStateWithLifecycle()
         AlertDialog(
             onDismissRequest = onDismissRequest,
             confirmButton = {

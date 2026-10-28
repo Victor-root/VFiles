@@ -19,6 +19,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,7 +46,6 @@ import me.zhanghai.android.files.ui.rememberFormFieldState
 import me.zhanghai.android.files.util.ParcelableParceler
 import me.zhanghai.android.files.util.asFileNameOrNull
 import me.zhanghai.android.files.util.asPathNameOrNull
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
@@ -254,7 +254,7 @@ private fun CreateArchiveDialog(
     onConfirm: (FileItemSet, String, ArchiveType, String?) -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    val type by Settings.CREATE_ARCHIVE_TYPE.observeAsStateCompat()
+    val type by Settings.CREATE_ARCHIVE_TYPE.flow.collectAsState()
     val passwordField = rememberFormFieldState()
     val initialName = remember(files) {
         files.singleOrNull()?.path?.fileName?.toString()

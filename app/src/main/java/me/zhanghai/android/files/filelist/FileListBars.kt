@@ -57,7 +57,7 @@ import java8.nio.file.Path
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
-import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
+import me.zhanghai.android.files.navigation.NavigationRootMap
 import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.MenuDivider
@@ -65,7 +65,6 @@ import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.appTopAppBarColors
-import me.zhanghai.android.files.util.valueCompat
 
 /** The colors of the app bar, which change once the list is scrolled. */
 class FileListAppBarColors(val container: Color, val content: Color)
@@ -594,7 +593,7 @@ fun CreateFileBar(controller: FileListController) {
 @Composable
 fun OpenDirectoryBar(currentPath: Path, controller: FileListController) {
     val context = LocalContext.current
-    val name = NavigationRootMapLiveData.valueCompat[currentPath]?.getName(context)
+    val name = NavigationRootMap.value[currentPath]?.getName(context)
         ?: currentPath.name
     FileListBottomBar(onClose = controller::cancelPicking) {
         Text(

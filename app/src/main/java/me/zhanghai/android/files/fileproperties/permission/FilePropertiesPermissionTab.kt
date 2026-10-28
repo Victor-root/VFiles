@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +20,6 @@ import me.zhanghai.android.files.provider.common.PosixFileAttributes
 import me.zhanghai.android.files.provider.common.PosixPrincipal
 import me.zhanghai.android.files.provider.common.toInt
 import me.zhanghai.android.files.provider.common.toModeString
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 private enum class PermissionDialog {
     OWNER,
@@ -30,7 +30,7 @@ private enum class PermissionDialog {
 
 @Composable
 fun FilePropertiesPermissionTab(viewModel: FilePropertiesFileViewModel) {
-    val stateful by viewModel.fileLiveData.observeAsStateCompat()
+    val stateful by viewModel.fileFlow.collectAsStateWithLifecycle()
     var dialog by rememberSaveable { mutableStateOf<PermissionDialog?>(null) }
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { file ->
         val attributes = file.attributes as PosixFileAttributes
