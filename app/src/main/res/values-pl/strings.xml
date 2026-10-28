@@ -669,6 +669,31 @@
     <string name="video_player_title">Odtwarzacz wideo</string>
     <string name="play">Odtwórz</string>
     <string name="pause">Wstrzymaj</string>
+    <string name="music_title">Muzyka</string>
+    <string name="music_tracks">Utwory</string>
+    <string name="music_albums">Albumy</string>
+    <string name="music_artists">Wykonawcy</string>
+    <string name="music_empty">Brak muzyki</string>
+    <string name="music_access_denied">Zezwól na dostęp do plików, aby zobaczyć swoją muzykę</string>
+    <string name="music_shuffle_all">Odtwarzaj wszystko losowo</string>
+    <string name="music_unknown_artist">Nieznany wykonawca</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d utwór</item>
+        <item quantity="few">%1$,d utwory</item>
+        <item quantity="many">%1$,d utworów</item>
+        <item quantity="other">%1$,d utworów</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="few">%1$,d albumy</item>
+        <item quantity="many">%1$,d albumów</item>
+        <item quantity="other">%1$,d albumów</item>
+    </plurals>
+    <string name="music_player_title">Odtwarzacz muzyki</string>
+    <string name="music_shuffle">Losowo</string>
+    <string name="music_repeat">Powtarzaj</string>
+    <string name="music_previous">Poprzedni</string>
+    <string name="music_next">Następny</string>
     <string name="image_viewer_title">Przeglądarka zdjęć</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Zapisz jako</string>
@@ -735,6 +760,7 @@
     <string name="settings_standard_directories_title">Standardowe katalogi</string>
     <string name="settings_standard_directories_summary_empty">Nie włączono żadnych standardowych katalogów</string>
     <string name="settings_standard_directory_gallery_summary">Zdjęcia i filmy na urządzeniu</string>
+    <string name="settings_standard_directory_music_summary">Utwory na urządzeniu</string>
     <string name="settings_bookmark_directories_title">Katalogi dodane do zakładek</string>
     <string name="settings_bookmark_directories_summary_empty">Brak katalogów dodanych do zakładek</string>
     <string name="settings_root_strategy_title">Tryb dostępu do roota</string>

@@ -669,6 +669,31 @@
     <string name="video_player_title">נגן וידאו</string>
     <string name="play">הפעלה</string>
     <string name="pause">השהיה</string>
+    <string name="music_title">מוזיקה</string>
+    <string name="music_tracks">שירים</string>
+    <string name="music_albums">אלבומים</string>
+    <string name="music_artists">אמנים</string>
+    <string name="music_empty">אין מוזיקה</string>
+    <string name="music_access_denied">יש לאפשר גישה לקבצים כדי לראות את המוזיקה שלך</string>
+    <string name="music_shuffle_all">ערבוב הכול</string>
+    <string name="music_unknown_artist">אמן לא ידוע</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">שיר %1$,d</item>
+        <item quantity="two">%1$,d שירים</item>
+        <item quantity="many">%1$,d שירים</item>
+        <item quantity="other">%1$,d שירים</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">אלבום %1$,d</item>
+        <item quantity="two">%1$,d אלבומים</item>
+        <item quantity="many">%1$,d אלבומים</item>
+        <item quantity="other">%1$,d אלבומים</item>
+    </plurals>
+    <string name="music_player_title">נגן מוזיקה</string>
+    <string name="music_shuffle">ערבוב</string>
+    <string name="music_repeat">חזרה</string>
+    <string name="music_previous">הקודם</string>
+    <string name="music_next">הבא</string>
     <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>
@@ -735,6 +760,7 @@
     <string name="settings_standard_directories_title">תיקיות סטנדרטיות</string>
     <string name="settings_standard_directories_summary_empty">תיקיות סטנדרטיות לא מופעל</string>
     <string name="settings_standard_directory_gallery_summary">תמונות וסרטונים מהמכשיר</string>
+    <string name="settings_standard_directory_music_summary">שירים מהמכשיר</string>
     <string name="settings_bookmark_directories_title">תיקיות סימניות</string>
     <string name="settings_bookmark_directories_summary_empty">אין תיקיות סימניות</string>
     <string name="settings_root_strategy_title">מצב גישת שורש</string>

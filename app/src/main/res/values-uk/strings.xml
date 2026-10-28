@@ -671,6 +671,31 @@
     <string name="video_player_title">Відеоплеєр</string>
     <string name="play">Відтворити</string>
     <string name="pause">Пауза</string>
+    <string name="music_title">Музика</string>
+    <string name="music_tracks">Треки</string>
+    <string name="music_albums">Альбоми</string>
+    <string name="music_artists">Виконавці</string>
+    <string name="music_empty">Немає музики</string>
+    <string name="music_access_denied">Надайте доступ до файлів, щоб бачити свою музику</string>
+    <string name="music_shuffle_all">Перемішати все</string>
+    <string name="music_unknown_artist">Невідомий виконавець</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d трек</item>
+        <item quantity="few">%1$,d треки</item>
+        <item quantity="many">%1$,d треків</item>
+        <item quantity="other">%1$,d треків</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d альбом</item>
+        <item quantity="few">%1$,d альбоми</item>
+        <item quantity="many">%1$,d альбомів</item>
+        <item quantity="other">%1$,d альбомів</item>
+    </plurals>
+    <string name="music_player_title">Музичний плеєр</string>
+    <string name="music_shuffle">Перемішати</string>
+    <string name="music_repeat">Повтор</string>
+    <string name="music_previous">Попередній</string>
+    <string name="music_next">Наступний</string>
     <string name="image_viewer_title">Переглядач зображень</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Зберегти як</string>
@@ -737,6 +762,7 @@
     <string name="settings_standard_directories_title">Стандартні теки</string>
     <string name="settings_standard_directories_summary_empty">Нема ввімкнених стандартних тек</string>
     <string name="settings_standard_directory_gallery_summary">Фото та відео на пристрої</string>
+    <string name="settings_standard_directory_music_summary">Треки на пристрої</string>
     <string name="settings_bookmark_directories_title">Теки закладок</string>
     <string name="settings_bookmark_directories_summary_empty">Нема тек закладок</string>
     <string name="settings_root_strategy_title">Режим доступу root</string>

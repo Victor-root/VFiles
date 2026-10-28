@@ -601,6 +601,27 @@
     <string name="video_player_title">Videólejátszó</string>
     <string name="play">Lejátszás</string>
     <string name="pause">Szünet</string>
+    <string name="music_title">Zene</string>
+    <string name="music_tracks">Dalok</string>
+    <string name="music_albums">Albumok</string>
+    <string name="music_artists">Előadók</string>
+    <string name="music_empty">Nincs zene</string>
+    <string name="music_access_denied">Engedélyezze a fájlokhoz való hozzáférést a zenék megtekintéséhez</string>
+    <string name="music_shuffle_all">Összes keverve</string>
+    <string name="music_unknown_artist">Ismeretlen előadó</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d dal</item>
+        <item quantity="other">%1$,d dal</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Zenelejátszó</string>
+    <string name="music_shuffle">Keverés</string>
+    <string name="music_repeat">Ismétlés</string>
+    <string name="music_previous">Előző</string>
+    <string name="music_next">Következő</string>
     <string name="image_viewer_title">Képmegjelenítő</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Mentés másként</string>
@@ -667,6 +688,7 @@
     <string name="settings_standard_directories_title">Szokásos mappák</string>
     <string name="settings_standard_directories_summary_empty">A szokásos mappák nem engedélyezettek</string>
     <string name="settings_standard_directory_gallery_summary">Az eszközön lévő fotók és videók</string>
+    <string name="settings_standard_directory_music_summary">Az eszközön lévő dalok</string>
     <string name="settings_bookmark_directories_title">Mappák könyvjelzőzése</string>
     <string name="settings_bookmark_directories_summary_empty">Nincsenek könyvjelzőzött mappák</string>
     <string name="settings_root_strategy_title">Root hozzáférési mód</string>
@@ -709,6 +731,7 @@
     <string name="onboarding_files_title">Fájlhozzáférés</string>
     <string name="onboarding_finish">Kezdés</string>
     <string name="onboarding_grant">Megadás</string>
+    <string name="onboarding_granted">Megadva</string>
     <string name="onboarding_notifications_description">Engedélyezze az értesítéseket a fájlműveletek – például másolás, áthelyezés és archiválás – előrehaladásának követéséhez, akkor is, ha az alkalmazás a háttérben fut.</string>
 
     <string name="onboarding_install_apps_title">Alkalmazások telepítése</string>

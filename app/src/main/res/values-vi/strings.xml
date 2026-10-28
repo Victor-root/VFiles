@@ -569,6 +569,25 @@
     <string name="video_player_title">Trình phát video</string>
     <string name="play">Phát</string>
     <string name="pause">Tạm dừng</string>
+    <string name="music_title">Âm nhạc</string>
+    <string name="music_tracks">Bài hát</string>
+    <string name="music_albums">Album</string>
+    <string name="music_artists">Nghệ sĩ</string>
+    <string name="music_empty">Không có nhạc</string>
+    <string name="music_access_denied">Cho phép truy cập tệp để xem nhạc của bạn</string>
+    <string name="music_shuffle_all">Phát ngẫu nhiên tất cả</string>
+    <string name="music_unknown_artist">Nghệ sĩ không xác định</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d bài hát</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Trình phát nhạc</string>
+    <string name="music_shuffle">Ngẫu nhiên</string>
+    <string name="music_repeat">Lặp lại</string>
+    <string name="music_previous">Trước</string>
+    <string name="music_next">Tiếp theo</string>
     <string name="image_viewer_title">Trình xem hình ảnh</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Lưu thành</string>
@@ -635,6 +654,7 @@
     <string name="settings_standard_directories_title">Các thư mục tiêu chuẩn</string>
     <string name="settings_standard_directories_summary_empty">Không bật thư mục tiêu chuẩn nào</string>
     <string name="settings_standard_directory_gallery_summary">Ảnh và video trên thiết bị</string>
+    <string name="settings_standard_directory_music_summary">Bài hát trên thiết bị</string>
     <string name="settings_bookmark_directories_title">Đánh dấu thư mục</string>
     <string name="settings_bookmark_directories_summary_empty">Không có thư mục nào được đánh dấu</string>
     <string name="settings_root_strategy_title">Chế độ truy cập root</string>

@@ -671,6 +671,31 @@
     <string name="video_player_title">Видеоплеер</string>
     <string name="play">Воспроизвести</string>
     <string name="pause">Пауза</string>
+    <string name="music_title">Музыка</string>
+    <string name="music_tracks">Треки</string>
+    <string name="music_albums">Альбомы</string>
+    <string name="music_artists">Исполнители</string>
+    <string name="music_empty">Нет музыки</string>
+    <string name="music_access_denied">Разрешите доступ к файлам, чтобы видеть свою музыку</string>
+    <string name="music_shuffle_all">Перемешать всё</string>
+    <string name="music_unknown_artist">Неизвестный исполнитель</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d трек</item>
+        <item quantity="few">%1$,d трека</item>
+        <item quantity="many">%1$,d треков</item>
+        <item quantity="other">%1$,d треков</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d альбом</item>
+        <item quantity="few">%1$,d альбома</item>
+        <item quantity="many">%1$,d альбомов</item>
+        <item quantity="other">%1$,d альбомов</item>
+    </plurals>
+    <string name="music_player_title">Музыкальный плеер</string>
+    <string name="music_shuffle">Перемешать</string>
+    <string name="music_repeat">Повтор</string>
+    <string name="music_previous">Предыдущий</string>
+    <string name="music_next">Следующий</string>
     <string name="image_viewer_title">Просмотрщик изображений</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Сохранить как</string>
@@ -737,6 +762,7 @@
     <string name="settings_standard_directories_title">Стандартные папки</string>
     <string name="settings_standard_directories_summary_empty">Стандартные папки не включены</string>
     <string name="settings_standard_directory_gallery_summary">Фото и видео на устройстве</string>
+    <string name="settings_standard_directory_music_summary">Треки на устройстве</string>
     <string name="settings_bookmark_directories_title">Закладки папок</string>
     <string name="settings_bookmark_directories_summary_empty">Нет закладок папок</string>
     <string name="settings_root_strategy_title">Root-доступ</string>

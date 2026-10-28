@@ -605,6 +605,27 @@
     <string name="video_player_title">Videospiller</string>
     <string name="play">Spill av</string>
     <string name="pause">Pause</string>
+    <string name="music_title">Musikk</string>
+    <string name="music_tracks">Sanger</string>
+    <string name="music_albums">Album</string>
+    <string name="music_artists">Artister</string>
+    <string name="music_empty">Ingen musikk</string>
+    <string name="music_access_denied">Gi tilgang til filer for å se musikken din</string>
+    <string name="music_shuffle_all">Bland alle</string>
+    <string name="music_unknown_artist">Ukjent artist</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d sang</item>
+        <item quantity="other">%1$,d sanger</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Musikkspiller</string>
+    <string name="music_shuffle">Bland</string>
+    <string name="music_repeat">Gjenta</string>
+    <string name="music_previous">Forrige</string>
+    <string name="music_next">Neste</string>
     <string name="image_viewer_title">Bildefremviser</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Lagre som</string>
@@ -671,6 +692,7 @@
     <string name="settings_standard_directories_title">Standardmapper</string>
     <string name="settings_standard_directories_summary_empty">Ingen standardmapper er aktivert</string>
     <string name="settings_standard_directory_gallery_summary">Bilder og videoer på enheten</string>
+    <string name="settings_standard_directory_music_summary">Sanger på enheten</string>
     <string name="settings_bookmark_directories_title">Bokmerkede mapper</string>
     <string name="settings_bookmark_directories_summary_empty">Ingen bokmerkede mapper</string>
     <string name="settings_root_strategy_title">Tilgang som rot</string>

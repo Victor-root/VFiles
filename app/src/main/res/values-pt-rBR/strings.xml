@@ -638,6 +638,29 @@
     <string name="video_player_title">Player de vídeo</string>
     <string name="play">Reproduzir</string>
     <string name="pause">Pausar</string>
+    <string name="music_title">Música</string>
+    <string name="music_tracks">Músicas</string>
+    <string name="music_albums">Álbuns</string>
+    <string name="music_artists">Artistas</string>
+    <string name="music_empty">Nenhuma música</string>
+    <string name="music_access_denied">Permita o acesso aos arquivos para ver suas músicas</string>
+    <string name="music_shuffle_all">Embaralhar tudo</string>
+    <string name="music_unknown_artist">Artista desconhecido</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d música</item>
+        <item quantity="many">%1$,d músicas</item>
+        <item quantity="other">%1$,d músicas</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d álbum</item>
+        <item quantity="many">%1$,d álbuns</item>
+        <item quantity="other">%1$,d álbuns</item>
+    </plurals>
+    <string name="music_player_title">Player de música</string>
+    <string name="music_shuffle">Aleatório</string>
+    <string name="music_repeat">Repetir</string>
+    <string name="music_previous">Anterior</string>
+    <string name="music_next">Próxima</string>
     <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvar como</string>
@@ -704,6 +727,7 @@
     <string name="settings_standard_directories_title">Pastas padrão</string>
     <string name="settings_standard_directories_summary_empty">Nenhuma pasta padrão ativada</string>
     <string name="settings_standard_directory_gallery_summary">Fotos e vídeos do dispositivo</string>
+    <string name="settings_standard_directory_music_summary">Músicas do dispositivo</string>
     <string name="settings_bookmark_directories_title">Pastas de favoritos</string>
     <string name="settings_bookmark_directories_summary_empty">Nenhuma pasta de favoritos</string>
     <string name="settings_root_strategy_title">Modo de acesso root</string>
