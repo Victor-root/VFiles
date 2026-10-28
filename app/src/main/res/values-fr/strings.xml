@@ -767,6 +767,7 @@
     <string name="onboarding_welcome_title">Bienvenue dans %1$s</string>
     <string name="onboarding_welcome_description">Accordez quelques autorisations pour profiter pleinement de l\'application. Les optionnelles pourront être modifiées plus tard dans les réglages.</string>
     <string name="onboarding_grant">Accorder</string>
+    <string name="onboarding_granted">Accordé</string>
     <string name="onboarding_required">Requis</string>
     <string name="onboarding_optional">Optionnel</string>
 

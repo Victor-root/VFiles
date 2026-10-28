@@ -779,6 +779,7 @@
     <string name="onboarding_files_title">Přístup k souborům</string>
     <string name="onboarding_finish">Začít</string>
     <string name="onboarding_grant">Udělit</string>
+    <string name="onboarding_granted">Uděleno</string>
     <string name="onboarding_notifications_description">Povolte oznámení, abyste mohli sledovat průběh operací se soubory, jako je kopírování, přesouvání a archivace, i když je aplikace na pozadí.</string>
 
     <string name="onboarding_install_apps_title">Instalace aplikací</string>

@@ -713,6 +713,7 @@
     <string name="onboarding_files_title">Filtilgang</string>
     <string name="onboarding_finish">Kom i gang</string>
     <string name="onboarding_grant">Gi</string>
+    <string name="onboarding_granted">Gitt</string>
     <string name="onboarding_notifications_description">Tillat varsler for å følge fremdriften til filoperasjoner som kopiering, flytting og arkivering, selv når appen kjører i bakgrunnen.</string>
 
     <string name="onboarding_install_apps_title">Installere apper</string>

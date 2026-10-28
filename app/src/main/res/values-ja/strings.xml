@@ -680,6 +680,7 @@
     <string name="onboarding_files_title">ファイルアクセス</string>
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>
+    <string name="onboarding_granted">許可済み</string>
     <string name="onboarding_notifications_description">通知を許可すると、アプリがバックグラウンドにあるときでも、コピー・移動・圧縮などのファイル操作の進行状況を確認できます。</string>
 
     <string name="onboarding_install_apps_title">アプリのインストール</string>

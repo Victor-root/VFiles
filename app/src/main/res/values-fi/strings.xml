@@ -685,6 +685,7 @@
     <string name="onboarding_files_title">Tiedostojen käyttöoikeus</string>
     <string name="onboarding_finish">Aloita</string>
     <string name="onboarding_grant">Myönnä</string>
+    <string name="onboarding_granted">Myönnetty</string>
     <string name="onboarding_notifications_description">Salli ilmoitukset, jotta voit seurata tiedostotoimintojen, kuten kopioinnin, siirron ja arkistoinnin, edistymistä, vaikka sovellus olisi taustalla.</string>
 
     <string name="onboarding_install_apps_title">Sovellusten asentaminen</string>

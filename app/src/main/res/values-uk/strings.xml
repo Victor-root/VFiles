@@ -781,6 +781,7 @@
     <string name="onboarding_files_title">Доступ до файлів</string>
     <string name="onboarding_finish">Почати</string>
     <string name="onboarding_grant">Надати</string>
+    <string name="onboarding_granted">Надано</string>
     <string name="onboarding_notifications_description">Дозвольте сповіщення, щоб відстежувати перебіг операцій із файлами (копіювання, переміщення, архівування) навіть коли додаток у фоні.</string>
 
     <string name="onboarding_install_apps_title">Встановлення додатків</string>

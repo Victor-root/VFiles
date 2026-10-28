@@ -676,6 +676,7 @@
     <string name="onboarding_files_title">Truy cập tệp</string>
     <string name="onboarding_finish">Bắt đầu</string>
     <string name="onboarding_grant">Cấp</string>
+    <string name="onboarding_granted">Đã cấp</string>
     <string name="onboarding_notifications_description">Cho phép thông báo để theo dõi tiến trình các thao tác tệp như sao chép, di chuyển và nén, ngay cả khi ứng dụng chạy nền.</string>
 
     <string name="onboarding_install_apps_title">Cài đặt ứng dụng</string>

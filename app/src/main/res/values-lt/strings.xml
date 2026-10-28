@@ -777,6 +777,7 @@
     <string name="onboarding_files_title">Failų prieiga</string>
     <string name="onboarding_finish">Pradėti</string>
     <string name="onboarding_grant">Suteikti</string>
+    <string name="onboarding_granted">Suteikta</string>
     <string name="onboarding_notifications_description">Leiskite pranešimus, kad galėtumėte stebėti failų operacijų, pvz., kopijavimo, perkėlimo ir archyvavimo, eigą net kai programa veikia fone.</string>
 
     <string name="onboarding_install_apps_title">Programų diegimas</string>

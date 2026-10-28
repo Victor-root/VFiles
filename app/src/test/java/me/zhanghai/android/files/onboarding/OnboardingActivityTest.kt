@@ -5,7 +5,9 @@
 
 package me.zhanghai.android.files.onboarding
 
+import android.Manifest
 import android.app.AppOpsManager
+import android.app.Application
 import android.content.Context
 import android.os.Process
 import androidx.compose.ui.input.key.Key
@@ -45,8 +47,11 @@ class OnboardingActivityTest {
 
     @Test
     fun asksForPermissions() {
+        shadowOf(ApplicationProvider.getApplicationContext<Application>())
+            .grantPermissions(Manifest.permission.POST_NOTIFICATIONS)
         launchWithoutFilesAccess()
         composeTestRule.onNodeWithText("Required").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Granted").assertIsDisplayed()
         // Files access is required to continue.
         composeTestRule.onNodeWithText("Get started").assertIsNotEnabled()
         captureScreenRoboImage("build/screenshots/onboarding.png")

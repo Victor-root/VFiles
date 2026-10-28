@@ -779,6 +779,7 @@
     <string name="onboarding_files_title">גישה לקבצים</string>
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>
+    <string name="onboarding_granted">הוענק</string>
     <string name="onboarding_notifications_description">אפשר התראות כדי לעקוב אחר התקדמות פעולות קבצים כמו העתקה, העברה ויצירת ארכיון, גם כשהאפליקציה פועלת ברקע.</string>
 
     <string name="onboarding_install_apps_title">התקנת אפליקציות</string>

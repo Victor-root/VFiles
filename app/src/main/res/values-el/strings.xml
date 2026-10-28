@@ -713,6 +713,7 @@
     <string name="onboarding_files_title">Πρόσβαση σε αρχεία</string>
     <string name="onboarding_finish">Ξεκινήστε</string>
     <string name="onboarding_grant">Παραχώρηση</string>
+    <string name="onboarding_granted">Παραχωρήθηκε</string>
     <string name="onboarding_notifications_description">Επιτρέψτε τις ειδοποιήσεις για να παρακολουθείτε την πρόοδο εργασιών αρχείων, όπως αντιγραφές, μετακινήσεις και αρχειοθετήσεις, ακόμη και όταν η εφαρμογή είναι στο παρασκήνιο.</string>
 
     <string name="onboarding_install_apps_title">Εγκατάσταση εφαρμογών</string>
