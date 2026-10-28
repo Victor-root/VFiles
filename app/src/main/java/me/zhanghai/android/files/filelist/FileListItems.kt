@@ -70,6 +70,7 @@ import coil3.compose.AsyncImage
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.coil.AppIconPackageName
 import me.zhanghai.android.files.file.FileItem
+import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.fileSize
 import me.zhanghai.android.files.file.formatShort
 import me.zhanghai.android.files.file.iconRes
@@ -103,6 +104,16 @@ private val GRID_THUMBNAIL_SHAPE = RoundedCornerShape(8.dp)
 private const val DISABLED_ALPHA = 0.38f
 private const val STROKE_ALPHA = 0.12f
 private val ICON_SIZE = 24.dp
+
+// Folders are in the accent color, which makes them stand out among the files.
+@Composable
+private fun fileIconColorFilter(file: FileItem): ColorFilter? {
+    if (file.mimeType != MimeType.DIRECTORY) {
+        return null
+    }
+    val color = MaterialTheme.colorScheme.primary
+    return remember(color) { ColorFilter.tint(color) }
+}
 private val MENU_BUTTON_SIZE = 40.dp
 
 private val MENU_BUTTON_MARGIN_START =
@@ -309,6 +320,7 @@ fun FileItemIcon(
     // Read when drawing only, so that a loaded thumbnail doesn't recompose the item.
     var isThumbnailShown by remember(file) { mutableStateOf(false) }
     val iconPainter = cachedIconPainter(file.mimeType.iconRes, ICON_SIZE)
+    val iconColorFilter = fileIconColorFilter(file)
     Box(
         modifier = modifier
             .size(48.dp)
@@ -327,7 +339,11 @@ fun FileItemIcon(
                 if (!isThumbnailShown) {
                     val iconSize = ICON_SIZE.toPx()
                     val inset = (size.width - iconSize) / 2
-                    translate(inset, inset) { with(iconPainter) { draw(Size(iconSize, iconSize)) } }
+                    translate(inset, inset) {
+                        with(iconPainter) {
+                            draw(Size(iconSize, iconSize), colorFilter = iconColorFilter)
+                        }
+                    }
                 }
             }
     ) {
@@ -438,7 +454,8 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
                 painter = painterResource(R.drawable.file_directory_thumbnail),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                // In the accent color like the icons of folders.
+                tint = MaterialTheme.colorScheme.primary
             )
             return@Box
         }
@@ -459,6 +476,7 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
         Image(
             painter = iconPainter,
             contentDescription = null,
+            colorFilter = fileIconColorFilter(file),
             modifier = Modifier
                 .size(40.dp)
                 .drawWithContent {
