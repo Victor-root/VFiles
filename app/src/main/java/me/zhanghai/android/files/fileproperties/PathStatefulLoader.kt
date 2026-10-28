@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import java8.nio.file.Path
 import kotlinx.coroutines.launch
-import me.zhanghai.android.files.filelist.observeChanges
+import me.zhanghai.android.files.filelist.loadOnChanges
 import me.zhanghai.android.files.util.StatefulLoader
 
 /**
  * A loader of [load] for the view model, which loads now, or starts with [initialValue] when there's
- * one, and loads again whenever [path] changes.
+ * one, and loads again whenever [path] changes while it's shown.
  */
 fun <T : Any> ViewModel.pathStatefulLoader(
     path: Path,
@@ -27,6 +27,6 @@ fun <T : Any> ViewModel.pathStatefulLoader(
     } else {
         loader.load()
     }
-    viewModelScope.launch { path.observeChanges().collect { loader.load() } }
+    viewModelScope.launch { path.loadOnChanges(loader.subscriptionCount) { loader.load() } }
     return loader
 }

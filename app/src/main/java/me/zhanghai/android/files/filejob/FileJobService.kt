@@ -11,12 +11,6 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.annotation.MainThread
 import java8.nio.file.Path
-import me.zhanghai.android.files.file.MimeType
-import me.zhanghai.android.files.provider.common.PosixFileModeBit
-import me.zhanghai.android.files.provider.common.PosixGroup
-import me.zhanghai.android.files.provider.common.PosixUser
-import me.zhanghai.android.files.util.ForegroundNotificationManager
-import me.zhanghai.android.files.util.WakeWifiLock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,6 +18,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
 import me.zhanghai.android.files.compat.removeFirstCompat
+import me.zhanghai.android.files.file.MimeType
+import me.zhanghai.android.files.provider.common.PosixFileModeBit
+import me.zhanghai.android.files.provider.common.PosixGroup
+import me.zhanghai.android.files.provider.common.PosixUser
+import me.zhanghai.android.files.util.ForegroundNotificationManager
+import me.zhanghai.android.files.util.WakeWifiLock
 import me.zhanghai.android.files.util.removeFirst
 
 class FileJobService : Service() {

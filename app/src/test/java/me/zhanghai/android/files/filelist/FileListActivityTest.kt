@@ -210,6 +210,18 @@ class FileListActivityTest {
     }
 
     @Test
+    fun refreshShowsNewFiles() {
+        launch()
+        composeTestRule.onNodeWithText("Empty").performClick()
+        waitForText("No files")
+        TestDocumentsProvider.addFile("Empty/added.txt", "text/plain", 1024)
+        // The only menu in an empty folder is the one of the app bar.
+        composeTestRule.onNodeWithContentDescription("More options").performClick()
+        composeTestRule.onNodeWithText("Refresh").performClick()
+        waitForText("added.txt")
+    }
+
+    @Test
     fun selectsFiles() {
         launch()
         composeTestRule.onNodeWithText("notes.txt").performTouchInput { longClick() }

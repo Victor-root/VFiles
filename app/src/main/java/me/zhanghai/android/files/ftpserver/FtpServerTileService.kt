@@ -18,6 +18,7 @@ class FtpServerTileService : TileService() {
     override fun onStartListening() {
         super.onStartListening()
 
+        stateJob?.cancel()
         stateJob = applicationScope.launch {
             FtpServerService.stateFlow.collect { onFtpServerStateChanged(it) }
         }

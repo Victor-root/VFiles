@@ -14,12 +14,12 @@ import java8.nio.file.Path
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -65,6 +65,8 @@ class FileListViewModel : ViewModel() {
             _pathSettings.value = PathSettingsHolder(path)
         }
         trail.value = trailData
+        // Each new trail lists its directory again, even if it's the same one.
+        loadFileList()
     }
 
     fun navigateTo(lastState: Parcelable, path: Path) =
@@ -95,6 +97,7 @@ class FileListViewModel : ViewModel() {
             return
         }
         _searchStateFlow.value = SearchState(true, query)
+        loadFileList()
     }
 
     fun stopSearching() {
@@ -102,6 +105,7 @@ class FileListViewModel : ViewModel() {
             return
         }
         _searchStateFlow.value = SearchState(false, "")
+        loadFileList()
     }
 
     private val _fileListFlow = MutableStateFlow<Stateful<List<FileItem>>>(Loading(null))
@@ -110,25 +114,24 @@ class FileListViewModel : ViewModel() {
     val fileListStateful: Stateful<List<FileItem>>
         get() = _fileListFlow.value
 
+    private var fileListJob: Job? = null
+
     // The loader of the directory shown when not searching, which can load it again.
     private var directoryLoader: StatefulLoader<List<FileItem>>? = null
 
-    // Increased to search again.
-    private val searchRequests = MutableStateFlow(0)
-
-    init {
-        viewModelScope.launch {
-            // Each new trail lists its directory again, even if it's the same one.
-            combine(trail.filterNotNull(), _searchStateFlow, searchRequests) { trail, search, _ ->
-                trail.currentPath to search
-            }
-                .collectLatest { (path, searchState) ->
-                    if (searchState.isSearching) {
-                        searchFiles(path, searchState.query)
-                    } else {
-                        listFiles(path)
-                    }
-                }
+    // Cancelling the previous loading right away ensures that its files are never shown for the
+    // new path or search, even while it's still blocked on I/O.
+    private fun loadFileList() {
+        fileListJob?.cancel()
+        directoryLoader = null
+        val path = currentPath
+        val searchState = searchState
+        if (searchState.isSearching) {
+            _fileListFlow.value = Loading(emptyList())
+            fileListJob = viewModelScope.launch { searchFiles(path, searchState.query) }
+        } else {
+            _fileListFlow.value = Loading(null)
+            fileListJob = viewModelScope.launch { listFiles(path) }
         }
     }
 
@@ -137,26 +140,21 @@ class FileListViewModel : ViewModel() {
         if (path.isArchivePath) {
             path.archiveRefresh()
         }
-        if (searchState.isSearching) {
-            ++searchRequests.value
+        val directoryLoader = directoryLoader
+        if (directoryLoader != null) {
+            directoryLoader.load()
         } else {
-            directoryLoader?.load()
+            loadFileList()
         }
     }
 
-    // Lists the files of the directory, and again whenever it changes.
+    // Lists the files of the directory, and again whenever it changes while they are shown.
     private suspend fun listFiles(path: Path): Unit = coroutineScope {
         val loader = StatefulLoader(this) { path.loadDirectoryFileItems() }
         directoryLoader = loader
-        try {
-            launch { loader.flow.collect { _fileListFlow.value = it } }
-            loader.load()
-            path.observeChanges().collect { loader.load() }
-        } finally {
-            if (directoryLoader === loader) {
-                directoryLoader = null
-            }
-        }
+        launch { loader.flow.collect { _fileListFlow.value = it } }
+        loader.load()
+        path.loadOnChanges(_fileListFlow.subscriptionCount) { loader.load() }
     }
 
     private fun Path.loadDirectoryFileItems(): List<FileItem> =
@@ -178,7 +176,6 @@ class FileListViewModel : ViewModel() {
 
     // Searches the files under the directory, showing the ones found as they are.
     private suspend fun searchFiles(path: Path, query: String) {
-        _fileListFlow.value = Loading(emptyList())
         val job = currentCoroutineContext().job
         val fileList = mutableListOf<FileItem>()
         _fileListFlow.value = try {
@@ -313,7 +310,8 @@ class FileListViewModel : ViewModel() {
     ) { fileList, sortOptions, isShowingHiddenFiles, searchState ->
         getDisplayedFiles(fileList, sortOptions, isShowingHiddenFiles, searchState)
     }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+        // Only while collected, so that the file list is collected only while it's shown.
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val displayedFiles: List<FileItem>
         get() = getDisplayedFiles(
             fileListStateful, sortOptions, Settings.FILE_LIST_SHOW_HIDDEN_FILES.value, searchState
