@@ -394,6 +394,21 @@ class FileListActivityTest {
 
     @Test
     @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun focusesNavigationIconInFolderWithOnlyHiddenFilesWithDpad() {
+        TestDocumentsProvider.addDirectory("Silent")
+        TestDocumentsProvider.addFile("Silent/.nomedia", "application/octet-stream", 0)
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val silent = composeTestRule.onNodeWithText("Silent")
+        silent.requestFocus()
+        silent.performKeyInput { pressKey(Key.DirectionCenter) }
+        waitForText("No files")
+        // Nothing is shown, so the focus can't go to the list.
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
     fun opensSettingsFromDrawerAndComesBackWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
