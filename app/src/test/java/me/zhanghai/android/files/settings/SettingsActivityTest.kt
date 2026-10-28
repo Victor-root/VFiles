@@ -12,6 +12,11 @@ import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isFocused
+import androidx.compose.ui.test.isSelectable
+import androidx.compose.ui.test.isSelected
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -92,6 +97,37 @@ class SettingsActivityTest {
         // Up and down go on from there.
         composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionDown) }
         storages.assertIsNotFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun choiceDialogFocusesCurrentChoiceWithDpad() {
+        composeTestRule.activityRule.scenario.onActivity { it.leaveTouchMode() }
+        // Like after a key press, so that clickables in the dialog window can take focus.
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        val encoding = composeTestRule.onNodeWithText("Archive file name encoding")
+            .performScrollTo()
+        encoding.requestFocus()
+        composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        val utf8 = composeTestRule.onNode(hasText("UTF-8") and isSelectable())
+        utf8.assertIsSelected().assertIsFocused()
+        // Down goes on to the next choice, rather than nowhere from the cancel button.
+        utf8.performKeyInput { pressKey(Key.DirectionDown) }
+        utf8.assertIsNotFocused()
+        composeTestRule.onNode(isSelectable() and isFocused()).assertExists()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun colorDialogFocusesCurrentColorWithDpad() {
+        composeTestRule.activityRule.scenario.onActivity { it.leaveTouchMode() }
+        // Like after a key press, so that clickables in the dialog window can take focus.
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        composeTestRule.onNodeWithText("Theme color").requestFocus()
+        composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNode(isSelectable() and isSelected()).assertIsFocused()
     }
 
     @Test
