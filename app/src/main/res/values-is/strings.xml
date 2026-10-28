@@ -715,6 +715,7 @@
     <string name="onboarding_files_title">Skráaaðgangur</string>
     <string name="onboarding_finish">Hefjast handa</string>
     <string name="onboarding_grant">Veita</string>
+    <string name="onboarding_granted">Veitt</string>
     <string name="onboarding_notifications_description">Leyfðu tilkynningar til að fylgjast með framvindu skráaaðgerða á borð við afritun, færslu og pökkun, jafnvel þegar forritið er í bakgrunni.</string>
 
     <string name="onboarding_install_apps_title">Uppsetning forrita</string>

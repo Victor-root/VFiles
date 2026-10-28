@@ -746,6 +746,7 @@
     <string name="onboarding_files_title">Acceso a archivos</string>
     <string name="onboarding_finish">Empezar</string>
     <string name="onboarding_grant">Conceder</string>
+    <string name="onboarding_granted">Concedido</string>
     <string name="onboarding_notifications_description">Permite las notificaciones para seguir el progreso de operaciones como copias, movimientos y archivos, incluso con la app en segundo plano.</string>
 
     <string name="onboarding_install_apps_title">Instalación de aplicaciones</string>

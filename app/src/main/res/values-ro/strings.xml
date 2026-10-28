@@ -745,6 +745,7 @@
     <string name="onboarding_files_title">Acces la fișiere</string>
     <string name="onboarding_finish">Începe</string>
     <string name="onboarding_grant">Acordă</string>
+    <string name="onboarding_granted">Acordat</string>
     <string name="onboarding_notifications_description">Permite notificările pentru a urmări progresul operațiilor cu fișiere, precum copierea, mutarea și arhivarea, chiar și când aplicația rulează în fundal.</string>
 
     <string name="onboarding_install_apps_title">Instalare aplicații</string>

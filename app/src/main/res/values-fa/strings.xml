@@ -711,6 +711,7 @@
     <string name="onboarding_files_title">دسترسی به فایل‌ها</string>
     <string name="onboarding_finish">شروع</string>
     <string name="onboarding_grant">اعطا</string>
+    <string name="onboarding_granted">اعطا شد</string>
     <string name="onboarding_notifications_description">اعلان‌ها را مجاز کنید تا پیشرفت عملیات فایل مانند کپی، انتقال و بایگانی را حتی وقتی برنامه در پس‌زمینه است دنبال کنید.</string>
 
     <string name="onboarding_install_apps_title">نصب برنامه‌ها</string>

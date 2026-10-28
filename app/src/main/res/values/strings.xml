@@ -863,6 +863,7 @@
     <string name="onboarding_welcome_title">Welcome to %1$s</string>
     <string name="onboarding_welcome_description">Grant a few permissions to get the best experience. Optional ones can be changed later in Settings.</string>
     <string name="onboarding_grant">Grant</string>
+    <string name="onboarding_granted">Granted</string>
     <string name="onboarding_required">Required</string>
     <string name="onboarding_optional">Optional</string>
 

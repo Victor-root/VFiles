@@ -17,8 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -35,10 +36,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,8 +49,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -106,20 +107,20 @@ class OnboardingActivity : AppActivity() {
                     text = stringResource(
                         R.string.onboarding_welcome_title, stringResource(R.string.app_name)
                     ),
-                    modifier = Modifier.padding(start = 24.dp, top = 48.dp, end = 24.dp),
-                    style = MaterialTheme.typography.headlineSmall
+                    modifier = Modifier.padding(start = 24.dp, top = 40.dp, end = 24.dp),
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
                     text = stringResource(R.string.onboarding_welcome_description),
                     modifier = Modifier.padding(start = 24.dp, top = 8.dp, end = 24.dp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState())
-                        .padding(start = 24.dp, top = 32.dp, end = 24.dp, bottom = 8.dp)
+                        .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 8.dp)
                 ) {
                     for (page in pages) {
                         PermissionCard(
@@ -137,7 +138,8 @@ class OnboardingActivity : AppActivity() {
                     onClick = ::finishOnboarding,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 24.dp),
+                        .padding(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 24.dp)
+                        .heightIn(min = 56.dp),
                     enabled = pages.none { it.isRequired && it !in grantedPages }
                 ) { Text(stringResource(R.string.onboarding_finish)) }
             }
@@ -192,7 +194,7 @@ class OnboardingActivity : AppActivity() {
         abstract fun requestGrant(activity: OnboardingActivity)
 
         object FilesAccess : OnboardingPage(
-            iconRes = R.drawable.sd_card_icon_white_24dp,
+            iconRes = R.drawable.file_directory_icon,
             titleRes = R.string.onboarding_files_title,
             descriptionRes = R.string.onboarding_files_description,
             isRequired = true
@@ -256,79 +258,91 @@ private fun PermissionCard(
     onGrant: () -> Unit
 ) {
     val context = LocalContext.current
-    ElevatedCard(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 12.dp),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        border = BorderStroke(
+            1.dp,
+            if (isGranted) GRANTED_COLOR else MaterialTheme.colorScheme.outlineVariant
+        )
     ) {
-        // On wide screens like TVs, the button is next to the text, so that the cards are short
+        // On wide screens like TVs, the action is next to the text, so that the cards are short
         // enough for the whole screen to fit without scrolling the title away.
         BoxWithConstraints {
             val isWide = maxWidth >= WIDE_CARD_MIN_WIDTH
-            val grantButton = @Composable { modifier: Modifier ->
-                OutlinedButton(onClick = onGrant, modifier = modifier) {
-                    Text(stringResource(R.string.onboarding_grant))
+            val action = @Composable { modifier: Modifier ->
+                if (isGranted) {
+                    GrantedBadge(modifier)
+                } else {
+                    FilledTonalButton(
+                        onClick = onGrant,
+                        modifier = modifier,
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primary.copy(
+                                alpha = TONAL_ALPHA
+                            ),
+                            contentColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) { Text(stringResource(R.string.onboarding_grant)) }
                 }
             }
-            Column(modifier = Modifier.padding(16.dp)) {
+            val description = @Composable { modifier: Modifier ->
+                Text(
+                    text = remember(page, context) { page.getDescription(context) },
+                    modifier = modifier,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            Column(modifier = Modifier.padding(20.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
-                            .size(44.dp)
-                            .background(MaterialTheme.colorScheme.primary, CircleShape),
+                            .size(52.dp)
+                            .background(
+                                MaterialTheme.colorScheme.primary.copy(alpha = TONAL_ALPHA),
+                                RoundedCornerShape(16.dp)
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             painter = painterResource(page.iconRes),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary
+                            modifier = Modifier.size(28.dp),
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                     Column(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(start = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(1.dp)
+                            .padding(start = 16.dp)
                     ) {
-                        Text(
-                            text = stringResource(page.titleRes),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = stringResource(
-                                if (page.isRequired) {
-                                    R.string.onboarding_required
-                                } else {
-                                    R.string.onboarding_optional
-                                }
-                            ),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                        Text(
-                            text = remember(page, context) { page.getDescription(context) },
-                            modifier = Modifier.padding(top = 5.dp),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.bodySmall
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = stringResource(page.titleRes),
+                                modifier = Modifier.weight(1f, fill = false),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            RequirementBadge(
+                                isRequired = page.isRequired,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                        if (isWide) {
+                            description(Modifier.padding(top = 6.dp))
+                        }
                     }
-                    if (isGranted) {
-                        Icon(
-                            painter = painterResource(R.drawable.check_icon_white_24dp),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(32.dp)
-                                .padding(4.dp),
-                            tint = colorResource(android.R.color.holo_green_dark)
-                        )
-                    } else if (isWide) {
-                        grantButton(Modifier.padding(start = 16.dp))
+                    if (isWide) {
+                        action(Modifier.padding(start = 16.dp))
                     }
                 }
-                if (!isGranted && !isWide) {
-                    grantButton(
+                // On narrow screens, the text takes the whole width below the icon.
+                if (!isWide) {
+                    description(Modifier.padding(top = 12.dp))
+                    action(
                         Modifier
                             .align(Alignment.End)
                             .padding(top = 12.dp)
@@ -339,4 +353,56 @@ private fun PermissionCard(
     }
 }
 
+@Composable
+private fun RequirementBadge(isRequired: Boolean, modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier,
+        shape = CircleShape,
+        color = if (isRequired) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.surfaceContainerHighest
+        },
+        contentColor = if (isRequired) {
+            MaterialTheme.colorScheme.onPrimary
+        } else {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        }
+    ) {
+        Text(
+            text = stringResource(
+                if (isRequired) R.string.onboarding_required else R.string.onboarding_optional
+            ),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 2.dp),
+            style = MaterialTheme.typography.labelMedium
+        )
+    }
+}
+
+@Composable
+private fun GrantedBadge(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .heightIn(min = 40.dp)
+            .background(GRANTED_COLOR.copy(alpha = TONAL_ALPHA), CircleShape)
+            .padding(start = 12.dp, end = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.check_icon_white_24dp),
+            contentDescription = null,
+            modifier = Modifier.size(18.dp),
+            tint = GRANTED_COLOR
+        )
+        Text(
+            text = stringResource(R.string.onboarding_granted),
+            modifier = Modifier.padding(start = 8.dp),
+            color = GRANTED_COLOR,
+            style = MaterialTheme.typography.labelLarge
+        )
+    }
+}
+
 private val WIDE_CARD_MIN_WIDTH = 600.dp
+private val GRANTED_COLOR = Color(0xFF22A667)
+private const val TONAL_ALPHA = 0.12f

@@ -713,6 +713,7 @@
     <string name="onboarding_files_title">Bestandstoegang</string>
     <string name="onboarding_finish">Aan de slag</string>
     <string name="onboarding_grant">Verlenen</string>
+    <string name="onboarding_granted">Verleend</string>
     <string name="onboarding_notifications_description">Sta meldingen toe om de voortgang van bestandsbewerkingen zoals kopiëren, verplaatsen en archiveren te volgen, ook als de app op de achtergrond draait.</string>
 
     <string name="onboarding_install_apps_title">Apps installeren</string>

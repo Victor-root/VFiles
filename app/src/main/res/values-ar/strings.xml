@@ -845,6 +845,7 @@
     <string name="onboarding_files_title">الوصول إلى الملفات</string>
     <string name="onboarding_finish">ابدأ</string>
     <string name="onboarding_grant">منح</string>
+    <string name="onboarding_granted">ممنوح</string>
     <string name="onboarding_notifications_description">اسمح بالإشعارات لتتبّع تقدّم عمليات الملفات مثل النسخ والنقل والأرشفة، حتى عندما يكون التطبيق في الخلفية.</string>
 
     <string name="onboarding_install_apps_title">تثبيت التطبيقات</string>

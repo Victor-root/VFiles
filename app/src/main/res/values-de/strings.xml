@@ -713,6 +713,7 @@
     <string name="onboarding_files_title">Dateizugriff</string>
     <string name="onboarding_finish">Loslegen</string>
     <string name="onboarding_grant">Erlauben</string>
+    <string name="onboarding_granted">Erteilt</string>
     <string name="onboarding_notifications_description">Erlaube Benachrichtigungen, um den Fortschritt von Dateivorgängen wie Kopieren, Verschieben und Archivieren zu verfolgen – auch wenn die App im Hintergrund läuft.</string>
 
     <string name="onboarding_install_apps_title">Apps installieren</string>

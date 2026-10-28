@@ -713,6 +713,7 @@
     <string name="onboarding_files_title">Достъп до файлове</string>
     <string name="onboarding_finish">Начало</string>
     <string name="onboarding_grant">Предостави</string>
+    <string name="onboarding_granted">Предоставено</string>
     <string name="onboarding_notifications_description">Разрешете известията, за да следите напредъка на файлови операции като копиране, преместване и архивиране, дори когато приложението е във фонов режим.</string>
 
     <string name="onboarding_install_apps_title">Инсталиране на приложения</string>
