@@ -5,9 +5,7 @@
 
 package me.zhanghai.android.files.viewer.video
 
-import android.content.Context
 import android.net.Uri
-import android.provider.OpenableColumns
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -37,11 +35,10 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.ui.MediaViewerSystemUiEffect
 import me.zhanghai.android.files.ui.MediaViewerTopAppBar
+import me.zhanghai.android.files.ui.queryDisplayName
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.isTelevision
 
@@ -136,13 +133,3 @@ private fun VideoPlayerScreen(uri: Uri, fileName: String?) {
     }
     LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
 }
-
-private suspend fun Context.queryDisplayName(uri: Uri): String? =
-    withContext(Dispatchers.IO) {
-        runCatching {
-            contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-                ?.use { if (it.moveToFirst()) it.getString(0) else null }
-        }
-            .onFailure { it.printStackTrace() }
-            .getOrNull()
-    }

@@ -5,6 +5,9 @@
 
 package me.zhanghai.android.files.ui
 
+import android.content.Context
+import android.net.Uri
+import android.provider.OpenableColumns
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -27,6 +30,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.LifecycleStartEffect
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.theme.DarkSystemBarsEffect
 import me.zhanghai.android.files.theme.LocalAppColors
@@ -84,7 +89,7 @@ fun MediaViewerSystemUiEffect(isShown: Boolean) {
 }
 
 @Composable
-fun MediaViewerError(throwable: Throwable) {
+fun MediaViewerError(throwable: Throwable, message: String = throwable.toString()) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(R.drawable.error_icon_white_240dp),
@@ -93,7 +98,7 @@ fun MediaViewerError(throwable: Throwable) {
             tint = Color.White.copy(alpha = 0.7f)
         )
         Text(
-            text = throwable.toString(),
+            text = message,
             modifier = Modifier.padding(16.dp),
             color = Color.White,
             textAlign = TextAlign.Center
@@ -123,4 +128,15 @@ fun Modifier.depthPageTransition(pagerState: PagerState, page: Int): Modifier =
             }
             else -> alpha = 0f
         }
+    }
+
+/** The name of the file at [uri] to show, null when it can't be read. */
+suspend fun Context.queryDisplayName(uri: Uri): String? =
+    withContext(Dispatchers.IO) {
+        runCatching {
+            contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                ?.use { if (it.moveToFirst()) it.getString(0) else null }
+        }
+            .onFailure { it.printStackTrace() }
+            .getOrNull()
     }

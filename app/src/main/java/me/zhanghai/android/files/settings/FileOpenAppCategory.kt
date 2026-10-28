@@ -37,7 +37,10 @@ enum class FileOpenAppCategory(
         R.string.settings_default_apps_video, "video/*", { it.isVideo },
         R.string.video_player_title
     ),
-    PDF(R.string.settings_default_apps_pdf, "application/pdf", { it.isPdf }),
+    PDF(
+        R.string.settings_default_apps_pdf, "application/pdf", { it.isPdf },
+        R.string.pdf_viewer_title
+    ),
     TEXT(R.string.settings_default_apps_text, "text/*", { it.value.startsWith("text/") });
 
     companion object {
