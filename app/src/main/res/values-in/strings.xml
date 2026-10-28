@@ -23,6 +23,8 @@
     <string name="loading">Memuat…</string>
     <string name="maybe_later">Mungkin nanti</string>
     <string name="merge">Gabung</string>
+    <string name="more_options">Opsi lainnya</string>
+    <string name="navigate_up">Kembali ke atas</string>
     <string name="none">Tidak ada</string>
     <string name="open_navigation_drawer">Buka drawer navigasi</string>
     <string name="paste">Tempel</string>
@@ -211,6 +213,7 @@
     <string name="file_name_error_empty">Nama berkas tidak boleh kosong</string>
     <string name="file_name_error_invalid">Nama berkas tidak valid</string>
     <string name="file_name_error_already_exists">Berkas dengan nama ini sudah ada</string>
+    <string name="file_replace_message_format">Ganti “%1$s”?</string>
     <string name="file_delete_message_file_format">Hapus “%1$s”?</string>
     <string name="file_delete_message_directory_format">Hapus folder “%1$s” dan isinya?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -232,6 +235,13 @@
     <string name="file_create_directory_title">Folder baru</string>
 
     <string name="file_list_title">File</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="other">Pilih berkas</item>
+    </plurals>
+    <string name="file_list_title_create_file">Simpan berkas</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="other">Pilih folder</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="other">%1$,d folder</item>
     </plurals>
@@ -261,14 +271,18 @@
     <string name="file_list_action_create_shortcut">Buat pintasan</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Buka di jendela baru</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Nama berkas</string>
+    <string name="file_list_open_current_directory_format">Pilih “%1$s”</string>
     <string name="file_list_paste_move_title_format">Memindahkan %1$,d</string>
     <string name="file_list_paste_copy_title_format">Menyalin %1$,d</string>
     <string name="file_list_paste_extract_title_format">Mengekstrak %1$,d</string>
     <string name="file_list_paste_action_extract_here">Ekstrak di sini</string>
     <string name="file_list_empty">Tidak ada berkas</string>
+    <string name="file_list_press_back_again_to_exit">Tekan kembali sekali lagi untuk keluar</string>
     <string name="file_list_error_folder_not_found">Folder ini sudah tidak ada</string>
     <string name="file_list_error_permission_denied">Anda tidak memiliki izin untuk membuka folder ini</string>
     <string name="file_list_error_unknown">Tidak dapat membuka folder ini</string>
+    <string name="file_list_action_create">Buat</string>
     <string name="file_list_action_create_file">Berkas</string>
     <string name="file_list_action_create_directory">Folder</string>
 
@@ -295,6 +309,39 @@
     <string name="file_properties_basic_parent_directory">Folder Induk</string>
     <string name="file_properties_basic_archive_file">Berkas Arsip</string>
     <string name="file_properties_basic_archive_entry">Entri Arsip</string>
+    <string name="file_properties_permission">Izin</string>
+    <string name="file_properties_permission_owner">Pemilik</string>
+    <string name="file_properties_permission_group">Grup</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Ubah pemilik</string>
+    <string name="file_properties_permission_set_group_title">Ubah grup</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Masukkan nama atau ID</string>
+    <string name="file_properties_permission_set_principal_system">Sistem</string>
+    <string name="file_properties_permission_mode">Mode</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Ubah mode</string>
+    <string name="file_properties_permission_set_mode_others">Lainnya</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Baca</item>
+        <item>Tulis</item>
+        <item>Eksekusi</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Baca</item>
+        <item>Tulis</item>
+        <item>Cari</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Khusus</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Jangan tambahkan “Eksekusi” untuk berkas di dalamnya</string>
+    <string name="file_properties_permission_selinux_context">Konteks SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_title">Ubah konteks SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Pulihkan</string>
+    <string name="file_properties_permission_recursive">Terapkan ke berkas di dalamnya</string>
     <string name="file_properties_image">Gambar</string>
     <string name="file_properties_media_dimensions">Dimensi</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -348,6 +395,12 @@
     <string name="file_properties_apk_signature_digests">Tanda tangan</string>
     <string name="file_properties_apk_signature_digests_empty">Tidak ada tanda tangan yang valid</string>
     <string name="file_properties_apk_past_signature_digests">Tanda tangan lama</string>
+    <string name="file_properties_checksum">Checksum</string>
+    <string name="file_properties_checksum_compare">Bandingkan</string>
+    <string name="file_properties_checksum_compare_placeholder">Checksum apa pun</string>
+    <string name="file_properties_checksum_compare_match_format">Cocok dengan checksum %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Cocok dengan awalan checksum %1$s</string>
+    <string name="file_properties_checksum_compare_no_match">Tidak ada checksum yang cocok</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Penyimpanan internal</string>
     <string name="storage_list_title">Penyimpanan</string>
@@ -357,9 +410,15 @@
     <string name="storage_add_storage_ftp_server">Server FTP</string>
     <string name="storage_add_storage_sftp_server">Server SFTP</string>
     <string name="storage_add_storage_smb_server">Server SMB</string>
+    <string name="storage_add_storage_webdav_server">Server WebDAV</string>
     <string name="storage_edit_device_storage_title">Sunting penyimpanan perangkat</string>
     <string name="storage_edit_device_storage_name">Nama</string>
     <string name="storage_edit_device_storage_path">Jalur</string>
+    <string name="storage_add_external_storage_shortcut_title">Tambah pintasan penyimpanan eksternal</string>
+    <string name="storage_edit_external_storage_shortcut_title">Sunting pintasan penyimpanan eksternal</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Volume penyimpanan</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Masukkan volume penyimpanan</string>
+    <string name="storage_edit_external_storage_shortcut_path">Jalur</string>
     <string name="storage_add_document_tree_title">Tambah penyimpanan eksternal</string>
     <string name="storage_edit_document_tree_title">Sunting penyimpanan eksternal</string>
     <string name="storage_edit_document_tree_name">Nama</string>
@@ -426,6 +485,7 @@
     <string name="storage_edit_smb_server_title_edit">Sunting server SMB</string>
     <string name="storage_edit_smb_server_title_add">Tambah server SMB</string>
     <string name="storage_edit_smb_server_host">Nama hos</string>
+    <string name="storage_edit_smb_server_host_placeholder">Alamat IP atau nama jaringan server, mis. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Masukkan nama hos</string>
     <string name="storage_edit_smb_server_host_error_invalid">Nama hos tidak valid</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -448,6 +508,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">Mengaktifkan dukungan enkripsi SMB3. Diperlukan oleh beberapa server; kembali ke SMB tanpa enkripsi bila tidak didukung.</string>
     <string name="storage_edit_smb_server_connect_and_add">Sambung dan tambah</string>
     <string name="storage_edit_smb_server_add">Tambah</string>
+    <string name="storage_edit_webdav_server_title_edit">Sunting server WebDAV</string>
+    <string name="storage_edit_webdav_server_title_add">Tambah server WebDAV</string>
+    <string name="storage_edit_webdav_server_host">Nama hos</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Masukkan nama hos</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Nama hos tidak valid</string>
+    <string name="storage_edit_webdav_server_port">Port</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Port tidak valid</string>
+    <string name="storage_edit_webdav_server_path">Jalur</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Boleh dikosongkan</string>
+    <string name="storage_edit_webdav_server_name">Nama</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Gunakan nama hos</string>
+    <string name="storage_edit_webdav_server_protocol">Protokol</string>
+    <string name="storage_edit_webdav_server_authentication_type">Otentikasi</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Sandi</item>
+        <item>Token akses</item>
+        <item>Tidak ada</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Nama pengguna</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Masukkan nama pengguna</string>
+    <string name="storage_edit_webdav_server_password">Sandi</string>
+    <string name="storage_edit_webdav_server_access_token">Token akses</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Masukkan token akses</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Sambung dan tambah</string>
+    <string name="storage_edit_webdav_server_add">Tambah</string>
     <string name="navigation_storage_subtitle_format">%1$s kosong dari %2$s</string>
     <string name="navigation_add_storage">Tambah penyimpanan…</string>
     <string name="navigation_standard_directory_alarms">Alarm</string>
@@ -467,8 +552,31 @@
     <string name="navigation_edit_bookmark_directory_name">Nama</string>
     <string name="navigation_edit_bookmark_directory_path">Jalur</string>
     <string name="archive_viewer_title">Penilik arsip</string>
+    <string name="gallery_title">Galeri</string>
+    <string name="gallery_photos">Foto</string>
+    <string name="gallery_albums">Album</string>
+    <string name="gallery_today">Hari ini</string>
+    <string name="gallery_yesterday">Kemarin</string>
+    <string name="gallery_empty">Tidak ada foto atau video</string>
+    <string name="gallery_access_denied">Izinkan akses ke berkas untuk melihat foto dan video Anda</string>
+    <string name="gallery_allow_access">Izinkan</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="other">%1$,d item</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="other">Hapus %1$,d item ini?</item>
+    </plurals>
+    <string name="gallery_details">Detail</string>
+    <string name="gallery_details_date">Tanggal</string>
+    <string name="gallery_show_in_folder">Tampilkan di folder</string>
+    <string name="video_player_title">Pemutar video</string>
+    <string name="video_player_play">Putar</string>
+    <string name="video_player_pause">Jeda</string>
     <string name="image_viewer_title">Penampil gambar</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Simpan sebagai</string>
+    <string name="save_as_error">Terjadi kesalahan saat menyimpan berkas</string>
+    <string name="save_as_success_format">“%1$s” telah disimpan ke “%2$s”</string>
     <string name="text_editor_title">Penyunting teks</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -495,7 +603,9 @@
     <string name="ftp_server_anonymous_login_title">Masuk secara anonim</string>
     <string name="ftp_server_username_title">Nama pengguna</string>
     <string name="ftp_server_password_title">Sandi</string>
+    <string name="ftp_server_password_summary_empty">Belum diatur</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Port tidak valid</string>
     <string name="ftp_server_home_directory_title">Folder root</string>
     <string name="ftp_server_writable_title">Izinkan menyimpan</string>
     <string name="settings_title">Pengaturan</string>
@@ -513,6 +623,9 @@
     </string-array>
     <string name="settings_black_night_mode">Mode super hitam</string>
     <string name="settings_file_list_animation_title">Animasi daftar berkas</string>
+    <string name="settings_double_back_to_exit_title">Tekan kembali dua kali untuk keluar</string>
+    <string name="settings_edge_to_edge_title">Tampilan layar penuh</string>
+    <string name="settings_edge_to_edge_summary">Konten bergulir di belakang bilah status dan navigasi</string>
     <string name="settings_file_name_ellipsize_title">Tampilkan nama berkas panjang</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Elipsis di awal</item>
@@ -524,6 +637,7 @@
     <string name="settings_default_directory_title">Folder default</string>
     <string name="settings_standard_directories_title">Folder standar</string>
     <string name="settings_standard_directories_summary_empty">Tidak ada folder standar yang diaktifkan</string>
+    <string name="settings_standard_directory_gallery_summary">Foto dan video di perangkat</string>
     <string name="settings_bookmark_directories_title">Folder bookmark</string>
     <string name="settings_bookmark_directories_summary_empty">Tidak ada folder bookmark</string>
     <string name="settings_root_strategy_title">Mode akses root</string>
@@ -542,6 +656,7 @@
         <item>Lihat konten</item>
         <item>Tanyakan yang ingin dilakukan</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Tampilkan thumbnail untuk dokumen PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Mungkin membuat apl tidak stabil pada versi Android lama</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Baca berkas remote untuk thumbnail</string>
 
@@ -553,6 +668,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Ikuti di GitHub</string>
     <string name="app_name_launcher">Berkas</string>
+    <string name="clear_query">Hapus kueri</string>
     <string name="about_fork_subtitle">Asli oleh Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Berdasarkan wallpaper</string>
     <string name="color_picker_preset_colors_label">Warna lain</string>
@@ -567,6 +683,7 @@
 
     <string name="onboarding_install_apps_title">Instal aplikasi</string>
     <string name="onboarding_install_apps_description">Izinkan %1$s menginstal file APK secara langsung. Dengan begitu, Anda dapat menginstal aplikasi dari file yang diunduh atau diterima, tanpa memerlukan installer pihak ketiga.</string>
+    <string name="reorder_drag_handle">Pindahkan</string>
     <string name="onboarding_notifications_title">Notifikasi</string>
     <string name="onboarding_optional">Opsional</string>
     <string name="onboarding_required">Wajib</string>

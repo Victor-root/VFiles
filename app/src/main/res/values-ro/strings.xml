@@ -23,6 +23,8 @@
     <string name="loading">Se încarcă…</string>
     <string name="maybe_later">Poate mai târziu</string>
     <string name="merge">Îmbinare</string>
+    <string name="more_options">Mai multe opțiuni</string>
+    <string name="navigate_up">Navighează în sus</string>
     <string name="none">Niciunul</string>
     <string name="open_navigation_drawer">Deschide sertarul de navigare</string>
     <string name="paste">Lipește</string>
@@ -253,6 +255,7 @@
     <string name="file_name_error_empty">Numele fișierului nu poate fi gol</string>
     <string name="file_name_error_invalid">Numele fișierului este greșit</string>
     <string name="file_name_error_already_exists">Un fișier cu același nume există deja</string>
+    <string name="file_replace_message_format">Înlocuiești “%1$s”?</string>
     <string name="file_delete_message_file_format">Ștergi \"%1$s\"?</string>
     <string name="file_delete_message_directory_format">Ștergi dosarul \"%1$s\" și conținutul acestuia?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -280,6 +283,17 @@
     <string name="file_create_directory_title">Dosar nou</string>
 
     <string name="file_list_title">Fișiere</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Selectează un fișier</item>
+        <item quantity="few">Selectează fișiere</item>
+        <item quantity="other">Selectează fișiere</item>
+    </plurals>
+    <string name="file_list_title_create_file">Salvează fișierul</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Selectează un dosar</item>
+        <item quantity="few">Selectează dosare</item>
+        <item quantity="other">Selectează dosare</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d dosar</item>
         <item quantity="few">%1$,d dosare</item>
@@ -313,14 +327,18 @@
     <string name="file_list_action_create_shortcut">Creează scurtătură</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Deschide într-o fereastră nouă</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Nume fișier</string>
+    <string name="file_list_open_current_directory_format">Selectează “%1$s”</string>
     <string name="file_list_paste_move_title_format">Se mută %1$,d</string>
     <string name="file_list_paste_copy_title_format">Se copiază %1$,d</string>
     <string name="file_list_paste_extract_title_format">Se extrag %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrage aici</string>
     <string name="file_list_empty">Fără fișiere</string>
+    <string name="file_list_press_back_again_to_exit">Apasă din nou înapoi pentru a ieși</string>
     <string name="file_list_error_folder_not_found">Acest folder nu mai există</string>
     <string name="file_list_error_permission_denied">Nu aveți permisiunea de a deschide acest folder</string>
     <string name="file_list_error_unknown">Nu se poate deschide acest folder</string>
+    <string name="file_list_action_create">Creează</string>
     <string name="file_list_action_create_file">Fișier</string>
     <string name="file_list_action_create_directory">Dosar</string>
 
@@ -349,6 +367,39 @@
     <string name="file_properties_basic_parent_directory">Dosar părinte</string>
     <string name="file_properties_basic_archive_file">Arhivează fișierul</string>
     <string name="file_properties_basic_archive_entry">Articol din arhivă</string>
+    <string name="file_properties_permission">Permisiuni</string>
+    <string name="file_properties_permission_owner">Proprietar</string>
+    <string name="file_properties_permission_group">Grup</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Schimbă proprietarul</string>
+    <string name="file_properties_permission_set_group_title">Schimbă grupul</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Introdu un nume sau un ID</string>
+    <string name="file_properties_permission_set_principal_system">Sistem</string>
+    <string name="file_properties_permission_mode">Mod</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Schimbă modul</string>
+    <string name="file_properties_permission_set_mode_others">Alții</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Citire</item>
+        <item>Scriere</item>
+        <item>Execuție</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Citire</item>
+        <item>Scriere</item>
+        <item>Căutare</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Speciale</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Nu adăuga “Execuție” pentru fișierele conținute</string>
+    <string name="file_properties_permission_selinux_context">Context SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_title">Schimbă contextul SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Restabilește</string>
+    <string name="file_properties_permission_recursive">Aplică fișierelor conținute</string>
     <string name="file_properties_image">Imagine</string>
     <string name="file_properties_media_dimensions">Dimensiuni</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -404,6 +455,12 @@
     <string name="file_properties_apk_signature_digests">Semnături</string>
     <string name="file_properties_apk_signature_digests_empty">Nu există semnături valide</string>
     <string name="file_properties_apk_past_signature_digests">Semnături vechi</string>
+    <string name="file_properties_checksum">Sume de control</string>
+    <string name="file_properties_checksum_compare">Compară</string>
+    <string name="file_properties_checksum_compare_placeholder">Orice sumă de control</string>
+    <string name="file_properties_checksum_compare_match_format">Corespunde sumei de control %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Corespunde prefixului sumei de control %1$s</string>
+    <string name="file_properties_checksum_compare_no_match">Nicio sumă de control corespunzătoare</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Stocare internă</string>
     <string name="storage_list_title">Stocare</string>
@@ -413,9 +470,15 @@
     <string name="storage_add_storage_ftp_server">Server FTP</string>
     <string name="storage_add_storage_sftp_server">Server SFTP</string>
     <string name="storage_add_storage_smb_server">Server SMB</string>
+    <string name="storage_add_storage_webdav_server">Server WebDAV</string>
     <string name="storage_edit_device_storage_title">Editează stocarea dispozitivului</string>
     <string name="storage_edit_device_storage_name">Nume</string>
     <string name="storage_edit_device_storage_path">Cale</string>
+    <string name="storage_add_external_storage_shortcut_title">Adaugă scurtătură spre stocarea externă</string>
+    <string name="storage_edit_external_storage_shortcut_title">Editează scurtătura spre stocarea externă</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Volum de stocare</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Introdu un volum de stocare</string>
+    <string name="storage_edit_external_storage_shortcut_path">Cale</string>
     <string name="storage_add_document_tree_title">Adaugă stocare externă</string>
     <string name="storage_edit_document_tree_title">Editează stocarea externă</string>
     <string name="storage_edit_document_tree_name">Nume</string>
@@ -482,6 +545,7 @@
     <string name="storage_edit_smb_server_title_edit">Editează serverul SMB</string>
     <string name="storage_edit_smb_server_title_add">Adaugă server SMB</string>
     <string name="storage_edit_smb_server_host">Nume de gazdă</string>
+    <string name="storage_edit_smb_server_host_placeholder">Adresa IP sau numele de rețea al serverului, de ex. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Introdu un nume de gazdă</string>
     <string name="storage_edit_smb_server_host_error_invalid">Hostname invalid</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -504,6 +568,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">Activează suportul pentru criptarea SMB3. Necesară pentru unele servere; revine la SMB necriptat când nu este acceptată.</string>
     <string name="storage_edit_smb_server_connect_and_add">Conectează și adaugă</string>
     <string name="storage_edit_smb_server_add">Adaugă</string>
+    <string name="storage_edit_webdav_server_title_edit">Editează serverul WebDAV</string>
+    <string name="storage_edit_webdav_server_title_add">Adaugă server WebDAV</string>
+    <string name="storage_edit_webdav_server_host">Nume de gazdă</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Introdu un nume de gazdă</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Nume de gazdă invalid</string>
+    <string name="storage_edit_webdav_server_port">Port</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Port invalid</string>
+    <string name="storage_edit_webdav_server_path">Cale</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Poate fi lăsat gol</string>
+    <string name="storage_edit_webdav_server_name">Nume</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Folosește numele de gazdă</string>
+    <string name="storage_edit_webdav_server_protocol">Protocol</string>
+    <string name="storage_edit_webdav_server_authentication_type">Autentificare</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Parolă</item>
+        <item>Token de acces</item>
+        <item>Niciuna</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Nume de utilizator</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Introdu un nume de utilizator</string>
+    <string name="storage_edit_webdav_server_password">Parolă</string>
+    <string name="storage_edit_webdav_server_access_token">Token de acces</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Introdu un token de acces</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Conectează și adaugă</string>
+    <string name="storage_edit_webdav_server_add">Adaugă</string>
     <string name="navigation_storage_subtitle_format">%1$s liber din %2$s</string>
     <string name="navigation_add_storage">Adăugare stocare…</string>
     <string name="navigation_standard_directory_alarms">Alarme</string>
@@ -523,8 +612,35 @@
     <string name="navigation_edit_bookmark_directory_name">Nume</string>
     <string name="navigation_edit_bookmark_directory_path">Cale</string>
     <string name="archive_viewer_title">Arhivează ce se vede pe ecran</string>
+    <string name="gallery_title">Galerie</string>
+    <string name="gallery_photos">Fotografii</string>
+    <string name="gallery_albums">Albume</string>
+    <string name="gallery_today">Astăzi</string>
+    <string name="gallery_yesterday">Ieri</string>
+    <string name="gallery_empty">Nicio fotografie sau videoclip</string>
+    <string name="gallery_access_denied">Permite accesul la fișiere pentru a-ți vedea fotografiile și videoclipurile</string>
+    <string name="gallery_allow_access">Permite</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d element</item>
+        <item quantity="few">%1$,d elemente</item>
+        <item quantity="other">%1$,d de elemente</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Ștergi acest element?</item>
+        <item quantity="few">Ștergi aceste %1$,d elemente?</item>
+        <item quantity="other">Ștergi aceste %1$,d de elemente?</item>
+    </plurals>
+    <string name="gallery_details">Detalii</string>
+    <string name="gallery_details_date">Dată</string>
+    <string name="gallery_show_in_folder">Arată în dosar</string>
+    <string name="video_player_title">Player video</string>
+    <string name="video_player_play">Redă</string>
+    <string name="video_player_pause">Pauză</string>
     <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Salvează ca</string>
+    <string name="save_as_error">Eroare la salvarea fișierului</string>
+    <string name="save_as_success_format">“%1$s” a fost salvat în “%2$s”</string>
     <string name="text_editor_title">Editor de text</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -544,11 +660,16 @@
     <string name="ftp_server_url_menu_copy_url">Copiază URL</string>
     <string name="ftp_server_url_menu_copy_password">Copiază parola</string>
     <string name="ftp_server_add_tile_title">Adaugă la Setările Rapide</string>
+    <string name="ftp_server_add_tile_result_added">“Server FTP” a fost adăugat la Setările Rapide</string>
+    <string name="ftp_server_add_tile_result_already_added">“Server FTP” este deja adăugat la Setările Rapide</string>
+    <string name="ftp_server_add_tile_result_error">Eroare la adăugarea “Server FTP” la Setările Rapide</string>
     <string name="ftp_server_configuration_title">Configurare</string>
     <string name="ftp_server_anonymous_login_title">Autentificare anonimă</string>
     <string name="ftp_server_username_title">Nume utilizator</string>
     <string name="ftp_server_password_title">Parolă</string>
+    <string name="ftp_server_password_summary_empty">Nesetată</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Port invalid</string>
     <string name="ftp_server_home_directory_title">Dosar rădăcină</string>
     <string name="ftp_server_writable_title">Permite scrierea</string>
     <string name="settings_title">Setări</string>
@@ -566,6 +687,9 @@
     </string-array>
     <string name="settings_black_night_mode">Mod de noapte negru</string>
     <string name="settings_file_list_animation_title">Animații liste fișiere</string>
+    <string name="settings_double_back_to_exit_title">Apasă de două ori înapoi pentru a ieși</string>
+    <string name="settings_edge_to_edge_title">Afișare pe tot ecranul</string>
+    <string name="settings_edge_to_edge_summary">Conținutul derulează în spatele barelor de stare și de navigare</string>
     <string name="settings_file_name_ellipsize_title">Arată numele lung al fișierului</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Elipsizează începutul</item>
@@ -577,6 +701,7 @@
     <string name="settings_default_directory_title">Dosar implicit</string>
     <string name="settings_standard_directories_title">Dosare standard</string>
     <string name="settings_standard_directories_summary_empty">Dosarele standard nu sunt pornite</string>
+    <string name="settings_standard_directory_gallery_summary">Fotografiile și videoclipurile de pe dispozitiv</string>
     <string name="settings_bookmark_directories_title">Dosare cu marcaje</string>
     <string name="settings_bookmark_directories_summary_empty">Nu există dosare cu marcaje</string>
     <string name="settings_root_strategy_title">Mod de acces root</string>
@@ -597,6 +722,7 @@
         <item>Vizualizează conținutul</item>
         <item>Întreabă ce să fac</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Arată miniatura pentru documentele PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Ar putea face aplicația instabilă pe versiunile vechi de Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Citește fișiere la distanță pentru miniaturi</string>
 
@@ -608,6 +734,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Urmărește pe GitHub</string>
     <string name="app_name_launcher">Fișiere</string>
+    <string name="clear_query">Șterge interogarea</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">În funcție de imaginea de fundal</string>
     <string name="color_picker_preset_colors_label">Alte culori</string>
@@ -622,6 +749,7 @@
 
     <string name="onboarding_install_apps_title">Instalare aplicații</string>
     <string name="onboarding_install_apps_description">Permite %1$s să instaleze fișiere APK direct. Astfel poți instala aplicații din fișiere descărcate sau primite, fără a avea nevoie de un instalator terț.</string>
+    <string name="reorder_drag_handle">Mută</string>
     <string name="onboarding_notifications_title">Notificări</string>
     <string name="onboarding_optional">Opțional</string>
     <string name="onboarding_required">Obligatoriu</string>
