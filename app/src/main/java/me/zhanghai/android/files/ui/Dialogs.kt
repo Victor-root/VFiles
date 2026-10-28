@@ -112,20 +112,21 @@ fun TextFieldDialog(
         text = {
             // The extra content may not fit with the keyboard shown.
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                val keyboard = rememberTextFieldKeyboard(
+                    KeyboardOptions(keyboardType = keyboardType, imeAction = ImeAction.Done)
+                )
                 OutlinedTextField(
                     state = state,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .then(keyboard.modifier)
                         .focusRequester(focusRequester),
                     label = label?.let { { Text(it) } },
                     placeholder = placeholder?.let { { Text(it) } },
                     supportingText = error?.let { { Text(it) } },
                     isError = error != null,
                     outputTransformation = outputTransformation,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = keyboardType,
-                        imeAction = ImeAction.Done
-                    ),
+                    keyboardOptions = keyboard.keyboardOptions,
                     onKeyboardAction = { confirm() },
                     lineLimits = TextFieldLineLimits.SingleLine
                 )

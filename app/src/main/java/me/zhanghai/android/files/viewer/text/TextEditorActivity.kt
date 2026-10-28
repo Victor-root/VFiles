@@ -55,6 +55,7 @@ import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.SingleChoiceDialog
 import me.zhanghai.android.files.ui.asFastScrollable
+import me.zhanghai.android.files.ui.rememberTextFieldKeyboard
 import me.zhanghai.android.files.util.ActionState
 import me.zhanghai.android.files.util.DataState
 import me.zhanghai.android.files.util.extraPath
@@ -210,11 +211,15 @@ private fun TextEditorScreen(viewModel: TextEditorViewModel, onFinish: () -> Uni
 private fun TextEditorTextField(viewModel: TextEditorViewModel) {
     val scrollState = rememberScrollState()
     Box(modifier = Modifier.fillMaxSize()) {
+        val keyboard = rememberTextFieldKeyboard()
         BasicTextField(
             state = viewModel.textFieldState,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .then(keyboard.modifier),
             // Only called for edits by the user, not when the text is loaded.
             inputTransformation = InputTransformation { viewModel.isTextChanged.value = true },
+            keyboardOptions = keyboard.keyboardOptions,
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = LocalContentColor.current
             ),

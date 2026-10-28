@@ -65,6 +65,7 @@ import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.appTopAppBarColors
+import me.zhanghai.android.files.ui.rememberTextFieldKeyboard
 
 /** The colors of the app bar, which change once the list is scrolled. */
 class FileListAppBarColors(val container: Color, val content: Color)
@@ -151,13 +152,16 @@ fun FileListSearchAppBar(
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
+                val keyboard =
+                    rememberTextFieldKeyboard(KeyboardOptions(imeAction = ImeAction.Search))
                 BasicTextField(
                     state = queryState,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .then(keyboard.modifier)
                         .focusRequester(focusRequester),
                     textStyle = MaterialTheme.typography.titleMedium.copy(color = colors.content),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardOptions = keyboard.keyboardOptions,
                     onKeyboardAction = { onSearch() },
                     lineLimits = TextFieldLineLimits.SingleLine,
                     cursorBrush = SolidColor(colors.content)
@@ -572,12 +576,15 @@ fun CreateFileBar(controller: FileListController) {
             }
             // Left unfocused at first: the calling app nearly always passes the name it wants, so
             // taking focus would only bring up the keyboard over the list for nothing.
+            val keyboard = rememberTextFieldKeyboard(KeyboardOptions(imeAction = ImeAction.Done))
             BasicTextField(
                 state = nameState,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(keyboard.modifier),
                 textStyle = MaterialTheme.typography.bodyLarge
                     .copy(color = MaterialTheme.colorScheme.onSurface),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardOptions = keyboard.keyboardOptions,
                 onKeyboardAction = { controller.createFileWithEnteredName() },
                 lineLimits = TextFieldLineLimits.SingleLine,
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
