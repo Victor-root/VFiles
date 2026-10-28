@@ -9,11 +9,13 @@ import java8.nio.file.Path
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOn
 import me.zhanghai.android.files.provider.common.observe
 import me.zhanghai.android.files.util.closeSafe
+import me.zhanghai.android.files.util.collectWhileSubscribed
 import java.io.IOException
 
 private const val THROTTLE_INTERVAL_MILLIS = 1000L
@@ -43,3 +45,10 @@ fun Path.observeChanges(): Flow<Unit> =
     }
         .conflate()
         .flowOn(Dispatchers.IO)
+
+/**
+ * Calls [load] whenever this path changes while [subscriptionCount] is positive, like while the UI
+ * showing it is visible. Never returns, so it must be cancelled.
+ */
+suspend fun Path.loadOnChanges(subscriptionCount: StateFlow<Int>, load: () -> Unit): Unit =
+    observeChanges().collectWhileSubscribed(subscriptionCount, load)

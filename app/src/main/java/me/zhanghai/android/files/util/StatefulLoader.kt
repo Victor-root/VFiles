@@ -30,6 +30,10 @@ class StatefulLoader<T>(
     val value: Stateful<T>
         get() = _flow.value
 
+    /** The number of collectors of [flow], like the UI while it's visible. */
+    val subscriptionCount: StateFlow<Int>
+        get() = _flow.subscriptionCount
+
     private var job: Job? = null
 
     fun load() {
