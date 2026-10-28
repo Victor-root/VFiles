@@ -225,11 +225,14 @@ private fun GalleryScreen(state: GalleryState?) {
     ) { scaffoldPadding ->
         val appBarHeight = scaffoldPadding.calculateTopPadding()
         val layoutDirection = LocalLayoutDirection.current
+        // On a TV, the media keep away from the edges of the screen, which may be cut, and leave
+        // room for growing when focused.
+        val televisionMargin = if (isTelevision) TELEVISION_MARGIN else 0.dp
         val contentPadding = PaddingValues(
-            start = scaffoldPadding.calculateStartPadding(layoutDirection),
+            start = scaffoldPadding.calculateStartPadding(layoutDirection) + televisionMargin,
             top = if (isContentBehindTopBar) appBarHeight else 0.dp,
-            end = scaffoldPadding.calculateEndPadding(layoutDirection),
-            bottom = scaffoldPadding.calculateBottomPadding()
+            end = scaffoldPadding.calculateEndPadding(layoutDirection) + televisionMargin,
+            bottom = scaffoldPadding.calculateBottomPadding() + televisionMargin
         )
         Box(
             modifier = Modifier
@@ -367,6 +370,8 @@ private fun GalleryTabSwitch(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit)
     }
 }
 
+private val TELEVISION_MARGIN = 32.dp
+
 private val ALBUM_MIN_WIDTH = 150.dp
 private val ALBUM_SHAPE = RoundedCornerShape(16.dp)
 
@@ -379,14 +384,15 @@ private fun GalleryAlbumGrid(
     onAlbumFocused: () -> Unit,
     contentPadding: PaddingValues
 ) {
+    val layoutDirection = LocalLayoutDirection.current
     LazyVerticalGrid(
         columns = GridCells.Adaptive(ALBUM_MIN_WIDTH),
         modifier = Modifier.fillMaxSize(),
         state = gridState,
         contentPadding = PaddingValues(
-            start = 16.dp,
+            start = contentPadding.calculateStartPadding(layoutDirection) + 16.dp,
             top = contentPadding.calculateTopPadding() + 16.dp,
-            end = 16.dp,
+            end = contentPadding.calculateEndPadding(layoutDirection) + 16.dp,
             bottom = contentPadding.calculateBottomPadding() + 16.dp
         ),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
