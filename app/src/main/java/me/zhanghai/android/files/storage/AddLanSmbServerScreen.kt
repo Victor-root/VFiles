@@ -26,8 +26,10 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,10 +40,12 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
+import me.zhanghai.android.files.util.isTelevision
 
 @Parcelize
 data object AddLanSmbServerDestination : Destination {
@@ -75,15 +79,29 @@ internal fun AddLanSmbServerScreen(
     val isLoading = lanSmbServerList is Loading
     val servers = lanSmbServerList.value ?: emptyList()
     val title = stringResource(R.string.storage_add_lan_smb_server_title)
-    AppScaffold(title = title) { contentPadding ->
+    val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
+    AppScaffold(
+        title = title,
+        actions = {
+            // In place of pulling the list, which needs touch.
+            if (isTelevision && !isLoading) {
+                ActionButton(
+                    R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.refresh),
+                    onClick = onRefresh
+                )
+            }
+        }
+    ) { contentPadding ->
         val pullToRefreshState = rememberPullToRefreshState()
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                // D-pad scrolling shouldn't start one on TVs.
                 .pullToRefresh(
                     isRefreshing = false,
                     state = pullToRefreshState,
-                    enabled = !isLoading,
+                    enabled = !isLoading && !isTelevision,
                     onRefresh = onRefresh
                 )
         ) {

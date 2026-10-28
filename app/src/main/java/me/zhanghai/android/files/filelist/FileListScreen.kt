@@ -658,6 +658,8 @@ private fun FileListMainAppBar(
     onNavigationIconClick: () -> Unit,
     navigationIconFocusRequester: FocusRequester
 ) {
+    val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
     FileListTopAppBar(
         title = fileListTitle(pickOptions, controller),
         subtitle = fileListSubtitle(fileListStateful, isSearching),
@@ -688,6 +690,12 @@ private fun FileListMainAppBar(
             }
         }
     ) {
+        // In place of pulling the list, which needs touch.
+        if (isTelevision) {
+            ActionButton(
+                R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.refresh)
+            ) { controller.refresh() }
+        }
         ActionButton(R.drawable.search_icon_control_normal_24dp, stringResource(R.string.search)) {
             viewModel.isSearchViewExpanded = true
         }

@@ -28,6 +28,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -35,7 +36,10 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -44,12 +48,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.rememberViewModelStoreOwner
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.ReadOnlyFormTextField
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.showToast
 
 /**
@@ -64,6 +71,10 @@ fun ViewModelStoreScope(content: @Composable () -> Unit) {
     )
 }
 
+// The requests to refresh the tab shown, from a button of the dialog on a TV, where pulling the tab
+// needs touch.
+val LocalFilePropertiesRefreshRequests = staticCompositionLocalOf<Flow<Unit>> { emptyFlow() }
+
 private enum class TabState {
     LOADING,
     ERROR,
@@ -71,8 +82,9 @@ private enum class TabState {
 }
 
 /**
- * The content of a tab, shown once there's a value, which can then be refreshed by pulling. An
- * error is shown in place of the content, or as a toast once there's a value.
+ * The content of a tab, shown once there's a value, which can then be refreshed by pulling, or with
+ * [LocalFilePropertiesRefreshRequests] on a TV. An error is shown in place of the content, or as a
+ * toast once there's a value.
  */
 @Composable
 fun <T : Any> FilePropertiesTab(
@@ -81,6 +93,10 @@ fun <T : Any> FilePropertiesTab(
     content: @Composable ColumnScope.(T) -> Unit
 ) {
     val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
+    val refreshRequests = LocalFilePropertiesRefreshRequests.current
+    val currentOnRefresh by rememberUpdatedState(onRefresh)
+    LaunchedEffect(refreshRequests) { refreshRequests.collect { currentOnRefresh() } }
     LaunchedEffect(stateful) {
         if (stateful is Failure) {
             stateful.throwable.printStackTrace()
@@ -103,7 +119,8 @@ fun <T : Any> FilePropertiesTab(
     ) { targetStateful ->
         val value = targetStateful.value
         if (value != null) {
-            PullToRefreshBox(isRefreshing = targetStateful is Loading, onRefresh = onRefresh) {
+            val isRefreshing = targetStateful is Loading
+            val tabContent = @Composable {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,6 +128,18 @@ fun <T : Any> FilePropertiesTab(
                         .padding(horizontal = 24.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) { content(value) }
+            }
+            if (isTelevision) {
+                Box {
+                    tabContent()
+                    if (isRefreshing) {
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                    }
+                }
+            } else {
+                PullToRefreshBox(isRefreshing = isRefreshing, onRefresh = onRefresh) {
+                    tabContent()
+                }
             }
         } else {
             StateBox(Modifier.padding(horizontal = 24.dp)) {
