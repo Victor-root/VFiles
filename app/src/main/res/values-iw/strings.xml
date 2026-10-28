@@ -23,6 +23,8 @@
     <string name="loading">טעינה…</string>
     <string name="maybe_later">אולי אחר כך</string>
     <string name="merge">מיזוג</string>
+    <string name="more_options">אפשרויות נוספות</string>
+    <string name="navigate_up">ניווט למעלה</string>
     <string name="none">ללא</string>
     <string name="open_navigation_drawer">פתיחת חלונית ההזזה לניווט</string>
     <string name="paste">הדבקה</string>
@@ -360,9 +362,11 @@
     <string name="file_list_paste_extract_title_format">מחלץ את %1$,d</string>
     <string name="file_list_paste_action_extract_here">חילוץ לכאן</string>
     <string name="file_list_empty">אין קבצים</string>
+    <string name="file_list_press_back_again_to_exit">יש ללחוץ שוב על חזרה כדי לצאת</string>
     <string name="file_list_error_folder_not_found">התיקייה הזו כבר לא קיימת</string>
     <string name="file_list_error_permission_denied">אין לך הרשאה לפתוח את התיקייה הזו</string>
     <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
+    <string name="file_list_action_create">יצירה</string>
     <string name="file_list_action_create_file">קובץ</string>
     <string name="file_list_action_create_directory">תיקייה</string>
 
@@ -571,6 +575,7 @@
     <string name="storage_edit_smb_server_title_edit">עריכת שרת SMB</string>
     <string name="storage_edit_smb_server_title_add">הוספת שרת SMB</string>
     <string name="storage_edit_smb_server_host">שם מארח</string>
+    <string name="storage_edit_smb_server_host_placeholder">כתובת IP או שם הרשת של השרת, למשל 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">הזנת שם מארח</string>
     <string name="storage_edit_smb_server_host_error_invalid">שם מארח לא תקין</string>
     <string name="storage_edit_smb_server_port">פתחה</string>
@@ -638,6 +643,32 @@
     <string name="navigation_edit_bookmark_directory_name">שם</string>
     <string name="navigation_edit_bookmark_directory_path">נתיב</string>
     <string name="archive_viewer_title">מציג ארכיונים</string>
+    <string name="gallery_title">גלריה</string>
+    <string name="gallery_photos">תמונות</string>
+    <string name="gallery_albums">אלבומים</string>
+    <string name="gallery_today">היום</string>
+    <string name="gallery_yesterday">אתמול</string>
+    <string name="gallery_empty">אין תמונות או סרטונים</string>
+    <string name="gallery_access_denied">יש לאפשר גישה לקבצים כדי לראות את התמונות והסרטונים שלך</string>
+    <string name="gallery_allow_access">אישור</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">פריט אחד</item>
+        <item quantity="two">%1$,d פריטים</item>
+        <item quantity="many">%1$,d פריטים</item>
+        <item quantity="other">%1$,d פריטים</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">למחוק את הפריט הזה?</item>
+        <item quantity="two">למחוק %1$,d פריטים אלה?</item>
+        <item quantity="many">למחוק %1$,d פריטים אלה?</item>
+        <item quantity="other">למחוק %1$,d פריטים אלה?</item>
+    </plurals>
+    <string name="gallery_details">פרטים</string>
+    <string name="gallery_details_date">תאריך</string>
+    <string name="gallery_show_in_folder">הצגה בתיקייה</string>
+    <string name="video_player_title">נגן וידאו</string>
+    <string name="video_player_play">הפעלה</string>
+    <string name="video_player_pause">השהיה</string>
     <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>
@@ -669,7 +700,9 @@
     <string name="ftp_server_anonymous_login_title">כניסה בעילום שם</string>
     <string name="ftp_server_username_title">שם משתמש</string>
     <string name="ftp_server_password_title">סיסמה</string>
+    <string name="ftp_server_password_summary_empty">לא הוגדרה</string>
     <string name="ftp_server_port_title">פתחה</string>
+    <string name="ftp_server_port_error_invalid">פתחה אינה תקפה</string>
     <string name="ftp_server_home_directory_title">תיקיית שורש</string>
     <string name="ftp_server_writable_title">איפשור כתיבה</string>
     <string name="settings_title">הגדרות</string>
@@ -687,6 +720,9 @@
     </string-array>
     <string name="settings_black_night_mode">מצב לילה שחור</string>
     <string name="settings_file_list_animation_title">אנימציית רשימת קבצים</string>
+    <string name="settings_double_back_to_exit_title">יש ללחוץ פעמיים על חזרה כדי לצאת</string>
+    <string name="settings_edge_to_edge_title">תצוגה מקצה לקצה</string>
+    <string name="settings_edge_to_edge_summary">התוכן נגלל מאחורי שורת המצב וסרגל הניווט</string>
     <string name="settings_file_name_ellipsize_title">הצגת שם קובץ ארוך</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>התחלה אליפסית</item>
@@ -698,6 +734,7 @@
     <string name="settings_default_directory_title">תיקיית ברירת מחדל</string>
     <string name="settings_standard_directories_title">תיקיות סטנדרטיות</string>
     <string name="settings_standard_directories_summary_empty">תיקיות סטנדרטיות לא מופעל</string>
+    <string name="settings_standard_directory_gallery_summary">תמונות וסרטונים מהמכשיר</string>
     <string name="settings_bookmark_directories_title">תיקיות סימניות</string>
     <string name="settings_bookmark_directories_summary_empty">אין תיקיות סימניות</string>
     <string name="settings_root_strategy_title">מצב גישת שורש</string>
@@ -731,6 +768,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">לעקוב ב-GitHub</string>
     <string name="app_name_launcher">קבצים</string>
+    <string name="clear_query">ניקוי החיפוש</string>
     <string name="about_fork_subtitle">מקור: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">בהתאם לטפט</string>
     <string name="color_picker_preset_colors_label">צבעים אחרים</string>
@@ -745,6 +783,7 @@
 
     <string name="onboarding_install_apps_title">התקנת אפליקציות</string>
     <string name="onboarding_install_apps_description">אפשרו ל-%1$s להתקין קובצי APK ישירות. כך תוכלו להתקין אפליקציות מקבצים שהורדתם או קיבלתם, בלי להזדקק למתקין צד שלישי.</string>
+    <string name="reorder_drag_handle">העברה</string>
     <string name="onboarding_notifications_title">התראות</string>
     <string name="onboarding_optional">אופציונלי</string>
     <string name="onboarding_required">חובה</string>
