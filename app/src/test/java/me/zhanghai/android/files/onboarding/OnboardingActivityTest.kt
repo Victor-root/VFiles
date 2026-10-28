@@ -11,9 +11,11 @@ import android.app.Application
 import android.content.Context
 import android.os.Process
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performKeyInput
@@ -64,6 +66,10 @@ class OnboardingActivityTest {
     @Config(qualifiers = "w960dp-h540dp-land-television")
     fun fitsOnTelevision() {
         launchWithoutFilesAccess()
+        // Every permission fits side by side, without scrolling.
+        val grantButtons = composeTestRule.onAllNodesWithText("Grant").assertCountEquals(3)
+        repeat(3) { grantButtons[it].assertIsDisplayed() }
+        composeTestRule.onNodeWithText("Get started").assertIsDisplayed()
         // Reaching the last button with the D-pad doesn't scroll the title away.
         repeat(3) { composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionDown) } }
         composeTestRule.waitForIdle()

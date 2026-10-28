@@ -19,13 +19,18 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -107,7 +112,7 @@ class OnboardingActivity : AppActivity() {
                     text = stringResource(
                         R.string.onboarding_welcome_title, stringResource(R.string.app_name)
                     ),
-                    modifier = Modifier.padding(start = 24.dp, top = 40.dp, end = 24.dp),
+                    modifier = Modifier.padding(start = 24.dp, top = 32.dp, end = 24.dp),
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
@@ -116,18 +121,42 @@ class OnboardingActivity : AppActivity() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyLarge
                 )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                        .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 8.dp)
-                ) {
-                    for (page in pages) {
-                        PermissionCard(
-                            page = page,
-                            isGranted = page in grantedPages,
-                            onGrant = { page.requestGrant(this@OnboardingActivity) }
-                        )
+                BoxWithConstraints(modifier = Modifier.weight(1f)) {
+                    // On wide screens like TVs, the permissions are tiles side by side, so that
+                    // they all fit without scrolling.
+                    val isTiled = maxWidth >= TILED_MIN_WIDTH
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        if (isTiled) {
+                            Row(
+                                modifier = Modifier.height(IntrinsicSize.Max),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                for (page in pages) {
+                                    PermissionTile(
+                                        page = page,
+                                        isGranted = page in grantedPages,
+                                        onGrant = { page.requestGrant(this@OnboardingActivity) },
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .fillMaxHeight()
+                                    )
+                                }
+                            }
+                        } else {
+                            for (page in pages) {
+                                PermissionCard(
+                                    page = page,
+                                    isGranted = page in grantedPages,
+                                    onGrant = { page.requestGrant(this@OnboardingActivity) }
+                                )
+                            }
+                        }
                     }
                 }
                 // Only the required pages gate the button, the optional ones can be skipped.
@@ -257,99 +286,154 @@ private fun PermissionCard(
     isGranted: Boolean,
     onGrant: () -> Unit
 ) {
-    val context = LocalContext.current
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 12.dp),
-        shape = RoundedCornerShape(24.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
-        border = BorderStroke(
-            1.dp,
-            if (isGranted) GRANTED_COLOR else MaterialTheme.colorScheme.outlineVariant
-        )
-    ) {
-        // On wide screens like TVs, the action is next to the text, so that the cards are short
-        // enough for the whole screen to fit without scrolling the title away.
+    PermissionSurface(isGranted, Modifier.fillMaxWidth()) {
+        // On medium screens, the action is next to the text, so that the cards are short.
         BoxWithConstraints {
             val isWide = maxWidth >= WIDE_CARD_MIN_WIDTH
-            val action = @Composable { modifier: Modifier ->
-                if (isGranted) {
-                    GrantedBadge(modifier)
-                } else {
-                    FilledTonalButton(
-                        onClick = onGrant,
-                        modifier = modifier,
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = MaterialTheme.colorScheme.primary.copy(
-                                alpha = TONAL_ALPHA
-                            ),
-                            contentColor = MaterialTheme.colorScheme.primary
-                        )
-                    ) { Text(stringResource(R.string.onboarding_grant)) }
-                }
-            }
-            val description = @Composable { modifier: Modifier ->
-                Text(
-                    text = remember(page, context) { page.getDescription(context) },
-                    modifier = modifier,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
             Column(modifier = Modifier.padding(20.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(52.dp)
-                            .background(
-                                MaterialTheme.colorScheme.primary.copy(alpha = TONAL_ALPHA),
-                                RoundedCornerShape(16.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(page.iconRes),
-                            contentDescription = null,
-                            modifier = Modifier.size(28.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
+                    PermissionIcon(page)
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 16.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = stringResource(page.titleRes),
-                                modifier = Modifier.weight(1f, fill = false),
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            RequirementBadge(
-                                isRequired = page.isRequired,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-                        }
+                        PermissionTitle(page)
                         if (isWide) {
-                            description(Modifier.padding(top = 6.dp))
+                            PermissionDescription(page, Modifier.padding(top = 6.dp))
                         }
                     }
                     if (isWide) {
-                        action(Modifier.padding(start = 16.dp))
+                        PermissionAction(isGranted, onGrant, Modifier.padding(start = 16.dp))
                     }
                 }
                 // On narrow screens, the text takes the whole width below the icon.
                 if (!isWide) {
-                    description(Modifier.padding(top = 12.dp))
-                    action(
-                        Modifier
+                    PermissionDescription(page, Modifier.padding(top = 12.dp))
+                    PermissionAction(
+                        isGranted = isGranted,
+                        onGrant = onGrant,
+                        modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 12.dp)
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun PermissionTile(
+    page: OnboardingActivity.OnboardingPage,
+    isGranted: Boolean,
+    onGrant: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    PermissionSurface(isGranted, modifier) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                PermissionIcon(page)
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+                    Text(
+                        text = stringResource(page.titleRes),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    RequirementBadge(page.isRequired, Modifier.padding(top = 4.dp))
+                }
+            }
+            PermissionDescription(page, Modifier.padding(top = 12.dp))
+            // Keeps the actions of all tiles on the same line.
+            Spacer(modifier = Modifier.weight(1f))
+            PermissionAction(isGranted, onGrant, Modifier.padding(top = 16.dp))
+        }
+    }
+}
+
+@Composable
+private fun PermissionSurface(
+    isGranted: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        border = BorderStroke(
+            1.dp,
+            if (isGranted) GRANTED_COLOR else MaterialTheme.colorScheme.outlineVariant
+        ),
+        content = content
+    )
+}
+
+@Composable
+private fun PermissionIcon(page: OnboardingActivity.OnboardingPage) {
+    Box(
+        modifier = Modifier
+            .size(52.dp)
+            .background(
+                MaterialTheme.colorScheme.primary.copy(alpha = TONAL_ALPHA),
+                RoundedCornerShape(16.dp)
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(page.iconRes),
+            contentDescription = null,
+            modifier = Modifier.size(28.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
+private fun PermissionTitle(page: OnboardingActivity.OnboardingPage) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = stringResource(page.titleRes),
+            modifier = Modifier.weight(1f, fill = false),
+            style = MaterialTheme.typography.titleMedium
+        )
+        RequirementBadge(
+            isRequired = page.isRequired,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
+
+@Composable
+private fun PermissionDescription(
+    page: OnboardingActivity.OnboardingPage,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    Text(
+        text = remember(page, context) { page.getDescription(context) },
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodyMedium
+    )
+}
+
+@Composable
+private fun PermissionAction(
+    isGranted: Boolean,
+    onGrant: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (isGranted) {
+        GrantedBadge(modifier)
+    } else {
+        FilledTonalButton(
+            onClick = onGrant,
+            modifier = modifier,
+            colors = ButtonDefaults.filledTonalButtonColors(
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = TONAL_ALPHA),
+                contentColor = MaterialTheme.colorScheme.primary
+            )
+        ) { Text(stringResource(R.string.onboarding_grant)) }
     }
 }
 
@@ -404,5 +488,6 @@ private fun GrantedBadge(modifier: Modifier = Modifier) {
 }
 
 private val WIDE_CARD_MIN_WIDTH = 600.dp
+private val TILED_MIN_WIDTH = 840.dp
 private val GRANTED_COLOR = Color(0xFF22A667)
 private const val TONAL_ALPHA = 0.12f
