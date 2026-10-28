@@ -44,6 +44,7 @@ import androidx.compose.ui.test.swipeUp
 import androidx.core.content.getSystemService
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
@@ -405,6 +406,27 @@ class FileListActivityTest {
         waitForText("No files")
         // Nothing is shown, so the focus can't go to the list.
         composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun opensMenusWithMenuKey() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        // On a file, its own menu.
+        val notes = composeTestRule.onNodeWithText("notes.txt")
+        notes.requestFocus()
+        notes.performKeyInput { pressKey(Key.Menu) }
+        composeTestRule.onNodeWithText("Rename").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Refresh").assertDoesNotExist()
+        Espresso.pressBack()
+        composeTestRule.waitForIdle()
+        // Elsewhere, the one of the app bar.
+        val navigationIcon = composeTestRule.onNodeWithContentDescription("Open navigation drawer")
+        navigationIcon.requestFocus()
+        navigationIcon.performKeyInput { pressKey(Key.Menu) }
+        composeTestRule.onNodeWithText("Refresh").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Rename").assertDoesNotExist()
     }
 
     @Test

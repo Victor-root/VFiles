@@ -138,6 +138,7 @@ import me.zhanghai.android.files.ui.SpeedDial
 import me.zhanghai.android.files.ui.SpeedDialAction
 import me.zhanghai.android.files.ui.SpeedDialScrim
 import me.zhanghai.android.files.ui.asFastScrollable
+import me.zhanghai.android.files.ui.onMenuKey
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.ui.sampleStatusBarContent
 import me.zhanghai.android.files.util.Failure
@@ -358,6 +359,12 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     Box(
         modifier = Modifier
             .onFocusChanged { hasFocus = it.hasFocus }
+            // When no file took it, the menu key opens the menu of the app bar.
+            .onMenuKey {
+                if (!drawerState.isOpen) {
+                    controller.showOverflowMenu()
+                }
+            }
             .onKeyEvent(controller::onKeyShortcut)
     ) {
         if (hasPersistentDrawer) {

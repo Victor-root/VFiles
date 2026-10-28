@@ -81,6 +81,7 @@ import me.zhanghai.android.files.ui.MenuDivider
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.cachedIconPainter
+import me.zhanghai.android.files.ui.onMenuKey
 
 /** What the menu of a file can do. */
 interface FileItemActions {
@@ -121,7 +122,7 @@ private val MENU_BUTTON_MARGIN_START =
 
 /**
  * A file in the list view. On a D-pad, the row is focused as a whole and right moves to its menu
- * button, from which left, up and down come back to the row.
+ * button, from which left, up and down come back to the row. The menu key opens the menu too.
  */
 @Composable
 fun FileListItem(
@@ -137,14 +138,15 @@ fun FileListItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
-    val focusRequesters = remember { FileItemFocusRequesters() }
+    val controls = remember { FileItemControls() }
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
             .background(selectedBackgroundColor(isSelected))
-            .focusRequester(focusRequesters.item)
-            .focusProperties { right = focusRequesters.menu }
+            .focusRequester(controls.item)
+            .focusProperties { right = controls.menu }
+            .onMenuKey { if (isEnabled) controls.showMenu() }
             .combinedClickable(enabled = isEnabled, onClick = onClick, onLongClick = onLongClick)
             .disabledAlpha(isEnabled),
         verticalAlignment = Alignment.CenterVertically
@@ -179,7 +181,7 @@ fun FileListItem(
             isEnabled = isEnabled,
             isPicking = isPicking,
             actions = actions,
-            focusRequesters = focusRequesters,
+            controls = controls,
             modifier = Modifier.padding(
                 start = dimensionResource(MENU_BUTTON_MARGIN_START),
                 end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp_at_least_8dp)
@@ -201,15 +203,16 @@ fun FileGridItem(
     actions: FileItemActions,
     modifier: Modifier = Modifier
 ) {
-    val focusRequesters = remember { FileItemFocusRequesters() }
+    val controls = remember { FileItemControls() }
     val shape = GRID_ITEM_SHAPE
     Column(
         modifier = modifier
             .padding(4.dp)
             .clip(shape)
             .background(selectedBackgroundColor(isSelected), shape)
-            .focusRequester(focusRequesters.item)
-            .focusProperties { right = focusRequesters.menu }
+            .focusRequester(controls.item)
+            .focusProperties { right = controls.menu }
+            .onMenuKey { if (isEnabled) controls.showMenu() }
             .combinedClickable(enabled = isEnabled, onClick = onClick, onLongClick = onLongClick)
             .disabledAlpha(isEnabled)
     ) {
@@ -249,7 +252,7 @@ fun FileGridItem(
                 isEnabled = isEnabled,
                 isPicking = isPicking,
                 actions = actions,
-                focusRequesters = focusRequesters,
+                controls = controls,
                 modifier = Modifier.padding(end = iconMargin - 4.dp)
             )
         }
@@ -268,9 +271,19 @@ private fun selectedBackgroundColor(isSelected: Boolean): Color =
         Color.Transparent
     }
 
-private class FileItemFocusRequesters {
+private class FileItemControls {
     val item = FocusRequester()
     val menu = FocusRequester()
+    var isMenuShown by mutableStateOf(false)
+    // Composing the menu of every item costs much while scrolling, so it's only composed once
+    // opened, and then kept for its closing animation.
+    var hasMenuBeenShown by mutableStateOf(false)
+        private set
+
+    fun showMenu() {
+        hasMenuBeenShown = true
+        isMenuShown = true
+    }
 }
 
 @Composable
@@ -505,13 +518,9 @@ private fun FileItemMenuButton(
     isEnabled: Boolean,
     isPicking: Boolean,
     actions: FileItemActions,
-    focusRequesters: FileItemFocusRequesters,
+    controls: FileItemControls,
     modifier: Modifier = Modifier
 ) {
-    var isMenuShown by remember { mutableStateOf(false) }
-    // Composing the menu of every item costs much while scrolling, so it's only composed once
-    // opened, and then kept for its closing animation.
-    var hasMenuBeenShown by remember { mutableStateOf(false) }
     val iconPainter = cachedIconPainter(R.drawable.more_vertical_icon_white_24dp, ICON_SIZE)
     val iconColorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant)
     val contentDescription = stringResource(R.string.more_options)
@@ -519,11 +528,11 @@ private fun FileItemMenuButton(
         // Built like an IconButton with an Icon, with fewer nodes since there's one per row.
         Box(
             modifier = Modifier
-                .focusRequester(focusRequesters.menu)
+                .focusRequester(controls.menu)
                 .focusProperties {
-                    left = focusRequesters.item
-                    up = focusRequesters.item
-                    down = focusRequesters.item
+                    left = controls.item
+                    up = controls.item
+                    down = controls.item
                 }
                 .minimumInteractiveComponentSize()
                 .size(MENU_BUTTON_SIZE)
@@ -533,10 +542,7 @@ private fun FileItemMenuButton(
                     role = Role.Button,
                     interactionSource = null,
                     indication = ripple()
-                ) {
-                    hasMenuBeenShown = true
-                    isMenuShown = true
-                }
+                ) { controls.showMenu() }
                 .semantics { this.contentDescription = contentDescription }
                 .paint(
                     iconPainter,
@@ -545,11 +551,11 @@ private fun FileItemMenuButton(
                     colorFilter = iconColorFilter
                 )
         )
-        if (hasMenuBeenShown) {
+        if (controls.hasMenuBeenShown) {
             RoundedDropdownMenu(
-                expanded = isMenuShown,
-                onDismissRequest = { isMenuShown = false }
-            ) { FileItemMenuItems(file, isPicking, actions) { isMenuShown = false } }
+                expanded = controls.isMenuShown,
+                onDismissRequest = { controls.isMenuShown = false }
+            ) { FileItemMenuItems(file, isPicking, actions) { controls.isMenuShown = false } }
         }
     }
 }
