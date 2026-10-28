@@ -9,6 +9,7 @@ import android.text.TextUtils
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
@@ -70,6 +71,27 @@ class SettingsActivityTest {
         composeTestRule.onNodeWithContentDescription("Navigate up").requestFocus()
         composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionDown) }
         composeTestRule.onNodeWithText("Language").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun opensStoragesAndComesBackWithDpad() {
+        composeTestRule.activityRule.scenario.onActivity { it.leaveTouchMode() }
+        val storages = composeTestRule.onNodeWithText("Storage").performScrollTo()
+        storages.requestFocus()
+        composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        // Opened above the settings, in the same activity.
+        composeTestRule.onNodeWithText("Interface").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Add storage").assertIsDisplayed()
+        composeTestRule.activityRule.scenario.onActivity {
+            it.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule.waitForIdle()
+        storages.assertIsFocused()
+        // Up and down go on from there.
+        composeTestRule.onRoot().performKeyInput { pressKey(Key.DirectionDown) }
+        storages.assertIsNotFocused()
     }
 
     @Test

@@ -26,14 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.SingleChoiceDialog
 
-class DefaultAppsActivity : AppActivity() {
+@Parcelize
+data object DefaultAppsDestination : Destination {
     @Composable
     override fun Content() {
         DefaultAppsScreen()

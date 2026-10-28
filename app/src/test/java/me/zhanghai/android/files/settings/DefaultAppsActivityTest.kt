@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
@@ -22,6 +23,7 @@ import androidx.compose.ui.test.performClick
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.setDestinationContent
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -37,7 +39,7 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class DefaultAppsActivityTest {
-    private val composeTestRule = createAndroidComposeRule<DefaultAppsActivity>()
+    private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule
     val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
@@ -47,6 +49,7 @@ class DefaultAppsActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
         Settings.FILE_OPEN_DEFAULT_APPS.putValue(emptyList())
         installImageViewer()
+        composeTestRule.setDestinationContent(DefaultAppsDestination)
     }
 
     private fun installImageViewer() {

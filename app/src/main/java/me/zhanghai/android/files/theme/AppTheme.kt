@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LifecycleStartEffect
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.night.isNightModeActive
 import me.zhanghai.android.files.theme.night.withNightMode
@@ -45,19 +48,38 @@ private val LocalStatusBarBackgrounds =
         error("No status bar backgrounds provided")
     }
 
-/** Makes the status bar icons follow [color] instead of the app bar while this is composed. */
+/**
+ * Makes the status bar icons follow [color] instead of the app bar while this is shown, which is
+ * while it's composed and started.
+ */
 @Composable
 fun StatusBarBackgroundEffect(color: Color) {
     val statusBarBackgrounds = LocalStatusBarBackgrounds.current
-    DisposableEffect(statusBarBackgrounds, color) {
+    LifecycleStartEffect(statusBarBackgrounds, color) {
         statusBarBackgrounds += color
-        onDispose { statusBarBackgrounds.removeAt(statusBarBackgrounds.lastIndexOf(color)) }
+        onStopOrDispose { statusBarBackgrounds.removeAt(statusBarBackgrounds.lastIndexOf(color)) }
     }
 }
 
-/** [hasDarkSystemBars] is for screens that always draw dark content behind the system bars. */
+// The number of screens shown that always draw dark content behind the system bars.
+private val LocalDarkSystemBarsCount =
+    staticCompositionLocalOf<MutableIntState> { error("No dark system bars count provided") }
+
+/**
+ * Makes the system bar icons light, for content that is always dark behind them, while this is
+ * shown, which is while it's composed and started.
+ */
 @Composable
-fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit) {
+fun DarkSystemBarsEffect() {
+    val darkSystemBarsCount = LocalDarkSystemBarsCount.current
+    LifecycleStartEffect(darkSystemBarsCount) {
+        ++darkSystemBarsCount.intValue
+        onStopOrDispose { --darkSystemBarsCount.intValue }
+    }
+}
+
+@Composable
+fun AppTheme(content: @Composable () -> Unit) {
     val nightMode by Settings.NIGHT_MODE.flow.collectAsState()
     val themeColor by Settings.THEME_COLOR.flow.collectAsState()
     val isBlackNightMode by Settings.BLACK_NIGHT_MODE.flow.collectAsState()
@@ -81,17 +103,19 @@ fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit
         AppColors(isDark, lightColorScheme.primary, lightColorScheme.onPrimary)
     }
     val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
+    val darkSystemBarsCount = remember { mutableIntStateOf(0) }
     SystemBarsEffect(
         statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer,
         // Unless edge to edge, the navigation bar is drawn over the color of the app bar.
         if (isEdgeToEdge) appColors.isDark else appColors.appBarContainer.luminance() < 0.5f,
-        hasDarkSystemBars
+        darkSystemBarsCount.intValue > 0
     )
     CompositionLocalProvider(
         LocalContext provides context,
         LocalConfiguration provides context.resources.configuration,
         LocalAppColors provides appColors,
-        LocalStatusBarBackgrounds provides statusBarBackgrounds
+        LocalStatusBarBackgrounds provides statusBarBackgrounds,
+        LocalDarkSystemBarsCount provides darkSystemBarsCount
     ) {
         MaterialTheme(colorScheme = colorScheme, content = content)
     }

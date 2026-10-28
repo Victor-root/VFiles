@@ -12,7 +12,6 @@ import android.os.Environment
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,6 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.InputMode
@@ -69,11 +69,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.ActionButton
@@ -83,15 +85,14 @@ import me.zhanghai.android.files.ui.HideOnScrollTopBar
 import me.zhanghai.android.files.ui.NavigateUpButton
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.ui.sampleStatusBarContent
-import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isTelevision
-import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 /** The photos and videos of the device by date, and their albums, like the gallery of a phone. */
-class GalleryActivity : AppActivity() {
+@Parcelize
+data object GalleryDestination : Destination {
     @Composable
     override fun Content() {
         val state by Gallery.flow.collectAsStateWithLifecycle()
@@ -112,6 +113,7 @@ private val SelectedIdsSaver = listSaver<Set<Long>, Long>(
 @Composable
 private fun GalleryScreen(state: GalleryState?) {
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
     var tab by rememberSaveable { mutableStateOf(GalleryTab.PHOTOS) }
     var albumId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selectedIds by rememberSaveable(stateSaver = SelectedIdsSaver) {
@@ -241,7 +243,8 @@ private fun GalleryScreen(state: GalleryState?) {
                 .sampleStatusBarContent(appBarState)
                 .focusRequester(contentFocusRequester)
                 .onFocusChanged { contentHasFocus = it.hasFocus }
-                .focusGroup()
+                // Focuses the media focused before again, like when coming back from the viewer.
+                .focusRestorer()
         ) {
             when {
                 state == null ->
@@ -261,7 +264,9 @@ private fun GalleryScreen(state: GalleryState?) {
                                     if (selectedIds.isNotEmpty()) {
                                         toggleSelection(listOf(it))
                                     } else {
-                                        context.openGalleryViewer(album?.id, it)
+                                        navigator.navigate(
+                                            GalleryViewerDestination(album?.id, it.id)
+                                        )
                                     }
                                 },
                                 onMediaLongClick = { toggleSelection(listOf(it)) },
@@ -283,13 +288,6 @@ private fun GalleryScreen(state: GalleryState?) {
             }
         }
     }
-}
-
-private fun Context.openGalleryViewer(albumId: Long?, media: GalleryMedia) {
-    startActivitySafe(
-        GalleryViewerActivity::class.createIntent()
-            .putArgs(GalleryViewerActivity.Args(albumId, media.id))
-    )
 }
 
 @Composable

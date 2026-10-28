@@ -7,6 +7,7 @@ package me.zhanghai.android.files.settings
 
 import android.app.Activity
 import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
@@ -30,6 +31,7 @@ import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
+import me.zhanghai.android.files.test.setDestinationContent
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.getArgs
@@ -47,7 +49,7 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class BookmarkDirectoryListActivityTest {
-    private val composeTestRule = createAndroidComposeRule<BookmarkDirectoryListActivity>()
+    private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule
     val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
@@ -61,6 +63,7 @@ class BookmarkDirectoryListActivityTest {
             BookmarkDirectory(null, Paths.get("/storage/emulated/0/$it"))
         }
         Settings.BOOKMARK_DIRECTORIES.putValue(bookmarkDirectories)
+        composeTestRule.setDestinationContent(BookmarkDirectoryListDestination)
     }
 
     @Test

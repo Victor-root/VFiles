@@ -49,6 +49,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
@@ -72,13 +74,14 @@ fun NavigationDrawerContent(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val items by NavigationItemList.flow.collectAsState()
     val currentOnNavigateTo by rememberUpdatedState(onNavigateTo)
     val currentOnNavigateToRoot by rememberUpdatedState(onNavigateToRoot)
     val currentOnCloseDrawer by rememberUpdatedState(onCloseDrawer)
     val currentPathState = rememberUpdatedState(currentPath)
     // Kept from a folder to the next one, so that only the items checked or unchecked recompose.
-    val listener = remember(context) {
+    val listener = remember(context, navigator) {
         object : NavigationItem.Listener {
             override val currentPath: Path
                 get() = currentPathState.value
@@ -93,6 +96,10 @@ fun NavigationDrawerContent(
 
             override fun launchIntent(intent: Intent) {
                 context.startActivitySafe(intent)
+            }
+
+            override fun navigate(destination: Destination) {
+                navigator.navigate(destination)
             }
 
             override fun showToast(textRes: Int) {

@@ -7,7 +7,6 @@ package me.zhanghai.android.files.ui
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
-import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,6 +40,7 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalInputModeManager
@@ -141,7 +141,9 @@ fun AppScaffold(
                 modifier = Modifier
                     .padding(top = contentPadding.calculateTopPadding())
                     .focusRequester(contentFocusRequester)
-                    .focusGroup()
+                    // Focuses the item focused before again, like when coming back from another
+                    // screen.
+                    .focusRestorer()
             ) {
                 content(
                     PaddingValues(

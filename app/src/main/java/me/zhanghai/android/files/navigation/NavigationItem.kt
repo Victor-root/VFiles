@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
+import me.zhanghai.android.files.app.Destination
 
 abstract class NavigationItem {
     abstract val id: Long
@@ -42,6 +43,7 @@ abstract class NavigationItem {
         fun navigateTo(path: Path)
         fun navigateToRoot(path: Path)
         fun launchIntent(intent: Intent)
+        fun navigate(destination: Destination)
         fun showToast(textRes: Int)
         fun closeNavigationDrawer()
     }
