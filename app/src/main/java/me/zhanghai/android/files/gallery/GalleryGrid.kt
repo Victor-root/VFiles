@@ -8,7 +8,6 @@ package me.zhanghai.android.files.gallery
 import android.content.Context
 import android.text.format.DateFormat
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,7 +40,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -55,21 +53,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.FastScrollable
 import me.zhanghai.android.files.ui.FastScroller
+import me.zhanghai.android.files.ui.animateFocusedScale
+import me.zhanghai.android.files.ui.focusedBorder
+import me.zhanghai.android.files.ui.focusedScale
+import me.zhanghai.android.files.ui.formatDuration
 import me.zhanghai.android.files.util.isTelevision
-import me.zhanghai.android.files.viewer.video.formatDuration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -310,27 +308,6 @@ private fun GalleryGridHeader(
         }
     }
 }
-
-private const val FOCUSED_SCALE = 1.08f
-private val FOCUSED_BORDER_WIDTH = 3.dp
-
-/** The scale of an item growing while focused, which stands out more than an overlay on photos. */
-@Composable
-internal fun animateFocusedScale(isFocused: Boolean): State<Float> =
-    animateFloatAsState(if (isFocused) FOCUSED_SCALE else 1f)
-
-/** Draws a focused item grown by [scale] above its neighbors. */
-internal fun Modifier.focusedScale(isFocused: Boolean, scale: () -> Float): Modifier =
-    zIndex(if (isFocused) 1f else 0f)
-        .graphicsLayer {
-            val currentScale = scale()
-            scaleX = currentScale
-            scaleY = currentScale
-        }
-
-/** Outlines a focused item in the accent color. */
-internal fun Modifier.focusedBorder(isFocused: Boolean, color: Color, shape: Shape): Modifier =
-    if (isFocused) border(FOCUSED_BORDER_WIDTH, color, shape) else this
 
 private val SELECTED_INSET = 12.dp
 private val SELECTED_CORNER_RADIUS = 12.dp

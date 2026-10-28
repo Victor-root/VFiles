@@ -586,7 +586,7 @@
     <string name="gallery_yesterday">Dün</string>
     <string name="gallery_empty">Fotoğraf veya video yok</string>
     <string name="gallery_access_denied">Fotoğraflarınızı ve videolarınızı görmek için dosyalara erişime izin verin</string>
-    <string name="gallery_allow_access">İzin ver</string>
+    <string name="allow_access">İzin ver</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d öge</item>
         <item quantity="other">%1$,d öge</item>
@@ -599,8 +599,8 @@
     <string name="gallery_details_date">Tarih</string>
     <string name="gallery_show_in_folder">Klasörde göster</string>
     <string name="video_player_title">Video oynatıcı</string>
-    <string name="video_player_play">Oynat</string>
-    <string name="video_player_pause">Duraklat</string>
+    <string name="play">Oynat</string>
+    <string name="pause">Duraklat</string>
     <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Farklı kaydet</string>

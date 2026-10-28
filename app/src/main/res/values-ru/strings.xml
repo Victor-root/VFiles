@@ -652,7 +652,7 @@
     <string name="gallery_yesterday">Вчера</string>
     <string name="gallery_empty">Нет фото и видео</string>
     <string name="gallery_access_denied">Разрешите доступ к файлам, чтобы видеть свои фото и видео</string>
-    <string name="gallery_allow_access">Разрешить</string>
+    <string name="allow_access">Разрешить</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d элемент</item>
         <item quantity="few">%1$,d элемента</item>
@@ -669,8 +669,8 @@
     <string name="gallery_details_date">Дата</string>
     <string name="gallery_show_in_folder">Показать в папке</string>
     <string name="video_player_title">Видеоплеер</string>
-    <string name="video_player_play">Воспроизвести</string>
-    <string name="video_player_pause">Пауза</string>
+    <string name="play">Воспроизвести</string>
+    <string name="pause">Пауза</string>
     <string name="image_viewer_title">Просмотрщик изображений</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Сохранить как</string>

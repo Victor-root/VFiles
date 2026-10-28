@@ -590,7 +590,7 @@
     <string name="gallery_yesterday">Χθες</string>
     <string name="gallery_empty">Δεν υπάρχουν φωτογραφίες ή βίντεο</string>
     <string name="gallery_access_denied">Επιτρέψτε την πρόσβαση στα αρχεία για να βλέπετε τις φωτογραφίες και τα βίντεό σας</string>
-    <string name="gallery_allow_access">Να επιτρέπεται</string>
+    <string name="allow_access">Να επιτρέπεται</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d στοιχείο</item>
         <item quantity="other">%1$,d στοιχεία</item>
@@ -603,8 +603,8 @@
     <string name="gallery_details_date">Ημερομηνία</string>
     <string name="gallery_show_in_folder">Εμφάνιση στον φάκελο</string>
     <string name="video_player_title">Πρόγραμμα αναπαραγωγής βίντεο</string>
-    <string name="video_player_play">Αναπαραγωγή</string>
-    <string name="video_player_pause">Παύση</string>
+    <string name="play">Αναπαραγωγή</string>
+    <string name="pause">Παύση</string>
     <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Αποθήκευση ως</string>

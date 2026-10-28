@@ -710,7 +710,7 @@
     <string name="gallery_yesterday">أمس</string>
     <string name="gallery_empty">لا توجد صور أو فيديوهات</string>
     <string name="gallery_access_denied">اسمح بالوصول إلى الملفات لعرض صورك وفيديوهاتك</string>
-    <string name="gallery_allow_access">سماح</string>
+    <string name="allow_access">سماح</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="zero">%1$,d عنصر</item>
         <item quantity="one">%1$,d عنصر</item>
@@ -731,8 +731,8 @@
     <string name="gallery_details_date">التاريخ</string>
     <string name="gallery_show_in_folder">عرض في المجلد</string>
     <string name="video_player_title">مشغل الفيديو</string>
-    <string name="video_player_play">تشغيل</string>
-    <string name="video_player_pause">إيقاف مؤقت</string>
+    <string name="play">تشغيل</string>
+    <string name="pause">إيقاف مؤقت</string>
     <string name="image_viewer_title">عارض الصور</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">حفظ كـ</string>

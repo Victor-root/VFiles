@@ -188,6 +188,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.activity.compose)

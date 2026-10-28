@@ -588,7 +588,7 @@
     <string name="gallery_yesterday">دیروز</string>
     <string name="gallery_empty">بدون عکس یا ویدیو</string>
     <string name="gallery_access_denied">برای دیدن عکس‌ها و ویدیوهایتان، اجازهٔ دسترسی به پرونده‌ها را بدهید</string>
-    <string name="gallery_allow_access">اجازه دادن</string>
+    <string name="allow_access">اجازه دادن</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d مورد</item>
         <item quantity="other">%1$,d مورد</item>
@@ -601,8 +601,8 @@
     <string name="gallery_details_date">تاریخ</string>
     <string name="gallery_show_in_folder">نمایش در شاخه</string>
     <string name="video_player_title">پخش‌کنندهٔ ویدیو</string>
-    <string name="video_player_play">پخش</string>
-    <string name="video_player_pause">مکث</string>
+    <string name="play">پخش</string>
+    <string name="pause">مکث</string>
     <string name="image_viewer_title">نمایشگر تصویر</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">ذخیره به عنوان</string>

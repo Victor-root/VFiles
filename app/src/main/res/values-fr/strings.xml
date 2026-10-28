@@ -636,7 +636,7 @@
     <string name="gallery_yesterday">Hier</string>
     <string name="gallery_empty">Aucune photo ni vidéo</string>
     <string name="gallery_access_denied">Autorisez l\'accès aux fichiers pour voir vos photos et vidéos</string>
-    <string name="gallery_allow_access">Autoriser</string>
+    <string name="allow_access">Autoriser</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d élément</item>
         <item quantity="other">%1$,d éléments</item>
@@ -649,8 +649,29 @@
     <string name="gallery_details_date">Date</string>
     <string name="gallery_show_in_folder">Afficher dans le dossier</string>
     <string name="video_player_title">Lecteur vidéo</string>
-    <string name="video_player_play">Lire</string>
-    <string name="video_player_pause">Pause</string>
+    <string name="play">Lire</string>
+    <string name="pause">Pause</string>
+    <string name="music_title">Musique</string>
+    <string name="music_tracks">Titres</string>
+    <string name="music_albums">Albums</string>
+    <string name="music_artists">Artistes</string>
+    <string name="music_empty">Aucune musique</string>
+    <string name="music_access_denied">Autorisez l\'accès aux fichiers pour voir votre musique</string>
+    <string name="music_shuffle_all">Tout lire en aléatoire</string>
+    <string name="music_unknown_artist">Artiste inconnu</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d titre</item>
+        <item quantity="other">%1$,d titres</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d albums</item>
+    </plurals>
+    <string name="music_player_title">Lecteur de musique</string>
+    <string name="music_shuffle">Aléatoire</string>
+    <string name="music_repeat">Répéter</string>
+    <string name="music_previous">Précédent</string>
+    <string name="music_next">Suivant</string>
     <string name="image_viewer_title">Visionneuse d\'images</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Enregistrer sous</string>
@@ -718,6 +739,7 @@
     <string name="settings_default_directory_title">Dossier par défaut</string>
     <string name="settings_standard_directories_title">Dossiers standard</string>
     <string name="settings_standard_directory_gallery_summary">Photos et vidéos de l\'appareil</string>
+    <string name="settings_standard_directory_music_summary">Morceaux de l\'appareil</string>
     <string name="settings_standard_directories_summary_empty">Aucuns dossiers standard activés</string>
     <string name="settings_bookmark_directories_title">Dossiers de marque-pages</string>
     <string name="settings_bookmark_directories_summary_empty">Pas de dossiers de marque-pages</string>

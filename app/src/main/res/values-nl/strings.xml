@@ -590,7 +590,7 @@
     <string name="gallery_yesterday">Gisteren</string>
     <string name="gallery_empty">Geen foto\'s of video\'s</string>
     <string name="gallery_access_denied">Geef toegang tot bestanden om je foto\'s en video\'s te zien</string>
-    <string name="gallery_allow_access">Toestaan</string>
+    <string name="allow_access">Toestaan</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d item</item>
         <item quantity="other">%1$,d items</item>
@@ -603,8 +603,8 @@
     <string name="gallery_details_date">Datum</string>
     <string name="gallery_show_in_folder">Tonen in map</string>
     <string name="video_player_title">Videospeler</string>
-    <string name="video_player_play">Afspelen</string>
-    <string name="video_player_pause">Pauzeren</string>
+    <string name="play">Afspelen</string>
+    <string name="pause">Pauzeren</string>
     <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Opslaan als</string>

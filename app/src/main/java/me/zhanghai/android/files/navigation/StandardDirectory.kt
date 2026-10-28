@@ -36,6 +36,10 @@ data class StandardDirectory internal constructor(
     val isGallery: Boolean
         get() = relativePath == GALLERY_KEY
 
+    /** Whether this is the music, which can replace the music directory in the drawer. */
+    val isMusic: Boolean
+        get() = relativePath == MUSIC_KEY
+
     fun getTitle(context: Context): String =
         if (!customTitle.isNullOrEmpty()) customTitle else context.getString(titleRes)
 
@@ -48,7 +52,8 @@ data class StandardDirectory internal constructor(
         StandardDirectorySettings(relativePath, customTitle, isEnabled)
 
     companion object {
-        // Not a directory, but the key of the gallery among them.
+        // Not directories, but the keys of the gallery and the music among them.
         const val GALLERY_KEY = "gallery"
+        const val MUSIC_KEY = "music"
     }
 }

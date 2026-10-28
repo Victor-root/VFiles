@@ -622,7 +622,7 @@
     <string name="gallery_yesterday">Ontem</string>
     <string name="gallery_empty">Sem fotos nem vídeos</string>
     <string name="gallery_access_denied">Permita o acesso aos ficheiros para ver as suas fotos e vídeos</string>
-    <string name="gallery_allow_access">Permitir</string>
+    <string name="allow_access">Permitir</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d item</item>
         <item quantity="many">%1$,d itens</item>
@@ -637,8 +637,8 @@
     <string name="gallery_details_date">Data</string>
     <string name="gallery_show_in_folder">Mostrar na pasta</string>
     <string name="video_player_title">Leitor de vídeo</string>
-    <string name="video_player_play">Reproduzir</string>
-    <string name="video_player_pause">Pausa</string>
+    <string name="play">Reproduzir</string>
+    <string name="pause">Pausa</string>
     <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Guardar como</string>

@@ -11,7 +11,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Process
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
@@ -21,7 +23,6 @@ import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
-import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.hasSetTextAction
@@ -121,6 +122,13 @@ class FileListActivityTest {
         )
 
     private fun onTextField(): SemanticsNodeInteraction = composeTestRule.onNode(hasSetTextAction())
+
+    // The list of the drawer sheet, whose pane title tells it apart from the files.
+    private fun onDrawerList(): SemanticsNodeInteraction =
+        composeTestRule.onNode(
+            hasScrollToNodeAction() and
+                hasAnyAncestor(SemanticsMatcher.keyIsDefined(SemanticsProperties.PaneTitle))
+        )
 
     @Test
     fun showsFiles() {
@@ -386,10 +394,10 @@ class FileListActivityTest {
         val navigationIcon = composeTestRule.onNodeWithContentDescription("Open navigation drawer")
         navigationIcon.assertIsFocused()
         // Left opens the drawer from there too.
-        composeTestRule.onNodeWithText("Internal storage").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("Gallery").assertIsNotDisplayed()
         navigationIcon.performKeyInput { pressKey(Key.DirectionLeft) }
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithText("Internal storage").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Gallery").assertIsDisplayed()
         navigationIcon.assertIsNotFocused()
     }
 
@@ -439,9 +447,7 @@ class FileListActivityTest {
         projects.performKeyInput { pressKey(Key.DirectionLeft) }
         composeTestRule.waitForIdle()
         // At the end of the drawer, rather than of the files.
-        composeTestRule.onNode(
-            hasScrollToNodeAction() and hasAnyDescendant(hasText("Internal storage"))
-        ).performScrollToNode(hasText("Settings"))
+        onDrawerList().performScrollToNode(hasText("Settings"))
         val settings = composeTestRule.onNodeWithText("Settings")
         settings.requestFocus()
         settings.performKeyInput { pressKey(Key.DirectionCenter) }
@@ -467,9 +473,7 @@ class FileListActivityTest {
         projects.requestFocus()
         projects.performKeyInput { pressKey(Key.DirectionLeft) }
         composeTestRule.waitForIdle()
-        composeTestRule.onNode(
-            hasScrollToNodeAction() and hasAnyDescendant(hasText("Internal storage"))
-        ).performScrollToNode(hasText("Add storage"))
+        onDrawerList().performScrollToNode(hasText("Add storage"))
         val addStorage = composeTestRule.onNodeWithText("Add storage")
         addStorage.requestFocus()
         addStorage.performKeyInput { pressKey(Key.DirectionCenter) }

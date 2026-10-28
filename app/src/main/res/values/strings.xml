@@ -708,6 +708,7 @@
     <string name="storage_volume_default_name_sd_card">SD card</string>
     <string name="storage_volume_partition_numbered">Partition %1$d</string>
     <string name="navigation_gallery" translatable="false">@string/gallery_title</string>
+    <string name="navigation_music" translatable="false">@string/music_title</string>
     <string name="navigation_ftp_server" translatable="false">@string/ftp_server_title</string>
     <string name="navigation_settings" translatable="false">@string/settings_title</string>
     <string name="navigation_about" translatable="false">@string/about_title</string>
@@ -720,7 +721,7 @@
     <string name="gallery_yesterday">Yesterday</string>
     <string name="gallery_empty">No photos or videos</string>
     <string name="gallery_access_denied">Allow access to files to see your photos and videos</string>
-    <string name="gallery_allow_access">Allow</string>
+    <string name="allow_access">Allow</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d item</item>
         <item quantity="other">%1$,d items</item>
@@ -734,8 +735,29 @@
     <string name="gallery_details_date">Date</string>
     <string name="gallery_show_in_folder">Show in folder</string>
     <string name="video_player_title">Video player</string>
-    <string name="video_player_play">Play</string>
-    <string name="video_player_pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="music_title">Music</string>
+    <string name="music_tracks">Songs</string>
+    <string name="music_albums">Albums</string>
+    <string name="music_artists">Artists</string>
+    <string name="music_empty">No music</string>
+    <string name="music_access_denied">Allow access to files to see your music</string>
+    <string name="music_shuffle_all">Shuffle all</string>
+    <string name="music_unknown_artist">Unknown artist</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d song</item>
+        <item quantity="other">%1$,d songs</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d albums</item>
+    </plurals>
+    <string name="music_player_title">Music player</string>
+    <string name="music_shuffle">Shuffle</string>
+    <string name="music_repeat">Repeat</string>
+    <string name="music_previous">Previous</string>
+    <string name="music_next">Next</string>
     <string name="image_viewer_title">Image viewer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="image_viewer_delete_message_format" translatable="false">@string/file_delete_message_file_format</string>
@@ -811,6 +833,7 @@
     <string name="settings_standard_directories_summary_empty">No standard folders enabled</string>
     <string name="settings_standard_directory_list_title" translatable="false">@string/settings_standard_directories_title</string>
     <string name="settings_standard_directory_gallery_summary">Photos and videos of the device</string>
+    <string name="settings_standard_directory_music_summary">Songs of the device</string>
     <string name="settings_bookmark_directories_title">Bookmark folders</string>
     <string name="settings_bookmark_directories_summary_empty">No bookmark folders</string>
     <string name="settings_bookmark_directory_list_title" translatable="false">@string/settings_bookmark_directories_title</string>

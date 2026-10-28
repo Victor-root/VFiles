@@ -590,7 +590,7 @@
     <string name="gallery_yesterday">Ahir</string>
     <string name="gallery_empty">No hi ha fotos ni vídeos</string>
     <string name="gallery_access_denied">Permeteu l\'accés als fitxers per veure les vostres fotos i vídeos</string>
-    <string name="gallery_allow_access">Permet</string>
+    <string name="allow_access">Permet</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d element</item>
         <item quantity="other">%1$,d elements</item>
@@ -603,8 +603,8 @@
     <string name="gallery_details_date">Data</string>
     <string name="gallery_show_in_folder">Mostra a la carpeta</string>
     <string name="video_player_title">Reproductor de vídeo</string>
-    <string name="video_player_play">Reprodueix</string>
-    <string name="video_player_pause">Pausa</string>
+    <string name="play">Reprodueix</string>
+    <string name="pause">Pausa</string>
     <string name="image_viewer_title">Visor d\'imatges</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Desa com a</string>
