@@ -590,7 +590,7 @@
     <string name="gallery_yesterday">Вчера</string>
     <string name="gallery_empty">Няма снимки или видеоклипове</string>
     <string name="gallery_access_denied">Разрешете достъп до файловете, за да виждате снимките и видеоклиповете си</string>
-    <string name="gallery_allow_access">Разрешаване</string>
+    <string name="allow_access">Разрешаване</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d елемент</item>
         <item quantity="other">%1$,d елемента</item>
@@ -603,8 +603,8 @@
     <string name="gallery_details_date">Дата</string>
     <string name="gallery_show_in_folder">Показване в папката</string>
     <string name="video_player_title">Видеоплейър</string>
-    <string name="video_player_play">Пускане</string>
-    <string name="video_player_pause">Пауза</string>
+    <string name="play">Пускане</string>
+    <string name="pause">Пауза</string>
     <string name="image_viewer_title">Преглед на изображение</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Запазване като</string>

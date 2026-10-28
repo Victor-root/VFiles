@@ -723,7 +723,7 @@
     <string name="gallery_yesterday">Atzo</string>
     <string name="gallery_empty">Ez dago argazki edo bideorik</string>
     <string name="gallery_access_denied">Baimendu fitxategietarako sarbidea zure argazkiak eta bideoak ikusteko</string>
-    <string name="gallery_allow_access">Baimendu</string>
+    <string name="allow_access">Baimendu</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">Elementu %1$,d</item>
         <item quantity="other">%1$,d elementu</item>
@@ -736,7 +736,7 @@
     <string name="gallery_details_date">Data</string>
     <string name="gallery_show_in_folder">Erakutsi karpetan</string>
     <string name="video_player_title">Bideo-erreproduzigailua</string>
-    <string name="video_player_play">Erreproduzitu</string>
-    <string name="video_player_pause">Pausatu</string>
+    <string name="play">Erreproduzitu</string>
+    <string name="pause">Pausatu</string>
     <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

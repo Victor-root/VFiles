@@ -5,22 +5,13 @@
 
 package me.zhanghai.android.files.gallery
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Environment
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -28,16 +19,9 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -51,44 +35,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.ActionButton
+import me.zhanghai.android.files.ui.AlbumCard
+import me.zhanghai.android.files.ui.AppBarTabSwitch
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.AppTopAppBar
 import me.zhanghai.android.files.ui.HideOnScrollTopBar
+import me.zhanghai.android.files.ui.MediaLibraryAccessDenied
+import me.zhanghai.android.files.ui.MediaLibraryMessage
 import me.zhanghai.android.files.ui.NavigateUpButton
 import me.zhanghai.android.files.ui.rememberAppBarScrollState
 import me.zhanghai.android.files.ui.sampleStatusBarContent
-import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isTelevision
-import me.zhanghai.android.files.util.startActivitySafe
-import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 /** The photos and videos of the device by date, and their albums, like the gallery of a phone. */
 @Parcelize
@@ -218,7 +195,13 @@ private fun GalleryScreen(state: GalleryState?) {
                         },
                         actions = {
                             if (album == null) {
-                                GalleryTabSwitch(tab = tab, onTabChange = onTabChange)
+                                AppBarTabSwitch(
+                                    tabs = GalleryTab.entries,
+                                    selectedTab = tab,
+                                    onTabChange = onTabChange,
+                                    iconRes = { it.iconRes },
+                                    label = { stringResource(it.labelRes) }
+                                )
                             }
                         }
                     )
@@ -339,42 +322,9 @@ private val GalleryTab.labelRes: Int
             GalleryTab.ALBUMS -> R.string.gallery_albums
         }
 
-// A switch in the app bar, which leaves the whole height to the media unlike a bottom bar.
-@Composable
-private fun GalleryTabSwitch(tab: GalleryTab, onTabChange: (GalleryTab) -> Unit) {
-    val appColors = LocalAppColors.current
-    val colors = SegmentedButtonDefaults.colors(
-        activeContainerColor = appColors.onAppBar,
-        activeContentColor = appColors.appBarContainer,
-        activeBorderColor = appColors.onAppBar,
-        inactiveContainerColor = Color.Transparent,
-        inactiveContentColor = appColors.onAppBar,
-        inactiveBorderColor = appColors.onAppBar
-    )
-    SingleChoiceSegmentedButtonRow(modifier = Modifier.padding(end = 12.dp)) {
-        GalleryTab.entries.forEachIndexed { index, item ->
-            SegmentedButton(
-                selected = item == tab,
-                onClick = { onTabChange(item) },
-                shape = SegmentedButtonDefaults.itemShape(index, GalleryTab.entries.size),
-                colors = colors,
-                icon = {},
-                label = {
-                    Icon(
-                        painter = painterResource(item.iconRes),
-                        contentDescription = stringResource(item.labelRes),
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            )
-        }
-    }
-}
-
 private val TELEVISION_MARGIN = 32.dp
 
 private val ALBUM_MIN_WIDTH = 150.dp
-private val ALBUM_SHAPE = RoundedCornerShape(16.dp)
 
 @Composable
 private fun GalleryAlbumGrid(
@@ -417,105 +367,28 @@ private fun GalleryAlbumItem(
     onFocused: () -> Unit,
     onClick: () -> Unit
 ) {
-    val focusRequester = remember { FocusRequester() }
-    if (isToFocus) {
-        LaunchedEffect(focusRequester) {
-            focusRequester.requestFocus()
-            onFocused()
-        }
-    }
-    var isFocused by remember { mutableStateOf(false) }
-    val scale by animateFocusedScale(isFocused)
-    Column(
-        modifier = Modifier
-            .focusedScale(isFocused) { scale }
-            .clip(ALBUM_SHAPE)
-            .focusRequester(focusRequester)
-            .onFocusChanged { isFocused = it.isFocused }
-            .clickable(onClick = onClick)
-            .padding(bottom = 4.dp)
-    ) {
-        AsyncImage(
-            model = album.cover,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .clip(ALBUM_SHAPE)
-                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                .focusedBorder(isFocused, MaterialTheme.colorScheme.primary, ALBUM_SHAPE),
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = album.name,
-            modifier = Modifier.padding(start = 4.dp, top = 8.dp, end = 4.dp),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.titleSmall
-        )
-        Text(
-            text = pluralStringResource(
-                R.plurals.gallery_album_item_count_format, album.media.size, album.media.size
-            ),
-            modifier = Modifier.padding(horizontal = 4.dp),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodySmall
-        )
-    }
+    AlbumCard(
+        cover = album.cover,
+        placeholderIconRes = R.drawable.gallery_icon_white_24dp,
+        name = album.name,
+        subtitle = pluralStringResource(
+            R.plurals.gallery_album_item_count_format, album.media.size, album.media.size
+        ),
+        isToFocus = isToFocus,
+        onFocused = onFocused,
+        onClick = onClick
+    )
 }
 
 @Composable
 private fun GalleryEmpty() {
-    GalleryMessage(stringResource(R.string.gallery_empty))
+    MediaLibraryMessage(R.drawable.gallery_icon_white_24dp, stringResource(R.string.gallery_empty))
 }
 
 @Composable
 private fun GalleryAccessDenied() {
-    val context = LocalContext.current
-    // Coming back from the settings where the access is given.
-    LifecycleResumeEffect(Unit) {
-        Gallery.reload()
-        onPauseOrDispose {}
-    }
-    GalleryMessage(stringResource(R.string.gallery_access_denied)) {
-        Button(
-            onClick = { context.startActivitySafe(context.createAccessSettingsIntent()) },
-            modifier = Modifier.padding(top = 16.dp)
-        ) { Text(stringResource(R.string.gallery_allow_access)) }
-    }
-}
-
-private fun Context.createAccessSettingsIntent(): Intent =
-    if (Environment::class.supportsExternalStorageManager()) {
-        Environment::class.createManageAppAllFilesAccessPermissionIntent(packageName)
-    } else {
-        Intent(
-            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", packageName, null)
-        )
-    }
-
-@Composable
-private fun GalleryMessage(text: String, content: @Composable () -> Unit = {}) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(32.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.gallery_icon_white_24dp),
-            contentDescription = null,
-            modifier = Modifier.size(96.dp),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Text(
-            text = text,
-            modifier = Modifier.padding(top = 16.dp),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyLarge
-        )
-        content()
-    }
+    MediaLibraryAccessDenied(
+        R.drawable.gallery_icon_white_24dp, stringResource(R.string.gallery_access_denied),
+        onReload = Gallery::reload
+    )
 }

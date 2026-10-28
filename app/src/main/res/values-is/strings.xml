@@ -592,7 +592,7 @@
     <string name="gallery_yesterday">Í gær</string>
     <string name="gallery_empty">Engar ljósmyndir eða myndskeið</string>
     <string name="gallery_access_denied">Leyfðu aðgang að skrám til að sjá ljósmyndirnar þínar og myndskeiðin</string>
-    <string name="gallery_allow_access">Leyfa</string>
+    <string name="allow_access">Leyfa</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d atriði</item>
         <item quantity="other">%1$,d atriði</item>
@@ -605,8 +605,8 @@
     <string name="gallery_details_date">Dagsetning</string>
     <string name="gallery_show_in_folder">Sýna í möppu</string>
     <string name="video_player_title">Myndspilari</string>
-    <string name="video_player_play">Spila</string>
-    <string name="video_player_pause">Hlé</string>
+    <string name="play">Spila</string>
+    <string name="pause">Hlé</string>
     <string name="image_viewer_title">Myndaskoðari</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Vista sem</string>

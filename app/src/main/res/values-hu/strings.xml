@@ -586,7 +586,7 @@
     <string name="gallery_yesterday">Tegnap</string>
     <string name="gallery_empty">Nincsenek fotók vagy videók</string>
     <string name="gallery_access_denied">Engedélyezze a fájlokhoz való hozzáférést a fotók és videók megtekintéséhez</string>
-    <string name="gallery_allow_access">Engedélyezés</string>
+    <string name="allow_access">Engedélyezés</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d elem</item>
         <item quantity="other">%1$,d elem</item>
@@ -599,8 +599,8 @@
     <string name="gallery_details_date">Dátum</string>
     <string name="gallery_show_in_folder">Megjelenítés a mappában</string>
     <string name="video_player_title">Videólejátszó</string>
-    <string name="video_player_play">Lejátszás</string>
-    <string name="video_player_pause">Szünet</string>
+    <string name="play">Lejátszás</string>
+    <string name="pause">Szünet</string>
     <string name="image_viewer_title">Képmegjelenítő</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Mentés másként</string>

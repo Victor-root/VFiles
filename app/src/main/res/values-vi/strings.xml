@@ -556,7 +556,7 @@
     <string name="gallery_yesterday">Hôm qua</string>
     <string name="gallery_empty">Không có ảnh hoặc video</string>
     <string name="gallery_access_denied">Cho phép truy cập tệp để xem ảnh và video của bạn</string>
-    <string name="gallery_allow_access">Cho phép</string>
+    <string name="allow_access">Cho phép</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="other">%1$,d mục</item>
     </plurals>
@@ -567,8 +567,8 @@
     <string name="gallery_details_date">Ngày</string>
     <string name="gallery_show_in_folder">Hiện trong thư mục</string>
     <string name="video_player_title">Trình phát video</string>
-    <string name="video_player_play">Phát</string>
-    <string name="video_player_pause">Tạm dừng</string>
+    <string name="play">Phát</string>
+    <string name="pause">Tạm dừng</string>
     <string name="image_viewer_title">Trình xem hình ảnh</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Lưu thành</string>

@@ -28,6 +28,7 @@ import me.zhanghai.android.files.file.JavaFile
 import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.ftpserver.FtpServerDestination
 import me.zhanghai.android.files.gallery.GalleryDestination
+import me.zhanghai.android.files.music.MusicDestination
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.settings.SettingsDestination
 import me.zhanghai.android.files.settings.StandardDirectoryListDestination
@@ -395,9 +396,19 @@ private val standardDirectoryItems: List<NavigationItem>
     get() =
         StandardDirectories.value
             .filter { it.isEnabled }
-            .map { if (it.isGallery) GalleryItem(it) else StandardDirectoryItem(it) }
+            .map {
+                when {
+                    it.isGallery -> LibraryItem(it, GalleryDestination)
+                    it.isMusic -> LibraryItem(it, MusicDestination)
+                    else -> StandardDirectoryItem(it)
+                }
+            }
 
-private class GalleryItem(private val standardDirectory: StandardDirectory) : NavigationItem() {
+// A library of media in place of a standard directory, like the gallery.
+private class LibraryItem(
+    private val standardDirectory: StandardDirectory,
+    private val destination: Destination
+) : NavigationItem() {
     override val id: Long
         get() = standardDirectory.id
 
@@ -411,7 +422,7 @@ private class GalleryItem(private val standardDirectory: StandardDirectory) : Na
     override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
 
     override fun onClick(listener: Listener) {
-        listener.navigate(GalleryDestination)
+        listener.navigate(destination)
     }
 
     override fun onLongClick(listener: Listener): Boolean {
@@ -512,6 +523,11 @@ private val DEFAULT_STANDARD_DIRECTORIES = listOf(
         R.drawable.gallery_icon_white_24dp, R.string.navigation_gallery,
         StandardDirectory.GALLERY_KEY, true,
         NavigationIconColor.PINK
+    ),
+    StandardDirectory(
+        R.drawable.music_library_icon_white_24dp, R.string.navigation_music,
+        StandardDirectory.MUSIC_KEY, true,
+        NavigationIconColor.ORANGE
     ),
     StandardDirectory(
         R.drawable.camera_icon_white_24dp, R.string.navigation_standard_directory_dcim,

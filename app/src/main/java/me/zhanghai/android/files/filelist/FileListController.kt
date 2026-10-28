@@ -55,9 +55,11 @@ import me.zhanghai.android.files.file.externalStorageDocumentUriOrNull
 import me.zhanghai.android.files.file.externalStorageTreeUriOrNull
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.file.isApk
+import me.zhanghai.android.files.file.isAudio
 import me.zhanghai.android.files.file.isImage
 import me.zhanghai.android.files.file.treeDocumentUri
 import me.zhanghai.android.files.filejob.FileJobService
+import me.zhanghai.android.files.music.MusicPlayerActivity
 import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.provider.archive.isArchivePath
@@ -358,7 +360,7 @@ class FileListController(
             .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             .apply {
                 extraPath = path
-                maybeAddImageViewerActivityExtras(this, path, mimeType)
+                maybeAddViewerActivityExtras(this, path, mimeType)
                 if (!withChooser) {
                     applyDefaultAppPackage(this, mimeType)
                 }
@@ -394,26 +396,29 @@ class FileListController(
         }
     }
 
-    // The image viewer can go through the other images of the folder, in the order shown.
-    private fun maybeAddImageViewerActivityExtras(intent: Intent, path: Path, mimeType: MimeType) {
-        if (!mimeType.isImage) {
-            return
+    // The image viewer and the music player go through the other images or songs of the folder,
+    // in the order shown.
+    private fun maybeAddViewerActivityExtras(intent: Intent, path: Path, mimeType: MimeType) {
+        val (isSameKind, putExtras) = when {
+            mimeType.isImage -> MimeType::isImage to ImageViewerActivity::putExtras
+            mimeType.isAudio -> MimeType::isAudio to MusicPlayerActivity::putExtras
+            else -> return
         }
         var paths = displayedFiles.mapNotNull { file ->
-            file.path.takeIf { file.mimeType.isImage || it == path }
+            file.path.takeIf { isSameKind(file.mimeType) || it == path }
         }
         var position = paths.indexOf(path)
         if (position == -1) {
             return
         }
         // Don't send too many paths to avoid TransactionTooLargeException.
-        if (paths.size > IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX) {
-            val start = (position - IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX / 2)
-                .coerceIn(0, paths.size - IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX)
-            paths = paths.subList(start, start + IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX)
+        if (paths.size > VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX) {
+            val start = (position - VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX / 2)
+                .coerceIn(0, paths.size - VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX)
+            paths = paths.subList(start, start + VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX)
             position -= start
         }
-        ImageViewerActivity.putExtras(intent, paths, position)
+        putExtras(intent, paths, position)
     }
 
     override fun cutFile(file: FileItem) {
@@ -829,7 +834,7 @@ class FileListController(
     companion object {
         private val KEY_STATE = "${FileListController::class.java.name}.state"
 
-        private const val IMAGE_VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX = 1000
+        private const val VIEWER_ACTIVITY_PATH_LIST_SIZE_MAX = 1000
 
         private val GRID_CACHE_WINDOW = 360.dp
 

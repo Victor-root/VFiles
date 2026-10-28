@@ -11,7 +11,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,10 +21,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -50,8 +46,8 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
-import androidx.media3.ui.compose.state.rememberProgressStateWithTickInterval
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.ui.PlayerProgressBar
 
 // The pieces shared by the players of videos, in the gallery and on their own.
 
@@ -115,8 +111,6 @@ fun VideoPlayer(
     }
 }
 
-private const val PROGRESS_TICK_INTERVAL_MILLIS = 200L
-
 // Lint checks the unstable APIs of Media3 against the opt-in of AndroidX.
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
@@ -143,80 +137,29 @@ private fun VideoControls(player: ExoPlayer, bottomPadding: Dp) {
                 ),
                 contentDescription = stringResource(
                     if (playPauseState.showPlay) {
-                        R.string.video_player_play
+                        R.string.play
                     } else {
-                        R.string.video_player_pause
+                        R.string.pause
                     }
                 ),
                 modifier = Modifier.size(48.dp),
                 tint = Color.White
             )
         }
-        val progressState = rememberProgressStateWithTickInterval(
-            player, PROGRESS_TICK_INTERVAL_MILLIS
-        )
-        val durationMillis = progressState.durationMs.coerceAtLeast(0)
-        // While dragging, the slider shows where the video will go instead of where it is.
-        var seekFraction by remember { mutableStateOf<Float?>(null) }
-        val positionFraction = if (durationMillis > 0) {
-            progressState.currentPositionMs.toFloat() / durationMillis
-        } else {
-            0f
-        }
-        val fraction = seekFraction ?: positionFraction
-        Row(
+        PlayerProgressBar(
+            player = player,
+            sliderColors = SliderDefaults.colors(
+                thumbColor = Color.White,
+                activeTrackColor = Color.White,
+                inactiveTrackColor = Color.White.copy(alpha = 0.3f)
+            ),
+            textColor = Color.White,
+            focusedColor = FOCUSED_COLOR,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(start = 16.dp, end = 16.dp, bottom = bottomPadding),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            VideoTime((fraction * durationMillis).toLong())
-            var isSliderFocused by remember { mutableStateOf(false) }
-            Slider(
-                value = fraction.coerceIn(0f, 1f),
-                onValueChange = { seekFraction = it },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp)
-                    .onFocusChanged { isSliderFocused = it.hasFocus }
-                    .background(
-                        if (isSliderFocused) FOCUSED_COLOR else Color.Transparent, CircleShape
-                    )
-                    .padding(horizontal = 8.dp),
-                onValueChangeFinished = {
-                    seekFraction?.let { player.seekTo((it * durationMillis).toLong()) }
-                    seekFraction = null
-                },
-                colors = SliderDefaults.colors(
-                    thumbColor = Color.White,
-                    activeTrackColor = Color.White,
-                    inactiveTrackColor = Color.White.copy(alpha = 0.3f)
-                )
-            )
-            VideoTime(durationMillis)
-        }
-    }
-}
-
-@Composable
-private fun VideoTime(millis: Long) {
-    Text(
-        text = formatDuration(millis),
-        color = Color.White,
-        style = MaterialTheme.typography.labelMedium
-    )
-}
-
-/** Like 1:23, or 1:02:03 from an hour, like the galleries of phones. */
-fun formatDuration(millis: Long): String {
-    val seconds = millis / 1000
-    val hours = seconds / 3600
-    val minutes = seconds / 60 % 60
-    return if (hours > 0) {
-        "%d:%02d:%02d".format(hours, minutes, seconds % 60)
-    } else {
-        "%d:%02d".format(minutes, seconds % 60)
+                .padding(start = 16.dp, end = 16.dp, bottom = bottomPadding)
+        )
     }
 }

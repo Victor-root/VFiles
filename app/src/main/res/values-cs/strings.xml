@@ -650,7 +650,7 @@
     <string name="gallery_yesterday">Včera</string>
     <string name="gallery_empty">Žádné fotky ani videa</string>
     <string name="gallery_access_denied">Povolte přístup k souborům, abyste viděli své fotky a videa</string>
-    <string name="gallery_allow_access">Povolit</string>
+    <string name="allow_access">Povolit</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d položka</item>
         <item quantity="few">%1$,d položky</item>
@@ -667,8 +667,8 @@
     <string name="gallery_details_date">Datum</string>
     <string name="gallery_show_in_folder">Zobrazit ve složce</string>
     <string name="video_player_title">Přehrávač videa</string>
-    <string name="video_player_play">Přehrát</string>
-    <string name="video_player_pause">Pozastavit</string>
+    <string name="play">Přehrát</string>
+    <string name="pause">Pozastavit</string>
     <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Uložit jako</string>

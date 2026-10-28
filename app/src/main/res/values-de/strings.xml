@@ -590,7 +590,7 @@
     <string name="gallery_yesterday">Gestern</string>
     <string name="gallery_empty">Keine Fotos oder Videos</string>
     <string name="gallery_access_denied">Erlaube den Zugriff auf Dateien, um deine Fotos und Videos zu sehen</string>
-    <string name="gallery_allow_access">Erlauben</string>
+    <string name="allow_access">Erlauben</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d Element</item>
         <item quantity="other">%1$,d Elemente</item>
@@ -603,8 +603,8 @@
     <string name="gallery_details_date">Datum</string>
     <string name="gallery_show_in_folder">Im Ordner anzeigen</string>
     <string name="video_player_title">Videoplayer</string>
-    <string name="video_player_play">Abspielen</string>
-    <string name="video_player_pause">Pause</string>
+    <string name="play">Abspielen</string>
+    <string name="pause">Pause</string>
     <string name="image_viewer_title">Bildbetrachter</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Speichern als</string>

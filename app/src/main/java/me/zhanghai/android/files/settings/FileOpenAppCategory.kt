@@ -29,7 +29,10 @@ enum class FileOpenAppCategory(
         R.string.settings_default_apps_image, "image/*", { it.isImage },
         R.string.image_viewer_title
     ),
-    AUDIO(R.string.settings_default_apps_audio, "audio/*", { it.isAudio }),
+    AUDIO(
+        R.string.settings_default_apps_audio, "audio/*", { it.isAudio },
+        R.string.music_player_title
+    ),
     VIDEO(
         R.string.settings_default_apps_video, "video/*", { it.isVideo },
         R.string.video_player_title

@@ -119,7 +119,7 @@ class StandardDirectoryListScreenTest {
         }
         composeTestRule.waitForIdle()
         assertEquals(
-            listOf(Environment.DIRECTORY_DCIM, StandardDirectory.GALLERY_KEY),
+            listOf(StandardDirectory.MUSIC_KEY, StandardDirectory.GALLERY_KEY),
             StandardDirectories.value.take(2).map { it.key }
         )
         // The list stays at its top rather than following the first item.
@@ -129,7 +129,7 @@ class StandardDirectoryListScreenTest {
     @Test
     fun dpadReordersStandardDirectories() {
         composeTestRule.runOnUiThread { composeTestRule.activity.leaveTouchMode() }
-        composeTestRule.onAllNodesWithContentDescription("Move")[1]
+        composeTestRule.onAllNodesWithContentDescription("Move")[2]
             .performSemanticsAction(SemanticsActions.RequestFocus)
         val root = composeTestRule.onRoot()
         // The center key picks DCIM up, down moves it, and the center key puts it down.
@@ -139,17 +139,17 @@ class StandardDirectoryListScreenTest {
         composeTestRule.waitForIdle()
         assertEquals(
             listOf(
-                StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
-                Environment.DIRECTORY_DCIM
+                StandardDirectory.GALLERY_KEY, StandardDirectory.MUSIC_KEY,
+                Environment.DIRECTORY_DOCUMENTS, Environment.DIRECTORY_DCIM
             ),
-            StandardDirectories.value.take(3).map { it.key }
+            StandardDirectories.value.take(4).map { it.key }
         )
         captureScreenRoboImage("build/screenshots/standard_directory_list_reordered.png")
     }
 
     @Test
     fun keepsNewStandardDirectoryInPlaceWhenReordered() {
-        // DCIM moved below Documents, before Pictures was added.
+        // DCIM moved below Documents, before Pictures and the music were added.
         Settings.STANDARD_DIRECTORY_ORDER.putValue(
             listOf(
                 StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
@@ -158,11 +158,11 @@ class StandardDirectoryListScreenTest {
         )
         assertEquals(
             listOf(
-                StandardDirectory.GALLERY_KEY, Environment.DIRECTORY_DOCUMENTS,
-                Environment.DIRECTORY_PICTURES, Environment.DIRECTORY_DCIM,
-                Environment.DIRECTORY_MUSIC
+                StandardDirectory.GALLERY_KEY, StandardDirectory.MUSIC_KEY,
+                Environment.DIRECTORY_DOCUMENTS, Environment.DIRECTORY_PICTURES,
+                Environment.DIRECTORY_DCIM, Environment.DIRECTORY_MUSIC
             ),
-            standardDirectories.take(5).map { it.key }
+            standardDirectories.take(6).map { it.key }
         )
     }
 

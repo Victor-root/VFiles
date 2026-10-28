@@ -722,7 +722,7 @@
     <string name="gallery_yesterday">Eilen</string>
     <string name="gallery_empty">Ei kuvia tai videoita</string>
     <string name="gallery_access_denied">Salli tiedostojen käyttö nähdäksesi kuvasi ja videosi</string>
-    <string name="gallery_allow_access">Salli</string>
+    <string name="allow_access">Salli</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d kohde</item>
         <item quantity="other">%1$,d kohdetta</item>
@@ -735,7 +735,7 @@
     <string name="gallery_details_date">Päivämäärä</string>
     <string name="gallery_show_in_folder">Näytä kansiossa</string>
     <string name="video_player_title">Videosoitin</string>
-    <string name="video_player_play">Toista</string>
-    <string name="video_player_pause">Tauko</string>
+    <string name="play">Toista</string>
+    <string name="pause">Tauko</string>
     <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
 </resources>

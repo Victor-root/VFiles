@@ -93,9 +93,10 @@ import me.zhanghai.android.files.ui.MediaViewerTopAppBar
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.depthPageTransition
+import me.zhanghai.android.files.ui.focusedBorder
+import me.zhanghai.android.files.ui.formatDuration
 import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.viewer.video.VideoPlayer
-import me.zhanghai.android.files.viewer.video.formatDuration
 import me.zhanghai.android.files.viewer.video.playOrPause
 import me.zhanghai.android.files.viewer.video.rememberVideoPlayer
 import java.time.Instant

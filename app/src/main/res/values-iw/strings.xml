@@ -650,7 +650,7 @@
     <string name="gallery_yesterday">אתמול</string>
     <string name="gallery_empty">אין תמונות או סרטונים</string>
     <string name="gallery_access_denied">יש לאפשר גישה לקבצים כדי לראות את התמונות והסרטונים שלך</string>
-    <string name="gallery_allow_access">אישור</string>
+    <string name="allow_access">אישור</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">פריט אחד</item>
         <item quantity="two">%1$,d פריטים</item>
@@ -667,8 +667,8 @@
     <string name="gallery_details_date">תאריך</string>
     <string name="gallery_show_in_folder">הצגה בתיקייה</string>
     <string name="video_player_title">נגן וידאו</string>
-    <string name="video_player_play">הפעלה</string>
-    <string name="video_player_pause">השהיה</string>
+    <string name="play">הפעלה</string>
+    <string name="pause">השהיה</string>
     <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>

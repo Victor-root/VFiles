@@ -619,7 +619,7 @@
     <string name="gallery_yesterday">Ieri</string>
     <string name="gallery_empty">Nicio fotografie sau videoclip</string>
     <string name="gallery_access_denied">Permite accesul la fișiere pentru a-ți vedea fotografiile și videoclipurile</string>
-    <string name="gallery_allow_access">Permite</string>
+    <string name="allow_access">Permite</string>
     <plurals name="gallery_album_item_count_format">
         <item quantity="one">%1$,d element</item>
         <item quantity="few">%1$,d elemente</item>
@@ -634,8 +634,8 @@
     <string name="gallery_details_date">Dată</string>
     <string name="gallery_show_in_folder">Arată în dosar</string>
     <string name="video_player_title">Player video</string>
-    <string name="video_player_play">Redă</string>
-    <string name="video_player_pause">Pauză</string>
+    <string name="play">Redă</string>
+    <string name="pause">Pauză</string>
     <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvează ca</string>
