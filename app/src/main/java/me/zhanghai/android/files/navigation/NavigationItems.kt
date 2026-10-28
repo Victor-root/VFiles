@@ -455,11 +455,37 @@ private class StandardDirectoryItem(
 val standardDirectories: List<StandardDirectory>
     get() {
         val settingsMap = Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat.associateBy { it.id }
-        return defaultStandardDirectories.map {
-            val settings = settingsMap[it.key]
-            if (settings != null) it.withSettings(settings) else it
+        return defaultStandardDirectories
+            .map {
+                val settings = settingsMap[it.key]
+                if (settings != null) it.withSettings(settings) else it
+            }
+            .sortedByOrder(Settings.STANDARD_DIRECTORY_ORDER.valueCompat)
+    }
+
+// In the order chosen by the user, with the directories added since then after the one before them
+// by default.
+private fun List<StandardDirectory>.sortedByOrder(order: List<String>): List<StandardDirectory> {
+    if (order.isEmpty()) {
+        return this
+    }
+    val directories = associateBy { it.key }
+    val sortedDirectories = order.mapNotNullTo(mutableListOf()) { directories[it] }
+    for ((index, directory) in withIndex()) {
+        if (directory.key !in order) {
+            val previousIndex = if (index > 0) sortedDirectories.indexOf(this[index - 1]) else -1
+            sortedDirectories.add(previousIndex + 1, directory)
         }
     }
+    return sortedDirectories
+}
+
+/** Moves a standard directory from one position to another, in the drawer too. */
+fun moveStandardDirectory(fromIndex: Int, toIndex: Int) {
+    val order = standardDirectories.mapTo(mutableListOf()) { it.key }
+        .apply { add(toIndex, removeAt(fromIndex)) }
+    Settings.STANDARD_DIRECTORY_ORDER.putValue(order)
+}
 
 private const val relativePathSeparator = ":"
 
