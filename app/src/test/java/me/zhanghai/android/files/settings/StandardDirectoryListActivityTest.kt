@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.settings
 
 import android.os.Environment
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
@@ -34,11 +35,12 @@ import me.zhanghai.android.files.navigation.StandardDirectorySettings
 import me.zhanghai.android.files.navigation.standardDirectories
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
+import me.zhanghai.android.files.test.setDestinationContent
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExternalResource
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -48,21 +50,18 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class StandardDirectoryListActivityTest {
-    private val composeTestRule = createAndroidComposeRule<StandardDirectoryListActivity>()
-
-    // Before the activity is launched, which would otherwise show the order of the previous test
-    // first.
-    private val settingsRule = object : ExternalResource() {
-        override fun before() {
-            Settings.NIGHT_MODE.putValue(NightMode.OFF)
-            Settings.STANDARD_DIRECTORY_SETTINGS.putValue(emptyList())
-            Settings.STANDARD_DIRECTORY_ORDER.putValue(emptyList())
-        }
-    }
+    private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule
-    val ruleChain: RuleChain =
-        RuleChain.outerRule(AppProviderRule()).around(settingsRule).around(composeTestRule)
+    val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
+
+    @Before
+    fun setUp() {
+        Settings.NIGHT_MODE.putValue(NightMode.OFF)
+        Settings.STANDARD_DIRECTORY_SETTINGS.putValue(emptyList())
+        Settings.STANDARD_DIRECTORY_ORDER.putValue(emptyList())
+        composeTestRule.setDestinationContent(StandardDirectoryListDestination)
+    }
 
     private fun scrollTo(text: String): SemanticsNodeInteraction {
         composeTestRule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText(text))

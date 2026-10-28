@@ -29,12 +29,15 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
 import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.provider.root.RootStrategy
-import me.zhanghai.android.files.storage.StorageListActivity
+import me.zhanghai.android.files.storage.StorageListDestination
 import me.zhanghai.android.files.theme.custom.ThemeColorPreference
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.ui.AppScaffold
@@ -42,11 +45,18 @@ import me.zhanghai.android.files.ui.BottomSheetListPreference
 import me.zhanghai.android.files.ui.DialogListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.startActivitySafe
 import java.nio.charset.Charset
 
+/** The settings opened from another app, like from the app info of the system settings. */
 class SettingsActivity : AppActivity() {
+    @Composable
+    override fun Content() {
+        SettingsDestination.Content()
+    }
+}
+
+@Parcelize
+data object SettingsDestination : Destination {
     @Composable
     override fun Content() {
         SettingsScreen()
@@ -152,6 +162,7 @@ private fun FileNameEllipsizePreference() {
 @Composable
 private fun StoragesPreference() {
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val storages by Settings.STORAGES.flow.collectAsState()
     val names = storages.filter { it.isVisible }.map { it.getName(context) }
     Preference(
@@ -159,13 +170,14 @@ private fun StoragesPreference() {
         icon = painterResource(R.drawable.sd_card_icon_white_24dp),
         summary = names.formatListOr(stringResource(R.string.settings_storages_summary_empty)),
         summaryMaxLines = 2,
-        onClick = { context.startActivitySafe(StorageListActivity::class.createIntent()) }
+        onClick = { navigator.navigate(StorageListDestination) }
     )
 }
 
 @Composable
 private fun StandardDirectoriesPreference() {
     val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val standardDirectories by StandardDirectories.flow.collectAsState()
     val titles = standardDirectories.filter { it.isEnabled }.map { it.getTitle(context) }
     Preference(
@@ -174,15 +186,13 @@ private fun StandardDirectoriesPreference() {
         summary = titles.formatListOr(
             stringResource(R.string.settings_standard_directories_summary_empty)
         ),
-        onClick = {
-            context.startActivitySafe(StandardDirectoryListActivity::class.createIntent())
-        }
+        onClick = { navigator.navigate(StandardDirectoryListDestination) }
     )
 }
 
 @Composable
 private fun BookmarkDirectoriesPreference() {
-    val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.flow.collectAsState()
     Preference(
         title = stringResource(R.string.settings_bookmark_directories_title),
@@ -190,9 +200,7 @@ private fun BookmarkDirectoriesPreference() {
         summary = bookmarkDirectories.map { it.name }.formatListOr(
             stringResource(R.string.settings_bookmark_directories_summary_empty)
         ),
-        onClick = {
-            context.startActivitySafe(BookmarkDirectoryListActivity::class.createIntent())
-        }
+        onClick = { navigator.navigate(BookmarkDirectoryListDestination) }
     )
 }
 
@@ -201,12 +209,12 @@ private fun List<String>.formatListOr(emptySummary: String): String =
 
 @Composable
 private fun DefaultAppsPreference() {
-    val context = LocalContext.current
+    val navigator = LocalNavigator.current
     Preference(
         title = stringResource(R.string.settings_default_apps_title),
         icon = painterResource(R.drawable.apps_icon_white_24dp),
         summary = stringResource(R.string.settings_default_apps_summary),
-        onClick = { context.startActivitySafe(DefaultAppsActivity::class.createIntent()) }
+        onClick = { navigator.navigate(DefaultAppsDestination) }
     )
 }
 

@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.about
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -13,6 +14,7 @@ import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.setDestinationContent
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +27,7 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class AboutActivityTest {
-    private val composeTestRule = createAndroidComposeRule<AboutActivity>()
+    private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule
     val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
@@ -33,7 +35,7 @@ class AboutActivityTest {
     @Test
     fun showsAppInfoAndOpensLicenses() {
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
-        composeTestRule.waitForIdle()
+        composeTestRule.setDestinationContent(AboutDestination)
         composeTestRule.onNodeWithText("VFiles").assertIsDisplayed()
         composeTestRule.onNodeWithText("Version").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/about_light.png")
@@ -46,7 +48,7 @@ class AboutActivityTest {
     @Test
     fun followsNightModeSetting() {
         Settings.NIGHT_MODE.putValue(NightMode.ON)
-        composeTestRule.waitForIdle()
+        composeTestRule.setDestinationContent(AboutDestination)
         captureScreenRoboImage("build/screenshots/about_dark.png")
     }
 }

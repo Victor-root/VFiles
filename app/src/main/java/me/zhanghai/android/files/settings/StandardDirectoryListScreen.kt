@@ -21,8 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.navigation.StandardDirectory
 import me.zhanghai.android.files.navigation.getExternalStorageDirectory
@@ -33,7 +34,8 @@ import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
 
-class StandardDirectoryListActivity : AppActivity() {
+@Parcelize
+data object StandardDirectoryListDestination : Destination {
     @Composable
     override fun Content() {
         StandardDirectoryListScreen()

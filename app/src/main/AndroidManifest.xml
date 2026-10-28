@@ -255,17 +255,6 @@
         </activity>
 
         <activity
-            android:name="me.zhanghai.android.files.gallery.GalleryActivity"
-            android:exported="false"
-            android:label="@string/gallery_title" />
-
-        <activity
-            android:name="me.zhanghai.android.files.gallery.GalleryViewerActivity"
-            android:exported="false"
-            android:label="@string/gallery_title"
-            android:theme="@style/Theme.VFiles.Immersive" />
-
-        <activity
             android:name="me.zhanghai.android.files.settings.SettingsActivity"
             android:exported="true"
             android:label="@string/settings_title"
@@ -275,31 +264,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.StorageListActivity"
-            android:label="@string/storage_list_title"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.StandardDirectoryListActivity"
-            android:label="@string/settings_standard_directory_list_title"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.BookmarkDirectoryListActivity"
-            android:label="@string/settings_bookmark_directory_list_title"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.DefaultAppsActivity"
-            android:label="@string/settings_default_apps_title"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name="me.zhanghai.android.files.about.AboutActivity"
-            android:label="@string/about_title"
-            android:launchMode="singleTop" />
 
         <activity
             android:name="me.zhanghai.android.files.fileaction.ArchivePasswordDialogActivity"

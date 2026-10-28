@@ -71,9 +71,6 @@ import me.zhanghai.android.files.util.withChooser
 import java.io.IOException
 
 class ImageViewerActivity : AppActivity() {
-    override val hasDarkSystemBars: Boolean
-        get() = true
-
     @Composable
     override fun Content() {
         val paths = intent.extraPathList

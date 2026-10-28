@@ -6,7 +6,6 @@
 package me.zhanghai.android.files.navigation
 
 import android.content.Context
-import android.content.Intent
 import android.hardware.usb.UsbConstants
 import android.hardware.usb.UsbManager
 import android.os.Build
@@ -18,7 +17,8 @@ import androidx.annotation.StringRes
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.about.AboutActivity
+import me.zhanghai.android.files.about.AboutDestination
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.compat.getDescriptionCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
@@ -26,11 +26,11 @@ import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.compat.uuidCompat
 import me.zhanghai.android.files.file.JavaFile
 import me.zhanghai.android.files.file.asFileSize
-import me.zhanghai.android.files.ftpserver.FtpServerActivity
-import me.zhanghai.android.files.gallery.GalleryActivity
+import me.zhanghai.android.files.ftpserver.FtpServerDestination
+import me.zhanghai.android.files.gallery.GalleryDestination
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.settings.SettingsActivity
-import me.zhanghai.android.files.settings.StandardDirectoryListActivity
+import me.zhanghai.android.files.settings.SettingsDestination
+import me.zhanghai.android.files.settings.StandardDirectoryListDestination
 import me.zhanghai.android.files.storage.AddStorageDialogActivity
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
@@ -416,12 +416,12 @@ private class GalleryItem(private val standardDirectory: StandardDirectory) : Na
     override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
 
     override fun onClick(listener: Listener) {
-        listener.launchIntent(GalleryActivity::class.createIntent())
+        listener.navigate(GalleryDestination)
         listener.closeNavigationDrawer()
     }
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(StandardDirectoryListActivity::class.createIntent())
+        listener.navigate(StandardDirectoryListDestination)
         return true
     }
 }
@@ -446,7 +446,7 @@ private class StandardDirectoryItem(
     override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(StandardDirectoryListActivity::class.createIntent())
+        listener.navigate(StandardDirectoryListDestination)
         return true
     }
 }
@@ -633,17 +633,16 @@ private class BookmarkDirectoryItem(
 private val menuItems: List<NavigationItem>
     @Size(3)
     get() = listOf(
-        IntentMenuItem(
+        DestinationMenuItem(
             R.drawable.ftp_server_icon_white_24dp, R.string.navigation_ftp_server,
-            FtpServerActivity::class.createIntent()
+            FtpServerDestination
         ),
-        IntentMenuItem(
+        DestinationMenuItem(
             R.drawable.settings_icon_white_24dp, R.string.navigation_settings,
-            SettingsActivity::class.createIntent()
+            SettingsDestination
         ),
-        IntentMenuItem(
-            R.drawable.about_icon_white_24dp, R.string.navigation_about,
-            AboutActivity::class.createIntent()
+        DestinationMenuItem(
+            R.drawable.about_icon_white_24dp, R.string.navigation_about, AboutDestination
         )
     )
 
@@ -654,16 +653,16 @@ private abstract class MenuItem(
     override fun getTitle(context: Context): String = context.getString(titleRes)
 }
 
-private class IntentMenuItem(
+private class DestinationMenuItem(
     @DrawableRes iconRes: Int,
     @StringRes titleRes: Int,
-    private val intent: Intent
+    private val destination: Destination
 ) : MenuItem(iconRes, titleRes) {
     override val id: Long
-        get() = intent.component.hashCode().toLong()
+        get() = titleRes.toLong()
 
     override fun onClick(listener: Listener) {
-        listener.launchIntent(intent)
+        listener.navigate(destination)
         listener.closeNavigationDrawer()
     }
 }

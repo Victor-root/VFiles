@@ -41,8 +41,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.navigation.BookmarkDirectories
@@ -57,7 +58,8 @@ import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 
-class BookmarkDirectoryListActivity : AppActivity() {
+@Parcelize
+data object BookmarkDirectoryListDestination : Destination {
     @Composable
     override fun Content() {
         BookmarkDirectoryListScreen()

@@ -20,7 +20,9 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
@@ -31,6 +33,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
@@ -379,6 +382,36 @@ class FileListActivityTest {
         empty.performKeyInput { pressKey(Key.DirectionCenter) }
         waitForText("No files")
         composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun opensSettingsFromDrawerAndComesBackWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val projects = composeTestRule.onNodeWithText("Projects")
+        projects.requestFocus()
+        projects.performKeyInput { pressKey(Key.DirectionLeft) }
+        composeTestRule.waitForIdle()
+        // At the end of the drawer, rather than of the files.
+        composeTestRule.onNode(
+            hasScrollToNodeAction() and hasAnyDescendant(hasText("Internal storage"))
+        ).performScrollToNode(hasText("Settings"))
+        val settings = composeTestRule.onNodeWithText("Settings")
+        settings.requestFocus()
+        settings.performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        // Opened above the files, in the same activity.
+        composeTestRule.onNodeWithText("Interface").assertIsDisplayed()
+        composeTestRule.onNodeWithText("notes.txt").assertDoesNotExist()
+        scenario.onActivity {
+            assertFalse(it.isFinishing)
+            it.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule.waitForIdle()
+        // The drawer closed meanwhile, and the file focused before is focused again.
+        composeTestRule.onNodeWithText("notes.txt").assertIsDisplayed()
+        projects.assertIsFocused()
     }
 
     @Test

@@ -34,8 +34,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderDragHandle
@@ -45,7 +46,8 @@ import me.zhanghai.android.files.ui.reorderableItem
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.startActivitySafe
 
-class StorageListActivity : AppActivity() {
+@Parcelize
+data object StorageListDestination : Destination {
     @Composable
     override fun Content() {
         StorageListScreen()

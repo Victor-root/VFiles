@@ -47,9 +47,6 @@ import me.zhanghai.android.files.util.isTelevision
 
 /** Plays a video opened from the files or from another app, like the player of the gallery. */
 class VideoPlayerActivity : AppActivity() {
-    override val hasDarkSystemBars: Boolean
-        get() = true
-
     @Composable
     override fun Content() {
         val uri = intent.data

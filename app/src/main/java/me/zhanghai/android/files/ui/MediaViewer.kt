@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.compose.LifecycleStartEffect
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.theme.DarkSystemBarsEffect
 import me.zhanghai.android.files.theme.LocalAppColors
 import kotlin.math.abs
 
@@ -55,21 +56,30 @@ fun MediaViewerTopAppBar(
     )
 }
 
-/** Shows or hides the system bars, which can still be shown with a swipe while hidden. */
+/**
+ * Shows or hides the system bars, which can still be shown with a swipe while hidden, and makes
+ * their icons light over the dark media. Once the viewer isn't shown anymore, like when another
+ * screen is opened over it, the system bars are shown again.
+ */
 @Composable
 fun MediaViewerSystemUiEffect(isShown: Boolean) {
+    DarkSystemBarsEffect()
     val activity = LocalActivity.current ?: return
     val view = LocalView.current
-    DisposableEffect(isShown) {
-        WindowCompat.getInsetsController(activity.window, view).apply {
-            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            if (isShown) {
-                show(WindowInsetsCompat.Type.systemBars())
-            } else {
-                hide(WindowInsetsCompat.Type.systemBars())
+    LifecycleStartEffect(isShown) {
+        val insetsController = WindowCompat.getInsetsController(activity.window, view)
+        insetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        if (isShown) {
+            insetsController.show(WindowInsetsCompat.Type.systemBars())
+        } else {
+            insetsController.hide(WindowInsetsCompat.Type.systemBars())
+        }
+        onStopOrDispose {
+            if (!isShown) {
+                insetsController.show(WindowInsetsCompat.Type.systemBars())
             }
         }
-        onDispose {}
     }
 }
 

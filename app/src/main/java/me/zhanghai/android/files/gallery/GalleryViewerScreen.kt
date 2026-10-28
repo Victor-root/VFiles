@@ -82,7 +82,8 @@ import kotlinx.parcelize.Parcelize
 import me.saket.telephoto.zoomable.coil3.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.theme.LocalAppColors
 import me.zhanghai.android.files.ui.ActionButton
@@ -92,8 +93,6 @@ import me.zhanghai.android.files.ui.MediaViewerTopAppBar
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.depthPageTransition
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.viewer.video.VideoPlayer
 import me.zhanghai.android.files.viewer.video.formatDuration
@@ -103,28 +102,23 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-/** The photos and videos of the gallery, or of one of its albums, in full screen. */
-class GalleryViewerActivity : AppActivity() {
-    private val args by args<Args>()
-
-    override val hasDarkSystemBars: Boolean
-        get() = true
-
+/**
+ * The photos and videos of the gallery, or of one of its albums, in full screen. The photos and
+ * videos are those of the album when there's one.
+ */
+@Parcelize
+data class GalleryViewerDestination(val albumId: Long?, val mediaId: Long) : Destination {
     @Composable
     override fun Content() {
         val state = Gallery.flow.collectAsStateWithLifecycle().value ?: return
-        val albumId = args.albumId
         val media = if (albumId != null) state.getAlbum(albumId)?.media.orEmpty() else state.media
         if (media.isEmpty()) {
-            LaunchedEffect(Unit) { finish() }
+            val navigator = LocalNavigator.current
+            LaunchedEffect(Unit) { navigator.goBack() }
             return
         }
-        GalleryViewerScreen(media, args.mediaId)
+        GalleryViewerScreen(media, mediaId)
     }
-
-    /** The photos and videos are those of the album when there's one. */
-    @Parcelize
-    class Args(val albumId: Long?, val mediaId: Long) : ParcelableArgs
 }
 
 // The height of the carousel at the bottom, above which the controls of videos are.

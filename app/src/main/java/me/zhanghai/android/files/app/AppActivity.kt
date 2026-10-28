@@ -37,11 +37,8 @@ abstract class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent { AppTheme(hasDarkSystemBars) { Content() } }
+        setContent { AppTheme { ScreenStack { Content() } } }
     }
-
-    /** Whether the screen always draws dark content behind the system bars. */
-    protected open val hasDarkSystemBars: Boolean = false
 
     override fun onResume() {
         super.onResume()

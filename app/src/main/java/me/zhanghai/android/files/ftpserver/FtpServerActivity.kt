@@ -31,8 +31,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.clipboardManager
 import me.zhanghai.android.files.compat.getSystemServiceCompat
 import me.zhanghai.android.files.compat.mainExecutorCompat
@@ -50,7 +52,16 @@ import me.zhanghai.android.files.util.copyText
 import me.zhanghai.android.files.util.requestAddTileService
 import me.zhanghai.android.files.util.showToast
 
+/** The FTP server opened from its notification, its quick settings tile or another app. */
 class FtpServerActivity : AppActivity() {
+    @Composable
+    override fun Content() {
+        FtpServerDestination.Content()
+    }
+}
+
+@Parcelize
+data object FtpServerDestination : Destination {
     @Composable
     override fun Content() {
         val state by FtpServerService.stateFlow.collectAsStateWithLifecycle()
