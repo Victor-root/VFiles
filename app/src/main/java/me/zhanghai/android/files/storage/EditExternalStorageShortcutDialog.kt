@@ -12,29 +12,30 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.file.displayName
 import me.zhanghai.android.files.ui.FormErrors
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.takeIfNotEmpty
 
-class EditExternalStorageShortcutDialogActivity : AppActivity() {
-    private val args by args<Args>()
+@Parcelize
+data class EditExternalStorageShortcutDestination(
+    val externalStorageShortcut: ExternalStorageShortcut
+) : Destination {
+    override val isDialog: Boolean
+        get() = true
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         EditExternalStorageShortcutDialog(
-            args.externalStorageShortcut, onDismissRequest = ::finish
+            externalStorageShortcut, onDismissRequest = navigator::goBack
         )
     }
-
-    @Parcelize
-    class Args(val externalStorageShortcut: ExternalStorageShortcut) : ParcelableArgs
 }
 
 @Composable

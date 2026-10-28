@@ -31,7 +31,7 @@ import me.zhanghai.android.files.gallery.GalleryDestination
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.settings.SettingsDestination
 import me.zhanghai.android.files.settings.StandardDirectoryListDestination
-import me.zhanghai.android.files.storage.AddStorageDialogActivity
+import me.zhanghai.android.files.storage.AddStorageDestination
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageVolumeCustomization
@@ -40,7 +40,6 @@ import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
-import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 val navigationItems: List<NavigationItem?>
@@ -117,7 +116,7 @@ private class PathStorageItem(
         storage.linuxPath?.let { getStorageSubtitle(it, context) }
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(storage.createEditIntent())
+        listener.navigate(storage.createEditDestination())
         return true
     }
 
@@ -146,7 +145,7 @@ private class IntentStorageItem(
     }
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(storage.createEditIntent())
+        listener.navigate(storage.createEditDestination())
         return true
     }
 }
@@ -277,10 +276,7 @@ private class StorageVolumeItem(
     // Long-press opens a small dialog to rename the volume, choose its icon, or eject it.
     override fun onLongClick(listener: Listener): Boolean {
         val uuid = storageVolume.uuidCompat ?: return false
-        listener.launchIntent(
-            EditStorageVolumeDialogActivity::class.createIntent()
-                .putArgs(EditStorageVolumeDialogActivity.Args(uuid, defaultName(application)))
-        )
+        listener.navigate(EditStorageVolumeDestination(uuid, defaultName(application)))
         return true
     }
 }
@@ -391,7 +387,7 @@ private class AddStorageItem : NavigationItem() {
         context.getString(R.string.navigation_add_storage)
 
     override fun onClick(listener: Listener) {
-        listener.launchIntent(AddStorageDialogActivity::class.createIntent())
+        listener.navigate(AddStorageDestination)
     }
 }
 
@@ -622,10 +618,7 @@ private class BookmarkDirectoryItem(
     override fun getTitle(context: Context): String = bookmarkDirectory.name
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(
-            EditBookmarkDirectoryDialogActivity::class.createIntent()
-                .putArgs(EditBookmarkDirectoryDialogActivity.Args(bookmarkDirectory))
-        )
+        listener.navigate(EditBookmarkDirectoryDestination(bookmarkDirectory))
         return true
     }
 }

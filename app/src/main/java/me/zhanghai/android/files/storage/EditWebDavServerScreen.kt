@@ -21,7 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.provider.webdav.client.AccessTokenAuthentication
 import me.zhanghai.android.files.provider.webdav.client.Authority
 import me.zhanghai.android.files.provider.webdav.client.NoneAuthentication
@@ -32,32 +33,24 @@ import me.zhanghai.android.files.ui.FormErrors
 import me.zhanghai.android.files.ui.FormPasswordField
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditWebDavServerActivity : AppActivity() {
-    private val args by args<Args>()
-
+@Parcelize
+data class EditWebDavServerDestination(
+    val server: WebDavServer? = null,
+    val host: String? = null
+) : Destination {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         EditWebDavServerScreen(
-            server = args.server,
-            host = args.host,
-            onFinish = {
-                setResult(RESULT_OK)
-                finish()
-            },
-            onCancel = ::finish
+            server = server,
+            host = host,
+            onFinish = navigator::goBack,
+            onCancel = navigator::goBack
         )
     }
-
-    @Parcelize
-    class Args(
-        val server: WebDavServer? = null,
-        val host: String? = null
-    ) : ParcelableArgs
 }
 
 private enum class WebDavAuthenticationType {

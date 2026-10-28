@@ -8,7 +8,6 @@ package me.zhanghai.android.files.gallery
 import android.app.UiModeManager
 import android.content.Context
 import android.content.res.Configuration
-import androidx.activity.ComponentActivity
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertContentDescriptionEquals
@@ -38,8 +37,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.test.TestMediaStoreProvider
-import me.zhanghai.android.files.test.launchDestination
 import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Before
@@ -55,7 +54,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class GalleryActivityTest {
+class GalleryScreenTest {
     private val temporaryFolder = TemporaryFolder()
 
     private val composeTestRule = createEmptyComposeRule()
@@ -72,11 +71,11 @@ class GalleryActivityTest {
         Gallery.reload()
     }
 
-    private fun launch(): ActivityScenario<ComponentActivity> =
-        launchDestination(GalleryDestination).also { waitForText("Today") }
+    private fun launch(): ActivityScenario<DestinationTestActivity> =
+        DestinationTestActivity.launch(GalleryDestination).also { waitForText("Today") }
 
-    private fun launchViewer(): ActivityScenario<ComponentActivity> =
-        launchDestination(GalleryViewerDestination(null, 1))
+    private fun launchViewer(): ActivityScenario<DestinationTestActivity> =
+        DestinationTestActivity.launch(GalleryViewerDestination(null, 1))
 
     // Like when opening the gallery with a D-pad on a TV.
     private fun setUpTelevision() {

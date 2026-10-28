@@ -6,7 +6,6 @@
 package me.zhanghai.android.files.navigation
 
 import android.app.Application
-import android.content.Intent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasSetTextAction
@@ -14,7 +13,6 @@ import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
@@ -23,8 +21,8 @@ import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.storage.StorageVolumeCustomizations
 import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.theme.night.NightMode
-import me.zhanghai.android.files.util.putArgs
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -40,13 +38,13 @@ import android.provider.Settings as AndroidSettings
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class EditStorageVolumeDialogActivityTest {
+class EditStorageVolumeDialogTest {
     private val composeTestRule = createEmptyComposeRule()
 
     @get:Rule
     val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
 
-    private lateinit var activity: EditStorageVolumeDialogActivity
+    private lateinit var activity: DestinationTestActivity
 
     @Before
     fun resetSettings() {
@@ -55,12 +53,8 @@ class EditStorageVolumeDialogActivityTest {
     }
 
     private fun launch() {
-        ActivityScenario.launch<EditStorageVolumeDialogActivity>(
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                EditStorageVolumeDialogActivity::class.java
-            ).putArgs(EditStorageVolumeDialogActivity.Args(UUID, "Kingston"))
-        ).onActivity { activity = it }
+        DestinationTestActivity.launch(EditStorageVolumeDestination(UUID, "Kingston"))
+            .onActivity { activity = it }
     }
 
     @Test

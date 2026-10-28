@@ -26,7 +26,7 @@ import org.robolectric.annotation.GraphicsMode
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class AboutActivityTest {
+class AboutScreenTest {
     private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule

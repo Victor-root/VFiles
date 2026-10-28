@@ -26,6 +26,7 @@ import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import me.zhanghai.android.files.app.ScreenStack
 import me.zhanghai.android.files.provider.ftp.client.Authority
 import me.zhanghai.android.files.provider.ftp.client.Mode
 import me.zhanghai.android.files.provider.ftp.client.Protocol
@@ -40,7 +41,6 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.GraphicsMode
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalRoborazziApi::class)
@@ -67,7 +67,7 @@ class StorageListScreenTest {
         Settings.STORAGES.putValue(listOf(fileSystemRoot, primaryStorageVolume, ftpServer))
         composeTestRule.setContent {
             inputModeManager = LocalInputModeManager.current
-            AppTheme { StorageListScreen() }
+            AppTheme { ScreenStack { StorageListScreen() } }
         }
     }
 
@@ -92,16 +92,12 @@ class StorageListScreenTest {
     @Test
     fun opensEditorAndAddStorage() {
         composeTestRule.onNodeWithText("Internal storage").performClick()
-        val activity = shadowOf(composeTestRule.activity)
-        assertEquals(
-            EditDeviceStorageDialogActivity::class.java.name,
-            activity.nextStartedActivity.component!!.className
-        )
+        // Opened above the list, in the same activity.
+        composeTestRule.onNodeWithText("Edit device storage").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Cancel").performClick()
+        composeTestRule.onNodeWithText("Edit device storage").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Add storage").performClick()
-        assertEquals(
-            AddStorageDialogActivity::class.java.name,
-            activity.nextStartedActivity.component!!.className
-        )
+        composeTestRule.onNodeWithText("SFTP server").assertIsDisplayed()
     }
 
     @Test
@@ -132,9 +128,7 @@ class StorageListScreenTest {
         val ftpServerNode = composeTestRule.onNodeWithText("Server")
         ftpServerNode.assertIsFocused()
         ftpServerNode.performKeyInput { pressKey(Key.DirectionCenter) }
-        assertEquals(
-            EditFtpServerActivity::class.java.name,
-            shadowOf(composeTestRule.activity).nextStartedActivity.component!!.className
-        )
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Edit FTP server").assertIsDisplayed()
     }
 }

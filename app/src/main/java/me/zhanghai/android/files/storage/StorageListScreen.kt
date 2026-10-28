@@ -37,14 +37,13 @@ import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderDragHandle
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.startActivitySafe
 
 @Parcelize
 data object StorageListDestination : Destination {
@@ -56,15 +55,13 @@ data object StorageListDestination : Destination {
 
 @Composable
 internal fun StorageListScreen() {
-    val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val storages by Settings.STORAGES.flow.collectAsState()
     AppScaffold(
         title = stringResource(R.string.storage_list_title),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    context.startActivitySafe(AddStorageDialogActivity::class.createIntent())
-                }
+                onClick = { navigator.navigate(AddStorageDestination) }
             ) {
                 Icon(
                     painter = painterResource(R.drawable.add_icon_white_24dp),
@@ -108,7 +105,7 @@ internal fun StorageListScreen() {
                     StorageItem(
                         storage = storage,
                         reorderableListState = reorderableListState,
-                        onClick = { context.startActivitySafe(storage.createEditIntent()) },
+                        onClick = { navigator.navigate(storage.createEditDestination()) },
                         // The dragged item follows the finger instead.
                         modifier = if (isDragged) Modifier else Modifier.animateItem()
                     )

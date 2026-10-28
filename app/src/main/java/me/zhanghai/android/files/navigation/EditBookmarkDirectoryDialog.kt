@@ -20,24 +20,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.ui.ReadOnlyTextField
 import me.zhanghai.android.files.ui.TextFieldDialog
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 
-class EditBookmarkDirectoryDialogActivity : AppActivity() {
-    private val args by args<Args>()
+@Parcelize
+data class EditBookmarkDirectoryDestination(
+    val bookmarkDirectory: BookmarkDirectory
+) : Destination {
+    override val isDialog: Boolean
+        get() = true
 
     @Composable
     override fun Content() {
-        EditBookmarkDirectoryDialog(args.bookmarkDirectory, onDismissRequest = { finish() })
+        val navigator = LocalNavigator.current
+        EditBookmarkDirectoryDialog(bookmarkDirectory, onDismissRequest = navigator::goBack)
     }
-
-    @Parcelize
-    class Args(val bookmarkDirectory: BookmarkDirectory) : ParcelableArgs
 }
 
 @Composable

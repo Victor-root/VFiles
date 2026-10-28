@@ -6,7 +6,6 @@
 package me.zhanghai.android.files.storage
 
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
@@ -20,13 +19,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.file.asDocumentTreeUri
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.theme.night.NightMode
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -40,7 +39,7 @@ import org.robolectric.annotation.GraphicsMode
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class EditStorageDialogActivitiesTest {
+class EditStorageDialogsTest {
     private val composeTestRule = createEmptyComposeRule()
 
     @get:Rule
@@ -69,10 +68,7 @@ class EditStorageDialogActivitiesTest {
 
     @Test
     fun deviceStorageDialogRenamesStorage() {
-        val scenario = launch(
-            EditDeviceStorageDialogActivity::class.createIntent()
-                .putArgs(EditDeviceStorageDialogActivity.Args(primaryStorageVolume))
-        )
+        val scenario = launch(EditDeviceStorageDestination(primaryStorageVolume))
         val nameNode = composeTestRule.onNode(hasSetTextAction() and hasText("Internal storage"))
         nameNode.assertIsFocused()
         composeTestRule.onNodeWithText("/storage/emulated/0").assertIsDisplayed()
@@ -89,12 +85,7 @@ class EditStorageDialogActivitiesTest {
 
     @Test
     fun deviceStorageDialogKeepsDefaultNameAsNoCustomName() {
-        launch(
-            EditDeviceStorageDialogActivity::class.createIntent()
-                .putArgs(
-                    EditDeviceStorageDialogActivity.Args(PrimaryStorageVolume("Phone", true))
-                )
-        )
+        launch(EditDeviceStorageDestination(PrimaryStorageVolume("Phone", true)))
         composeTestRule.onNode(hasSetTextAction() and hasText("Phone"))
             .performTextReplacement("Internal storage")
         composeTestRule.onNodeWithText("OK").performClick()
@@ -104,10 +95,7 @@ class EditStorageDialogActivitiesTest {
 
     @Test
     fun deviceStorageDialogHidesStorage() {
-        launch(
-            EditDeviceStorageDialogActivity::class.createIntent()
-                .putArgs(EditDeviceStorageDialogActivity.Args(primaryStorageVolume))
-        )
+        launch(EditDeviceStorageDestination(primaryStorageVolume))
         composeTestRule.onNodeWithText("Hide").performClick()
         composeTestRule.waitForIdle()
         assertEquals(false, Settings.STORAGES.value[1].isVisible)
@@ -115,10 +103,7 @@ class EditStorageDialogActivitiesTest {
 
     @Test
     fun documentTreeDialogRemovesStorage() {
-        val scenario = launch(
-            EditDocumentTreeDialogActivity::class.createIntent()
-                .putArgs(EditDocumentTreeDialogActivity.Args(documentTree))
-        )
+        val scenario = launch(EditDocumentTreeDestination(documentTree))
         composeTestRule.onNode(hasSetTextAction() and hasText("Downloads")).assertIsFocused()
         composeTestRule.onNodeWithText(documentTree.uri.value.toString()).assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/storage_edit_document_tree.png")
@@ -130,10 +115,7 @@ class EditStorageDialogActivitiesTest {
 
     @Test
     fun externalStorageShortcutDialogValidatesStorageVolume() {
-        val scenario = launch(
-            EditExternalStorageShortcutDialogActivity::class.createIntent()
-                .putArgs(EditExternalStorageShortcutDialogActivity.Args(externalStorageShortcut))
-        )
+        val scenario = launch(EditExternalStorageShortcutDestination(externalStorageShortcut))
         val rootIdNode = composeTestRule.onNode(hasSetTextAction() and hasText("primary"))
         rootIdNode.performTextReplacement("")
         composeTestRule.onNodeWithText("OK").performClick()
@@ -154,6 +136,6 @@ class EditStorageDialogActivitiesTest {
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
     }
 
-    private fun launch(intent: Intent): ActivityScenario<Activity> =
-        ActivityScenario.launchActivityForResult(intent)
+    private fun launch(destination: Destination): ActivityScenario<DestinationTestActivity> =
+        DestinationTestActivity.launch(destination)
 }

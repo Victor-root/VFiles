@@ -6,15 +6,13 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.provider.ftp.client.Authority
 import me.zhanghai.android.files.provider.ftp.createFtpRootPath
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import kotlin.random.Random
 
 @Parcelize
@@ -46,6 +44,5 @@ class FtpServer(
     override val path: Path
         get() = authority.createFtpRootPath().resolve(relativePath)
 
-    override fun createEditIntent(): Intent =
-        EditFtpServerActivity::class.createIntent().putArgs(EditFtpServerActivity.Args(this))
+    override fun createEditDestination(): Destination = EditFtpServerDestination(this)
 }
