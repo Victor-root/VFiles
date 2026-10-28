@@ -6,8 +6,13 @@
 package me.zhanghai.android.files.storage
 
 import android.app.Activity
+import android.app.UiModeManager
+import android.content.Context
+import android.content.res.Configuration
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
@@ -27,6 +32,8 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.pressKey
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import com.hierynomus.smbj.auth.AuthenticationContext
@@ -40,6 +47,7 @@ import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -47,6 +55,8 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import me.zhanghai.android.files.provider.ftp.client.Authority as FtpAuthority
 import me.zhanghai.android.files.provider.sftp.client.Authority as SftpAuthority
@@ -54,7 +64,7 @@ import me.zhanghai.android.files.provider.smb.client.Authority as SmbAuthority
 import me.zhanghai.android.files.provider.webdav.client.Authority as WebDavAuthority
 import me.zhanghai.android.files.provider.webdav.client.Protocol as WebDavProtocol
 
-@OptIn(ExperimentalRoborazziApi::class)
+@OptIn(ExperimentalRoborazziApi::class, ExperimentalTestApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class EditServerScreensTest {
@@ -325,4 +335,44 @@ class EditServerScreensTest {
 
     private fun launch(destination: Destination): ActivityScenario<DestinationTestActivity> =
         DestinationTestActivity.launch(destination)
+
+    @Test
+    fun focusedFieldOpensKeyboard() {
+        launch(EditFtpServerDestination())
+        textField("Hostname").performSemanticsAction(SemanticsActions.RequestFocus)
+        composeTestRule.waitForIdle()
+        assertTrue(isKeyboardShown())
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun focusedFieldOpensKeyboardOnlyOnceClickedOnTelevision() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        shadowOf(context.getSystemService(UiModeManager::class.java))
+            .setCurrentModeType(Configuration.UI_MODE_TYPE_TELEVISION)
+        InstrumentationRegistry.getInstrumentation().setInTouchMode(false)
+        launch(EditFtpServerDestination())
+        val hostname = textField("Hostname")
+        hostname.performSemanticsAction(SemanticsActions.RequestFocus)
+        composeTestRule.waitForIdle()
+        hostname.assertIsFocused()
+        assertFalse(isKeyboardShown())
+        hostname.performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        assertTrue(isKeyboardShown())
+        // Moving on to the next field closes it, until clicked again.
+        textField("Port").performSemanticsAction(SemanticsActions.RequestFocus)
+        composeTestRule.waitForIdle()
+        assertFalse(isKeyboardShown())
+        textField("Port").performKeyInput { pressKey(Key.DirectionCenter) }
+        composeTestRule.waitForIdle()
+        assertTrue(isKeyboardShown())
+    }
+
+    private fun isKeyboardShown(): Boolean =
+        shadowOf(
+            ApplicationProvider.getApplicationContext<Context>()
+                .getSystemService(InputMethodManager::class.java)
+        ).isSoftInputVisible
 }
+

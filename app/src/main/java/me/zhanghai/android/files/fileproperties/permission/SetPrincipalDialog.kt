@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.content.pm.ApplicationInfo
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -46,6 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import java8.nio.file.Path
@@ -59,6 +59,7 @@ import me.zhanghai.android.files.provider.common.PosixGroup
 import me.zhanghai.android.files.provider.common.PosixUser
 import me.zhanghai.android.files.provider.common.toByteString
 import me.zhanghai.android.files.ui.CheckboxItem
+import me.zhanghai.android.files.ui.rememberTextFieldKeyboard
 import me.zhanghai.android.files.util.Success
 
 @Composable
@@ -158,9 +159,12 @@ fun SetPrincipalDialog(
             title = { Text(stringResource(titleRes)) },
             text = {
                 Column {
+                    val keyboard = rememberTextFieldKeyboard()
                     OutlinedTextField(
                         state = filterState,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .then(keyboard.modifier),
                         placeholder = {
                             Text(
                                 stringResource(
@@ -176,6 +180,7 @@ fun SetPrincipalDialog(
                                 contentDescription = null
                             )
                         },
+                        keyboardOptions = keyboard.keyboardOptions,
                         lineLimits = TextFieldLineLimits.SingleLine
                     )
                     StatefulList(

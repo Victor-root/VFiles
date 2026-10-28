@@ -120,11 +120,13 @@ fun FormTextField(
     onTextChange: () -> Unit = { field.errorRes = null }
 ) {
     TextChangeEffect(field, onTextChange)
+    val keyboard = rememberTextFieldKeyboard(KeyboardOptions(keyboardType = keyboardType))
     OutlinedTextField(
         state = field.textFieldState,
         modifier = modifier
             .fillMaxWidth()
             .wholeFieldIntoViewWhenFocused()
+            .then(keyboard.modifier)
             .focusRequester(field.focusRequester),
         labelPosition = labelPosition(placeholder),
         label = { Text(label) },
@@ -132,7 +134,7 @@ fun FormTextField(
         trailingIcon = trailingIcon,
         supportingText = field.errorRes?.let { { Text(stringResource(it)) } },
         isError = field.errorRes != null,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardOptions = keyboard.keyboardOptions,
         lineLimits = if (isMultiLine) {
             TextFieldLineLimits.MultiLine()
         } else {
@@ -153,11 +155,13 @@ fun FormPasswordField(
 ) {
     TextChangeEffect(field, onTextChange)
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
+    val keyboard = rememberTextFieldKeyboard()
     OutlinedSecureTextField(
         state = field.textFieldState,
         modifier = modifier
             .fillMaxWidth()
             .wholeFieldIntoViewWhenFocused()
+            .then(keyboard.modifier)
             .focusRequester(field.focusRequester),
         labelPosition = labelPosition(placeholder),
         label = label?.let { { Text(it) } },
@@ -180,6 +184,7 @@ fun FormPasswordField(
         },
         supportingText = field.errorRes?.let { { Text(stringResource(it)) } },
         isError = field.errorRes != null,
+        keyboardOptions = keyboard.keyboardOptions,
         onKeyboardAction = onKeyboardAction,
         textObfuscationMode = if (isPasswordVisible) {
             TextObfuscationMode.Visible

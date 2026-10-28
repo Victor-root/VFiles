@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.fileproperties.checksum
 
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
@@ -17,11 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
+import me.zhanghai.android.files.ui.rememberTextFieldKeyboard
 
 @Composable
 fun FilePropertiesChecksumTab(path: Path) {
@@ -66,9 +67,12 @@ private fun ChecksumCompareField(state: TextFieldState, checksumInfo: ChecksumIn
         isError -> stringResource(R.string.file_properties_checksum_compare_no_match)
         else -> null
     }
+    val keyboard = rememberTextFieldKeyboard()
     OutlinedTextField(
         state = state,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(keyboard.modifier),
         labelPosition = TextFieldLabelPosition.Attached(alwaysMinimize = true),
         label = { Text(stringResource(R.string.file_properties_checksum_compare)) },
         placeholder = {
@@ -76,6 +80,7 @@ private fun ChecksumCompareField(state: TextFieldState, checksumInfo: ChecksumIn
         },
         supportingText = supportingText?.let { { Text(it) } },
         isError = isError,
+        keyboardOptions = keyboard.keyboardOptions,
         lineLimits = TextFieldLineLimits.MultiLine()
     )
 }

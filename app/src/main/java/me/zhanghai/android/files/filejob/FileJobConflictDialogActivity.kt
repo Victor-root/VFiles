@@ -56,6 +56,7 @@ import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.filelist.FileItemIcon
 import me.zhanghai.android.files.filelist.formatDescription
 import me.zhanghai.android.files.ui.CheckboxItem
+import me.zhanghai.android.files.ui.rememberTextFieldKeyboard
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.RemoteCallback
 import me.zhanghai.android.files.util.args
@@ -159,9 +160,13 @@ class FileJobConflictDialogActivity : AppActivity() {
                         isShown = isNameShown,
                         onShownChange = { isNameShown = it },
                         nameField = {
+                            val keyboard = rememberTextFieldKeyboard()
                             OutlinedTextField(
                                 state = nameState,
-                                modifier = it.fillMaxWidth(),
+                                modifier = it
+                                    .fillMaxWidth()
+                                    .then(keyboard.modifier),
+                                keyboardOptions = keyboard.keyboardOptions,
                                 lineLimits = TextFieldLineLimits.SingleLine,
                                 placeholder = {
                                     Text(stringResource(R.string.file_job_conflict_name_hint))
