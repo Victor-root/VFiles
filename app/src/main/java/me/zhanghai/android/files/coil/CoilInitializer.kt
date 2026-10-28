@@ -16,6 +16,8 @@ import me.zhanghai.android.files.gallery.GalleryMediaKeyer
 import me.zhanghai.android.files.gallery.GalleryThumbnailFetcher
 import me.zhanghai.android.files.music.MusicArtworkFetcher
 import me.zhanghai.android.files.music.MusicTrackKeyer
+import me.zhanghai.android.files.viewer.pdf.PdfPageFetcher
+import me.zhanghai.android.files.viewer.pdf.PdfPageKeyer
 
 fun initializeCoil() {
     SingletonImageLoader.setSafe {
@@ -31,6 +33,8 @@ fun initializeCoil() {
                 add(GalleryThumbnailFetcher.Factory(application))
                 add(MusicTrackKeyer())
                 add(MusicArtworkFetcher.Factory(application))
+                add(PdfPageKeyer())
+                add(PdfPageFetcher.Factory(application))
                 add(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         AnimatedImageDecoder.Factory()

@@ -758,6 +758,12 @@
     <string name="music_repeat">Repeat</string>
     <string name="music_previous">Previous</string>
     <string name="music_next">Next</string>
+    <string name="pdf_viewer_title">PDF viewer</string>
+    <string name="pdf_viewer_subtitle_format" translatable="false">@string/image_viewer_subtitle_format</string>
+    <string name="pdf_viewer_go_to_page">Go to page</string>
+    <string name="pdf_viewer_page_hint_format">Page, from 1 to %1$,d</string>
+    <string name="pdf_viewer_page_error">No such page</string>
+    <string name="pdf_viewer_password_protected">This PDF is protected by a password, which isn\'t supported</string>
     <string name="image_viewer_title">Image viewer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="image_viewer_delete_message_format" translatable="false">@string/file_delete_message_file_format</string>

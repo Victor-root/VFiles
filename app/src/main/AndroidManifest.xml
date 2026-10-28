@@ -285,6 +285,18 @@
         </activity>
 
         <activity
+            android:name="me.zhanghai.android.files.viewer.pdf.PdfViewerActivity"
+            android:exported="true"
+            android:label="@string/pdf_viewer_title"
+            android:theme="@style/Theme.VFiles.Immersive">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="me.zhanghai.android.files.music.MusicPlayerActivity"
             android:exported="true"
             android:label="@string/music_player_title"
