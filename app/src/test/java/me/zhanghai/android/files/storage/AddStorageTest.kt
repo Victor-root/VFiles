@@ -17,20 +17,22 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.getArgs
-import me.zhanghai.android.files.util.putArgs
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -46,7 +48,7 @@ import org.robolectric.shadows.ShadowToast
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class AddStorageActivitiesTest {
+class AddStorageTest {
     private val composeTestRule = createEmptyComposeRule()
 
     @get:Rule
@@ -61,8 +63,9 @@ class AddStorageActivitiesTest {
     }
 
     @Test
-    fun addStorageDialogStartsChosenType() {
-        val scenario = launch(AddStorageDialogActivity::class.createIntent())
+    fun addStorageDialogOpensChosenType() {
+        val scenario = launch(StorageListDestination)
+        composeTestRule.onNodeWithContentDescription("Add storage").performClick()
         composeTestRule.onNodeWithText("Android/data").assertIsDisplayed()
         composeTestRule.onNodeWithText("External storage").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/storage_add_storage_light.png")
@@ -70,17 +73,21 @@ class AddStorageActivitiesTest {
         composeTestRule.waitForIdle()
         captureScreenRoboImage("build/screenshots/storage_add_storage_dark.png")
         composeTestRule.onNodeWithText("SFTP server").performClick()
-        lateinit var startedIntent: Intent
-        scenario.onActivity { startedIntent = shadowOf(it).nextStartedActivity }
-        assertEquals(EditSftpServerActivity::class.java.name, startedIntent.component!!.className)
-        assertEquals(null, startedIntent.extras!!.getArgs<EditSftpServerActivity.Args>().server)
-        assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
+        composeTestRule.waitForIdle()
+        // Opened in place of the dialog, which isn't shown again once back.
+        composeTestRule.onNodeWithText("Add SFTP server").assertIsDisplayed()
+        composeTestRule.onNodeWithText("SFTP server").assertDoesNotExist()
+        scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithContentDescription("Add storage").assertIsDisplayed()
+        composeTestRule.onNodeWithText("SFTP server").assertDoesNotExist()
+        assertEquals(Lifecycle.State.RESUMED, scenario.state)
     }
 
     @Test
     fun addExternalStorageShortcutNeedsDocumentsUi() {
         installDocumentsUi(canViewDirectory = false)
-        val scenario = launch(externalStorageShortcutIntent())
+        val scenario = launch(externalStorageShortcutDestination())
         composeTestRule.waitForIdle()
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
         assertEquals(
@@ -94,7 +101,7 @@ class AddStorageActivitiesTest {
     @Test
     fun addExternalStorageShortcutAddsShortcut() {
         installDocumentsUi(canViewDirectory = true)
-        val scenario = launch(externalStorageShortcutIntent())
+        val scenario = launch(externalStorageShortcutDestination())
         composeTestRule.waitForIdle()
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
         val storage = Settings.STORAGES.value.single() as ExternalStorageShortcut
@@ -107,7 +114,7 @@ class AddStorageActivitiesTest {
 
     @Test
     fun addDocumentTreeAddsPickedTree() {
-        val scenario = launch(AddDocumentTreeActivity::class.createIntent())
+        val scenario = launch(AddDocumentTreeDestination)
         composeTestRule.waitForIdle()
         val treeUri =
             Uri.parse("content://com.android.externalstorage.documents/tree/primary%3ADownload")
@@ -152,15 +159,13 @@ class AddStorageActivitiesTest {
         }
     }
 
-    private fun externalStorageShortcutIntent(): Intent =
-        AddExternalStorageShortcutActivity::class.createIntent().putArgs(
-            AddExternalStorageShortcutActivity.Args(
-                R.string.storage_add_storage_android_data, androidDataUri
-            )
+    private fun externalStorageShortcutDestination(): Destination =
+        AddExternalStorageShortcutDestination(
+            R.string.storage_add_storage_android_data, androidDataUri
         )
 
-    private fun launch(intent: Intent): ActivityScenario<Activity> =
-        ActivityScenario.launchActivityForResult(intent)
+    private fun launch(destination: Destination): ActivityScenario<DestinationTestActivity> =
+        DestinationTestActivity.launch(destination)
 
     companion object {
         private const val DOCUMENTS_UI_PACKAGE = "com.android.documentsui"

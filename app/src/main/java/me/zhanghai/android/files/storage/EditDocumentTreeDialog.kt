@@ -11,23 +11,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.ReadOnlyFormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 
-class EditDocumentTreeDialogActivity : AppActivity() {
-    private val args by args<Args>()
+@Parcelize
+data class EditDocumentTreeDestination(val documentTree: DocumentTree) : Destination {
+    override val isDialog: Boolean
+        get() = true
 
     @Composable
     override fun Content() {
-        EditDocumentTreeDialog(args.documentTree, onDismissRequest = ::finish)
+        val navigator = LocalNavigator.current
+        EditDocumentTreeDialog(documentTree, onDismissRequest = navigator::goBack)
     }
-
-    @Parcelize
-    class Args(val documentTree: DocumentTree) : ParcelableArgs
 }
 
 @Composable

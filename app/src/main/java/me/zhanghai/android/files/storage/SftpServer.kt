@@ -6,16 +6,14 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.provider.sftp.client.Authentication
 import me.zhanghai.android.files.provider.sftp.client.Authority
 import me.zhanghai.android.files.provider.sftp.createSftpRootPath
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import kotlin.random.Random
 
 @Parcelize
@@ -47,6 +45,5 @@ class SftpServer(
     override val path: Path
         get() = authority.createSftpRootPath().resolve(relativePath)
 
-    override fun createEditIntent(): Intent =
-        EditSftpServerActivity::class.createIntent().putArgs(EditSftpServerActivity.Args(this))
+    override fun createEditDestination(): Destination = EditSftpServerDestination(this)
 }

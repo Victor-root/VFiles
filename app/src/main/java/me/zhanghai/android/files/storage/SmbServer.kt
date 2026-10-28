@@ -6,15 +6,13 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.provider.smb.client.Authority
 import me.zhanghai.android.files.provider.smb.createSmbRootPath
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import kotlin.random.Random
 
 @Parcelize
@@ -46,6 +44,5 @@ class SmbServer(
     override val path: Path
         get() = authority.createSmbRootPath().resolve(relativePath)
 
-    override fun createEditIntent(): Intent =
-        EditSmbServerActivity::class.createIntent().putArgs(EditSmbServerActivity.Args(this))
+    override fun createEditDestination(): Destination = EditSmbServerDestination(this)
 }

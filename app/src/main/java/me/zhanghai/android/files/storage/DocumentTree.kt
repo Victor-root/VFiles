@@ -7,12 +7,12 @@ package me.zhanghai.android.files.storage
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Environment
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.compat.getDescriptionCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
@@ -20,8 +20,6 @@ import me.zhanghai.android.files.file.DocumentTreeUri
 import me.zhanghai.android.files.file.displayName
 import me.zhanghai.android.files.file.storageVolume
 import me.zhanghai.android.files.provider.document.createDocumentTreeRootPath
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 import kotlin.random.Random
 
@@ -64,7 +62,5 @@ data class DocumentTree(
     override val linuxPath: String?
         get() = uri.storageVolume?.pathCompat
 
-    override fun createEditIntent(): Intent =
-        EditDocumentTreeDialogActivity::class.createIntent()
-            .putArgs(EditDocumentTreeDialogActivity.Args(this))
+    override fun createEditDestination(): Destination = EditDocumentTreeDestination(this)
 }

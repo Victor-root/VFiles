@@ -13,17 +13,15 @@ import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Paths
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
+import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
-import me.zhanghai.android.files.util.putArgs
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -38,13 +36,13 @@ import org.robolectric.annotation.GraphicsMode
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class EditBookmarkDirectoryDialogActivityTest {
+class EditBookmarkDirectoryDialogTest {
     private val composeTestRule = createEmptyComposeRule()
 
     @get:Rule
     val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
 
-    private lateinit var activity: EditBookmarkDirectoryDialogActivity
+    private lateinit var activity: DestinationTestActivity
 
     private lateinit var bookmarkDirectory: BookmarkDirectory
 
@@ -56,12 +54,8 @@ class EditBookmarkDirectoryDialogActivityTest {
     }
 
     private fun launch() {
-        ActivityScenario.launch<EditBookmarkDirectoryDialogActivity>(
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                EditBookmarkDirectoryDialogActivity::class.java
-            ).putArgs(EditBookmarkDirectoryDialogActivity.Args(bookmarkDirectory))
-        ).onActivity { activity = it }
+        DestinationTestActivity.launch(EditBookmarkDirectoryDestination(bookmarkDirectory))
+            .onActivity { activity = it }
     }
 
     @Test

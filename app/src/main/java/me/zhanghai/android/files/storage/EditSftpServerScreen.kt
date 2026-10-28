@@ -30,7 +30,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hierynomus.sshj.common.KeyDecryptionFailedException
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.provider.sftp.client.Authentication
@@ -43,24 +44,19 @@ import me.zhanghai.android.files.ui.FormPasswordField
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
 import me.zhanghai.android.files.util.ActionState
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
 import me.zhanghai.android.files.util.isReady
 import me.zhanghai.android.files.util.launchSafe
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditSftpServerActivity : AppActivity() {
-    private val args by args<Args>()
-
+@Parcelize
+data class EditSftpServerDestination(val server: SftpServer? = null) : Destination {
     @Composable
     override fun Content() {
-        EditSftpServerScreen(server = args.server, onFinish = ::finish)
+        val navigator = LocalNavigator.current
+        EditSftpServerScreen(server = server, onFinish = navigator::goBack)
     }
-
-    @Parcelize
-    class Args(val server: SftpServer? = null) : ParcelableArgs
 }
 
 private enum class SftpAuthenticationType {

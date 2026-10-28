@@ -9,11 +9,11 @@ import android.content.Context
 import android.content.Intent
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.file.ExternalStorageUri
 import me.zhanghai.android.files.file.displayName
 import me.zhanghai.android.files.util.createDocumentsUiViewDirectoryIntent
 import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import kotlin.random.Random
 
 @Parcelize
@@ -38,7 +38,6 @@ data class ExternalStorageShortcut(
 
     override fun createIntent(): Intent = uri.value.createDocumentsUiViewDirectoryIntent()
 
-    override fun createEditIntent(): Intent =
-        EditExternalStorageShortcutDialogActivity::class.createIntent()
-            .putArgs(EditExternalStorageShortcutDialogActivity.Args(this))
+    override fun createEditDestination(): Destination =
+        EditExternalStorageShortcutDestination(this)
 }

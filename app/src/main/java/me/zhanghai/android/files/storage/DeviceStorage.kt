@@ -6,17 +6,15 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import android.os.storage.StorageVolume
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 
 sealed class DeviceStorage : Storage() {
     override val description: String
@@ -27,9 +25,7 @@ sealed class DeviceStorage : Storage() {
 
     abstract override val linuxPath: String
 
-    override fun createEditIntent(): Intent =
-        EditDeviceStorageDialogActivity::class.createIntent()
-            .putArgs(EditDeviceStorageDialogActivity.Args(this))
+    override fun createEditDestination(): Destination = EditDeviceStorageDestination(this)
 
     fun copy_(
         customName: String? = this.customName,

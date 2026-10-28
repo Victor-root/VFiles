@@ -13,6 +13,8 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -28,13 +30,11 @@ import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Paths
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.navigation.BookmarkDirectory
-import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.test.setDestinationContent
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
-import me.zhanghai.android.files.util.getArgs
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -48,7 +48,7 @@ import org.robolectric.annotation.GraphicsMode
 @OptIn(ExperimentalRoborazziApi::class)
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class BookmarkDirectoryListActivityTest {
+class BookmarkDirectoryListScreenTest {
     private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule
@@ -87,14 +87,13 @@ class BookmarkDirectoryListActivityTest {
     @Test
     fun clickOpensEditDialog() {
         composeTestRule.onNodeWithText("Beta").performClick()
-        val intent = shadowOf(composeTestRule.activity).nextStartedActivity
-        assertEquals(
-            EditBookmarkDirectoryDialogActivity::class.java.name, intent.component!!.className
-        )
-        assertEquals(
-            bookmarkDirectories[1],
-            intent.extras!!.getArgs<EditBookmarkDirectoryDialogActivity.Args>().bookmarkDirectory
-        )
+        assertEditDialogShown("Beta")
+    }
+
+    // Opened above the list, in the same activity.
+    private fun assertEditDialogShown(name: String) {
+        composeTestRule.onNodeWithText("Bookmark folder").assertIsDisplayed()
+        composeTestRule.onNode(hasSetTextAction() and hasText(name)).assertIsDisplayed()
     }
 
     @Test
@@ -136,11 +135,7 @@ class BookmarkDirectoryListActivityTest {
         root.performKeyInput { pressKey(Key.DirectionDown) }
         composeTestRule.onNodeWithText("Beta").assertIsFocused()
         root.performKeyInput { pressKey(Key.DirectionCenter) }
-        val intent = shadowOf(composeTestRule.activity).nextStartedActivity
-        assertEquals(
-            bookmarkDirectories[1],
-            intent.extras!!.getArgs<EditBookmarkDirectoryDialogActivity.Args>().bookmarkDirectory
-        )
+        assertEditDialogShown("Beta")
     }
 
 }

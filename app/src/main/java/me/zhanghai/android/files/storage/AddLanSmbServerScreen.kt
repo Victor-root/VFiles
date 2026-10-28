@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.storage
 
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,22 +28,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.util.Failure
 import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
-import me.zhanghai.android.files.util.launchSafe
 
-class AddLanSmbServerActivity : AppActivity() {
+@Parcelize
+data object AddLanSmbServerDestination : Destination {
     @Composable
     override fun Content() {
         val viewModel = viewModel { AddLanSmbServerViewModel() }
@@ -52,19 +52,13 @@ class AddLanSmbServerActivity : AppActivity() {
         LaunchedEffect(lanSmbServerList) {
             (lanSmbServerList as? Failure)?.throwable?.printStackTrace()
         }
-        val addSmbServerLauncher =
-            rememberLauncherForActivityResult(EditSmbServerActivity.Contract()) {
-                if (it) {
-                    finish()
-                }
-            }
-        val context = LocalContext.current
+        val navigator = LocalNavigator.current
         AddLanSmbServerScreen(
             lanSmbServerList = lanSmbServerList,
             onRefresh = viewModel::reload,
             onAddServer = {
-                addSmbServerLauncher.launchSafe(
-                    EditSmbServerActivity.Args(host = it?.host), context
+                navigator.navigate(
+                    EditSmbServerDestination(host = it?.host, closesPreviousScreen = true)
                 )
             }
         )

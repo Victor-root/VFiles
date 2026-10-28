@@ -40,10 +40,23 @@ class Navigator internal constructor(
     }
 
     fun goBack() {
+        goBack(1)
+    }
+
+    /**
+     * Closes the current screen and the ones below it, [screenCount] in total, like the screen it
+     * was opened from to be done with both.
+     */
+    fun goBack(screenCount: Int) {
         val index = entries.indexOfFirst { it.id == entryId }
-        when {
-            index == 0 -> activity.finish()
-            index > 0 -> entries.removeAt(index)
+        if (index == -1) {
+            return
+        }
+        val firstIndex = index - screenCount + 1
+        if (firstIndex <= 0) {
+            activity.finish()
+        } else {
+            entries.removeRange(firstIndex, index + 1)
         }
     }
 

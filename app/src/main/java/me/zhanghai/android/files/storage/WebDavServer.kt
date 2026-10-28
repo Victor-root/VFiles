@@ -6,16 +6,14 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.provider.webdav.client.Authentication
 import me.zhanghai.android.files.provider.webdav.client.Authority
 import me.zhanghai.android.files.provider.webdav.createWebDavRootPath
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import kotlin.random.Random
 
 @Parcelize
@@ -47,6 +45,5 @@ class WebDavServer(
     override val path: Path
         get() = authority.createWebDavRootPath().resolve(relativePath)
 
-    override fun createEditIntent(): Intent =
-        EditWebDavServerActivity::class.createIntent().putArgs(EditWebDavServerActivity.Args(this))
+    override fun createEditDestination(): Destination = EditWebDavServerDestination(this)
 }

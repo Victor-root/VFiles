@@ -35,7 +35,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,19 +43,17 @@ import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
 import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
-import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity
+import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDestination
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderDragHandle
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.startActivitySafe
 
 @Parcelize
 data object BookmarkDirectoryListDestination : Destination {
@@ -68,7 +65,7 @@ data object BookmarkDirectoryListDestination : Destination {
 
 @Composable
 private fun BookmarkDirectoryListScreen() {
-    val context = LocalContext.current
+    val navigator = LocalNavigator.current
     val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.flow.collectAsState()
     val openPathLauncher =
         rememberLauncherForActivityResult(FileListActivity.OpenDirectoryContract()) {
@@ -124,10 +121,7 @@ private fun BookmarkDirectoryListScreen() {
                         bookmarkDirectory = it,
                         reorderableListState = reorderableListState,
                         onClick = {
-                            context.startActivitySafe(
-                                EditBookmarkDirectoryDialogActivity::class.createIntent()
-                                    .putArgs(EditBookmarkDirectoryDialogActivity.Args(it))
-                            )
+                            navigator.navigate(EditBookmarkDirectoryDestination(it))
                         },
                         modifier = if (it.id != reorderableListState.draggedItemKey) {
                             Modifier.animateItem()

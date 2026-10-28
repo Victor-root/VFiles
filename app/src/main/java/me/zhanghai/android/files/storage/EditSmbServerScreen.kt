@@ -5,10 +5,6 @@
 
 package me.zhanghai.android.files.storage
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,48 +33,36 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hierynomus.smbj.auth.AuthenticationContext
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.provider.smb.client.Authority
 import me.zhanghai.android.files.ui.FormDropdownField
 import me.zhanghai.android.files.ui.FormErrors
 import me.zhanghai.android.files.ui.FormPasswordField
 import me.zhanghai.android.files.ui.FormTextField
 import me.zhanghai.android.files.ui.rememberFormFieldState
-import me.zhanghai.android.files.util.ParcelableArgs
-import me.zhanghai.android.files.util.args
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.takeIfNotEmpty
 import java.net.URI
 
-class EditSmbServerActivity : AppActivity() {
-    private val args by args<Args>()
-
+/**
+ * Adds or edits an SMB server. Once added, the screen it was opened from is closed too when
+ * [closesPreviousScreen], like the list of the servers found on the LAN.
+ */
+@Parcelize
+data class EditSmbServerDestination(
+    val server: SmbServer? = null,
+    val host: String? = null,
+    val closesPreviousScreen: Boolean = false
+) : Destination {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         EditSmbServerScreen(
-            server = args.server,
-            host = args.host,
-            onFinish = {
-                setResult(RESULT_OK)
-                finish()
-            },
-            onCancel = ::finish
+            server = server,
+            host = host,
+            onFinish = { navigator.goBack(if (closesPreviousScreen) 2 else 1) },
+            onCancel = navigator::goBack
         )
-    }
-
-    @Parcelize
-    class Args(
-        val server: SmbServer? = null,
-        val host: String? = null
-    ) : ParcelableArgs
-
-    class Contract : ActivityResultContract<Args, Boolean>() {
-        override fun createIntent(context: Context, input: Args): Intent =
-            EditSmbServerActivity::class.createIntent().putArgs(input)
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Boolean =
-            resultCode == Activity.RESULT_OK
     }
 }
 

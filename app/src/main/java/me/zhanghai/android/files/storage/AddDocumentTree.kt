@@ -14,15 +14,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import me.zhanghai.android.files.app.AppActivity
+import kotlinx.parcelize.Parcelize
+import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.file.asDocumentTreeUriOrNull
 import me.zhanghai.android.files.file.takePersistablePermission
 import me.zhanghai.android.files.util.launchSafe
 
 /** Shows no UI but the system picker of the document tree to add. */
-class AddDocumentTreeActivity : AppActivity() {
+@Parcelize
+data object AddDocumentTreeDestination : Destination {
+    override val isDialog: Boolean
+        get() = true
+
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
         val openDocumentTreeLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
                 val treeUri = it?.asDocumentTreeUriOrNull()
@@ -30,7 +37,7 @@ class AddDocumentTreeActivity : AppActivity() {
                     treeUri.takePersistablePermission()
                     Storages.addOrReplace(DocumentTree(null, null, treeUri))
                 }
-                finish()
+                navigator.goBack()
             }
         val context = LocalContext.current
         var isLaunched by rememberSaveable { mutableStateOf(false) }
