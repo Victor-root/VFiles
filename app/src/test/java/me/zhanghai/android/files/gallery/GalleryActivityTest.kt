@@ -10,10 +10,10 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
-import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.isFocused
@@ -42,7 +42,6 @@ import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
-import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -190,27 +189,22 @@ class GalleryActivityTest {
     @Config(qualifiers = "w960dp-h540dp-land-television")
     fun viewerMovesWithDpadOnTelevision() {
         setUpTelevision()
-        val scenario = launchViewer()
-        composeTestRule.waitForBackgroundWork {
-            composeTestRule.onAllNodesWithContentDescription("Share").fetchSemanticsNodes()
-                .isNotEmpty()
-        }
-        // Down goes to the current media of the carousel, up to the actions, and back goes back
-        // to the photo.
-        val currentCarouselItem = composeTestRule.onNode(isSelected())
-        pressKey(Key.DirectionDown)
-        currentCarouselItem.assertIsFocused()
-        pressKey(Key.DirectionRight)
-        composeTestRule.onAllNodes(isFocused()).assertCountEquals(1)
-        currentCarouselItem.assertIsNotFocused()
-        captureScreenRoboImage("build/screenshots/gallery_tv_viewer.png")
-        pressKey(Key.DirectionUp)
-        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(1)
-        scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        launchViewer()
+        composeTestRule.waitForBackgroundWork { GalleryLiveData.value != null }
         composeTestRule.waitForIdle()
-        composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
-        scenario.onActivity { assertFalse(it.isFinishing) }
-        // The center key hides the bars of a photo.
+        // The bars are hidden at first, and the center key shows or hides them.
+        composeTestRule.onNodeWithContentDescription("Share").assertDoesNotExist()
+        pressKey(Key.DirectionCenter)
+        composeTestRule.onNodeWithContentDescription("Share").assertIsDisplayed()
+        captureScreenRoboImage("build/screenshots/gallery_tv_viewer.png")
+        // Nothing in them is ever focused.
+        for (key in listOf(Key.DirectionDown, Key.DirectionUp, Key.DirectionDown)) {
+            pressKey(key)
+            composeTestRule.onAllNodes(isFocused() and hasClickAction()).assertCountEquals(0)
+        }
+        // Right goes to the next media.
+        pressKey(Key.DirectionRight)
+        composeTestRule.onNode(isSelected()).assertContentDescriptionEquals("IMG_today_1.png")
         pressKey(Key.DirectionCenter)
         composeTestRule.onNodeWithContentDescription("Share").assertDoesNotExist()
     }

@@ -108,6 +108,7 @@ import me.zhanghai.android.files.ui.OverflowMenu
 import me.zhanghai.android.files.ui.depthPageTransition
 import me.zhanghai.android.files.util.ParcelableArgs
 import me.zhanghai.android.files.util.args
+import me.zhanghai.android.files.util.isTelevision
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -166,7 +167,10 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
         }
     }
     val currentMedia = media[pagerState.currentPage.coerceIn(media.indices)]
-    var isUiShown by rememberSaveable { mutableStateOf(true) }
+    // On a TV, the bars are only there to tell where the media is, so they are hidden at first and
+    // never focused.
+    val isTelevision = remember(context) { context.isTelevision }
+    var isUiShown by rememberSaveable { mutableStateOf(!isTelevision) }
     var isDetailsShown by rememberSaveable { mutableStateOf(false) }
     val deleteMedia = rememberGalleryMediaDeleter(onDeleted = {})
     val coroutineScope = rememberCoroutineScope()
@@ -203,16 +207,21 @@ private fun GalleryViewerScreen(media: List<GalleryMedia>, initialMediaId: Long)
                             coroutineScope.launch { pagerState.animateScrollToPage(page) }
                         }
                     }
-                    // Its center key plays or pauses a video, and shows or hides the bars of a
-                    // photo, like a tap.
+                    // Its center key plays or pauses a video, with the bars shown while paused on
+                    // a TV, and shows or hides the bars of a photo, like a tap.
                     Key.DirectionCenter, Key.Enter, Key.NumPadEnter, Key.MediaPlayPause ->
                         if (player != null) {
                             player.playOrPause()
+                            if (isTelevision) {
+                                isUiShown = !player.playWhenReady
+                            }
                         } else {
                             isUiShown = !isUiShown
                         }
-                    // Its down key goes to the carousel.
-                    Key.DirectionDown -> {
+                    // Its down key goes to the carousel, except on a TV where nothing else is
+                    // focused.
+                    Key.DirectionUp -> if (!isTelevision) return@onKeyEvent false
+                    Key.DirectionDown -> if (!isTelevision) {
                         isUiShown = true
                         coroutineScope.launch {
                             // Lets the bars appear.
@@ -383,7 +392,7 @@ private fun GalleryViewerCarouselItem(
     val onAppBar = LocalAppColors.current.onAppBar
     AsyncImage(
         model = media,
-        contentDescription = null,
+        contentDescription = media.displayName,
         modifier = modifier
             .size(CAROUSEL_ITEM_SIZE)
             .graphicsLayer { alpha = if (isCurrent || isFocused) 1f else CAROUSEL_OTHER_ALPHA }
