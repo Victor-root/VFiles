@@ -5,6 +5,9 @@
 
 package me.zhanghai.android.files.storage
 
+import android.app.UiModeManager
+import android.content.Context
+import android.content.res.Configuration
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +21,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -26,6 +30,7 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.swipeDown
+import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import me.zhanghai.android.files.settings.Settings
@@ -42,6 +47,8 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.net.InetAddress
 
@@ -134,5 +141,34 @@ class AddLanSmbServerScreenTest {
             swipeDown(startY = height * 0.3f, endY = height * 0.9f)
         }
         composeTestRule.waitForIdle()
+    }
+}
+
+@RunWith(RobolectricTestRunner::class)
+class AddLanSmbServerScreenTelevisionTest {
+    private val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+
+    @get:Rule
+    val ruleChain: RuleChain = RuleChain.outerRule(AppProviderRule()).around(composeTestRule)
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun refreshesWithAppBarButton() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        shadowOf(context.getSystemService(UiModeManager::class.java))
+            .setCurrentModeType(Configuration.UI_MODE_TYPE_TELEVISION)
+        var refreshCount = 0
+        composeTestRule.setContent {
+            AppTheme {
+                AddLanSmbServerScreen(
+                    lanSmbServerList = Success(emptyList()),
+                    onRefresh = { ++refreshCount },
+                    onAddServer = {}
+                )
+            }
+        }
+        // In place of pulling the list, which D-pad scrolling shouldn't start.
+        composeTestRule.onNodeWithContentDescription("Refresh").performClick()
+        assertEquals(1, refreshCount)
     }
 }

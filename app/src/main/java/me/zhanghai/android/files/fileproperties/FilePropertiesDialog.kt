@@ -7,6 +7,7 @@ package me.zhanghai.android.files.fileproperties
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -20,15 +21,19 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.FileItem
@@ -44,8 +49,10 @@ import me.zhanghai.android.files.fileproperties.image.FilePropertiesImageTab
 import me.zhanghai.android.files.fileproperties.permission.FilePropertiesPermissionTab
 import me.zhanghai.android.files.fileproperties.video.FilePropertiesVideoTab
 import me.zhanghai.android.files.provider.common.PosixFileAttributes
+import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.util.isGetPackageArchiveInfoCompatible
 import me.zhanghai.android.files.util.isMediaMetadataRetrieverCompatible
+import me.zhanghai.android.files.util.isTelevision
 
 /** The properties of [file], in tabs depending on its type. */
 @Composable
@@ -62,6 +69,9 @@ private fun FilePropertiesDialogContent(file: FileItem, onDismissRequest: () -> 
     val tabs = remember(file) { FilePropertiesTabType.entries.filter { it.isAvailable(file) } }
     val pagerState = rememberPagerState { tabs.size }
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val isTelevision = remember(context) { context.isTelevision }
+    val refreshRequests = remember { MutableSharedFlow<Unit>(extraBufferCapacity = 1) }
     BasicAlertDialog(onDismissRequest = onDismissRequest) {
         Surface(
             shape = AlertDialogDefaults.shape,
@@ -69,12 +79,26 @@ private fun FilePropertiesDialogContent(file: FileItem, onDismissRequest: () -> 
             tonalElevation = AlertDialogDefaults.TonalElevation
         ) {
             Column(modifier = Modifier.padding(vertical = 24.dp)) {
-                Text(
-                    text = stringResource(R.string.file_properties_title_format, file.name),
-                    modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 16.dp),
-                    color = AlertDialogDefaults.titleContentColor,
-                    style = MaterialTheme.typography.headlineSmall
-                )
+                Row(
+                    modifier = Modifier.padding(start = 24.dp, end = 12.dp, bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.file_properties_title_format, file.name),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 12.dp),
+                        color = AlertDialogDefaults.titleContentColor,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    // In place of pulling the tab, which needs touch.
+                    if (isTelevision) {
+                        ActionButton(
+                            R.drawable.refresh_icon_control_normal_24dp,
+                            stringResource(R.string.refresh)
+                        ) { refreshRequests.tryEmit(Unit) }
+                    }
+                }
                 PrimaryScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,
                     containerColor = Color.Transparent,
@@ -98,17 +122,10 @@ private fun FilePropertiesDialogContent(file: FileItem, onDismissRequest: () -> 
                         .padding(top = 8.dp),
                     verticalAlignment = Alignment.Top
                 ) { page ->
-                    when (tabs[page]) {
-                        FilePropertiesTabType.BASIC -> FilePropertiesBasicTab(fileViewModel)
-                        FilePropertiesTabType.PERMISSION ->
-                            FilePropertiesPermissionTab(fileViewModel)
-                        FilePropertiesTabType.IMAGE ->
-                            FilePropertiesImageTab(file.path, file.mimeType)
-                        FilePropertiesTabType.AUDIO -> FilePropertiesAudioTab(file.path)
-                        FilePropertiesTabType.VIDEO -> FilePropertiesVideoTab(file.path)
-                        FilePropertiesTabType.APK -> FilePropertiesApkTab(file.path)
-                        FilePropertiesTabType.CHECKSUM -> FilePropertiesChecksumTab(file.path)
-                    }
+                    CompositionLocalProvider(
+                        LocalFilePropertiesRefreshRequests provides
+                            if (page == pagerState.currentPage) refreshRequests else NO_REQUESTS
+                    ) { FilePropertiesTabContent(tabs[page], file, fileViewModel) }
                 }
                 TextButton(
                     onClick = onDismissRequest,
@@ -118,6 +135,25 @@ private fun FilePropertiesDialogContent(file: FileItem, onDismissRequest: () -> 
                 ) { Text(stringResource(android.R.string.ok)) }
             }
         }
+    }
+}
+
+private val NO_REQUESTS = emptyFlow<Unit>()
+
+@Composable
+private fun FilePropertiesTabContent(
+    tab: FilePropertiesTabType,
+    file: FileItem,
+    fileViewModel: FilePropertiesFileViewModel
+) {
+    when (tab) {
+        FilePropertiesTabType.BASIC -> FilePropertiesBasicTab(fileViewModel)
+        FilePropertiesTabType.PERMISSION -> FilePropertiesPermissionTab(fileViewModel)
+        FilePropertiesTabType.IMAGE -> FilePropertiesImageTab(file.path, file.mimeType)
+        FilePropertiesTabType.AUDIO -> FilePropertiesAudioTab(file.path)
+        FilePropertiesTabType.VIDEO -> FilePropertiesVideoTab(file.path)
+        FilePropertiesTabType.APK -> FilePropertiesApkTab(file.path)
+        FilePropertiesTabType.CHECKSUM -> FilePropertiesChecksumTab(file.path)
     }
 }
 
