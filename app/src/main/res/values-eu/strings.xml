@@ -644,6 +644,7 @@
     <string name="settings_standard_directories_title">Karpeta estandarrak</string>
     <string name="settings_standard_directories_summary_empty">Ez da karpeta estandarrik gaitu</string>
     <string name="settings_standard_directory_gallery_summary">Gailuko argazkiak eta bideoak</string>
+    <string name="settings_standard_directory_music_summary">Gailuko abestiak</string>
     <string name="settings_bookmark_directories_title">Karpeten laster-markak</string>
     <string name="settings_bookmark_directories_summary_empty">Karpeten laster-markarik ez</string>
     <string name="settings_root_strategy_title">Root sarbidea modua</string>
@@ -738,5 +739,26 @@
     <string name="video_player_title">Bideo-erreproduzigailua</string>
     <string name="play">Erreproduzitu</string>
     <string name="pause">Pausatu</string>
+    <string name="music_title">Musika</string>
+    <string name="music_tracks">Abestiak</string>
+    <string name="music_albums">Albumak</string>
+    <string name="music_artists">Artistak</string>
+    <string name="music_empty">Ez dago musikarik</string>
+    <string name="music_access_denied">Baimendu fitxategietarako sarbidea zure musika ikusteko</string>
+    <string name="music_shuffle_all">Erreproduzitu dena ausaz</string>
+    <string name="music_unknown_artist">Artista ezezaguna</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">Abesti %1$,d</item>
+        <item quantity="other">%1$,d abesti</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">Album %1$,d</item>
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Musika-erreproduzigailua</string>
+    <string name="music_shuffle">Ausazkoa</string>
+    <string name="music_repeat">Errepikatu</string>
+    <string name="music_previous">Aurrekoa</string>
+    <string name="music_next">Hurrengoa</string>
     <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

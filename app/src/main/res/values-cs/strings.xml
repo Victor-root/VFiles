@@ -669,6 +669,31 @@
     <string name="video_player_title">Přehrávač videa</string>
     <string name="play">Přehrát</string>
     <string name="pause">Pozastavit</string>
+    <string name="music_title">Hudba</string>
+    <string name="music_tracks">Skladby</string>
+    <string name="music_albums">Alba</string>
+    <string name="music_artists">Interpreti</string>
+    <string name="music_empty">Žádná hudba</string>
+    <string name="music_access_denied">Povolte přístup k souborům, abyste viděli svou hudbu</string>
+    <string name="music_shuffle_all">Náhodně přehrát vše</string>
+    <string name="music_unknown_artist">Neznámý interpret</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d skladba</item>
+        <item quantity="few">%1$,d skladby</item>
+        <item quantity="many">%1$,d skladeb</item>
+        <item quantity="other">%1$,d skladeb</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="few">%1$,d alba</item>
+        <item quantity="many">%1$,d alb</item>
+        <item quantity="other">%1$,d alb</item>
+    </plurals>
+    <string name="music_player_title">Přehrávač hudby</string>
+    <string name="music_shuffle">Náhodně</string>
+    <string name="music_repeat">Opakovat</string>
+    <string name="music_previous">Předchozí</string>
+    <string name="music_next">Další</string>
     <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Uložit jako</string>
@@ -735,6 +760,7 @@
     <string name="settings_standard_directories_title">Standartní složky</string>
     <string name="settings_standard_directories_summary_empty">Nejsou povoleny žádné standartní složky</string>
     <string name="settings_standard_directory_gallery_summary">Fotky a videa v zařízení</string>
+    <string name="settings_standard_directory_music_summary">Skladby v zařízení</string>
     <string name="settings_bookmark_directories_title">Založené složky</string>
     <string name="settings_bookmark_directories_summary_empty">Žádné založené složky</string>
     <string name="settings_root_strategy_title">Režim přístupu root</string>

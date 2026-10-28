@@ -637,6 +637,29 @@
     <string name="video_player_title">Reproductor de vídeo</string>
     <string name="play">Reproducir</string>
     <string name="pause">Pausar</string>
+    <string name="music_title">Música</string>
+    <string name="music_tracks">Canciones</string>
+    <string name="music_albums">Álbumes</string>
+    <string name="music_artists">Artistas</string>
+    <string name="music_empty">No hay música</string>
+    <string name="music_access_denied">Permite el acceso a los archivos para ver tu música</string>
+    <string name="music_shuffle_all">Reproducir todo aleatoriamente</string>
+    <string name="music_unknown_artist">Artista desconocido</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d canción</item>
+        <item quantity="many">%1$,d canciones</item>
+        <item quantity="other">%1$,d canciones</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d álbum</item>
+        <item quantity="many">%1$,d álbumes</item>
+        <item quantity="other">%1$,d álbumes</item>
+    </plurals>
+    <string name="music_player_title">Reproductor de música</string>
+    <string name="music_shuffle">Aleatorio</string>
+    <string name="music_repeat">Repetir</string>
+    <string name="music_previous">Anterior</string>
+    <string name="music_next">Siguiente</string>
     <string name="image_viewer_title">Visor de imagen</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Guardar como</string>
@@ -703,6 +726,7 @@
     <string name="settings_standard_directories_title">Carpetas estándar</string>
     <string name="settings_standard_directories_summary_empty">Ninguna carpeta estándar habilitada</string>
     <string name="settings_standard_directory_gallery_summary">Fotos y vídeos del dispositivo</string>
+    <string name="settings_standard_directory_music_summary">Canciones del dispositivo</string>
     <string name="settings_bookmark_directories_title">Carpetas fijadas</string>
     <string name="settings_bookmark_directories_summary_empty">Sin carpetas fijadas</string>
     <string name="settings_root_strategy_title">Modo de acceso administrativo</string>

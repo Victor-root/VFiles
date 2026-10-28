@@ -643,6 +643,7 @@
     <string name="settings_standard_directories_title">Standardihakemistot</string>
     <string name="settings_standard_directories_summary_empty">Standardihakemistoja ei ole otettu käyttöön</string>
     <string name="settings_standard_directory_gallery_summary">Laitteen kuvat ja videot</string>
+    <string name="settings_standard_directory_music_summary">Laitteen kappaleet</string>
     <string name="settings_bookmark_directories_title">Kirjanmerkkikansiot</string>
     <string name="settings_bookmark_directories_summary_empty">Ei kirjanmerkkikansioita</string>
     <string name="settings_root_strategy_title">Root-käyttöoikeus</string>
@@ -737,5 +738,26 @@
     <string name="video_player_title">Videosoitin</string>
     <string name="play">Toista</string>
     <string name="pause">Tauko</string>
+    <string name="music_title">Musiikki</string>
+    <string name="music_tracks">Kappaleet</string>
+    <string name="music_albums">Albumit</string>
+    <string name="music_artists">Esittäjät</string>
+    <string name="music_empty">Ei musiikkia</string>
+    <string name="music_access_denied">Salli tiedostojen käyttö nähdäksesi musiikkisi</string>
+    <string name="music_shuffle_all">Toista kaikki satunnaisesti</string>
+    <string name="music_unknown_artist">Tuntematon esittäjä</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d kappale</item>
+        <item quantity="other">%1$,d kappaletta</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d albumi</item>
+        <item quantity="other">%1$,d albumia</item>
+    </plurals>
+    <string name="music_player_title">Musiikkisoitin</string>
+    <string name="music_shuffle">Satunnaistoisto</string>
+    <string name="music_repeat">Uudelleentoisto</string>
+    <string name="music_previous">Edellinen</string>
+    <string name="music_next">Seuraava</string>
     <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
 </resources>

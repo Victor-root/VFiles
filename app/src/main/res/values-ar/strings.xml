@@ -733,6 +733,35 @@
     <string name="video_player_title">مشغل الفيديو</string>
     <string name="play">تشغيل</string>
     <string name="pause">إيقاف مؤقت</string>
+    <string name="music_title">الموسيقى</string>
+    <string name="music_tracks">الأغاني</string>
+    <string name="music_albums">الألبومات</string>
+    <string name="music_artists">الفنانون</string>
+    <string name="music_empty">لا توجد موسيقى</string>
+    <string name="music_access_denied">اسمح بالوصول إلى الملفات لعرض موسيقاك</string>
+    <string name="music_shuffle_all">تشغيل الكل عشوائيًا</string>
+    <string name="music_unknown_artist">فنان غير معروف</string>
+    <plurals name="music_track_count_format">
+        <item quantity="zero">%1$,d أغنية</item>
+        <item quantity="one">%1$,d أغنية</item>
+        <item quantity="two">%1$,d أغنيتان</item>
+        <item quantity="few">%1$,d أغانٍ</item>
+        <item quantity="many">%1$,d أغنية</item>
+        <item quantity="other">%1$,d أغنية</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="zero">%1$,d ألبوم</item>
+        <item quantity="one">%1$,d ألبوم</item>
+        <item quantity="two">%1$,d ألبومان</item>
+        <item quantity="few">%1$,d ألبومات</item>
+        <item quantity="many">%1$,d ألبومًا</item>
+        <item quantity="other">%1$,d ألبوم</item>
+    </plurals>
+    <string name="music_player_title">مشغل الموسيقى</string>
+    <string name="music_shuffle">ترتيب عشوائي</string>
+    <string name="music_repeat">تكرار</string>
+    <string name="music_previous">السابق</string>
+    <string name="music_next">التالي</string>
     <string name="image_viewer_title">عارض الصور</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">حفظ كـ</string>
@@ -799,6 +828,7 @@
     <string name="settings_standard_directories_title">المجلدات الأساسية</string>
     <string name="settings_standard_directories_summary_empty">لم يتم تمكين المجلدات الأساسية</string>
     <string name="settings_standard_directory_gallery_summary">صور وفيديوهات الجهاز</string>
+    <string name="settings_standard_directory_music_summary">أغاني الجهاز</string>
     <string name="settings_bookmark_directories_title">مجلدات الإشارات المرجعية</string>
     <string name="settings_bookmark_directories_summary_empty">لا توجد مجلدات الإشارات المرجعية</string>
     <string name="settings_root_strategy_title">وضع الروت</string>
