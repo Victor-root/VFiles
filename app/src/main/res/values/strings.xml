@@ -733,8 +733,9 @@
     <string name="gallery_details">Details</string>
     <string name="gallery_details_date">Date</string>
     <string name="gallery_show_in_folder">Show in folder</string>
-    <string name="gallery_play">Play</string>
-    <string name="gallery_pause">Pause</string>
+    <string name="video_player_title">Video player</string>
+    <string name="video_player_play">Play</string>
+    <string name="video_player_pause">Pause</string>
     <string name="image_viewer_title">Image viewer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="image_viewer_delete_message_format" translatable="false">@string/file_delete_message_file_format</string>

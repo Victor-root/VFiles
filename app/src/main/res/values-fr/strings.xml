@@ -648,8 +648,9 @@
     <string name="gallery_details">Détails</string>
     <string name="gallery_details_date">Date</string>
     <string name="gallery_show_in_folder">Afficher dans le dossier</string>
-    <string name="gallery_play">Lire</string>
-    <string name="gallery_pause">Pause</string>
+    <string name="video_player_title">Lecteur vidéo</string>
+    <string name="video_player_play">Lire</string>
+    <string name="video_player_pause">Pause</string>
     <string name="image_viewer_title">Visionneuse d\'images</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Enregistrer sous</string>
