@@ -23,6 +23,8 @@
     <string name="loading">Laden…</string>
     <string name="maybe_later">Vielleicht später</string>
     <string name="merge">Zusammenführen</string>
+    <string name="more_options">Weitere Optionen</string>
+    <string name="navigate_up">Nach oben</string>
     <string name="none">Nichts</string>
     <string name="open_navigation_drawer">Navigationsmenü öffnen</string>
     <string name="paste">Einfügen</string>
@@ -304,9 +306,11 @@
     <string name="file_list_paste_extract_title_format">Extrahiere %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrahiere hier</string>
     <string name="file_list_empty">Keine Dateien</string>
+    <string name="file_list_press_back_again_to_exit">Zum Beenden erneut „Zurück“ drücken</string>
     <string name="file_list_error_folder_not_found">Dieser Ordner existiert nicht mehr</string>
     <string name="file_list_error_permission_denied">Sie haben keine Berechtigung, diesen Ordner zu öffnen</string>
     <string name="file_list_error_unknown">Dieser Ordner kann nicht geöffnet werden</string>
+    <string name="file_list_action_create">Erstellen</string>
     <string name="file_list_action_create_file">Datei</string>
     <string name="file_list_action_create_directory">Ordner</string>
 
@@ -511,6 +515,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB-Server bearbeiten</string>
     <string name="storage_edit_smb_server_title_add">SMB-Server hinzufügen</string>
     <string name="storage_edit_smb_server_host">Hostname</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP-Adresse oder Netzwerkname des Servers, z. B. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Benutzernamen eingeben</string>
     <string name="storage_edit_smb_server_host_error_invalid">Ungültiger Hostname</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -578,6 +583,28 @@
     <string name="navigation_edit_bookmark_directory_name">Name</string>
     <string name="navigation_edit_bookmark_directory_path">Pfad</string>
     <string name="archive_viewer_title">Archivbetrachter</string>
+    <string name="gallery_title">Galerie</string>
+    <string name="gallery_photos">Fotos</string>
+    <string name="gallery_albums">Alben</string>
+    <string name="gallery_today">Heute</string>
+    <string name="gallery_yesterday">Gestern</string>
+    <string name="gallery_empty">Keine Fotos oder Videos</string>
+    <string name="gallery_access_denied">Erlaube den Zugriff auf Dateien, um deine Fotos und Videos zu sehen</string>
+    <string name="gallery_allow_access">Erlauben</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d Element</item>
+        <item quantity="other">%1$,d Elemente</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Dieses Element löschen?</item>
+        <item quantity="other">Diese %1$,d Elemente löschen?</item>
+    </plurals>
+    <string name="gallery_details">Details</string>
+    <string name="gallery_details_date">Datum</string>
+    <string name="gallery_show_in_folder">Im Ordner anzeigen</string>
+    <string name="video_player_title">Videoplayer</string>
+    <string name="video_player_play">Abspielen</string>
+    <string name="video_player_pause">Pause</string>
     <string name="image_viewer_title">Bildbetrachter</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Speichern als</string>
@@ -609,7 +636,9 @@
     <string name="ftp_server_anonymous_login_title">Anonymer Login</string>
     <string name="ftp_server_username_title">Benutzername</string>
     <string name="ftp_server_password_title">Passwort</string>
+    <string name="ftp_server_password_summary_empty">Nicht festgelegt</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Ungültiger Port</string>
     <string name="ftp_server_home_directory_title">Stammverzeichnis</string>
     <string name="ftp_server_writable_title">Erlaube Schreiben</string>
     <string name="settings_title">Einstellungen</string>
@@ -627,6 +656,9 @@
     </string-array>
     <string name="settings_black_night_mode">Schwarzer Nachtmodus</string>
     <string name="settings_file_list_animation_title">Dateiliste animieren</string>
+    <string name="settings_double_back_to_exit_title">Zum Beenden zweimal „Zurück“ drücken</string>
+    <string name="settings_edge_to_edge_title">Randlose Anzeige</string>
+    <string name="settings_edge_to_edge_summary">Inhalte scrollen hinter Status- und Navigationsleiste</string>
     <string name="settings_file_name_ellipsize_title">Langen Dateinamen anzeigen</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Den Anfang kürzen</item>
@@ -638,6 +670,7 @@
     <string name="settings_default_directory_title">Startordner</string>
     <string name="settings_standard_directories_title">Standardordner</string>
     <string name="settings_standard_directories_summary_empty">Keine Standardordner aktiviert</string>
+    <string name="settings_standard_directory_gallery_summary">Fotos und Videos des Geräts</string>
     <string name="settings_bookmark_directories_title">Lesezeichenordner</string>
     <string name="settings_bookmark_directories_summary_empty">Keine Lesezeichenordner</string>
     <string name="settings_root_strategy_title">Root Zugriffsmodus</string>
@@ -669,6 +702,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Auf GitHub folgen</string>
     <string name="app_name_launcher">Dateien</string>
+    <string name="clear_query">Suchanfrage löschen</string>
     <string name="about_fork_subtitle">Original von Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Anhand des Hintergrunds</string>
     <string name="color_picker_preset_colors_label">Andere Farben</string>
@@ -683,6 +717,7 @@
 
     <string name="onboarding_install_apps_title">Apps installieren</string>
     <string name="onboarding_install_apps_description">Erlaube %1$s, APK-Dateien direkt zu installieren. So kannst du Apps aus heruntergeladenen oder empfangenen Dateien installieren, ohne einen Installer von Drittanbietern zu benötigen.</string>
+    <string name="reorder_drag_handle">Verschieben</string>
     <string name="onboarding_notifications_title">Benachrichtigungen</string>
     <string name="onboarding_optional">Optional</string>
     <string name="onboarding_required">Erforderlich</string>

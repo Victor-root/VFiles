@@ -25,6 +25,8 @@
     <string name="loading">Hleð inn…</string>
     <string name="maybe_later">Kannski seinna</string>
     <string name="merge">Sameina</string>
+    <string name="more_options">Fleiri valkostir</string>
+    <string name="navigate_up">Fara upp</string>
     <string name="none">Ekkert</string>
     <string name="open_navigation_drawer">Opna leiðsagnarspjald</string>
     <string name="paste">Líma</string>
@@ -306,9 +308,11 @@
     <string name="file_list_paste_extract_title_format">Afþjappa %1$,d</string>
     <string name="file_list_paste_action_extract_here">Afþjappa hér</string>
     <string name="file_list_empty">Engar skrár</string>
+    <string name="file_list_press_back_again_to_exit">Ýttu aftur á Til baka til að hætta</string>
     <string name="file_list_error_folder_not_found">Þessi mappa er ekki lengur til</string>
     <string name="file_list_error_permission_denied">Þú hefur ekki heimild til að opna þessa möppu</string>
     <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
+    <string name="file_list_action_create">Útbúa</string>
     <string name="file_list_action_create_file">Skrá</string>
     <string name="file_list_action_create_directory">Mappa</string>
 
@@ -513,6 +517,7 @@
     <string name="storage_edit_smb_server_title_edit">Breyta SMB-netþjóni</string>
     <string name="storage_edit_smb_server_title_add">Bæta við SMB-netþjóni</string>
     <string name="storage_edit_smb_server_host">Vélarheiti</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP-vistfang eða netheiti þjónsins, t.d. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Settu inn vélarheiti</string>
     <string name="storage_edit_smb_server_host_error_invalid">Ógilt vélarheiti</string>
     <string name="storage_edit_smb_server_port">Gátt</string>
@@ -580,6 +585,28 @@
     <string name="navigation_edit_bookmark_directory_name">Nafn</string>
     <string name="navigation_edit_bookmark_directory_path">Slóð</string>
     <string name="archive_viewer_title">Safnskoðari</string>
+    <string name="gallery_title">Myndasafn</string>
+    <string name="gallery_photos">Ljósmyndir</string>
+    <string name="gallery_albums">Albúm</string>
+    <string name="gallery_today">Í dag</string>
+    <string name="gallery_yesterday">Í gær</string>
+    <string name="gallery_empty">Engar ljósmyndir eða myndskeið</string>
+    <string name="gallery_access_denied">Leyfðu aðgang að skrám til að sjá ljósmyndirnar þínar og myndskeiðin</string>
+    <string name="gallery_allow_access">Leyfa</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d atriði</item>
+        <item quantity="other">%1$,d atriði</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Eyða þessu atriði?</item>
+        <item quantity="other">Eyða þessum %1$,d atriðum?</item>
+    </plurals>
+    <string name="gallery_details">Nánar</string>
+    <string name="gallery_details_date">Dagsetning</string>
+    <string name="gallery_show_in_folder">Sýna í möppu</string>
+    <string name="video_player_title">Myndspilari</string>
+    <string name="video_player_play">Spila</string>
+    <string name="video_player_pause">Hlé</string>
     <string name="image_viewer_title">Myndaskoðari</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Vista sem</string>
@@ -611,7 +638,9 @@
     <string name="ftp_server_anonymous_login_title">Nafnlaus innskráning</string>
     <string name="ftp_server_username_title">Notandanafn</string>
     <string name="ftp_server_password_title">Lykilorð</string>
+    <string name="ftp_server_password_summary_empty">Ekki stillt</string>
     <string name="ftp_server_port_title">Gátt</string>
+    <string name="ftp_server_port_error_invalid">Ógild gátt</string>
     <string name="ftp_server_home_directory_title">Rótarmappa</string>
     <string name="ftp_server_writable_title">Leyfa skrifun</string>
     <string name="settings_title">Stillingar</string>
@@ -629,6 +658,9 @@
     </string-array>
     <string name="settings_black_night_mode">Svartur næturhamur</string>
     <string name="settings_file_list_animation_title">Hreyfa skráalista</string>
+    <string name="settings_double_back_to_exit_title">Ýta tvisvar á Til baka til að hætta</string>
+    <string name="settings_edge_to_edge_title">Birting út að jöðrum</string>
+    <string name="settings_edge_to_edge_summary">Efni flettist á bak við stöðu- og leiðsagnarstikur</string>
     <string name="settings_file_name_ellipsize_title">Birta löng skráaheiti</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Setja úrfellingarpunkta í byrjun</item>
@@ -640,6 +672,7 @@
     <string name="settings_default_directory_title">Sjálfgefin mappa</string>
     <string name="settings_standard_directories_title">Staðlaðar möppur</string>
     <string name="settings_standard_directories_summary_empty">Engar staðlaðar möppur virkjaðar</string>
+    <string name="settings_standard_directory_gallery_summary">Ljósmyndir og myndskeið tækisins</string>
     <string name="settings_bookmark_directories_title">Bókamerkjamöppur</string>
     <string name="settings_bookmark_directories_summary_empty">Engar bókamerkjamöppur</string>
     <string name="settings_root_strategy_title">Hamur kerfisstjóraaðgangs</string>
@@ -671,6 +704,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Fylgjast með á GitHub</string>
     <string name="app_name_launcher">Skrár</string>
+    <string name="clear_query">Hreinsa fyrirspurn</string>
     <string name="about_fork_subtitle">Upprunalegt eftir Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Eftir veggfóðri</string>
     <string name="color_picker_preset_colors_label">Aðrir litir</string>
@@ -685,6 +719,7 @@
 
     <string name="onboarding_install_apps_title">Uppsetning forrita</string>
     <string name="onboarding_install_apps_description">Leyfðu %1$s að setja upp APK-skrár beint. Þannig geturðu sett upp forrit úr skrám sem þú hleður niður eða færð, án þess að þurfa uppsetningarforrit frá þriðja aðila.</string>
+    <string name="reorder_drag_handle">Færa</string>
     <string name="onboarding_notifications_title">Tilkynningar</string>
     <string name="onboarding_optional">Valfrjálst</string>
     <string name="onboarding_required">Nauðsynlegt</string>

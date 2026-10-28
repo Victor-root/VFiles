@@ -23,6 +23,8 @@
     <string name="loading">Φόρτωση…</string>
     <string name="maybe_later">Ίσως αργότερα</string>
     <string name="merge">Συγχώνευση</string>
+    <string name="more_options">Περισσότερες επιλογές</string>
+    <string name="navigate_up">Μετάβαση επάνω</string>
     <string name="none">Χωρίς</string>
     <string name="open_navigation_drawer">Άνοιγμα συρταριού πλοήγησης</string>
     <string name="paste">Επικόλληση</string>
@@ -304,9 +306,11 @@
     <string name="file_list_paste_extract_title_format">Εξαγωγή %1$,d</string>
     <string name="file_list_paste_action_extract_here">Εξαγωγή εδώ</string>
     <string name="file_list_empty">Χωρίς αρχεία</string>
+    <string name="file_list_press_back_again_to_exit">Πατήστε ξανά Πίσω για έξοδο</string>
     <string name="file_list_error_folder_not_found">Αυτός ο φάκελος δεν υπάρχει πλέον</string>
     <string name="file_list_error_permission_denied">Δεν έχετε δικαίωμα να ανοίξετε αυτόν τον φάκελο</string>
     <string name="file_list_error_unknown">Δεν είναι δυνατό το άνοιγμα αυτού του φακέλου</string>
+    <string name="file_list_action_create">Δημιουργία</string>
     <string name="file_list_action_create_file">Αρχείο</string>
     <string name="file_list_action_create_directory">Φάκελος</string>
 
@@ -511,6 +515,7 @@
     <string name="storage_edit_smb_server_title_edit">Επεξεργασία διακομιστή SMB</string>
     <string name="storage_edit_smb_server_title_add">Προσθήκη διακομιστή SMB</string>
     <string name="storage_edit_smb_server_host">Όνομα υπολογιστή</string>
+    <string name="storage_edit_smb_server_host_placeholder">Διεύθυνση IP ή όνομα δικτύου του διακομιστή, π.χ. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Εισάγετε ένα όνομα υπολογιστή</string>
     <string name="storage_edit_smb_server_host_error_invalid">Μη έγκυρο όνομα υπολογιστή</string>
     <string name="storage_edit_smb_server_port">Θύρα</string>
@@ -578,6 +583,28 @@
     <string name="navigation_edit_bookmark_directory_name">Όνομα</string>
     <string name="navigation_edit_bookmark_directory_path">Διαδρομή</string>
     <string name="archive_viewer_title">Προβολέας αρχειοθήκης</string>
+    <string name="gallery_title">Συλλογή</string>
+    <string name="gallery_photos">Φωτογραφίες</string>
+    <string name="gallery_albums">Άλμπουμ</string>
+    <string name="gallery_today">Σήμερα</string>
+    <string name="gallery_yesterday">Χθες</string>
+    <string name="gallery_empty">Δεν υπάρχουν φωτογραφίες ή βίντεο</string>
+    <string name="gallery_access_denied">Επιτρέψτε την πρόσβαση στα αρχεία για να βλέπετε τις φωτογραφίες και τα βίντεό σας</string>
+    <string name="gallery_allow_access">Να επιτρέπεται</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d στοιχείο</item>
+        <item quantity="other">%1$,d στοιχεία</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Διαγραφή αυτού του στοιχείου;</item>
+        <item quantity="other">Διαγραφή αυτών των %1$,d στοιχείων;</item>
+    </plurals>
+    <string name="gallery_details">Λεπτομέρειες</string>
+    <string name="gallery_details_date">Ημερομηνία</string>
+    <string name="gallery_show_in_folder">Εμφάνιση στον φάκελο</string>
+    <string name="video_player_title">Πρόγραμμα αναπαραγωγής βίντεο</string>
+    <string name="video_player_play">Αναπαραγωγή</string>
+    <string name="video_player_pause">Παύση</string>
     <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Αποθήκευση ως</string>
@@ -609,7 +636,9 @@
     <string name="ftp_server_anonymous_login_title">Ανώνυμη σύνδεση</string>
     <string name="ftp_server_username_title">Όνομα χρήστη</string>
     <string name="ftp_server_password_title">Κωδικός</string>
+    <string name="ftp_server_password_summary_empty">Δεν έχει οριστεί</string>
     <string name="ftp_server_port_title">Θύρα</string>
+    <string name="ftp_server_port_error_invalid">Μη έγκυρη θύρα</string>
     <string name="ftp_server_home_directory_title">Φάκελος ρίζας</string>
     <string name="ftp_server_writable_title">Αποδοχή εγγραφής</string>
     <string name="settings_title">Ρυθμίσεις</string>
@@ -627,6 +656,9 @@
     </string-array>
     <string name="settings_black_night_mode">Μαύρη νυχτερινή λειτουργία</string>
     <string name="settings_file_list_animation_title">Κινούμενη εικόνα λίστας αρχείων</string>
+    <string name="settings_double_back_to_exit_title">Πατήστε Πίσω δύο φορές για έξοδο</string>
+    <string name="settings_edge_to_edge_title">Προβολή από άκρη σε άκρη</string>
+    <string name="settings_edge_to_edge_summary">Το περιεχόμενο κυλά πίσω από τις γραμμές κατάστασης και πλοήγησης</string>
     <string name="settings_file_name_ellipsize_title">Εμφάνιση μακροσκελούς ονόματος αρχείου</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Ελλειψομετρία στην αρχή</item>
@@ -638,6 +670,7 @@
     <string name="settings_default_directory_title">Προεπιλεγμένος φάκελος</string>
     <string name="settings_standard_directories_title">Τυπικοί φάκελοι</string>
     <string name="settings_standard_directories_summary_empty">Χωρίς ενεργούς τυπικούς φακέλους</string>
+    <string name="settings_standard_directory_gallery_summary">Φωτογραφίες και βίντεο της συσκευής</string>
     <string name="settings_bookmark_directories_title">Φάκελοι σελιδοδείκτες</string>
     <string name="settings_bookmark_directories_summary_empty">Χωρίς φακέλους σελιδοδείκτες</string>
     <string name="settings_root_strategy_title">Λειτουργία πρόσβασης ρίζας</string>
@@ -669,6 +702,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Ακολουθήστε στο GitHub</string>
     <string name="app_name_launcher">Αρχεία</string>
+    <string name="clear_query">Απαλοιφή αναζήτησης</string>
     <string name="about_fork_subtitle">Πρωτότυπο από τον Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Βάσει ταπετσαρίας</string>
     <string name="color_picker_preset_colors_label">Άλλα χρώματα</string>
@@ -683,6 +717,7 @@
 
     <string name="onboarding_install_apps_title">Εγκατάσταση εφαρμογών</string>
     <string name="onboarding_install_apps_description">Επιτρέψτε στο %1$s να εγκαθιστά απευθείας αρχεία APK. Έτσι μπορείτε να εγκαθιστάτε εφαρμογές από αρχεία που κατεβάζετε ή λαμβάνετε, χωρίς να χρειάζεστε πρόγραμμα εγκατάστασης τρίτου μέρους.</string>
+    <string name="reorder_drag_handle">Μετακίνηση</string>
     <string name="onboarding_notifications_title">Ειδοποιήσεις</string>
     <string name="onboarding_optional">Προαιρετικό</string>
     <string name="onboarding_required">Απαιτείται</string>

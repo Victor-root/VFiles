@@ -13,15 +13,20 @@
     <string name="default_">Lehenetsia</string>
     <string name="delete">Ezabatu</string>
     <string name="discard">Baztertu</string>
+    <string name="edit">Editatu</string>
     <string name="empty">Hustu</string>
     <string name="empty_placeholder">(Hutsik)</string>
     <string name="error">Errorea</string>
+    <string name="hide">Ezkutatu</string>
     <string name="install">Instalatu</string>
     <string name="keep_editing">Jarraitu editatzen</string>
     <string name="loading">Kargatzen…</string>
     <string name="maybe_later">Agian geroago</string>
     <string name="merge">Bateratu</string>
+    <string name="more_options">Aukera gehiago</string>
+    <string name="navigate_up">Joan gora</string>
     <string name="none">Bat ere ez</string>
+    <string name="open_navigation_drawer">Ireki nabigazio-tiradera</string>
     <string name="paste">Itsatsi</string>
     <string name="refresh">Freskatu</string>
     <string name="reload">Birkargatu</string>
@@ -35,8 +40,10 @@
     <string name="select">Hautatu</string>
     <string name="select_all">Hautatu guztiak</string>
     <string name="share">Partekatu</string>
+    <string name="show">Erakutsi</string>
     <string name="skip">Saltatu</string>
     <string name="stop">Gelditu</string>
+    <string name="system_default">Sistemaren lehenetsia</string>
     <string name="unknown">Ezezaguna</string>
     <string name="view">Ikusi</string>
 
@@ -48,6 +55,7 @@
         <item quantity="one">byte %1$,d</item>
         <item quantity="other">%1$,d byte</item>
     </plurals>
+    <string name="all_files_access_rationale_message">Aplikazioak fitxategi guztiak kudeatzeko sarbidea behar du. Baimendu sarbidea hurrengo sistemaren ezarpenean.</string>
 
     <!-- The allow button before Android 10 was in all-caps. -->
     <string name="storage_permission_rationale_message">Aplikazioak fitxategiak atzitzeko baimena behar du. Sakatu \"BAIMENDU\" hurrengo elkarrizketa-koadroan.</string>
@@ -58,6 +66,9 @@
     <string name="notification_channel_file_job_description">Erakutsi eta kontrolatu fitxategi-eragiketak</string>
     <string name="notification_channel_ftp_server_name">FTP zerbitzaria</string>
     <string name="notification_channel_ftp_server_description">Erakutsi eta kontrolatu FTP zerbitzaria</string>
+    <string name="file_action_archive_password_title">Pasahitza behar da</string>
+    <string name="file_action_archive_password_message_format">“%1$s” pasahitzez babestuta dago.</string>
+    <string name="file_action_archive_password_error_empty">Pasahitza ezin da hutsik egon</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Fitxategi %1$,d konprimitzeko prestatzen (%2$s)</item>
@@ -185,6 +196,8 @@
     <string name="file_job_move_error_message_format">Errorea gertatu da fitxategia “%1$s”-ra mugitzean.\n%2$s</string>
     <string name="file_job_delete_error_title">Errorea ezabatzean</string>
     <string name="file_job_delete_error_message_format">Errorea gertatu da “%1$s” ezabatzean.\n%2$s</string>
+    <string name="file_job_rename_error_title_format">Errorea “%1$s”-ren izena aldatzean</string>
+    <string name="file_job_rename_error_message_format">Errorea gertatu da fitxategiari “%1$s” izena jartzean.\n%2$s</string>
     <string name="file_job_set_owner_error_title_format">Errorea \"%1$s\"-ren jabetza aldatzean</string>
     <string name="file_job_set_owner_error_message_format">Errorea gertatu da “%1$s”-ren jabetza aldatzean.\n%2$s</string>
     <string name="file_job_set_group_error_title_format">Errorea \"%1$s\"-ren taldea aldatzean</string>
@@ -218,17 +231,40 @@
     <string name="file_name_error_empty">Fitxategiaren izena ezin da hutsik egon</string>
     <string name="file_name_error_invalid">Fitxategi-izen baliogabea</string>
     <string name="file_name_error_already_exists">Badago izen bereko fitxategi bat aurretik</string>
+    <string name="file_replace_message_format">Ordeztu “%1$s”?</string>
     <string name="file_delete_message_file_format">Ezabatu “%1$s”?</string>
     <string name="file_delete_message_directory_format">Ezabatu \"%1$s\" karpeta eta bere edukiak?</string>
+    <plurals name="file_delete_message_multiple_files_format">
+        <item quantity="one">Ezabatu fitxategi %1$,d?</item>
+        <item quantity="other">Ezabatu %1$,d fitxategi?</item>
+    </plurals>
+    <plurals name="file_delete_message_multiple_directories_format">
+        <item quantity="one">Ezabatu karpeta %1$,d eta bere edukia?</item>
+        <item quantity="other">Ezabatu %1$,d karpeta eta haien edukiak?</item>
+    </plurals>
+    <plurals name="file_delete_message_multiple_mixed_format">
+        <item quantity="one">Ezabatu elementu %1$,d?</item>
+        <item quantity="other">Ezabatu %1$,d elementu?</item>
+    </plurals>
     <string name="file_create_archive_title">Sortu artxiboa</string>
     <string name="file_create_archive_type_zip">.zip</string>
     <string name="file_create_archive_type_tar_xz">.tar.xz</string>
     <string name="file_create_archive_type_7z">.7z</string>
+    <string name="file_create_archive_password">Pasahitza (aukerakoa)</string>
     <string name="file_add_bookmark_success">Laster-marka gehitu da</string>
     <string name="file_create_file_title">Fitxategi berria</string>
     <string name="file_create_directory_title">Karpeta berria</string>
 
     <string name="file_list_title">Fitxategiak</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Hautatu fitxategi bat</item>
+        <item quantity="other">Hautatu fitxategiak</item>
+    </plurals>
+    <string name="file_list_title_create_file">Gorde fitxategia</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Hautatu karpeta bat</item>
+        <item quantity="other">Hautatu karpetak</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">Karpeta %1$,d</item>
         <item quantity="other">%1$,d karpeta</item>
@@ -238,28 +274,40 @@
         <item quantity="other">%1$,d fitxategi</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
+    <string name="file_list_path_error_empty">Bidea ezin da hutsik egon</string>
+    <string name="file_list_path_error_invalid">Bide baliogabea</string>
+    <string name="file_list_action_view_sort">Ikusi eta ordenatu</string>
+    <string name="file_list_action_view_list">Zerrenda</string>
+    <string name="file_list_action_view_grid">Sareta</string>
     <string name="file_list_action_sort_by_name">Izena</string>
     <string name="file_list_action_sort_by_type">Mota</string>
     <string name="file_list_action_sort_by_size">Tamaina</string>
     <string name="file_list_action_sort_by_last_modified">Azken aldaketa</string>
     <string name="file_list_action_sort_order_ascending">Gorantza</string>
     <string name="file_list_action_sort_directories_first">Karpetak aurretik</string>
+    <string name="file_list_action_view_sort_path_specific">Karpeta honetarako soilik</string>
     <string name="file_list_action_new_task">Leiho berria</string>
     <string name="file_list_action_navigate_up">Joan gora</string>
+    <string name="file_list_action_navigate_to">Joan hona</string>
     <string name="file_list_action_show_hidden_files">Erakutsi ezkutatutako fitxategiak</string>
     <string name="file_list_action_copy_path">Kopiatu bidea</string>
     <string name="file_list_action_open_in_terminal">Ireki terminalean</string>
     <string name="file_list_action_add_bookmark">Gehitu laster-marka</string>
     <string name="file_list_action_create_shortcut">Sortu laster-marka</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Ireki leiho berrian</string>
+    <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Fitxategiaren izena</string>
+    <string name="file_list_open_current_directory_format">Hautatu “%1$s”</string>
     <string name="file_list_paste_move_title_format">%1$,d lekuz aldatzen</string>
     <string name="file_list_paste_copy_title_format">%1$,d kopiatzen</string>
     <string name="file_list_paste_extract_title_format">%1$,d erauzten</string>
     <string name="file_list_paste_action_extract_here">Erauzi hemen</string>
     <string name="file_list_empty">Fitxategirik ez</string>
+    <string name="file_list_press_back_again_to_exit">Sakatu atzera berriro irteteko</string>
     <string name="file_list_error_folder_not_found">Karpeta hau jada ez dago</string>
     <string name="file_list_error_permission_denied">Ez duzu baimenik karpeta hau irekitzeko</string>
     <string name="file_list_error_unknown">Ezin da karpeta hau ireki</string>
+    <string name="file_list_action_create">Sortu</string>
     <string name="file_list_action_create_file">Fitxategia</string>
     <string name="file_list_action_create_directory">Karpeta</string>
 
@@ -279,12 +327,239 @@
     <string name="file_properties_basic_size">Tamaina</string>
     <string name="file_properties_basic_size_with_human_readable_format">%1$s (%2$s)</string>
     <string name="file_properties_basic_contents">Edukiak</string>
+    <plurals name="file_properties_basic_contents_format">
+        <item quantity="one">Elementu %1$,d, guztira %2$s</item>
+        <item quantity="other">%1$,d elementu, guztira %2$s</item>
+    </plurals>
     <string name="file_properties_basic_last_modification_time">Azken aldaketa</string>
     <string name="file_properties_basic_parent_directory">Karpeta gurasoa</string>
     <string name="file_properties_basic_archive_file">Artxibo fitxategia</string>
     <string name="file_properties_basic_archive_entry">Artxibo sarrera</string>
+    <string name="file_properties_permission">Baimenak</string>
+    <string name="file_properties_permission_owner">Jabea</string>
+    <string name="file_properties_permission_group">Taldea</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Aldatu jabea</string>
+    <string name="file_properties_permission_set_group_title">Aldatu taldea</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Idatzi izen bat edo IDa</string>
+    <string name="file_properties_permission_set_principal_system">Sistema</string>
+    <string name="file_properties_permission_mode">Modua</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Aldatu modua</string>
+    <string name="file_properties_permission_set_mode_others">Besteak</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Irakurri</item>
+        <item>Idatzi</item>
+        <item>Exekutatu</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Irakurri</item>
+        <item>Idatzi</item>
+        <item>Bilatu</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Berezia</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Ez gehitu “Exekutatu” barneko fitxategiei</string>
+    <string name="file_properties_permission_selinux_context">SELinux testuingurua</string>
+    <string name="file_properties_permission_set_selinux_context_title">Aldatu SELinux testuingurua</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Berrezarri</string>
+    <string name="file_properties_permission_recursive">Aplikatu barneko fitxategiei</string>
+    <string name="file_properties_image">Irudia</string>
+    <string name="file_properties_media_dimensions">Neurriak</string>
+    <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
+    <string name="file_properties_media_date_time">Ateratze-data</string>
+    <string name="file_properties_media_coordinates">Koordenatuak</string>
+    <string name="file_properties_media_coordinates_format">%1$.3f, %2$.3f</string>
+    <string name="file_properties_media_address">Kokapena</string>
+    <string name="file_properties_image_gps_altitude">Altitudea</string>
+    <string name="file_properties_image_gps_altitude_format">%1$,.3f m</string>
+    <string name="file_properties_image_equipment">Kamera</string>
+    <string name="file_properties_image_equipment_format">%1$s %2$s</string>
+    <string name="file_properties_image_f_number">Irekiera</string>
+    <string name="file_properties_image_shutter_speed">Obturazio-abiadura</string>
+    <string name="file_properties_image_focal_length">Foku-distantzia</string>
+    <string name="file_properties_image_focal_length_format">%1$.2f mm</string>
+    <string name="file_properties_image_photographic_sensitivity">ISO baliokidea</string>
+    <string name="file_properties_image_photographic_sensitivity_format">ISO %1$d</string>
+    <string name="file_properties_image_software">Softwarea</string>
+    <string name="file_properties_image_description">Deskribapena</string>
+    <string name="file_properties_image_artist">Sortzailea</string>
+    <string name="file_properties_image_copyright">Copyright-a</string>
+    <string name="file_properties_audio">Audioa</string>
+    <string name="file_properties_media_title">Izenburua</string>
+    <string name="file_properties_audio_artist">Artista</string>
+    <string name="file_properties_audio_album">Albuma</string>
+    <string name="file_properties_audio_album_artist">Albumaren artista</string>
+    <string name="file_properties_audio_composer">Konpositorea</string>
+    <string name="file_properties_audio_disc_number">Diskoa</string>
+    <string name="file_properties_audio_track_number">Pista</string>
+    <string name="file_properties_audio_year">Urtea</string>
+    <string name="file_properties_audio_genre">Generoa</string>
+    <string name="file_properties_media_duration">Iraupena</string>
+    <string name="file_properties_media_bit_rate">Bit-tasa</string>
+    <string name="file_properties_media_bit_rate_format">%1$d kbps</string>
+    <string name="file_properties_audio_sample_rate">Laginketa-maiztasuna</string>
+    <string name="file_properties_audio_sample_rate_format">%1$d Hz</string>
+    <string name="file_properties_video">Bideoa</string>
+    <string name="file_properties_apk">APK</string>
+    <string name="file_properties_apk_label">Izena</string>
+    <string name="file_properties_apk_package_name">Paketearen izena</string>
+    <string name="file_properties_apk_version">Bertsioa</string>
+    <string name="file_properties_apk_version_format">%1$s (%2$d)</string>
+    <string name="file_properties_apk_min_sdk_version">Sistemaren gutxieneko bertsioa</string>
+    <string name="file_properties_apk_target_sdk_version">Sistemaren helburu-bertsioa</string>
+    <string name="file_properites_apk_sdk_version_format">%1$s (%2$s, %3$d)</string>
+    <string name="file_properties_apk_requested_permissions">Baimenak</string>
+    <string name="file_properties_apk_requested_permissions_zero">Ez da baimenik eskatzen</string>
+    <plurals name="file_properties_apk_requested_permissions_positive_format">
+        <item quantity="one">Baimen %1$,d eskatzen da</item>
+        <item quantity="other">%1$,d baimen eskatzen dira</item>
+    </plurals>
+    <string name="file_properties_apk_signature_digests">Sinadurak</string>
+    <string name="file_properties_apk_signature_digests_empty">Ez dago sinadura baliozkorik</string>
+    <string name="file_properties_apk_past_signature_digests">Sinadura zaharrak</string>
+    <string name="file_properties_checksum">Kontrol-baturak</string>
+    <string name="file_properties_checksum_compare">Konparatu</string>
+    <string name="file_properties_checksum_compare_placeholder">Edozein kontrol-batura</string>
+    <string name="file_properties_checksum_compare_match_format">%1$s kontrol-baturarekin bat dator</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">%1$s kontrol-baturaren aurrizkiarekin bat dator</string>
+    <string name="file_properties_checksum_compare_no_match">Ez da bat datorren kontrol-baturarik aurkitu</string>
     <string name="storage_file_system_root_title">Erroa</string>
     <string name="storage_internal_storage">Barne-biltegiratzea</string>
+    <string name="storage_list_title">Biltegiak</string>
+    <string name="storage_list_empty">Biltegirik ez</string>
+    <string name="storage_add_storage_title">Gehitu biltegia</string>
+    <string name="storage_add_storage_document_tree">Kanpoko biltegia</string>
+    <string name="storage_add_storage_ftp_server">FTP zerbitzaria</string>
+    <string name="storage_add_storage_sftp_server">SFTP zerbitzaria</string>
+    <string name="storage_add_storage_smb_server">SMB zerbitzaria</string>
+    <string name="storage_add_storage_webdav_server">WebDAV zerbitzaria</string>
+    <string name="storage_edit_device_storage_title">Editatu gailuaren biltegia</string>
+    <string name="storage_edit_device_storage_name">Izena</string>
+    <string name="storage_edit_device_storage_path">Bidea</string>
+    <string name="storage_add_external_storage_shortcut_title">Gehitu kanpoko biltegiaren lasterbidea</string>
+    <string name="storage_edit_external_storage_shortcut_title">Editatu kanpoko biltegiaren lasterbidea</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Biltegi-bolumena</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Idatzi biltegi-bolumen bat</string>
+    <string name="storage_edit_external_storage_shortcut_path">Bidea</string>
+    <string name="storage_add_document_tree_title">Gehitu kanpoko biltegia</string>
+    <string name="storage_edit_document_tree_title">Editatu kanpoko biltegia</string>
+    <string name="storage_edit_document_tree_name">Izena</string>
+    <string name="storage_edit_document_tree_uri">URIa</string>
+    <string name="storage_edit_document_tree_path">Bidea</string>
+    <string name="storage_edit_ftp_server_title_edit">Editatu FTP zerbitzaria</string>
+    <string name="storage_edit_ftp_server_title_add">Gehitu FTP zerbitzaria</string>
+    <string name="storage_edit_ftp_server_host">Ostalari-izena</string>
+    <string name="storage_edit_ftp_server_host_error_empty">Idatzi ostalari-izen bat</string>
+    <string name="storage_edit_ftp_server_host_error_invalid">Ostalari-izen baliogabea</string>
+    <string name="storage_edit_ftp_server_port">Ataka</string>
+    <string name="storage_edit_ftp_server_port_error_invalid">Ataka baliogabea</string>
+    <string name="storage_edit_ftp_server_path">Bidea</string>
+    <string name="storage_edit_ftp_server_path_placeholder">Hutsik utz daiteke</string>
+    <string name="storage_edit_ftp_server_name">Izena</string>
+    <string name="storage_edit_ftp_server_name_placeholder">Erabili ostalari-izena</string>
+    <string name="storage_edit_ftp_server_protocol">Protokoloa</string>
+    <string name="storage_edit_ftp_server_authentication_type">Autentifikazioa</string>
+    <string-array name="storage_edit_ftp_server_authentication_type_entries">
+        <item>Pasahitza</item>
+        <item>Anonimoa</item>
+    </string-array>
+    <string name="storage_edit_ftp_server_username">Erabiltzaile-izena</string>
+    <string name="storage_edit_ftp_server_username_error_empty">Idatzi erabiltzaile-izen bat</string>
+    <string name="storage_edit_ftp_server_password">Pasahitza</string>
+    <string name="storage_edit_ftp_server_mode">Modua</string>
+    <string-array name="storage_edit_ftp_server_mode_entries">
+        <item>Aktiboa</item>
+        <item>Pasiboa</item>
+    </string-array>
+    <string name="storage_edit_ftp_server_encoding">Kodeketa</string>
+    <string name="storage_edit_ftp_server_connect_and_add">Konektatu eta gehitu</string>
+    <string name="storage_edit_ftp_server_add">Gehitu</string>
+    <string name="storage_edit_sftp_server_title_edit">Editatu SFTP zerbitzaria</string>
+    <string name="storage_edit_sftp_server_title_add">Gehitu SFTP zerbitzaria</string>
+    <string name="storage_edit_sftp_server_host">Ostalari-izena</string>
+    <string name="storage_edit_sftp_server_host_error_empty">Idatzi ostalari-izen bat</string>
+    <string name="storage_edit_sftp_server_host_error_invalid">Ostalari-izen baliogabea</string>
+    <string name="storage_edit_sftp_server_port">Ataka</string>
+    <string name="storage_edit_sftp_server_port_error_invalid">Ataka baliogabea</string>
+    <string name="storage_edit_sftp_server_path">Bidea</string>
+    <string name="storage_edit_sftp_server_path_placeholder">Hutsik utz daiteke</string>
+    <string name="storage_edit_sftp_server_name">Izena</string>
+    <string name="storage_edit_sftp_server_name_placeholder">Erabili ostalari-izena</string>
+    <string name="storage_edit_sftp_server_authentication_type">Autentifikazioa</string>
+    <string-array name="storage_edit_sftp_server_authentication_type_entries">
+        <item>Pasahitza</item>
+        <item>Gako publikoa</item>
+    </string-array>
+    <string name="storage_edit_sftp_server_username">Erabiltzaile-izena</string>
+    <string name="storage_edit_sftp_server_username_error_empty">Idatzi erabiltzaile-izen bat</string>
+    <string name="storage_edit_sftp_server_password">Pasahitza</string>
+    <string name="storage_edit_sftp_server_private_key">Gako pribatua</string>
+    <string name="storage_edit_sftp_server_private_key_open_file">Ireki fitxategia</string>
+    <string name="storage_edit_sftp_server_private_key_error_empty">Idatzi gako pribatu bat</string>
+    <string name="storage_edit_sftp_server_private_key_error_invalid">Gako pribatu baliogabea</string>
+    <string name="storage_edit_sftp_server_private_key_password">Gako pribatuaren pasahitza</string>
+    <string name="storage_edit_sftp_server_private_key_password_placeholder">Hutsik utz daiteke</string>
+    <string name="storage_edit_sftp_server_private_key_password_error_invalid">Gako pribatuaren pasahitz baliogabea</string>
+    <string name="storage_edit_sftp_server_connect_and_add">Konektatu eta gehitu</string>
+    <string name="storage_edit_sftp_server_add">Gehitu</string>
+    <string name="storage_add_lan_smb_server_loading">SMB zerbitzariak bilatzen…</string>
+    <string name="storage_add_lan_smb_server_add">Gehitu eskuz</string>
+    <string name="storage_edit_smb_server_title_edit">Editatu SMB zerbitzaria</string>
+    <string name="storage_edit_smb_server_title_add">Gehitu SMB zerbitzaria</string>
+    <string name="storage_edit_smb_server_host">Ostalari-izena</string>
+    <string name="storage_edit_smb_server_host_placeholder">Zerbitzariaren IP helbidea edo sareko izena, adibidez 192.168.1.10</string>
+    <string name="storage_edit_smb_server_host_error_empty">Idatzi ostalari-izen bat</string>
+    <string name="storage_edit_smb_server_host_error_invalid">Ostalari-izen baliogabea</string>
+    <string name="storage_edit_smb_server_port">Ataka</string>
+    <string name="storage_edit_smb_server_port_error_invalid">Ataka baliogabea</string>
+    <string name="storage_edit_smb_server_path">Bidea</string>
+    <string name="storage_edit_smb_server_path_placeholder">Hutsik utz daiteke</string>
+    <string name="storage_edit_smb_server_name">Izena</string>
+    <string name="storage_edit_smb_server_name_placeholder">Tiraderan erakusten da; lehenespenez, ostalari-izena</string>
+    <string name="storage_edit_smb_server_authentication_type">Autentifikazioa</string>
+    <string-array name="storage_edit_smb_server_authentication_type_entries">
+        <item>Pasahitza</item>
+        <item>Gonbidatua</item>
+        <item>Anonimoa</item>
+    </string-array>
+    <string name="storage_edit_smb_server_username">Erabiltzaile-izena</string>
+    <string name="storage_edit_smb_server_username_error_empty">Idatzi erabiltzaile-izen bat</string>
+    <string name="storage_edit_smb_server_password">Pasahitza</string>
+    <string name="storage_edit_smb_server_domain">Domeinua</string>
+    <string name="storage_edit_smb_server_encrypt">SMB enkriptatzea</string>
+    <string name="storage_edit_smb_server_encrypt_summary">Gaitu SMB3 enkriptatzearen euskarria. Zerbitzari batzuek behar dute; onartzen ez bada, enkriptatu gabeko SMB erabiltzen da.</string>
+    <string name="storage_edit_smb_server_connect_and_add">Konektatu eta gehitu</string>
+    <string name="storage_edit_smb_server_add">Gehitu</string>
+    <string name="storage_edit_webdav_server_title_edit">Editatu WebDAV zerbitzaria</string>
+    <string name="storage_edit_webdav_server_title_add">Gehitu WebDAV zerbitzaria</string>
+    <string name="storage_edit_webdav_server_host">Ostalari-izena</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Idatzi ostalari-izen bat</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Ostalari-izen baliogabea</string>
+    <string name="storage_edit_webdav_server_port">Ataka</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Ataka baliogabea</string>
+    <string name="storage_edit_webdav_server_path">Bidea</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Hutsik utz daiteke</string>
+    <string name="storage_edit_webdav_server_name">Izena</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Erabili ostalari-izena</string>
+    <string name="storage_edit_webdav_server_protocol">Protokoloa</string>
+    <string name="storage_edit_webdav_server_authentication_type">Autentifikazioa</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Pasahitza</item>
+        <item>Sarbide-tokena</item>
+        <item>Bat ere ez</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Erabiltzaile-izena</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Idatzi erabiltzaile-izen bat</string>
+    <string name="storage_edit_webdav_server_password">Pasahitza</string>
+    <string name="storage_edit_webdav_server_access_token">Sarbide-tokena</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Idatzi sarbide-token bat</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Konektatu eta gehitu</string>
+    <string name="storage_edit_webdav_server_add">Gehitu</string>
     <string name="navigation_storage_subtitle_format">%1$s libre %2$s guztira</string>
     <string name="navigation_add_storage">Gehitu biltegia…</string>
     <string name="navigation_standard_directory_alarms">Alarmak</string>
@@ -305,11 +580,15 @@
     <string name="navigation_edit_bookmark_directory_path">Bidea</string>
     <string name="image_viewer_title">Irudi ikuslea</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Gorde honela</string>
+    <string name="save_as_error">Errorea fitxategia gordetzean</string>
+    <string name="save_as_success_format">“%1$s” hemen gorde da: “%2$s”</string>
     <string name="text_editor_title">Testu editorea</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
     <string name="text_editor_save_success">Gordeta</string>
     <string name="text_editor_reload_message">Ziur birkargatu nahi duzula? Dokumentu honi egindako gorde gabeko aldaketak galduko dira.</string>
+    <string name="text_editor_encoding">Kodeketa</string>
     <string name="text_editor_close_message">Ziur dokumentu honi egindako gorde gabeko aldaketak baztertu nahi dituzula?</string>
 
     <string name="ftp_server_title">FTP zerbitzaria</string>
@@ -319,17 +598,27 @@
     <string name="ftp_server_state_summary_stopping">Gelditzen…</string>
     <string name="ftp_server_state_summary_stopped">Hasi gabe</string>
     <string name="ftp_server_url_title">URLa</string>
+    <string name="ftp_server_url_summary_no_local_inet_address">Tokiko IP helbidea ezezaguna da</string>
     <string name="ftp_server_url_menu_copy_url">Kopiatu URLa</string>
     <string name="ftp_server_url_menu_copy_password">Kopiatu pasahitza</string>
+    <string name="ftp_server_add_tile_title">Gehitu ezarpen bizkorretara</string>
+    <string name="ftp_server_add_tile_result_added">“FTP zerbitzaria” ezarpen bizkorretara gehitu da</string>
+    <string name="ftp_server_add_tile_result_already_added">“FTP zerbitzaria” dagoeneko ezarpen bizkorretan dago</string>
+    <string name="ftp_server_add_tile_result_error">Errorea “FTP zerbitzaria” ezarpen bizkorretara gehitzean</string>
     <string name="ftp_server_configuration_title">Konfigurazioa</string>
     <string name="ftp_server_anonymous_login_title">Saio anonimoa</string>
     <string name="ftp_server_username_title">Erabiltzaile-izena</string>
     <string name="ftp_server_password_title">Pasahitza</string>
+    <string name="ftp_server_password_summary_empty">Ezarri gabe</string>
     <string name="ftp_server_port_title">Ataka</string>
+    <string name="ftp_server_port_error_invalid">Ataka baliogabea</string>
     <string name="ftp_server_home_directory_title">Erro karpeta</string>
     <string name="ftp_server_writable_title">Baimendu idaztea</string>
     <string name="settings_title">Ezarpenak</string>
     <string name="settings_interface_title">Interfazea</string>
+    <string name="settings_locale_title">Hizkuntza</string>
+    <string name="settings_theme_color_title">Gaiaren kolorea</string>
+    <string name="settings_theme_color_summary">Aplikazioan gehien agertzen den kolorea</string>
     <string name="settings_night_mode_title">Gauerako modua</string>
     <string-array name="settings_night_mode_entries">
         <item>Jarraitu sistemari</item>
@@ -338,11 +627,23 @@
         <item>Denboraren arabera</item>
         <item>Bateria aurrezlearen arabera</item>
     </string-array>
+    <string name="settings_black_night_mode">Gauerako modu beltza</string>
     <string name="settings_file_list_animation_title">Fitxategien zerrendaren animazioa</string>
+    <string name="settings_double_back_to_exit_title">Sakatu atzera bi aldiz irteteko</string>
+    <string name="settings_edge_to_edge_title">Ertzetik ertzerako pantaila</string>
+    <string name="settings_edge_to_edge_summary">Edukia egoera- eta nabigazio-barren atzetik korritzen da</string>
+    <string name="settings_file_name_ellipsize_title">Fitxategi-izen luzeen bistaratzea</string>
+    <string-array name="settings_file_name_ellipsize_entries">
+        <item>Laburtu hasiera</item>
+        <item>Laburtu erdialdea</item>
+        <item>Laburtu amaiera</item>
+        <item>Testu korrikaria</item>
+    </string-array>
     <string name="settings_behavior_title">Portaera</string>
     <string name="settings_default_directory_title">Lehenetsitako karpeta</string>
     <string name="settings_standard_directories_title">Karpeta estandarrak</string>
     <string name="settings_standard_directories_summary_empty">Ez da karpeta estandarrik gaitu</string>
+    <string name="settings_standard_directory_gallery_summary">Gailuko argazkiak eta bideoak</string>
     <string name="settings_bookmark_directories_title">Karpeten laster-markak</string>
     <string name="settings_bookmark_directories_summary_empty">Karpeten laster-markarik ez</string>
     <string name="settings_root_strategy_title">Root sarbidea modua</string>
@@ -362,6 +663,8 @@
         <item>Ikusi edukiak</item>
         <item>Galdetu zer egin</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Erakutsi PDF dokumentuen iruditxoak</string>
+    <string name="settings_show_pdf_thumbnail_pre_28_summary">Aplikazioa ezegonkor bihur dezake Android bertsio zaharretan</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Irakurri iruditxoen urruneko fitxategiak</string>
 
     <string name="about_title">Honi buruz</string>
@@ -372,6 +675,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Jarraitu GitHub-en</string>
     <string name="app_name_launcher">Fitxategiak</string>
+    <string name="clear_query">Garbitu bilaketa</string>
     <string name="about_fork_subtitle">Jatorrizkoa: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Horma-paperaren arabera</string>
     <string name="color_picker_preset_colors_label">Beste kolore batzuk</string>
@@ -386,6 +690,7 @@
 
     <string name="onboarding_install_apps_title">Aplikazioak instalatzea</string>
     <string name="onboarding_install_apps_description">Baimendu %1$s(r)i APK fitxategiak zuzenean instalatzen. Horrela, deskargatutako edo jasotako fitxategietatik aplikazioak instalatu ahalko dituzu, hirugarrenen instalatzailerik behar izan gabe.</string>
+    <string name="reorder_drag_handle">Mugitu</string>
     <string name="onboarding_notifications_title">Jakinarazpenak</string>
     <string name="onboarding_optional">Aukerakoa</string>
     <string name="onboarding_required">Beharrezkoa</string>
@@ -409,5 +714,28 @@
     <string name="storage_volume_icon_usb">USB unitatea</string>
     <string name="storage_volume_name">Izena</string>
     <string name="storage_volume_partition_numbered">%1$d. partizioa</string>
+    <string name="archive_viewer_title">Artxibo ikuslea</string>
+    <string name="gallery_title">Galeria</string>
+    <string name="gallery_photos">Argazkiak</string>
+    <string name="gallery_albums">Albumak</string>
+    <string name="gallery_today">Gaur</string>
+    <string name="gallery_yesterday">Atzo</string>
+    <string name="gallery_empty">Ez dago argazki edo bideorik</string>
+    <string name="gallery_access_denied">Baimendu fitxategietarako sarbidea zure argazkiak eta bideoak ikusteko</string>
+    <string name="gallery_allow_access">Baimendu</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">Elementu %1$,d</item>
+        <item quantity="other">%1$,d elementu</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Ezabatu elementu hau?</item>
+        <item quantity="other">Ezabatu %1$,d elementu hauek?</item>
+    </plurals>
+    <string name="gallery_details">Xehetasunak</string>
+    <string name="gallery_details_date">Data</string>
+    <string name="gallery_show_in_folder">Erakutsi karpetan</string>
+    <string name="video_player_title">Bideo-erreproduzigailua</string>
+    <string name="video_player_play">Erreproduzitu</string>
+    <string name="video_player_pause">Pausatu</string>
     <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

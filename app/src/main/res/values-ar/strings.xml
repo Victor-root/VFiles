@@ -23,6 +23,8 @@
     <string name="loading">جار التحميل…</string>
     <string name="maybe_later">ربما في وقت لاحق</string>
     <string name="merge">دمج</string>
+    <string name="more_options">خيارات إضافية</string>
+    <string name="navigate_up">الانتقال للأعلى</string>
     <string name="none">لا شيء</string>
     <string name="open_navigation_drawer">افتح درج التنقل</string>
     <string name="paste">لصق</string>
@@ -416,9 +418,11 @@
     <string name="file_list_paste_extract_title_format">استخراج %1$,d</string>
     <string name="file_list_paste_action_extract_here">استخرج هنا</string>
     <string name="file_list_empty">لا توجد ملفات</string>
+    <string name="file_list_press_back_again_to_exit">اضغط رجوع مرة أخرى للخروج</string>
     <string name="file_list_error_folder_not_found">لم يعد هذا المجلد موجودًا</string>
     <string name="file_list_error_permission_denied">ليس لديك إذن لفتح هذا المجلد</string>
     <string name="file_list_error_unknown">تعذّر فتح هذا المجلد</string>
+    <string name="file_list_action_create">إنشاء</string>
     <string name="file_list_action_create_file">ملف</string>
     <string name="file_list_action_create_directory">مجلد</string>
 
@@ -631,6 +635,7 @@
     <string name="storage_edit_smb_server_title_edit">تحرير خادم SMB</string>
     <string name="storage_edit_smb_server_title_add">إضافة خادم SMB</string>
     <string name="storage_edit_smb_server_host">اسم المضيف</string>
+    <string name="storage_edit_smb_server_host_placeholder">عنوان IP أو اسم الشبكة للخادم، مثل 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">أدخل اسم مضيف</string>
     <string name="storage_edit_smb_server_host_error_invalid">اسم مضيف غير صالح</string>
     <string name="storage_edit_smb_server_port">منفذ</string>
@@ -698,6 +703,36 @@
     <string name="navigation_edit_bookmark_directory_name">الاسم</string>
     <string name="navigation_edit_bookmark_directory_path">المسار</string>
     <string name="archive_viewer_title">عارض الأرشيف</string>
+    <string name="gallery_title">المعرض</string>
+    <string name="gallery_photos">الصور</string>
+    <string name="gallery_albums">الألبومات</string>
+    <string name="gallery_today">اليوم</string>
+    <string name="gallery_yesterday">أمس</string>
+    <string name="gallery_empty">لا توجد صور أو فيديوهات</string>
+    <string name="gallery_access_denied">اسمح بالوصول إلى الملفات لعرض صورك وفيديوهاتك</string>
+    <string name="gallery_allow_access">سماح</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="zero">%1$,d عنصر</item>
+        <item quantity="one">%1$,d عنصر</item>
+        <item quantity="two">%1$,d عنصران</item>
+        <item quantity="few">%1$,d عناصر</item>
+        <item quantity="many">%1$,d عنصرًا</item>
+        <item quantity="other">%1$,d عنصر</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="zero">هل تريد حذف %1$,d عنصر؟</item>
+        <item quantity="one">هل تريد حذف هذا العنصر؟</item>
+        <item quantity="two">هل تريد حذف هذين العنصرين؟</item>
+        <item quantity="few">هل تريد حذف هذه العناصر الـ %1$,d؟</item>
+        <item quantity="many">هل تريد حذف هذه الـ %1$,d عنصرًا؟</item>
+        <item quantity="other">هل تريد حذف هذه الـ %1$,d عنصر؟</item>
+    </plurals>
+    <string name="gallery_details">التفاصيل</string>
+    <string name="gallery_details_date">التاريخ</string>
+    <string name="gallery_show_in_folder">عرض في المجلد</string>
+    <string name="video_player_title">مشغل الفيديو</string>
+    <string name="video_player_play">تشغيل</string>
+    <string name="video_player_pause">إيقاف مؤقت</string>
     <string name="image_viewer_title">عارض الصور</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">حفظ كـ</string>
@@ -729,7 +764,9 @@
     <string name="ftp_server_anonymous_login_title">تسجيل دخول مجهول</string>
     <string name="ftp_server_username_title">اسم المستخدم</string>
     <string name="ftp_server_password_title">كلمة المرور</string>
+    <string name="ftp_server_password_summary_empty">غير محددة</string>
     <string name="ftp_server_port_title">منفذ</string>
+    <string name="ftp_server_port_error_invalid">منفذ غير صالح</string>
     <string name="ftp_server_home_directory_title">المجلد الرئيسي</string>
     <string name="ftp_server_writable_title">اسمح بالكتابة</string>
     <string name="settings_title">الإعدادات</string>
@@ -747,6 +784,9 @@
     </string-array>
     <string name="settings_black_night_mode">الوضع الليلي الأسود</string>
     <string name="settings_file_list_animation_title">التأثيرات المتحركة لقائمة الملفات</string>
+    <string name="settings_double_back_to_exit_title">اضغط رجوع مرتين للخروج</string>
+    <string name="settings_edge_to_edge_title">العرض من الحافة إلى الحافة</string>
+    <string name="settings_edge_to_edge_summary">يمر المحتوى خلف شريطي الحالة والتنقل</string>
     <string name="settings_file_name_ellipsize_title">عرض اسم ملف طويل</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>قلل من البداية</item>
@@ -758,6 +798,7 @@
     <string name="settings_default_directory_title">المجلد الإفتراضى</string>
     <string name="settings_standard_directories_title">المجلدات الأساسية</string>
     <string name="settings_standard_directories_summary_empty">لم يتم تمكين المجلدات الأساسية</string>
+    <string name="settings_standard_directory_gallery_summary">صور وفيديوهات الجهاز</string>
     <string name="settings_bookmark_directories_title">مجلدات الإشارات المرجعية</string>
     <string name="settings_bookmark_directories_summary_empty">لا توجد مجلدات الإشارات المرجعية</string>
     <string name="settings_root_strategy_title">وضع الروت</string>
@@ -793,6 +834,7 @@
     <string name="about_author_name_title">هاي تشانغ Hai Zhang</string>
     <string name="about_author_github_title">تابعني على GitHub</string>
     <string name="app_name_launcher">الملفات</string>
+    <string name="clear_query">مسح البحث</string>
     <string name="about_fork_subtitle">الأصل من تأليف Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">استنادًا إلى الخلفية</string>
     <string name="color_picker_preset_colors_label">ألوان أخرى</string>
@@ -807,6 +849,7 @@
 
     <string name="onboarding_install_apps_title">تثبيت التطبيقات</string>
     <string name="onboarding_install_apps_description">اسمح لتطبيق %1$s بتثبيت ملفات APK مباشرةً. سيتيح لك ذلك تثبيت التطبيقات من الملفات التي تنزّلها أو تستلمها، دون الحاجة إلى مثبِّت من جهة خارجية.</string>
+    <string name="reorder_drag_handle">نقل</string>
     <string name="onboarding_notifications_title">الإشعارات</string>
     <string name="onboarding_optional">اختياري</string>
     <string name="onboarding_required">مطلوب</string>

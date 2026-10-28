@@ -23,6 +23,8 @@
     <string name="loading">Cargando…</string>
     <string name="maybe_later">Quizás más tarde</string>
     <string name="merge">Fusionar</string>
+    <string name="more_options">Más opciones</string>
+    <string name="navigate_up">Navegar hacia arriba</string>
     <string name="none">Ninguno</string>
     <string name="open_navigation_drawer">Abrir barra de navegación</string>
     <string name="paste">Pegar</string>
@@ -332,9 +334,11 @@
     <string name="file_list_paste_extract_title_format">Extrayendo %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extraer aquí</string>
     <string name="file_list_empty">Sin archivos</string>
+    <string name="file_list_press_back_again_to_exit">Pulsa Atrás de nuevo para salir</string>
     <string name="file_list_error_folder_not_found">Esta carpeta ya no existe</string>
     <string name="file_list_error_permission_denied">No tienes permiso para abrir esta carpeta</string>
     <string name="file_list_error_unknown">No se puede abrir esta carpeta</string>
+    <string name="file_list_action_create">Crear</string>
     <string name="file_list_action_create_file">Archivo</string>
     <string name="file_list_action_create_directory">Carpeta</string>
 
@@ -541,6 +545,7 @@
     <string name="storage_edit_smb_server_title_edit">Editar servidor SMB</string>
     <string name="storage_edit_smb_server_title_add">Añadir servidor SMB</string>
     <string name="storage_edit_smb_server_host">Nombre de host</string>
+    <string name="storage_edit_smb_server_host_placeholder">Dirección IP o nombre de red del servidor, p. ej. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Ingrese un nombre de host</string>
     <string name="storage_edit_smb_server_host_error_invalid">Nombre de host no válido</string>
     <string name="storage_edit_smb_server_port">Puerto</string>
@@ -608,6 +613,30 @@
     <string name="navigation_edit_bookmark_directory_name">Nombre</string>
     <string name="navigation_edit_bookmark_directory_path">Ruta</string>
     <string name="archive_viewer_title">Visor de archivos</string>
+    <string name="gallery_title">Galería</string>
+    <string name="gallery_photos">Fotos</string>
+    <string name="gallery_albums">Álbumes</string>
+    <string name="gallery_today">Hoy</string>
+    <string name="gallery_yesterday">Ayer</string>
+    <string name="gallery_empty">No hay fotos ni vídeos</string>
+    <string name="gallery_access_denied">Permite el acceso a los archivos para ver tus fotos y vídeos</string>
+    <string name="gallery_allow_access">Permitir</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d elemento</item>
+        <item quantity="many">%1$,d elementos</item>
+        <item quantity="other">%1$,d elementos</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">¿Eliminar este elemento?</item>
+        <item quantity="many">¿Eliminar estos %1$,d elementos?</item>
+        <item quantity="other">¿Eliminar estos %1$,d elementos?</item>
+    </plurals>
+    <string name="gallery_details">Detalles</string>
+    <string name="gallery_details_date">Fecha</string>
+    <string name="gallery_show_in_folder">Mostrar en la carpeta</string>
+    <string name="video_player_title">Reproductor de vídeo</string>
+    <string name="video_player_play">Reproducir</string>
+    <string name="video_player_pause">Pausar</string>
     <string name="image_viewer_title">Visor de imagen</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Guardar como</string>
@@ -639,7 +668,9 @@
     <string name="ftp_server_anonymous_login_title">Ingreso anónimo</string>
     <string name="ftp_server_username_title">Nombre de usuario</string>
     <string name="ftp_server_password_title">Contraseña</string>
+    <string name="ftp_server_password_summary_empty">Sin establecer</string>
     <string name="ftp_server_port_title">Puerto</string>
+    <string name="ftp_server_port_error_invalid">Puerto no válido</string>
     <string name="ftp_server_home_directory_title">Carpeta raíz</string>
     <string name="ftp_server_writable_title">Permitir escritura</string>
     <string name="settings_title">Ajustes</string>
@@ -657,6 +688,9 @@
     </string-array>
     <string name="settings_black_night_mode">Usar negro puro</string>
     <string name="settings_file_list_animation_title">Animación en la lista de archivos</string>
+    <string name="settings_double_back_to_exit_title">Pulsar Atrás dos veces para salir</string>
+    <string name="settings_edge_to_edge_title">Pantalla de borde a borde</string>
+    <string name="settings_edge_to_edge_summary">El contenido se desplaza detrás de las barras de estado y de navegación</string>
     <string name="settings_file_name_ellipsize_title">En nombres de archivo extensos</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Mostrar la última parte</item>
@@ -668,6 +702,7 @@
     <string name="settings_default_directory_title">Carpeta predeterminada</string>
     <string name="settings_standard_directories_title">Carpetas estándar</string>
     <string name="settings_standard_directories_summary_empty">Ninguna carpeta estándar habilitada</string>
+    <string name="settings_standard_directory_gallery_summary">Fotos y vídeos del dispositivo</string>
     <string name="settings_bookmark_directories_title">Carpetas fijadas</string>
     <string name="settings_bookmark_directories_summary_empty">Sin carpetas fijadas</string>
     <string name="settings_root_strategy_title">Modo de acceso administrativo</string>
@@ -700,6 +735,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Seguir en GitHub</string>
     <string name="app_name_launcher">Archivos</string>
+    <string name="clear_query">Borrar búsqueda</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Según el fondo de pantalla</string>
     <string name="color_picker_preset_colors_label">Otros colores</string>
@@ -714,6 +750,7 @@
 
     <string name="onboarding_install_apps_title">Instalación de aplicaciones</string>
     <string name="onboarding_install_apps_description">Permite que %1$s instale archivos APK directamente. Así podrás instalar apps a partir de archivos descargados o recibidos, sin necesidad de un instalador de terceros.</string>
+    <string name="reorder_drag_handle">Mover</string>
     <string name="onboarding_notifications_title">Notificaciones</string>
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obligatorio</string>
