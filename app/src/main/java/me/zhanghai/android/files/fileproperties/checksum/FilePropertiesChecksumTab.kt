@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.checksum
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
@@ -21,12 +22,11 @@ import java8.nio.file.Path
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun FilePropertiesChecksumTab(path: Path) {
     val viewModel = viewModel { FilePropertiesChecksumTabViewModel(path) }
-    val stateful by viewModel.checksumInfoLiveData.observeAsStateCompat()
+    val stateful by viewModel.checksumInfoFlow.collectAsStateWithLifecycle()
     // Kept across refreshes.
     val compareState = rememberTextFieldState()
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { checksumInfo ->

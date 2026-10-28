@@ -36,13 +36,12 @@ import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.storage.StorageVolumeCustomizations
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.supportsExternalStorageManager
-import me.zhanghai.android.files.util.valueCompat
 
 val navigationItems: List<NavigationItem?>
     get() =
@@ -81,7 +80,7 @@ val navigationItems: List<NavigationItem?>
 private val storageItems: List<NavigationItem>
     @Size(min = 0)
     get() =
-        Settings.STORAGES.valueCompat.filter { it.isVisible }.map {
+        Settings.STORAGES.value.filter { it.isVisible }.map {
             if (it.path != null) PathStorageItem(it) else IntentStorageItem(it)
         }
 
@@ -155,7 +154,7 @@ private class IntentStorageItem(
 private val storageVolumeItems: List<NavigationItem>
     @Size(min = 0)
     get() {
-        val volumes = StorageVolumeListLiveData.valueCompat
+        val volumes = StorageVolumeList.value
             .filter { !it.isPrimaryCompat && it.isMounted }
         if (volumes.isEmpty()) {
             return emptyList()
@@ -399,7 +398,7 @@ private class AddStorageItem : NavigationItem() {
 private val standardDirectoryItems: List<NavigationItem>
     @Size(min = 0)
     get() =
-        StandardDirectoriesLiveData.valueCompat
+        StandardDirectories.value
             .filter { it.isEnabled }
             .map { if (it.isGallery) GalleryItem(it) else StandardDirectoryItem(it) }
 
@@ -454,13 +453,13 @@ private class StandardDirectoryItem(
 
 val standardDirectories: List<StandardDirectory>
     get() {
-        val settingsMap = Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat.associateBy { it.id }
+        val settingsMap = Settings.STANDARD_DIRECTORY_SETTINGS.value.associateBy { it.id }
         return defaultStandardDirectories
             .map {
                 val settings = settingsMap[it.key]
                 if (settings != null) it.withSettings(settings) else it
             }
-            .sortedByOrder(Settings.STANDARD_DIRECTORY_ORDER.valueCompat)
+            .sortedByOrder(Settings.STANDARD_DIRECTORY_ORDER.value)
     }
 
 // In the order chosen by the user, with the directories added since then after the one before them
@@ -607,7 +606,7 @@ private class BookmarksHintItem : NavigationItem() {
 
 private val bookmarkDirectoryItems: List<NavigationItem>
     @Size(min = 0)
-    get() = Settings.BOOKMARK_DIRECTORIES.valueCompat.map { BookmarkDirectoryItem(it) }
+    get() = Settings.BOOKMARK_DIRECTORIES.value.map { BookmarkDirectoryItem(it) }
 
 private class BookmarkDirectoryItem(
     private val bookmarkDirectory: BookmarkDirectory

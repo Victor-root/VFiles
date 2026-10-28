@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.image
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -17,14 +18,13 @@ import me.zhanghai.android.files.filelist.name
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
 import me.zhanghai.android.files.fileproperties.LocationItems
-import me.zhanghai.android.files.util.observeAsStateCompat
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable
 fun FilePropertiesImageTab(path: Path, mimeType: MimeType) {
     val viewModel = viewModel { FilePropertiesImageTabViewModel(path, mimeType) }
-    val stateful by viewModel.imageInfoLiveData.observeAsStateCompat()
+    val stateful by viewModel.imageInfoFlow.collectAsStateWithLifecycle()
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { imageInfo ->
         FilePropertiesItem(
             R.string.file_properties_media_dimensions,

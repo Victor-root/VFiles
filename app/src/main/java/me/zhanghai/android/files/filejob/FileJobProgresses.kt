@@ -5,7 +5,9 @@
 
 package me.zhanghai.android.files.filejob
 
-import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /** A snapshot of one in-flight file job, mirrored from its progress notification. */
 data class FileJobProgress(
@@ -17,11 +19,14 @@ data class FileJobProgress(
 )
 
 /**
- * Live list of the file jobs currently running, so the UI can show in-app progress alongside the
- * notification. Updated (off the main thread) from [postNotification] and cleared when a job ends.
+ * The file jobs currently running, so the UI can show in-app progress alongside the notification.
+ * Updated (off the main thread) from [postNotification] and cleared when a job ends.
  */
-object FileJobProgressLiveData : MutableLiveData<List<FileJobProgress>>(emptyList()) {
+object FileJobProgresses {
     private val progresses = LinkedHashMap<Int, FileJobProgress>()
+
+    private val _flow = MutableStateFlow<List<FileJobProgress>>(emptyList())
+    val flow: StateFlow<List<FileJobProgress>> = _flow.asStateFlow()
 
     fun update(
         id: Int,
@@ -38,14 +43,14 @@ object FileJobProgressLiveData : MutableLiveData<List<FileJobProgress>>(emptyLis
         }
         synchronized(progresses) {
             progresses[id] = FileJobProgress(id, title.toString(), detail?.toString(), fraction)
-            postValue(progresses.values.toList())
+            _flow.value = progresses.values.toList()
         }
     }
 
     fun remove(id: Int) {
         synchronized(progresses) {
             if (progresses.remove(id) != null) {
-                postValue(progresses.values.toList())
+                _flow.value = progresses.values.toList()
             }
         }
     }

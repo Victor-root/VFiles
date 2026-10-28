@@ -11,27 +11,31 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.annotation.WorkerThread
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import me.zhanghai.android.files.compat.mainExecutorCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.zhanghai.android.files.app.applicationScope
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.WakeWifiLock
 import me.zhanghai.android.files.util.showToast
-import me.zhanghai.android.files.util.valueCompat
-import java.util.concurrent.Executors
 
 class FtpServerService : Service() {
     private var state = State.STOPPED
         set(value) {
             field = value
-            _stateLiveData.value = value
+            _stateFlow.value = value
         }
 
     private lateinit var wakeWifiLock: WakeWifiLock
 
     private lateinit var notification: FtpServerNotification
 
-    private val executorService = Executors.newSingleThreadExecutor()
+    // Starting and stopping run one at a time, in order. They run in the application scope because
+    // stopping must still complete after this service is destroyed.
+    private val serverDispatcher = Dispatchers.IO.limitedParallelism(1)
 
     private var server: FtpServer? = null
 
@@ -56,7 +60,6 @@ class FtpServerService : Service() {
         super.onDestroy()
 
         executeStop()
-        executorService.shutdown()
     }
 
     private fun executeStart() {
@@ -66,7 +69,17 @@ class FtpServerService : Service() {
         wakeWifiLock.isAcquired = true
         notification.startForeground()
         state = State.STARTING
-        executorService.execute { doStart() }
+        applicationScope.launch {
+            val isStarted = try {
+                withContext(serverDispatcher) { doStart() }
+            } catch (e: Exception) {
+                onStartError(e)
+                return@launch
+            }
+            if (isStarted) {
+                state = State.RUNNING
+            }
+        }
     }
 
     private fun onStartError(exception: Exception) {
@@ -82,33 +95,32 @@ class FtpServerService : Service() {
             return
         }
         state = State.STOPPING
-        executorService.execute { doStop() }
+        applicationScope.launch {
+            if (withContext(serverDispatcher) { doStop() }) {
+                state = State.STOPPED
+            }
+        }
         notification.stopForeground()
         wakeWifiLock.isAcquired = false
     }
 
     @WorkerThread
-    private fun postState(state: State) {
-        mainExecutorCompat.execute { this.state = state }
-    }
-
-    @WorkerThread
-    private fun doStart() {
+    private fun doStart(): Boolean {
         if (server != null) {
-            return
+            return false
         }
         val username: String?
         val password: String?
-        if (Settings.FTP_SERVER_ANONYMOUS_LOGIN.valueCompat) {
+        if (Settings.FTP_SERVER_ANONYMOUS_LOGIN.value) {
             username = USERNAME_ANONYMOUS
             password = null
         } else {
-            username = Settings.FTP_SERVER_USERNAME.valueCompat
-            password = Settings.FTP_SERVER_PASSWORD.valueCompat
+            username = Settings.FTP_SERVER_USERNAME.value
+            password = Settings.FTP_SERVER_PASSWORD.value
         }
-        val port = Settings.FTP_SERVER_PORT.valueCompat
-        val homeDirectory = Settings.FTP_SERVER_HOME_DIRECTORY.valueCompat
-        val writable = Settings.FTP_SERVER_WRITABLE.valueCompat
+        val port = Settings.FTP_SERVER_PORT.value
+        val homeDirectory = Settings.FTP_SERVER_HOME_DIRECTORY.value
+        val writable = Settings.FTP_SERVER_WRITABLE.value
         val server = FtpServer(username, password, port, homeDirectory, writable)
         this.server = server
         try {
@@ -116,26 +128,24 @@ class FtpServerService : Service() {
         } catch (e: Exception) {
             e.printStackTrace()
             this.server = null
-            mainExecutorCompat.execute { onStartError(e) }
-            return
+            throw e
         }
-        postState(State.RUNNING)
+        return true
     }
 
     @WorkerThread
-    private fun doStop() {
-        val server = server ?: return
+    private fun doStop(): Boolean {
+        val server = server ?: return false
         server.stop()
         this.server = null
-        postState(State.STOPPED)
+        return true
     }
 
     companion object {
         const val USERNAME_ANONYMOUS = "anonymous"
 
-        private val _stateLiveData = MutableLiveData(State.STOPPED)
-        val stateLiveData: LiveData<State>
-            get() = _stateLiveData
+        private val _stateFlow = MutableStateFlow(State.STOPPED)
+        val stateFlow: StateFlow<State> = _stateFlow.asStateFlow()
 
         fun start(context: Context) {
             ContextCompat.startForegroundService(
@@ -148,11 +158,10 @@ class FtpServerService : Service() {
         }
 
         fun toggle(context: Context) {
-            when (val state = _stateLiveData.valueCompat) {
+            when (_stateFlow.value) {
                 State.STARTING, State.STOPPING -> {}
                 State.RUNNING -> stop(context)
                 State.STOPPED -> start(context)
-                else -> throw AssertionError(state)
             }
         }
     }

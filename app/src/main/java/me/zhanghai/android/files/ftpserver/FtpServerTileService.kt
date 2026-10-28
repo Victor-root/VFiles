@@ -7,22 +7,27 @@ package me.zhanghai.android.files.ftpserver
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import androidx.lifecycle.Observer
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import me.zhanghai.android.files.app.applicationScope
 import me.zhanghai.android.files.compat.doWithStartForegroundServiceAllowed
 
 class FtpServerTileService : TileService() {
-    private val observer = Observer<FtpServerService.State> { onFtpServerStateChanged(it) }
+    private var stateJob: Job? = null
 
     override fun onStartListening() {
         super.onStartListening()
 
-        FtpServerService.stateLiveData.observeForever(observer)
+        stateJob = applicationScope.launch {
+            FtpServerService.stateFlow.collect { onFtpServerStateChanged(it) }
+        }
     }
 
     override fun onStopListening() {
         super.onStopListening()
 
-        FtpServerService.stateLiveData.removeObserver(observer)
+        stateJob?.cancel()
+        stateJob = null
     }
 
     private fun onFtpServerStateChanged(state: FtpServerService.State) {

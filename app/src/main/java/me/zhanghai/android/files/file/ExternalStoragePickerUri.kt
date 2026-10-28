@@ -16,8 +16,7 @@ import me.zhanghai.android.files.compat.directoryCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.uuidCompat
 import me.zhanghai.android.files.provider.linux.isLinuxPath
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
-import me.zhanghai.android.files.util.valueCompat
+import me.zhanghai.android.files.storage.StorageVolumeList
 
 // Support for the "systemPicker" build flavor: when Material Files replaces DocumentsUI as the
 // platform document picker, it must hand back the exact same
@@ -80,7 +79,7 @@ private fun Path.externalStorageDocumentIdOrNull(): String? {
     }
     return runCatching {
         val file = toFile()
-        for (storageVolume in StorageVolumeListLiveData.valueCompat) {
+        for (storageVolume in StorageVolumeList.value) {
             val directory = storageVolume.directoryCompat ?: continue
             if (!file.startsWith(directory)) {
                 continue

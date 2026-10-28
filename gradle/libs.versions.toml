@@ -21,7 +21,6 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-core = { module = "androidx.core:core-ktx", version = "1.19.1" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version = "1.4.2" }
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version = "1.4.1" }
-androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
@@ -33,7 +32,6 @@ androidx-media3-ui-compose = { module = "androidx.media3:media3-ui-compose", ver
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }

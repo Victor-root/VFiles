@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.content.pm.ApplicationInfo
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -59,7 +60,6 @@ import me.zhanghai.android.files.provider.common.PosixUser
 import me.zhanghai.android.files.provider.common.toByteString
 import me.zhanghai.android.files.ui.CheckboxItem
 import me.zhanghai.android.files.util.Success
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun SetOwnerDialog(file: FileItem, onDismissRequest: () -> Unit) {
@@ -113,9 +113,9 @@ fun SetPrincipalDialog(
 ) {
     ViewModelStoreScope {
         val viewModel = viewModel { createViewModel() }
-        val principalListStateful by viewModel.filteredPrincipalListLiveData
-            .observeAsStateCompat()
-        val selectedId by viewModel.selectionLiveData.observeAsStateCompat()
+        val principalListStateful by viewModel.filteredPrincipalListFlow
+            .collectAsStateWithLifecycle()
+        val selectedId by viewModel.selectionFlow.collectAsStateWithLifecycle()
         val filterState = rememberTextFieldState()
         LaunchedEffect(filterState) {
             snapshotFlow { filterState.text.toString() }.collect { viewModel.filter = it }

@@ -33,7 +33,6 @@ import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.theme.AppTheme
 import me.zhanghai.android.files.theme.night.NightMode
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -117,7 +116,7 @@ class StorageListScreenTest {
         composeTestRule.waitForIdle()
         assertEquals(
             listOf(primaryStorageVolume.id, ftpServer.id, fileSystemRoot.id),
-            Settings.STORAGES.valueCompat.map { it.id }
+            Settings.STORAGES.value.map { it.id }
         )
     }
 

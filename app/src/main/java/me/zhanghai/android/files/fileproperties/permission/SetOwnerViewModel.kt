@@ -5,4 +5,5 @@
 
 package me.zhanghai.android.files.fileproperties.permission
 
-class SetOwnerViewModel(selectedId: Int) : SetPrincipalViewModel(UserListLiveData(), selectedId)
+class SetOwnerViewModel(selectedId: Int) :
+    SetPrincipalViewModel(UserListLoader::loadPrincipals, selectedId)

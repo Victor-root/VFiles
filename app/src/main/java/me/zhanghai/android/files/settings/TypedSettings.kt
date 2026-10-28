@@ -27,12 +27,12 @@ import me.zhanghai.android.files.util.toBase64
 import me.zhanghai.android.files.util.toByteArray
 import me.zhanghai.android.files.util.use
 
-class StringSettingLiveData(
+class StringSetting(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @StringRes defaultValueRes: Int
-) : SettingLiveData<String>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<String>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     constructor(@StringRes keyRes: Int, @StringRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )
@@ -55,12 +55,12 @@ class StringSettingLiveData(
     }
 }
 
-class StringSetSettingLiveData(
+class StringSetSetting(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @ArrayRes defaultValueRes: Int
-) : SettingLiveData<Set<String>>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<Set<String>>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     constructor(@StringRes keyRes: Int, @ArrayRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )
@@ -83,12 +83,12 @@ class StringSetSettingLiveData(
     }
 }
 
-class IntegerSettingLiveData(
+class IntegerSetting(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @IntegerRes defaultValueRes: Int
-) : SettingLiveData<Int>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<Int>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     constructor(@StringRes keyRes: Int, @IntegerRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )
@@ -111,12 +111,12 @@ class IntegerSettingLiveData(
     }
 }
 
-class FloatSettingLiveData(
+class FloatSetting(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @DimenRes defaultValueRes: Int
-) : SettingLiveData<Float>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<Float>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     constructor(@StringRes keyRes: Int, @DimenRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )
@@ -139,12 +139,12 @@ class FloatSettingLiveData(
     }
 }
 
-class BooleanSettingLiveData(
+class BooleanSetting(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @BoolRes defaultValueRes: Int
-) : SettingLiveData<Boolean>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<Boolean>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     constructor(@StringRes keyRes: Int, @BoolRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )
@@ -170,14 +170,14 @@ class BooleanSettingLiveData(
 // Use string resource for default value so that we can support ListPreference.
 // TODO: kotlinc: Type argument is not within its bounds: should be subtype of 'Enum<E>'
 //  https://youtrack.jetbrains.com/issue/KT-60985
-//class EnumSettingLiveData<E : Enum<E>?>(
-class EnumSettingLiveData<E : Enum<*>?>(
+//class EnumSetting<E : Enum<E>?>(
+class EnumSetting<E : Enum<*>?>(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @StringRes defaultValueRes: Int,
     enumClass: Class<E>
-) : SettingLiveData<E>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
+) : Setting<E>(nameSuffix, keyRes, keySuffix, defaultValueRes) {
     private val enumValues = enumClass.enumConstants!!
 
     constructor(
@@ -212,12 +212,12 @@ class EnumSettingLiveData<E : Enum<*>?>(
     }
 }
 
-class ParcelValueSettingLiveData<T>(
+class ParcelValueSetting<T>(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     private val defaultValue: T
-) : SettingLiveData<T>(nameSuffix, keyRes, keySuffix, 0) {
+) : Setting<T>(nameSuffix, keyRes, keySuffix, 0) {
     constructor(@StringRes keyRes: Int, defaultValue: T) : this(null, keyRes, null, defaultValue)
 
     init {

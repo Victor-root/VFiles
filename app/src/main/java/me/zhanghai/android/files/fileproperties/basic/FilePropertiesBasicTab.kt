@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.basic
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,12 +37,11 @@ import me.zhanghai.android.files.fileproperties.FilePropertiesTab
 import me.zhanghai.android.files.provider.archive.ArchiveFileAttributes
 import me.zhanghai.android.files.provider.archive.archiveFile
 import me.zhanghai.android.files.provider.archive.isArchivePath
-import me.zhanghai.android.files.util.observeAsStateCompat
 import java.io.IOException
 
 @Composable
 fun FilePropertiesBasicTab(viewModel: FilePropertiesFileViewModel) {
-    val stateful by viewModel.fileLiveData.observeAsStateCompat()
+    val stateful by viewModel.fileFlow.collectAsStateWithLifecycle()
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { file ->
         FilePropertiesItem(R.string.file_properties_basic_name, file.name)
         val path = file.path

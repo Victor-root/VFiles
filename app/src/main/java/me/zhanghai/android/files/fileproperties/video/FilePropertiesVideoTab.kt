@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.video
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -17,12 +18,11 @@ import me.zhanghai.android.files.filelist.name
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
 import me.zhanghai.android.files.fileproperties.LocationItems
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun FilePropertiesVideoTab(path: Path) {
     val viewModel = viewModel { FilePropertiesVideoTabViewModel(path) }
-    val stateful by viewModel.videoInfoLiveData.observeAsStateCompat()
+    val stateful by viewModel.videoInfoFlow.collectAsStateWithLifecycle()
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { videoInfo ->
         if (videoInfo.title != null) {
             FilePropertiesItem(R.string.file_properties_media_title, videoInfo.title)

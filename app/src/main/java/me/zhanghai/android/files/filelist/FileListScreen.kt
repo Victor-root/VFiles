@@ -63,9 +63,9 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -108,6 +108,7 @@ import androidx.compose.ui.unit.min
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import java8.nio.file.AccessDeniedException
 import java8.nio.file.NoSuchFileException
@@ -125,7 +126,7 @@ import me.zhanghai.android.files.file.fileSize
 import me.zhanghai.android.files.file.formatShort
 import me.zhanghai.android.files.navigation.NavigationDrawerContent
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.theme.StatusBarBackgroundEffect
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
@@ -145,7 +146,6 @@ import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.Success
 import me.zhanghai.android.files.util.findCauseByClass
 import me.zhanghai.android.files.util.isTelevision
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.showToast
 import java.util.IdentityHashMap
 import java.util.Locale
@@ -157,22 +157,21 @@ private val GRID_COLUMN_MIN_WIDTH = 180.dp
 
 @Composable
 fun FileListScreen(controller: FileListController, viewModel: FileListViewModel) {
-    // These are computed once observed, so there's nothing to show for the first frame.
-    val currentPath = viewModel.currentPathLiveData.observeAsState().value ?: return
-    val breadcrumbData = viewModel.breadcrumbLiveData.observeAsState().value ?: return
-    val fileListStateful = viewModel.fileListLiveData.observeAsState().value ?: return
-    val viewType = viewModel.viewTypeLiveData.observeAsState().value ?: return
-    val sortOptions = viewModel.sortOptionsLiveData.observeAsState().value ?: return
-    val isViewSortPathSpecific =
-        viewModel.viewSortPathSpecificLiveData.observeAsState().value ?: return
-    val files = viewModel.displayedFileListLiveData.observeAsState().value
-    val pickOptions by viewModel.pickOptionsLiveData.observeAsState()
-    val selectedFiles by viewModel.selectedFilesLiveData.observeAsStateCompat()
-    val pasteState by viewModel.pasteStateLiveData.observeAsStateCompat()
-    val searchState by viewModel.searchStateLiveData.observeAsStateCompat()
-    val isSearchViewExpanded by viewModel.searchViewExpandedLiveData.observeAsStateCompat()
-    val showHiddenFiles by Settings.FILE_LIST_SHOW_HIDDEN_FILES.observeAsStateCompat()
-    val isPersistentDrawerOpen by Settings.FILE_LIST_PERSISTENT_DRAWER_OPEN.observeAsStateCompat()
+    // There's nothing to show until a directory is opened.
+    val currentPath = viewModel.currentPathFlow.collectAsStateWithLifecycle().value ?: return
+    val breadcrumbData = viewModel.breadcrumbFlow.collectAsStateWithLifecycle().value ?: return
+    val fileListStateful = viewModel.fileListFlow.collectAsStateWithLifecycle().value
+    val viewType by viewModel.viewTypeFlow.collectAsStateWithLifecycle()
+    val sortOptions by viewModel.sortOptionsFlow.collectAsStateWithLifecycle()
+    val isViewSortPathSpecific by viewModel.viewSortPathSpecificFlow.collectAsStateWithLifecycle()
+    val files by viewModel.displayedFileListFlow.collectAsStateWithLifecycle()
+    val pickOptions by viewModel.pickOptionsFlow.collectAsStateWithLifecycle()
+    val selectedFiles by viewModel.selectedFilesFlow.collectAsStateWithLifecycle()
+    val pasteState by viewModel.pasteStateFlow.collectAsStateWithLifecycle()
+    val searchState by viewModel.searchStateFlow.collectAsStateWithLifecycle()
+    val isSearchViewExpanded by viewModel.searchViewExpandedFlow.collectAsStateWithLifecycle()
+    val showHiddenFiles by Settings.FILE_LIST_SHOW_HIDDEN_FILES.flow.collectAsState()
+    val isPersistentDrawerOpen by Settings.FILE_LIST_PERSISTENT_DRAWER_OPEN.flow.collectAsState()
 
     val context = LocalContext.current
     val inputModeManager = LocalInputModeManager.current
@@ -192,7 +191,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
 
     LifecycleResumeEffect(controller) {
         // A volume plugged in while in the background should appear in the drawer.
-        StorageVolumeListLiveData.refresh()
+        StorageVolumeList.refresh()
         controller.ensureStorageAccess()
         onPauseOrDispose {}
     }
@@ -361,7 +360,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     }
 
     // At the start of the app, back has to be pressed twice in a row to leave it.
-    val isDoubleBackToExit by Settings.DOUBLE_BACK_TO_EXIT.observeAsStateCompat()
+    val isDoubleBackToExit by Settings.DOUBLE_BACK_TO_EXIT.flow.collectAsState()
     var lastBackTime by remember { mutableStateOf<Long?>(null) }
     val activity = LocalActivity.current
     BackHandler(enabled = isDoubleBackToExit && pickOptions == null) {
@@ -465,7 +464,7 @@ private fun FileListScaffold(
     // Edge to edge, the app bar hides along with the status bar area when scrolling down, and
     // comes back when scrolling up, except while selecting or searching, next to a persistent
     // drawer, or on a TV, where the items focused with the D-pad must never be behind it.
-    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
     val context = LocalContext.current
     val isTelevision = remember(context) { context.isTelevision }
     // The list then scrolls behind the app bar, so that it only moves instead of resizing the list.
@@ -922,8 +921,8 @@ private fun FileGrid(
     focusRequester: FocusRequester
 ) {
     val context = LocalContext.current
-    val nameEllipsize by Settings.FILE_NAME_ELLIPSIZE.observeAsStateCompat()
-    val isAnimationEnabled by Settings.FILE_LIST_ANIMATION.observeAsStateCompat()
+    val nameEllipsize by Settings.FILE_NAME_ELLIPSIZE.flow.collectAsState()
+    val isAnimationEnabled by Settings.FILE_LIST_ANIMATION.flow.collectAsState()
     // Files appear with an animation when a new list is shown, not when it's only updated.
     val appearance = remember(currentPath, isSearching, viewType, sortOptions) {
         ListAppearance(isAnimationEnabled)

@@ -41,9 +41,9 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.listSaver
@@ -69,6 +69,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import coil3.compose.AsyncImage
 import me.zhanghai.android.files.R
@@ -85,7 +86,6 @@ import me.zhanghai.android.files.ui.sampleStatusBarContent
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isTelevision
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
@@ -94,7 +94,7 @@ import me.zhanghai.android.files.util.supportsExternalStorageManager
 class GalleryActivity : AppActivity() {
     @Composable
     override fun Content() {
-        val state by GalleryLiveData.observeAsState()
+        val state by Gallery.flow.collectAsStateWithLifecycle()
         GalleryScreen(state)
     }
 }
@@ -155,7 +155,7 @@ private fun GalleryScreen(state: GalleryState?) {
     val isTelevision = remember(context) { context.isTelevision }
     // Edge to edge, the app bar hides when scrolling down like in the file list, except while
     // selecting, or on a TV, where the media focused with the D-pad must never be behind it.
-    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
     val isContentBehindTopBar = isEdgeToEdge && !isTelevision
     val gridState = when {
         album != null -> albumGridState
@@ -476,7 +476,7 @@ private fun GalleryAccessDenied() {
     val context = LocalContext.current
     // Coming back from the settings where the access is given.
     LifecycleResumeEffect(Unit) {
-        GalleryLiveData.reload()
+        Gallery.reload()
         onPauseOrDispose {}
     }
     GalleryMessage(stringResource(R.string.gallery_access_denied)) {

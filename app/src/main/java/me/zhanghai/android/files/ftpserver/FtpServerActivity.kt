@@ -17,12 +17,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
@@ -45,14 +47,13 @@ import me.zhanghai.android.files.ui.SheetItem
 import me.zhanghai.android.files.ui.SwitchPreference
 import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.util.copyText
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.requestAddTileService
 import me.zhanghai.android.files.util.showToast
 
 class FtpServerActivity : AppActivity() {
     @Composable
     override fun Content() {
-        val state by FtpServerService.stateLiveData.observeAsStateCompat()
+        val state by FtpServerService.stateFlow.collectAsStateWithLifecycle()
         FtpServerScreen(state)
     }
 }
@@ -75,7 +76,7 @@ internal fun FtpServerScreen(state: FtpServerService.State) {
             PreferenceCategory(stringResource(R.string.ftp_server_configuration_title))
             // The server only reads its configuration when it starts.
             val isConfigurable = !isStartingOrRunning
-            val isAnonymousLogin by Settings.FTP_SERVER_ANONYMOUS_LOGIN.observeAsStateCompat()
+            val isAnonymousLogin by Settings.FTP_SERVER_ANONYMOUS_LOGIN.flow.collectAsState()
             SettingSwitchPreference(
                 Settings.FTP_SERVER_ANONYMOUS_LOGIN,
                 stringResource(R.string.ftp_server_anonymous_login_title),
@@ -125,10 +126,10 @@ private fun StatePreference(state: FtpServerService.State, isStartingOrRunning: 
 @Composable
 private fun UrlPreference() {
     val context = LocalContext.current
-    val isAnonymousLogin by Settings.FTP_SERVER_ANONYMOUS_LOGIN.observeAsStateCompat()
-    val username by Settings.FTP_SERVER_USERNAME.observeAsStateCompat()
-    val password by Settings.FTP_SERVER_PASSWORD.observeAsStateCompat()
-    val port by Settings.FTP_SERVER_PORT.observeAsStateCompat()
+    val isAnonymousLogin by Settings.FTP_SERVER_ANONYMOUS_LOGIN.flow.collectAsState()
+    val username by Settings.FTP_SERVER_USERNAME.flow.collectAsState()
+    val password by Settings.FTP_SERVER_PASSWORD.flow.collectAsState()
+    val port by Settings.FTP_SERVER_PORT.flow.collectAsState()
     var networkChangeCount by remember { mutableIntStateOf(0) }
     DisposableEffect(context) {
         val receiver = FtpServerUrl.createChangeReceiver(context) { ++networkChangeCount }
@@ -204,7 +205,7 @@ private fun requestAddTile(context: Context) {
 
 @Composable
 private fun UsernamePreference(enabled: Boolean) {
-    val username by Settings.FTP_SERVER_USERNAME.observeAsStateCompat()
+    val username by Settings.FTP_SERVER_USERNAME.flow.collectAsState()
     val defaultUsername = stringResource(R.string.pref_default_value_ftp_server_username)
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_username_title),
@@ -218,7 +219,7 @@ private fun UsernamePreference(enabled: Boolean) {
 
 @Composable
 private fun PasswordPreference(enabled: Boolean) {
-    val password by Settings.FTP_SERVER_PASSWORD.observeAsStateCompat()
+    val password by Settings.FTP_SERVER_PASSWORD.flow.collectAsState()
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_password_title),
         icon = painterResource(R.drawable.key_icon_white_24dp),
@@ -240,7 +241,7 @@ private const val PASSWORD_MASK_CHAR = '•'
 
 @Composable
 private fun PortPreference(enabled: Boolean) {
-    val port by Settings.FTP_SERVER_PORT.observeAsStateCompat()
+    val port by Settings.FTP_SERVER_PORT.flow.collectAsState()
     val errorInvalid = stringResource(R.string.ftp_server_port_error_invalid)
     TextFieldPreference(
         title = stringResource(R.string.ftp_server_port_title),

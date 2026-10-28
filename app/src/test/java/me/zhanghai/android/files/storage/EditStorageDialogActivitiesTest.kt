@@ -27,7 +27,6 @@ import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -84,7 +83,7 @@ class EditStorageDialogActivitiesTest {
         nameNode.performTextReplacement("Phone")
         composeTestRule.onNodeWithText("OK").performClick()
         composeTestRule.waitForIdle()
-        assertEquals("Phone", Settings.STORAGES.valueCompat[1].customName)
+        assertEquals("Phone", Settings.STORAGES.value[1].customName)
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
     }
 
@@ -100,7 +99,7 @@ class EditStorageDialogActivitiesTest {
             .performTextReplacement("Internal storage")
         composeTestRule.onNodeWithText("OK").performClick()
         composeTestRule.waitForIdle()
-        assertEquals(null, Settings.STORAGES.valueCompat[1].customName)
+        assertEquals(null, Settings.STORAGES.value[1].customName)
     }
 
     @Test
@@ -111,7 +110,7 @@ class EditStorageDialogActivitiesTest {
         )
         composeTestRule.onNodeWithText("Hide").performClick()
         composeTestRule.waitForIdle()
-        assertEquals(false, Settings.STORAGES.valueCompat[1].isVisible)
+        assertEquals(false, Settings.STORAGES.value[1].isVisible)
     }
 
     @Test
@@ -125,7 +124,7 @@ class EditStorageDialogActivitiesTest {
         captureScreenRoboImage("build/screenshots/storage_edit_document_tree.png")
         composeTestRule.onNodeWithText("Remove").performClick()
         composeTestRule.waitForIdle()
-        assertTrue(Settings.STORAGES.valueCompat.none { it.id == documentTree.id })
+        assertTrue(Settings.STORAGES.value.none { it.id == documentTree.id })
         assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
     }
 
@@ -148,7 +147,7 @@ class EditStorageDialogActivitiesTest {
             .performTextReplacement("/Android/obb")
         composeTestRule.onNodeWithText("OK").performClick()
         composeTestRule.waitForIdle()
-        val storage = Settings.STORAGES.valueCompat[3] as ExternalStorageShortcut
+        val storage = Settings.STORAGES.value[3] as ExternalStorageShortcut
         assertEquals(ExternalStorageUri("1234-5678", "Android/obb"), storage.uri)
         // The name was the default one for the old path, it's kept as a custom name.
         assertEquals("data", storage.customName)

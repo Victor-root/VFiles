@@ -80,7 +80,6 @@ import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
-import me.zhanghai.android.files.util.valueCompat
 import me.zhanghai.android.files.util.withChooser
 import me.zhanghai.android.files.viewer.image.ImageViewerActivity
 
@@ -139,7 +138,7 @@ class FileListController(
         get() = viewModel.currentPath
 
     private val displayedFiles: List<FileItem>
-        get() = viewModel.displayedFileListLiveData.value.orEmpty()
+        get() = viewModel.displayedFiles
 
     fun collapseSearch() {
         viewModel.isSearchViewExpanded = false
@@ -190,7 +189,7 @@ class FileListController(
 
     fun toggleShowHiddenFiles() {
         Settings.FILE_LIST_SHOW_HIDDEN_FILES.putValue(
-            !Settings.FILE_LIST_SHOW_HIDDEN_FILES.valueCompat
+            !Settings.FILE_LIST_SHOW_HIDDEN_FILES.value
         )
     }
 
@@ -314,7 +313,7 @@ class FileListController(
             installApk(file)
             return
         }
-        when (Settings.OPEN_APK_DEFAULT_ACTION.valueCompat) {
+        when (Settings.OPEN_APK_DEFAULT_ACTION.value) {
             OpenApkDefaultAction.INSTALL -> installApk(file)
             OpenApkDefaultAction.VIEW -> viewApk(file)
             OpenApkDefaultAction.ASK -> dialog = FileListDialog.OpenApk(file)

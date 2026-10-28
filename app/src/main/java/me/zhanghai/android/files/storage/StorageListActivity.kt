@@ -24,6 +24,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,6 @@ import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
 import me.zhanghai.android.files.ui.reorderableItem
 import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe
 
 class StorageListActivity : AppActivity() {
@@ -55,7 +55,7 @@ class StorageListActivity : AppActivity() {
 @Composable
 internal fun StorageListScreen() {
     val context = LocalContext.current
-    val storages by Settings.STORAGES.observeAsStateCompat()
+    val storages by Settings.STORAGES.flow.collectAsState()
     AppScaffold(
         title = stringResource(R.string.storage_list_title),
         floatingActionButton = {

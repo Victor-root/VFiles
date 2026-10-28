@@ -184,7 +184,6 @@ dependencies {
     implementation(libs.androidx.exifinterface)
     // Installs the baseline profile when the app isn't installed from a store doing it.
     implementation(libs.androidx.profileinstaller)
-    implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -197,7 +196,6 @@ dependencies {
     implementation(libs.androidx.media3.ui.compose)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
-    implementation(libs.compose.runtime.livedata)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     // Shows the composables in the system traces of Android Studio.

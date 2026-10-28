@@ -43,11 +43,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.filejob.FileJobProgress
-import me.zhanghai.android.files.filejob.FileJobProgressLiveData
+import me.zhanghai.android.files.filejob.FileJobProgresses
 import me.zhanghai.android.files.filejob.FileJobService
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 /**
  * A round button showing the overall progress and the count of the file jobs running, which opens
@@ -55,7 +55,7 @@ import me.zhanghai.android.files.util.observeAsStateCompat
  */
 @Composable
 fun FileJobProgressButton(modifier: Modifier = Modifier) {
-    val progresses by FileJobProgressLiveData.observeAsStateCompat()
+    val progresses by FileJobProgresses.flow.collectAsStateWithLifecycle()
     if (progresses.isEmpty()) {
         return
     }

@@ -26,7 +26,6 @@ import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.takeIfNotEmpty
-import me.zhanghai.android.files.util.valueCompat
 
 class FileListActivity : AppActivity() {
     private val viewModel by viewModels<FileListViewModel>()
@@ -36,7 +35,7 @@ class FileListActivity : AppActivity() {
     private lateinit var controller: FileListController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (!Settings.ONBOARDING_COMPLETED.valueCompat) {
+        if (!Settings.ONBOARDING_COMPLETED.value) {
             if (Environment::class.isExternalStorageAccessGranted()) {
                 // Existing install with permissions already granted: skip onboarding.
                 Settings.ONBOARDING_COMPLETED.putValue(true)
@@ -126,7 +125,7 @@ class FileListActivity : AppActivity() {
                     }
                 }
         }
-        resetTo(path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.valueCompat)
+        resetTo(path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
         if (pickOptions != null) {
             this.pickOptions = pickOptions
         }

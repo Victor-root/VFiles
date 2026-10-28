@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.settings
 
+import androidx.compose.runtime.collectAsState
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,20 +14,19 @@ import androidx.compose.ui.platform.LocalContext
 import java8.nio.file.Path
 import me.zhanghai.android.files.filelist.FileListActivity
 import me.zhanghai.android.files.filelist.toUserFriendlyString
-import me.zhanghai.android.files.navigation.NavigationRootMapLiveData
+import me.zhanghai.android.files.navigation.NavigationRootMap
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.SwitchPreference
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun SettingSwitchPreference(
-    setting: SettingLiveData<Boolean>,
+    setting: Setting<Boolean>,
     title: String,
     summary: String? = null,
     enabled: Boolean = true,
     icon: Painter? = null
 ) {
-    val checked by setting.observeAsStateCompat()
+    val checked by setting.flow.collectAsState()
     SwitchPreference(
         title = title,
         checked = checked,
@@ -40,14 +40,14 @@ fun SettingSwitchPreference(
 /** A folder, picked in the file list. */
 @Composable
 fun PathPreference(
-    setting: SettingLiveData<Path>,
+    setting: Setting<Path>,
     title: String,
     enabled: Boolean = true,
     icon: Painter? = null
 ) {
     val context = LocalContext.current
-    val path by setting.observeAsStateCompat()
-    val navigationRoots by NavigationRootMapLiveData.observeAsStateCompat()
+    val path by setting.flow.collectAsState()
+    val navigationRoots by NavigationRootMap.flow.collectAsState()
     val launcher = rememberLauncherForActivityResult(FileListActivity.OpenDirectoryContract()) {
         if (it != null) {
             setting.putValue(it)

@@ -15,12 +15,11 @@ import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.app.contentResolver
 import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.compat.createOpenDocumentTreeIntentCompat
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.util.StableUriParceler
 import me.zhanghai.android.files.util.getParcelableExtraSafe
 import me.zhanghai.android.files.util.releasePersistablePermission
 import me.zhanghai.android.files.util.takePersistablePermission
-import me.zhanghai.android.files.util.valueCompat
 
 @Parcelize
 @JvmInline
@@ -79,4 +78,4 @@ val StorageVolume.documentTreeUri: DocumentTreeUri
     }
 
 val DocumentTreeUri.storageVolume: StorageVolume?
-    get() = StorageVolumeListLiveData.valueCompat.find { it.documentTreeUri == this }
+    get() = StorageVolumeList.value.find { it.documentTreeUri == this }

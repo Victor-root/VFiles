@@ -17,7 +17,6 @@ import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 
 sealed class DeviceStorage : Storage() {
     override val description: String
@@ -84,5 +83,5 @@ data class PrimaryStorageVolume(
         get() = storageVolume.pathCompat
 
     private val storageVolume: StorageVolume
-        get() = StorageVolumeListLiveData.valueCompat.find { it.isPrimaryCompat }!!
+        get() = StorageVolumeList.value.find { it.isPrimaryCompat }!!
 }

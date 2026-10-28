@@ -16,6 +16,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,15 +24,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.filelist.OpenApkDefaultAction
-import me.zhanghai.android.files.navigation.StandardDirectoriesLiveData
+import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.storage.StorageListActivity
 import me.zhanghai.android.files.theme.custom.ThemeColorPreference
@@ -42,7 +43,6 @@ import me.zhanghai.android.files.ui.DialogListPreference
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.PreferenceCategory
 import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.observeAsStateCompat
 import me.zhanghai.android.files.util.startActivitySafe
 import java.nio.charset.Charset
 
@@ -117,7 +117,7 @@ private fun SettingsScreen() {
 
 @Composable
 private fun NightModePreference() {
-    val nightMode by Settings.NIGHT_MODE.observeAsStateCompat()
+    val nightMode by Settings.NIGHT_MODE.flow.collectAsState()
     val entries = stringArrayResource(R.array.settings_night_mode_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_night_mode_title),
@@ -137,7 +137,7 @@ private val FILE_NAME_ELLIPSIZE_ENTRIES = listOf(
 
 @Composable
 private fun FileNameEllipsizePreference() {
-    val ellipsize by Settings.FILE_NAME_ELLIPSIZE.observeAsStateCompat()
+    val ellipsize by Settings.FILE_NAME_ELLIPSIZE.flow.collectAsState()
     val entries = stringArrayResource(R.array.settings_file_name_ellipsize_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_file_name_ellipsize_title),
@@ -152,7 +152,7 @@ private fun FileNameEllipsizePreference() {
 @Composable
 private fun StoragesPreference() {
     val context = LocalContext.current
-    val storages by Settings.STORAGES.observeAsStateCompat()
+    val storages by Settings.STORAGES.flow.collectAsState()
     val names = storages.filter { it.isVisible }.map { it.getName(context) }
     Preference(
         title = stringResource(R.string.settings_storages_title),
@@ -166,7 +166,7 @@ private fun StoragesPreference() {
 @Composable
 private fun StandardDirectoriesPreference() {
     val context = LocalContext.current
-    val standardDirectories by StandardDirectoriesLiveData.observeAsStateCompat()
+    val standardDirectories by StandardDirectories.flow.collectAsState()
     val titles = standardDirectories.filter { it.isEnabled }.map { it.getTitle(context) }
     Preference(
         title = stringResource(R.string.settings_standard_directories_title),
@@ -183,7 +183,7 @@ private fun StandardDirectoriesPreference() {
 @Composable
 private fun BookmarkDirectoriesPreference() {
     val context = LocalContext.current
-    val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.observeAsStateCompat()
+    val bookmarkDirectories by Settings.BOOKMARK_DIRECTORIES.flow.collectAsState()
     Preference(
         title = stringResource(R.string.settings_bookmark_directories_title),
         icon = painterResource(R.drawable.bookmark_icon_white_24dp),
@@ -212,7 +212,7 @@ private fun DefaultAppsPreference() {
 
 @Composable
 private fun RootStrategyPreference() {
-    val rootStrategy by Settings.ROOT_STRATEGY.observeAsStateCompat()
+    val rootStrategy by Settings.ROOT_STRATEGY.flow.collectAsState()
     val entries = stringArrayResource(R.array.settings_root_strategy_entries)
     var isSheetShown by rememberSaveable { mutableStateOf(false) }
     var runningJobCountToConfirm by rememberSaveable { mutableStateOf<Int?>(null) }
@@ -263,7 +263,7 @@ private fun RootStrategyPreference() {
 
 @Composable
 private fun ArchiveFileNameEncodingPreference() {
-    val encoding by Settings.ARCHIVE_FILE_NAME_ENCODING.observeAsStateCompat()
+    val encoding by Settings.ARCHIVE_FILE_NAME_ENCODING.flow.collectAsState()
     val charsets = remember { Charset.availableCharsets() }
     DialogListPreference(
         title = stringResource(R.string.settings_archive_file_name_encoding_title),
@@ -277,7 +277,7 @@ private fun ArchiveFileNameEncodingPreference() {
 
 @Composable
 private fun OpenApkDefaultActionPreference() {
-    val action by Settings.OPEN_APK_DEFAULT_ACTION.observeAsStateCompat()
+    val action by Settings.OPEN_APK_DEFAULT_ACTION.flow.collectAsState()
     val entries = stringArrayResource(R.array.settings_open_apk_default_action_entries)
     BottomSheetListPreference(
         title = stringResource(R.string.settings_open_apk_default_action_title),

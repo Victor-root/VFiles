@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.fileproperties.audio
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -14,12 +15,11 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.file.format
 import me.zhanghai.android.files.fileproperties.FilePropertiesItem
 import me.zhanghai.android.files.fileproperties.FilePropertiesTab
-import me.zhanghai.android.files.util.observeAsStateCompat
 
 @Composable
 fun FilePropertiesAudioTab(path: Path) {
     val viewModel = viewModel { FilePropertiesAudioTabViewModel(path) }
-    val stateful by viewModel.audioInfoLiveData.observeAsStateCompat()
+    val stateful by viewModel.audioInfoFlow.collectAsStateWithLifecycle()
     FilePropertiesTab(stateful, onRefresh = viewModel::reload) { audioInfo ->
         if (audioInfo.title != null) {
             FilePropertiesItem(R.string.file_properties_media_title, audioInfo.title)

@@ -17,10 +17,14 @@ import me.zhanghai.android.files.provider.common.PosixGroup
 import me.zhanghai.android.files.provider.common.PosixUser
 import me.zhanghai.android.files.util.ForegroundNotificationManager
 import me.zhanghai.android.files.util.WakeWifiLock
-import me.zhanghai.android.files.util.removeFirst
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import me.zhanghai.android.files.compat.removeFirstCompat
+import me.zhanghai.android.files.util.removeFirst
 
 class FileJobService : Service() {
     private lateinit var wakeWifiLock: WakeWifiLock
@@ -28,9 +32,9 @@ class FileJobService : Service() {
     internal lateinit var notificationManager: ForegroundNotificationManager
         private set
 
-    private val executorService = Executors.newCachedThreadPool()
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val runningJobs = mutableMapOf<FileJob, Future<*>>()
+    private val runningJobs = mutableMapOf<FileJob, Job>()
 
     override fun onCreate() {
         super.onCreate()
@@ -54,21 +58,24 @@ class FileJobService : Service() {
     private fun startJob(job: FileJob) {
         // Synchronize on runningJobs to prevent a job from removing itself before being added.
         synchronized(runningJobs) {
-            val future = executorService.submit {
-                job.runOn(this)
-                synchronized(runningJobs) {
-                    runningJobs.remove(job)
-                    updateWakeWifiLockLocked()
+            // Cancelling interrupts the job, which blocks on I/O.
+            runningJobs[job] = coroutineScope.launch {
+                try {
+                    runInterruptible { job.runOn(this@FileJobService) }
+                } finally {
+                    synchronized(runningJobs) {
+                        runningJobs.remove(job)
+                        updateWakeWifiLockLocked()
+                    }
                 }
             }
-            runningJobs[job] = future
             updateWakeWifiLockLocked()
         }
     }
 
     private fun cancelJob(id: Int) {
         synchronized(runningJobs) {
-            runningJobs.removeFirst { it.key.id == id }?.value?.cancel(true)
+            runningJobs.removeFirst { it.key.id == id }?.value?.cancel()
             updateWakeWifiLockLocked()
         }
     }
@@ -76,7 +83,7 @@ class FileJobService : Service() {
     private fun cancelAllJobs() {
         synchronized(runningJobs) {
             while (runningJobs.isNotEmpty()) {
-                runningJobs.removeFirst().value.cancel(true)
+                runningJobs.removeFirst().value.cancel()
             }
             updateWakeWifiLockLocked()
         }

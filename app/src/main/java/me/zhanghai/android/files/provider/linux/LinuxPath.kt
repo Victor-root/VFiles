@@ -20,9 +20,8 @@ import me.zhanghai.android.files.compat.pathFileCompat
 import me.zhanghai.android.files.provider.common.ByteString
 import me.zhanghai.android.files.provider.common.ByteStringListPath
 import me.zhanghai.android.files.provider.root.RootablePath
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.util.readParcelable
-import me.zhanghai.android.files.util.valueCompat
 import java.io.File
 import java.io.IOException
 
@@ -79,7 +78,7 @@ internal class LinuxPath : ByteStringListPath<LinuxPath>, RootablePath {
 
     override fun isRootRequired(isAttributeAccess: Boolean): Boolean {
         val file = toFile()
-        return StorageVolumeListLiveData.valueCompat.none {
+        return StorageVolumeList.value.none {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R && !it.isPrimaryCompat) {
                 return@none false
             }

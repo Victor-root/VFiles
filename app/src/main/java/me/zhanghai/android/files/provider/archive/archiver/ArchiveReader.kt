@@ -21,7 +21,6 @@ import me.zhanghai.android.files.provider.common.newInputStream
 import me.zhanghai.android.files.provider.root.isRunningAsRoot
 import me.zhanghai.android.files.provider.root.rootContext
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 import java.io.Closeable
 import java.io.IOException
 import java.io.InputStream
@@ -203,7 +202,7 @@ object ArchiveReader {
                     StandardCharsets.UTF_8
                 }
             } else {
-                Charset.forName(Settings.ARCHIVE_FILE_NAME_ENCODING.valueCompat)
+                Charset.forName(Settings.ARCHIVE_FILE_NAME_ENCODING.value)
             }
 
     private class ArchiveCloseable(

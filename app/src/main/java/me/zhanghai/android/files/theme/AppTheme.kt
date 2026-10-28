@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -26,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.night.isNightModeActive
 import me.zhanghai.android.files.theme.night.withNightMode
-import me.zhanghai.android.files.util.observeAsStateCompat
 import android.graphics.Color as AndroidColor
 
 @Immutable
@@ -58,10 +58,10 @@ fun StatusBarBackgroundEffect(color: Color) {
 /** [hasDarkSystemBars] is for screens that always draw dark content behind the system bars. */
 @Composable
 fun AppTheme(hasDarkSystemBars: Boolean = false, content: @Composable () -> Unit) {
-    val nightMode by Settings.NIGHT_MODE.observeAsStateCompat()
-    val themeColor by Settings.THEME_COLOR.observeAsStateCompat()
-    val isBlackNightMode by Settings.BLACK_NIGHT_MODE.observeAsStateCompat()
-    val isEdgeToEdge by Settings.EDGE_TO_EDGE.observeAsStateCompat()
+    val nightMode by Settings.NIGHT_MODE.flow.collectAsState()
+    val themeColor by Settings.THEME_COLOR.flow.collectAsState()
+    val isBlackNightMode by Settings.BLACK_NIGHT_MODE.flow.collectAsState()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
     val isDark = nightMode.isNightModeActive()
     val baseContext = LocalContext.current
     val baseConfiguration = LocalConfiguration.current

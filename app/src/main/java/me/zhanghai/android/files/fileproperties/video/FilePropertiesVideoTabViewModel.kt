@@ -5,21 +5,18 @@
 
 package me.zhanghai.android.files.fileproperties.video
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import java8.nio.file.Path
+import kotlinx.coroutines.flow.StateFlow
+import me.zhanghai.android.files.fileproperties.pathStatefulLoader
 import me.zhanghai.android.files.util.Stateful
 
 class FilePropertiesVideoTabViewModel(path: Path) : ViewModel() {
-    private val _videoInfoLiveData = VideoInfoLiveData(path)
-    val videoInfoLiveData: LiveData<Stateful<VideoInfo>>
-        get() = _videoInfoLiveData
+    private val loader = pathStatefulLoader(path) { loadVideoInfo(path) }
+    val videoInfoFlow: StateFlow<Stateful<VideoInfo>>
+        get() = loader.flow
 
     fun reload() {
-        _videoInfoLiveData.loadValue()
-    }
-
-    override fun onCleared() {
-        _videoInfoLiveData.close()
+        loader.load()
     }
 }

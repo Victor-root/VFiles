@@ -9,20 +9,32 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.annotation.AnyRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.defaultSharedPreferences
 import me.zhanghai.android.files.compat.PreferenceManagerCompat
 
-abstract class SettingLiveData<T>(
+/**
+ * A value of the shared preferences, kept up to date in [flow], including when it's changed from
+ * elsewhere.
+ */
+abstract class Setting<T>(
     nameSuffix: String?,
     @StringRes keyRes: Int,
     keySuffix: String?,
     @param:AnyRes private val defaultValueRes: Int
-) : LiveData<T>(), OnSharedPreferenceChangeListener {
+) : OnSharedPreferenceChangeListener {
     private val sharedPreferences = getSharedPreferences(nameSuffix)
     private val key = getKey(keyRes, keySuffix)
     private var defaultValue: T? = null
+
+    private lateinit var _flow: MutableStateFlow<T>
+    val flow: StateFlow<T>
+        get() = _flow
+
+    val value: T
+        get() = _flow.value
 
     constructor(@StringRes keyRes: Int, @AnyRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
@@ -54,7 +66,12 @@ abstract class SettingLiveData<T>(
 
     private fun loadValue() {
         @Suppress("UNCHECKED_CAST")
-        value = getValue(sharedPreferences, key, defaultValue as T)
+        val value = getValue(sharedPreferences, key, defaultValue as T)
+        if (this::_flow.isInitialized) {
+            _flow.value = value
+        } else {
+            _flow = MutableStateFlow(value)
+        }
     }
 
     protected abstract fun getValue(

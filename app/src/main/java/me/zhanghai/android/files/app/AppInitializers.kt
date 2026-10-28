@@ -7,6 +7,8 @@ package me.zhanghai.android.files.app
 
 import android.webkit.WebView
 import jcifs.context.SingletonContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.coil.initializeCoil
 import me.zhanghai.android.files.filejob.fileJobNotificationTemplate
@@ -17,7 +19,7 @@ import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.FtpServerAuthenticator
 import me.zhanghai.android.files.storage.SftpServerAuthenticator
 import me.zhanghai.android.files.storage.SmbServerAuthenticator
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.WebDavServerAuthenticator
 import java.util.Properties
 import me.zhanghai.android.files.provider.ftp.client.Client as FtpClient
@@ -31,7 +33,7 @@ val appInitializers = listOf(
     ::initializeCoil,
     ::initializeFileSystemProviders,
     ::upgradeApp,
-    ::initializeLiveDataObjects,
+    ::initializeStateObjects,
     ::createNotificationChannels
 )
 
@@ -56,18 +58,17 @@ private fun initializeFileSystemProviders() {
     FileSystemProviders.install()
     FileSystemProviders.overflowWatchEvents = true
     // SingletonContext.init() calls NameServiceClientImpl.initCache() which connects to network.
-    backgroundExecutor.execute {
-        SingletonContext.init(createJcifsProperties())
-    }
+    applicationScope.launch(Dispatchers.IO) { SingletonContext.init(createJcifsProperties()) }
     FtpClient.authenticator = FtpServerAuthenticator
     SftpClient.authenticator = SftpServerAuthenticator
     SmbClient.authenticator = SmbServerAuthenticator
     WebDavClient.authenticator = WebDavServerAuthenticator
 }
 
-private fun initializeLiveDataObjects() {
-    // Force initialization of LiveData objects so that it won't happen on a background thread.
-    StorageVolumeListLiveData.value
+private fun initializeStateObjects() {
+    // Force initialization of the objects holding state so that it won't happen on a background
+    // thread.
+    StorageVolumeList.value
     Settings.FILE_LIST_DEFAULT_DIRECTORY.value
 }
 

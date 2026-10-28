@@ -5,21 +5,18 @@
 
 package me.zhanghai.android.files.fileproperties.checksum
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import java8.nio.file.Path
+import kotlinx.coroutines.flow.StateFlow
+import me.zhanghai.android.files.fileproperties.pathStatefulLoader
 import me.zhanghai.android.files.util.Stateful
 
 class FilePropertiesChecksumTabViewModel(path: Path) : ViewModel() {
-    private val _checksumInfoLiveData = ChecksumInfoLiveData(path)
-    val checksumInfoLiveData: LiveData<Stateful<ChecksumInfo>>
-        get() = _checksumInfoLiveData
+    private val loader = pathStatefulLoader(path) { loadChecksumInfo(path) }
+    val checksumInfoFlow: StateFlow<Stateful<ChecksumInfo>>
+        get() = loader.flow
 
     fun reload() {
-        _checksumInfoLiveData.loadValue()
-    }
-
-    override fun onCleared() {
-        _checksumInfoLiveData.close()
+        loader.load()
     }
 }
