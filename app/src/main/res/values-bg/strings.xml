@@ -23,6 +23,8 @@
     <string name="loading">Зареждане…</string>
     <string name="maybe_later">По-късно</string>
     <string name="merge">Обединаване</string>
+    <string name="more_options">Още опции</string>
+    <string name="navigate_up">Придвижване нагоре</string>
     <string name="none">Няма</string>
     <string name="open_navigation_drawer">Отваря менюто</string>
     <string name="paste">Поставяне</string>
@@ -304,9 +306,11 @@
     <string name="file_list_paste_extract_title_format">Извличане на %1$,d</string>
     <string name="file_list_paste_action_extract_here">Извличане тук</string>
     <string name="file_list_empty">Няма файлове</string>
+    <string name="file_list_press_back_again_to_exit">Натиснете „Назад“ отново за изход</string>
     <string name="file_list_error_folder_not_found">Тази папка вече не съществува</string>
     <string name="file_list_error_permission_denied">Нямате разрешение да отворите тази папка</string>
     <string name="file_list_error_unknown">Папката не може да бъде отворена</string>
+    <string name="file_list_action_create">Създаване</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>
 
@@ -362,6 +366,7 @@
         <item>Задаване на GID</item>
         <item>Лепкав бит</item>
     </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Без добавяне на „Изпълняване“ за съдържащите се файлове</string>
     <string name="file_properties_permission_selinux_context">Контекст на SELinux</string>
     <string name="file_properties_permission_set_selinux_context_title">Смяна на контекста на SELinux</string>
     <string name="file_properties_permission_set_selinux_context_restore">Възстановяване</string>
@@ -420,6 +425,12 @@
     <string name="file_properties_apk_signature_digests">Подписи</string>
     <string name="file_properties_apk_signature_digests_empty">Няма валидни подписи</string>
     <string name="file_properties_apk_past_signature_digests">Стари подписи</string>
+    <string name="file_properties_checksum">Контролни суми</string>
+    <string name="file_properties_checksum_compare">Сравняване</string>
+    <string name="file_properties_checksum_compare_placeholder">Произволна контролна сума</string>
+    <string name="file_properties_checksum_compare_match_format">Съвпада с контролната сума %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Съвпада с началото на контролната сума %1$s</string>
+    <string name="file_properties_checksum_compare_no_match">Няма съвпадаща контролна сума</string>
     <string name="storage_file_system_root_title">Коренова папка</string>
     <string name="storage_internal_storage">Вътрешна памет</string>
     <string name="storage_list_title">Хранилище</string>
@@ -433,6 +444,11 @@
     <string name="storage_edit_device_storage_title">Редактиране на хранилище</string>
     <string name="storage_edit_device_storage_name">Име</string>
     <string name="storage_edit_device_storage_path">Път</string>
+    <string name="storage_add_external_storage_shortcut_title">Добавяне на пряк път към външно хранилище</string>
+    <string name="storage_edit_external_storage_shortcut_title">Редактиране на пряк път към външно хранилище</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Том на хранилището</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Въведете том на хранилището</string>
+    <string name="storage_edit_external_storage_shortcut_path">Път</string>
     <string name="storage_add_document_tree_title">Добавяне на външно хранилище</string>
     <string name="storage_edit_document_tree_title">Редакция на външно хранилище</string>
     <string name="storage_edit_document_tree_name">Име</string>
@@ -499,6 +515,7 @@
     <string name="storage_edit_smb_server_title_edit">Редакция на SMB сървър</string>
     <string name="storage_edit_smb_server_title_add">Добавяне на SMB сървър</string>
     <string name="storage_edit_smb_server_host">Име на машина</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP адрес или мрежово име на сървъра, напр. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Въведете име на машина</string>
     <string name="storage_edit_smb_server_host_error_invalid">Недействително име на машина</string>
     <string name="storage_edit_smb_server_port">Порт</string>
@@ -566,8 +583,33 @@
     <string name="navigation_edit_bookmark_directory_name">Име</string>
     <string name="navigation_edit_bookmark_directory_path">Път</string>
     <string name="archive_viewer_title">Преглед на архиви</string>
+    <string name="gallery_title">Галерия</string>
+    <string name="gallery_photos">Снимки</string>
+    <string name="gallery_albums">Албуми</string>
+    <string name="gallery_today">Днес</string>
+    <string name="gallery_yesterday">Вчера</string>
+    <string name="gallery_empty">Няма снимки или видеоклипове</string>
+    <string name="gallery_access_denied">Разрешете достъп до файловете, за да виждате снимките и видеоклиповете си</string>
+    <string name="gallery_allow_access">Разрешаване</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d елемент</item>
+        <item quantity="other">%1$,d елемента</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Изтриване на този елемент?</item>
+        <item quantity="other">Изтриване на тези %1$,d елемента?</item>
+    </plurals>
+    <string name="gallery_details">Подробности</string>
+    <string name="gallery_details_date">Дата</string>
+    <string name="gallery_show_in_folder">Показване в папката</string>
+    <string name="video_player_title">Видеоплейър</string>
+    <string name="video_player_play">Пускане</string>
+    <string name="video_player_pause">Пауза</string>
     <string name="image_viewer_title">Преглед на изображение</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Запазване като</string>
+    <string name="save_as_error">Грешка при запазване на файла</string>
+    <string name="save_as_success_format">„%1$s“ е запазен в „%2$s“</string>
     <string name="text_editor_title">Текстов редактор</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -594,7 +636,9 @@
     <string name="ftp_server_anonymous_login_title">Анонимно вписване</string>
     <string name="ftp_server_username_title">Потребител</string>
     <string name="ftp_server_password_title">Парола</string>
+    <string name="ftp_server_password_summary_empty">Не е зададена</string>
     <string name="ftp_server_port_title">Порт</string>
+    <string name="ftp_server_port_error_invalid">Неприемлив порт</string>
     <string name="ftp_server_home_directory_title">Коренова папка</string>
     <string name="ftp_server_writable_title">Разрешаване на писане</string>
     <string name="settings_title">Настройки</string>
@@ -612,6 +656,9 @@
     </string-array>
     <string name="settings_black_night_mode">Тъмен нощен режим</string>
     <string name="settings_file_list_animation_title">Анимиране на списъка на файлове</string>
+    <string name="settings_double_back_to_exit_title">Двукратно натискане на „Назад“ за изход</string>
+    <string name="settings_edge_to_edge_title">Показване от край до край</string>
+    <string name="settings_edge_to_edge_summary">Съдържанието се превърта под лентите за състояние и навигация</string>
     <string name="settings_file_name_ellipsize_title">Показване на дълги имена на файлове</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Многоточие в началото</item>
@@ -623,6 +670,7 @@
     <string name="settings_default_directory_title">Папка по подразбиране</string>
     <string name="settings_standard_directories_title">Стандартни папки</string>
     <string name="settings_standard_directories_summary_empty">Няма стандартни папки</string>
+    <string name="settings_standard_directory_gallery_summary">Снимки и видеоклипове на устройството</string>
     <string name="settings_bookmark_directories_title">Отметнати папки</string>
     <string name="settings_bookmark_directories_summary_empty">Няма отметнати папки</string>
     <string name="settings_root_strategy_title">Достъп от суперпотребителя</string>
@@ -642,6 +690,7 @@
         <item>Преглед на съдържанието</item>
         <item>Питане за действие</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Показване на миниатюри за PDF документи</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Има опасност да направи приложението нестабилно под по-ранни издания на Андроид</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Четене на отдалечени файлове за миниатюри</string>
 
@@ -653,6 +702,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Следване в GitHub</string>
     <string name="app_name_launcher">Файлове</string>
+    <string name="clear_query">Изчистване на заявката</string>
     <string name="about_fork_subtitle">Оригинал: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Според тапета</string>
     <string name="color_picker_preset_colors_label">Други цветове</string>
@@ -667,6 +717,7 @@
 
     <string name="onboarding_install_apps_title">Инсталиране на приложения</string>
     <string name="onboarding_install_apps_description">Разрешете на %1$s директно да инсталира APK файлове. Така ще можете да инсталирате приложения от изтеглени или получени файлове, без да ви трябва инсталатор на трета страна.</string>
+    <string name="reorder_drag_handle">Преместване</string>
     <string name="onboarding_notifications_title">Известия</string>
     <string name="onboarding_optional">По избор</string>
     <string name="onboarding_required">Задължително</string>

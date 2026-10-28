@@ -23,6 +23,8 @@
     <string name="loading">Načítání…</string>
     <string name="maybe_later">Možná později</string>
     <string name="merge">Sloučit</string>
+    <string name="more_options">Další možnosti</string>
+    <string name="navigate_up">Přejít nahoru</string>
     <string name="none">Nic</string>
     <string name="open_navigation_drawer">Otevřít navigační panel</string>
     <string name="paste">Vložit</string>
@@ -305,7 +307,19 @@
     <string name="file_create_directory_title">Nová složka</string>
 
     <string name="file_list_title">Soubory</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Vyberte soubor</item>
+        <item quantity="few">Vyberte soubory</item>
+        <item quantity="many">Vyberte soubory</item>
+        <item quantity="other">Vyberte soubory</item>
+    </plurals>
     <string name="file_list_title_create_file">Uložit soubor</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Vyberte složku</item>
+        <item quantity="few">Vyberte složky</item>
+        <item quantity="many">Vyberte složky</item>
+        <item quantity="other">Vyberte složky</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d složka</item>
         <item quantity="few">%1$,d složky</item>
@@ -340,15 +354,19 @@
     <string name="file_list_action_add_bookmark">Přidat záložku</string>
     <string name="file_list_action_create_shortcut">Vytvořit zástupce</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Otevřít v novém okně</string>
+    <string name="file_list_select_title_format">%1$,d</string>
     <string name="file_list_create_file_name_hint">Název souboru</string>
+    <string name="file_list_open_current_directory_format">Vybrat „%1$s“</string>
     <string name="file_list_paste_move_title_format">Přesouvání %1$,d</string>
     <string name="file_list_paste_copy_title_format">Kopírování %1$,d</string>
     <string name="file_list_paste_extract_title_format">Rozbalování %1$,d</string>
     <string name="file_list_paste_action_extract_here">Rozbalit zde</string>
     <string name="file_list_empty">Žádné soubory</string>
+    <string name="file_list_press_back_again_to_exit">Pro ukončení stiskněte znovu Zpět</string>
     <string name="file_list_error_folder_not_found">Tato složka již neexistuje</string>
     <string name="file_list_error_permission_denied">Nemáte oprávnění k otevření této složky</string>
     <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
+    <string name="file_list_action_create">Vytvořit</string>
     <string name="file_list_action_create_file">Soubor</string>
     <string name="file_list_action_create_directory">Složka</string>
 
@@ -381,10 +399,13 @@
     <string name="file_properties_permission">Oprávnění</string>
     <string name="file_properties_permission_owner">Vlastník</string>
     <string name="file_properties_permission_group">Skupina</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
     <string name="file_properties_permission_set_owner_title">Změnit vlastníka</string>
     <string name="file_properties_permission_set_group_title">Změnit skupinu</string>
     <string name="file_properties_permission_set_principal_filter_hint">Zadejte název nebo ID</string>
+    <string name="file_properties_permission_set_principal_system">Systém</string>
     <string name="file_properties_permission_mode">Režim</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
     <string name="file_properties_permission_set_mode_title">Změnit režim</string>
     <string name="file_properties_permission_set_mode_others">Ostatní</string>
     <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
@@ -403,7 +424,11 @@
         <item>Nastavit GID</item>
         <item>Sticky bit</item>
     </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Nepřidávat „Spuštění“ pro obsažené soubory</string>
+    <string name="file_properties_permission_selinux_context">Kontext SELinuxu</string>
+    <string name="file_properties_permission_set_selinux_context_title">Změnit kontext SELinuxu</string>
     <string name="file_properties_permission_set_selinux_context_restore">Obnovit</string>
+    <string name="file_properties_permission_recursive">Použít na obsažené soubory</string>
     <string name="file_properties_image">Obrázek</string>
     <string name="file_properties_media_dimensions">Rozměry</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -463,6 +488,8 @@
     <string name="file_properties_checksum">Kontrolní součty</string>
     <string name="file_properties_checksum_compare">Porovnat</string>
     <string name="file_properties_checksum_compare_placeholder">Jakýkoli kontrolní součet</string>
+    <string name="file_properties_checksum_compare_match_format">Odpovídá kontrolnímu součtu %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Odpovídá začátku kontrolního součtu %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Žádný odpovídající kontrolní součet</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Vnitřní úložiště</string>
@@ -477,6 +504,11 @@
     <string name="storage_edit_device_storage_title">Upravit úložiště zařízení</string>
     <string name="storage_edit_device_storage_name">Název</string>
     <string name="storage_edit_device_storage_path">Cesta</string>
+    <string name="storage_add_external_storage_shortcut_title">Přidat zástupce externího úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_title">Upravit zástupce externího úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Svazek úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Zadejte svazek úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_path">Cesta</string>
     <string name="storage_add_document_tree_title">Přidat externí úložiště</string>
     <string name="storage_edit_document_tree_title">Upravit externí úložiště</string>
     <string name="storage_edit_document_tree_name">Název</string>
@@ -543,6 +575,7 @@
     <string name="storage_edit_smb_server_title_edit">Upravit server SMB</string>
     <string name="storage_edit_smb_server_title_add">Přidat server SMB</string>
     <string name="storage_edit_smb_server_host">Název hostitele</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP adresa nebo síťový název serveru, např. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Vložit název hostitele</string>
     <string name="storage_edit_smb_server_host_error_invalid">Neplatný název hostitele</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -610,6 +643,32 @@
     <string name="navigation_edit_bookmark_directory_name">Název</string>
     <string name="navigation_edit_bookmark_directory_path">Cesta</string>
     <string name="archive_viewer_title">Prohlížeč archivů</string>
+    <string name="gallery_title">Galerie</string>
+    <string name="gallery_photos">Fotky</string>
+    <string name="gallery_albums">Alba</string>
+    <string name="gallery_today">Dnes</string>
+    <string name="gallery_yesterday">Včera</string>
+    <string name="gallery_empty">Žádné fotky ani videa</string>
+    <string name="gallery_access_denied">Povolte přístup k souborům, abyste viděli své fotky a videa</string>
+    <string name="gallery_allow_access">Povolit</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d položka</item>
+        <item quantity="few">%1$,d položky</item>
+        <item quantity="many">%1$,d položek</item>
+        <item quantity="other">%1$,d položek</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Odstranit tuto položku?</item>
+        <item quantity="few">Odstranit tyto %1$,d položky?</item>
+        <item quantity="many">Odstranit těchto %1$,d položek?</item>
+        <item quantity="other">Odstranit těchto %1$,d položek?</item>
+    </plurals>
+    <string name="gallery_details">Podrobnosti</string>
+    <string name="gallery_details_date">Datum</string>
+    <string name="gallery_show_in_folder">Zobrazit ve složce</string>
+    <string name="video_player_title">Přehrávač videa</string>
+    <string name="video_player_play">Přehrát</string>
+    <string name="video_player_pause">Pozastavit</string>
     <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Uložit jako</string>
@@ -641,7 +700,9 @@
     <string name="ftp_server_anonymous_login_title">Anonymní přihlášení</string>
     <string name="ftp_server_username_title">Uživatelské jméno</string>
     <string name="ftp_server_password_title">Heslo</string>
+    <string name="ftp_server_password_summary_empty">Nenastaveno</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Neplatný port</string>
     <string name="ftp_server_home_directory_title">Složka Root</string>
     <string name="ftp_server_writable_title">Povolit zapisování</string>
     <string name="settings_title">Nastavení</string>
@@ -659,6 +720,9 @@
     </string-array>
     <string name="settings_black_night_mode">Režim černá noc</string>
     <string name="settings_file_list_animation_title">Animace při zobrazení souborů</string>
+    <string name="settings_double_back_to_exit_title">Pro ukončení stisknout dvakrát Zpět</string>
+    <string name="settings_edge_to_edge_title">Zobrazení od okraje k okraji</string>
+    <string name="settings_edge_to_edge_summary">Obsah se posouvá pod stavovou a navigační lištou</string>
     <string name="settings_file_name_ellipsize_title">Způsob zobrazení dlouhého názvu souboru</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Zobrazit od konce</item>
@@ -670,6 +734,7 @@
     <string name="settings_default_directory_title">Výchozí složka</string>
     <string name="settings_standard_directories_title">Standartní složky</string>
     <string name="settings_standard_directories_summary_empty">Nejsou povoleny žádné standartní složky</string>
+    <string name="settings_standard_directory_gallery_summary">Fotky a videa v zařízení</string>
     <string name="settings_bookmark_directories_title">Založené složky</string>
     <string name="settings_bookmark_directories_summary_empty">Žádné založené složky</string>
     <string name="settings_root_strategy_title">Režim přístupu root</string>
@@ -703,6 +768,7 @@
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sledovat na GitHubu</string>
     <string name="app_name_launcher">Soubory</string>
+    <string name="clear_query">Vymazat dotaz</string>
     <string name="about_fork_subtitle">Originál: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Podle tapety</string>
     <string name="color_picker_preset_colors_label">Další barvy</string>
@@ -717,6 +783,7 @@
 
     <string name="onboarding_install_apps_title">Instalace aplikací</string>
     <string name="onboarding_install_apps_description">Povolte aplikaci %1$s přímo instalovat soubory APK. Díky tomu budete moci instalovat aplikace ze stažených nebo přijatých souborů bez instalátoru třetí strany.</string>
+    <string name="reorder_drag_handle">Přesunout</string>
     <string name="onboarding_notifications_title">Oznámení</string>
     <string name="onboarding_optional">Volitelné</string>
     <string name="onboarding_required">Povinné</string>
