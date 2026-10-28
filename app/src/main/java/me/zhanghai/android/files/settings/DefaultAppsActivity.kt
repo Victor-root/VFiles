@@ -50,10 +50,12 @@ private fun DefaultAppsScreen() {
         ++resumeCount
         onPauseOrDispose {}
     }
-    val summaries = remember(defaultApps, resumeCount) {
+    val noChoiceLabels =
+        FileOpenAppCategory.entries.associateWith { stringResource(it.noChoiceLabelRes) }
+    val summaries = remember(defaultApps, resumeCount, noChoiceLabels) {
         FileOpenAppCategory.entries.associateWith { category ->
             FileOpenDefaultApps.getPackage(category)?.let { context.getAppLabel(it) }
-                ?: context.getString(category.noChoiceLabelRes)
+                ?: noChoiceLabels.getValue(category)
         }
     }
     var pickingCategory by rememberSaveable { mutableStateOf<FileOpenAppCategory?>(null) }
