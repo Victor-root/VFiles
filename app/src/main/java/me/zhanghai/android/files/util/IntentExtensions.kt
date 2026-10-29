@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.util
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -16,6 +17,7 @@ import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.intentType
+import me.zhanghai.android.files.viewer.saveas.SaveAsActivity
 import kotlin.reflect.KClass
 
 fun <T : Context> KClass<T>.createIntent(): Intent = Intent(application, java)
@@ -32,9 +34,15 @@ fun <T : Parcelable> Intent.getParcelableExtraSafe(key: String?): T? {
     return getParcelableExtra(key)
 }
 
+// Saving a file as another one is only of use for those of other apps, so it isn't offered for
+// those of this app.
 fun Intent.withChooser(title: CharSequence? = null, vararg initialIntents: Intent): Intent =
     Intent.createChooser(this, title).apply {
         putExtra(Intent.EXTRA_INITIAL_INTENTS, initialIntents)
+        putExtra(
+            Intent.EXTRA_EXCLUDE_COMPONENTS,
+            arrayOf(ComponentName(application, SaveAsActivity::class.java))
+        )
     }
 
 fun Intent.withChooser(vararg initialIntents: Intent) = withChooser(null, *initialIntents)
