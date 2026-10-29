@@ -34,6 +34,13 @@ fun KClass<Environment>.supportsExternalStorageManager(): Boolean =
         else -> false
     }
 
+/**
+ * Whether the access to all files can only be given with adb, on devices without a page for it,
+ * like TVs whose maker replaced it, while the app only has the access to media without it.
+ */
+fun KClass<Environment>.needsAdbForExternalStorageManager(): Boolean =
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !supportsExternalStorageManager()
+
 // Whether the app currently holds full access to external storage, through whichever mechanism this
 // device offers. Deliberately keyed on supportsExternalStorageManager() rather than the API level:
 // a device without an "All files access" page can never grant that special access, so it has to be

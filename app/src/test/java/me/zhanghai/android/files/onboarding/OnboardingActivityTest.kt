@@ -54,6 +54,8 @@ class OnboardingActivityTest {
         launchWithoutFilesAccess()
         composeTestRule.onNodeWithText("Required").assertIsDisplayed()
         composeTestRule.onNodeWithText("Granted").assertIsDisplayed()
+        composeTestRule.onNodeWithText("MANAGE_EXTERNAL_STORAGE allow", substring = true)
+            .assertDoesNotExist()
         // Files access is required to continue.
         composeTestRule.onNodeWithText("Get started").assertIsNotEnabled()
         captureScreenRoboImage("build/screenshots/onboarding.png")

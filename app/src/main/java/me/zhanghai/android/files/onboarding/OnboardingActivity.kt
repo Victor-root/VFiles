@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -58,6 +59,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -68,6 +70,7 @@ import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
+import me.zhanghai.android.files.util.needsAdbForExternalStorageManager
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 
 /** Asks for the permissions the app needs on its first launch, before showing the files. */
@@ -104,6 +107,14 @@ class OnboardingActivity : AppActivity() {
             onPauseOrDispose {}
         }
         val grantedPages = remember(grantCheckCount) { pages.filter { it.isGranted(context) } }
+        // The command giving the access to all files when only adb can give it.
+        val adbCommand = remember(grantCheckCount) {
+            if (Environment::class.needsAdbForExternalStorageManager()) {
+                getString(R.string.onboarding_files_adb_command_format, packageName)
+            } else {
+                null
+            }
+        }
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
                 // Kept above the cards, so that moving the focus down to them with a D-pad doesn't
@@ -142,6 +153,9 @@ class OnboardingActivity : AppActivity() {
                                         page = page,
                                         isGranted = page in grantedPages,
                                         onGrant = { page.requestGrant(this@OnboardingActivity) },
+                                        adbCommand = adbCommand.takeIf {
+                                            page == OnboardingPage.FilesAccess
+                                        },
                                         modifier = Modifier
                                             .weight(1f)
                                             .fillMaxHeight()
@@ -153,7 +167,10 @@ class OnboardingActivity : AppActivity() {
                                 PermissionCard(
                                     page = page,
                                     isGranted = page in grantedPages,
-                                    onGrant = { page.requestGrant(this@OnboardingActivity) }
+                                    onGrant = { page.requestGrant(this@OnboardingActivity) },
+                                    adbCommand = adbCommand.takeIf {
+                                        page == OnboardingPage.FilesAccess
+                                    }
                                 )
                             }
                         }
@@ -284,7 +301,8 @@ class OnboardingActivity : AppActivity() {
 private fun PermissionCard(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
-    onGrant: () -> Unit
+    onGrant: () -> Unit,
+    adbCommand: String?
 ) {
     PermissionSurface(isGranted, Modifier.fillMaxWidth()) {
         // On medium screens, the action is next to the text, so that the cards are short.
@@ -300,7 +318,7 @@ private fun PermissionCard(
                     ) {
                         PermissionTitle(page)
                         if (isWide) {
-                            PermissionDescription(page, Modifier.padding(top = 6.dp))
+                            PermissionDescription(page, adbCommand, Modifier.padding(top = 6.dp))
                         }
                     }
                     if (isWide) {
@@ -309,7 +327,7 @@ private fun PermissionCard(
                 }
                 // On narrow screens, the text takes the whole width below the icon.
                 if (!isWide) {
-                    PermissionDescription(page, Modifier.padding(top = 12.dp))
+                    PermissionDescription(page, adbCommand, Modifier.padding(top = 12.dp))
                     PermissionAction(
                         isGranted = isGranted,
                         onGrant = onGrant,
@@ -328,6 +346,7 @@ private fun PermissionTile(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
     onGrant: () -> Unit,
+    adbCommand: String?,
     modifier: Modifier = Modifier
 ) {
     PermissionSurface(isGranted, modifier) {
@@ -342,7 +361,7 @@ private fun PermissionTile(
                     RequirementBadge(page.isRequired, Modifier.padding(top = 4.dp))
                 }
             }
-            PermissionDescription(page, Modifier.padding(top = 12.dp))
+            PermissionDescription(page, adbCommand, Modifier.padding(top = 12.dp))
             // Keeps the actions of all tiles on the same line.
             Spacer(modifier = Modifier.weight(1f))
             PermissionAction(isGranted, onGrant, Modifier.padding(top = 16.dp))
@@ -406,15 +425,38 @@ private fun PermissionTitle(page: OnboardingActivity.OnboardingPage) {
 @Composable
 private fun PermissionDescription(
     page: OnboardingActivity.OnboardingPage,
+    adbCommand: String?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Text(
-        text = remember(page, context) { page.getDescription(context) },
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodyMedium
-    )
+    Column(modifier = modifier) {
+        Text(
+            text = remember(page, context) { page.getDescription(context) },
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        if (adbCommand != null) {
+            Text(
+                text = stringResource(R.string.onboarding_files_adb_note),
+                modifier = Modifier.padding(top = 8.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall
+            )
+            SelectionContainer(modifier = Modifier.padding(top = 4.dp)) {
+                Text(
+                    text = adbCommand,
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.surfaceContainerHighest,
+                            RoundedCornerShape(8.dp)
+                        )
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    fontFamily = FontFamily.Monospace,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+    }
 }
 
 @Composable
