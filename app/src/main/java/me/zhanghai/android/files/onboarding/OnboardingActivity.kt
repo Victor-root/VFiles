@@ -119,19 +119,23 @@ class OnboardingActivity : AppActivity() {
         val grantedPages = remember(grantCheckCount) { pages.filter { it.isGranted(context) } }
         val isShizukuAvailable by ShizukuFileServiceLauncher.isAvailableFlow
             .collectAsStateWithLifecycle(false)
-        val adbAccess = remember(grantCheckCount, isShizukuAvailable) {
-            if (Environment::class.needsAdbForExternalStorageManager()) {
-                AdbAccess(
-                    command = getString(R.string.onboarding_files_adb_command_format, packageName),
-                    onGrantWithShizuku = if (isShizukuAvailable) {
-                        ::grantFilesAccessWithShizuku
-                    } else {
-                        null
-                    }
-                )
-            } else {
-                null
-            }
+        val filesAccessAlternatives = remember(grantCheckCount, isShizukuAvailable) {
+            FilesAccessAlternatives(
+                adbCommand = if (Environment::class.needsAdbForExternalStorageManager()) {
+                    getString(R.string.onboarding_files_adb_command_format, packageName)
+                } else {
+                    null
+                },
+                // Shizuku can give the access on any device, without going through the settings.
+                onGrantWithShizuku = if (
+                    isShizukuAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+                        !Environment.isExternalStorageManager()
+                ) {
+                    ::grantFilesAccessWithShizuku
+                } else {
+                    null
+                }
+            )
         }
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
@@ -171,7 +175,7 @@ class OnboardingActivity : AppActivity() {
                                         page = page,
                                         isGranted = page in grantedPages,
                                         onGrant = { page.requestGrant(this@OnboardingActivity) },
-                                        adbAccess = adbAccess.takeIf {
+                                        alternatives = filesAccessAlternatives.takeIf {
                                             page == OnboardingPage.FilesAccess
                                         },
                                         modifier = Modifier
@@ -186,7 +190,7 @@ class OnboardingActivity : AppActivity() {
                                     page = page,
                                     isGranted = page in grantedPages,
                                     onGrant = { page.requestGrant(this@OnboardingActivity) },
-                                    adbAccess = adbAccess.takeIf {
+                                    alternatives = filesAccessAlternatives.takeIf {
                                         page == OnboardingPage.FilesAccess
                                     }
                                 )
@@ -332,7 +336,7 @@ private fun PermissionCard(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
     onGrant: () -> Unit,
-    adbAccess: AdbAccess?
+    alternatives: FilesAccessAlternatives?
 ) {
     PermissionSurface(isGranted, Modifier.fillMaxWidth()) {
         // On medium screens, the action is next to the text, so that the cards are short.
@@ -348,7 +352,7 @@ private fun PermissionCard(
                     ) {
                         PermissionTitle(page)
                         if (isWide) {
-                            PermissionDescription(page, adbAccess, Modifier.padding(top = 6.dp))
+                            PermissionDescription(page, alternatives, Modifier.padding(top = 6.dp))
                         }
                     }
                     if (isWide) {
@@ -357,7 +361,7 @@ private fun PermissionCard(
                 }
                 // On narrow screens, the text takes the whole width below the icon.
                 if (!isWide) {
-                    PermissionDescription(page, adbAccess, Modifier.padding(top = 12.dp))
+                    PermissionDescription(page, alternatives, Modifier.padding(top = 12.dp))
                     PermissionAction(
                         isGranted = isGranted,
                         onGrant = onGrant,
@@ -376,7 +380,7 @@ private fun PermissionTile(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
     onGrant: () -> Unit,
-    adbAccess: AdbAccess?,
+    alternatives: FilesAccessAlternatives?,
     modifier: Modifier = Modifier
 ) {
     PermissionSurface(isGranted, modifier) {
@@ -391,7 +395,7 @@ private fun PermissionTile(
                     RequirementBadge(page.isRequired, Modifier.padding(top = 4.dp))
                 }
             }
-            PermissionDescription(page, adbAccess, Modifier.padding(top = 12.dp))
+            PermissionDescription(page, alternatives, Modifier.padding(top = 12.dp))
             // Keeps the actions of all tiles on the same line.
             Spacer(modifier = Modifier.weight(1f))
             PermissionAction(isGranted, onGrant, Modifier.padding(top = 16.dp))
@@ -455,7 +459,7 @@ private fun PermissionTitle(page: OnboardingActivity.OnboardingPage) {
 @Composable
 private fun PermissionDescription(
     page: OnboardingActivity.OnboardingPage,
-    adbAccess: AdbAccess?,
+    alternatives: FilesAccessAlternatives?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -465,7 +469,8 @@ private fun PermissionDescription(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium
         )
-        if (adbAccess != null) {
+        val adbCommand = alternatives?.adbCommand
+        if (adbCommand != null) {
             Text(
                 text = stringResource(R.string.onboarding_files_adb_note),
                 modifier = Modifier.padding(top = 8.dp),
@@ -474,7 +479,7 @@ private fun PermissionDescription(
             )
             SelectionContainer(modifier = Modifier.padding(top = 4.dp)) {
                 Text(
-                    text = adbAccess.command,
+                    text = adbCommand,
                     modifier = Modifier
                         .background(
                             MaterialTheme.colorScheme.surfaceContainerHighest,
@@ -485,13 +490,13 @@ private fun PermissionDescription(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-            val onGrantWithShizuku = adbAccess.onGrantWithShizuku
-            if (onGrantWithShizuku != null) {
-                OutlinedButton(
-                    onClick = onGrantWithShizuku,
-                    modifier = Modifier.padding(top = 8.dp)
-                ) { Text(stringResource(R.string.onboarding_files_grant_with_shizuku)) }
-            }
+        }
+        val onGrantWithShizuku = alternatives?.onGrantWithShizuku
+        if (onGrantWithShizuku != null) {
+            OutlinedButton(
+                onClick = onGrantWithShizuku,
+                modifier = Modifier.padding(top = 8.dp)
+            ) { Text(stringResource(R.string.onboarding_files_grant_with_shizuku)) }
         }
     }
 }
@@ -566,8 +571,12 @@ private fun GrantedBadge(modifier: Modifier = Modifier) {
     }
 }
 
-/** How to give the access to all files when only adb can give it. */
-private class AdbAccess(val command: String, val onGrantWithShizuku: (() -> Unit)?)
+/** The ways to give the access to all files besides the settings. */
+private class FilesAccessAlternatives(
+    /** The command giving the access when only adb can give it. */
+    val adbCommand: String?,
+    val onGrantWithShizuku: (() -> Unit)?
+)
 
 private val WIDE_CARD_MIN_WIDTH = 600.dp
 private val TILED_MIN_WIDTH = 840.dp
