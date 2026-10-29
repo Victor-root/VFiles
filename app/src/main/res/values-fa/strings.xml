@@ -698,7 +698,7 @@
     <string name="settings_standard_directory_music_summary">آهنگ‌های افزاره</string>
     <string name="settings_bookmark_directories_title">شاخه‌های نشان شده</string>
     <string name="settings_bookmark_directories_summary_empty">بدون شاخهٔ نشان شده</string>
-    <string name="settings_root_strategy_title">حالت دسترسی ریشه</string>
+    <string name="settings_root_strategy_title">حالت دسترسی ریشه یا Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">شما %1$,d عملیات پروندهٔ در حال اجرا دارید و تغییر حالت دسترسی ریشه اکنون ممکن است منجر به خطای غیرمنتظره شود. آیا مطمئنید که اکنون می‌خواهید آن را تغییر دهید؟</item>
         <item quantity="other">شما %1$,d عملیات پروندهٔ در حال اجرا دارید و تغییر حالت دسترسی ریشه اکنون ممکن است منجر به خطای غیرمنتظره شود. آیا مطمئنید که اکنون می‌خواهید آن را تغییر دهید؟</item>
@@ -706,7 +706,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>فقط دسترسی معمولی</item>
         <item>خودکار</item>
-        <item>فقط دسترسی ریشه</item>
+        <item>فقط دسترسی ریشه یا Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">رمزگذاری نام پروندهٔ بایگانی</string>
     <string name="settings_open_apk_default_action_title">گشودن بستهٔ اندروید</string>
@@ -736,6 +736,7 @@
     <string name="navigation_bookmarks_hint_toast">پوشه‌ای را باز کنید، روی ⋮ ضربه بزنید و «افزودن نشانک» را انتخاب کنید</string>
     <string name="onboarding_files_description">برنامهٔ %1$s برای مدیریت همهٔ فایل‌های دستگاه به اجازه نیاز دارد. این اجازه برای مرور، کپی، انتقال و سازمان‌دهی فایل‌ها ضروری است.</string>
     <string name="onboarding_files_adb_note">این دستگاه نمی‌تواند از طریق تنظیمات خود دسترسی به همهٔ فایل‌ها را بدهد، بنابراین فقط عکس‌ها، ویدیوها و موسیقی شما در دسترس است. برای استفاده از همهٔ فایل‌ها، این فرمان را از یک رایانه اجرا کنید:</string>
+    <string name="onboarding_files_grant_with_shizuku">اعطا با Shizuku</string>
     <string name="onboarding_files_title">دسترسی به فایل‌ها</string>
     <string name="onboarding_finish">شروع</string>
     <string name="onboarding_grant">اعطا</string>

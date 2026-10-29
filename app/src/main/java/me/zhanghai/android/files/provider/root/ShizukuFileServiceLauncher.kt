@@ -13,6 +13,10 @@ import android.os.IBinder
 import android.os.Parcel
 import androidx.annotation.Keep
 import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeout
@@ -23,31 +27,36 @@ import me.zhanghai.android.files.provider.remote.RemoteFileServiceInterface
 import me.zhanghai.android.files.provider.remote.RemoteFileSystemException
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuApiConstants
-import rikka.sui.Sui
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.system.exitProcess
 
-object SuiFileServiceLauncher {
+object ShizukuFileServiceLauncher {
     private val lock = Any()
 
-    private var isSuiIntialized = false
+    // Also true with Sui, which ShizukuProvider initializes.
+    fun isAvailable(): Boolean = Shizuku.pingBinder()
 
-    fun isSuiAvailable(): Boolean {
-        synchronized(lock) {
-            if (!isSuiIntialized) {
-                Sui.init(application.packageName)
-                isSuiIntialized = true
+    /** Whether Shizuku is available, as it starts and stops. */
+    val isAvailableFlow: Flow<Boolean> =
+        callbackFlow {
+            val binderReceivedListener = Shizuku.OnBinderReceivedListener { trySend(true) }
+            val binderDeadListener = Shizuku.OnBinderDeadListener { trySend(false) }
+            Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
+            Shizuku.addBinderDeadListener(binderDeadListener)
+            trySend(isAvailable())
+            awaitClose {
+                Shizuku.removeBinderReceivedListener(binderReceivedListener)
+                Shizuku.removeBinderDeadListener(binderDeadListener)
             }
-            return Sui.isSui()
         }
-    }
+            .distinctUntilChanged()
 
     @Throws(RemoteFileSystemException::class)
     fun launchService(): IRemoteFileService {
         synchronized(lock) {
-            if (!isSuiAvailable()) {
-                throw RemoteFileSystemException("Sui isn't available")
+            if (!isAvailable()) {
+                throw RemoteFileSystemException("Shizuku isn't available")
             }
             if (Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
                 val granted = try {
@@ -74,7 +83,7 @@ object SuiFileServiceLauncher {
                     throw RemoteFileSystemException(e)
                 }
                 if (!granted) {
-                    throw RemoteFileSystemException("Sui permission isn't granted")
+                    throw RemoteFileSystemException("Shizuku permission isn't granted")
                 }
             }
             return try {
@@ -83,11 +92,14 @@ object SuiFileServiceLauncher {
                         withTimeout(RootFileService.TIMEOUT_MILLIS) {
                             suspendCancellableCoroutine { continuation ->
                                 val serviceArgs = Shizuku.UserServiceArgs(
-                                    ComponentName(application, SuiFileServiceInterface::class.java)
+                                    ComponentName(
+                                        application,
+                                        ShizukuFileServiceInterface::class.java
+                                    )
                                 )
                                     .debuggable(BuildConfig.DEBUG)
                                     .daemon(false)
-                                    .processNameSuffix("sui")
+                                    .processNameSuffix("shizuku")
                                     .version(BuildConfig.VERSION_CODE)
                                 val connection = object : ServiceConnection {
                                     override fun onServiceConnected(
@@ -103,7 +115,7 @@ object SuiFileServiceLauncher {
                                         if (continuation.isActive) {
                                             continuation.resumeWithException(
                                                 RemoteFileSystemException(
-                                                    "Sui service disconnected"
+                                                    "Shizuku service disconnected"
                                                 )
                                             )
                                         }
@@ -112,7 +124,7 @@ object SuiFileServiceLauncher {
                                     override fun onBindingDied(name: ComponentName) {
                                         if (continuation.isActive) {
                                             continuation.resumeWithException(
-                                                RemoteFileSystemException("Sui binding died")
+                                                RemoteFileSystemException("Shizuku binding died")
                                             )
                                         }
                                     }
@@ -120,7 +132,7 @@ object SuiFileServiceLauncher {
                                     override fun onNullBinding(name: ComponentName) {
                                         if (continuation.isActive) {
                                             continuation.resumeWithException(
-                                                RemoteFileSystemException("Sui binding is null")
+                                                RemoteFileSystemException("Shizuku binding is null")
                                             )
                                         }
                                     }
@@ -143,13 +155,13 @@ object SuiFileServiceLauncher {
 }
 
 @Keep
-class SuiFileServiceInterface : RemoteFileServiceInterface() {
+class ShizukuFileServiceInterface : RemoteFileServiceInterface() {
     init {
         RootFileService.main()
     }
 
-    // Sui only sends this transaction once the app is gone and never kills the process itself, so
-    // without handling it every app session leaves one more root process behind.
+    // Shizuku only sends this transaction once the app is gone and never kills the process itself,
+    // so without handling it every app session leaves one more privileged process behind.
     override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
         // Let super call data.enforceInterface() exactly once.
         if (super.onTransact(code, data, reply, flags)) {

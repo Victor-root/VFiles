@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.ColorStateList
+import android.os.Build
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -29,6 +30,14 @@ fun <T> Context.getSystemServiceCompat(serviceClass: Class<T>): T =
 
 val Context.mainExecutorCompat: Executor
     get() = ContextCompat.getMainExecutor(this)
+
+val Context.opPackageNameCompat: String
+    get() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            opPackageName
+        } else {
+            applicationContext.packageName
+        }
 
 fun Context.registerReceiverCompat(
     receiver: BroadcastReceiver?,

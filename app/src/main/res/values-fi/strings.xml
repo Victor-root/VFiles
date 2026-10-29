@@ -646,7 +646,7 @@
     <string name="settings_standard_directory_music_summary">Laitteen kappaleet</string>
     <string name="settings_bookmark_directories_title">Kirjanmerkkikansiot</string>
     <string name="settings_bookmark_directories_summary_empty">Ei kirjanmerkkikansioita</string>
-    <string name="settings_root_strategy_title">Root-käyttöoikeus</string>
+    <string name="settings_root_strategy_title">Root- tai Shizuku-käyttöoikeus</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">%1$,d tiedostotoiminto on käynnissä ja root-käyttöoikeuden muuttaminen saattaa johtaa odottamattomaan virheeseen. Haluatko varmasti muuttaa asetusta nyt?</item>
         <item quantity="other">%1$,d tiedostotoimintoa on käynnissä ja root-käyttöoikeuden muuttaminen saattaa johtaa odottamattomaan virheeseen. Haluatko varmasti muuttaa asetusta nyt?</item>
@@ -654,7 +654,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Vain normaalikäyttö</item>
         <item>Automaattinen</item>
-        <item>Vain root-käyttö</item>
+        <item>Vain root- tai Shizuku-käyttö</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Pakkausten tiedostonimen koodaus</string>
     <string name="settings_open_apk_default_action_title">Avaa Android-pakkaus</string>
@@ -684,6 +684,7 @@
     <string name="navigation_bookmarks_hint_toast">Avaa kansio, napauta ⋮ ja valitse ”Lisää kirjanmerkki”</string>
     <string name="onboarding_files_description">%1$s tarvitsee luvan hallita kaikkia laitteesi tiedostoja. Se on välttämätön tiedostojen selaamiseen, kopioimiseen, siirtämiseen ja järjestämiseen.</string>
     <string name="onboarding_files_adb_note">Tämä laite ei voi antaa pääsyä kaikkiin tiedostoihin asetuksistaan, joten vain kuvasi, videosi ja musiikkisi ovat käytettävissä. Jos haluat käyttää kaikkia tiedostojasi, suorita tämä komento tietokoneelta:</string>
+    <string name="onboarding_files_grant_with_shizuku">Myönnä Shizukulla</string>
     <string name="onboarding_files_title">Tiedostojen käyttöoikeus</string>
     <string name="onboarding_finish">Aloita</string>
     <string name="onboarding_grant">Myönnä</string>

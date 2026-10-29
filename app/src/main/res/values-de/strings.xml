@@ -700,7 +700,7 @@
     <string name="settings_standard_directory_music_summary">Titel des Geräts</string>
     <string name="settings_bookmark_directories_title">Lesezeichenordner</string>
     <string name="settings_bookmark_directories_summary_empty">Keine Lesezeichenordner</string>
-    <string name="settings_root_strategy_title">Root Zugriffsmodus</string>
+    <string name="settings_root_strategy_title">Root- oder Shizuku-Zugriffsmodus</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Es läuft gerade %1$,d Dateioperation. Ändern des Zugriffsmodus könnte unerwartete Fehler hervorrufen. Zugriffsmodus dennoch ändern?</item>
         <item quantity="other">Es laufen gerade %1$,d Dateioperationen. Ändern des Zugriffsmodus könnte unerwartete Fehler hervorrufen. Zugriffsmodus dennoch ändern?</item>
@@ -708,7 +708,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Nur normaler Zugriff</item>
         <item>Automatisch</item>
-        <item>Nur Root-Zugriff</item>
+        <item>Nur Root- oder Shizuku-Zugriff</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Zeichenkodierung des Dateinamens im Archiv</string>
     <string name="settings_open_apk_default_action_title">Öffnen einer APK-Datei</string>
@@ -738,6 +738,7 @@
     <string name="navigation_bookmarks_hint_toast">Öffne einen Ordner, tippe dann auf ⋮ und „Lesezeichen hinzufügen“</string>
     <string name="onboarding_files_description">%1$s benötigt die Berechtigung, alle Dateien auf deinem Gerät zu verwalten. Das ist zum Durchsuchen, Kopieren, Verschieben und Organisieren deiner Dateien erforderlich.</string>
     <string name="onboarding_files_adb_note">Dieses Gerät kann den Zugriff auf alle Dateien nicht über seine Einstellungen gewähren, daher sind nur deine Fotos, Videos und Musik verfügbar. Um alle deine Dateien zu nutzen, führe diesen Befehl auf einem Computer aus:</string>
+    <string name="onboarding_files_grant_with_shizuku">Mit Shizuku erlauben</string>
     <string name="onboarding_files_title">Dateizugriff</string>
     <string name="onboarding_finish">Loslegen</string>
     <string name="onboarding_grant">Erlauben</string>

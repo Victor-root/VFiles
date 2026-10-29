@@ -836,7 +836,7 @@
     <string name="settings_standard_directory_music_summary">أغاني الجهاز</string>
     <string name="settings_bookmark_directories_title">مجلدات الإشارات المرجعية</string>
     <string name="settings_bookmark_directories_summary_empty">لا توجد مجلدات الإشارات المرجعية</string>
-    <string name="settings_root_strategy_title">وضع الروت</string>
+    <string name="settings_root_strategy_title">وضع الروت أو Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="zero">لديك %1$,d عملية ملف قيد التشغيل وقد يؤدي تغيير وضع الوصول إلى الجذر الآن إلى حدوث خطأ غير متوقع. هل أنت متأكد أنك تريد تغييره الآن؟</item>
         <item quantity="one">لديك %1$,d عملية ملف قيد التشغيل وقد يؤدي تغيير وضع الوصول إلى الجذر الآن إلى حدوث خطأ غير متوقع. هل أنت متأكد أنك تريد تغييره الآن؟</item>
@@ -848,7 +848,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>الوصول العادي فقط</item>
         <item>تلقائي</item>
-        <item>الروت فقط</item>
+        <item>الروت أو Shizuku فقط</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">أرشيف اسم ملف الترميز</string>
     <string name="settings_open_apk_default_action_title">افتح حزمة Android</string>
@@ -878,6 +878,7 @@
     <string name="navigation_bookmarks_hint_toast">افتح مجلدًا، ثم اضغط على ⋮ و«إضافة إشارة مرجعية»</string>
     <string name="onboarding_files_description">يحتاج %1$s إلى إذن لإدارة جميع الملفات على جهازك. هذا ضروري للتصفح والنسخ والنقل وتنظيم ملفاتك.</string>
     <string name="onboarding_files_adb_note">لا يمكن لهذا الجهاز منح الوصول إلى جميع الملفات من إعداداته، لذا تتوفر صورك ومقاطع الفيديو والموسيقى فقط. لاستخدام جميع ملفاتك، شغّل هذا الأمر من جهاز كمبيوتر:</string>
+    <string name="onboarding_files_grant_with_shizuku">منح باستخدام Shizuku</string>
     <string name="onboarding_files_title">الوصول إلى الملفات</string>
     <string name="onboarding_finish">ابدأ</string>
     <string name="onboarding_grant">منح</string>

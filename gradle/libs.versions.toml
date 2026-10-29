@@ -9,6 +9,7 @@ bouncycastle = "1.86"
 coil = "3.6.3"
 compose-bom = "2026.09.00"
 roborazzi = "1.77.0"
+shizuku = "13.1.5"
 
 [libraries]
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" }
@@ -75,7 +76,8 @@ libsu-service = { module = "com.github.topjohnwu.libsu:service", version = "6.0.
 # LicensesDialog 2.2.0 pulls in androidx.webkit and uses setForceDark() instead of correctly setting
 # colors.
 mina-core = { module = "org.apache.mina:mina-core", version = "2.2.10" }
-shizuku-api = { module = "dev.rikka.shizuku:api", version = "13.1.5" }
+shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
+shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 # SMBJ 0.12.0 broke anonymous authentication: https://github.com/hierynomus/smbj/issues/792 , and
 # it's still an issue in 0.15.0.
 smbj = { module = "com.hierynomus:smbj", version = "0.11.5" }

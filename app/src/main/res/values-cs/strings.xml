@@ -768,7 +768,7 @@
     <string name="settings_standard_directory_music_summary">Skladby v zařízení</string>
     <string name="settings_bookmark_directories_title">Založené složky</string>
     <string name="settings_bookmark_directories_summary_empty">Žádné založené složky</string>
-    <string name="settings_root_strategy_title">Režim přístupu root</string>
+    <string name="settings_root_strategy_title">Režim přístupu root nebo Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Právě probíhá %1$,d souborová operace a změna režimu přístupu root by mohla mít za následek nečekanou chybu. Jste si jisit, že ho chcete změnit nyní?</item>
         <item quantity="few">Právě probíhá %1$,d souborové operace a změna režimu přístupu root by mohla mít za následek nečekanou chybu. Jste si jisti, že ho chcete změnit nyní?</item>
@@ -778,7 +778,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Pouze normální přístup</item>
         <item>Automatický</item>
-        <item>Pouze přístup root</item>
+        <item>Pouze přístup root nebo Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Kódování názvu archivovaného souboru</string>
     <string name="settings_open_apk_default_action_title">Otevírání balíčku Android</string>
@@ -808,6 +808,7 @@
     <string name="navigation_bookmarks_hint_toast">Otevřete složku, klepněte na ⋮ a zvolte „Přidat záložku“</string>
     <string name="onboarding_files_description">%1$s potřebuje oprávnění ke správě všech souborů v zařízení. Je nezbytné pro procházení, kopírování, přesouvání a organizaci souborů.</string>
     <string name="onboarding_files_adb_note">Toto zařízení nedokáže v nastavení udělit přístup ke všem souborům, proto jsou dostupné jen vaše fotky, videa a hudba. Chcete-li používat všechny soubory, spusťte z počítače tento příkaz:</string>
+    <string name="onboarding_files_grant_with_shizuku">Udělit pomocí Shizuku</string>
     <string name="onboarding_files_title">Přístup k souborům</string>
     <string name="onboarding_finish">Začít</string>
     <string name="onboarding_grant">Udělit</string>

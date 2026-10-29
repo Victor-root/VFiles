@@ -662,14 +662,14 @@
     <string name="settings_standard_directory_music_summary">Bài hát trên thiết bị</string>
     <string name="settings_bookmark_directories_title">Đánh dấu thư mục</string>
     <string name="settings_bookmark_directories_summary_empty">Không có thư mục nào được đánh dấu</string>
-    <string name="settings_root_strategy_title">Chế độ truy cập root</string>
+    <string name="settings_root_strategy_title">Chế độ truy cập root hoặc Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">Bạn có %1$,d thao tác với tệp đang chạy và việc thay đổi chế độ truy cập root ngay bây giờ có thể gây ra lỗi không mong đợi. Bạn có chắc bạn muốn thay đổi ngay không?</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>Chỉ dùng quyền truy cập thông thường</item>
         <item>Tự động</item>
-        <item>Chỉ dùng quyền truy cập root</item>
+        <item>Chỉ dùng quyền truy cập root hoặc Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Bảng mã kí tự của tên tệp nén</string>
     <string name="settings_open_apk_default_action_title">Mở gói cài đặt Android</string>
@@ -699,6 +699,7 @@
     <string name="navigation_bookmarks_hint_toast">Mở một thư mục, rồi nhấn ⋮ và chọn “Thêm dấu trang”</string>
     <string name="onboarding_files_description">%1$s cần quyền quản lý tất cả tệp trên thiết bị của bạn. Quyền này rất cần thiết để duyệt, sao chép, di chuyển và sắp xếp tệp.</string>
     <string name="onboarding_files_adb_note">Thiết bị này không thể cấp quyền truy cập tất cả tệp từ phần cài đặt, nên chỉ có ảnh, video và nhạc của bạn. Để sử dụng tất cả tệp, hãy chạy lệnh sau từ máy tính:</string>
+    <string name="onboarding_files_grant_with_shizuku">Cấp bằng Shizuku</string>
     <string name="onboarding_files_title">Truy cập tệp</string>
     <string name="onboarding_finish">Bắt đầu</string>
     <string name="onboarding_grant">Cấp</string>

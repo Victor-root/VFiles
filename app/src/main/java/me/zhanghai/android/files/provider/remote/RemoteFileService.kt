@@ -8,6 +8,7 @@ package me.zhanghai.android.files.provider.remote
 import java8.nio.file.FileSystem
 import me.zhanghai.android.files.provider.common.PosixFileAttributeView
 import me.zhanghai.android.files.provider.common.PosixFileStore
+import java.io.IOException
 
 abstract class RemoteFileService(private val remoteInterface: RemoteInterface<IRemoteFileService>) {
     @Throws(RemoteFileSystemException::class)
@@ -29,4 +30,9 @@ abstract class RemoteFileService(private val remoteInterface: RemoteInterface<IR
         remoteInterface.get().call {
             getRemotePosixFileAttributeViewInterface(attributeView.toParcelable())
         }
+
+    @Throws(IOException::class)
+    fun allowExternalStorageManager() {
+        remoteInterface.get().call { exception -> allowExternalStorageManager(exception) }
+    }
 }

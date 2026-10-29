@@ -234,6 +234,7 @@ dependencies {
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)
     implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
     implementation(libs.smbj) {
         // Use the JDK 1.5 to 1.8 flavor of Bouncy Castle like the rest of the app, so that there's
         // only one copy of it.

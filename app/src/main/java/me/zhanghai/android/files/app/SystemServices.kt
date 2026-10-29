@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.app
 
+import android.app.AppOpsManager
 import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.SharedPreferences
@@ -28,6 +29,10 @@ val appClassLoader = AppProvider::class.java.classLoader
 // For the state kept while the app runs, updated on the main thread like the UI reading it.
 val applicationScope: CoroutineScope by lazy {
     CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+}
+
+val appOpsManager: AppOpsManager by lazy {
+    application.getSystemServiceCompat(AppOpsManager::class.java)
 }
 
 val clipboardManager: ClipboardManager by lazy {

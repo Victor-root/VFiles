@@ -696,7 +696,7 @@
     <string name="settings_standard_directory_music_summary">Cihazın şarkıları</string>
     <string name="settings_bookmark_directories_title">Yer işareti klasörleri</string>
     <string name="settings_bookmark_directories_summary_empty">Yer işareti klasörü yok</string>
-    <string name="settings_root_strategy_title">Kök erişim modu</string>
+    <string name="settings_root_strategy_title">Kök veya Shizuku erişim modu</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Çalışan %1$,d dosya işleminiz var ve şimdi kök erişim modunu değiştirmek beklenmeyen hatalara neden olabilir. Şimdi değiştirmek istediğinizden emin misiniz?</item>
         <item quantity="other">Çalışan %1$,d dosya işleminiz var ve şimdi kök erişim modunu değiştirmek beklenmeyen hatalara neden olabilir. Şimdi değiştirmek istediğinizden emin misiniz?</item>
@@ -704,7 +704,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Yalnızca normal erişim</item>
         <item>Otomatik</item>
-        <item>Yalnızca kök erişimi</item>
+        <item>Yalnızca kök veya Shizuku erişimi</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Arşiv dosya adı kodlaması</string>
     <string name="settings_open_apk_default_action_title">Android paketini aç</string>
@@ -734,6 +734,7 @@
     <string name="navigation_bookmarks_hint_toast">Bir klasör açın, ardından ⋮ simgesine dokunup “Yer imi ekle”yi seçin</string>
     <string name="onboarding_files_description">%1$s, cihazınızdaki tüm dosyaları yönetmek için izne ihtiyaç duyar. Dosyalarınıza göz atmak, kopyalamak, taşımak ve düzenlemek için gereklidir.</string>
     <string name="onboarding_files_adb_note">Bu cihaz, ayarlarından tüm dosyalara erişim izni veremiyor; bu nedenle yalnızca fotoğraflarınız, videolarınız ve müziğiniz kullanılabilir. Tüm dosyalarınızı kullanmak için bir bilgisayardan şu komutu çalıştırın:</string>
+    <string name="onboarding_files_grant_with_shizuku">Shizuku ile ver</string>
     <string name="onboarding_files_title">Dosya erişimi</string>
     <string name="onboarding_finish">Başla</string>
     <string name="onboarding_grant">Ver</string>

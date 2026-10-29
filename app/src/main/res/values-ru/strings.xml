@@ -770,7 +770,7 @@
     <string name="settings_standard_directory_music_summary">Треки на устройстве</string>
     <string name="settings_bookmark_directories_title">Закладки папок</string>
     <string name="settings_bookmark_directories_summary_empty">Нет закладок папок</string>
-    <string name="settings_root_strategy_title">Root-доступ</string>
+    <string name="settings_root_strategy_title">Root- или Shizuku-доступ</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">У вас запущена %1$,d файловая операция и изменение режима root-доступа может привести к непредвиденной ошибке. Вы уверены, что хотите изменить сейчас?</item>
         <item quantity="few">У вас запущены %1$,d файловые операции и изменение режима root-доступа может привести к непредвиденной ошибке. Вы уверены, что хотите изменить сейчас?</item>
@@ -780,7 +780,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Только обычный доступ</item>
         <item>Автоматически</item>
-        <item>Только root-доступ</item>
+        <item>Только root- или Shizuku-доступ</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Кодировка имени файла архива</string>
     <string name="settings_open_apk_default_action_title">Открытие Android-пакета</string>
@@ -810,6 +810,7 @@
     <string name="navigation_bookmarks_hint_toast">Откройте папку, нажмите ⋮ и «Добавить закладку»</string>
     <string name="onboarding_files_description">%1$s требуется разрешение на управление всеми файлами на устройстве. Оно необходимо для просмотра, копирования, перемещения и организации файлов.</string>
     <string name="onboarding_files_adb_note">Это устройство не может предоставить доступ ко всем файлам в своих настройках, поэтому доступны только ваши фото, видео и музыка. Чтобы использовать все файлы, выполните эту команду на компьютере:</string>
+    <string name="onboarding_files_grant_with_shizuku">Предоставить через Shizuku</string>
     <string name="onboarding_files_title">Доступ к файлам</string>
     <string name="onboarding_finish">Начать</string>
     <string name="onboarding_grant">Предоставить</string>

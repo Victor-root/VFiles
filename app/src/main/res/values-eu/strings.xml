@@ -647,7 +647,7 @@
     <string name="settings_standard_directory_music_summary">Gailuko abestiak</string>
     <string name="settings_bookmark_directories_title">Karpeten laster-markak</string>
     <string name="settings_bookmark_directories_summary_empty">Karpeten laster-markarik ez</string>
-    <string name="settings_root_strategy_title">Root sarbidea modua</string>
+    <string name="settings_root_strategy_title">Root edo Shizuku sarbidea modua</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Eragiketa %1$,d duzu abian eta root sarbide modua orain aldatzeak ustekabeko errorea sortu dezake. Ziur orain aldatu nahi duzula?</item>
         <item quantity="other">%1$,d eragiketa dituzu abian eta root sarbide modua orain aldatzeak ustekabeko errorea sortu dezake. Ziur orain aldatu nahi duzula?</item>
@@ -655,7 +655,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Sarbide arrunta soilik</item>
         <item>Automatic</item>
-        <item>Root sarbidea soilik</item>
+        <item>Root edo Shizuku sarbidea soilik</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Artxibo fitxategi-izenaren kodeketa</string>
     <string name="settings_open_apk_default_action_title">Ireki Android paketea</string>
@@ -685,6 +685,7 @@
     <string name="navigation_bookmarks_hint_toast">Ireki karpeta bat, sakatu ⋮ eta hautatu «Gehitu laster-marka»</string>
     <string name="onboarding_files_description">%1$s-ek baimena behar du gailuko fitxategi guztiak kudeatzeko. Ezinbestekoa da fitxategiak arakatu, kopiatu, lekuz aldatu eta antolatzeko.</string>
     <string name="onboarding_files_adb_note">Gailu honek ezin du fitxategi guztietarako sarbidea eman bere ezarpenetatik; beraz, zure argazkiak, bideoak eta musika soilik daude erabilgarri. Fitxategi guztiak erabiltzeko, exekutatu komando hau ordenagailu batetik:</string>
+    <string name="onboarding_files_grant_with_shizuku">Eman Shizuku bidez</string>
     <string name="onboarding_files_title">Fitxategietarako sarbidea</string>
     <string name="onboarding_finish">Hasi</string>
     <string name="onboarding_grant">Eman</string>

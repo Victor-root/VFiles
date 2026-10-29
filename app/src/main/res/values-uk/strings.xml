@@ -770,7 +770,7 @@
     <string name="settings_standard_directory_music_summary">Треки на пристрої</string>
     <string name="settings_bookmark_directories_title">Теки закладок</string>
     <string name="settings_bookmark_directories_summary_empty">Нема тек закладок</string>
-    <string name="settings_root_strategy_title">Режим доступу root</string>
+    <string name="settings_root_strategy_title">Режим доступу root або Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">У вас запущена %1$,d файлова операція, і зміна режиму root доступу зараз може призвести до неочікуваної помилки. Ви впевнені, що хочете змінити його зараз?</item>
         <item quantity="few">У вас запущено %1$,d файлові операції, і зміна режиму root доступу зараз може призвести до неочікуваної помилки. Ви впевнені, що хочете змінити його зараз?</item>
@@ -780,7 +780,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Лише звичайний доступ</item>
         <item>Автоматично</item>
-        <item>Лише доступ root</item>
+        <item>Лише доступ root або Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Кодування назви файлу для архіву</string>
     <string name="settings_open_apk_default_action_title">Відкривати пакунок Android</string>
@@ -810,6 +810,7 @@
     <string name="navigation_bookmarks_hint_toast">Відкрийте папку, торкніться ⋮ і виберіть «Додати закладку»</string>
     <string name="onboarding_files_description">%1$s потрібен дозвіл на керування всіма файлами на пристрої. Він необхідний для перегляду, копіювання, переміщення та впорядкування файлів.</string>
     <string name="onboarding_files_adb_note">Цей пристрій не може надати доступ до всіх файлів у своїх налаштуваннях, тому доступні лише ваші фото, відео й музика. Щоб користуватися всіма файлами, виконайте цю команду на комп’ютері:</string>
+    <string name="onboarding_files_grant_with_shizuku">Надати через Shizuku</string>
     <string name="onboarding_files_title">Доступ до файлів</string>
     <string name="onboarding_finish">Почати</string>
     <string name="onboarding_grant">Надати</string>
