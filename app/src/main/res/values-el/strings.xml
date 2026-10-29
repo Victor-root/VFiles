@@ -737,6 +737,7 @@
     <string name="navigation_bookmarks_hint_title">Σελιδοδείκτες</string>
     <string name="navigation_bookmarks_hint_toast">Ανοίξτε έναν φάκελο, πατήστε ⋮ και «Προσθήκη σελιδοδείκτη»</string>
     <string name="onboarding_files_description">Το %1$s χρειάζεται άδεια για τη διαχείριση όλων των αρχείων στη συσκευή σας. Είναι απαραίτητη για περιήγηση, αντιγραφή, μετακίνηση και οργάνωση των αρχείων σας.</string>
+    <string name="onboarding_files_adb_note">Αυτή η συσκευή δεν μπορεί να παραχωρήσει πρόσβαση σε όλα τα αρχεία από τις ρυθμίσεις της, οπότε είναι διαθέσιμες μόνο οι φωτογραφίες, τα βίντεο και η μουσική σας. Για να χρησιμοποιήσετε όλα τα αρχεία σας, εκτελέστε αυτή την εντολή από έναν υπολογιστή:</string>
     <string name="onboarding_files_title">Πρόσβαση σε αρχεία</string>
     <string name="onboarding_finish">Ξεκινήστε</string>
     <string name="onboarding_grant">Παραχώρηση</string>

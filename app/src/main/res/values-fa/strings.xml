@@ -735,6 +735,7 @@
     <string name="navigation_bookmarks_hint_title">نشانک‌ها</string>
     <string name="navigation_bookmarks_hint_toast">پوشه‌ای را باز کنید، روی ⋮ ضربه بزنید و «افزودن نشانک» را انتخاب کنید</string>
     <string name="onboarding_files_description">برنامهٔ %1$s برای مدیریت همهٔ فایل‌های دستگاه به اجازه نیاز دارد. این اجازه برای مرور، کپی، انتقال و سازمان‌دهی فایل‌ها ضروری است.</string>
+    <string name="onboarding_files_adb_note">این دستگاه نمی‌تواند از طریق تنظیمات خود دسترسی به همهٔ فایل‌ها را بدهد، بنابراین فقط عکس‌ها، ویدیوها و موسیقی شما در دسترس است. برای استفاده از همهٔ فایل‌ها، این فرمان را از یک رایانه اجرا کنید:</string>
     <string name="onboarding_files_title">دسترسی به فایل‌ها</string>
     <string name="onboarding_finish">شروع</string>
     <string name="onboarding_grant">اعطا</string>

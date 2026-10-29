@@ -809,6 +809,7 @@
     <string name="navigation_bookmarks_hint_title">Закладки</string>
     <string name="navigation_bookmarks_hint_toast">Откройте папку, нажмите ⋮ и «Добавить закладку»</string>
     <string name="onboarding_files_description">%1$s требуется разрешение на управление всеми файлами на устройстве. Оно необходимо для просмотра, копирования, перемещения и организации файлов.</string>
+    <string name="onboarding_files_adb_note">Это устройство не может предоставить доступ ко всем файлам в своих настройках, поэтому доступны только ваши фото, видео и музыка. Чтобы использовать все файлы, выполните эту команду на компьютере:</string>
     <string name="onboarding_files_title">Доступ к файлам</string>
     <string name="onboarding_finish">Начать</string>
     <string name="onboarding_grant">Предоставить</string>

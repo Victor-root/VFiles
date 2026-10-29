@@ -807,6 +807,7 @@
     <string name="navigation_bookmarks_hint_title">Zakładki</string>
     <string name="navigation_bookmarks_hint_toast">Otwórz folder, dotknij ⋮ i „Dodaj zakładkę”</string>
     <string name="onboarding_files_description">%1$s potrzebuje uprawnienia do zarządzania wszystkimi plikami na urządzeniu. Jest ono niezbędne do przeglądania, kopiowania, przenoszenia i porządkowania plików.</string>
+    <string name="onboarding_files_adb_note">To urządzenie nie może przyznać dostępu do wszystkich plików w swoich ustawieniach, więc dostępne są tylko Twoje zdjęcia, filmy i muzyka. Aby korzystać ze wszystkich plików, uruchom to polecenie na komputerze:</string>
     <string name="onboarding_files_title">Dostęp do plików</string>
     <string name="onboarding_finish">Rozpocznij</string>
     <string name="onboarding_grant">Przyznaj</string>

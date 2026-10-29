@@ -737,6 +737,7 @@
     <string name="navigation_bookmarks_hint_title">Отметки</string>
     <string name="navigation_bookmarks_hint_toast">Отворете папка, докоснете ⋮ и изберете „Добавяне на отметка“</string>
     <string name="onboarding_files_description">%1$s се нуждае от разрешение за управление на всички файлове на устройството. То е необходимо за разглеждане, копиране, преместване и подреждане на файловете.</string>
+    <string name="onboarding_files_adb_note">Това устройство не може да предостави достъп до всички файлове от настройките си, затова са достъпни само снимките, видеоклиповете и музиката ви. За да използвате всички файлове, изпълнете тази команда от компютър:</string>
     <string name="onboarding_files_title">Достъп до файлове</string>
     <string name="onboarding_finish">Начало</string>
     <string name="onboarding_grant">Предостави</string>

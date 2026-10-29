@@ -807,6 +807,7 @@
     <string name="navigation_bookmarks_hint_title">Záložky</string>
     <string name="navigation_bookmarks_hint_toast">Otevřete složku, klepněte na ⋮ a zvolte „Přidat záložku“</string>
     <string name="onboarding_files_description">%1$s potřebuje oprávnění ke správě všech souborů v zařízení. Je nezbytné pro procházení, kopírování, přesouvání a organizaci souborů.</string>
+    <string name="onboarding_files_adb_note">Toto zařízení nedokáže v nastavení udělit přístup ke všem souborům, proto jsou dostupné jen vaše fotky, videa a hudba. Chcete-li používat všechny soubory, spusťte z počítače tento příkaz:</string>
     <string name="onboarding_files_title">Přístup k souborům</string>
     <string name="onboarding_finish">Začít</string>
     <string name="onboarding_grant">Udělit</string>

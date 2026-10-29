@@ -737,6 +737,7 @@
     <string name="navigation_bookmarks_hint_title">Lesezeichen</string>
     <string name="navigation_bookmarks_hint_toast">Öffne einen Ordner, tippe dann auf ⋮ und „Lesezeichen hinzufügen“</string>
     <string name="onboarding_files_description">%1$s benötigt die Berechtigung, alle Dateien auf deinem Gerät zu verwalten. Das ist zum Durchsuchen, Kopieren, Verschieben und Organisieren deiner Dateien erforderlich.</string>
+    <string name="onboarding_files_adb_note">Dieses Gerät kann den Zugriff auf alle Dateien nicht über seine Einstellungen gewähren, daher sind nur deine Fotos, Videos und Musik verfügbar. Um alle deine Dateien zu nutzen, führe diesen Befehl auf einem Computer aus:</string>
     <string name="onboarding_files_title">Dateizugriff</string>
     <string name="onboarding_finish">Loslegen</string>
     <string name="onboarding_grant">Erlauben</string>

@@ -684,6 +684,7 @@
     <string name="navigation_bookmarks_hint_title">Laster-markak</string>
     <string name="navigation_bookmarks_hint_toast">Ireki karpeta bat, sakatu ⋮ eta hautatu «Gehitu laster-marka»</string>
     <string name="onboarding_files_description">%1$s-ek baimena behar du gailuko fitxategi guztiak kudeatzeko. Ezinbestekoa da fitxategiak arakatu, kopiatu, lekuz aldatu eta antolatzeko.</string>
+    <string name="onboarding_files_adb_note">Gailu honek ezin du fitxategi guztietarako sarbidea eman bere ezarpenetatik; beraz, zure argazkiak, bideoak eta musika soilik daude erabilgarri. Fitxategi guztiak erabiltzeko, exekutatu komando hau ordenagailu batetik:</string>
     <string name="onboarding_files_title">Fitxategietarako sarbidea</string>
     <string name="onboarding_finish">Hasi</string>
     <string name="onboarding_grant">Eman</string>

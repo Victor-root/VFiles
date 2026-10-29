@@ -739,6 +739,7 @@
     <string name="navigation_bookmarks_hint_title">Bókamerki</string>
     <string name="navigation_bookmarks_hint_toast">Opnaðu möppu, ýttu á ⋮ og veldu „Bæta við bókamerki“</string>
     <string name="onboarding_files_description">%1$s þarf heimild til að stjórna öllum skrám í tækinu þínu. Hún er nauðsynleg til að skoða, afrita, færa og skipuleggja skrárnar þínar.</string>
+    <string name="onboarding_files_adb_note">Þetta tæki getur ekki veitt aðgang að öllum skrám í stillingum sínum, svo aðeins myndir, myndskeið og tónlist eru tiltæk. Til að nota allar skrárnar þínar skaltu keyra þessa skipun úr tölvu:</string>
     <string name="onboarding_files_title">Skráaaðgangur</string>
     <string name="onboarding_finish">Hefjast handa</string>
     <string name="onboarding_grant">Veita</string>

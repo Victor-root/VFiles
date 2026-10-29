@@ -771,6 +771,7 @@
     <string name="navigation_bookmarks_hint_title">Marcaje</string>
     <string name="navigation_bookmarks_hint_toast">Deschide un folder, apoi atinge ⋮ și „Adaugă marcaj”</string>
     <string name="onboarding_files_description">%1$s are nevoie de permisiunea de a gestiona toate fișierele de pe dispozitiv. Este esențială pentru a răsfoi, copia, muta și organiza fișierele.</string>
+    <string name="onboarding_files_adb_note">Acest dispozitiv nu poate acorda acces la toate fișierele din setările sale, așa că sunt disponibile doar fotografiile, videoclipurile și muzica ta. Pentru a folosi toate fișierele, rulează această comandă de pe un computer:</string>
     <string name="onboarding_files_title">Acces la fișiere</string>
     <string name="onboarding_finish">Începe</string>
     <string name="onboarding_grant">Acordă</string>

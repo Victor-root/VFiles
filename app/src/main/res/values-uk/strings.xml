@@ -809,6 +809,7 @@
     <string name="navigation_bookmarks_hint_title">Закладки</string>
     <string name="navigation_bookmarks_hint_toast">Відкрийте папку, торкніться ⋮ і виберіть «Додати закладку»</string>
     <string name="onboarding_files_description">%1$s потрібен дозвіл на керування всіма файлами на пристрої. Він необхідний для перегляду, копіювання, переміщення та впорядкування файлів.</string>
+    <string name="onboarding_files_adb_note">Цей пристрій не може надати доступ до всіх файлів у своїх налаштуваннях, тому доступні лише ваші фото, відео й музика. Щоб користуватися всіма файлами, виконайте цю команду на комп’ютері:</string>
     <string name="onboarding_files_title">Доступ до файлів</string>
     <string name="onboarding_finish">Почати</string>
     <string name="onboarding_grant">Надати</string>

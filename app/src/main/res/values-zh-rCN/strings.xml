@@ -703,6 +703,7 @@
     <string name="navigation_bookmarks_hint_title">书签</string>
     <string name="navigation_bookmarks_hint_toast">打开文件夹，然后点按 ⋮ 并选择“添加书签”</string>
     <string name="onboarding_files_description">%1$s 需要管理设备上所有文件的权限。这对于浏览、复制、移动和整理文件至关重要。</string>
+    <string name="onboarding_files_adb_note">此设备无法在设置中授予所有文件访问权限，因此只能使用你的照片、视频和音乐。要使用所有文件，请在电脑上运行以下命令：</string>
     <string name="onboarding_files_title">文件访问</string>
     <string name="onboarding_finish">开始使用</string>
     <string name="onboarding_grant">授予</string>
