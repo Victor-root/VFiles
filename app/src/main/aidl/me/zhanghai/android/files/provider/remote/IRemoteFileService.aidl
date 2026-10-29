@@ -4,6 +4,7 @@ import me.zhanghai.android.files.provider.remote.IRemoteFileSystem;
 import me.zhanghai.android.files.provider.remote.IRemoteFileSystemProvider;
 import me.zhanghai.android.files.provider.remote.IRemotePosixFileAttributeView;
 import me.zhanghai.android.files.provider.remote.IRemotePosixFileStore;
+import me.zhanghai.android.files.provider.remote.ParcelableException;
 import me.zhanghai.android.files.provider.remote.ParcelableObject;
 
 interface IRemoteFileService {
@@ -16,4 +17,6 @@ interface IRemoteFileService {
     IRemotePosixFileAttributeView getRemotePosixFileAttributeViewInterface(
         in ParcelableObject attributeView
     );
+
+    void allowExternalStorageManager(out ParcelableException exception);
 }

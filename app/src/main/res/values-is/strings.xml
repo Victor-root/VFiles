@@ -702,7 +702,7 @@
     <string name="settings_standard_directory_music_summary">Lög tækisins</string>
     <string name="settings_bookmark_directories_title">Bókamerkjamöppur</string>
     <string name="settings_bookmark_directories_summary_empty">Engar bókamerkjamöppur</string>
-    <string name="settings_root_strategy_title">Hamur kerfisstjóraaðgangs</string>
+    <string name="settings_root_strategy_title">Hamur kerfisstjóra- eða Shizuku-aðgangs</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Þú ert með %1$,d skráaaðgerð í gangi, ef skipt er núna yfir í rótaraðgangsham getur það valdið óvæntum villum. Ertu viss um að þú viljir skipta núna?</item>
         <item quantity="other">Þú ert með %1$,d skráaaðgerðir í gangi, ef skipt er núna yfir í rótaraðgangsham getur það valdið óvæntum villum. Ertu viss um að þú viljir skipta núna?</item>
@@ -710,7 +710,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Aðeins venjulegur aðgangur</item>
         <item>Sjálfvirkt</item>
-        <item>Aðeins kerfisstjóraaðgangur</item>
+        <item>Aðeins kerfisstjóra- eða Shizuku-aðgangur</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Kóðun skráaheita í geymslu</string>
     <string name="settings_open_apk_default_action_title">Opna Android-pakka</string>
@@ -740,6 +740,7 @@
     <string name="navigation_bookmarks_hint_toast">Opnaðu möppu, ýttu á ⋮ og veldu „Bæta við bókamerki“</string>
     <string name="onboarding_files_description">%1$s þarf heimild til að stjórna öllum skrám í tækinu þínu. Hún er nauðsynleg til að skoða, afrita, færa og skipuleggja skrárnar þínar.</string>
     <string name="onboarding_files_adb_note">Þetta tæki getur ekki veitt aðgang að öllum skrám í stillingum sínum, svo aðeins myndir, myndskeið og tónlist eru tiltæk. Til að nota allar skrárnar þínar skaltu keyra þessa skipun úr tölvu:</string>
+    <string name="onboarding_files_grant_with_shizuku">Veita með Shizuku</string>
     <string name="onboarding_files_title">Skráaaðgangur</string>
     <string name="onboarding_finish">Hefjast handa</string>
     <string name="onboarding_grant">Veita</string>

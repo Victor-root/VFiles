@@ -700,7 +700,7 @@
     <string name="settings_standard_directory_music_summary">Cançons del dispositiu</string>
     <string name="settings_bookmark_directories_title">Carpetes de marcadors</string>
     <string name="settings_bookmark_directories_summary_empty">No hi ha cap carpeta de marcadors</string>
-    <string name="settings_root_strategy_title">Mode d\'accés root</string>
+    <string name="settings_root_strategy_title">Mode d\'accés root o Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Hi ha %1$,d operació de fitxer executant-se ara mateix. Canviar el mode d\'accés root podria provocar un error inesperat. Esteu segur que voleu canviar-lo ara?</item>
         <item quantity="other">Hi ha %1$,d operacions de fitxer executant-se ara mateix. Canviar el mode d\'accés root podria provocar un error inesperat. Esteu segur que voleu canviar-lo ara?</item>
@@ -708,7 +708,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Només amb accés normal</item>
         <item>Automàtic</item>
-        <item>Només amb accés root</item>
+        <item>Només amb accés root o Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Codificació dels noms dels fitxers als arxius</string>
     <string name="settings_open_apk_default_action_title">Obre els paquets d\'Android</string>
@@ -738,6 +738,7 @@
     <string name="navigation_bookmarks_hint_toast">Obriu una carpeta, toqueu ⋮ i «Afegeix adreça d\'interès»</string>
     <string name="onboarding_files_description">El %1$s necessita permís per gestionar tots els fitxers del dispositiu. És essencial per navegar, copiar, moure i organitzar els fitxers.</string>
     <string name="onboarding_files_adb_note">Aquest dispositiu no pot donar accés a tots els fitxers des de la seva configuració, de manera que només tens disponibles les fotos, els vídeos i la música. Per fer servir tots els fitxers, executa aquesta ordre des d\'un ordinador:</string>
+    <string name="onboarding_files_grant_with_shizuku">Concedeix amb Shizuku</string>
     <string name="onboarding_files_title">Accés als fitxers</string>
     <string name="onboarding_finish">Comença</string>
     <string name="onboarding_grant">Concedeix</string>

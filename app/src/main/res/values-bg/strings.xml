@@ -700,7 +700,7 @@
     <string name="settings_standard_directory_music_summary">Песни на устройството</string>
     <string name="settings_bookmark_directories_title">Отметнати папки</string>
     <string name="settings_bookmark_directories_summary_empty">Няма отметнати папки</string>
-    <string name="settings_root_strategy_title">Достъп от суперпотребителя</string>
+    <string name="settings_root_strategy_title">Достъп от суперпотребителя или Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">В момента се извършва действие с %1$,d файл и промяната на режима за достъп до правата на суперпотребителя може да доведе до неочаквана грешка. Сигурни ли сте, че желаете да промените режима сега?</item>
         <item quantity="other">В момента се извършват действия с %1$,d файла и промяната на режима за достъп до правата на суперпотребителя може да доведе до неочаквани грешки. Сигурни ли сте, че желаете да промените режима сега?</item>
@@ -708,7 +708,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Само нормален достъп</item>
         <item>Автоматичен</item>
-        <item>Само достъп от суперпотребител</item>
+        <item>Само достъп от суперпотребител или Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Кодиране на имената на архиви</string>
     <string name="settings_open_apk_default_action_title">Отваряне на пакет на Андроид</string>
@@ -738,6 +738,7 @@
     <string name="navigation_bookmarks_hint_toast">Отворете папка, докоснете ⋮ и изберете „Добавяне на отметка“</string>
     <string name="onboarding_files_description">%1$s се нуждае от разрешение за управление на всички файлове на устройството. То е необходимо за разглеждане, копиране, преместване и подреждане на файловете.</string>
     <string name="onboarding_files_adb_note">Това устройство не може да предостави достъп до всички файлове от настройките си, затова са достъпни само снимките, видеоклиповете и музиката ви. За да използвате всички файлове, изпълнете тази команда от компютър:</string>
+    <string name="onboarding_files_grant_with_shizuku">Предостави чрез Shizuku</string>
     <string name="onboarding_files_title">Достъп до файлове</string>
     <string name="onboarding_finish">Начало</string>
     <string name="onboarding_grant">Предостави</string>

@@ -854,7 +854,7 @@
     <string name="settings_default_apps_video">Videos</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_text">Text</string>
-    <string name="settings_root_strategy_title">Root access mode</string>
+    <string name="settings_root_strategy_title">Root or Shizuku access mode</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">You have %1$,d file operation running and changing root access mode now may result in unexpected error. Are you sure you want to change it now?</item>
         <item quantity="other">You have %1$,d file operations running and changing root access mode now may result in unexpected error. Are you sure you want to change it now?</item>
@@ -862,7 +862,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Normal access only</item>
         <item>Automatic</item>
-        <item>Root access only</item>
+        <item>Root or Shizuku access only</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archive file name encoding</string>
     <string name="settings_open_apk_default_action_title">Open Android package</string>
@@ -900,6 +900,7 @@
     <string name="onboarding_files_description">%1$s needs permission to manage all files on your device. This is essential for browsing, copying, moving and organizing your files.</string>
     <string name="onboarding_files_adb_note">This device can\'t give the access to all files from its settings, so only your photos, videos and music are available. To use all your files, run this command from a computer:</string>
     <string name="onboarding_files_adb_command_format" translatable="false">adb shell appops set --uid %1$s MANAGE_EXTERNAL_STORAGE allow</string>
+    <string name="onboarding_files_grant_with_shizuku">Grant with Shizuku</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Allow notifications to track the progress of file operations such as copies, moves and archives, even when the app is in the background.</string>

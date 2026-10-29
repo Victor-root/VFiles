@@ -700,7 +700,7 @@
     <string name="settings_standard_directory_music_summary">Nummers op het apparaat</string>
     <string name="settings_bookmark_directories_title">Bladwijzermappen</string>
     <string name="settings_bookmark_directories_summary_empty">Geen bladwijzermappen</string>
-    <string name="settings_root_strategy_title">Roottoegangsmodus</string>
+    <string name="settings_root_strategy_title">Root- of Shizuku-toegangsmodus</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Er wordt %1$,d bestandshandeling uitgevoerd. Als je nu de root-toegangsmodus aanpast, dan kan er een onverwachte fout optreden. Weet je zeker dat je wilt doorgaan?</item>
         <item quantity="other">Er worden %1$,d bestandshandelingen uitgevoerd. Als je nu de roottoegangsmodus aanpast, dan kan er een onverwachte fout optreden. Weet je zeker dat je wilt doorgaan?</item>
@@ -708,7 +708,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Alleen reguliere toegang</item>
         <item>Automatisch</item>
-        <item>Alleen roottoegang</item>
+        <item>Alleen root- of Shizuku-toegang</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Tekenreeks van archiefbestandsnaam</string>
     <string name="settings_open_apk_default_action_title">Android-pakket openen</string>
@@ -738,6 +738,7 @@
     <string name="navigation_bookmarks_hint_toast">Open een map, tik dan op ⋮ en „Bladwijzer toevoegen”</string>
     <string name="onboarding_files_description">%1$s heeft toestemming nodig om alle bestanden op je apparaat te beheren. Dit is essentieel om te bladeren, kopiëren, verplaatsen en je bestanden te ordenen.</string>
     <string name="onboarding_files_adb_note">Dit apparaat kan geen toegang tot alle bestanden geven via de instellingen, dus alleen je foto\'s, video\'s en muziek zijn beschikbaar. Voer deze opdracht uit vanaf een computer om al je bestanden te gebruiken:</string>
+    <string name="onboarding_files_grant_with_shizuku">Verlenen met Shizuku</string>
     <string name="onboarding_files_title">Bestandstoegang</string>
     <string name="onboarding_finish">Aan de slag</string>
     <string name="onboarding_grant">Verlenen</string>

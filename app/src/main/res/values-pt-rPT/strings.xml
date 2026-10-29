@@ -736,7 +736,7 @@
     <string name="settings_standard_directory_music_summary">Músicas do dispositivo</string>
     <string name="settings_bookmark_directories_title">Pastas de marcadores</string>
     <string name="settings_bookmark_directories_summary_empty">Não existem pastas de marcadores</string>
-    <string name="settings_root_strategy_title">Modo de acesso root</string>
+    <string name="settings_root_strategy_title">Modo de acesso root ou Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Tem %1$,d operação de ficheiro em execução e se alterar o modo de acesso root agora podem ocorrer erros inesperados. Tem a certeza de que deseja alterar agora?</item>
         <item quantity="many">Tem %1$,d operações de ficheiro em execução e se alterar o modo de acesso root agora podem ocorrer erros inesperados. Tem a certeza de que deseja alterar agora?</item>
@@ -745,7 +745,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Apenas acesso normal</item>
         <item>Automático</item>
-        <item>Apenas acesso root</item>
+        <item>Apenas acesso root ou Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Codificação para o nome do arquivo</string>
     <string name="settings_open_apk_default_action_title">Abrir pacote Android</string>
@@ -775,6 +775,7 @@
     <string name="navigation_bookmarks_hint_toast">Abra uma pasta, toque em ⋮ e em «Adicionar marcador»</string>
     <string name="onboarding_files_description">O %1$s precisa de permissão para gerir todos os ficheiros do seu dispositivo. É essencial para navegar, copiar, mover e organizar os seus ficheiros.</string>
     <string name="onboarding_files_adb_note">Este dispositivo não consegue conceder acesso a todos os ficheiros a partir das definições, por isso só estão disponíveis as suas fotos, vídeos e música. Para utilizar todos os seus ficheiros, execute este comando a partir de um computador:</string>
+    <string name="onboarding_files_grant_with_shizuku">Conceder com Shizuku</string>
     <string name="onboarding_files_title">Acesso a ficheiros</string>
     <string name="onboarding_finish">Começar</string>
     <string name="onboarding_grant">Conceder</string>

@@ -700,7 +700,7 @@
     <string name="settings_standard_directory_music_summary">Τραγούδια της συσκευής</string>
     <string name="settings_bookmark_directories_title">Φάκελοι σελιδοδείκτες</string>
     <string name="settings_bookmark_directories_summary_empty">Χωρίς φακέλους σελιδοδείκτες</string>
-    <string name="settings_root_strategy_title">Λειτουργία πρόσβασης ρίζας</string>
+    <string name="settings_root_strategy_title">Λειτουργία πρόσβασης ρίζας ή Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Έχετε %1$,d αρχείο σε εκτέλεση και αλλαγή της λειτουργίας πρόσβασης root μπορεί να προκαλέσει τώρα μη αναμενόμενο σφάλμα. Είστε βέβαιοι ότι θέλετε να την αλλάξετε;</item>
         <item quantity="other">Έχετε %1$,d λειτουργίες αρχείων που εκτελούνται και η αλλαγή της λειτουργίας πρόσβασης ρίζας τώρα ενδέχεται να προκαλέσει μη αναμενόμενο σφάλμα. Είστε βέβαιοι ότι θέλετε να την αλλάξετε;</item>
@@ -708,7 +708,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Μόνο κανονική πρόσβαση</item>
         <item>Αυτόματη</item>
-        <item>Μόνο πρόσβαση ρίζας</item>
+        <item>Μόνο πρόσβαση ρίζας ή Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Κωδικοποίηση ονόματος αρχείου αρχειοθήκης</string>
     <string name="settings_open_apk_default_action_title">Άνοιγμα πακέτου Android</string>
@@ -738,6 +738,7 @@
     <string name="navigation_bookmarks_hint_toast">Ανοίξτε έναν φάκελο, πατήστε ⋮ και «Προσθήκη σελιδοδείκτη»</string>
     <string name="onboarding_files_description">Το %1$s χρειάζεται άδεια για τη διαχείριση όλων των αρχείων στη συσκευή σας. Είναι απαραίτητη για περιήγηση, αντιγραφή, μετακίνηση και οργάνωση των αρχείων σας.</string>
     <string name="onboarding_files_adb_note">Αυτή η συσκευή δεν μπορεί να παραχωρήσει πρόσβαση σε όλα τα αρχεία από τις ρυθμίσεις της, οπότε είναι διαθέσιμες μόνο οι φωτογραφίες, τα βίντεο και η μουσική σας. Για να χρησιμοποιήσετε όλα τα αρχεία σας, εκτελέστε αυτή την εντολή από έναν υπολογιστή:</string>
+    <string name="onboarding_files_grant_with_shizuku">Παραχώρηση με Shizuku</string>
     <string name="onboarding_files_title">Πρόσβαση σε αρχεία</string>
     <string name="onboarding_finish">Ξεκινήστε</string>
     <string name="onboarding_grant">Παραχώρηση</string>

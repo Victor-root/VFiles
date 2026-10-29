@@ -666,14 +666,14 @@
     <string name="settings_standard_directory_music_summary">기기의 노래</string>
     <string name="settings_bookmark_directories_title">즐겨찾기 폴더</string>
     <string name="settings_bookmark_directories_summary_empty">즐겨찾기된 폴더 없음</string>
-    <string name="settings_root_strategy_title">루트 액세스 모드</string>
+    <string name="settings_root_strategy_title">루트 또는 Shizuku 액세스 모드</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">아직 %1$,d개의 파일 작업이 진행 중입니다. 지금 루트 액세스 모드를 변경하면 예기치 못한 오류가 발생할 수 있습니다. 정말 지금 변경하시겠습니까?</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>일반 액세스만</item>
         <item>자동</item>
-        <item>루트 액세스만</item>
+        <item>루트 또는 Shizuku 액세스만</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">압축 파일 이름 인코딩</string>
     <string name="settings_open_apk_default_action_title">Android 패키지(APK)를 열 때 작업</string>
@@ -703,6 +703,7 @@
     <string name="navigation_bookmarks_hint_toast">폴더를 연 다음 ⋮ 를 탭하고 “북마크 추가”를 선택하세요</string>
     <string name="onboarding_files_description">%1$s가 기기의 모든 파일을 관리하려면 권한이 필요합니다. 파일을 탐색, 복사, 이동, 정리하는 데 필수적입니다.</string>
     <string name="onboarding_files_adb_note">이 기기는 설정에서 모든 파일에 대한 액세스를 허용할 수 없으므로 사진, 동영상, 음악만 사용할 수 있습니다. 모든 파일을 사용하려면 컴퓨터에서 다음 명령을 실행하세요:</string>
+    <string name="onboarding_files_grant_with_shizuku">Shizuku로 허용</string>
     <string name="onboarding_files_title">파일 액세스</string>
     <string name="onboarding_finish">시작하기</string>
     <string name="onboarding_grant">허용</string>

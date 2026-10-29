@@ -733,7 +733,7 @@
     <string name="settings_standard_directory_music_summary">Melodiile de pe dispozitiv</string>
     <string name="settings_bookmark_directories_title">Dosare cu marcaje</string>
     <string name="settings_bookmark_directories_summary_empty">Nu există dosare cu marcaje</string>
-    <string name="settings_root_strategy_title">Mod de acces root</string>
+    <string name="settings_root_strategy_title">Mod de acces root sau Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Aveți %1$,d operațiune cu fișiere în desfășurare și schimbarea accesului de root acum ar putea rezulta o eroare neaștetată. Ești sigur că dorești să facia ceastă schimbare acum ?</item>
         <item quantity="few">Aveți %1$,d operațiuni cu fișiere în desfășurare și schimbarea accesului de root acum ar putea rezulta o eroare neaștetată. Ești sigur că dorești să facia ceastă schimbare acum ?</item>
@@ -742,7 +742,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Numai acces normal</item>
         <item>Automat</item>
-        <item>Numai acces root</item>
+        <item>Numai acces root sau Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Codificarea numelui fișierului arhivă</string>
     <string name="settings_open_apk_default_action_title">Deschide pachetul Android</string>
@@ -772,6 +772,7 @@
     <string name="navigation_bookmarks_hint_toast">Deschide un folder, apoi atinge ⋮ și „Adaugă marcaj”</string>
     <string name="onboarding_files_description">%1$s are nevoie de permisiunea de a gestiona toate fișierele de pe dispozitiv. Este esențială pentru a răsfoi, copia, muta și organiza fișierele.</string>
     <string name="onboarding_files_adb_note">Acest dispozitiv nu poate acorda acces la toate fișierele din setările sale, așa că sunt disponibile doar fotografiile, videoclipurile și muzica ta. Pentru a folosi toate fișierele, rulează această comandă de pe un computer:</string>
+    <string name="onboarding_files_grant_with_shizuku">Acordă cu Shizuku</string>
     <string name="onboarding_files_title">Acces la fișiere</string>
     <string name="onboarding_finish">Începe</string>
     <string name="onboarding_grant">Acordă</string>

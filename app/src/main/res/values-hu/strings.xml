@@ -696,7 +696,7 @@
     <string name="settings_standard_directory_music_summary">Az eszközön lévő dalok</string>
     <string name="settings_bookmark_directories_title">Mappák könyvjelzőzése</string>
     <string name="settings_bookmark_directories_summary_empty">Nincsenek könyvjelzőzött mappák</string>
-    <string name="settings_root_strategy_title">Root hozzáférési mód</string>
+    <string name="settings_root_strategy_title">Root vagy Shizuku hozzáférési mód</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">%1$,d fájlművelet fut, és a root hozzáférési mód átváltása váratlan hibát okozhat. Biztos, hogy most módosítja?</item>
         <item quantity="other">%1$,d fájlművelet fut, és a root hozzáférési mód átváltása váratlan hibát okozhat. Biztos, hogy most módosítja?</item>
@@ -704,7 +704,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Csak normál hozzáférés</item>
         <item>Automatikus</item>
-        <item>Csak root hozzéférés</item>
+        <item>Csak root vagy Shizuku hozzáférés</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archívum fájlnévkódolása</string>
     <string name="settings_open_apk_default_action_title">Androidos csomag megnyitása</string>
@@ -734,6 +734,7 @@
     <string name="navigation_bookmarks_hint_toast">Nyisson meg egy mappát, koppintson a ⋮ ikonra, majd a „Könyvjelző hozzáadása” elemre</string>
     <string name="onboarding_files_description">A %1$s engedélyt kér az eszközön lévő összes fájl kezeléséhez. Ez elengedhetetlen a fájlok böngészéséhez, másolásához, áthelyezéséhez és rendszerezéséhez.</string>
     <string name="onboarding_files_adb_note">Ez az eszköz a beállításaiban nem tud hozzáférést adni az összes fájlhoz, ezért csak a fényképei, videói és zenéi érhetők el. Az összes fájl használatához futtassa ezt a parancsot egy számítógépről:</string>
+    <string name="onboarding_files_grant_with_shizuku">Megadás Shizukuval</string>
     <string name="onboarding_files_title">Fájlhozzáférés</string>
     <string name="onboarding_finish">Kezdés</string>
     <string name="onboarding_grant">Megadás</string>

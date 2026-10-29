@@ -757,7 +757,7 @@
     <string name="settings_default_apps_video">Vidéos</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_text">Texte</string>
-    <string name="settings_root_strategy_title">Mode d\'accès root</string>
+    <string name="settings_root_strategy_title">Mode d\'accès root ou Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Vous avez %1$,d opération de fichiers en cours d’exécution et changer maintenant le mode d’accès root peut entraîner une erreur inattendue. Êtes-vous sûr de vouloir changer cela maintenant ?</item>
         <item quantity="many">Vous avez %1$,d opérations de fichiers en cours d’exécution et changer maintenant le mode d’accès root peut entraîner une erreur inattendue. Êtes-vous sûr de vouloir changer cela maintenant ?</item>
@@ -766,7 +766,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Accès normal uniquement</item>
         <item>Automatique</item>
-        <item>Accès root uniquement</item>
+        <item>Accès root ou Shizuku uniquement</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Encodage du nom de l\'archive</string>
     <string name="settings_open_apk_default_action_title">Ouvrir le paquet Android</string>
@@ -801,6 +801,7 @@
     <string name="onboarding_files_title">Accès aux fichiers</string>
     <string name="onboarding_files_description">%1$s a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
     <string name="onboarding_files_adb_note">Cet appareil ne permet pas de donner l\'accès à tous les fichiers depuis ses réglages : seuls vos photos, vidéos et musiques sont accessibles. Pour utiliser tous vos fichiers, lancez cette commande depuis un ordinateur :</string>
+    <string name="onboarding_files_grant_with_shizuku">Accorder avec Shizuku</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers (copies, déplacements, archives) même lorsque l\'application est en arrière-plan.</string>

@@ -734,7 +734,7 @@
     <string name="settings_standard_directory_music_summary">Brani del dispositivo</string>
     <string name="settings_bookmark_directories_title">Cartelle segnalibri</string>
     <string name="settings_bookmark_directories_summary_empty">Nessuna cartella per segnalibri</string>
-    <string name="settings_root_strategy_title">Modalità di accesso root</string>
+    <string name="settings_root_strategy_title">Modalità di accesso root o Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">È in corso %1$,d operazione su file e cambiare ora la modalità di accesso root potrebbe causare un errore. Sei sicuro di volere cambiarla ora?</item>
         <item quantity="many">Sono in corso %1$,d operazioni su file e cambiare ora la modalità di accesso root potrebbe causare un errore. Sei sicuro di volere cambiarla ora?</item>
@@ -743,7 +743,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Solo accesso normale</item>
         <item>Automatico</item>
-        <item>Solo accesso root</item>
+        <item>Solo accesso root o Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Codifica nome file archivio</string>
     <string name="settings_open_apk_default_action_title">Apri pacchetto Android</string>
@@ -773,6 +773,7 @@
     <string name="navigation_bookmarks_hint_toast">Apri una cartella, poi tocca ⋮ e «Aggiungi segnalibro»</string>
     <string name="onboarding_files_description">%1$s ha bisogno dell\'autorizzazione per gestire tutti i file del dispositivo. È essenziale per sfogliare, copiare, spostare e organizzare i tuoi file.</string>
     <string name="onboarding_files_adb_note">Questo dispositivo non può concedere l\'accesso a tutti i file dalle sue impostazioni, quindi sono disponibili solo foto, video e musica. Per usare tutti i tuoi file, esegui questo comando da un computer:</string>
+    <string name="onboarding_files_grant_with_shizuku">Concedi con Shizuku</string>
     <string name="onboarding_files_title">Accesso ai file</string>
     <string name="onboarding_finish">Inizia</string>
     <string name="onboarding_grant">Concedi</string>

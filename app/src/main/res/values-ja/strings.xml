@@ -666,14 +666,14 @@
     <string name="settings_standard_directory_music_summary">端末内の曲</string>
     <string name="settings_bookmark_directories_title">ブックマークフォルダ</string>
     <string name="settings_bookmark_directories_summary_empty">ブックマークフォルダがありません</string>
-    <string name="settings_root_strategy_title">Root アクセスモード</string>
+    <string name="settings_root_strategy_title">Root / Shizuku アクセスモード</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">%1$,d 件のファイルが操作を実行中です。ルートアクセスモードを変更すると予期せぬエラーが発生することがあります。本当に今すぐ変更しますか？</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>通常アクセスのみ</item>
         <item>自動</item>
-        <item>Root アクセスのみ</item>
+        <item>Root / Shizuku アクセスのみ</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">アーカイブのファイル名のエンコーディング</string>
     <string name="settings_open_apk_default_action_title">Android パッケージを開く</string>
@@ -703,6 +703,7 @@
     <string name="navigation_bookmarks_hint_toast">フォルダを開き、⋮ をタップして「ブックマークに追加」を選択</string>
     <string name="onboarding_files_description">%1$s がデバイス上のすべてのファイルを管理するには権限が必要です。ファイルの閲覧、コピー、移動、整理に不可欠です。</string>
     <string name="onboarding_files_adb_note">このデバイスでは設定からすべてのファイルへのアクセスを許可できないため、写真、動画、音楽のみ利用できます。すべてのファイルを使うには、パソコンから次のコマンドを実行してください：</string>
+    <string name="onboarding_files_grant_with_shizuku">Shizuku で許可</string>
     <string name="onboarding_files_title">ファイルアクセス</string>
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>

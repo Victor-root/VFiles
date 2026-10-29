@@ -768,7 +768,7 @@
     <string name="settings_standard_directory_music_summary">שירים מהמכשיר</string>
     <string name="settings_bookmark_directories_title">תיקיות סימניות</string>
     <string name="settings_bookmark_directories_summary_empty">אין תיקיות סימניות</string>
-    <string name="settings_root_strategy_title">מצב גישת שורש</string>
+    <string name="settings_root_strategy_title">מצב גישת שורש או Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">יש לך פעולה קובץ שרצה ושינוי מצב גישת שורש כעת עלול לגרום לשגיאה בלתי צפויה. האם בוודאות ברצונך לשנות זאת כעת?</item>
         <item quantity="two">יש לך %1$,d פעולות קבצים שרצות ושינוי מצב גישת שורש כעת עלול לגרום לשגיאה בלתי צפויה. האם בוודאות ברצונך לשנות זאת כעת?</item>
@@ -778,7 +778,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>גישה רגילה בלבד</item>
         <item>אוטומטי</item>
-        <item>גישת שורש בלבד</item>
+        <item>גישת שורש או Shizuku בלבד</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">הצפנת שם קובץ בארכיון</string>
     <string name="settings_open_apk_default_action_title">פתיחת חבילת אנדרואיד</string>
@@ -808,6 +808,7 @@
     <string name="navigation_bookmarks_hint_toast">פתח תיקייה, הקש על ⋮ ובחר ב“הוספת סימנייה”</string>
     <string name="onboarding_files_description">%1$s זקוק להרשאה לניהול כל הקבצים במכשיר. ההרשאה חיונית לעיון, העתקה, העברה וארגון של הקבצים.</string>
     <string name="onboarding_files_adb_note">מכשיר זה אינו יכול להעניק גישה לכל הקבצים מתוך ההגדרות שלו, ולכן רק התמונות, הסרטונים והמוזיקה שלך זמינים. כדי להשתמש בכל הקבצים, הריצו את הפקודה הזו ממחשב:</string>
+    <string name="onboarding_files_grant_with_shizuku">הענק באמצעות Shizuku</string>
     <string name="onboarding_files_title">גישה לקבצים</string>
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>

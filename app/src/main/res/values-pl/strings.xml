@@ -768,7 +768,7 @@
     <string name="settings_standard_directory_music_summary">Utwory na urządzeniu</string>
     <string name="settings_bookmark_directories_title">Katalogi dodane do zakładek</string>
     <string name="settings_bookmark_directories_summary_empty">Brak katalogów dodanych do zakładek</string>
-    <string name="settings_root_strategy_title">Tryb dostępu do roota</string>
+    <string name="settings_root_strategy_title">Tryb dostępu do roota lub Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Masz uruchomione %1$,d operację na pliku, a zmiana trybu dostępu roota może teraz spowodować nieoczekiwany błąd. Czy na pewno chcesz to teraz zmienić?</item>
         <item quantity="few">Masz uruchomione %1$,d operacje na plikach, a zmiana trybu dostępu roota może teraz spowodować nieoczekiwany błąd. Czy na pewno chcesz to teraz zmienić?</item>
@@ -778,7 +778,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Tylko dostęp normalny</item>
         <item>Automatyczny</item>
-        <item>Tylko dostęp do roota</item>
+        <item>Tylko dostęp do roota lub Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Kodowanie nazwy pliku archiwum</string>
     <string name="settings_open_apk_default_action_title">Działanie podczas otwarcia pakietu instalacyjnego</string>
@@ -808,6 +808,7 @@
     <string name="navigation_bookmarks_hint_toast">Otwórz folder, dotknij ⋮ i „Dodaj zakładkę”</string>
     <string name="onboarding_files_description">%1$s potrzebuje uprawnienia do zarządzania wszystkimi plikami na urządzeniu. Jest ono niezbędne do przeglądania, kopiowania, przenoszenia i porządkowania plików.</string>
     <string name="onboarding_files_adb_note">To urządzenie nie może przyznać dostępu do wszystkich plików w swoich ustawieniach, więc dostępne są tylko Twoje zdjęcia, filmy i muzyka. Aby korzystać ze wszystkich plików, uruchom to polecenie na komputerze:</string>
+    <string name="onboarding_files_grant_with_shizuku">Przyznaj przez Shizuku</string>
     <string name="onboarding_files_title">Dostęp do plików</string>
     <string name="onboarding_finish">Rozpocznij</string>
     <string name="onboarding_grant">Przyznaj</string>

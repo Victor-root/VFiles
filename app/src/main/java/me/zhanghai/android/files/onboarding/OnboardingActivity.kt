@@ -46,6 +46,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,15 +64,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.filelist.FileListActivity
+import me.zhanghai.android.files.provider.root.RootFileService
+import me.zhanghai.android.files.provider.root.ShizukuFileServiceLauncher
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createManageAppAllFilesAccessPermissionIntent
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.needsAdbForExternalStorageManager
+import me.zhanghai.android.files.util.showToast
 import me.zhanghai.android.files.util.supportsExternalStorageManager
+import java.io.IOException
 
 /** Asks for the permissions the app needs on its first launch, before showing the files. */
 class OnboardingActivity : AppActivity() {
@@ -107,10 +117,18 @@ class OnboardingActivity : AppActivity() {
             onPauseOrDispose {}
         }
         val grantedPages = remember(grantCheckCount) { pages.filter { it.isGranted(context) } }
-        // The command giving the access to all files when only adb can give it.
-        val adbCommand = remember(grantCheckCount) {
+        val isShizukuAvailable by ShizukuFileServiceLauncher.isAvailableFlow
+            .collectAsStateWithLifecycle(false)
+        val adbAccess = remember(grantCheckCount, isShizukuAvailable) {
             if (Environment::class.needsAdbForExternalStorageManager()) {
-                getString(R.string.onboarding_files_adb_command_format, packageName)
+                AdbAccess(
+                    command = getString(R.string.onboarding_files_adb_command_format, packageName),
+                    onGrantWithShizuku = if (isShizukuAvailable) {
+                        ::grantFilesAccessWithShizuku
+                    } else {
+                        null
+                    }
+                )
             } else {
                 null
             }
@@ -153,7 +171,7 @@ class OnboardingActivity : AppActivity() {
                                         page = page,
                                         isGranted = page in grantedPages,
                                         onGrant = { page.requestGrant(this@OnboardingActivity) },
-                                        adbCommand = adbCommand.takeIf {
+                                        adbAccess = adbAccess.takeIf {
                                             page == OnboardingPage.FilesAccess
                                         },
                                         modifier = Modifier
@@ -168,7 +186,7 @@ class OnboardingActivity : AppActivity() {
                                     page = page,
                                     isGranted = page in grantedPages,
                                     onGrant = { page.requestGrant(this@OnboardingActivity) },
-                                    adbCommand = adbCommand.takeIf {
+                                    adbAccess = adbAccess.takeIf {
                                         page == OnboardingPage.FilesAccess
                                     }
                                 )
@@ -200,6 +218,18 @@ class OnboardingActivity : AppActivity() {
         Settings.ONBOARDING_COMPLETED.putValue(true)
         startActivity(FileListActivity::class.createIntent())
         finish()
+    }
+
+    private fun grantFilesAccessWithShizuku() {
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) { RootFileService.allowExternalStorageManager() }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                showToast(e.toString())
+            }
+            grantCheckCount++
+        }
     }
 
     fun openStorageSettings() {
@@ -302,7 +332,7 @@ private fun PermissionCard(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
     onGrant: () -> Unit,
-    adbCommand: String?
+    adbAccess: AdbAccess?
 ) {
     PermissionSurface(isGranted, Modifier.fillMaxWidth()) {
         // On medium screens, the action is next to the text, so that the cards are short.
@@ -318,7 +348,7 @@ private fun PermissionCard(
                     ) {
                         PermissionTitle(page)
                         if (isWide) {
-                            PermissionDescription(page, adbCommand, Modifier.padding(top = 6.dp))
+                            PermissionDescription(page, adbAccess, Modifier.padding(top = 6.dp))
                         }
                     }
                     if (isWide) {
@@ -327,7 +357,7 @@ private fun PermissionCard(
                 }
                 // On narrow screens, the text takes the whole width below the icon.
                 if (!isWide) {
-                    PermissionDescription(page, adbCommand, Modifier.padding(top = 12.dp))
+                    PermissionDescription(page, adbAccess, Modifier.padding(top = 12.dp))
                     PermissionAction(
                         isGranted = isGranted,
                         onGrant = onGrant,
@@ -346,7 +376,7 @@ private fun PermissionTile(
     page: OnboardingActivity.OnboardingPage,
     isGranted: Boolean,
     onGrant: () -> Unit,
-    adbCommand: String?,
+    adbAccess: AdbAccess?,
     modifier: Modifier = Modifier
 ) {
     PermissionSurface(isGranted, modifier) {
@@ -361,7 +391,7 @@ private fun PermissionTile(
                     RequirementBadge(page.isRequired, Modifier.padding(top = 4.dp))
                 }
             }
-            PermissionDescription(page, adbCommand, Modifier.padding(top = 12.dp))
+            PermissionDescription(page, adbAccess, Modifier.padding(top = 12.dp))
             // Keeps the actions of all tiles on the same line.
             Spacer(modifier = Modifier.weight(1f))
             PermissionAction(isGranted, onGrant, Modifier.padding(top = 16.dp))
@@ -425,7 +455,7 @@ private fun PermissionTitle(page: OnboardingActivity.OnboardingPage) {
 @Composable
 private fun PermissionDescription(
     page: OnboardingActivity.OnboardingPage,
-    adbCommand: String?,
+    adbAccess: AdbAccess?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -435,7 +465,7 @@ private fun PermissionDescription(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium
         )
-        if (adbCommand != null) {
+        if (adbAccess != null) {
             Text(
                 text = stringResource(R.string.onboarding_files_adb_note),
                 modifier = Modifier.padding(top = 8.dp),
@@ -444,7 +474,7 @@ private fun PermissionDescription(
             )
             SelectionContainer(modifier = Modifier.padding(top = 4.dp)) {
                 Text(
-                    text = adbCommand,
+                    text = adbAccess.command,
                     modifier = Modifier
                         .background(
                             MaterialTheme.colorScheme.surfaceContainerHighest,
@@ -454,6 +484,13 @@ private fun PermissionDescription(
                     fontFamily = FontFamily.Monospace,
                     style = MaterialTheme.typography.bodySmall
                 )
+            }
+            val onGrantWithShizuku = adbAccess.onGrantWithShizuku
+            if (onGrantWithShizuku != null) {
+                OutlinedButton(
+                    onClick = onGrantWithShizuku,
+                    modifier = Modifier.padding(top = 8.dp)
+                ) { Text(stringResource(R.string.onboarding_files_grant_with_shizuku)) }
             }
         }
     }
@@ -528,6 +565,9 @@ private fun GrantedBadge(modifier: Modifier = Modifier) {
         )
     }
 }
+
+/** How to give the access to all files when only adb can give it. */
+private class AdbAccess(val command: String, val onGrantWithShizuku: (() -> Unit)?)
 
 private val WIDE_CARD_MIN_WIDTH = 600.dp
 private val TILED_MIN_WIDTH = 840.dp

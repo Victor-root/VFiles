@@ -10,20 +10,26 @@ import android.content.Context
 import android.os.Process
 import android.util.Log
 import me.zhanghai.android.files.BuildConfig
+import me.zhanghai.android.files.compat.UserHandleCompat
 import me.zhanghai.android.files.provider.FileSystemProviders
 import me.zhanghai.android.files.provider.remote.RemoteFileService
 import me.zhanghai.android.files.provider.remote.RemoteInterface
 import me.zhanghai.android.files.util.lazyReflectedMethod
 
-val isRunningAsRoot = Process.myUid() == 0
+// The file service may also run as the shell UID with Shizuku.
+val isRunningAsRoot =
+    when (UserHandleCompat.getAppId(Process.myUid())) {
+        Process.ROOT_UID, Process.SHELL_UID -> true
+        else -> false
+    }
 
 @SuppressLint("StaticFieldLeak")
 lateinit var rootContext: Context private set
 
 object RootFileService : RemoteFileService(
     RemoteInterface {
-        if (SuiFileServiceLauncher.isSuiAvailable()) {
-            SuiFileServiceLauncher.launchService()
+        if (ShizukuFileServiceLauncher.isAvailable()) {
+            ShizukuFileServiceLauncher.launchService()
         } else {
             LibSuFileServiceLauncher.launchService()
         }

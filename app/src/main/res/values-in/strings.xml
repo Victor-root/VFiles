@@ -665,14 +665,14 @@
     <string name="settings_standard_directory_music_summary">Lagu di perangkat</string>
     <string name="settings_bookmark_directories_title">Folder bookmark</string>
     <string name="settings_bookmark_directories_summary_empty">Tidak ada folder bookmark</string>
-    <string name="settings_root_strategy_title">Mode akses root</string>
+    <string name="settings_root_strategy_title">Mode akses root atau Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">Anda memiliki %1$,d proses berkas yang sedang berjalan dan mengubah mode akses root sekarang bisa mengakibatkan kesalahan yang tidak terduga. Apakah Anda yakin ingin mengubahnya sekarang?</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>Hanya akses normal</item>
         <item>Otomatis</item>
-        <item>Hanya akses root</item>
+        <item>Hanya akses root atau Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Enkode nama berkas arsip</string>
     <string name="settings_open_apk_default_action_title">Buka paket Android</string>
@@ -702,6 +702,7 @@
     <string name="navigation_bookmarks_hint_toast">Buka folder, lalu ketuk ⋮ dan “Tambah markah”</string>
     <string name="onboarding_files_description">%1$s memerlukan izin untuk mengelola semua file di perangkat Anda. Ini penting untuk menjelajahi, menyalin, memindahkan, dan menata file Anda.</string>
     <string name="onboarding_files_adb_note">Perangkat ini tidak dapat memberikan akses ke semua file dari setelannya, jadi hanya foto, video, dan musik Anda yang tersedia. Untuk menggunakan semua file Anda, jalankan perintah ini dari komputer:</string>
+    <string name="onboarding_files_grant_with_shizuku">Beri dengan Shizuku</string>
     <string name="onboarding_files_title">Akses file</string>
     <string name="onboarding_finish">Mulai</string>
     <string name="onboarding_grant">Beri</string>

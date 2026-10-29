@@ -5,17 +5,23 @@
 
 package me.zhanghai.android.files.provider.linux
 
+import android.app.AppOpsManager
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import android.os.Process
 import java8.nio.file.LinkOption
 import java8.nio.file.Path
 import java8.nio.file.ProviderMismatchException
 import java8.nio.file.WatchEvent
 import java8.nio.file.WatchKey
 import java8.nio.file.WatchService
+import me.zhanghai.android.files.app.appOpsManager
 import me.zhanghai.android.files.app.application
+import me.zhanghai.android.files.compat.AppOpsManagerCompat
+import me.zhanghai.android.files.compat.checkOpRawNoThrowCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
+import me.zhanghai.android.files.compat.opPackageNameCompat
 import me.zhanghai.android.files.compat.pathFileCompat
 import me.zhanghai.android.files.provider.common.ByteString
 import me.zhanghai.android.files.provider.common.ByteStringListPath
@@ -114,6 +120,12 @@ internal class LinuxPath : ByteStringListPath<LinuxPath>, RootablePath {
                 startsWith(androidObbDirectory)
             }
             if (isInAndroidObbDirectory) {
+                // REQUEST_INSTALL_PACKAGES gives access to Android/obb. Since S,
+                // StorageManagerService doesn't restart us when it's given for the access to apply
+                // at once, which isn't handled, like for the access to all files.
+                if (isRequestInstallPackagesAllowed()) {
+                    return true
+                }
                 val appObbDirectory = androidObbDirectory.resolve(appPackageName)
                 return startsWith(appObbDirectory)
             }
@@ -140,6 +152,28 @@ internal class LinuxPath : ByteStringListPath<LinuxPath>, RootablePath {
             override fun createFromParcel(source: Parcel): LinuxPath = LinuxPath(source)
 
             override fun newArray(size: Int): Array<LinuxPath?> = arrayOfNulls(size)
+        }
+
+        // IPC for checking the app op is expensive, and we'll be killed by StorageManagerService
+        // when losing the app op, so the result is cached once it was allowed.
+        @Volatile
+        private var wasRequestInstallPackagesAllowed = false
+
+        private fun isRequestInstallPackagesAllowed(): Boolean {
+            if (wasRequestInstallPackagesAllowed) {
+                return true
+            }
+            // We'll never have the signature|appop permission itself, so only the app op is
+            // checked against MODE_ALLOWED.
+            return (
+                appOpsManager.checkOpRawNoThrowCompat(
+                    AppOpsManagerCompat.OPSTR_REQUEST_INSTALL_PACKAGES,
+                    Process.myUid(),
+                    application.opPackageNameCompat,
+                    null
+                ) == AppOpsManager.MODE_ALLOWED
+            )
+                .also { wasRequestInstallPackagesAllowed = it }
         }
     }
 }

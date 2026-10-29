@@ -766,7 +766,7 @@
     <string name="settings_standard_directory_music_summary">Įrenginio dainos</string>
     <string name="settings_bookmark_directories_title">Pažymėti aplankai</string>
     <string name="settings_bookmark_directories_summary_empty">Nėra pažymėtų aplankų</string>
-    <string name="settings_root_strategy_title">Root prieigos režimas</string>
+    <string name="settings_root_strategy_title">Root arba Shizuku prieigos režimas</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Vykdoma %1$,d failų operacija, todėl dabar pakeitus root prieigos režimą gali įvykti netikėta klaida. Ar tikrai norite jį keisti dabar?</item>
         <item quantity="few">Vykdomos %1$,d failų operacijos, todėl dabar pakeitus root prieigos režimą gali įvykti netikėta klaida. Ar tikrai norite jį keisti dabar?</item>
@@ -776,7 +776,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Tik įprasta prieiga</item>
         <item>Automatinis</item>
-        <item>Tik root prieiga</item>
+        <item>Tik root arba Shizuku prieiga</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archyvo failo pavadinimo kodavimas</string>
     <string name="settings_open_apk_default_action_title">Atidaryti Android paketą</string>
@@ -806,6 +806,7 @@
     <string name="navigation_bookmarks_hint_toast">Atidarykite aplanką, palieskite ⋮ ir pasirinkite „Pridėti žymę“</string>
     <string name="onboarding_files_description">„%1$s“ reikia leidimo tvarkyti visus įrenginio failus. Jis būtinas norint naršyti, kopijuoti, perkelti ir tvarkyti failus.</string>
     <string name="onboarding_files_adb_note">Šis įrenginys negali suteikti prieigos prie visų failų savo nustatymuose, todėl pasiekiamos tik jūsų nuotraukos, vaizdo įrašai ir muzika. Norėdami naudoti visus failus, paleiskite šią komandą iš kompiuterio:</string>
+    <string name="onboarding_files_grant_with_shizuku">Suteikti per Shizuku</string>
     <string name="onboarding_files_title">Failų prieiga</string>
     <string name="onboarding_finish">Pradėti</string>
     <string name="onboarding_grant">Suteikti</string>

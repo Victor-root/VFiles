@@ -667,11 +667,11 @@
     <string name="settings_standard_directory_music_summary">裝置上的歌曲</string>
     <string name="settings_bookmark_directories_title">書籤資料夾</string>
     <string name="settings_bookmark_directories_summary_empty">無書籤資料夾</string>
-    <string name="settings_root_strategy_title">Root 存取模式</string>
+    <string name="settings_root_strategy_title">Root 或 Shizuku 存取模式</string>
     <string-array name="settings_root_strategy_entries">
         <item>僅普通存取</item>
         <item>自動</item>
-        <item>僅 root 存取</item>
+        <item>僅 root 或 Shizuku 存取</item>
     </string-array>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">您有 %1$,d 個正在執行的檔案作業，因此現在變更 root 存取模式可能會導致未預期的錯誤。您確定要現在變更它嗎？</item>
@@ -704,6 +704,7 @@
     <string name="navigation_bookmarks_hint_toast">開啟資料夾，然後輕觸 ⋮ 並選擇「新增書籤」</string>
     <string name="onboarding_files_description">%1$s 需要管理裝置上所有檔案的權限。這對於瀏覽、複製、移動和整理檔案至關重要。</string>
     <string name="onboarding_files_adb_note">此裝置無法從設定中授予所有檔案存取權，因此只能使用你的相片、影片和音樂。若要使用所有檔案，請在電腦上執行以下指令：</string>
+    <string name="onboarding_files_grant_with_shizuku">透過 Shizuku 授予</string>
     <string name="onboarding_files_title">檔案存取</string>
     <string name="onboarding_finish">開始使用</string>
     <string name="onboarding_grant">授予</string>
