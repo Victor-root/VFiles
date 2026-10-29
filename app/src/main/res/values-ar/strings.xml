@@ -877,6 +877,7 @@
     <string name="navigation_bookmarks_hint_title">الإشارات المرجعية</string>
     <string name="navigation_bookmarks_hint_toast">افتح مجلدًا، ثم اضغط على ⋮ و«إضافة إشارة مرجعية»</string>
     <string name="onboarding_files_description">يحتاج %1$s إلى إذن لإدارة جميع الملفات على جهازك. هذا ضروري للتصفح والنسخ والنقل وتنظيم ملفاتك.</string>
+    <string name="onboarding_files_adb_note">لا يمكن لهذا الجهاز منح الوصول إلى جميع الملفات من إعداداته، لذا تتوفر صورك ومقاطع الفيديو والموسيقى فقط. لاستخدام جميع ملفاتك، شغّل هذا الأمر من جهاز كمبيوتر:</string>
     <string name="onboarding_files_title">الوصول إلى الملفات</string>
     <string name="onboarding_finish">ابدأ</string>
     <string name="onboarding_grant">منح</string>

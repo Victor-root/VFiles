@@ -698,6 +698,7 @@
     <string name="navigation_bookmarks_hint_title">Dấu trang</string>
     <string name="navigation_bookmarks_hint_toast">Mở một thư mục, rồi nhấn ⋮ và chọn “Thêm dấu trang”</string>
     <string name="onboarding_files_description">%1$s cần quyền quản lý tất cả tệp trên thiết bị của bạn. Quyền này rất cần thiết để duyệt, sao chép, di chuyển và sắp xếp tệp.</string>
+    <string name="onboarding_files_adb_note">Thiết bị này không thể cấp quyền truy cập tất cả tệp từ phần cài đặt, nên chỉ có ảnh, video và nhạc của bạn. Để sử dụng tất cả tệp, hãy chạy lệnh sau từ máy tính:</string>
     <string name="onboarding_files_title">Truy cập tệp</string>
     <string name="onboarding_finish">Bắt đầu</string>
     <string name="onboarding_grant">Cấp</string>

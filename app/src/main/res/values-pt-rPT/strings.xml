@@ -774,6 +774,7 @@
     <string name="navigation_bookmarks_hint_title">Marcadores</string>
     <string name="navigation_bookmarks_hint_toast">Abra uma pasta, toque em ⋮ e em «Adicionar marcador»</string>
     <string name="onboarding_files_description">O %1$s precisa de permissão para gerir todos os ficheiros do seu dispositivo. É essencial para navegar, copiar, mover e organizar os seus ficheiros.</string>
+    <string name="onboarding_files_adb_note">Este dispositivo não consegue conceder acesso a todos os ficheiros a partir das definições, por isso só estão disponíveis as suas fotos, vídeos e música. Para utilizar todos os seus ficheiros, execute este comando a partir de um computador:</string>
     <string name="onboarding_files_title">Acesso a ficheiros</string>
     <string name="onboarding_finish">Começar</string>
     <string name="onboarding_grant">Conceder</string>

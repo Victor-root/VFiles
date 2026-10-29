@@ -807,6 +807,7 @@
     <string name="navigation_bookmarks_hint_title">סימניות</string>
     <string name="navigation_bookmarks_hint_toast">פתח תיקייה, הקש על ⋮ ובחר ב“הוספת סימנייה”</string>
     <string name="onboarding_files_description">%1$s זקוק להרשאה לניהול כל הקבצים במכשיר. ההרשאה חיונית לעיון, העתקה, העברה וארגון של הקבצים.</string>
+    <string name="onboarding_files_adb_note">מכשיר זה אינו יכול להעניק גישה לכל הקבצים מתוך ההגדרות שלו, ולכן רק התמונות, הסרטונים והמוזיקה שלך זמינים. כדי להשתמש בכל הקבצים, הריצו את הפקודה הזו ממחשב:</string>
     <string name="onboarding_files_title">גישה לקבצים</string>
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>

@@ -701,6 +701,7 @@
     <string name="navigation_bookmarks_hint_title">Markah</string>
     <string name="navigation_bookmarks_hint_toast">Buka folder, lalu ketuk ⋮ dan “Tambah markah”</string>
     <string name="onboarding_files_description">%1$s memerlukan izin untuk mengelola semua file di perangkat Anda. Ini penting untuk menjelajahi, menyalin, memindahkan, dan menata file Anda.</string>
+    <string name="onboarding_files_adb_note">Perangkat ini tidak dapat memberikan akses ke semua file dari setelannya, jadi hanya foto, video, dan musik Anda yang tersedia. Untuk menggunakan semua file Anda, jalankan perintah ini dari komputer:</string>
     <string name="onboarding_files_title">Akses file</string>
     <string name="onboarding_finish">Mulai</string>
     <string name="onboarding_grant">Beri</string>

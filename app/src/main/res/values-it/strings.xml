@@ -772,6 +772,7 @@
     <string name="navigation_bookmarks_hint_title">Segnalibri</string>
     <string name="navigation_bookmarks_hint_toast">Apri una cartella, poi tocca ⋮ e «Aggiungi segnalibro»</string>
     <string name="onboarding_files_description">%1$s ha bisogno dell\'autorizzazione per gestire tutti i file del dispositivo. È essenziale per sfogliare, copiare, spostare e organizzare i tuoi file.</string>
+    <string name="onboarding_files_adb_note">Questo dispositivo non può concedere l\'accesso a tutti i file dalle sue impostazioni, quindi sono disponibili solo foto, video e musica. Per usare tutti i tuoi file, esegui questo comando da un computer:</string>
     <string name="onboarding_files_title">Accesso ai file</string>
     <string name="onboarding_finish">Inizia</string>
     <string name="onboarding_grant">Concedi</string>

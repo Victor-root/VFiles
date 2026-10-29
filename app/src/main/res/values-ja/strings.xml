@@ -702,6 +702,7 @@
     <string name="navigation_bookmarks_hint_title">ブックマーク</string>
     <string name="navigation_bookmarks_hint_toast">フォルダを開き、⋮ をタップして「ブックマークに追加」を選択</string>
     <string name="onboarding_files_description">%1$s がデバイス上のすべてのファイルを管理するには権限が必要です。ファイルの閲覧、コピー、移動、整理に不可欠です。</string>
+    <string name="onboarding_files_adb_note">このデバイスでは設定からすべてのファイルへのアクセスを許可できないため、写真、動画、音楽のみ利用できます。すべてのファイルを使うには、パソコンから次のコマンドを実行してください：</string>
     <string name="onboarding_files_title">ファイルアクセス</string>
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>

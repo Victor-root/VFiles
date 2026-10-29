@@ -772,6 +772,7 @@
     <string name="navigation_bookmarks_hint_title">Marcadores</string>
     <string name="navigation_bookmarks_hint_toast">Abre una carpeta, luego toca ⋮ y «Añadir marcador»</string>
     <string name="onboarding_files_description">%1$s necesita permiso para gestionar todos los archivos de tu dispositivo. Es imprescindible para explorar, copiar, mover y organizar tus archivos.</string>
+    <string name="onboarding_files_adb_note">Este dispositivo no puede conceder el acceso a todos los archivos desde sus ajustes, así que solo están disponibles tus fotos, vídeos y música. Para usar todos tus archivos, ejecuta este comando desde un ordenador:</string>
     <string name="onboarding_files_title">Acceso a archivos</string>
     <string name="onboarding_finish">Empezar</string>
     <string name="onboarding_grant">Conceder</string>

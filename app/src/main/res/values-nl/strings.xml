@@ -737,6 +737,7 @@
     <string name="navigation_bookmarks_hint_title">Bladwijzers</string>
     <string name="navigation_bookmarks_hint_toast">Open een map, tik dan op ⋮ en „Bladwijzer toevoegen”</string>
     <string name="onboarding_files_description">%1$s heeft toestemming nodig om alle bestanden op je apparaat te beheren. Dit is essentieel om te bladeren, kopiëren, verplaatsen en je bestanden te ordenen.</string>
+    <string name="onboarding_files_adb_note">Dit apparaat kan geen toegang tot alle bestanden geven via de instellingen, dus alleen je foto\'s, video\'s en muziek zijn beschikbaar. Voer deze opdracht uit vanaf een computer om al je bestanden te gebruiken:</string>
     <string name="onboarding_files_title">Bestandstoegang</string>
     <string name="onboarding_finish">Aan de slag</string>
     <string name="onboarding_grant">Verlenen</string>

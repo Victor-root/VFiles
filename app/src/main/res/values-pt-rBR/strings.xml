@@ -773,6 +773,7 @@
     <string name="navigation_bookmarks_hint_title">Favoritos</string>
     <string name="navigation_bookmarks_hint_toast">Abra uma pasta, toque em ⋮ e em «Adicionar favorito»</string>
     <string name="onboarding_files_description">O %1$s precisa de permissão para gerenciar todos os arquivos do seu dispositivo. Isso é essencial para navegar, copiar, mover e organizar seus arquivos.</string>
+    <string name="onboarding_files_adb_note">Este dispositivo não consegue conceder acesso a todos os arquivos pelas configurações, então só suas fotos, vídeos e músicas estão disponíveis. Para usar todos os seus arquivos, execute este comando em um computador:</string>
     <string name="onboarding_files_title">Acesso a arquivos</string>
     <string name="onboarding_finish">Começar</string>
     <string name="onboarding_grant">Conceder</string>

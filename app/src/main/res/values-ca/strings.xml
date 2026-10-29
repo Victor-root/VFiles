@@ -737,6 +737,7 @@
     <string name="navigation_bookmarks_hint_title">Adreces d\'interès</string>
     <string name="navigation_bookmarks_hint_toast">Obriu una carpeta, toqueu ⋮ i «Afegeix adreça d\'interès»</string>
     <string name="onboarding_files_description">El %1$s necessita permís per gestionar tots els fitxers del dispositiu. És essencial per navegar, copiar, moure i organitzar els fitxers.</string>
+    <string name="onboarding_files_adb_note">Aquest dispositiu no pot donar accés a tots els fitxers des de la seva configuració, de manera que només tens disponibles les fotos, els vídeos i la música. Per fer servir tots els fitxers, executa aquesta ordre des d\'un ordinador:</string>
     <string name="onboarding_files_title">Accés als fitxers</string>
     <string name="onboarding_finish">Comença</string>
     <string name="onboarding_grant">Concedeix</string>
