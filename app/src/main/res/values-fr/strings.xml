@@ -800,6 +800,7 @@
 
     <string name="onboarding_files_title">Accès aux fichiers</string>
     <string name="onboarding_files_description">%1$s a besoin d\'accéder à l\'ensemble de vos fichiers pour naviguer, copier, déplacer et organiser votre stockage. Cette autorisation est indispensable au fonctionnement de l\'application.</string>
+    <string name="onboarding_files_adb_note">Cet appareil ne permet pas de donner l\'accès à tous les fichiers depuis ses réglages : seuls vos photos, vidéos et musiques sont accessibles. Pour utiliser tous vos fichiers, lancez cette commande depuis un ordinateur :</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Autorisez les notifications pour suivre la progression des opérations sur les fichiers (copies, déplacements, archives) même lorsque l\'application est en arrière-plan.</string>
