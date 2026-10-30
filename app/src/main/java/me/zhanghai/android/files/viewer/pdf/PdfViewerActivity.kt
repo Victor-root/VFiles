@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.viewer.pdf
 
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -14,6 +15,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
@@ -28,10 +30,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -101,7 +106,12 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
     var isGoToPageDialogShown by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
+    var isFocused by remember { mutableStateOf(false) }
+    var isControlFocused by remember { mutableStateOf(false) }
+    val actionsFocusRequester = remember { FocusRequester() }
     MediaViewerSystemUiEffect(isSystemUiShown)
+    // On a remote, back from the app bar goes back to the pages.
+    BackHandler(enabled = isControlFocused) { focusRequester.requestFocus() }
 
     Box(
         modifier = Modifier
@@ -110,8 +120,12 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
             // A remote goes through the pages with its arrows, and up from the first one reaches
             // the app bar.
             .focusRequester(focusRequester)
+            .onFocusChanged {
+                isFocused = it.isFocused
+                isControlFocused = it.hasFocus && !it.isFocused
+            }
             .onKeyEvent {
-                if (it.type != KeyEventType.KeyDown) {
+                if (!isFocused || it.type != KeyEventType.KeyDown) {
                     return@onKeyEvent false
                 }
                 val page = when (it.key) {
@@ -124,6 +138,16 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                         return@onKeyEvent true
                     }
                     else -> return@onKeyEvent false
+                }
+                if (page < 0 && it.key == Key.DirectionUp) {
+                    // The app bar is over the pages, so it's out of the reach of the focus search.
+                    isSystemUiShown = true
+                    coroutineScope.launch {
+                        // Lets the app bar appear.
+                        withFrameNanos {}
+                        actionsFocusRequester.requestFocus()
+                    }
+                    return@onKeyEvent true
                 }
                 if (page !in 0..<pagerState.pageCount) {
                     return@onKeyEvent false
@@ -165,18 +189,25 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                     )
                 },
                 actions = {
-                    if (document != null && document.pageCount > 1) {
-                        ActionButton(
-                            R.drawable.navigate_to_icon_control_normal_24dp,
-                            stringResource(R.string.pdf_viewer_go_to_page)
-                        ) { isGoToPageDialogShown = true }
-                    }
-                    ActionButton(
-                        R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share)
+                    Row(
+                        modifier = Modifier
+                            .focusRequester(actionsFocusRequester)
+                            .focusProperties { down = focusRequester }
                     ) {
-                        context.startActivitySafe(
-                            uri.createSendStreamIntent(MimeType.PDF).withChooser()
-                        )
+                        if (document != null && document.pageCount > 1) {
+                            ActionButton(
+                                R.drawable.navigate_to_icon_control_normal_24dp,
+                                stringResource(R.string.pdf_viewer_go_to_page)
+                            ) { isGoToPageDialogShown = true }
+                        }
+                        ActionButton(
+                            R.drawable.share_icon_control_normal_24dp,
+                            stringResource(R.string.share)
+                        ) {
+                            context.startActivitySafe(
+                                uri.createSendStreamIntent(MimeType.PDF).withChooser()
+                            )
+                        }
                     }
                 }
             )
