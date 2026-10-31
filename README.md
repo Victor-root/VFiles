@@ -29,13 +29,28 @@
 
 ## ✨ What this fork changes
 
+### 🧩 Rebuilt in Jetpack Compose
+- The whole interface is rebuilt in Jetpack Compose and Material 3: neutral backgrounds, a red accent by default, open folder icons, settings choices in bottom sheets and grouped action menus.
+- Faster startup and smoother scrolling of large folders, with screens opening inside the app instead of separate windows.
+- Requires **Android 8.0 or newer**.
+
+### 🖼️ Gallery, music, video and PDF built in
+- **Gallery** in the sidebar: photos and videos by day or by month, albums of folders, and a full screen viewer with zoomable photos and a video player.
+- **Music player**: songs, albums and artists, playback in the background controlled from the notification.
+- **Video player** and **PDF viewer** (one page at a time or fit to the width of the screen, pinch to zoom, go to page).
+
+### 🔑 Shizuku support
+- With [Shizuku](https://shizuku.rikka.app/) (or Sui), Android/data and Android/obb can be browsed without root.
+- One tap **"Grant with Shizuku"** gives the access to all files, even on TVs whose settings can't give it.
+
 ### 📺 Android TV support
 - Full D-pad navigation: the sidebar, toolbar and file lists are reachable and highlight correctly with a remote.
-- The first-launch onboarding works on TV.
-- Fixed getting stuck in an empty folder (focus falls back to the toolbar) and a focus jump when toggling the FTP server.
+- A refresh button in the header, the menu key of remotes opens menus, D-pad left opens the sidebar, and choice dialogs focus the current choice.
+- PDFs open fit to the width of the screen.
 
 ### 🚀 First-launch onboarding
-- A welcome flow that requests the permissions the app needs (all-files access, notifications) up front, so nothing has to be granted mid-use later.
+- A welcome flow that requests the permissions the app needs (all-files access, notifications, installing apps) up front, laid out as tiles on TVs.
+- Where only adb can give the access to all files, it shows the exact command to run, or the Shizuku button when Shizuku is running.
 
 ### 💾 Removable storage (SD card / USB), reworked
 - SD cards and USB drives **appear automatically under "Internal storage"** and refresh when you plug one in. No manual "Add storage" SAF dance.
@@ -44,7 +59,7 @@
 - **Eject** shortcut, and the free-space figure refreshes live (e.g. right after deleting files) instead of only after a restart.
 
 ### 🎯 Default apps per file type
-- New **Settings → Default apps**: pick which app opens Images, Audio, Video, PDF and Text, so those files open straight away in your app of choice instead of asking every time.
+- New **Settings → Default apps**: pick which app opens Images, Audio, Video, PDF and Text, VFiles' own viewers included, so those files open straight away in your app of choice. Without a choice, Android asks every time.
 
 ### 📋 File operation progress
 - A progress button appears in the toolbar during copies, moves and archive operations, opening a popover with live per-file details instead of only a notification.
@@ -64,7 +79,8 @@
 
 ### 🐛 Other fixes & polish
 - Friendly message when a folder can't be opened, instead of a silent failure.
-- Optional per-server **encryption** for SMB shares.
+- Optional per-server **encryption** for SMB shares, and a much faster scan for SMB servers on the local network.
+- Reorder the standard folders of the sidebar, with a drag or a D-pad.
 - Fixed a crash on tablets in landscape, and the status/navigation bars are now coloured to match the app bar.
 - Back exits at the root instead of leaving the app stuck, and long toolbar titles now marquee-scroll.
 - All fork-specific strings translated into **31 languages**.

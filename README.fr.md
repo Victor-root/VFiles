@@ -13,15 +13,48 @@ Un fork personnel et amélioré de **[Material Files](https://github.com/zhangha
 
 Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent **uniquement ce que ce fork ajoute ou modifie**. Pour ce qu'est fondamentalement l'application, voir [À propos de l'application d'origine](#à-propos-de-lapplication-dorigine).
 
+## 📸 Captures d'écran
+
+<p align="center"><strong>📱 Mobile</strong></p>
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/mobile-dark.webp" />
+  <img width="320" alt="VFiles sur un téléphone" src="docs/screenshots/mobile-light.webp" />
+</picture>
+</p>
+
+<p align="center"><strong>📺 Android TV</strong></p>
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/tv-dark.png" />
+  <img width="720" alt="VFiles sur Android TV" src="docs/screenshots/tv-light.png" />
+</picture>
+</p>
+
 ## ✨ Ce que ce fork change
+
+### 🧩 Reconstruit en Jetpack Compose
+- Toute l'interface est reconstruite en Jetpack Compose et Material 3 : fonds neutres, accent rouge par défaut, icônes de dossier ouvert, choix des réglages dans des panneaux en bas d'écran et menus d'actions regroupés.
+- Démarrage plus rapide et défilement plus fluide des gros dossiers, avec des écrans qui s'ouvrent dans l'app au lieu de fenêtres séparées.
+- Nécessite **Android 8.0 ou plus récent**.
+
+### 🖼️ Galerie, musique, vidéo et PDF intégrés
+- **Galerie** dans la barre latérale : photos et vidéos par jour ou par mois, albums par dossier, et une visionneuse plein écran avec photos zoomables et lecteur vidéo.
+- **Lecteur de musique** : titres, albums et artistes, lecture en arrière-plan contrôlable depuis la notification.
+- **Lecteur vidéo** et **lecteur PDF** (une page à la fois ou ajusté à la largeur de l'écran, zoom au pincement, aller à une page).
+
+### 🔑 Support de Shizuku
+- Avec [Shizuku](https://shizuku.rikka.app/) (ou Sui), Android/data et Android/obb sont accessibles sans root.
+- Un simple **« Accorder avec Shizuku »** donne l'accès à tous les fichiers, même sur les TV dont les réglages ne le permettent pas.
 
 ### 📺 Support Android TV
 - Navigation complète à la télécommande (D-pad) : la barre latérale, la barre d'outils et les listes sont accessibles et correctement surlignées.
-- L'onboarding du premier lancement fonctionne sur TV.
-- Correction du blocage dans un dossier vide (le focus revient à la barre d'outils) et d'un saut de focus lors de l'activation du serveur FTP.
+- Un bouton Actualiser dans l'en-tête, la touche menu de la télécommande ouvre les menus, gauche ouvre la barre latérale, et les fenêtres de choix placent le focus sur le choix actuel.
+- Les PDF s'ouvrent ajustés à la largeur de l'écran.
 
 ### 🚀 Onboarding au premier lancement
-- Un écran d'accueil qui demande en amont les autorisations nécessaires (accès à tous les fichiers, notifications), pour ne rien avoir à accorder en cours d'usage.
+- Un écran d'accueil qui demande en amont les autorisations nécessaires (accès à tous les fichiers, notifications, installation d'applications), présentées en tuiles sur TV.
+- Là où seul adb peut donner l'accès à tous les fichiers, il affiche la commande exacte à lancer, ou le bouton Shizuku quand Shizuku est en marche.
 
 ### 💾 Stockage amovible (carte SD / USB), repensé
 - Les cartes SD et clés USB **apparaissent automatiquement sous « Stockage interne »** et se rafraîchissent au branchement. Fini le « Ajouter un support » manuel via SAF.
@@ -30,7 +63,7 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 - Raccourci **Éjecter**, et l'espace libre se met à jour en direct (par ex. juste après une suppression) au lieu d'attendre un redémarrage.
 
 ### 🎯 Applications par défaut par type de fichier
-- Nouveau **Réglages → Applications par défaut** : choisissez quelle app ouvre les images, l'audio, les vidéos, les PDF et le texte, pour que ces fichiers s'ouvrent directement avec la bonne app, sans demander à chaque fois.
+- Nouveau **Réglages → Applications par défaut** : choisissez quelle app ouvre les images, l'audio, les vidéos, les PDF et le texte, lecteurs de VFiles compris, pour que ces fichiers s'ouvrent directement avec la bonne app. Sans choix, Android demande à chaque fois.
 
 ### 📋 Progression des opérations sur les fichiers
 - Un bouton de progression apparaît dans la barre d'outils pendant les copies, déplacements et opérations d'archive, ouvrant une popup avec le détail en direct de chaque fichier, plutôt qu'une simple notification.
@@ -50,7 +83,8 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 
 ### 🐛 Autres corrections et finitions
 - Message clair quand un dossier ne peut pas être ouvert, au lieu d'un échec silencieux.
-- **Chiffrement** optionnel par serveur pour les partages SMB.
+- **Chiffrement** optionnel par serveur pour les partages SMB, et une recherche des serveurs SMB du réseau local bien plus rapide.
+- Les dossiers standards de la barre latérale se réordonnent, par glisser-déposer ou au D-pad.
 - Correction d'un plantage sur tablette en mode paysage, et les barres de statut/navigation sont désormais colorées pour correspondre à la barre d'application.
 - Retour arrière quitte directement à la racine au lieu de rester bloqué, et les titres longs de la barre d'outils défilent désormais.
 - Toutes les chaînes propres au fork traduites en **31 langues**.
