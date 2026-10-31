@@ -34,7 +34,7 @@ import java.io.IOException
 import java.net.URI
 
 /**
- * A [DocumentsProvider] that exposes the whole file system MaterialFiles can browse - not only local
+ * A [DocumentsProvider] that exposes the whole file system VFiles can browse - not only local
  * storage but also SMB/FTP/SFTP/WebDAV servers and archives - so that other apps can pick a tree or
  * document from any of them via the Storage Access Framework.
  *

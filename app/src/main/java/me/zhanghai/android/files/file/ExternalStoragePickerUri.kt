@@ -18,7 +18,7 @@ import me.zhanghai.android.files.compat.uuidCompat
 import me.zhanghai.android.files.provider.linux.isLinuxPath
 import me.zhanghai.android.files.storage.StorageVolumeList
 
-// Support for the "systemPicker" build flavor: when Material Files replaces DocumentsUI as the
+// Support for the "systemPicker" build flavor: when VFiles replaces DocumentsUI as the
 // platform document picker, it must hand back the exact same
 // `com.android.externalstorage.documents` URIs that DocumentsUI would, so that apps requiring
 // ExternalStorageProvider URIs (e.g. the whole SimpleMobileTools/Fossify family, which compares the
@@ -30,7 +30,7 @@ import me.zhanghai.android.files.storage.StorageVolumeList
 // manifest and only granted to a build signed with the platform key.
 
 /**
- * Whether Material Files may hand back real ExternalStorageProvider URIs, i.e. it actually holds
+ * Whether VFiles may hand back real ExternalStorageProvider URIs, i.e. it actually holds
  * [Manifest.permission.MANAGE_DOCUMENTS].
  *
  * This MUST gate every [externalStorageTreeUriOrNull] / [externalStorageDocumentUriOrNull] use: the

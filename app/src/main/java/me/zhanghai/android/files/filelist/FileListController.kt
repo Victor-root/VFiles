@@ -641,7 +641,7 @@ class FileListController(
         // only ACTION_OPEN_DOCUMENT_TREE needs a SAF tree URI, which must come from
         // FileSystemDocumentsProvider.
         val singlePath = paths.singleOrNull()
-        // When Material Files is the platform document picker (systemPicker builds signed with the
+        // When VFiles is the platform document picker (systemPicker builds signed with the
         // platform key, holding MANAGE_DOCUMENTS), hand back the same
         // com.android.externalstorage.documents URIs that DocumentsUI would, so apps that require
         // ExternalStorageProvider URIs accept the result and the real I/O goes through the genuine

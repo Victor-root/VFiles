@@ -78,7 +78,7 @@ private fun Uri.toPathOrNull(): Path? =
 
 // Resolves an ExternalStorageProvider (com.android.externalstorage.documents) tree/document/bare
 // URI that points to an existing directory on a mounted storage volume to the corresponding local
-// Path, or null otherwise. Lets Material Files browse a folder another app opens via a SAF URI
+// Path, or null otherwise. Lets VFiles browse a folder another app opens via a SAF URI
 // (which ContentPath can't list) by falling back to direct local access.
 private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
     if (authority != DocumentsContractCompat.EXTERNAL_STORAGE_PROVIDER_AUTHORITY) {
