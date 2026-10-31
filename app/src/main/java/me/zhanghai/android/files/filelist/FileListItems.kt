@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -232,13 +233,18 @@ fun FileGridItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val iconMargin = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
-            FileItemIcon(
-                file = file,
-                modifier = Modifier.padding(start = iconMargin - 4.dp),
-                isSelected = isSelected,
-                showsThumbnail = false,
-                onClick = onIconClick
-            )
+            // A folder is already told by its thumbnail, but its name stays centered.
+            if (file.attributes.isDirectory) {
+                Spacer(modifier = Modifier.padding(start = iconMargin - 4.dp).size(48.dp))
+            } else {
+                FileItemIcon(
+                    file = file,
+                    modifier = Modifier.padding(start = iconMargin - 4.dp),
+                    isSelected = isSelected,
+                    showsThumbnail = false,
+                    onClick = onIconClick
+                )
+            }
             Text(
                 text = file.name,
                 modifier = Modifier.weight(1f),
@@ -464,7 +470,7 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
     ) {
         if (isDirectory) {
             Icon(
-                painter = painterResource(R.drawable.file_directory_thumbnail),
+                painter = painterResource(R.drawable.file_directory_icon),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 // In the accent color like the icons of folders.
