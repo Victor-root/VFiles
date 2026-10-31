@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -210,6 +211,8 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
         contentAlignment = Alignment.Center
     ) {
         val result = documentResult
+        // Keeps the top of the pages below the app bar.
+        val topPadding = with(LocalDensity.current) { appBarHeight.toDp() }
         when {
             result == null -> CircularProgressIndicator()
             document == null -> {
@@ -227,11 +230,16 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                 PdfWidePages(
                     document = document,
                     listState = listState,
-                    // Keeps the top of the first page below the app bar.
-                    topPadding = with(LocalDensity.current) { appBarHeight.toDp() },
+                    topPadding = topPadding,
                     onClick = { isSystemUiShown = !isSystemUiShown }
                 )
-            else -> PdfPages(document, pagerState) { isSystemUiShown = !isSystemUiShown }
+            else ->
+                PdfPages(
+                    document = document,
+                    pagerState = pagerState,
+                    topPadding = topPadding,
+                    onClick = { isSystemUiShown = !isSystemUiShown }
+                )
         }
         AnimatedVisibility(
             visible = isSystemUiShown,
@@ -323,19 +331,29 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
 }
 
 @Composable
-private fun PdfPages(document: PdfDocument, pagerState: PagerState, onClick: () -> Unit) {
+private fun PdfPages(
+    document: PdfDocument,
+    pagerState: PagerState,
+    topPadding: Dp,
+    onClick: () -> Unit
+) {
     VerticalPager(
         state = pagerState,
         modifier = Modifier.fillMaxSize(),
         beyondViewportPageCount = 1,
         key = { it }
     ) { page ->
-        PdfPageView(document, page, onClick)
+        PdfPageView(document, page, Modifier.padding(top = topPadding), onClick)
     }
 }
 
 @Composable
-private fun PdfPageView(document: PdfDocument, index: Int, onClick: () -> Unit) {
+private fun PdfPageView(
+    document: PdfDocument,
+    index: Int,
+    modifier: Modifier,
+    onClick: () -> Unit
+) {
     val context = LocalContext.current
     var error by remember(document, index) { mutableStateOf<Throwable?>(null) }
     val zoomableImageState = rememberZoomableImageState()
@@ -350,7 +368,7 @@ private fun PdfPageView(document: PdfDocument, index: Int, onClick: () -> Unit) 
             )
             .build()
     }
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val currentError = error
         if (currentError != null) {
             MediaViewerError(currentError)
