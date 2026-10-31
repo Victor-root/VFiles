@@ -13,14 +13,18 @@
 
 <p align="center"><strong>📱 Mobile</strong></p>
 <p align="center">
-<img width="320" alt="VFiles on a phone, light theme" src="docs/screenshots/mobile-light.webp" />
-<img width="320" alt="VFiles on a phone, dark theme" src="docs/screenshots/mobile-dark.webp" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/mobile-dark.webp" />
+  <img width="320" alt="VFiles on a phone" src="docs/screenshots/mobile-light.webp" />
+</picture>
 </p>
 
 <p align="center"><strong>📺 Android TV</strong></p>
 <p align="center">
-<img width="400" alt="VFiles on Android TV, light theme" src="docs/screenshots/tv-light.png" />
-<img width="400" alt="VFiles on Android TV, dark theme" src="docs/screenshots/tv-dark.png" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/tv-dark.png" />
+  <img width="720" alt="VFiles on Android TV" src="docs/screenshots/tv-light.png" />
+</picture>
 </p>
 
 ## ✨ What this fork changes
