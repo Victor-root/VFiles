@@ -6,10 +6,11 @@
 package me.zhanghai.android.files.navigation
 
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.LocalBringIntoViewSpec
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,7 +38,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +45,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
@@ -53,7 +52,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java8.nio.file.Path
-import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.theme.LocalAppColors
@@ -64,9 +62,11 @@ import me.zhanghai.android.files.util.startActivitySafe
  * The bookmarks, standard folders, storages and app menu of the file list. [subtitleKey] changes
  * whenever the free space shown for storages may have changed, so that it's read again. Each new
  * [focusCheckedItemRequest] above 0 moves the D-pad focus to the item of the current folder, or the
- * first item, like when the drawer opens. While it isn't [isShown], it's kept scrolled to that item,
- * so that it opens there without scrolling.
+ * first item, like when the drawer opens. While it isn't [isShown], it's kept scrolled to where
+ * focusing that item would scroll it, so that it opens there without scrolling.
  */
+// For LocalBringIntoViewSpec.
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavigationDrawerContent(
     currentPath: Path,
@@ -121,31 +121,32 @@ fun NavigationDrawerContent(
     val focusedIndex = items.indexOfFirst { it != null && it.isChecked(listener) }
         .takeIf { it != -1 } ?: items.indexOfFirst { it != null && !it.isHeader }
     val checkedItemFocusRequester = remember { FocusRequester() }
-    LaunchedEffect(isShown, focusedIndex) {
-        if (BuildConfig.BUILD_TYPE == "debug") {
-            Log.d("DrawerDebug", "isShown=$isShown focusedIndex=$focusedIndex first=${listState.firstVisibleItemIndex}")
+    val bringIntoViewSpec = LocalBringIntoViewSpec.current
+    LaunchedEffect(isShown, focusedIndex, bringIntoViewSpec) {
+        if (isShown || focusedIndex == -1) {
+            return@LaunchedEffect
         }
-        if (!isShown && focusedIndex != -1) {
-            listState.scrollToItem(focusedIndex)
-            if (BuildConfig.BUILD_TYPE == "debug") {
-                Log.d("DrawerDebug", "pre-scrolled first=${listState.firstVisibleItemIndex}")
-            }
-        }
-    }
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
-                .collect { Log.d("DrawerDebug", "scroll first=${it.first} offset=${it.second}") }
-        }
+        listState.scrollToItem(focusedIndex)
+        // Then where focusing the item scrolls it to, like a third down the screen on a TV.
+        val layoutInfo = listState.layoutInfo
+        val item = layoutInfo.visibleItemsInfo.find { it.index == focusedIndex }
+            ?: return@LaunchedEffect
+        listState.scrollBy(
+            bringIntoViewSpec.calculateScrollDistance(
+                (item.offset - layoutInfo.viewportStartOffset).toFloat(),
+                item.size.toFloat(),
+                layoutInfo.viewportSize.height.toFloat()
+            )
+        )
     }
     LaunchedEffect(focusCheckedItemRequest) {
         if (focusCheckedItemRequest == 0 || focusedIndex == -1) {
             return@LaunchedEffect
         }
-        if (BuildConfig.BUILD_TYPE == "debug") {
-            Log.d("DrawerDebug", "focus request=$focusCheckedItemRequest focusedIndex=$focusedIndex first=${listState.firstVisibleItemIndex}")
+        // The drawer is usually already scrolled to it, but not when the items changed since.
+        if (listState.layoutInfo.visibleItemsInfo.none { it.index == focusedIndex }) {
+            listState.scrollToItem(focusedIndex)
         }
-        listState.scrollToItem(focusedIndex)
         // Lets the item be composed if it was scrolled into view.
         withFrameNanos {}
         checkedItemFocusRequester.requestFocus()
@@ -172,21 +173,11 @@ fun NavigationDrawerContent(
                     isChecked = item.isChecked(listener),
                     listener = listener,
                     subtitleKey = subtitleKey,
-                    modifier = (if (index == focusedIndex) {
+                    modifier = if (index == focusedIndex) {
                         Modifier.focusRequester(checkedItemFocusRequester)
                     } else {
                         Modifier
-                    }).then(
-                        if (BuildConfig.BUILD_TYPE == "debug") {
-                            Modifier.onFocusChanged {
-                                if (it.isFocused) {
-                                    Log.d("DrawerDebug", "focused index=$index", Throwable())
-                                }
-                            }
-                        } else {
-                            Modifier
-                        }
-                    )
+                    }
                 )
             }
         }
