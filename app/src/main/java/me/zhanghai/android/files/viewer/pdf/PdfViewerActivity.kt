@@ -83,6 +83,7 @@ import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.ui.queryDisplayName
 import me.zhanghai.android.files.util.createSendStreamIntent
 import me.zhanghai.android.files.util.extraPath
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.withChooser
 
@@ -123,8 +124,8 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
     val document = documentResult?.getOrNull()
     val pageCount = document?.pageCount ?: 0
     // Pages are either fit whole in the screen one at a time, or as wide as the screen one after
-    // the other, like on a TV whose wide screen leaves a fit page small.
-    var isFitWidth by rememberSaveable { mutableStateOf(false) }
+    // the other, like at first on a TV whose wide screen leaves a fit page small.
+    var isFitWidth by rememberSaveable { mutableStateOf(context.isTelevision) }
     val pagerState = rememberPagerState { pageCount }
     val listState = rememberLazyListState()
     // The page in the middle of the screen when fit to its width.
