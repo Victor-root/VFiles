@@ -60,7 +60,8 @@ import me.zhanghai.android.files.util.startActivitySafe
  * The bookmarks, standard folders, storages and app menu of the file list. [subtitleKey] changes
  * whenever the free space shown for storages may have changed, so that it's read again. Each new
  * [focusCheckedItemRequest] above 0 moves the D-pad focus to the item of the current folder, or the
- * first item, like when the drawer opens.
+ * first item, like when the drawer opens. While it isn't [isShown], it's kept scrolled to that item,
+ * so that it opens there without scrolling.
  */
 @Composable
 fun NavigationDrawerContent(
@@ -70,6 +71,7 @@ fun NavigationDrawerContent(
     onCloseDrawer: () -> Unit,
     subtitleKey: Any?,
     focusCheckedItemRequest: Int,
+    isShown: Boolean,
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues()
@@ -115,6 +117,11 @@ fun NavigationDrawerContent(
     val focusedIndex = items.indexOfFirst { it != null && it.isChecked(listener) }
         .takeIf { it != -1 } ?: items.indexOfFirst { it != null && !it.isHeader }
     val checkedItemFocusRequester = remember { FocusRequester() }
+    LaunchedEffect(isShown, focusedIndex) {
+        if (!isShown && focusedIndex != -1) {
+            listState.scrollToItem(focusedIndex)
+        }
+    }
     LaunchedEffect(focusCheckedItemRequest) {
         if (focusCheckedItemRequest == 0 || focusedIndex == -1) {
             return@LaunchedEffect

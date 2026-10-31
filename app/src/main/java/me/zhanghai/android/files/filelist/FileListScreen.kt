@@ -313,6 +313,11 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             onCloseDrawer = closeDrawer,
             subtitleKey = drawerSubtitleKey,
             focusCheckedItemRequest = drawerFocusRequest,
+            isShown = if (hasPersistentDrawer) {
+                isPersistentDrawerOpen
+            } else {
+                drawerState.targetValue == DrawerValue.Open
+            },
             modifier = modifier.focusRequester(drawerFocusRequester)
         )
     }
