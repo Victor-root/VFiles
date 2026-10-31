@@ -15,15 +15,23 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
+import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -31,11 +39,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -56,6 +66,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
@@ -67,6 +78,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import coil3.size.Size
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import me.saket.telephoto.zoomable.coil3.ZoomableAsyncImage
@@ -83,8 +95,10 @@ import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.ui.queryDisplayName
 import me.zhanghai.android.files.util.createSendStreamIntent
 import me.zhanghai.android.files.util.extraPath
+import me.zhanghai.android.files.util.isTelevision
 import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.withChooser
+import kotlin.math.roundToInt
 
 /** Shows a PDF opened from the files or from another app, page by page. */
 class PdfViewerActivity : AppActivity() {
@@ -122,9 +136,9 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
     }
     val document = documentResult?.getOrNull()
     val pageCount = document?.pageCount ?: 0
-    // Pages are either as wide as the screen one after the other, which reads best at first, or fit
-    // whole in the screen one at a time.
-    var isFitWidth by rememberSaveable { mutableStateOf(true) }
+    // Pages are either fit whole in the screen one at a time, or as wide as the screen one after
+    // the other, like at first on a TV whose wide screen leaves a fit page small.
+    var isFitWidth by rememberSaveable { mutableStateOf(context.isTelevision) }
     val pagerState = rememberPagerState { pageCount }
     val listState = rememberLazyListState()
     // The page in the middle of the screen when fit to its width.
@@ -394,16 +408,65 @@ private fun PdfWidePages(
     topPadding: Dp,
     onClick: () -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = listState,
-        contentPadding = PaddingValues(top = topPadding),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    // Zooming in makes the pages wider than the screen, which then scrolls sideways too.
+    var scale by remember { mutableFloatStateOf(1f) }
+    val horizontalScrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize()
+            // Before the list, so that it doesn't scroll while pinching.
+            .pointerInput(listState, horizontalScrollState) {
+                awaitEachGesture {
+                    awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                    do {
+                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                        if (event.changes.count { it.pressed } < 2) {
+                            continue
+                        }
+                        val newScale = (scale * event.calculateZoom()).coerceIn(1f, MAX_SCALE)
+                        val ratio = newScale / scale
+                        if (ratio != 1f) {
+                            val focus = event.calculateCentroid()
+                            listState.keepFocusWhileZooming(focus.y, ratio)
+                            val scrollX = (horizontalScrollState.value + focus.x) * ratio - focus.x
+                            scale = newScale
+                            coroutineScope.launch {
+                                // Once the pages are as wide as they are now zoomed.
+                                withFrameNanos {}
+                                horizontalScrollState.scrollTo(scrollX.roundToInt())
+                            }
+                        }
+                        event.changes.forEach { it.consume() }
+                    } while (event.changes.any { it.pressed })
+                }
+            }
     ) {
-        items(document.pageCount, key = { it }) { index ->
-            PdfWidePageView(document, index, onClick)
+        LazyColumn(
+            modifier = Modifier
+                .horizontalScroll(horizontalScrollState)
+                .requiredWidth(maxWidth * scale)
+                .fillMaxHeight(),
+            state = listState,
+            contentPadding = PaddingValues(top = topPadding),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(document.pageCount, key = { it }) { index ->
+                PdfWidePageView(document, index, onClick)
+            }
         }
     }
+}
+
+/** Keeps the point at [focusY] in the viewport over the same spot of its page, zoomed by [ratio]. */
+private fun LazyListState.keepFocusWhileZooming(focusY: Float, ratio: Float) {
+    val layoutInfo = layoutInfo
+    val item = layoutInfo.visibleItemsInfo.lastOrNull {
+        it.offset - layoutInfo.viewportStartOffset <= focusY
+    } ?: return
+    val itemTop = item.offset - layoutInfo.viewportStartOffset
+    val newItemTop = focusY - (focusY - itemTop) * ratio
+    requestScrollToItem(item.index, (-layoutInfo.viewportStartOffset - newItemTop).roundToInt())
 }
 
 @Composable
@@ -414,7 +477,11 @@ private fun PdfWidePageView(document: PdfDocument, index: Int, onClick: () -> Un
         value = document.getPageAspectRatio(index)
     }
     val request = remember(context, document, index) {
-        ImageRequest.Builder(context).data(PdfPage(document, index)).build()
+        ImageRequest.Builder(context)
+            .data(PdfPage(document, index))
+            // As wide as the fetcher draws by default, so that it stays sharp when zoomed in.
+            .size(Size.ORIGINAL)
+            .build()
     }
     AsyncImage(
         model = request,
@@ -432,3 +499,5 @@ private fun PdfWidePageView(document: PdfDocument, index: Int, onClick: () -> Un
 private const val SCROLL_FRACTION = 0.8f
 
 private const val A4_ASPECT_RATIO = 210f / 297f
+
+private const val MAX_SCALE = 4f
