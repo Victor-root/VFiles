@@ -7,8 +7,6 @@
 [![Android](https://img.shields.io/badge/Android-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Victor-root/VFiles/releases/latest)
 [![Android TV](https://img.shields.io/badge/Android%20TV-supported-3DDC84?style=for-the-badge&logo=androidtv&logoColor=white)](https://github.com/Victor-root/VFiles/releases/latest)
 
-[<img src="docs/badges/get-it-on-omnify.svg" alt="Disponible sur Omnify" height="56">](https://github.com/Victor-root/Omnify)
-
 Un fork personnel et amélioré de **[Material Files](https://github.com/zhanghai/MaterialFiles)** de Hai Zhang, un gestionnaire de fichiers Material Design open source pour Android.
 
 Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent **uniquement ce que ce fork ajoute ou modifie**. Pour ce qu'est fondamentalement l'application, voir [À propos de l'application d'origine](#à-propos-de-lapplication-dorigine).
@@ -29,6 +27,12 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/tv-dark.png" />
   <img width="720" alt="VFiles sur Android TV" src="docs/screenshots/tv-light.png" />
 </picture>
+</p>
+
+## 📥 Téléchargement et mises à jour
+
+<p align="center">
+  <a href="https://victor-root.github.io/Omnify/add?url=https%3A%2F%2Fgithub.com%2FVictor-root%2FVFiles"><img src="https://victor-root.github.io/Omnify/assets/get-it-on-omnify.svg" alt="Disponible sur Omnify"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Victor-root/VFiles/releases"><img src="docs/badges/get-it-on-github.svg" alt="Disponible sur GitHub"/></a>
 </p>
 
 ## ✨ Ce que ce fork change
