@@ -18,6 +18,7 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -55,9 +57,12 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -131,6 +136,7 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
         }
     }
     val currentPage = if (isFitWidth) listCurrentPage else pagerState.currentPage
+    var appBarHeight by remember { mutableIntStateOf(0) }
     var isSystemUiShown by rememberSaveable { mutableStateOf(true) }
     var isGoToPageDialogShown by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -218,12 +224,20 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                 )
             }
             isFitWidth ->
-                PdfWidePages(document, listState) { isSystemUiShown = !isSystemUiShown }
+                PdfWidePages(
+                    document = document,
+                    listState = listState,
+                    // Keeps the top of the first page below the app bar.
+                    topPadding = with(LocalDensity.current) { appBarHeight.toDp() },
+                    onClick = { isSystemUiShown = !isSystemUiShown }
+                )
             else -> PdfPages(document, pagerState) { isSystemUiShown = !isSystemUiShown }
         }
         AnimatedVisibility(
             visible = isSystemUiShown,
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .onSizeChanged { appBarHeight = it.height },
             enter = fadeIn() + slideInVertically { -it },
             exit = fadeOut() + slideOutVertically { -it }
         ) {
@@ -356,10 +370,16 @@ private fun PdfPageView(document: PdfDocument, index: Int, onClick: () -> Unit) 
 }
 
 @Composable
-private fun PdfWidePages(document: PdfDocument, listState: LazyListState, onClick: () -> Unit) {
+private fun PdfWidePages(
+    document: PdfDocument,
+    listState: LazyListState,
+    topPadding: Dp,
+    onClick: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         state = listState,
+        contentPadding = PaddingValues(top = topPadding),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(document.pageCount, key = { it }) { index ->
