@@ -13,17 +13,14 @@
 
 <p align="center"><strong>📱 Mobile</strong></p>
 <p align="center">
-<img width="320" alt="image" src="https://github.com/user-attachments/assets/c353e45d-2251-4956-8dcf-2af6d51d44ea"/>
-<img width="320" alt="image" src="https://github.com/user-attachments/assets/48ec2dc1-b835-43a0-a2cb-ecb9dd563a7d" />
+<img width="320" alt="VFiles on a phone, light theme" src="docs/screenshots/mobile-light.webp" />
+<img width="320" alt="VFiles on a phone, dark theme" src="docs/screenshots/mobile-dark.webp" />
 </p>
 
 <p align="center"><strong>📺 Android TV</strong></p>
 <p align="center">
-  <img
-    src="https://github.com/user-attachments/assets/65e9d19a-099f-4692-96cd-f6286e6e003c"
-    width="720"
-    alt="AdAway Community — Android TV home screen"
-  />
+<img width="400" alt="VFiles on Android TV, light theme" src="docs/screenshots/tv-light.png" />
+<img width="400" alt="VFiles on Android TV, dark theme" src="docs/screenshots/tv-dark.png" />
 </p>
 
 ## ✨ What this fork changes
