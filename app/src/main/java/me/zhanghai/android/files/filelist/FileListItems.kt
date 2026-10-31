@@ -456,7 +456,8 @@ private fun FileGridThumbnail(file: FileItem, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(1.78f)
+            // Taller for folders, so that their icon fills more of the width.
+            .aspectRatio(if (isDirectory) 1.2f else 1.78f)
             .then(
                 if (isDirectory) {
                     Modifier
