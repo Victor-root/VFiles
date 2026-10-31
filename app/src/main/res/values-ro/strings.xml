@@ -661,6 +661,8 @@
     <string name="music_next">Următor</string>
     <string name="pdf_viewer_title">Vizualizator PDF</string>
     <string name="pdf_viewer_go_to_page">Salt la pagină</string>
+    <string name="pdf_viewer_fit_width">Potrivește la lățime</string>
+    <string name="pdf_viewer_fit_page">Afișează pagina întreagă</string>
     <string name="pdf_viewer_page_hint_format">Pagina, de la 1 la %1$,d</string>
     <string name="pdf_viewer_page_error">Pagina nu există</string>
     <string name="pdf_viewer_password_protected">Acest PDF este protejat de o parolă, ceea ce nu este acceptat</string>

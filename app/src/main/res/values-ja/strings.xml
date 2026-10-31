@@ -594,6 +594,8 @@
     <string name="music_next">次へ</string>
     <string name="pdf_viewer_title">PDF ビューアー</string>
     <string name="pdf_viewer_go_to_page">ページへ移動</string>
+    <string name="pdf_viewer_fit_width">幅に合わせる</string>
+    <string name="pdf_viewer_fit_page">ページ全体を表示</string>
     <string name="pdf_viewer_page_hint_format">ページ (1～%1$,d)</string>
     <string name="pdf_viewer_page_error">そのページはありません</string>
     <string name="pdf_viewer_password_protected">この PDF はパスワードで保護されているため、開けません</string>

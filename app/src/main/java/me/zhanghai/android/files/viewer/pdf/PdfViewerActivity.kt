@@ -14,15 +14,25 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -43,9 +53,13 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -101,7 +115,22 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
         awaitDispose { result.getOrNull()?.let { applicationScope.launch { it.close() } } }
     }
     val document = documentResult?.getOrNull()
-    val pagerState = rememberPagerState { document?.pageCount ?: 0 }
+    val pageCount = document?.pageCount ?: 0
+    // Pages are either fit whole in the screen one at a time, or as wide as the screen one after
+    // the other, like on a TV whose wide screen leaves a fit page small.
+    var isFitWidth by rememberSaveable { mutableStateOf(false) }
+    val pagerState = rememberPagerState { pageCount }
+    val listState = rememberLazyListState()
+    // The page in the middle of the screen when fit to its width.
+    val listCurrentPage by remember(listState) {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            val center = (layoutInfo.viewportStartOffset + layoutInfo.viewportEndOffset) / 2
+            layoutInfo.visibleItemsInfo.lastOrNull { it.offset <= center }?.index
+                ?: listState.firstVisibleItemIndex
+        }
+    }
+    val currentPage = if (isFitWidth) listCurrentPage else pagerState.currentPage
     var isSystemUiShown by rememberSaveable { mutableStateOf(true) }
     var isGoToPageDialogShown by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -117,8 +146,8 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            // A remote goes through the pages with its arrows, and up from the first one reaches
-            // the app bar.
+            // A remote goes through the pages with its arrows, or scrolls them up and down when
+            // they are fit to the width, and up from the top reaches the app bar.
             .focusRequester(focusRequester)
             .onFocusChanged {
                 isFocused = it.isFocused
@@ -128,18 +157,8 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                 if (!isFocused || it.type != KeyEventType.KeyDown) {
                     return@onKeyEvent false
                 }
-                val page = when (it.key) {
-                    Key.DirectionUp, Key.DirectionLeft, Key.PageUp, Key.ChannelUp ->
-                        pagerState.currentPage - 1
-                    Key.DirectionDown, Key.DirectionRight, Key.PageDown, Key.ChannelDown ->
-                        pagerState.currentPage + 1
-                    Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
-                        isSystemUiShown = !isSystemUiShown
-                        return@onKeyEvent true
-                    }
-                    else -> return@onKeyEvent false
-                }
-                if (page < 0 && it.key == Key.DirectionUp) {
+                val isAtTop = if (isFitWidth) !listState.canScrollBackward else currentPage == 0
+                if (it.key == Key.DirectionUp && isAtTop) {
                     // The app bar is over the pages, so it's out of the reach of the focus search.
                     isSystemUiShown = true
                     coroutineScope.launch {
@@ -149,10 +168,36 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                     }
                     return@onKeyEvent true
                 }
-                if (page !in 0..<pagerState.pageCount) {
+                if (isFitWidth && (it.key == Key.DirectionUp || it.key == Key.DirectionDown)) {
+                    val distance = listState.layoutInfo.viewportSize.height * SCROLL_FRACTION
+                    coroutineScope.launch {
+                        listState.animateScrollBy(
+                            if (it.key == Key.DirectionUp) -distance else distance
+                        )
+                    }
+                    return@onKeyEvent true
+                }
+                val page = when (it.key) {
+                    Key.DirectionUp, Key.DirectionLeft, Key.PageUp, Key.ChannelUp ->
+                        currentPage - 1
+                    Key.DirectionDown, Key.DirectionRight, Key.PageDown, Key.ChannelDown ->
+                        currentPage + 1
+                    Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
+                        isSystemUiShown = !isSystemUiShown
+                        return@onKeyEvent true
+                    }
+                    else -> return@onKeyEvent false
+                }
+                if (page !in 0..<pageCount) {
                     return@onKeyEvent false
                 }
-                coroutineScope.launch { pagerState.animateScrollToPage(page) }
+                coroutineScope.launch {
+                    if (isFitWidth) {
+                        listState.animateScrollToItem(page)
+                    } else {
+                        pagerState.animateScrollToPage(page)
+                    }
+                }
                 true
             }
             .focusable(),
@@ -172,6 +217,8 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                     }
                 )
             }
+            isFitWidth ->
+                PdfWidePages(document, listState) { isSystemUiShown = !isSystemUiShown }
             else -> PdfPages(document, pagerState) { isSystemUiShown = !isSystemUiShown }
         }
         AnimatedVisibility(
@@ -184,8 +231,7 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                 title = title,
                 subtitle = document?.let {
                     stringResource(
-                        R.string.pdf_viewer_subtitle_format, pagerState.currentPage + 1,
-                        it.pageCount
+                        R.string.pdf_viewer_subtitle_format, currentPage + 1, it.pageCount
                     )
                 },
                 actions = {
@@ -194,7 +240,31 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
                             .focusRequester(actionsFocusRequester)
                             .focusProperties { down = focusRequester }
                     ) {
-                        if (document != null && document.pageCount > 1) {
+                        if (document != null) {
+                            ActionButton(
+                                if (isFitWidth) {
+                                    R.drawable.fit_page_icon_control_normal_24dp
+                                } else {
+                                    R.drawable.fit_width_icon_control_normal_24dp
+                                },
+                                stringResource(
+                                    if (isFitWidth) {
+                                        R.string.pdf_viewer_fit_page
+                                    } else {
+                                        R.string.pdf_viewer_fit_width
+                                    }
+                                )
+                            ) {
+                                // Stays on the same page.
+                                if (isFitWidth) {
+                                    pagerState.requestScrollToPage(currentPage)
+                                } else {
+                                    listState.requestScrollToItem(currentPage)
+                                }
+                                isFitWidth = !isFitWidth
+                            }
+                        }
+                        if (pageCount > 1) {
                             ActionButton(
                                 R.drawable.navigate_to_icon_control_normal_24dp,
                                 stringResource(R.string.pdf_viewer_go_to_page)
@@ -216,15 +286,19 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
     LaunchedEffect(focusRequester) { focusRequester.requestFocus() }
 
     if (isGoToPageDialogShown && document != null) {
-        val pageCount = document.pageCount
         val pageError = stringResource(R.string.pdf_viewer_page_error)
         TextFieldDialog(
             title = stringResource(R.string.pdf_viewer_go_to_page),
             onConfirm = { text ->
-                coroutineScope.launch { pagerState.scrollToPage(text.toInt() - 1) }
+                val page = text.toInt() - 1
+                if (isFitWidth) {
+                    listState.requestScrollToItem(page)
+                } else {
+                    pagerState.requestScrollToPage(page)
+                }
             },
             onDismissRequest = { isGoToPageDialogShown = false },
-            initialText = (pagerState.currentPage + 1).toString(),
+            initialText = (currentPage + 1).toString(),
             label = stringResource(R.string.pdf_viewer_page_hint_format, pageCount),
             validate = { text ->
                 pageError.takeIf { text.toIntOrNull().let { it == null || it !in 1..pageCount } }
@@ -280,3 +354,43 @@ private fun PdfPageView(document: PdfDocument, index: Int, onClick: () -> Unit) 
         }
     }
 }
+
+@Composable
+private fun PdfWidePages(document: PdfDocument, listState: LazyListState, onClick: () -> Unit) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        state = listState,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(document.pageCount, key = { it }) { index ->
+            PdfWidePageView(document, index, onClick)
+        }
+    }
+}
+
+@Composable
+private fun PdfWidePageView(document: PdfDocument, index: Int, onClick: () -> Unit) {
+    val context = LocalContext.current
+    // Most pages are A4, which keeps the list from jumping while the actual size is read.
+    val aspectRatio by produceState(A4_ASPECT_RATIO, document, index) {
+        value = document.getPageAspectRatio(index)
+    }
+    val request = remember(context, document, index) {
+        ImageRequest.Builder(context).data(PdfPage(document, index)).build()
+    }
+    AsyncImage(
+        model = request,
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(aspectRatio)
+            .background(Color.White)
+            .pointerInput(onClick) { detectTapGestures { onClick() } },
+        contentScale = ContentScale.FillWidth
+    )
+}
+
+// How much of the screen a remote's up and down keys scroll pages fit to its width.
+private const val SCROLL_FRACTION = 0.8f
+
+private const val A4_ASPECT_RATIO = 210f / 297f

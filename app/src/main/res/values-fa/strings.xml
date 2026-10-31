@@ -626,6 +626,8 @@
     <string name="music_next">بعدی</string>
     <string name="pdf_viewer_title">نمایشگر PDF</string>
     <string name="pdf_viewer_go_to_page">رفتن به صفحه</string>
+    <string name="pdf_viewer_fit_width">هم‌اندازه با عرض</string>
+    <string name="pdf_viewer_fit_page">نمایش کل صفحه</string>
     <string name="pdf_viewer_page_hint_format">صفحه، از ۱ تا %1$,d</string>
     <string name="pdf_viewer_page_error">چنین صفحه‌ای وجود ندارد</string>
     <string name="pdf_viewer_password_protected">این PDF با گذرواژه محافظت شده است که پشتیبانی نمی‌شود</string>

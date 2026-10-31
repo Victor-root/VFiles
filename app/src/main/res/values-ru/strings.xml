@@ -698,6 +698,8 @@
     <string name="music_next">Следующий</string>
     <string name="pdf_viewer_title">Просмотр PDF</string>
     <string name="pdf_viewer_go_to_page">Перейти к странице</string>
+    <string name="pdf_viewer_fit_width">По ширине</string>
+    <string name="pdf_viewer_fit_page">Страница целиком</string>
     <string name="pdf_viewer_page_hint_format">Страница, от 1 до %1$,d</string>
     <string name="pdf_viewer_page_error">Такой страницы нет</string>
     <string name="pdf_viewer_password_protected">Этот PDF защищён паролем, что не поддерживается</string>

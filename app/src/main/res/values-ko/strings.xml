@@ -594,6 +594,8 @@
     <string name="music_next">다음</string>
     <string name="pdf_viewer_title">PDF 뷰어</string>
     <string name="pdf_viewer_go_to_page">페이지로 이동</string>
+    <string name="pdf_viewer_fit_width">너비에 맞추기</string>
+    <string name="pdf_viewer_fit_page">전체 페이지 보기</string>
     <string name="pdf_viewer_page_hint_format">페이지 (1~%1$,d)</string>
     <string name="pdf_viewer_page_error">해당 페이지가 없습니다</string>
     <string name="pdf_viewer_password_protected">이 PDF는 비밀번호로 보호되어 있으며, 이는 지원되지 않습니다</string>

@@ -662,6 +662,8 @@
     <string name="music_next">Successivo</string>
     <string name="pdf_viewer_title">Visualizzatore PDF</string>
     <string name="pdf_viewer_go_to_page">Vai alla pagina</string>
+    <string name="pdf_viewer_fit_width">Adatta alla larghezza</string>
+    <string name="pdf_viewer_fit_page">Mostra pagina intera</string>
     <string name="pdf_viewer_page_hint_format">Pagina, da 1 a %1$,d</string>
     <string name="pdf_viewer_page_error">Pagina inesistente</string>
     <string name="pdf_viewer_password_protected">Questo PDF è protetto da password, che non è supportata</string>

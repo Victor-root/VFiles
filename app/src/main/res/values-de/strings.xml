@@ -628,6 +628,8 @@
     <string name="music_next">Weiter</string>
     <string name="pdf_viewer_title">PDF-Betrachter</string>
     <string name="pdf_viewer_go_to_page">Gehe zu Seite</string>
+    <string name="pdf_viewer_fit_width">An Breite anpassen</string>
+    <string name="pdf_viewer_fit_page">Ganze Seite anzeigen</string>
     <string name="pdf_viewer_page_hint_format">Seite, von 1 bis %1$,d</string>
     <string name="pdf_viewer_page_error">Diese Seite gibt es nicht</string>
     <string name="pdf_viewer_password_protected">Dieses PDF ist passwortgeschützt, was nicht unterstützt wird</string>

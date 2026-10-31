@@ -694,6 +694,8 @@
     <string name="music_next">Kitas</string>
     <string name="pdf_viewer_title">PDF žiūryklė</string>
     <string name="pdf_viewer_go_to_page">Eiti į puslapį</string>
+    <string name="pdf_viewer_fit_width">Pritaikyti pagal plotį</string>
+    <string name="pdf_viewer_fit_page">Rodyti visą puslapį</string>
     <string name="pdf_viewer_page_hint_format">Puslapis, nuo 1 iki %1$,d</string>
     <string name="pdf_viewer_page_error">Tokio puslapio nėra</string>
     <string name="pdf_viewer_password_protected">Šis PDF apsaugotas slaptažodžiu, o tai nepalaikoma</string>

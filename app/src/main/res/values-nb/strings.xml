@@ -628,6 +628,8 @@
     <string name="music_next">Neste</string>
     <string name="pdf_viewer_title">PDF-visning</string>
     <string name="pdf_viewer_go_to_page">Gå til side</string>
+    <string name="pdf_viewer_fit_width">Tilpass bredden</string>
+    <string name="pdf_viewer_fit_page">Vis hele siden</string>
     <string name="pdf_viewer_page_hint_format">Side, fra 1 til %1$,d</string>
     <string name="pdf_viewer_page_error">Siden finnes ikke</string>
     <string name="pdf_viewer_password_protected">Denne PDF-en er passordbeskyttet, noe som ikke støttes</string>

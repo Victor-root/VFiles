@@ -764,6 +764,8 @@
     <string name="music_next">التالي</string>
     <string name="pdf_viewer_title">عارض PDF</string>
     <string name="pdf_viewer_go_to_page">الانتقال إلى صفحة</string>
+    <string name="pdf_viewer_fit_width">ملاءمة العرض</string>
+    <string name="pdf_viewer_fit_page">ملاءمة الصفحة كاملة</string>
     <string name="pdf_viewer_page_hint_format">الصفحة، من ١ إلى %1$,d</string>
     <string name="pdf_viewer_page_error">لا توجد صفحة بهذا الرقم</string>
     <string name="pdf_viewer_password_protected">ملف PDF هذا محمي بكلمة مرور، وهذا غير مدعوم</string>

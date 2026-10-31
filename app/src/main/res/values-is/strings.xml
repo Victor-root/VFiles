@@ -630,6 +630,8 @@
     <string name="music_next">Næsta</string>
     <string name="pdf_viewer_title">PDF-skoðari</string>
     <string name="pdf_viewer_go_to_page">Fara á síðu</string>
+    <string name="pdf_viewer_fit_width">Laga að breidd</string>
+    <string name="pdf_viewer_fit_page">Sýna alla síðuna</string>
     <string name="pdf_viewer_page_hint_format">Síða, frá 1 til %1$,d</string>
     <string name="pdf_viewer_page_error">Þessi síða er ekki til</string>
     <string name="pdf_viewer_password_protected">Þetta PDF er varið með lykilorði, sem er ekki stutt</string>

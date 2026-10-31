@@ -628,6 +628,8 @@
     <string name="music_next">Següent</string>
     <string name="pdf_viewer_title">Visor de PDF</string>
     <string name="pdf_viewer_go_to_page">Ves a la pàgina</string>
+    <string name="pdf_viewer_fit_width">Ajusta a l\'amplada</string>
+    <string name="pdf_viewer_fit_page">Ajusta a la pàgina sencera</string>
     <string name="pdf_viewer_page_hint_format">Pàgina, entre 1 i %1$,d</string>
     <string name="pdf_viewer_page_error">No existeix aquesta pàgina</string>
     <string name="pdf_viewer_password_protected">Aquest PDF està protegit amb contrasenya, cosa que no és compatible</string>

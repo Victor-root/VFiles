@@ -696,6 +696,8 @@
     <string name="music_next">הבא</string>
     <string name="pdf_viewer_title">מציג PDF</string>
     <string name="pdf_viewer_go_to_page">מעבר לעמוד</string>
+    <string name="pdf_viewer_fit_width">התאמה לרוחב</string>
+    <string name="pdf_viewer_fit_page">הצגת העמוד כולו</string>
     <string name="pdf_viewer_page_hint_format">עמוד, מ־1 עד %1$,d</string>
     <string name="pdf_viewer_page_error">אין עמוד כזה</string>
     <string name="pdf_viewer_password_protected">קובץ PDF זה מוגן בסיסמה, דבר שאינו נתמך</string>

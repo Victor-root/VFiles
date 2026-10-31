@@ -674,6 +674,8 @@
     <string name="music_next">Suivant</string>
     <string name="pdf_viewer_title">Lecteur PDF</string>
     <string name="pdf_viewer_go_to_page">Aller à la page</string>
+    <string name="pdf_viewer_fit_width">Ajuster à la largeur</string>
+    <string name="pdf_viewer_fit_page">Afficher la page entière</string>
     <string name="pdf_viewer_page_hint_format">Page, de 1 à %1$,d</string>
     <string name="pdf_viewer_page_error">Cette page n\'existe pas</string>
     <string name="pdf_viewer_password_protected">Ce PDF est protégé par un mot de passe, ce qui n\'est pas pris en charge</string>

@@ -624,6 +624,8 @@
     <string name="music_next">Következő</string>
     <string name="pdf_viewer_title">PDF-megjelenítő</string>
     <string name="pdf_viewer_go_to_page">Ugrás oldalra</string>
+    <string name="pdf_viewer_fit_width">Szélességhez igazítás</string>
+    <string name="pdf_viewer_fit_page">Teljes oldal</string>
     <string name="pdf_viewer_page_hint_format">Oldal, 1 és %1$,d között</string>
     <string name="pdf_viewer_page_error">Nincs ilyen oldal</string>
     <string name="pdf_viewer_password_protected">Ez a PDF jelszóval védett, ami nem támogatott</string>

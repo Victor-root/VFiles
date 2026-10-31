@@ -33,6 +33,19 @@ class PdfDocument private constructor(
 
     val pageCount: Int = renderer.pageCount
 
+    private val pageAspectRatios = FloatArray(pageCount)
+
+    /** Returns the width of the page at [index] divided by its height. */
+    suspend fun getPageAspectRatio(index: Int): Float =
+        mutex.withLock {
+            pageAspectRatios[index].takeIf { it != 0f }
+                ?: withContext(Dispatchers.IO) {
+                    check(!isClosed) { "$uri is closed" }
+                    renderer.openPage(index).use { it.width.toFloat() / it.height }
+                }
+                    .also { pageAspectRatios[index] = it }
+        }
+
     /** Draws the page at [index] [width] pixels wide, on white like paper. */
     suspend fun renderPage(index: Int, width: Int): Bitmap =
         mutex.withLock {

@@ -628,6 +628,8 @@
     <string name="music_next">Volgende</string>
     <string name="pdf_viewer_title">PDF-weergave</string>
     <string name="pdf_viewer_go_to_page">Ga naar pagina</string>
+    <string name="pdf_viewer_fit_width">Aanpassen aan breedte</string>
+    <string name="pdf_viewer_fit_page">Hele pagina tonen</string>
     <string name="pdf_viewer_page_hint_format">Pagina, van 1 tot %1$,d</string>
     <string name="pdf_viewer_page_error">Deze pagina bestaat niet</string>
     <string name="pdf_viewer_password_protected">Deze PDF is beveiligd met een wachtwoord, wat niet wordt ondersteund</string>

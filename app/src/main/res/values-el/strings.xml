@@ -628,6 +628,8 @@
     <string name="music_next">Επόμενο</string>
     <string name="pdf_viewer_title">Προβολέας PDF</string>
     <string name="pdf_viewer_go_to_page">Μετάβαση σε σελίδα</string>
+    <string name="pdf_viewer_fit_width">Προσαρμογή στο πλάτος</string>
+    <string name="pdf_viewer_fit_page">Προσαρμογή σε όλη τη σελίδα</string>
     <string name="pdf_viewer_page_hint_format">Σελίδα, από 1 έως %1$,d</string>
     <string name="pdf_viewer_page_error">Η σελίδα δεν υπάρχει</string>
     <string name="pdf_viewer_password_protected">Αυτό το PDF προστατεύεται από κωδικό, κάτι που δεν υποστηρίζεται</string>
