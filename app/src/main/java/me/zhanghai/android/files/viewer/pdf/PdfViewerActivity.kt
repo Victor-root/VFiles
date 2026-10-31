@@ -458,7 +458,9 @@ private fun PdfWidePages(
     }
 }
 
-/** Keeps the point at [focusY] in the viewport over the same spot of its page, zoomed by [ratio]. */
+/**
+ * Keeps the point at [focusY] in the viewport over the same spot of its page, zoomed by [ratio].
+ */
 private fun LazyListState.keepFocusWhileZooming(focusY: Float, ratio: Float) {
     val layoutInfo = layoutInfo
     val item = layoutInfo.visibleItemsInfo.lastOrNull {
