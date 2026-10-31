@@ -8,6 +8,7 @@ package me.zhanghai.android.files.filelist
 import android.Manifest
 import android.app.Activity
 import android.content.ClipData
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -86,6 +87,7 @@ import me.zhanghai.android.files.util.startActivitySafe
 import me.zhanghai.android.files.util.supportsExternalStorageManager
 import me.zhanghai.android.files.util.withChooser
 import me.zhanghai.android.files.viewer.image.ImageViewerActivity
+import me.zhanghai.android.files.viewer.saveas.SaveAsActivity
 
 /**
  * What the file list does, for the lifetime of its activity: opening, picking and acting on files,
@@ -381,18 +383,20 @@ class FileListController(
     }
 
     // If the user picked a default app for this file's category (Settings > Default apps), open it
-    // directly with that app instead of asking, or else with the viewer of this app when there's
-    // one, but only when the app can actually handle the file, otherwise fall back to the normal
-    // handling.
+    // directly with that app instead of asking, but only when the app can actually handle the
+    // file, otherwise fall back to the normal handling.
     private fun applyDefaultAppPackage(intent: Intent, mimeType: MimeType) {
         val category = FileOpenAppCategory.forMimeType(mimeType) ?: return
-        val packageName = FileOpenDefaultApps.getPackage(category)
-            ?: activity.packageName.takeIf { category.builtInViewerTitleRes != null }
-            ?: return
-        val canHandle = Intent(intent).setPackage(packageName)
-            .resolveActivity(activity.packageManager) != null
-        if (canHandle) {
-            intent.setPackage(packageName)
+        val packageName = FileOpenDefaultApps.getPackage(category) ?: return
+        val activityNames = activity.packageManager
+            .queryIntentActivities(Intent(intent).setPackage(packageName), 0)
+            .map { it.activityInfo.name }
+            // Saving as another file isn't opening it, and would make the user choose.
+            .filter { it != SaveAsActivity::class.java.name }
+        when (activityNames.size) {
+            0 -> {}
+            1 -> intent.component = ComponentName(packageName, activityNames.single())
+            else -> intent.setPackage(packageName)
         }
     }
 

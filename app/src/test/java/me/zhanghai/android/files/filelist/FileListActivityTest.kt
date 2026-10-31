@@ -49,6 +49,8 @@ import androidx.test.espresso.Espresso
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
+import me.zhanghai.android.files.settings.FileOpenAppCategory
+import me.zhanghai.android.files.settings.FileOpenDefaultApps
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.TestDocumentsProvider
@@ -56,6 +58,7 @@ import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.util.extraPath
+import me.zhanghai.android.files.viewer.image.ImageViewerActivity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -87,6 +90,7 @@ class FileListActivityTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         Settings.ONBOARDING_COMPLETED.putValue(true)
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
+        Settings.FILE_OPEN_DEFAULT_APPS.putValue(emptyList())
         Settings.FILE_LIST_VIEW_TYPE.putValue(FileViewType.LIST)
         Settings.FILE_LIST_SHOW_HIDDEN_FILES.putValue(false)
         Settings.EDGE_TO_EDGE.putValue(false)
@@ -214,11 +218,29 @@ class FileListActivityTest {
     }
 
     @Test
-    fun opensImageWithImageViewer() {
+    fun asksWhichAppOpensImage() {
         val scenario = launch()
         composeTestRule.onNodeWithText("photo.jpg").performClick()
         scenario.onActivity {
-            assertEquals(it.packageName, shadowOf(it).nextStartedActivity.`package`)
+            val intent = shadowOf(it).nextStartedActivity
+            assertEquals(null, intent.`package`)
+            assertEquals(null, intent.component)
+        }
+    }
+
+    @Test
+    fun opensImageWithImageViewerWhenItsAppIsTheDefault() {
+        val scenario = launch()
+        scenario.onActivity {
+            FileOpenDefaultApps.setPackage(FileOpenAppCategory.IMAGE, it.packageName)
+        }
+        composeTestRule.onNodeWithText("photo.jpg").performClick()
+        scenario.onActivity {
+            // Directly, without asking to choose between it and saving as another file.
+            assertEquals(
+                ImageViewerActivity::class.java.name,
+                shadowOf(it).nextStartedActivity.component?.className
+            )
         }
     }
 

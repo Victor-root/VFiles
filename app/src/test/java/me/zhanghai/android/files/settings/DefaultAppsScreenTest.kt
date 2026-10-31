@@ -88,8 +88,8 @@ class DefaultAppsScreenTest {
     @Test
     fun picksAppForCategory() {
         composeTestRule.onNodeWithText("Images").performClick()
-        // Images open with the viewer of the app by default.
-        composeTestRule.onNode(hasText("Image viewer") and isSelectable()).assertIsSelected()
+        // The user is asked by default.
+        composeTestRule.onNode(hasText("Ask every time") and isSelectable()).assertIsSelected()
         captureScreenRoboImage("build/screenshots/default_apps_picker.png")
         composeTestRule.onNode(hasText("Gallery") and isSelectable()).performClick()
         assertEquals(GALLERY_PACKAGE, FileOpenDefaultApps.getPackage(FileOpenAppCategory.IMAGE))
@@ -99,22 +99,18 @@ class DefaultAppsScreenTest {
     }
 
     @Test
-    fun builtInViewerClearsApp() {
+    fun askingEveryTimeClearsApp() {
         FileOpenDefaultApps.setPackage(FileOpenAppCategory.IMAGE, GALLERY_PACKAGE)
         composeTestRule.onNodeWithText("Gallery").assertIsDisplayed()
         composeTestRule.onNodeWithText("Images").performClick()
-        composeTestRule.onNode(hasText("Image viewer") and isSelectable()).performClick()
+        composeTestRule.onNode(hasText("Ask every time") and isSelectable()).performClick()
         assertEquals(null, FileOpenDefaultApps.getPackage(FileOpenAppCategory.IMAGE))
-        composeTestRule.onNodeWithText("Image viewer").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(5)
     }
 
     @Test
-    fun asksEveryTimeWithoutBuiltInViewer() {
-        // Text, while songs, videos and PDFs open with the viewers of the app.
-        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(1)
-        composeTestRule.onNodeWithText("Music player").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Video player").assertIsDisplayed()
-        composeTestRule.onNodeWithText("PDF viewer").assertIsDisplayed()
+    fun asksEveryTimeByDefault() {
+        composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(5)
     }
 
     companion object {

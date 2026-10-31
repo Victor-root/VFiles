@@ -52,12 +52,11 @@ private fun DefaultAppsScreen() {
         ++resumeCount
         onPauseOrDispose {}
     }
-    val noChoiceLabels =
-        FileOpenAppCategory.entries.associateWith { stringResource(it.noChoiceLabelRes) }
-    val summaries = remember(defaultApps, resumeCount, noChoiceLabels) {
+    val noChoiceLabel = stringResource(R.string.settings_default_apps_ask)
+    val summaries = remember(defaultApps, resumeCount, noChoiceLabel) {
         FileOpenAppCategory.entries.associateWith { category ->
             FileOpenDefaultApps.getPackage(category)?.let { context.getAppLabel(it) }
-                ?: noChoiceLabels.getValue(category)
+                ?: noChoiceLabel
         }
     }
     var pickingCategory by rememberSaveable { mutableStateOf<FileOpenAppCategory?>(null) }
@@ -85,9 +84,9 @@ private fun DefaultAppsScreen() {
 private fun AppPickerDialog(category: FileOpenAppCategory, onDismissRequest: () -> Unit) {
     val context = LocalContext.current
     val apps = remember(category) { context.queryApps(category) }
-    val noChoiceLabel = stringResource(category.noChoiceLabelRes)
-    // The first entry clears the choice, which asks every time or opens with the viewer of this
-    // app, the rest are the candidate apps.
+    val noChoiceLabel = stringResource(R.string.settings_default_apps_ask)
+    // The first entry clears the choice, which asks every time, the rest are the candidate apps,
+    // this one included.
     val packageNames = listOf(null) + apps.keys
     val currentPackageName = FileOpenDefaultApps.getPackage(category)?.takeIf { it in apps }
     SingleChoiceDialog(
@@ -119,15 +118,10 @@ private fun Context.queryApps(category: FileOpenAppCategory): Map<String, String
     return packageManager.queryIntentActivities(queryIntent, 0)
         .map { it.activityInfo.packageName }
         .distinct()
-        // This app is the choice by default when it has a viewer.
-        .filter { category.builtInViewerTitleRes == null || it != packageName }
         .mapNotNull { packageName -> getAppLabel(packageName)?.let { packageName to it } }
         .sortedBy { it.second.lowercase() }
         .toMap()
 }
-
-private val FileOpenAppCategory.noChoiceLabelRes: Int
-    get() = builtInViewerTitleRes ?: R.string.settings_default_apps_ask
 
 private fun Context.getAppLabel(packageName: String): String? =
     try {
