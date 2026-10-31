@@ -1,5 +1,33 @@
 # Changelog
 
+## 🚀 v2.0.0 (2026-10-31)
+
+A full rewrite of the interface in Jetpack Compose, with a gallery, a music player, a video player and a PDF viewer built in, Shizuku support, and a smoother app on phones and Android TV alike.
+
+### ➕ Added
+- **A gallery** in the sidebar: photos and videos by day, or by month with a pinch, albums of folders, selection to share or move to the trash, and a full screen viewer with zoomable photos, a video player and a carousel of the media around.
+- **A music player:** songs, albums and artists from the sidebar, playback in the background controlled from the notification, and a mini player above the library.
+- **A video player** and **a PDF viewer**: pages one at a time or fit to the width of the screen, pinch to zoom, go to page, share.
+- **Shizuku support (Sui included):** Android/data and Android/obb without root, and a one tap "Grant with Shizuku" for the access to all files, even on TVs whose settings can't give it.
+- **Android/obb without root** once installing apps is allowed.
+- **Reorderable standard folders,** with a drag or a D-pad, like bookmarks and storages.
+
+### 🔄 Changed
+- **A brand new interface** in Material 3: neutral backgrounds, a red accent by default, open folder icons in the accent color, settings choices in bottom sheets, grouped action menus, and a header that hides on scroll and comes back as soon as you scroll up.
+- **Faster:** quicker startup, smoother scrolling of large folders, and screens that open inside the app instead of separate windows.
+- **A modernized first-launch screen,** laid out as tiles on TVs. Where only adb can give the access to all files, it shows the exact command to run.
+- **Files open with the app of your choice:** without a default app, Android asks every time. VFiles is now listed among the default apps, and opens straight in its own viewer once picked.
+- **Android TV:** a refresh button in the header, the menu key of remotes opens menus, D-pad left opens the sidebar, which stays open below the screens opened from it and opens right on the current folder, choice dialogs focus the current choice, the center key opens the keyboard, and VFiles shows its own name on the home screen banner.
+- **Faster LAN scan for SMB servers.**
+- **Android 8 or newer is now required.** The Material Design 2 style and its setting are gone.
+
+### 🐛 Fixed
+- **Opening Android/data or Android/obb from the sidebar crashed** the app.
+- **"Save as" no longer shows up** when opening or sharing a file from VFiles itself.
+- **On TVs whose maker replaced the settings page,** like TCL, the access to all files page of the system settings is opened directly, and an access granted through adb is recognized.
+- **A folder with only hidden files** shows as empty, with the focus where the D-pad can reach the sidebar.
+- **Many smaller fixes and translations** completed in all 32 languages.
+
 ## 🚀 v1.8.4 (2026-10-25)
 
 Edge-to-edge display that works on every screen as soon as it is switched on, and no more root process left behind with Sui.
