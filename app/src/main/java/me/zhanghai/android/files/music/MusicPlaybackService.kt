@@ -14,6 +14,9 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import me.zhanghai.android.files.util.createIntent
 
 /**
@@ -25,6 +28,7 @@ class MusicPlaybackService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
+        _isRunning.value = true
         val player = ExoPlayer.Builder(this)
             .setAudioAttributes(
                 AudioAttributes.Builder()
@@ -74,6 +78,14 @@ class MusicPlaybackService : MediaSessionService() {
             release()
         }
         mediaSession = null
+        _isRunning.value = false
         super.onDestroy()
+    }
+
+    companion object {
+        private val _isRunning = MutableStateFlow(false)
+
+        /** Whether it's running, so that screens only connect to it then to show what's playing. */
+        val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
     }
 }

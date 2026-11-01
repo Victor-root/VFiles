@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -122,9 +123,14 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.fileSize
 import me.zhanghai.android.files.file.formatShort
+import me.zhanghai.android.files.music.MiniMusicPlayer
+import me.zhanghai.android.files.music.MusicPlaybackService
+import me.zhanghai.android.files.music.MusicPlayerDestination
+import me.zhanghai.android.files.music.rememberMusicController
 import me.zhanghai.android.files.navigation.NavigationDrawerContent
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.StorageVolumeList
@@ -884,12 +890,21 @@ private fun FileListBottomBars(
     controller: FileListController,
     viewModel: FileListViewModel
 ) {
+    // Like in the music library, the music playing can be gone back to from the files.
+    val isMusicServiceRunning by MusicPlaybackService.isRunning.collectAsStateWithLifecycle()
+    val musicController = if (pickOptions == null && isMusicServiceRunning) {
+        rememberMusicController()
+    } else {
+        null
+    }
     val bar = when {
         pickOptions?.mode == PickOptions.Mode.CREATE_FILE -> BottomBar.CREATE_FILE
         pickOptions?.mode == PickOptions.Mode.OPEN_DIRECTORY -> BottomBar.OPEN_DIRECTORY
         pickOptions == null && pasteState.files.isNotEmpty() -> BottomBar.PASTE
+        musicController != null -> BottomBar.MUSIC
         else -> null
     }
+    val navigator = LocalNavigator.current
     AnimatedContent(
         targetState = bar,
         transitionSpec = { slideInVertically { it } togetherWith slideOutVertically { it } }
@@ -899,6 +914,16 @@ private fun FileListBottomBars(
             BottomBar.OPEN_DIRECTORY -> OpenDirectoryBar(currentPath, controller)
             BottomBar.PASTE ->
                 PasteBar(pasteState, currentPath, controller, onClose = viewModel::clearPasteState)
+            BottomBar.MUSIC ->
+                musicController?.let { player ->
+                    MiniMusicPlayer(
+                        player = player,
+                        onClick = { navigator.navigate(MusicPlayerDestination) },
+                        modifier = Modifier.windowInsetsPadding(
+                            WindowInsets.navigationBars.only(WindowInsetsSides.Horizontal)
+                        )
+                    )
+                }
             null -> {}
         }
     }
@@ -907,7 +932,8 @@ private fun FileListBottomBars(
 private enum class BottomBar {
     CREATE_FILE,
     OPEN_DIRECTORY,
-    PASTE
+    PASTE,
+    MUSIC
 }
 
 private val Throwable.errorMessageRes: Int

@@ -137,3 +137,9 @@ fun Player.playItems(items: List<MusicItem>, startIndex: Int = 0, shuffle: Boole
     prepare()
     play()
 }
+
+/** Stops the music and forgets the songs, which closes the players and the notification. */
+fun Player.stopMusic() {
+    stop()
+    clearMediaItems()
+}

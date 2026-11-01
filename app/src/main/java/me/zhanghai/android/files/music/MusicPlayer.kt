@@ -73,6 +73,21 @@ fun MusicPlayerScreen(player: Player?, onClose: () -> Unit) {
                     contentDescription = stringResource(R.string.close)
                 )
             }
+        },
+        actions = {
+            if (player != null) {
+                IconButton(
+                    onClick = {
+                        player.stopMusic()
+                        onClose()
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.stop_icon_white_24dp),
+                        contentDescription = stringResource(R.string.stop)
+                    )
+                }
+            }
         }
     ) { contentPadding ->
         Box(
@@ -327,6 +342,12 @@ fun MiniMusicPlayer(player: Player, onClick: () -> Unit, modifier: Modifier = Mo
                     Icon(
                         painter = painterResource(R.drawable.skip_next_icon_white_24dp),
                         contentDescription = stringResource(R.string.music_next)
+                    )
+                }
+                IconButton(onClick = player::stopMusic) {
+                    Icon(
+                        painter = painterResource(R.drawable.stop_icon_white_24dp),
+                        contentDescription = stringResource(R.string.stop)
                     )
                 }
             }
