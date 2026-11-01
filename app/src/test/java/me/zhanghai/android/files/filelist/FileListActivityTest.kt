@@ -366,14 +366,21 @@ class FileListActivityTest {
     }
 
     @Test
-    fun opensDrawerWithSwipe() {
+    fun opensDrawer() {
         launch()
-        // There's no button for it on a touch screen.
-        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertDoesNotExist()
-        composeTestRule.onRoot().performTouchInput { swipeRight() }
+        // From the start of the breadcrumb on a touch screen, leaving the app bar to the title.
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").performClick()
         composeTestRule.waitForIdle()
         onDrawerList().assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/file_list_drawer.png")
+    }
+
+    @Test
+    fun opensDrawerWithSwipe() {
+        launch()
+        composeTestRule.onRoot().performTouchInput { swipeRight() }
+        composeTestRule.waitForIdle()
+        onDrawerList().assertIsDisplayed()
     }
 
     @Test

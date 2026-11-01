@@ -51,6 +51,8 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -554,24 +556,37 @@ private fun FileListScaffold(
                                     )
                             }
                         }
-                        Breadcrumb(
-                            data = breadcrumbData,
-                            isReadOnly = isTelevision,
-                            onNavigateTo = controller::navigateTo,
-                            onCopyPath = controller::copyPath,
-                            onOpenInNewTask = controller::openInNewTask,
-                            // Aligned with the title.
-                            contentPadding = PaddingValues(
-                                start = dimensionResource(
-                                    if (pickOptions != null || hasDrawerButton) {
-                                        R.dimen.content_start_margin_minus_12dp
+                        // Without a drawer button next to the title, it's at the start of the
+                        // breadcrumb, which leaves the whole width of the app bar to the title.
+                        val hasBreadcrumbDrawerButton = pickOptions == null && !hasDrawerButton
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            if (hasBreadcrumbDrawerButton) {
+                                DrawerButton(
+                                    onClick = onNavigationIconClick,
+                                    onLeftKey = onLeftEdgeReached,
+                                    focusRequester = navigationIconFocusRequester,
+                                    modifier = Modifier.padding(start = 4.dp),
+                                    isTinted = true
+                                )
+                            }
+                            Breadcrumb(
+                                data = breadcrumbData,
+                                isReadOnly = isTelevision,
+                                onNavigateTo = controller::navigateTo,
+                                onCopyPath = controller::copyPath,
+                                onOpenInNewTask = controller::openInNewTask,
+                                modifier = Modifier.weight(1f),
+                                // Aligned with the title, or a little away from the button.
+                                contentPadding = PaddingValues(
+                                    start = if (hasBreadcrumbDrawerButton) {
+                                        4.dp
                                     } else {
-                                        R.dimen.screen_edge_margin_minus_12dp
-                                    }
-                                ),
-                                end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
+                                        dimensionResource(R.dimen.content_start_margin_minus_12dp)
+                                    },
+                                    end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
@@ -699,24 +714,11 @@ private fun FileListMainAppBar(
                     )
                 }
             } else if (hasDrawerButton) {
-                IconButton(
+                DrawerButton(
                     onClick = onNavigationIconClick,
-                    modifier = Modifier
-                        .focusRequester(navigationIconFocusRequester)
-                        .onKeyEvent {
-                            val isLeft = it.type == KeyEventType.KeyDown &&
-                                it.key == Key.DirectionLeft
-                            if (isLeft) {
-                                onNavigationIconLeftKey()
-                            }
-                            isLeft
-                        }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.menu_icon_control_normal_24dp),
-                        contentDescription = stringResource(R.string.open_navigation_drawer)
-                    )
-                }
+                    onLeftKey = onNavigationIconLeftKey,
+                    focusRequester = navigationIconFocusRequester
+                )
             }
         }
     ) {
@@ -733,6 +735,46 @@ private fun FileListMainAppBar(
         FileListOverflowMenu(controller, showHiddenFiles)
     }
 }
+
+/**
+ * The button opening the drawer, which a D-pad left opens too. [isTinted] gives it a background,
+ * where it's away from the other buttons of the app bar.
+ */
+@Composable
+private fun DrawerButton(
+    onClick: () -> Unit,
+    onLeftKey: () -> Unit,
+    focusRequester: FocusRequester,
+    modifier: Modifier = Modifier,
+    isTinted: Boolean = false
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+            .focusRequester(focusRequester)
+            .onKeyEvent {
+                val isLeft = it.type == KeyEventType.KeyDown && it.key == Key.DirectionLeft
+                if (isLeft) {
+                    onLeftKey()
+                }
+                isLeft
+            },
+        colors = if (isTinted) {
+            IconButtonDefaults.iconButtonColors(
+                containerColor = LocalContentColor.current.copy(alpha = DRAWER_BUTTON_TINT_ALPHA)
+            )
+        } else {
+            IconButtonDefaults.iconButtonColors()
+        }
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.menu_icon_control_normal_24dp),
+            contentDescription = stringResource(R.string.open_navigation_drawer)
+        )
+    }
+}
+
+private const val DRAWER_BUTTON_TINT_ALPHA = 0.14f
 
 @Composable
 private fun fileListTitle(
