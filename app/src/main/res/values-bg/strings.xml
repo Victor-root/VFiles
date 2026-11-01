@@ -759,6 +759,7 @@
     <string name="onboarding_welcome_description">Предоставете няколко разрешения за най-добро изживяване. Незадължителните могат да се променят по-късно в Настройки.</string>
     <string name="onboarding_welcome_title">Добре дошли в %1$s</string>
     <string name="settings_default_apps_ask">Питай всеки път</string>
+    <string name="settings_default_apps_android_default_format">По подразбиране в Android (%1$s)</string>
     <string name="settings_default_apps_audio">Аудио / Музика</string>
     <string name="settings_default_apps_image">Изображения</string>
     <string name="settings_default_apps_pdf">PDF</string>

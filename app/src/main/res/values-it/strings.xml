@@ -795,6 +795,7 @@
     <string name="onboarding_welcome_description">Concedi alcune autorizzazioni per la migliore esperienza. Quelle facoltative possono essere modificate più tardi nelle impostazioni.</string>
     <string name="onboarding_welcome_title">Benvenuto in %1$s</string>
     <string name="settings_default_apps_ask">Chiedi ogni volta</string>
+    <string name="settings_default_apps_android_default_format">Predefinita di Android (%1$s)</string>
     <string name="settings_default_apps_audio">Audio / Musica</string>
     <string name="settings_default_apps_image">Immagini</string>
     <string name="settings_default_apps_pdf">PDF</string>

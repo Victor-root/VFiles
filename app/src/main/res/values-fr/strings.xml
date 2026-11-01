@@ -758,6 +758,7 @@
     <string name="settings_default_apps_title">Applications par défaut</string>
     <string name="settings_default_apps_summary">Choisir l\'app qui ouvre chaque type de fichier</string>
     <string name="settings_default_apps_ask">Demander à chaque fois</string>
+    <string name="settings_default_apps_android_default_format">Par défaut d\'Android (%1$s)</string>
     <string name="settings_default_apps_image">Images</string>
     <string name="settings_default_apps_audio">Audio / Musique</string>
     <string name="settings_default_apps_video">Vidéos</string>

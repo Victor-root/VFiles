@@ -833,6 +833,7 @@
     <string name="onboarding_welcome_description">Надайте кілька дозволів для найкращої роботи. Необов’язкові можна змінити пізніше в Налаштуваннях.</string>
     <string name="onboarding_welcome_title">Ласкаво просимо до %1$s</string>
     <string name="settings_default_apps_ask">Запитувати щоразу</string>
+    <string name="settings_default_apps_android_default_format">За замовчуванням в Android (%1$s)</string>
     <string name="settings_default_apps_audio">Аудіо / Музика</string>
     <string name="settings_default_apps_image">Зображення</string>
     <string name="settings_default_apps_pdf">PDF</string>

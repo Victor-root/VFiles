@@ -761,6 +761,7 @@
     <string name="onboarding_welcome_description">Veittu nokkrar heimildir til að fá bestu upplifunina. Hægt er að breyta valfrjálsum síðar í Stillingum.</string>
     <string name="onboarding_welcome_title">Velkomin í %1$s</string>
     <string name="settings_default_apps_ask">Spyrja í hvert sinn</string>
+    <string name="settings_default_apps_android_default_format">Sjálfgefið í Android (%1$s)</string>
     <string name="settings_default_apps_audio">Hljóð / Tónlist</string>
     <string name="settings_default_apps_image">Myndir</string>
     <string name="settings_default_apps_pdf">PDF</string>

@@ -54,6 +54,8 @@ class DefaultAppsScreenTest {
 
     private fun installImageViewer() {
         val packageManager = shadowOf(composeTestRule.activity.packageManager)
+        // Like Android, which asks which app to use when there's no default one.
+        packageManager.setShouldShowActivityChooser(true)
         packageManager.installPackage(
             PackageInfo().apply {
                 packageName = GALLERY_PACKAGE
@@ -68,6 +70,7 @@ class DefaultAppsScreenTest {
         packageManager.addIntentFilterForActivity(
             component,
             IntentFilter(Intent.ACTION_VIEW).apply {
+                addCategory(Intent.CATEGORY_DEFAULT)
                 addDataScheme("content")
                 addDataType("image/*")
             }
@@ -106,6 +109,25 @@ class DefaultAppsScreenTest {
         composeTestRule.onNode(hasText("Ask every time") and isSelectable()).performClick()
         assertEquals(null, FileOpenDefaultApps.getPackage(FileOpenAppCategory.IMAGE))
         composeTestRule.onAllNodesWithText("Ask every time").assertCountEquals(5)
+    }
+
+    @Test
+    fun showsAndroidDefaultApp() {
+        val filter = IntentFilter(Intent.ACTION_VIEW).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+            addDataScheme("content")
+            addDataType("image/*")
+        }
+        // What choosing it with "Always" in the chooser of Android does.
+        @Suppress("DEPRECATION")
+        composeTestRule.activity.packageManager.addPreferredActivity(
+            filter, IntentFilter.MATCH_CATEGORY_TYPE, null,
+            ComponentName(GALLERY_PACKAGE, "$GALLERY_PACKAGE.ViewActivity")
+        )
+        // Read again when opening the choices.
+        composeTestRule.onNodeWithText("Images").performClick()
+        composeTestRule.onNode(hasText("Android default (Gallery)") and isSelectable())
+            .assertIsSelected()
     }
 
     @Test

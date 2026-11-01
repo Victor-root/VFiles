@@ -755,6 +755,7 @@
     <string name="onboarding_welcome_description">Adjon meg néhány engedélyt a legjobb élményért. A választhatók később a Beállításokban módosíthatók.</string>
     <string name="onboarding_welcome_title">Üdvözli a %1$s</string>
     <string name="settings_default_apps_ask">Mindig kérdezzen</string>
+    <string name="settings_default_apps_android_default_format">Android alapértelmezett (%1$s)</string>
     <string name="settings_default_apps_audio">Hang / Zene</string>
     <string name="settings_default_apps_image">Képek</string>
     <string name="settings_default_apps_pdf">PDF</string>

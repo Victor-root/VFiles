@@ -724,6 +724,7 @@
     <string name="onboarding_welcome_description">授予一些權限以獲得最佳體驗。選用權限可稍後在設定中變更。</string>
     <string name="onboarding_welcome_title">歡迎使用 %1$s</string>
     <string name="settings_default_apps_ask">每次都詢問</string>
+    <string name="settings_default_apps_android_default_format">Android 預設（%1$s）</string>
     <string name="settings_default_apps_audio">音訊 / 音樂</string>
     <string name="settings_default_apps_image">圖片</string>
     <string name="settings_default_apps_pdf">PDF</string>

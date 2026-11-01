@@ -854,6 +854,7 @@
     <string name="settings_default_apps_title">Default apps</string>
     <string name="settings_default_apps_summary">Choose which app opens each type of file</string>
     <string name="settings_default_apps_ask">Ask every time</string>
+    <string name="settings_default_apps_android_default_format">Android default (%1$s)</string>
     <string name="settings_default_apps_image">Images</string>
     <string name="settings_default_apps_audio">Audio / Music</string>
     <string name="settings_default_apps_video">Videos</string>

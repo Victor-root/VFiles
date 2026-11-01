@@ -723,6 +723,7 @@
     <string name="onboarding_welcome_description">최상의 환경을 위해 몇 가지 권한을 허용하세요. 선택 권한은 나중에 설정에서 변경할 수 있습니다.</string>
     <string name="onboarding_welcome_title">%1$s에 오신 것을 환영합니다</string>
     <string name="settings_default_apps_ask">매번 묻기</string>
+    <string name="settings_default_apps_android_default_format">Android 기본값(%1$s)</string>
     <string name="settings_default_apps_audio">오디오 / 음악</string>
     <string name="settings_default_apps_image">이미지</string>
     <string name="settings_default_apps_pdf">PDF</string>

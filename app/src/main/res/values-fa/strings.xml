@@ -757,6 +757,7 @@
     <string name="onboarding_welcome_description">برای بهترین تجربه چند اجازه بدهید. موارد اختیاری را می‌توانید بعداً در تنظیمات تغییر دهید.</string>
     <string name="onboarding_welcome_title">به %1$s خوش آمدید</string>
     <string name="settings_default_apps_ask">هر بار بپرس</string>
+    <string name="settings_default_apps_android_default_format">پیش‌فرض Android (%1$s)</string>
     <string name="settings_default_apps_audio">صدا / موسیقی</string>
     <string name="settings_default_apps_image">تصاویر</string>
     <string name="settings_default_apps_pdf">PDF</string>

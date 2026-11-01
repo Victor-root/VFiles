@@ -52,11 +52,10 @@ private fun DefaultAppsScreen() {
         ++resumeCount
         onPauseOrDispose {}
     }
-    val noChoiceLabel = stringResource(R.string.settings_default_apps_ask)
-    val summaries = remember(defaultApps, resumeCount, noChoiceLabel) {
+    val summaries = remember(defaultApps, resumeCount, context) {
         FileOpenAppCategory.entries.associateWith { category ->
             FileOpenDefaultApps.getPackage(category)?.let { context.getAppLabel(it) }
-                ?: noChoiceLabel
+                ?: context.getNoChoiceLabel(category)
         }
     }
     var pickingCategory by rememberSaveable { mutableStateOf<FileOpenAppCategory?>(null) }
@@ -83,10 +82,10 @@ private fun DefaultAppsScreen() {
 @Composable
 private fun AppPickerDialog(category: FileOpenAppCategory, onDismissRequest: () -> Unit) {
     val context = LocalContext.current
-    val apps = remember(category) { context.queryApps(category) }
-    val noChoiceLabel = stringResource(R.string.settings_default_apps_ask)
-    // The first entry clears the choice, which asks every time, the rest are the candidate apps,
-    // this one included.
+    val apps = remember(category, context) { context.queryApps(category) }
+    val noChoiceLabel = remember(category, context) { context.getNoChoiceLabel(category) }
+    // The first entry clears the choice, which leaves it to Android, the rest are the candidate
+    // apps, this one included.
     val packageNames = listOf(null) + apps.keys
     val currentPackageName = FileOpenDefaultApps.getPackage(category)?.takeIf { it in apps }
     SingleChoiceDialog(
@@ -102,26 +101,52 @@ private fun AppPickerDialog(category: FileOpenAppCategory, onDismissRequest: () 
     )
 }
 
-/** Returns the labels of the apps that can open [category], by package name. */
-private fun Context.queryApps(category: FileOpenAppCategory): Map<String, String> {
-    // Query with the same shape of intent the file list actually fires: a content: URI from our
-    // own FileProvider, plus the type (Path.fileProviderUri and Uri.createViewIntent). An intent
-    // carrying a type but no URI only matches filters that declare no URI format at all, so
-    // querying by type alone silently drops every app whose filter is scheme-qualified, which is
-    // how most viewers declare theirs. Those apps open the file perfectly once picked, they just
-    // never showed up here to be picked.
+/**
+ * Returns the label of the choice leaving the files to Android: the app picked there with
+ * "Always", or else asking every time.
+ */
+private fun Context.getNoChoiceLabel(category: FileOpenAppCategory): String =
+    getAndroidDefaultPackage(category)?.let { getAppLabel(it) }
+        ?.let { getString(R.string.settings_default_apps_android_default_format, it) }
+        ?: getString(R.string.settings_default_apps_ask)
+
+/** Returns the package of the app that Android opens [category] with without asking, if any. */
+private fun Context.getAndroidDefaultPackage(category: FileOpenAppCategory): String? {
+    val queryIntent = category.createQueryIntent()
+    val defaultActivity = packageManager.resolveActivity(
+        queryIntent, PackageManager.MATCH_DEFAULT_ONLY
+    )?.activityInfo ?: return null
+    // Without one, it resolves to the chooser of the system, which isn't among the candidates.
+    val isCandidate = packageManager.queryIntentActivities(
+        queryIntent, PackageManager.MATCH_DEFAULT_ONLY
+    )
+        .any {
+            it.activityInfo.packageName == defaultActivity.packageName &&
+                it.activityInfo.name == defaultActivity.name
+        }
+    return defaultActivity.packageName.takeIf { isCandidate }
+}
+
+// The same shape of intent the file list actually fires: a content: URI from our own FileProvider,
+// plus the type (Path.fileProviderUri and Uri.createViewIntent). An intent carrying a type but no
+// URI only matches filters that declare no URI format at all, so querying by type alone silently
+// drops every app whose filter is scheme-qualified, which is how most viewers declare theirs.
+private fun FileOpenAppCategory.createQueryIntent(): Intent {
     val queryUri = Uri.Builder()
         .scheme(ContentResolver.SCHEME_CONTENT)
         .authority(BuildConfig.FILE_PROVIDIER_AUTHORITY)
         .build()
-    val queryIntent = Intent(Intent.ACTION_VIEW).setDataAndType(queryUri, category.queryMimeType)
-    return packageManager.queryIntentActivities(queryIntent, 0)
+    return Intent(Intent.ACTION_VIEW).setDataAndType(queryUri, queryMimeType)
+}
+
+/** Returns the labels of the apps that can open [category], by package name. */
+private fun Context.queryApps(category: FileOpenAppCategory): Map<String, String> =
+    packageManager.queryIntentActivities(category.createQueryIntent(), 0)
         .map { it.activityInfo.packageName }
         .distinct()
         .mapNotNull { packageName -> getAppLabel(packageName)?.let { packageName to it } }
         .sortedBy { it.second.lowercase() }
         .toMap()
-}
 
 private fun Context.getAppLabel(packageName: String): String? =
     try {

@@ -703,6 +703,7 @@
     <string name="onboarding_welcome_description">Myönnä muutama lupa parasta kokemusta varten. Valinnaisia voi muuttaa myöhemmin asetuksissa.</string>
     <string name="onboarding_welcome_title">Tervetuloa – %1$s</string>
     <string name="settings_default_apps_ask">Kysy joka kerta</string>
+    <string name="settings_default_apps_android_default_format">Androidin oletus (%1$s)</string>
     <string name="settings_default_apps_audio">Ääni / Musiikki</string>
     <string name="settings_default_apps_image">Kuvat</string>
     <string name="settings_default_apps_pdf">PDF</string>

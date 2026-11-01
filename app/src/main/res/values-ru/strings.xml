@@ -833,6 +833,7 @@
     <string name="onboarding_welcome_description">Предоставьте несколько разрешений для наилучшей работы. Необязательные можно изменить позже в настройках.</string>
     <string name="onboarding_welcome_title">Добро пожаловать в %1$s</string>
     <string name="settings_default_apps_ask">Спрашивать каждый раз</string>
+    <string name="settings_default_apps_android_default_format">По умолчанию в Android (%1$s)</string>
     <string name="settings_default_apps_audio">Аудио / Музыка</string>
     <string name="settings_default_apps_image">Изображения</string>
     <string name="settings_default_apps_pdf">PDF</string>

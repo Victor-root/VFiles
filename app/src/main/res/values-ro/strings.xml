@@ -794,6 +794,7 @@
     <string name="onboarding_welcome_description">Acordă câteva permisiuni pentru cea mai bună experiență. Cele opționale pot fi schimbate mai târziu în Setări.</string>
     <string name="onboarding_welcome_title">Bine ai venit în %1$s</string>
     <string name="settings_default_apps_ask">Întreabă de fiecare dată</string>
+    <string name="settings_default_apps_android_default_format">Implicit în Android (%1$s)</string>
     <string name="settings_default_apps_audio">Audio / Muzică</string>
     <string name="settings_default_apps_image">Imagini</string>
     <string name="settings_default_apps_pdf">PDF</string>

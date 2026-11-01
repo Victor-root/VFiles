@@ -759,6 +759,7 @@
     <string name="onboarding_welcome_description">Verleen een paar rechten voor de beste ervaring. Optionele kun je later wijzigen in Instellingen.</string>
     <string name="onboarding_welcome_title">Welkom bij %1$s</string>
     <string name="settings_default_apps_ask">Elke keer vragen</string>
+    <string name="settings_default_apps_android_default_format">Android-standaard (%1$s)</string>
     <string name="settings_default_apps_audio">Audio / Muziek</string>
     <string name="settings_default_apps_image">Afbeeldingen</string>
     <string name="settings_default_apps_pdf">PDF</string>
