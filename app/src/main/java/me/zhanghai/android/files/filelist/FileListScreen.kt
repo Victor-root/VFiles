@@ -493,6 +493,9 @@ private fun FileListScaffold(
     val isTelevision = remember(context) { context.isTelevision }
     // The list then scrolls behind the app bar, so that it only moves instead of resizing the list.
     val isListBehindAppBar = isEdgeToEdge && persistentDrawer == null && !isTelevision
+    // On touch screens, the drawer opens with a swipe, so that its button doesn't take the room of
+    // the title.
+    val hasDrawerButton = isTelevision || persistentDrawer != null
     val isAppBarPinned =
         !isListBehindAppBar || selectedFiles.isNotEmpty() || isSearchViewExpanded
     val speedDialFocusRequester = remember { FocusRequester() }
@@ -544,6 +547,7 @@ private fun FileListScaffold(
                                         pickOptions = pickOptions,
                                         showHiddenFiles = showHiddenFiles,
                                         colors = appBarColors,
+                                        hasDrawerButton = hasDrawerButton,
                                         onNavigationIconClick = onNavigationIconClick,
                                         onNavigationIconLeftKey = onLeftEdgeReached,
                                         navigationIconFocusRequester = navigationIconFocusRequester
@@ -556,8 +560,15 @@ private fun FileListScaffold(
                             onNavigateTo = controller::navigateTo,
                             onCopyPath = controller::copyPath,
                             onOpenInNewTask = controller::openInNewTask,
+                            // Aligned with the title.
                             contentPadding = PaddingValues(
-                                start = dimensionResource(R.dimen.content_start_margin_minus_12dp),
+                                start = dimensionResource(
+                                    if (pickOptions != null || hasDrawerButton) {
+                                        R.dimen.content_start_margin_minus_12dp
+                                    } else {
+                                        R.dimen.screen_edge_margin_minus_12dp
+                                    }
+                                ),
                                 end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
                             )
                         )
@@ -663,6 +674,7 @@ private fun FileListMainAppBar(
     pickOptions: PickOptions?,
     showHiddenFiles: Boolean,
     colors: FileListAppBarColors,
+    hasDrawerButton: Boolean,
     onNavigationIconClick: () -> Unit,
     onNavigationIconLeftKey: () -> Unit,
     navigationIconFocusRequester: FocusRequester
@@ -686,7 +698,7 @@ private fun FileListMainAppBar(
                         contentDescription = stringResource(android.R.string.cancel)
                     )
                 }
-            } else {
+            } else if (hasDrawerButton) {
                 IconButton(
                     onClick = onNavigationIconClick,
                     modifier = Modifier

@@ -7,8 +7,10 @@ package me.zhanghai.android.files.filelist
 
 import android.app.Activity
 import android.app.AppOpsManager
+import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Process
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -34,6 +36,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performScrollToNode
@@ -42,6 +45,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.requestFocus
 import androidx.compose.ui.test.swipeDown
+import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.test.swipeUp
 import androidx.core.content.getSystemService
 import androidx.test.core.app.ActivityScenario
@@ -90,6 +94,12 @@ class FileListActivityTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
+        // The TV qualifiers of a test only change the configuration, unlike a real TV.
+        val uiModeType = context.resources.configuration.uiMode and Configuration.UI_MODE_TYPE_MASK
+        if (uiModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+            shadowOf(context.getSystemService(UiModeManager::class.java))
+                .setCurrentModeType(Configuration.UI_MODE_TYPE_TELEVISION)
+        }
         Settings.ONBOARDING_COMPLETED.putValue(true)
         Settings.NIGHT_MODE.putValue(NightMode.OFF)
         Settings.FILE_OPEN_DEFAULT_APPS.putValue(emptyList())
@@ -356,10 +366,13 @@ class FileListActivityTest {
     }
 
     @Test
-    fun opensDrawer() {
+    fun opensDrawerWithSwipe() {
         launch()
-        composeTestRule.onNodeWithContentDescription("Open navigation drawer").performClick()
+        // There's no button for it on a touch screen.
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertDoesNotExist()
+        composeTestRule.onRoot().performTouchInput { swipeRight() }
         composeTestRule.waitForIdle()
+        onDrawerList().assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/file_list_drawer.png")
     }
 
@@ -385,6 +398,7 @@ class FileListActivityTest {
     }
 
     @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
     fun movesUpFromFirstFileToNavigationIconWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
