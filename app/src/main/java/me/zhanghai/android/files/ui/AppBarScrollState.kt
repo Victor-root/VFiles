@@ -43,6 +43,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -79,7 +80,8 @@ class AppBarScrollState(
 
     private var showJob: Job? = null
 
-    // The app bar hides along with the list, and comes back entirely as soon as it's scrolled up.
+    // The app bar hides along with the list, and comes back entirely once it's scrolled up enough,
+    // which rememberAppBarScrollState() tells.
     val nestedScrollConnection = object : NestedScrollConnection {
         override fun onPostScroll(
             consumed: Offset,
@@ -93,8 +95,6 @@ class AppBarScrollState(
                 showJob?.cancel()
                 showJob = null
                 offset = (offset + consumed.y).coerceIn(-height, 0f)
-            } else if (consumed.y > 0) {
-                show()
             }
             return Offset.Zero
         }
@@ -136,16 +136,36 @@ fun rememberAppBarScrollState(
     val state = remember { AppBarScrollState(coroutineScope, statusBarContentLayer) }
     state.isEnabled = isEnabled
     LaunchedEffect(isEnabled) { state.offset = 0f }
-    // Scrolling up with the fast scroller doesn't go through nested scrolling, and its jumps may be
-    // over before they are seen here, so any move up shows the app bar.
+    // The app bar comes back once the content is scrolled up by a distance from where it last
+    // scrolled down, so that a slight move doesn't bring it back, or at the top. It's told from
+    // the first item visible, since scrolling with the fast scroller or a D-pad may not go through
+    // nested scrolling.
+    val showDistance = with(LocalDensity.current) { SHOW_SCROLL_DISTANCE.toPx() }
+    val currentShowDistance by rememberUpdatedState(showDistance)
     LaunchedEffect(state) {
         var lastIndex = 0
         var lastOffset = 0
+        var downIndex = 0
+        var downOffset = 0
         snapshotFlow { currentFirstVisibleItem() }
             .collect { (index, offset) ->
-                val isScrolledUp = index < lastIndex || index == lastIndex && offset < lastOffset
-                if (isScrolledUp) {
-                    state.show()
+                val isScrolledDown =
+                    index > lastIndex || index == lastIndex && offset > lastOffset
+                if (isScrolledDown) {
+                    downIndex = index
+                    downOffset = offset
+                } else {
+                    // The sizes of the items above aren't known, so an item scrolled past counts
+                    // as at least as far as the distance.
+                    val isScrolledFarEnough = when {
+                        index == 0 && offset == 0 -> true
+                        index == downIndex -> downOffset - offset >= currentShowDistance
+                        index == downIndex - 1 -> downOffset >= currentShowDistance
+                        else -> index < downIndex
+                    }
+                    if (isScrolledFarEnough) {
+                        state.show()
+                    }
                 }
                 lastIndex = index
                 lastOffset = offset
@@ -203,6 +223,7 @@ fun rememberAppBarScrollState(
     return state
 }
 
+private val SHOW_SCROLL_DISTANCE = 48.dp
 private const val STATUS_BAR_SAMPLING_INTERVAL_MILLIS = 200L
 private const val DARK_LUMINANCE_MAX = 0.4f
 private const val LIGHT_LUMINANCE_MIN = 0.6f
