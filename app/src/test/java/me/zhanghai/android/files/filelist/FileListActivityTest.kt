@@ -291,6 +291,15 @@ class FileListActivityTest {
     }
 
     @Test
+    fun opensSearchOverAppBar() {
+        launch()
+        composeTestRule.onNodeWithContentDescription("Search").performClick()
+        composeTestRule.onNode(hasSetTextAction()).assertIsDisplayed()
+        // The app bar stays below it, but is left out while searching.
+        composeTestRule.onNodeWithText("2 folders, 2 files").assertDoesNotExist()
+    }
+
+    @Test
     fun showsCurrentFolderAsTitle() {
         launch()
         composeTestRule.onNodeWithText("Empty").performClick()

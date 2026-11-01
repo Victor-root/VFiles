@@ -102,6 +102,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -412,6 +413,30 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
     BackHandler(enabled = !hasPersistentDrawer && drawerState.isOpen) { closeDrawer() }
 }
 
+/** Unrolls [content] over what's below it from its end, and rolls it back the same way. */
+@Composable
+private fun EndRevealVisibility(
+    isVisible: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    AnimatedVisibility(
+        visible = isVisible,
+        modifier = modifier,
+        enter = expandHorizontally(
+            animationSpec = tween(END_REVEAL_MILLIS),
+            expandFrom = Alignment.End
+        ),
+        exit = shrinkHorizontally(
+            animationSpec = tween(END_REVEAL_MILLIS),
+            shrinkTowards = Alignment.End
+        )
+    ) { content() }
+}
+
+// Like the search of Omnify.
+private const val END_REVEAL_MILLIS = 300
+
 private val DRAWER_MAX_WIDTH = 320.dp
 private val DRAWER_SCREEN_EDGE_MARGIN = 56.dp
 
@@ -532,33 +557,54 @@ private fun FileListScaffold(
                                         selectedFiles, pickOptions, currentPath, controller,
                                         appBarColors
                                     )
-                                isSearchViewExpanded ->
-                                    FileListSearchAppBar(
-                                        queryState = searchQueryState,
-                                        colors = appBarColors,
-                                        onSearch = {
-                                            viewModel.search(searchQueryState.text.toString())
-                                        },
-                                        onCollapse = controller::collapseSearch
-                                    ) { FileListOverflowMenu(controller, showHiddenFiles) }
                                 else ->
-                                    FileListMainAppBar(
-                                        controller = controller,
-                                        viewModel = viewModel,
-                                        breadcrumbData = breadcrumbData,
-                                        fileListStateful = fileListStateful,
-                                        isSearching = isSearching,
-                                        viewType = viewType,
-                                        sortOptions = sortOptions,
-                                        isViewSortPathSpecific = isViewSortPathSpecific,
-                                        pickOptions = pickOptions,
-                                        showHiddenFiles = showHiddenFiles,
-                                        colors = appBarColors,
-                                        hasDrawerButton = hasDrawerButton,
-                                        onNavigationIconClick = onNavigationIconClick,
-                                        onNavigationIconLeftKey = onLeftEdgeReached,
-                                        navigationIconFocusRequester = navigationIconFocusRequester
-                                    )
+                                    // The search bar unrolls over the app bar from its end, which
+                                    // stays below so that the header never flashes.
+                                    Box {
+                                        FileListMainAppBar(
+                                            controller = controller,
+                                            viewModel = viewModel,
+                                            breadcrumbData = breadcrumbData,
+                                            fileListStateful = fileListStateful,
+                                            isSearching = isSearching,
+                                            viewType = viewType,
+                                            sortOptions = sortOptions,
+                                            isViewSortPathSpecific = isViewSortPathSpecific,
+                                            pickOptions = pickOptions,
+                                            showHiddenFiles = showHiddenFiles,
+                                            colors = appBarColors,
+                                            hasDrawerButton = hasDrawerButton,
+                                            onNavigationIconClick = onNavigationIconClick,
+                                            onNavigationIconLeftKey = onLeftEdgeReached,
+                                            navigationIconFocusRequester =
+                                                navigationIconFocusRequester,
+                                            modifier = if (isSearchViewExpanded) {
+                                                Modifier
+                                                    .focusProperties {
+                                                        onEnter = { cancelFocusChange() }
+                                                    }
+                                                    .focusGroup()
+                                                    .clearAndSetSemantics {}
+                                            } else {
+                                                Modifier
+                                            }
+                                        )
+                                        EndRevealVisibility(
+                                            isVisible = isSearchViewExpanded,
+                                            modifier = Modifier.align(Alignment.TopEnd)
+                                        ) {
+                                            FileListSearchAppBar(
+                                                queryState = searchQueryState,
+                                                colors = appBarColors,
+                                                onSearch = {
+                                                    viewModel.search(
+                                                        searchQueryState.text.toString()
+                                                    )
+                                                },
+                                                onCollapse = controller::collapseSearch
+                                            ) { FileListOverflowMenu(controller, showHiddenFiles) }
+                                        }
+                                    }
                             }
                         }
                         // Without a drawer button next to the title, it's at the start of the
@@ -696,7 +742,8 @@ private fun FileListMainAppBar(
     hasDrawerButton: Boolean,
     onNavigationIconClick: () -> Unit,
     onNavigationIconLeftKey: () -> Unit,
-    navigationIconFocusRequester: FocusRequester
+    navigationIconFocusRequester: FocusRequester,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val isTelevision = remember(context) { context.isTelevision }
@@ -707,7 +754,7 @@ private fun FileListMainAppBar(
         textMeasurer.measure(title, titleStyle, softWrap = false, maxLines = 1).size.width
     }
     var isViewSortMenuShown by remember { mutableStateOf(false) }
-    BoxWithConstraints {
+    BoxWithConstraints(modifier = modifier) {
         // Sorting, and then searching, go to the overflow menu when the title doesn't fit next to
         // their buttons.
         val hasNavigationIcon = pickOptions != null || hasDrawerButton
