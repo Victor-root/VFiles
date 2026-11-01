@@ -702,18 +702,25 @@ private fun FileListMainAppBar(
     }
     var isViewSortMenuShown by remember { mutableStateOf(false) }
     BoxWithConstraints {
-        // Searching and sorting go to the overflow menu when the title doesn't fit next to their
-        // buttons.
+        // Sorting, and then searching, go to the overflow menu when the title doesn't fit next to
+        // their buttons.
         val hasNavigationIcon = pickOptions != null || hasDrawerButton
-        val actionCount = if (isTelevision) 4 else 3
         val titleStart = if (hasNavigationIcon) {
             APP_BAR_TITLE_START_AFTER_NAVIGATION_ICON
         } else {
             APP_BAR_TITLE_START
         }
-        val titleMaxWidth = maxWidth - titleStart - APP_BAR_BUTTON_SIZE * actionCount -
-            APP_BAR_TITLE_HORIZONTAL_PADDING * 2
-        val areActionsFolded = with(LocalDensity.current) { titleWidth > titleMaxWidth.toPx() }
+        // The overflow menu, and the refresh button on a TV, always stay.
+        val fixedActionCount = if (isTelevision) 2 else 1
+        val density = LocalDensity.current
+        val foldableActionCount = (FOLDABLE_ACTION_COUNT downTo 0).firstOrNull { count ->
+            val titleMaxWidth = maxWidth - titleStart -
+                APP_BAR_BUTTON_SIZE * (fixedActionCount + count) -
+                APP_BAR_TITLE_HORIZONTAL_PADDING * 2
+            titleWidth <= with(density) { titleMaxWidth.toPx() }
+        } ?: 0
+        val isSearchFolded = foldableActionCount < 1
+        val isViewSortFolded = foldableActionCount < 2
         FileListTopAppBar(
             title = title,
             subtitle = fileListSubtitle(fileListStateful, isSearching),
@@ -747,7 +754,7 @@ private fun FileListMainAppBar(
                 ) { controller.refresh() }
             }
             val search = { viewModel.isSearchViewExpanded = true }
-            if (!areActionsFolded) {
+            if (!isSearchFolded) {
                 ActionButton(
                     R.drawable.search_icon_control_normal_24dp, stringResource(R.string.search),
                     onClick = search
@@ -761,14 +768,14 @@ private fun FileListMainAppBar(
                 viewModel = viewModel,
                 isMenuShown = isViewSortMenuShown,
                 onMenuShownChange = { isViewSortMenuShown = it },
-                hasButton = !areActionsFolded
+                hasButton = !isViewSortFolded
             )
             val viewSort = { isViewSortMenuShown = true }
             FileListOverflowMenu(
                 controller = controller,
                 showHiddenFiles = showHiddenFiles,
-                onSearch = search.takeIf { areActionsFolded },
-                onViewSort = viewSort.takeIf { areActionsFolded }
+                onSearch = search.takeIf { isSearchFolded },
+                onViewSort = viewSort.takeIf { isViewSortFolded }
             )
         }
     }
@@ -779,6 +786,8 @@ private fun FileListMainAppBar(
 private val APP_BAR_TITLE_START = 16.dp
 private val APP_BAR_TITLE_START_AFTER_NAVIGATION_ICON = 56.dp
 private val APP_BAR_BUTTON_SIZE = 48.dp
+// Searching, and viewing and sorting.
+private const val FOLDABLE_ACTION_COUNT = 2
 
 /** The button opening the drawer, which a D-pad left opens too. */
 @Composable

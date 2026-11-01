@@ -274,6 +274,23 @@ class FileListActivityTest {
     }
 
     @Test
+    fun foldsSortIntoOverflowMenuFirstForTitle() {
+        val name = "Pictures to documents"
+        TestDocumentsProvider.addDirectory("Empty/$name")
+        launch()
+        composeTestRule.onNodeWithText("Empty").performClick()
+        waitForText(name)
+        composeTestRule.onNodeWithText(name).performClick()
+        waitForText("No files")
+        // There's still room for one button.
+        composeTestRule.onNodeWithContentDescription("Search").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("View and sort").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("More options").performClick()
+        composeTestRule.onNodeWithText("View and sort").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Search").assertDoesNotExist()
+    }
+
+    @Test
     fun showsCurrentFolderAsTitle() {
         launch()
         composeTestRule.onNodeWithText("Empty").performClick()

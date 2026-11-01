@@ -400,8 +400,8 @@ private val SORT_BY_ITEMS = listOf(
 )
 
 /**
- * The overflow menu of the current folder, starting with searching and viewing and sorting when
- * [onSearch] and [onViewSort] are given, for when their buttons don't fit in the app bar.
+ * The overflow menu of the current folder, starting with searching or viewing and sorting when
+ * [onSearch] or [onViewSort] is given, for when their buttons don't fit in the app bar.
  */
 @Composable
 fun FileListOverflowMenu(
@@ -419,12 +419,16 @@ fun FileListOverflowMenu(
             }
         }
 
-        if (onSearch != null && onViewSort != null) {
+        if (onSearch != null) {
             Item(R.drawable.search_icon_control_normal_24dp, R.string.search, onClick = onSearch)
+        }
+        if (onViewSort != null) {
             Item(
                 R.drawable.sort_icon_control_normal_24dp, R.string.file_list_action_view_sort,
                 onClick = onViewSort
             )
+        }
+        if (onSearch != null || onViewSort != null) {
             MenuDivider()
         }
 
