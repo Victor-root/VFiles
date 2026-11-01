@@ -294,22 +294,32 @@ private fun SelectionActions(
     }
 }
 
-/** The menu choosing how the files are shown and sorted. */
+/**
+ * The menu choosing how the files are shown and sorted, with its button unless [hasButton] is
+ * false, like when it's opened from the overflow menu instead.
+ */
 @Composable
 fun ViewSortMenuButton(
     viewType: FileViewType,
     sortOptions: FileSortOptions,
     isViewSortPathSpecific: Boolean,
-    viewModel: FileListViewModel
+    viewModel: FileListViewModel,
+    isMenuShown: Boolean,
+    onMenuShownChange: (Boolean) -> Unit,
+    hasButton: Boolean
 ) {
-    var isMenuShown by remember { mutableStateOf(false) }
     Box {
-        ActionButton(
-            R.drawable.sort_icon_control_normal_24dp,
-            stringResource(R.string.file_list_action_view_sort)
-        ) { isMenuShown = true }
-        RoundedDropdownMenu(expanded = isMenuShown, onDismissRequest = { isMenuShown = false }) {
-            val dismiss = { isMenuShown = false }
+        if (hasButton) {
+            ActionButton(
+                R.drawable.sort_icon_control_normal_24dp,
+                stringResource(R.string.file_list_action_view_sort)
+            ) { onMenuShownChange(true) }
+        }
+        RoundedDropdownMenu(
+            expanded = isMenuShown,
+            onDismissRequest = { onMenuShownChange(false) }
+        ) {
+            val dismiss = { onMenuShownChange(false) }
             @Composable
             fun Item(
                 iconRes: Int,
@@ -389,9 +399,17 @@ private val SORT_BY_ITEMS = listOf(
     )
 )
 
-/** The overflow menu of the current folder. */
+/**
+ * The overflow menu of the current folder, starting with searching and viewing and sorting when
+ * [onSearch] and [onViewSort] are given, for when their buttons don't fit in the app bar.
+ */
 @Composable
-fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolean) {
+fun FileListOverflowMenu(
+    controller: FileListController,
+    showHiddenFiles: Boolean,
+    onSearch: (() -> Unit)? = null,
+    onViewSort: (() -> Unit)? = null
+) {
     OverflowMenu(controller.overflowMenuRequests) { dismiss ->
         @Composable
         fun Item(iconRes: Int, titleRes: Int, enabled: Boolean = true, onClick: () -> Unit) {
@@ -399,6 +417,15 @@ fun FileListOverflowMenu(controller: FileListController, showHiddenFiles: Boolea
                 dismiss()
                 onClick()
             }
+        }
+
+        if (onSearch != null && onViewSort != null) {
+            Item(R.drawable.search_icon_control_normal_24dp, R.string.search, onClick = onSearch)
+            Item(
+                R.drawable.sort_icon_control_normal_24dp, R.string.file_list_action_view_sort,
+                onClick = onViewSort
+            )
+            MenuDivider()
         }
 
         Item(R.drawable.arrow_up_icon_control_normal_24dp, R.string.file_list_action_navigate_up) {

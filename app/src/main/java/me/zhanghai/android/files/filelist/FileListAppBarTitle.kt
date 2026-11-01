@@ -93,7 +93,7 @@ fun FileListAppBarTitle(
         Column(
             modifier = Modifier
                 // Keeps the text in place, with the background around it.
-                .offset(x = -TITLE_HORIZONTAL_PADDING)
+                .offset(x = -APP_BAR_TITLE_HORIZONTAL_PADDING)
                 .clip(TITLE_SHAPE)
                 .background(contentColor.copy(alpha = backgroundAlpha))
                 .clickable(
@@ -102,7 +102,7 @@ fun FileListAppBarTitle(
                     enabled = isRunning,
                     onClickLabel = stringResource(R.string.file_job_progress_title)
                 ) { isPopoverShown = !isPopoverShown }
-                .padding(horizontal = TITLE_HORIZONTAL_PADDING, vertical = 2.dp)
+                .padding(horizontal = APP_BAR_TITLE_HORIZONTAL_PADDING, vertical = 2.dp)
         ) {
             Text(
                 text = title,
@@ -206,7 +206,7 @@ private object BelowPositionProvider : PopupPositionProvider {
     }
 }
 
-private val TITLE_HORIZONTAL_PADDING = 8.dp
+internal val APP_BAR_TITLE_HORIZONTAL_PADDING = 8.dp
 private val TITLE_SHAPE = RoundedCornerShape(12.dp)
 private const val BACKGROUND_ALPHA = 0.14f
 private const val FOCUSED_BACKGROUND_ALPHA = 0.3f

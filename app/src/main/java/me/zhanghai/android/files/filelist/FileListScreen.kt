@@ -101,6 +101,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -693,45 +694,91 @@ private fun FileListMainAppBar(
 ) {
     val context = LocalContext.current
     val isTelevision = remember(context) { context.isTelevision }
-    FileListTopAppBar(
-        title = fileListTitle(pickOptions, controller, breadcrumbData),
-        subtitle = fileListSubtitle(fileListStateful, isSearching),
-        isTitleScrolling = pickOptions != null,
-        colors = colors,
-        navigationIcon = {
-            // When picking for another app, closing cancels the pick.
-            if (pickOptions != null) {
-                IconButton(
-                    onClick = controller::cancelPicking,
-                    modifier = Modifier.focusRequester(navigationIconFocusRequester)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.close_icon_white_24dp),
-                        contentDescription = stringResource(android.R.string.cancel)
+    val title = fileListTitle(pickOptions, controller, breadcrumbData)
+    val titleStyle = MaterialTheme.typography.titleLarge
+    val textMeasurer = rememberTextMeasurer()
+    val titleWidth = remember(title, titleStyle, textMeasurer) {
+        textMeasurer.measure(title, titleStyle, softWrap = false, maxLines = 1).size.width
+    }
+    var isViewSortMenuShown by remember { mutableStateOf(false) }
+    BoxWithConstraints {
+        // Searching and sorting go to the overflow menu when the title doesn't fit next to their
+        // buttons.
+        val hasNavigationIcon = pickOptions != null || hasDrawerButton
+        val actionCount = if (isTelevision) 4 else 3
+        val titleStart = if (hasNavigationIcon) {
+            APP_BAR_TITLE_START_AFTER_NAVIGATION_ICON
+        } else {
+            APP_BAR_TITLE_START
+        }
+        val titleMaxWidth = maxWidth - titleStart - APP_BAR_BUTTON_SIZE * actionCount -
+            APP_BAR_TITLE_HORIZONTAL_PADDING * 2
+        val areActionsFolded = with(LocalDensity.current) { titleWidth > titleMaxWidth.toPx() }
+        FileListTopAppBar(
+            title = title,
+            subtitle = fileListSubtitle(fileListStateful, isSearching),
+            isTitleScrolling = pickOptions != null,
+            colors = colors,
+            navigationIcon = {
+                // When picking for another app, closing cancels the pick.
+                if (pickOptions != null) {
+                    IconButton(
+                        onClick = controller::cancelPicking,
+                        modifier = Modifier.focusRequester(navigationIconFocusRequester)
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.close_icon_white_24dp),
+                            contentDescription = stringResource(android.R.string.cancel)
+                        )
+                    }
+                } else if (hasDrawerButton) {
+                    DrawerButton(
+                        onClick = onNavigationIconClick,
+                        onLeftKey = onNavigationIconLeftKey,
+                        focusRequester = navigationIconFocusRequester
                     )
                 }
-            } else if (hasDrawerButton) {
-                DrawerButton(
-                    onClick = onNavigationIconClick,
-                    onLeftKey = onNavigationIconLeftKey,
-                    focusRequester = navigationIconFocusRequester
+            }
+        ) {
+            // In place of pulling the list, which needs touch.
+            if (isTelevision) {
+                ActionButton(
+                    R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.refresh)
+                ) { controller.refresh() }
+            }
+            val search = { viewModel.isSearchViewExpanded = true }
+            if (!areActionsFolded) {
+                ActionButton(
+                    R.drawable.search_icon_control_normal_24dp, stringResource(R.string.search),
+                    onClick = search
                 )
             }
+            // Without its button, it opens next to the overflow menu.
+            ViewSortMenuButton(
+                viewType = viewType,
+                sortOptions = sortOptions,
+                isViewSortPathSpecific = isViewSortPathSpecific,
+                viewModel = viewModel,
+                isMenuShown = isViewSortMenuShown,
+                onMenuShownChange = { isViewSortMenuShown = it },
+                hasButton = !areActionsFolded
+            )
+            val viewSort = { isViewSortMenuShown = true }
+            FileListOverflowMenu(
+                controller = controller,
+                showHiddenFiles = showHiddenFiles,
+                onSearch = search.takeIf { areActionsFolded },
+                onViewSort = viewSort.takeIf { areActionsFolded }
+            )
         }
-    ) {
-        // In place of pulling the list, which needs touch.
-        if (isTelevision) {
-            ActionButton(
-                R.drawable.refresh_icon_control_normal_24dp, stringResource(R.string.refresh)
-            ) { controller.refresh() }
-        }
-        ActionButton(R.drawable.search_icon_control_normal_24dp, stringResource(R.string.search)) {
-            viewModel.isSearchViewExpanded = true
-        }
-        ViewSortMenuButton(viewType, sortOptions, isViewSortPathSpecific, viewModel)
-        FileListOverflowMenu(controller, showHiddenFiles)
     }
 }
+
+// The layout of TopAppBar: the title starts 16dp in, or 56dp in after a navigation icon, and ends
+// where the 48dp buttons of the actions start.
+private val APP_BAR_TITLE_START = 16.dp
+private val APP_BAR_TITLE_START_AFTER_NAVIGATION_ICON = 56.dp
+private val APP_BAR_BUTTON_SIZE = 48.dp
 
 /** The button opening the drawer, which a D-pad left opens too. */
 @Composable
