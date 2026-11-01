@@ -51,8 +51,6 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -565,8 +563,7 @@ private fun FileListScaffold(
                                     onClick = onNavigationIconClick,
                                     onLeftKey = onLeftEdgeReached,
                                     focusRequester = navigationIconFocusRequester,
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    isTinted = true
+                                    modifier = Modifier.padding(start = 4.dp)
                                 )
                             }
                             Breadcrumb(
@@ -736,17 +733,13 @@ private fun FileListMainAppBar(
     }
 }
 
-/**
- * The button opening the drawer, which a D-pad left opens too. [isTinted] gives it a background,
- * where it's away from the other buttons of the app bar.
- */
+/** The button opening the drawer, which a D-pad left opens too. */
 @Composable
 private fun DrawerButton(
     onClick: () -> Unit,
     onLeftKey: () -> Unit,
     focusRequester: FocusRequester,
-    modifier: Modifier = Modifier,
-    isTinted: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = onClick,
@@ -758,14 +751,7 @@ private fun DrawerButton(
                     onLeftKey()
                 }
                 isLeft
-            },
-        colors = if (isTinted) {
-            IconButtonDefaults.iconButtonColors(
-                containerColor = LocalContentColor.current.copy(alpha = DRAWER_BUTTON_TINT_ALPHA)
-            )
-        } else {
-            IconButtonDefaults.iconButtonColors()
-        }
+            }
     ) {
         Icon(
             painter = painterResource(R.drawable.menu_icon_control_normal_24dp),
@@ -773,8 +759,6 @@ private fun DrawerButton(
         )
     }
 }
-
-private const val DRAWER_BUTTON_TINT_ALPHA = 0.14f
 
 @Composable
 private fun fileListTitle(
