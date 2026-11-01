@@ -258,7 +258,6 @@
     <string name="file_create_file_title">Νέο αρχείο</string>
     <string name="file_create_directory_title">Νέος φάκελος</string>
 
-    <string name="file_list_title">Αρχεία</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Επιλέξτε ένα αρχείο</item>
         <item quantity="other">Επιλέξτε αρχεία</item>
@@ -275,6 +274,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d αρχείο</item>
         <item quantity="other">%1$,d αρχεία</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d λειτουργία</item>
+        <item quantity="other">%1$,d λειτουργίες</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Η διαδρομή δεν μπορεί να είναι κενή</string>

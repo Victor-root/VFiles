@@ -234,7 +234,6 @@
     <string name="file_create_file_title">新しいファイル</string>
     <string name="file_create_directory_title">新しいフォルダ</string>
 
-    <string name="file_list_title">ファイル</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">ファイルを選択</item>
     </plurals>
@@ -247,6 +246,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">ファイル %1$,d 件</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">%1$,d 件の操作</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">パスは空白にできません</string>

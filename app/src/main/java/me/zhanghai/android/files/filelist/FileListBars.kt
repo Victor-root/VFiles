@@ -5,10 +5,7 @@
 
 package me.zhanghai.android.files.filelist
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -100,29 +97,7 @@ fun FileListTopAppBar(
     actions: @Composable RowScope.() -> Unit
 ) {
     TopAppBar(
-        title = {
-            Column {
-                Text(
-                    text = title,
-                    // A long title, like when picking files for another app, scrolls to be read.
-                    modifier = if (isTitleScrolling) {
-                        Modifier.basicMarquee(iterations = Int.MAX_VALUE)
-                    } else {
-                        Modifier
-                    },
-                    maxLines = 1,
-                    overflow = if (isTitleScrolling) TextOverflow.Clip else TextOverflow.Ellipsis
-                )
-                Crossfade(targetState = subtitle) {
-                    Text(
-                        text = it,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-        },
+        title = { FileListAppBarTitle(title, subtitle, isTitleScrolling, colors.content) },
         navigationIcon = navigationIcon,
         actions = actions,
         colors = topAppBarColors(colors),

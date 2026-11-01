@@ -255,7 +255,6 @@
     <string name="file_create_file_title">Yeni dosya</string>
     <string name="file_create_directory_title">Yeni klasör</string>
 
-    <string name="file_list_title">Dosyalar</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Bir dosya seçin</item>
         <item quantity="other">Dosyaları seçin</item>
@@ -272,6 +271,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d dosya</item>
         <item quantity="other">%1$,d dosya</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d işlem</item>
+        <item quantity="other">%1$,d işlem</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Yol boş olamaz</string>

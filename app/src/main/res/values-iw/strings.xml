@@ -306,7 +306,6 @@
     <string name="file_create_file_title">קובץ חדש</string>
     <string name="file_create_directory_title">תיקיה חדשה</string>
 
-    <string name="file_list_title">קבצים</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">בחירת קובץ</item>
         <item quantity="two">בחירת קבצים</item>
@@ -331,6 +330,12 @@
         <item quantity="two">%1$,d קבצים</item>
         <item quantity="many">%1$,d קבצים</item>
         <item quantity="other">%1$,d קבצים</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">פעולה %1$,d</item>
+        <item quantity="two">%1$,d פעולות</item>
+        <item quantity="many">%1$,d פעולות</item>
+        <item quantity="other">%1$,d פעולות</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">נתיב אינו יכול להיות ריק</string>

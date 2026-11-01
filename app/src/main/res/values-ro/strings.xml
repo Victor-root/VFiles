@@ -282,7 +282,6 @@
     <string name="file_create_file_title">Fișier nou</string>
     <string name="file_create_directory_title">Dosar nou</string>
 
-    <string name="file_list_title">Fișiere</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Selectează un fișier</item>
         <item quantity="few">Selectează fișiere</item>
@@ -303,6 +302,11 @@
         <item quantity="one">%1$,d fișier</item>
         <item quantity="few">%1$,d fișiere</item>
         <item quantity="other">%1$,d de fișiere</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operație</item>
+        <item quantity="few">%1$,d operații</item>
+        <item quantity="other">%1$,d de operații</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Calea nu poate fi liberă</string>

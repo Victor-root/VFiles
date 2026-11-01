@@ -308,7 +308,6 @@
     <string name="file_create_file_title">Новый файл</string>
     <string name="file_create_directory_title">Новая папка</string>
 
-    <string name="file_list_title">Файлы</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Выбрать файл</item>
         <item quantity="few">Выбрать файлы</item>
@@ -333,6 +332,12 @@
         <item quantity="few">%1$,d файла</item>
         <item quantity="many">%1$,d файлов</item>
         <item quantity="other">%1$,d файлов</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d операция</item>
+        <item quantity="few">%1$,d операции</item>
+        <item quantity="many">%1$,d операций</item>
+        <item quantity="other">%1$,d операции</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Путь не может быть пустым</string>

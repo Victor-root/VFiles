@@ -257,7 +257,6 @@
     <string name="file_create_file_title">پروندهٔ جدید</string>
     <string name="file_create_directory_title">شاخهٔ جدید</string>
 
-    <string name="file_list_title">پرونده‌ها</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">گزینش یک پرونده</item>
         <item quantity="other">گزینش پرونده‌ها</item>
@@ -274,6 +273,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d پرونده</item>
         <item quantity="other">%1$,d پرونده</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d عملیات</item>
+        <item quantity="other">%1$,d عملیات</item>
     </plurals>
     <string name="file_list_subtitle_separator">،\u0020</string>
     <string name="file_list_path_error_empty">مسیر نمی‌تواند خالی باشد</string>

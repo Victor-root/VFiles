@@ -283,7 +283,6 @@
     <string name="file_create_file_title">Novo arquivo</string>
     <string name="file_create_directory_title">Nova pasta</string>
 
-    <string name="file_list_title">Arquivos</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Selecionar um arquivo</item>
         <item quantity="many">Selecionar arquivos</item>
@@ -304,6 +303,11 @@
         <item quantity="one">%1$,d arquivo</item>
         <item quantity="many">%1$,d arquivos</item>
         <item quantity="other">%1$,d arquivos</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operação</item>
+        <item quantity="many">%1$,d operações</item>
+        <item quantity="other">%1$,d operações</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Caminho não pode estar vazio</string>

@@ -354,7 +354,6 @@
     <string name="file_create_file_title">ملف جديد</string>
     <string name="file_create_directory_title">مجلد جديد</string>
 
-    <string name="file_list_title">ملفات</string>
     <plurals name="file_list_title_open_file">
         <item quantity="zero">اختيار ملف</item>
         <item quantity="one">اختيار ملف</item>
@@ -387,6 +386,14 @@
         <item quantity="few">%1$,d ملفات</item>
         <item quantity="many">%1$,d ملف</item>
         <item quantity="other">%1$,d ملف</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="zero">%1$,d عملية</item>
+        <item quantity="one">عملية واحدة</item>
+        <item quantity="two">عمليتان</item>
+        <item quantity="few">%1$,d عمليات</item>
+        <item quantity="many">%1$,d عملية</item>
+        <item quantity="other">%1$,d عملية</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">لا يمكن أن يكون المسار فارغًا</string>

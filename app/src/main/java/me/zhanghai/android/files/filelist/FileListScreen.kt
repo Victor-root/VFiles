@@ -535,6 +535,7 @@ private fun FileListScaffold(
                                     FileListMainAppBar(
                                         controller = controller,
                                         viewModel = viewModel,
+                                        breadcrumbData = breadcrumbData,
                                         fileListStateful = fileListStateful,
                                         isSearching = isSearching,
                                         viewType = viewType,
@@ -644,12 +645,6 @@ private fun FileListScaffold(
                     isExpanded = isSpeedDialExpanded,
                     onCollapse = { onSpeedDialExpandedChange(false) }
                 )
-                FileJobProgressButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(start = 16.dp, bottom = contentPadding.calculateBottomPadding())
-                        .padding(bottom = 16.dp)
-                )
             }
         }
     }
@@ -659,6 +654,7 @@ private fun FileListScaffold(
 private fun FileListMainAppBar(
     controller: FileListController,
     viewModel: FileListViewModel,
+    breadcrumbData: BreadcrumbData,
     fileListStateful: Stateful<List<FileItem>>,
     isSearching: Boolean,
     viewType: FileViewType,
@@ -674,7 +670,7 @@ private fun FileListMainAppBar(
     val context = LocalContext.current
     val isTelevision = remember(context) { context.isTelevision }
     FileListTopAppBar(
-        title = fileListTitle(pickOptions, controller),
+        title = fileListTitle(pickOptions, controller, breadcrumbData),
         subtitle = fileListSubtitle(fileListStateful, isSearching),
         isTitleScrolling = pickOptions != null,
         colors = colors,
@@ -727,9 +723,17 @@ private fun FileListMainAppBar(
 }
 
 @Composable
-private fun fileListTitle(pickOptions: PickOptions?, controller: FileListController): String {
+private fun fileListTitle(
+    pickOptions: PickOptions?,
+    controller: FileListController,
+    breadcrumbData: BreadcrumbData
+): String {
+    // The name of the current folder, like in the breadcrumb.
     if (pickOptions == null) {
-        return stringResource(R.string.file_list_title)
+        val context = LocalContext.current
+        return remember(breadcrumbData, context) {
+            breadcrumbData.nameProducers[breadcrumbData.selectedIndex](context)
+        }
     }
     val count = if (pickOptions.allowMultiple) Int.MAX_VALUE else 1
     val title = when (pickOptions.mode) {

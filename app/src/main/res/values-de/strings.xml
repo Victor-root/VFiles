@@ -258,7 +258,6 @@
     <string name="file_create_file_title">Neue Datei</string>
     <string name="file_create_directory_title">Neuer Ordner</string>
 
-    <string name="file_list_title">Dateien</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Wähle eine Datei aus</item>
         <item quantity="other">Wähle Dateien aus</item>
@@ -275,6 +274,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d Datei</item>
         <item quantity="other">%1$,d Dateien</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d Vorgang</item>
+        <item quantity="other">%1$,d Vorgänge</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Pfad darf nicht leer sein</string>

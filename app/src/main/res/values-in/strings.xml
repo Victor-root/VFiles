@@ -234,7 +234,6 @@
     <string name="file_create_file_title">Berkas baru</string>
     <string name="file_create_directory_title">Folder baru</string>
 
-    <string name="file_list_title">File</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">Pilih berkas</item>
     </plurals>
@@ -247,6 +246,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">%1$,d berkas</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">%1$,d operasi</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Jalur tidak boleh kosong</string>

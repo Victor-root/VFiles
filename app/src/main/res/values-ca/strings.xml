@@ -258,7 +258,6 @@
     <string name="file_create_file_title">Fitxer nou</string>
     <string name="file_create_directory_title">Carpeta nova</string>
 
-    <string name="file_list_title">Fitxers</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Seleccioneu un fitxer</item>
         <item quantity="other">Seleccioneu fitxers</item>
@@ -275,6 +274,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d fitxer</item>
         <item quantity="other">%1$,d fitxers</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operació</item>
+        <item quantity="other">%1$,d operacions</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">El camí no pot estar buit</string>

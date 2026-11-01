@@ -306,7 +306,6 @@
     <string name="file_create_file_title">Nový soubor</string>
     <string name="file_create_directory_title">Nová složka</string>
 
-    <string name="file_list_title">Soubory</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Vyberte soubor</item>
         <item quantity="few">Vyberte soubory</item>
@@ -331,6 +330,12 @@
         <item quantity="few">%1$,d soubory</item>
         <item quantity="many">%1$,d souborů</item>
         <item quantity="other">%1$,d souborů</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operace</item>
+        <item quantity="few">%1$,d operace</item>
+        <item quantity="many">%1$,d operace</item>
+        <item quantity="other">%1$,d operací</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Cesta nemůže být prázná</string>

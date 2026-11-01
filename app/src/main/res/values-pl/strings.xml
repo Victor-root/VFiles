@@ -306,7 +306,6 @@
     <string name="file_create_file_title">Nowy plik</string>
     <string name="file_create_directory_title">Nowy katalog</string>
 
-    <string name="file_list_title">Pliki</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Wybierz plik</item>
         <item quantity="few">Wybierz pliki</item>
@@ -331,6 +330,12 @@
         <item quantity="few">%1$,d pliki</item>
         <item quantity="many">%1$,d plików</item>
         <item quantity="other">%1$,d plików</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operacja</item>
+        <item quantity="few">%1$,d operacje</item>
+        <item quantity="many">%1$,d operacji</item>
+        <item quantity="other">%1$,d operacji</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Ścieżka nie może być pusta</string>

@@ -16,6 +16,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
@@ -49,6 +50,7 @@ import androidx.test.espresso.Espresso
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
+import me.zhanghai.android.files.filejob.FileJobProgresses
 import me.zhanghai.android.files.settings.FileOpenAppCategory
 import me.zhanghai.android.files.settings.FileOpenDefaultApps
 import me.zhanghai.android.files.settings.Settings
@@ -242,6 +244,32 @@ class FileListActivityTest {
                 shadowOf(it).nextStartedActivity.component?.className
             )
         }
+    }
+
+    @Test
+    fun showsCurrentFolderAsTitle() {
+        launch()
+        composeTestRule.onNodeWithText("Empty").performClick()
+        waitForText("No files")
+        // In the app bar, above its subtitle, as well as in the breadcrumb.
+        composeTestRule.onAllNodesWithText("Empty").assertCountEquals(2)
+    }
+
+    @Test
+    fun showsFileJobsInAppBar() {
+        launch()
+        FileJobProgresses.update(1, "Copying photo.jpg", "1 MB of 2 MB", 100, 40, false)
+        try {
+            composeTestRule.onNodeWithText("1 operation, 40%").assertIsDisplayed()
+            captureScreenRoboImage("build/screenshots/file_list_file_jobs.png")
+            composeTestRule.onNodeWithText("1 operation, 40%").performClick()
+            composeTestRule.onNodeWithText("Operations in progress").assertIsDisplayed()
+            composeTestRule.onNodeWithText("Copying photo.jpg").assertIsDisplayed()
+            captureScreenRoboImage("build/screenshots/file_list_file_jobs_popover.png")
+        } finally {
+            FileJobProgresses.remove(1)
+        }
+        composeTestRule.onNodeWithText("2 folders, 2 files").assertIsDisplayed()
     }
 
     @Test

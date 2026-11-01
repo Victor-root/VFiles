@@ -232,7 +232,6 @@
     <string name="file_create_file_title">新建文件</string>
     <string name="file_create_directory_title">新建文件夹</string>
 
-    <string name="file_list_title">文件</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">选择文件</item>
     </plurals>
@@ -245,6 +244,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">%1$,d 个文件</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">%1$,d 个操作</item>
     </plurals>
     <string name="file_list_subtitle_separator">，</string>
     <string name="file_list_path_error_empty">路径不能为空</string>
