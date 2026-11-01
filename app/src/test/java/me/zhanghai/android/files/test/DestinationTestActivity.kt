@@ -9,15 +9,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.content.IntentCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.filelist.FilePicker
+import me.zhanghai.android.files.filelist.LocalFilePicker
 import org.robolectric.Shadows.shadowOf
 
 /** Shows the destination it's launched with as its own screen, like the activities showing one. */
 class DestinationTestActivity : AppActivity() {
+    @Composable
+    override fun ProvideScreenLocals(content: @Composable () -> Unit) {
+        CompositionLocalProvider(LocalFilePicker provides filePicker, content = content)
+    }
+
     @Composable
     override fun Content() {
         IntentCompat.getParcelableExtra(intent, EXTRA_DESTINATION, Destination::class.java)!!
@@ -26,6 +34,9 @@ class DestinationTestActivity : AppActivity() {
 
     companion object {
         private const val EXTRA_DESTINATION = "destination"
+
+        /** Picks files like for another app, when set before launching. */
+        var filePicker: FilePicker? = null
 
         /**
          * Launches an activity showing [destination], for tests setting up the device first, or

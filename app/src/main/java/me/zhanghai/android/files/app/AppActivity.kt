@@ -37,7 +37,7 @@ abstract class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent { AppTheme { ScreenStack { Content() } } }
+        setContent { AppTheme { ProvideScreenLocals { ScreenStack { Content() } } } }
     }
 
     override fun onResume() {
@@ -47,6 +47,12 @@ abstract class AppActivity : ComponentActivity() {
         if (appliedLocales != null && Settings.LOCALES.value != appliedLocales) {
             recreate()
         }
+    }
+
+    /** Provides what every screen of the activity reads, like the ones opened above [Content]. */
+    @Composable
+    protected open fun ProvideScreenLocals(content: @Composable () -> Unit) {
+        content()
     }
 
     @Composable

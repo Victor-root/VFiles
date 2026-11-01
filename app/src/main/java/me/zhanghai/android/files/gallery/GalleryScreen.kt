@@ -53,6 +53,7 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.filelist.LocalFilePicker
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AlbumCard
@@ -91,6 +92,15 @@ private val SelectedIdsSaver = listSaver<Set<Long>, Long>(
 private fun GalleryScreen(state: GalleryState?) {
     val context = LocalContext.current
     val navigator = LocalNavigator.current
+    // When picking for another app, only the media it accepts are shown, and clicking one picks it.
+    val filePicker = LocalFilePicker.current
+    val state = remember(state, filePicker) {
+        if (state != null && filePicker != null) {
+            GalleryState(state.media.filter { filePicker.accepts(it.mimeType) })
+        } else {
+            state
+        }
+    }
     var tab by rememberSaveable { mutableStateOf(GalleryTab.PHOTOS) }
     var albumId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selectedIds by rememberSaveable(stateSaver = SelectedIdsSaver) {
@@ -172,6 +182,7 @@ private fun GalleryScreen(state: GalleryState?) {
                     GallerySelectionAppBar(
                         count = selectedMedia.size,
                         onClose = clearSelection,
+                        onPick = filePicker?.let { { it.pick(selectedMedia.map { it.path }) } },
                         onShare = { context.shareGalleryMedia(selectedMedia) },
                         onDelete = { deleteMedia(selectedMedia) },
                         onSelectAll = { selectedIds = media.mapTo(mutableSetOf()) { it.id } }
@@ -244,16 +255,28 @@ private fun GalleryScreen(state: GalleryState?) {
                                 media = media,
                                 selectedIds = selectedIds,
                                 onMediaClick = {
-                                    if (selectedIds.isNotEmpty()) {
-                                        toggleSelection(listOf(it))
-                                    } else {
-                                        navigator.navigate(
-                                            GalleryViewerDestination(album?.id, it.id)
-                                        )
+                                    when {
+                                        selectedIds.isNotEmpty() -> toggleSelection(listOf(it))
+                                        filePicker != null -> filePicker.pick(listOf(it.path))
+                                        else ->
+                                            navigator.navigate(
+                                                GalleryViewerDestination(album?.id, it.id)
+                                            )
                                     }
                                 },
-                                onMediaLongClick = { toggleSelection(listOf(it)) },
-                                onSectionClick = toggleSelection,
+                                // Only one can be picked otherwise.
+                                onMediaLongClick = {
+                                    if (filePicker == null || filePicker.allowsMultiple) {
+                                        toggleSelection(listOf(it))
+                                    } else {
+                                        filePicker.pick(listOf(it.path))
+                                    }
+                                },
+                                onSectionClick = {
+                                    if (filePicker == null || filePicker.allowsMultiple) {
+                                        toggleSelection(it)
+                                    }
+                                },
                                 gridState = gridState,
                                 contentPadding = contentPadding
                             )
@@ -277,6 +300,8 @@ private fun GalleryScreen(state: GalleryState?) {
 private fun GallerySelectionAppBar(
     count: Int,
     onClose: () -> Unit,
+    // When picking for another app, in place of sharing and deleting.
+    onPick: (() -> Unit)?,
     onShare: () -> Unit,
     onDelete: () -> Unit,
     onSelectAll: () -> Unit
@@ -292,14 +317,21 @@ private fun GallerySelectionAppBar(
             }
         },
         actions = {
-            ActionButton(
-                R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share),
-                onClick = onShare
-            )
-            ActionButton(
-                R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete),
-                onClick = onDelete
-            )
+            if (onPick != null) {
+                ActionButton(
+                    R.drawable.check_icon_white_24dp, stringResource(R.string.select),
+                    onClick = onPick
+                )
+            } else {
+                ActionButton(
+                    R.drawable.share_icon_control_normal_24dp, stringResource(R.string.share),
+                    onClick = onShare
+                )
+                ActionButton(
+                    R.drawable.delete_icon_control_normal_24dp, stringResource(R.string.delete),
+                    onClick = onDelete
+                )
+            }
             ActionButton(
                 R.drawable.select_all_icon_control_normal_24dp, stringResource(R.string.select_all),
                 onClick = onSelectAll

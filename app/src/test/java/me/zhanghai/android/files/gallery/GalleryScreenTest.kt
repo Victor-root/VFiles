@@ -35,12 +35,16 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import java8.nio.file.Path
+import me.zhanghai.android.files.file.isImage
+import me.zhanghai.android.files.filelist.FilePicker
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.DestinationTestActivity
 import me.zhanghai.android.files.test.TestMediaStoreProvider
 import me.zhanghai.android.files.test.waitForBackgroundWork
 import me.zhanghai.android.files.theme.night.NightMode
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -111,6 +115,23 @@ class GalleryScreenTest {
         launch()
         composeTestRule.onNodeWithText("Today").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/gallery_edge_to_edge.png")
+    }
+
+    @Test
+    fun picksPhotoForAnotherApp() {
+        val pickedPaths = mutableListOf<Path>()
+        DestinationTestActivity.filePicker = FilePicker(
+            accepts = { it.isImage }, allowsMultiple = false, pick = { pickedPaths += it }
+        )
+        try {
+            launch()
+            // Only the photos asked for are shown.
+            composeTestRule.onNodeWithText("1:23").assertDoesNotExist()
+            composeTestRule.onNodeWithContentDescription("IMG_today_0.png").performClick()
+            assertEquals(listOf("IMG_today_0.png"), pickedPaths.map { it.fileName.toString() })
+        } finally {
+            DestinationTestActivity.filePicker = null
+        }
     }
 
     @Test

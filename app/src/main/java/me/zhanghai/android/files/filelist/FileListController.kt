@@ -588,6 +588,11 @@ class FileListController(
         pickPaths(viewModel.selectedFiles.mapTo(linkedSetOf()) { it.path })
     }
 
+    // Like from the gallery.
+    fun pickFiles(paths: List<Path>) {
+        pickPaths(LinkedHashSet(paths))
+    }
+
     fun pickCurrentDirectory() {
         pickPaths(linkedSetOf(currentPath))
     }

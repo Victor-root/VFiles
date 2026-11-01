@@ -12,6 +12,10 @@ import android.os.Environment
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.app.AppActivity
@@ -63,6 +67,26 @@ class FileListActivity : AppActivity() {
         if (::controller.isInitialized) {
             controller.saveState(outState)
         }
+    }
+
+    // Files can be picked for another app from the screens opened above the file list too.
+    @Composable
+    override fun ProvideScreenLocals(content: @Composable () -> Unit) {
+        if (isOnboarding) {
+            content()
+            return
+        }
+        val pickOptions by viewModel.pickOptionsFlow.collectAsStateWithLifecycle()
+        val filePicker = remember(pickOptions) {
+            pickOptions?.takeIf { it.mode == PickOptions.Mode.OPEN_FILE }?.let { options ->
+                FilePicker(
+                    accepts = { mimeType -> options.mimeTypes.any { it.match(mimeType) } },
+                    allowsMultiple = options.allowMultiple,
+                    pick = controller::pickFiles
+                )
+            }
+        }
+        CompositionLocalProvider(LocalFilePicker provides filePicker, content = content)
     }
 
     @Composable
