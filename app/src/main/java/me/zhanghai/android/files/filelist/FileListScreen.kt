@@ -626,10 +626,10 @@ private fun FileListScaffold(
                                 onCopyPath = controller::copyPath,
                                 onOpenInNewTask = controller::openInNewTask,
                                 modifier = Modifier.weight(1f),
-                                // Aligned with the title, or a little away from the button.
+                                // Aligned with the title, or right after the button.
                                 contentPadding = PaddingValues(
                                     start = if (hasBreadcrumbDrawerButton) {
-                                        4.dp
+                                        0.dp
                                     } else {
                                         dimensionResource(R.dimen.content_start_margin_minus_12dp)
                                     },
