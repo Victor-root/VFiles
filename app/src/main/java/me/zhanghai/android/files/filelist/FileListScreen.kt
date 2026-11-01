@@ -634,7 +634,8 @@ private fun FileListScaffold(
                                         dimensionResource(R.dimen.content_start_margin_minus_12dp)
                                     },
                                     end = dimensionResource(R.dimen.screen_edge_margin_minus_12dp)
-                                )
+                                ),
+                                isAfterButton = hasBreadcrumbDrawerButton
                             )
                         }
                     }

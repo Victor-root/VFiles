@@ -55,7 +55,8 @@ fun Breadcrumb(
     onCopyPath: (Path) -> Unit,
     onOpenInNewTask: (Path) -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues()
+    contentPadding: PaddingValues = PaddingValues(),
+    isAfterButton: Boolean = false
 ) {
     val context = LocalContext.current
     val listState = rememberLazyListState()
@@ -96,7 +97,11 @@ fun Breadcrumb(
                             },
                             onLongClick = { isMenuShown = true }
                         )
-                        .padding(start = 12.dp, end = 4.dp),
+                        .padding(
+                            // Less after a button, which already has room around its icon.
+                            start = if (index == 0 && isAfterButton) 4.dp else 12.dp,
+                            end = 4.dp
+                        ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     val color = LocalContentColor.current.let {
