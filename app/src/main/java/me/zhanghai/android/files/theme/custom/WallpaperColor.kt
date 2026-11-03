@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.files.theme.custom
 
-import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.Context
 import android.os.Build
@@ -13,7 +12,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.ColorInt
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -30,47 +28,20 @@ import me.zhanghai.android.files.BuildConfig
  * NOT the system "dynamic" / Material You accent (`@android:color/system_accent*`). On some OEM
  * skins (e.g. ColorOS) that system accent is a fixed value that does not follow the wallpaper, so
  * reading the wallpaper colors directly is what keeps the "wallpaper" theme option matching the
- * actual wallpaper. Available since API 27 (O_MR1).
- *
- * A live wallpaper may not tell its colors, like the image ColorOS shows behind an effect of glass,
- * so they are then extracted from the image of the wallpaper, which the access to all files lets
- * the app read.
+ * actual wallpaper. Only the extracted colors are read, never the wallpaper image, so no permission
+ * is required. Available since API 27 (O_MR1).
  */
 @ColorInt
 fun Context.wallpaperAccentColor(): Int? {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
         return null
     }
-    val wallpaperManager = WallpaperManager.getInstance(this)
-    val colors = runCatching { wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM) }
-        .getOrNull()
-        ?: wallpaperManager.getImageColors()
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        Log.d("DynamicColorDebug", "wallpaperAccentColor colors=$colors")
-    }
-    return colors?.primaryColor?.toArgb()
-}
-
-// Decoding the image takes a while, so its colors are kept until the wallpaper changes.
-private var imageColors: Pair<Int, WallpaperColors?>? = null
-
-@RequiresApi(Build.VERSION_CODES.O_MR1)
-private fun WallpaperManager.getImageColors(): WallpaperColors? {
-    val wallpaperId = getWallpaperId(WallpaperManager.FLAG_SYSTEM)
-    imageColors?.let { (id, colors) ->
-        if (id == wallpaperId) {
-            return colors
-        }
-    }
-    val colors = runCatching { drawable?.let { WallpaperColors.fromDrawable(it) } }
-        .onFailure {
-            if (BuildConfig.BUILD_TYPE == "debug") {
-                Log.d("DynamicColorDebug", "Failed to read the wallpaper image", it)
-            }
-        }
-        .getOrNull()
-    imageColors = wallpaperId to colors
-    return colors
+    return runCatching {
+        WallpaperManager.getInstance(this)
+            .getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+            ?.primaryColor
+            ?.toArgb()
+    }.getOrNull()
 }
 
 /**
