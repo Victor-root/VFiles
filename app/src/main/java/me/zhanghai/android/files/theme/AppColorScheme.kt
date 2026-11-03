@@ -132,7 +132,12 @@ private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
                 " systemId=${runCatching {
                     wallpaperManager.getWallpaperId(android.app.WallpaperManager.FLAG_SYSTEM)
                 }}" +
-                " isWallpaperSupported=${wallpaperManager.isWallpaperSupported}"
+                " isWallpaperSupported=${wallpaperManager.isWallpaperSupported}" +
+                " themeCustomization=${runCatching {
+                    android.provider.Settings.Secure.getString(
+                        context.contentResolver, "theme_customization_overlay_packages"
+                    )
+                }}"
         )
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
