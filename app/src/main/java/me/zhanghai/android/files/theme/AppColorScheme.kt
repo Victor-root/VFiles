@@ -117,6 +117,23 @@ private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
             "isDark=$isDark wallpaperColor=${wallpaperColor?.let { Integer.toHexString(it) }}" +
                 " wallpaperColors=$colors"
         )
+        val wallpaperManager = android.app.WallpaperManager.getInstance(context)
+        Log.d(
+            "DynamicColorDebug",
+            "context=${context.javaClass.name} displayId=${runCatching { context.display?.displayId }}" +
+                " appContextColors=${runCatching {
+                    android.app.WallpaperManager.getInstance(context.applicationContext)
+                        .getWallpaperColors(android.app.WallpaperManager.FLAG_SYSTEM)
+                }}" +
+                " lockColors=${runCatching {
+                    wallpaperManager.getWallpaperColors(android.app.WallpaperManager.FLAG_LOCK)
+                }}" +
+                " wallpaperInfo=${runCatching { wallpaperManager.wallpaperInfo }}" +
+                " systemId=${runCatching {
+                    wallpaperManager.getWallpaperId(android.app.WallpaperManager.FLAG_SYSTEM)
+                }}" +
+                " isWallpaperSupported=${wallpaperManager.isWallpaperSupported}"
+        )
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val systemColorScheme =
