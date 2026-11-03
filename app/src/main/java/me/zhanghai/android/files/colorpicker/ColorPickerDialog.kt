@@ -183,8 +183,8 @@ private fun ColorSwatch(
     }
 }
 
-private val SWATCH_SIZE = 52.dp
+private val SWATCH_SIZE = 64.dp
 private const val SWATCH_COLUMN_COUNT = 4
-private val SWATCH_SPACING = 16.dp
-private val SWATCH_RING_WIDTH = 3.dp
-private val SWATCH_RING_GAP = 3.dp
+private val SWATCH_SPACING = 8.dp
+private val SWATCH_RING_WIDTH = 2.dp
+private val SWATCH_RING_GAP = 2.dp
