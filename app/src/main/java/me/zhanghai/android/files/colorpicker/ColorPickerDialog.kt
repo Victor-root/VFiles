@@ -13,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -47,6 +48,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.zhanghai.android.files.R
 
@@ -121,15 +123,23 @@ fun ColorPickerDialog(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement =
-                        Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    for (index in firstPresetIndex..colors.lastIndex) {
-                        ColorSwatch(colors[index], checkedIndex == index, swatchModifier(index)) {
-                            checkedIndex = index
+                // As wide as the dialog, a few big colors on each row.
+                BoxWithConstraints {
+                    val swatchSize = (maxWidth - SWATCH_SPACING * (SWATCH_COLUMN_COUNT - 1)) /
+                        SWATCH_COLUMN_COUNT
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(SWATCH_SPACING),
+                        verticalArrangement = Arrangement.spacedBy(SWATCH_SPACING),
+                        maxItemsInEachRow = SWATCH_COLUMN_COUNT
+                    ) {
+                        for (index in firstPresetIndex..colors.lastIndex) {
+                            ColorSwatch(
+                                color = colors[index],
+                                isChecked = checkedIndex == index,
+                                modifier = swatchModifier(index),
+                                size = swatchSize
+                            ) { checkedIndex = index }
                         }
                     }
                 }
@@ -146,6 +156,7 @@ private fun ColorSwatch(
     color: Color,
     isChecked: Boolean,
     modifier: Modifier = Modifier,
+    size: Dp = SWATCH_SIZE,
     onClick: () -> Unit
 ) {
     val ringColor by animateColorAsState(
@@ -153,7 +164,7 @@ private fun ColorSwatch(
     )
     Box(
         modifier = modifier
-            .size(SWATCH_SIZE)
+            .size(size)
             .clip(CircleShape)
             .selectable(selected = isChecked, role = Role.RadioButton, onClick = onClick)
             .border(SWATCH_RING_WIDTH, ringColor, CircleShape)
@@ -173,5 +184,7 @@ private fun ColorSwatch(
 }
 
 private val SWATCH_SIZE = 52.dp
+private const val SWATCH_COLUMN_COUNT = 4
+private val SWATCH_SPACING = 16.dp
 private val SWATCH_RING_WIDTH = 3.dp
 private val SWATCH_RING_GAP = 3.dp
