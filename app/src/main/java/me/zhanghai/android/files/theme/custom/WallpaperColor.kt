@@ -10,6 +10,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import me.zhanghai.android.files.BuildConfig
 
 /**
  * Primary color extracted from the system wallpaper (ARGB), or null if unavailable.
@@ -56,6 +58,9 @@ fun rememberWallpaperColorsVersion(isEnabled: Boolean): Int {
         }
         val wallpaperManager = WallpaperManager.getInstance(context)
         val listener = WallpaperManager.OnColorsChangedListener { _, which ->
+            if (BuildConfig.BUILD_TYPE == "debug") {
+                Log.d("DynamicColorDebug", "Wallpaper colors changed: which=$which")
+            }
             if (which and WallpaperManager.FLAG_SYSTEM != 0) {
                 ++version
             }
