@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -21,7 +20,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import me.zhanghai.android.files.BuildConfig
 
 /**
  * Primary color extracted from the system wallpaper (ARGB), or null if unavailable.
@@ -54,16 +52,7 @@ fun Context.wallpaperAccentColor(): Int? {
 private fun Context.colorOsWallpaperSeedColor(): Int? {
     val value = runCatching {
         Settings.System.getString(contentResolver, COLOR_OS_WALLPAPER_SEED_COLOR)
-    }
-        .onFailure {
-            if (BuildConfig.BUILD_TYPE == "debug") {
-                Log.d("DynamicColorDebug", "Failed to read the ColorOS wallpaper color", it)
-            }
-        }
-        .getOrNull()
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        Log.d("DynamicColorDebug", "ColorOS wallpaper color: $value")
-    }
+    }.getOrNull()
     return value?.substringBefore('&')?.toIntOrNull()
 }
 
