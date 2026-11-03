@@ -111,6 +111,7 @@ class TestMediaStoreProvider : ContentProvider() {
             when (column) {
                 MediaStore.Audio.Media._ID -> id
                 MediaStore.Audio.Media.DATA -> "/storage/emulated/0/Music/$album/$title.mp3"
+                MediaStore.Audio.Media.MIME_TYPE -> "audio/mpeg"
                 MediaStore.Audio.Media.TITLE -> title
                 MediaStore.Audio.Media.DISPLAY_NAME -> "$title.mp3"
                 MediaStore.Audio.Media.ARTIST -> artist ?: MediaStore.UNKNOWN_STRING

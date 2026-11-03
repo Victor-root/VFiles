@@ -23,6 +23,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import java8.nio.file.Path
+import me.zhanghai.android.files.file.isAudio
+import me.zhanghai.android.files.filelist.FilePicker
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.DestinationTestActivity
@@ -100,6 +103,24 @@ class MusicScreenTest {
         composeTestRule.onNodeWithText("Morning Light").assertIsDisplayed()
         composeTestRule.onNodeWithText("Unknown artist", substring = true).assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/music.png")
+    }
+
+    @Test
+    fun picksSongForAnotherApp() {
+        val pickedPaths = mutableListOf<Path>()
+        DestinationTestActivity.filePicker = FilePicker(
+            accepts = { it.isAudio }, allowsMultiple = false, pick = { pickedPaths += it }
+        )
+        try {
+            DestinationTestActivity.launch(MusicDestination)
+            waitForText("Morning Light")
+            // Nothing is played while picking.
+            composeTestRule.onNodeWithText("Shuffle all").assertDoesNotExist()
+            composeTestRule.onNodeWithText("Morning Light").performClick()
+            assertEquals(listOf("Morning Light.mp3"), pickedPaths.map { it.fileName.toString() })
+        } finally {
+            DestinationTestActivity.filePicker = null
+        }
     }
 
     @Test

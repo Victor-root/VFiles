@@ -68,6 +68,7 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.filelist.LocalFilePicker
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AlbumCard
 import me.zhanghai.android.files.ui.AppBarTabSwitch
@@ -102,6 +103,15 @@ private enum class MusicTab(@param:DrawableRes val iconRes: Int, val labelRes: I
 @Composable
 internal fun MusicScreen(state: MusicState?) {
     val navigator = LocalNavigator.current
+    // When picking for another app, only the songs it accepts are shown, and clicking one picks it.
+    val filePicker = LocalFilePicker.current
+    val state = remember(state, filePicker) {
+        if (state != null && filePicker != null) {
+            MusicState(state.tracks.filter { filePicker.accepts(it.mimeType) })
+        } else {
+            state
+        }
+    }
     val player = rememberMusicController()
     var tab by rememberSaveable { mutableStateOf(MusicTab.TRACKS) }
     var albumId by rememberSaveable { mutableStateOf<Long?>(null) }
@@ -161,7 +171,11 @@ internal fun MusicScreen(state: MusicState?) {
     LaunchedEffect(tab, albumId, artistId) { appBarState.offset = 0f }
     BackHandler(enabled = album != null || artist != null, onBack = closeDetail)
     val play: (List<MusicTrack>, Int, Boolean) -> Unit = { tracks, index, shuffle ->
-        player?.playTracks(tracks, index, shuffle)
+        if (filePicker != null) {
+            filePicker.pick(listOf(tracks[index].path))
+        } else {
+            player?.playTracks(tracks, index, shuffle)
+        }
     }
 
     AppScaffold(
@@ -242,10 +256,12 @@ internal fun MusicScreen(state: MusicState?) {
                     )
                 album != null || artist != null -> {
                     val tracks = album?.tracks ?: artist!!.tracks
-                    TrackList(tracks, detailListState, listPadding, play)
+                    TrackList(tracks, detailListState, listPadding, filePicker == null, play)
                 }
                 tab == MusicTab.TRACKS ->
-                    TrackList(state.tracks, tracksListState, listPadding, play)
+                    TrackList(
+                        state.tracks, tracksListState, listPadding, filePicker == null, play
+                    )
                 tab == MusicTab.ALBUMS ->
                     AlbumGrid(
                         albums = state.albums,
@@ -277,6 +293,7 @@ private fun TrackList(
     tracks: List<MusicTrack>,
     listState: LazyListState,
     contentPadding: PaddingValues,
+    hasShuffle: Boolean,
     onPlay: (tracks: List<MusicTrack>, index: Int, shuffle: Boolean) -> Unit
 ) {
     LazyColumn(
@@ -284,21 +301,24 @@ private fun TrackList(
         state = listState,
         contentPadding = contentPadding
     ) {
-        item(key = "shuffle") {
-            ListItem(
-                headlineContent = { Text(stringResource(R.string.music_shuffle_all)) },
-                modifier = Modifier.clickable {
-                    onPlay(tracks, tracks.indices.random(), true)
-                },
-                leadingContent = {
-                    Icon(
-                        painter = painterResource(R.drawable.shuffle_icon_white_24dp),
-                        contentDescription = null,
-                        modifier = Modifier.padding(12.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-            )
+        // Not while picking a song for another app.
+        if (hasShuffle) {
+            item(key = "shuffle") {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.music_shuffle_all)) },
+                    modifier = Modifier.clickable {
+                        onPlay(tracks, tracks.indices.random(), true)
+                    },
+                    leadingContent = {
+                        Icon(
+                            painter = painterResource(R.drawable.shuffle_icon_white_24dp),
+                            contentDescription = null,
+                            modifier = Modifier.padding(12.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                )
+            }
         }
         itemsIndexed(tracks, key = { _, track -> track.id }) { index, track ->
             ListItem(

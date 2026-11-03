@@ -47,7 +47,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -62,8 +64,9 @@ import me.zhanghai.android.files.util.startActivitySafe
  * The bookmarks, standard folders, storages and app menu of the file list. [subtitleKey] changes
  * whenever the free space shown for storages may have changed, so that it's read again. Each new
  * [focusCheckedItemRequest] above 0 moves the D-pad focus to the item of the current folder, or the
- * first item, like when the drawer opens. While it isn't [isShown], it's kept scrolled to where
- * focusing that item would scroll it, so that it opens there without scrolling.
+ * first item, like when the drawer opens. While it isn't [isShown] on a D-pad, it's kept scrolled
+ * to where focusing that item would scroll it, so that it opens there without scrolling. On a
+ * touch screen, it opens where it was left, at the top at first.
  */
 // For LocalBringIntoViewSpec.
 @OptIn(ExperimentalFoundationApi::class)
@@ -122,8 +125,9 @@ fun NavigationDrawerContent(
         .takeIf { it != -1 } ?: items.indexOfFirst { it != null && !it.isHeader }
     val checkedItemFocusRequester = remember { FocusRequester() }
     val bringIntoViewSpec = LocalBringIntoViewSpec.current
+    val inputModeManager = LocalInputModeManager.current
     LaunchedEffect(isShown, focusedIndex, bringIntoViewSpec) {
-        if (isShown || focusedIndex == -1) {
+        if (isShown || focusedIndex == -1 || inputModeManager.inputMode != InputMode.Keyboard) {
             return@LaunchedEffect
         }
         listState.scrollToItem(focusedIndex)

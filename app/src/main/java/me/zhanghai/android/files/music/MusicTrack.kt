@@ -9,6 +9,7 @@ import android.net.Uri
 import androidx.compose.runtime.Immutable
 import java8.nio.file.Path
 import java8.nio.file.Paths
+import me.zhanghai.android.files.file.MimeType
 
 /** A song indexed by the media store. */
 @Immutable
@@ -16,6 +17,7 @@ data class MusicTrack(
     val id: Long,
     val uri: Uri,
     val data: String,
+    val mimeType: MimeType,
     val title: String,
     /** Null when unknown. */
     val artist: String?,

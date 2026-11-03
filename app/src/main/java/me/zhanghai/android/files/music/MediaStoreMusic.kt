@@ -12,6 +12,8 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.WorkerThread
 import androidx.core.database.getStringOrNull
+import me.zhanghai.android.files.file.MimeType
+import me.zhanghai.android.files.file.asMimeTypeOrNull
 
 /** The songs indexed by the media store, on all the volumes. */
 object MediaStoreMusic {
@@ -30,6 +32,7 @@ object MediaStoreMusic {
             MediaStore.Audio.Media._ID,
             // The path is needed to share, open and show the files like the rest of the app.
             MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.MIME_TYPE,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.ARTIST,
@@ -46,6 +49,7 @@ object MediaStoreMusic {
         return cursor.use {
             val idColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             val dataColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+            val mimeTypeColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.MIME_TYPE)
             val titleColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
             val displayNameColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
             val artistColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
@@ -64,6 +68,8 @@ object MediaStoreMusic {
                             id = id,
                             uri = ContentUris.withAppendedId(audioUri, id),
                             data = data,
+                            mimeType = it.getStringOrNull(mimeTypeColumn)?.asMimeTypeOrNull()
+                                ?: MimeType.AUDIO_ANY,
                             title = it.getStringOrNull(titleColumn)?.takeIf { it.isNotBlank() }
                                 ?: it.getStringOrNull(displayNameColumn)
                                 ?: data.substringAfterLast('/'),
