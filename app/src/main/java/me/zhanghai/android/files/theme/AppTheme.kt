@@ -28,6 +28,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleStartEffect
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.custom.ThemeColor
+import me.zhanghai.android.files.theme.custom.rememberWallpaperColorsVersion
 import me.zhanghai.android.files.theme.night.isNightModeActive
 import me.zhanghai.android.files.theme.night.withNightMode
 import android.graphics.Color as AndroidColor
@@ -90,9 +92,11 @@ fun AppTheme(content: @Composable () -> Unit) {
     val context = remember(baseContext, baseConfiguration, isDark) {
         baseContext.withNightMode(isDark)
     }
-    val colorScheme = remember(context, themeColor, isDark, isBlackNightMode) {
-        appColorScheme(context, themeColor, isDark, isBlackNightMode)
-    }
+    val wallpaperColorsVersion = rememberWallpaperColorsVersion(themeColor == ThemeColor.DYNAMIC)
+    val colorScheme =
+        remember(context, themeColor, isDark, isBlackNightMode, wallpaperColorsVersion) {
+            appColorScheme(context, themeColor, isDark, isBlackNightMode)
+        }
     // The app bar keeps the theme color of light mode in dark mode too.
     val appColors = remember(context, themeColor, colorScheme, isDark) {
         val lightColorScheme = if (isDark) {

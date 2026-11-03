@@ -8,7 +8,16 @@ package me.zhanghai.android.files.theme.custom
 import android.app.WallpaperManager
 import android.content.Context
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.ColorInt
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 
 /**
  * Primary color extracted from the system wallpaper (ARGB), or null if unavailable.
@@ -31,4 +40,28 @@ fun Context.wallpaperAccentColor(): Int? {
             ?.primaryColor
             ?.toArgb()
     }.getOrNull()
+}
+
+/**
+ * Counts the changes of the colors of the wallpaper while [isEnabled], so that what's derived from
+ * them is computed again, since the system may not tell otherwise.
+ */
+@Composable
+fun rememberWallpaperColorsVersion(isEnabled: Boolean): Int {
+    var version by remember { mutableIntStateOf(0) }
+    val context = LocalContext.current
+    DisposableEffect(context, isEnabled) {
+        if (!isEnabled || Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
+            return@DisposableEffect onDispose {}
+        }
+        val wallpaperManager = WallpaperManager.getInstance(context)
+        val listener = WallpaperManager.OnColorsChangedListener { _, which ->
+            if (which and WallpaperManager.FLAG_SYSTEM != 0) {
+                ++version
+            }
+        }
+        wallpaperManager.addOnColorsChangedListener(listener, Handler(Looper.getMainLooper()))
+        onDispose { wallpaperManager.removeOnColorsChangedListener(listener) }
+    }
+    return version
 }

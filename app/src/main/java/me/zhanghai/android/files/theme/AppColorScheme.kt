@@ -15,6 +15,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import com.materialkolor.dynamiccolor.DynamicScheme
 import com.materialkolor.hct.Hct
@@ -23,6 +24,8 @@ import com.materialkolor.scheme.SchemeFidelity
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.custom.wallpaperAccentColor
 import me.zhanghai.android.files.theme.night.withNightMode
+import kotlin.math.abs
+import kotlin.math.min
 
 fun appColorScheme(
     context: Context,
@@ -90,20 +93,46 @@ private fun ColorScheme.withNeutralColors(isDark: Boolean): ColorScheme =
 
 private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
 
-// OEM skins (e.g. ColorOS) may report a fixed system accent that ignores the wallpaper, so the
-// scheme is seeded from the real wallpaper color when it can be read, like the system does.
+/**
+ * The scheme of the system, unless it doesn't follow the wallpaper, like on ColorOS whose dynamic
+ * colors can stay on an older wallpaper. The colors of the wallpaper itself, which the system
+ * derives its scheme from, tell it: when their hue is way off the one of the system, the scheme is
+ * derived from the wallpaper instead, like the system does. Before Android 12, there's only the
+ * wallpaper to follow.
+ */
 private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
     val wallpaperColor = context.wallpaperAccentColor()
-    return when {
-        wallpaperColor != null ->
-            SchemeContent(Hct.fromInt(wallpaperColor), isDark, 0.0).toColorScheme()
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val systemColorScheme =
             if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        else -> themeColorScheme(
+        if (wallpaperColor == null ||
+            !isHueMismatched(systemColorScheme.primary.toArgb(), wallpaperColor)) {
+            return systemColorScheme
+        }
+    }
+    return if (wallpaperColor != null) {
+        SchemeContent(Hct.fromInt(wallpaperColor), isDark, 0.0).toColorScheme()
+    } else {
+        themeColorScheme(
             ContextCompat.getColor(context, ThemeColor.COLOR_PRIMARY.resourceId), isDark
         )
     }
 }
+
+// Further apart than the system would ever bring colors derived from the same wallpaper, for colors
+// colorful enough for their hue to mean anything.
+private fun isHueMismatched(@ColorInt color1: Int, @ColorInt color2: Int): Boolean {
+    val hsv1 = FloatArray(3).also { android.graphics.Color.colorToHSV(color1, it) }
+    val hsv2 = FloatArray(3).also { android.graphics.Color.colorToHSV(color2, it) }
+    if (hsv1[1] <= HUE_SATURATION_MIN || hsv2[1] <= HUE_SATURATION_MIN) {
+        return false
+    }
+    val hueDistance = abs(hsv1[0] - hsv2[0]).let { min(it, 360 - it) }
+    return hueDistance > HUE_DISTANCE_MAX
+}
+
+private const val HUE_SATURATION_MIN = 0.15f
+private const val HUE_DISTANCE_MAX = 60f
 
 // The chosen color is used as is for the primary color, like the app has always done, and the
 // rest of the scheme is derived from it.
