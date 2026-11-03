@@ -121,8 +121,16 @@ fun NavigationDrawerContent(
             }
         }
     }
-    val focusedIndex = items.indexOfFirst { it != null && it.isChecked(listener) }
-        .takeIf { it != -1 } ?: items.indexOfFirst { it != null && !it.isHeader }
+    // The item of the deepest folder containing the current one, like a server while in one of its
+    // folders.
+    val checkedIndex = items.indices
+        .filter { index ->
+            val checkedPath = items[index]?.checkedPath
+            checkedPath != null && checkedPath.fileSystem == currentPath.fileSystem &&
+                currentPath.startsWith(checkedPath)
+        }
+        .maxByOrNull { items[it]!!.checkedPath!!.nameCount }
+    val focusedIndex = checkedIndex ?: items.indexOfFirst { it != null && !it.isHeader }
     val checkedItemFocusRequester = remember { FocusRequester() }
     val bringIntoViewSpec = LocalBringIntoViewSpec.current
     val inputModeManager = LocalInputModeManager.current
@@ -174,7 +182,7 @@ fun NavigationDrawerContent(
             } else {
                 NavigationItemRow(
                     item = item,
-                    isChecked = item.isChecked(listener),
+                    isChecked = index == checkedIndex,
                     listener = listener,
                     subtitleKey = subtitleKey,
                     modifier = if (index == focusedIndex) {

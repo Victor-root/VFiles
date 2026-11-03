@@ -32,7 +32,9 @@ abstract class NavigationItem {
     // whose partitions are listed beneath it). Such rows aren't clickable or focusable.
     open val isHeader: Boolean = false
 
-    open fun isChecked(listener: Listener): Boolean = false
+    // The folder this item opens, which it's checked in, as well as in its subfolders when no other
+    // item opens them.
+    open val checkedPath: Path? = null
 
     abstract fun onClick(listener: Listener)
 
