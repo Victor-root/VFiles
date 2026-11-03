@@ -7,9 +7,11 @@ package me.zhanghai.android.files.theme.custom
 
 import android.app.WallpaperManager
 import android.content.Context
+import android.database.ContentObserver
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
@@ -30,6 +32,9 @@ import me.zhanghai.android.files.BuildConfig
  * reading the wallpaper colors directly is what keeps the "wallpaper" theme option matching the
  * actual wallpaper. Only the extracted colors are read, never the wallpaper image, so no permission
  * is required. Available since API 27 (O_MR1).
+ *
+ * A live wallpaper may not tell its colors, like the image ColorOS shows behind an effect of glass,
+ * whose colors ColorOS keeps on its own instead.
  */
 @ColorInt
 fun Context.wallpaperAccentColor(): Int? {
@@ -41,8 +46,28 @@ fun Context.wallpaperAccentColor(): Int? {
             .getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
             ?.primaryColor
             ?.toArgb()
-    }.getOrNull()
+    }.getOrNull() ?: colorOsWallpaperSeedColor()
 }
+
+// The color ColorOS derives from the wallpaper, as "<color>&<…>&<…>".
+@ColorInt
+private fun Context.colorOsWallpaperSeedColor(): Int? {
+    val value = runCatching {
+        Settings.System.getString(contentResolver, COLOR_OS_WALLPAPER_SEED_COLOR)
+    }
+        .onFailure {
+            if (BuildConfig.BUILD_TYPE == "debug") {
+                Log.d("DynamicColorDebug", "Failed to read the ColorOS wallpaper color", it)
+            }
+        }
+        .getOrNull()
+    if (BuildConfig.BUILD_TYPE == "debug") {
+        Log.d("DynamicColorDebug", "ColorOS wallpaper color: $value")
+    }
+    return value?.substringBefore('&')?.toIntOrNull()
+}
+
+private const val COLOR_OS_WALLPAPER_SEED_COLOR = "wall_paper_seed_color"
 
 /**
  * Counts the changes of the colors of the wallpaper while [isEnabled], so that what's derived from
@@ -56,17 +81,27 @@ fun rememberWallpaperColorsVersion(isEnabled: Boolean): Int {
         if (!isEnabled || Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
             return@DisposableEffect onDispose {}
         }
+        val handler = Handler(Looper.getMainLooper())
         val wallpaperManager = WallpaperManager.getInstance(context)
         val listener = WallpaperManager.OnColorsChangedListener { _, which ->
-            if (BuildConfig.BUILD_TYPE == "debug") {
-                Log.d("DynamicColorDebug", "Wallpaper colors changed: which=$which")
-            }
             if (which and WallpaperManager.FLAG_SYSTEM != 0) {
                 ++version
             }
         }
-        wallpaperManager.addOnColorsChangedListener(listener, Handler(Looper.getMainLooper()))
-        onDispose { wallpaperManager.removeOnColorsChangedListener(listener) }
+        wallpaperManager.addOnColorsChangedListener(listener, handler)
+        // And the color ColorOS keeps for a live wallpaper not telling its colors.
+        val observer = object : ContentObserver(handler) {
+            override fun onChange(selfChange: Boolean) {
+                ++version
+            }
+        }
+        context.contentResolver.registerContentObserver(
+            Settings.System.getUriFor(COLOR_OS_WALLPAPER_SEED_COLOR), false, observer
+        )
+        onDispose {
+            wallpaperManager.removeOnColorsChangedListener(listener)
+            context.contentResolver.unregisterContentObserver(observer)
+        }
     }
     return version
 }

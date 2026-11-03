@@ -7,7 +7,6 @@ package me.zhanghai.android.files.theme
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
@@ -22,7 +21,6 @@ import com.materialkolor.dynamiccolor.DynamicScheme
 import com.materialkolor.hct.Hct
 import com.materialkolor.scheme.SchemeContent
 import com.materialkolor.scheme.SchemeFidelity
-import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.custom.wallpaperAccentColor
 import me.zhanghai.android.files.theme.night.withNightMode
@@ -35,9 +33,6 @@ fun appColorScheme(
     isDark: Boolean,
     isBlack: Boolean
 ): ColorScheme {
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        Log.d("DynamicColorDebug", "appColorScheme themeColor=$themeColor isDark=$isDark")
-    }
     // Theme colors have a lighter variant for night mode, which follows the app setting.
     val nightModeContext = context.withNightMode(isDark)
     val colorScheme = if (themeColor == ThemeColor.DYNAMIC) {
@@ -107,51 +102,9 @@ private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
  */
 private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
     val wallpaperColor = context.wallpaperAccentColor()
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        val colors = runCatching {
-            android.app.WallpaperManager.getInstance(context)
-                .getWallpaperColors(android.app.WallpaperManager.FLAG_SYSTEM)
-        }
-        Log.d(
-            "DynamicColorDebug",
-            "isDark=$isDark wallpaperColor=${wallpaperColor?.let { Integer.toHexString(it) }}" +
-                " wallpaperColors=$colors"
-        )
-        val wallpaperManager = android.app.WallpaperManager.getInstance(context)
-        Log.d(
-            "DynamicColorDebug",
-            "context=${context.javaClass.name} displayId=${runCatching { context.display?.displayId }}" +
-                " appContextColors=${runCatching {
-                    android.app.WallpaperManager.getInstance(context.applicationContext)
-                        .getWallpaperColors(android.app.WallpaperManager.FLAG_SYSTEM)
-                }}" +
-                " lockColors=${runCatching {
-                    wallpaperManager.getWallpaperColors(android.app.WallpaperManager.FLAG_LOCK)
-                }}" +
-                " wallpaperInfo=${runCatching { wallpaperManager.wallpaperInfo }}" +
-                " systemId=${runCatching {
-                    wallpaperManager.getWallpaperId(android.app.WallpaperManager.FLAG_SYSTEM)
-                }}" +
-                " isWallpaperSupported=${wallpaperManager.isWallpaperSupported}" +
-                " themeCustomization=${runCatching {
-                    android.provider.Settings.Secure.getString(
-                        context.contentResolver, "theme_customization_overlay_packages"
-                    )
-                }}"
-        )
-    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val systemColorScheme =
             if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        if (BuildConfig.BUILD_TYPE == "debug") {
-            Log.d(
-                "DynamicColorDebug",
-                "systemPrimary=${Integer.toHexString(systemColorScheme.primary.toArgb())}" +
-                    " mismatched=${wallpaperColor?.let {
-                        isHueMismatched(systemColorScheme.primary.toArgb(), it)
-                    }}"
-            )
-        }
         if (wallpaperColor == null ||
             !isHueMismatched(systemColorScheme.primary.toArgb(), wallpaperColor)) {
             return systemColorScheme
@@ -175,12 +128,6 @@ private fun isHueMismatched(@ColorInt color1: Int, @ColorInt color2: Int): Boole
         return false
     }
     val hueDistance = abs(hsv1[0] - hsv2[0]).let { min(it, 360 - it) }
-    if (BuildConfig.BUILD_TYPE == "debug") {
-        Log.d(
-            "DynamicColorDebug",
-            "hsv1=${hsv1.toList()} hsv2=${hsv2.toList()} hueDistance=$hueDistance"
-        )
-    }
     return hueDistance > HUE_DISTANCE_MAX
 }
 
