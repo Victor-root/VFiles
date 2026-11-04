@@ -83,8 +83,17 @@ internal class LinuxPath : ByteStringListPath<LinuxPath>, RootablePath {
     }
 
     override fun isRootRequired(isAttributeAccess: Boolean): Boolean {
-        val file = toFile()
-        return StorageVolumeList.value.none {
+        var file = toFile()
+        val storageVolumes = StorageVolumeList.value
+        // Like /sdcard, which is a symbolic link to a storage volume.
+        if (storageVolumes.none { file.startsWith(it.pathFileCompat) }) {
+            try {
+                file = file.canonicalFile
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        return storageVolumes.none {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R && !it.isPrimaryCompat) {
                 return@none false
             }
