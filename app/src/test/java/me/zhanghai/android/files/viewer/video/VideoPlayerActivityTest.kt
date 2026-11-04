@@ -8,6 +8,7 @@ package me.zhanghai.android.files.viewer.video
 import android.content.Intent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
@@ -49,9 +50,11 @@ class VideoPlayerActivityTest {
             composeTestRule.onAllNodesWithText("clip.mp4").fetchSemanticsNodes().isNotEmpty()
         }
         composeTestRule.onNodeWithText("clip.mp4").assertIsDisplayed()
-        // The empty file may play or fail at once.
-        composeTestRule.onNode(hasContentDescription("Pause") or hasContentDescription("Play"))
-            .assertIsDisplayed()
+        // The empty file may play for a moment before it fails.
+        composeTestRule.onNode(
+            hasContentDescription("Pause") or hasContentDescription("Play") or
+                hasText("Unable to open this file")
+        ).assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/video_player.png")
     }
 }
