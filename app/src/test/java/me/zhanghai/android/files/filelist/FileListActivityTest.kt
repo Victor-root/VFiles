@@ -702,6 +702,7 @@ class FileListActivityTest {
             .apply { extraPath = rootPath }
         val scenario = launch(intent)
         composeTestRule.onNodeWithText("Select a file").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Open navigation drawer").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/file_list_pick.png")
         composeTestRule.onNodeWithText("notes.txt").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)

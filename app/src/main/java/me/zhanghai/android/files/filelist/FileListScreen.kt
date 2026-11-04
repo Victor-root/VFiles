@@ -632,8 +632,9 @@ private fun FileListScaffold(
                             }
                         }
                         // Without a drawer button next to the title, it's at the start of the
-                        // breadcrumb, which leaves the whole width of the app bar to the title.
-                        val hasBreadcrumbDrawerButton = pickOptions == null && !hasDrawerButton
+                        // breadcrumb, which leaves the whole width of the app bar to the title. It
+                        // stays there when picking, since the gesture is the one going back.
+                        val hasBreadcrumbDrawerButton = !hasDrawerButton
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             if (hasBreadcrumbDrawerButton) {
                                 DrawerButton(
