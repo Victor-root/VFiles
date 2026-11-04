@@ -95,6 +95,16 @@ class OnboardingActivity : AppActivity() {
             grantCheckCount++
         }
 
+    // Once denied for good, only the system settings can give it.
+    private var isStoragePermissionDeniedForGood = false
+
+    private val requestStoragePermissionLauncher: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            isStoragePermissionDeniedForGood = !isGranted &&
+                !shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            grantCheckCount++
+        }
+
     private val requestSystemSettingsLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             grantCheckCount++
@@ -240,6 +250,12 @@ class OnboardingActivity : AppActivity() {
         // Must follow the same condition as isExternalStorageAccessGranted(), otherwise a device
         // with no "All files access" page would be sent to a screen that does not exist while
         // being checked for the permission it was never asked for.
+        if (!Environment::class.supportsExternalStorageManager() &&
+            !isStoragePermissionDeniedForGood
+        ) {
+            requestStoragePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            return
+        }
         val intent = if (Environment::class.supportsExternalStorageManager()) {
             Environment::class.createManageAppAllFilesAccessPermissionIntent(packageName)
         } else {
