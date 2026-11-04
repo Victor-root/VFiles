@@ -256,6 +256,18 @@ class FileListActivityTest {
     }
 
     @Test
+    fun retriesFolderInErrorWithPull() {
+        ActivityScenario.launch<FileListActivity>(
+            FileListActivity.createViewIntent(rootPath.resolve("Later"))
+        )
+        waitForText("This folder no longer exists")
+        TestDocumentsProvider.addDirectory("Later")
+        composeTestRule.onNodeWithText("This folder no longer exists")
+            .performTouchInput { swipeDown(endY = centerY + 800f) }
+        waitForText("No files")
+    }
+
+    @Test
     fun showsEmptyFolder() {
         launch()
         composeTestRule.onNodeWithText("Empty").performClick()

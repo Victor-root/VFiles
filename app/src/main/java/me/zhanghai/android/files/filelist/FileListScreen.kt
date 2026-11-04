@@ -45,8 +45,10 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -1107,6 +1109,13 @@ private fun FileListContent(
                 onRightEdgeReached = onRightEdgeReached,
                 focusRequester = focusRequester,
                 focusTarget = focusTarget
+            )
+        } else if (fileListStateful is Failure) {
+            // Without a list, this is what can be pulled to try again.
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             )
         }
         AnimatedVisibility(
