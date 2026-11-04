@@ -111,6 +111,8 @@ internal object LinuxCopyMove {
                     try {
                         Syscall.close(targetFd)
                     } catch (e: SyscallException) {
+                        // What was written may only fail to reach the storage now, like when full.
+                        successful = false
                         throw e.toFileSystemException(target.toString())
                     } finally {
                         if (!successful) {
