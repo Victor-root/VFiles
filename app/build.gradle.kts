@@ -230,6 +230,7 @@ dependencies {
     implementation(libs.jcifs.ng) {
         exclude(group = "org.bouncycastle", module = "bcprov-jdk18on")
     }
+    implementation(libs.juniversalchardet)
     implementation(libs.libsu.service)
     // Also a dependency of org.apache.ftpserver:ftpserver-core, upgraded for its bug fixes.
     implementation(libs.mina.core)

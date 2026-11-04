@@ -89,6 +89,10 @@ class TextEditorViewModel(file: Path) : ViewModel() {
                 file.readAllBytes()
             }
             currentCoroutineContext().ensureActive()
+            // Later loads keep the encoding, which the user may have chosen.
+            if (_bytesState.value.data == null) {
+                encoding.value = withContext(Dispatchers.Default) { bytes.detectCharset() }
+            }
             _bytesState.value = DataState.Success(bytes)
         } catch (e: CancellationException) {
             e.printStackTrace()
@@ -178,9 +182,9 @@ class TextEditorViewModel(file: Path) : ViewModel() {
         }
     }
 
+    class FileTooLargeException(message: String) : IOException(message)
+
     companion object {
         private const val MAX_FILE_SIZE = 1024 * 1024.toLong()
     }
 }
-    class FileTooLargeException(message: String) : IOException(message)
-

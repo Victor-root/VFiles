@@ -72,6 +72,7 @@ guava = { module = "com.google.guava:guava", version = "33.7.2-android" }
 guava-listenablefuture = { module = "com.google.guava:listenablefuture", version = "9999.0-empty-to-avoid-conflict-with-guava" }
 # dev.chrisbanes.insetter:insetter 0.6.0 makes insets unstable when entering immersive.
 jcifs-ng = { module = "eu.agno3.jcifs:jcifs-ng", version = "2.1.10" }
+juniversalchardet = { module = "com.github.albfernandez:juniversalchardet", version = "2.5.2" }
 libsu-service = { module = "com.github.topjohnwu.libsu:service", version = "6.0.0" }
 # LicensesDialog 2.2.0 pulls in androidx.webkit and uses setForceDark() instead of correctly setting
 # colors.
