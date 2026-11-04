@@ -10,6 +10,7 @@ import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import java8.nio.file.DirectoryIteratorException
+import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +47,7 @@ import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
 import me.zhanghai.android.files.util.StatefulLoader
 import me.zhanghai.android.files.util.Success
+import me.zhanghai.android.files.util.findCauseByClass
 import java.io.IOException
 
 // TODO: Use SavedStateHandle to save state.
@@ -323,6 +325,10 @@ class FileListViewModel : ViewModel() {
         isShowingHiddenFiles: Boolean,
         searchState: SearchState
     ): List<FileItem>? {
+        // What was listed before isn't there anymore either.
+        if ((fileList as? Failure)?.throwable?.findCauseByClass<NoSuchFileException>() != null) {
+            return null
+        }
         var files = fileList.value ?: return null
         if (!isShowingHiddenFiles) {
             files = files.filterNot { it.isHidden }
