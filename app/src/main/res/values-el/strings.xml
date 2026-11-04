@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Απαιτείται κωδικός</string>
     <string name="file_action_archive_password_message_format">Το “%1$s” προστατεύεται από κωδικό.</string>
     <string name="file_action_archive_password_error_empty">Ο κωδικός δεν μπορεί να είναι άδειος</string>
+    <string name="file_action_archive_password_error_incorrect">Λάθος κωδικός πρόσβασης</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Προετοιμασία για συμπίεση %1$,d αρχείο (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Πατήστε ξανά Πίσω για έξοδο</string>
     <string name="file_list_error_folder_not_found">Αυτός ο φάκελος δεν υπάρχει πλέον</string>
     <string name="file_list_error_permission_denied">Δεν έχετε δικαίωμα να ανοίξετε αυτόν τον φάκελο</string>
-    <string name="file_list_error_unknown">Δεν είναι δυνατό το άνοιγμα αυτού του φακέλου</string>
     <string name="file_list_error_archive_header_encrypted">Η λίστα αρχείων αυτού του συμπιεσμένου αρχείου είναι κρυπτογραφημένη, κάτι που δεν υποστηρίζεται</string>
+    <string name="file_list_error_unknown">Δεν είναι δυνατό το άνοιγμα αυτού του φακέλου</string>
     <string name="file_list_action_create">Δημιουργία</string>
     <string name="file_list_action_create_file">Αρχείο</string>
     <string name="file_list_action_create_directory">Φάκελος</string>

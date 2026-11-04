@@ -68,6 +68,7 @@
     <string name="file_action_archive_password_title">Cần mật khẩu</string>
     <string name="file_action_archive_password_message_format">“%1$s” được bảo vệ bằng mật khẩu.</string>
     <string name="file_action_archive_password_error_empty">Mật khẩu không được để trống</string>
+    <string name="file_action_archive_password_error_incorrect">Sai mật khẩu</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">Đang chuẩn bị nén %1$,d tệp (%2$s)</item>
@@ -281,8 +282,8 @@
     <string name="file_list_press_back_again_to_exit">Nhấn quay lại lần nữa để thoát</string>
     <string name="file_list_error_folder_not_found">Thư mục này không còn tồn tại</string>
     <string name="file_list_error_permission_denied">Bạn không có quyền mở thư mục này</string>
-    <string name="file_list_error_unknown">Không thể mở thư mục này</string>
     <string name="file_list_error_archive_header_encrypted">Danh sách tệp của kho lưu trữ này được mã hóa, điều này không được hỗ trợ</string>
+    <string name="file_list_error_unknown">Không thể mở thư mục này</string>
     <string name="file_list_action_create">Tạo</string>
     <string name="file_list_action_create_file">Tệp</string>
     <string name="file_list_action_create_directory">Thư mục</string>

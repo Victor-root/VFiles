@@ -17,16 +17,22 @@ import kotlin.coroutines.resume
 
 class ArchivePasswordRequiredException(
     private val file: Path,
-    reason: String?
+    private val reason: String?
 ) :
     UserActionRequiredException(file.toString(), null, reason) {
 
     override fun getUserAction(continuation: Continuation<Boolean>, context: Context): UserAction {
         return UserAction(
             ArchivePasswordDialogActivity::class.createIntent().putArgs(
-                ArchivePasswordDialogActivity.Args(file) { continuation.resume(it) }
+                ArchivePasswordDialogActivity.Args(
+                    file, reason == INCORRECT_PASSWORD_REASON
+                ) { continuation.resume(it) }
             ), ArchivePasswordDialogActivity.getTitle(context),
             ArchivePasswordDialogActivity.getMessage(file, context)
         )
+    }
+
+    companion object {
+        const val INCORRECT_PASSWORD_REASON = "Incorrect passphrase"
     }
 }

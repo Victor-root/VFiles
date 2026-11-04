@@ -76,6 +76,7 @@
     <string name="file_action_archive_password_title">Password required</string>
     <string name="file_action_archive_password_message_format">“%1$s” is password-protected.</string>
     <string name="file_action_archive_password_error_empty">Password cannot be empty</string>
+    <string name="file_action_archive_password_error_incorrect">Incorrect password</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparing to compress %1$,d file (%2$s)</item>
@@ -324,8 +325,8 @@
     <string name="file_list_press_back_again_to_exit">Press back again to exit</string>
     <string name="file_list_error_folder_not_found">This folder no longer exists</string>
     <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
-    <string name="file_list_error_unknown">Unable to open this folder</string>
     <string name="file_list_error_archive_header_encrypted">The list of files of this archive is encrypted, which isn\'t supported</string>
+    <string name="file_list_error_unknown">Unable to open this folder</string>
     <string name="file_list_action_create">Create</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Folder</string>

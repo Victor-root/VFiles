@@ -76,6 +76,7 @@
     <string name="file_action_archive_password_title">Потрібен пароль</string>
     <string name="file_action_archive_password_message_format">“%1$s” захищений паролем.</string>
     <string name="file_action_archive_password_error_empty">Пароль не може бути порожнім</string>
+    <string name="file_action_archive_password_error_incorrect">Неправильний пароль</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Підготовка до стиснення %1$,d файлу (%2$s)</item>
@@ -373,8 +374,8 @@
     <string name="file_list_press_back_again_to_exit">Натисніть «Назад» ще раз, щоб вийти</string>
     <string name="file_list_error_folder_not_found">Ця папка більше не існує</string>
     <string name="file_list_error_permission_denied">У вас немає дозволу відкрити цю папку</string>
-    <string name="file_list_error_unknown">Не вдалося відкрити цю папку</string>
     <string name="file_list_error_archive_header_encrypted">Список файлів цього архіву зашифровано, це не підтримується</string>
+    <string name="file_list_error_unknown">Не вдалося відкрити цю папку</string>
     <string name="file_list_action_create">Створити</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Тека</string>

@@ -76,6 +76,7 @@
     <string name="file_action_archive_password_title">كلمة المرور مطلوبة</string>
     <string name="file_action_archive_password_message_format">”%1$s“ محمي بكلمة مرور</string>
     <string name="file_action_archive_password_error_empty">كلمة المرور لا يمكن أن تكون فارغة</string>
+    <string name="file_action_archive_password_error_incorrect">كلمة المرور غير صحيحة</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="zero">التحضير لضغط %1$,d ملف (%2$s)</item>
@@ -429,8 +430,8 @@
     <string name="file_list_press_back_again_to_exit">اضغط رجوع مرة أخرى للخروج</string>
     <string name="file_list_error_folder_not_found">لم يعد هذا المجلد موجودًا</string>
     <string name="file_list_error_permission_denied">ليس لديك إذن لفتح هذا المجلد</string>
-    <string name="file_list_error_unknown">تعذّر فتح هذا المجلد</string>
     <string name="file_list_error_archive_header_encrypted">قائمة ملفات هذا الأرشيف مشفرة، وهذا غير مدعوم</string>
+    <string name="file_list_error_unknown">تعذّر فتح هذا المجلد</string>
     <string name="file_list_action_create">إنشاء</string>
     <string name="file_list_action_create_file">ملف</string>
     <string name="file_list_action_create_directory">مجلد</string>

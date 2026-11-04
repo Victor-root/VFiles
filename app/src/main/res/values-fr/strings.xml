@@ -76,6 +76,7 @@
     <string name="file_action_archive_password_title">Mot de passe requis</string>
     <string name="file_action_archive_password_message_format">\"%1$s\" est protégé par un mot de passe</string>
     <string name="file_action_archive_password_error_empty">Le mot de passe ne peut pas être vide</string>
+    <string name="file_action_archive_password_error_incorrect">Mot de passe incorrect</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Préparation de la compression de %1$,d fichier (%2$s)</item>
@@ -345,8 +346,8 @@
     <string name="file_list_press_back_again_to_exit">Appuyez à nouveau sur retour pour quitter</string>
     <string name="file_list_error_folder_not_found">Ce dossier n\'existe plus</string>
     <string name="file_list_error_permission_denied">Vous n\'avez pas l\'autorisation d\'ouvrir ce dossier</string>
-    <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
     <string name="file_list_error_archive_header_encrypted">La liste des fichiers de cette archive est chiffrée, ce qui n\'est pas pris en charge</string>
+    <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
     <string name="file_list_action_create">Créer</string>
     <string name="file_list_action_create_file">Fichier</string>
     <string name="file_list_action_create_directory">Dossier</string>

@@ -68,6 +68,7 @@
     <string name="file_action_archive_password_title">Salasana vaaditaan</string>
     <string name="file_action_archive_password_message_format">“%1$s” on suojattu salasanalla.</string>
     <string name="file_action_archive_password_error_empty">Salasana ei voi olla tyhjä</string>
+    <string name="file_action_archive_password_error_incorrect">Väärä salasana</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Valmistaudutaan pakkaamaan %1$,d tiedosto (%2$s)</item>
@@ -309,8 +310,8 @@
     <string name="file_list_press_back_again_to_exit">Poistu painamalla takaisin uudelleen</string>
     <string name="file_list_error_folder_not_found">Tätä kansiota ei ole enää olemassa</string>
     <string name="file_list_error_permission_denied">Sinulla ei ole oikeutta avata tätä kansiota</string>
-    <string name="file_list_error_unknown">Kansiota ei voi avata</string>
     <string name="file_list_error_archive_header_encrypted">Tämän arkiston tiedostoluettelo on salattu, mitä ei tueta</string>
+    <string name="file_list_error_unknown">Kansiota ei voi avata</string>
     <string name="file_list_action_create">Luo</string>
     <string name="file_list_action_create_file">Tiedosto</string>
     <string name="file_list_action_create_directory">Kansio</string>

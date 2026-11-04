@@ -74,6 +74,7 @@
     <string name="file_action_archive_password_title">צריך סיסמה</string>
     <string name="file_action_archive_password_message_format">„%1$s” מוגן בסיסמה</string>
     <string name="file_action_archive_password_error_empty">הסיסמה לא יכולה להיות ריקה</string>
+    <string name="file_action_archive_password_error_incorrect">סיסמה שגויה</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">מתכונן לדחיסת קובץ אחד (%2$s)</item>
@@ -371,8 +372,8 @@
     <string name="file_list_press_back_again_to_exit">יש ללחוץ שוב על חזרה כדי לצאת</string>
     <string name="file_list_error_folder_not_found">התיקייה הזו כבר לא קיימת</string>
     <string name="file_list_error_permission_denied">אין לך הרשאה לפתוח את התיקייה הזו</string>
-    <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
     <string name="file_list_error_archive_header_encrypted">רשימת הקבצים של ארכיון זה מוצפנת, ואין תמיכה בכך</string>
+    <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
     <string name="file_list_action_create">יצירה</string>
     <string name="file_list_action_create_file">קובץ</string>
     <string name="file_list_action_create_directory">תיקייה</string>

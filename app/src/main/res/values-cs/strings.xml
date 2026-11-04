@@ -74,6 +74,7 @@
     <string name="file_action_archive_password_title">Heslo vyžadováno</string>
     <string name="file_action_archive_password_message_format">\"%1$s\" je chráněno heslem.</string>
     <string name="file_action_archive_password_error_empty">Heslo nemůže být prázdné</string>
+    <string name="file_action_archive_password_error_incorrect">Nesprávné heslo</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Příprava ke kompresi %1$,d souboru (%2$s)</item>
@@ -371,8 +372,8 @@
     <string name="file_list_press_back_again_to_exit">Pro ukončení stiskněte znovu Zpět</string>
     <string name="file_list_error_folder_not_found">Tato složka již neexistuje</string>
     <string name="file_list_error_permission_denied">Nemáte oprávnění k otevření této složky</string>
-    <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
     <string name="file_list_error_archive_header_encrypted">Seznam souborů tohoto archivu je zašifrovaný, což není podporováno</string>
+    <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
     <string name="file_list_action_create">Vytvořit</string>
     <string name="file_list_action_create_file">Soubor</string>
     <string name="file_list_action_create_directory">Složka</string>

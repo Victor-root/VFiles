@@ -47,6 +47,11 @@ class ArchivePasswordDialogActivity : AppActivity() {
     @Composable
     override fun Content() {
         val passwordField = rememberFormFieldState()
+        LaunchedEffect(passwordField) {
+            if (args.isPasswordIncorrect) {
+                passwordField.errorRes = R.string.file_action_archive_password_error_incorrect
+            }
+        }
         val confirm = {
             val password = passwordField.text
             if (password.isEmpty()) {
@@ -114,6 +119,7 @@ class ArchivePasswordDialogActivity : AppActivity() {
     @Parcelize
     class Args(
         val path: @WriteWith<ParcelableParceler> Path,
+        val isPasswordIncorrect: Boolean,
         val listener: @WriteWith<ListenerParceler>()
         (Boolean) -> Unit
     ) : ParcelableArgs {

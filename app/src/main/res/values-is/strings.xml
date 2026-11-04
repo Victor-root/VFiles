@@ -74,6 +74,7 @@
     <string name="file_action_archive_password_title">Lykilorðs krafist</string>
     <string name="file_action_archive_password_message_format">“%1$s” er varið með lykilorði.</string>
     <string name="file_action_archive_password_error_empty">Lykilorð má ekki vera autt</string>
+    <string name="file_action_archive_password_error_incorrect">Rangt lykilorð</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Undirbý að þjappa %1$,d skrá (%2$s)</item>
@@ -315,8 +316,8 @@
     <string name="file_list_press_back_again_to_exit">Ýttu aftur á Til baka til að hætta</string>
     <string name="file_list_error_folder_not_found">Þessi mappa er ekki lengur til</string>
     <string name="file_list_error_permission_denied">Þú hefur ekki heimild til að opna þessa möppu</string>
-    <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
     <string name="file_list_error_archive_header_encrypted">Skráalisti þessa safns er dulkóðaður, sem er ekki stutt</string>
+    <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
     <string name="file_list_action_create">Útbúa</string>
     <string name="file_list_action_create_file">Skrá</string>
     <string name="file_list_action_create_directory">Mappa</string>

@@ -69,6 +69,7 @@
     <string name="file_action_archive_password_title">需要密码</string>
     <string name="file_action_archive_password_message_format">“%1$s”受密码保护。</string>
     <string name="file_action_archive_password_error_empty">密码不能为空</string>
+    <string name="file_action_archive_password_error_incorrect">密码不正确</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">正在准备压缩 %1$,d 个文件（%2$s）</item>
@@ -282,8 +283,8 @@
     <string name="file_list_press_back_again_to_exit">再按一次返回键退出</string>
     <string name="file_list_error_folder_not_found">此文件夹已不存在</string>
     <string name="file_list_error_permission_denied">您没有权限打开此文件夹</string>
-    <string name="file_list_error_unknown">无法打开此文件夹</string>
     <string name="file_list_error_archive_header_encrypted">此压缩文件的文件列表已加密，不受支持</string>
+    <string name="file_list_error_unknown">无法打开此文件夹</string>
     <string name="file_list_action_create">创建</string>
     <string name="file_list_action_create_file">文件</string>
     <string name="file_list_action_create_directory">文件夹</string>

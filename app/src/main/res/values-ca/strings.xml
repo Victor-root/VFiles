@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Es requereix una contrasenya</string>
     <string name="file_action_archive_password_message_format">«%1$s» està protegit amb contrasenya.</string>
     <string name="file_action_archive_password_error_empty">La contrasenya no pot ser buida</string>
+    <string name="file_action_archive_password_error_incorrect">Contrasenya incorrecta</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparant la compressió de %1$,d fitxers (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Torneu a prémer Enrere per sortir</string>
     <string name="file_list_error_folder_not_found">Aquesta carpeta ja no existeix</string>
     <string name="file_list_error_permission_denied">No teniu permís per obrir aquesta carpeta</string>
-    <string name="file_list_error_unknown">No s\'ha pogut obrir aquesta carpeta</string>
     <string name="file_list_error_archive_header_encrypted">La llista de fitxers d\'aquest arxiu està xifrada, cosa que no és compatible</string>
+    <string name="file_list_error_unknown">No s\'ha pogut obrir aquesta carpeta</string>
     <string name="file_list_action_create">Crea</string>
     <string name="file_list_action_create_file">Fitxer</string>
     <string name="file_list_action_create_directory">Carpeta</string>

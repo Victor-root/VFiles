@@ -73,6 +73,7 @@
     <string name="file_action_archive_password_title">Reikalingas slaptažodis</string>
     <string name="file_action_archive_password_message_format">„%1$s“ apsaugotas slaptažodžiu.</string>
     <string name="file_action_archive_password_error_empty">Slaptažodis negali būti tuščias</string>
+    <string name="file_action_archive_password_error_incorrect">Neteisingas slaptažodis</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Ruošiamasi suspausti %1$,d failą (%2$s)</item>
@@ -370,8 +371,8 @@
     <string name="file_list_press_back_again_to_exit">Paspauskite „Atgal“ dar kartą, kad išeitumėte</string>
     <string name="file_list_error_folder_not_found">Šio aplanko nebėra</string>
     <string name="file_list_error_permission_denied">Neturite leidimo atidaryti šio aplanko</string>
-    <string name="file_list_error_unknown">Nepavyko atidaryti šio aplanko</string>
     <string name="file_list_error_archive_header_encrypted">Šio archyvo failų sąrašas užšifruotas, tai nepalaikoma</string>
+    <string name="file_list_error_unknown">Nepavyko atidaryti šio aplanko</string>
     <string name="file_list_action_create">Sukurti</string>
     <string name="file_list_action_create_file">Failas</string>
     <string name="file_list_action_create_directory">Aplankas</string>

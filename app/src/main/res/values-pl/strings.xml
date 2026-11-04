@@ -74,6 +74,7 @@
     <string name="file_action_archive_password_title">Wymagane hasło</string>
     <string name="file_action_archive_password_message_format">„%1$s” jest chronione hasłem.</string>
     <string name="file_action_archive_password_error_empty">Hasło nie może być puste</string>
+    <string name="file_action_archive_password_error_incorrect">Nieprawidłowe hasło</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Trwa przygotowywanie do skompresowania %1$,d pliku (%2$s)</item>
@@ -371,8 +372,8 @@
     <string name="file_list_press_back_again_to_exit">Naciśnij Wstecz ponownie, aby wyjść</string>
     <string name="file_list_error_folder_not_found">Ten folder już nie istnieje</string>
     <string name="file_list_error_permission_denied">Nie masz uprawnień do otwarcia tego folderu</string>
-    <string name="file_list_error_unknown">Nie można otworzyć tego folderu</string>
     <string name="file_list_error_archive_header_encrypted">Lista plików tego archiwum jest zaszyfrowana, co nie jest obsługiwane</string>
+    <string name="file_list_error_unknown">Nie można otworzyć tego folderu</string>
     <string name="file_list_action_create">Utwórz</string>
     <string name="file_list_action_create_file">Plik</string>
     <string name="file_list_action_create_directory">Katalog</string>

@@ -71,6 +71,7 @@
     <string name="file_action_archive_password_title">비밀번호 필요</string>
     <string name="file_action_archive_password_message_format">“%1$s” 파일은 비밀번호로 보호되어 있습니다.</string>
     <string name="file_action_archive_password_error_empty">비밀번호를 입력하세요</string>
+    <string name="file_action_archive_password_error_incorrect">비밀번호가 올바르지 않습니다</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">%1$,d개 파일 압축 준비 중 (%2$s)</item>
@@ -284,8 +285,8 @@
     <string name="file_list_press_back_again_to_exit">종료하려면 뒤로를 한 번 더 누르세요</string>
     <string name="file_list_error_folder_not_found">이 폴더가 더 이상 존재하지 않습니다</string>
     <string name="file_list_error_permission_denied">이 폴더를 열 권한이 없습니다</string>
-    <string name="file_list_error_unknown">이 폴더를 열 수 없습니다</string>
     <string name="file_list_error_archive_header_encrypted">이 압축 파일의 파일 목록은 암호화되어 있어 지원되지 않습니다</string>
+    <string name="file_list_error_unknown">이 폴더를 열 수 없습니다</string>
     <string name="file_list_action_create">만들기</string>
     <string name="file_list_action_create_file">파일</string>
     <string name="file_list_action_create_directory">폴더</string>

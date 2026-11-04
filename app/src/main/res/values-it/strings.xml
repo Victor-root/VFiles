@@ -73,6 +73,7 @@
     <string name="file_action_archive_password_title">Password richiesta</string>
     <string name="file_action_archive_password_message_format">“%1$s” è protetto da password.</string>
     <string name="file_action_archive_password_error_empty">La password non può essere vuota</string>
+    <string name="file_action_archive_password_error_incorrect">Password errata</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparazione per comprimere %1$,d file (%2$s)</item>
@@ -342,8 +343,8 @@
     <string name="file_list_press_back_again_to_exit">Premi di nuovo Indietro per uscire</string>
     <string name="file_list_error_folder_not_found">Questa cartella non esiste più</string>
     <string name="file_list_error_permission_denied">Non hai i permessi per aprire questa cartella</string>
-    <string name="file_list_error_unknown">Impossibile aprire questa cartella</string>
     <string name="file_list_error_archive_header_encrypted">L\'elenco dei file di questo archivio è crittografato e ciò non è supportato</string>
+    <string name="file_list_error_unknown">Impossibile aprire questa cartella</string>
     <string name="file_list_action_create">Crea</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Cartella</string>

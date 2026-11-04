@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Wachtwoord vereist</string>
     <string name="file_action_archive_password_message_format">‘%1$s’ is beveiligd met een wachtwoord.</string>
     <string name="file_action_archive_password_error_empty">Voer een wachtwoord in</string>
+    <string name="file_action_archive_password_error_incorrect">Onjuist wachtwoord</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Bezig met voorbereiden van %1$,d bestand (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Druk nogmaals op Terug om af te sluiten</string>
     <string name="file_list_error_folder_not_found">Deze map bestaat niet meer</string>
     <string name="file_list_error_permission_denied">Je hebt geen toestemming om deze map te openen</string>
-    <string name="file_list_error_unknown">Kan deze map niet openen</string>
     <string name="file_list_error_archive_header_encrypted">De bestandslijst van dit archief is versleuteld, wat niet wordt ondersteund</string>
+    <string name="file_list_error_unknown">Kan deze map niet openen</string>
     <string name="file_list_action_create">Maken</string>
     <string name="file_list_action_create_file">Bestand</string>
     <string name="file_list_action_create_directory">Map</string>

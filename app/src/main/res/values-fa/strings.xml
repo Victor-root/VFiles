@@ -71,6 +71,7 @@
     <string name="file_action_archive_password_title">گذرواژه لازم است</string>
     <string name="file_action_archive_password_message_format">«⁨%1$s⁩» با گذرواژه محافظت شده است.</string>
     <string name="file_action_archive_password_error_empty">گذرواژه نمی‌تواند خالی باشد</string>
+    <string name="file_action_archive_password_error_incorrect">گذرواژه نادرست است</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">در حال آماده‌سازی برای فشرده کردن %1$,d پرونده (⁨%2$s⁩)</item>
@@ -312,8 +313,8 @@
     <string name="file_list_press_back_again_to_exit">برای خروج، دوباره دکمهٔ بازگشت را بزنید</string>
     <string name="file_list_error_folder_not_found">این پوشه دیگر وجود ندارد</string>
     <string name="file_list_error_permission_denied">شما اجازهٔ باز کردن این پوشه را ندارید</string>
-    <string name="file_list_error_unknown">باز کردن این پوشه ممکن نیست</string>
     <string name="file_list_error_archive_header_encrypted">فهرست فایل‌های این بایگانی رمزگذاری شده است و پشتیبانی نمی‌شود</string>
+    <string name="file_list_error_unknown">باز کردن این پوشه ممکن نیست</string>
     <string name="file_list_action_create">ایجاد</string>
     <string name="file_list_action_create_file">پرونده</string>
     <string name="file_list_action_create_directory">شاخه</string>

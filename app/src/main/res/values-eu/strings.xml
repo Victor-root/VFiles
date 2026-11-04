@@ -69,6 +69,7 @@
     <string name="file_action_archive_password_title">Pasahitza behar da</string>
     <string name="file_action_archive_password_message_format">“%1$s” pasahitzez babestuta dago.</string>
     <string name="file_action_archive_password_error_empty">Pasahitza ezin da hutsik egon</string>
+    <string name="file_action_archive_password_error_incorrect">Pasahitz okerra</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Fitxategi %1$,d konprimitzeko prestatzen (%2$s)</item>
@@ -310,8 +311,8 @@
     <string name="file_list_press_back_again_to_exit">Sakatu atzera berriro irteteko</string>
     <string name="file_list_error_folder_not_found">Karpeta hau jada ez dago</string>
     <string name="file_list_error_permission_denied">Ez duzu baimenik karpeta hau irekitzeko</string>
-    <string name="file_list_error_unknown">Ezin da karpeta hau ireki</string>
     <string name="file_list_error_archive_header_encrypted">Artxibo honen fitxategi-zerrenda zifratuta dago, eta hori ez da onartzen</string>
+    <string name="file_list_error_unknown">Ezin da karpeta hau ireki</string>
     <string name="file_list_action_create">Sortu</string>
     <string name="file_list_action_create_file">Fitxategia</string>
     <string name="file_list_action_create_directory">Karpeta</string>

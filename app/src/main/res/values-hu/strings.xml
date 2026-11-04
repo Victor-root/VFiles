@@ -69,6 +69,7 @@
     <string name="file_action_archive_password_title">Jelszó szükséges</string>
     <string name="file_action_archive_password_message_format">A(z) „%1$s” jelszóval védett.</string>
     <string name="file_action_archive_password_error_empty">A jelszó nem lehet üres</string>
+    <string name="file_action_archive_password_error_incorrect">Helytelen jelszó</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Felkészülés %1$,d fájl tömörítésére (%2$s)</item>
@@ -310,8 +311,8 @@
     <string name="file_list_press_back_again_to_exit">Nyomja meg újra a Vissza gombot a kilépéshez</string>
     <string name="file_list_error_folder_not_found">Ez a mappa már nem létezik</string>
     <string name="file_list_error_permission_denied">Nincs jogosultsága a mappa megnyitásához</string>
-    <string name="file_list_error_unknown">A mappa nem nyitható meg</string>
     <string name="file_list_error_archive_header_encrypted">Az archívum fájllistája titkosított, ami nem támogatott</string>
+    <string name="file_list_error_unknown">A mappa nem nyitható meg</string>
     <string name="file_list_action_create">Létrehozás</string>
     <string name="file_list_action_create_file">Fájl</string>
     <string name="file_list_action_create_directory">Mappa</string>

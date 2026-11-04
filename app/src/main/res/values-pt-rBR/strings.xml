@@ -74,6 +74,7 @@
     <string name="file_action_archive_password_title">Senha necessária</string>
     <string name="file_action_archive_password_message_format">“%1$s” é protegido por senha.</string>
     <string name="file_action_archive_password_error_empty">A senha não pode estar vazia</string>
+    <string name="file_action_archive_password_error_incorrect">Senha incorreta</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparando para compactar %1$,d arquivo (%2$s)</item>
@@ -343,8 +344,8 @@
     <string name="file_list_press_back_again_to_exit">Pressione voltar novamente para sair</string>
     <string name="file_list_error_folder_not_found">Esta pasta não existe mais</string>
     <string name="file_list_error_permission_denied">Você não tem permissão para abrir esta pasta</string>
-    <string name="file_list_error_unknown">Não foi possível abrir esta pasta</string>
     <string name="file_list_error_archive_header_encrypted">A lista de arquivos deste pacote está criptografada, o que não é compatível</string>
+    <string name="file_list_error_unknown">Não foi possível abrir esta pasta</string>
     <string name="file_list_action_create">Criar</string>
     <string name="file_list_action_create_file">Arquivo</string>
     <string name="file_list_action_create_directory">Pasta</string>

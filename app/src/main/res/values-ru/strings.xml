@@ -76,6 +76,7 @@
     <string name="file_action_archive_password_title">Нужен пароль</string>
     <string name="file_action_archive_password_message_format">“%1$s” защищённый паролем.</string>
     <string name="file_action_archive_password_error_empty">Пароль не может быть пустым</string>
+    <string name="file_action_archive_password_error_incorrect">Неверный пароль</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Подготовка к сжатию %1$,d файла (%2$s)</item>
@@ -373,8 +374,8 @@
     <string name="file_list_press_back_again_to_exit">Нажмите «Назад» ещё раз для выхода</string>
     <string name="file_list_error_folder_not_found">Эта папка больше не существует</string>
     <string name="file_list_error_permission_denied">У вас нет разрешения на открытие этой папки</string>
-    <string name="file_list_error_unknown">Не удалось открыть эту папку</string>
     <string name="file_list_error_archive_header_encrypted">Список файлов этого архива зашифрован, это не поддерживается</string>
+    <string name="file_list_error_unknown">Не удалось открыть эту папку</string>
     <string name="file_list_action_create">Создать</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>

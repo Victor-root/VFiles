@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Необходима е парола</string>
     <string name="file_action_archive_password_message_format">Файлът „%1$s“ е защитен с парола</string>
     <string name="file_action_archive_password_error_empty">Паролата не може да е празна</string>
+    <string name="file_action_archive_password_error_incorrect">Грешна парола</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Подготвя се за компресиране %1$,d файл (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Натиснете „Назад“ отново за изход</string>
     <string name="file_list_error_folder_not_found">Тази папка вече не съществува</string>
     <string name="file_list_error_permission_denied">Нямате разрешение да отворите тази папка</string>
-    <string name="file_list_error_unknown">Папката не може да бъде отворена</string>
     <string name="file_list_error_archive_header_encrypted">Списъкът с файлове на този архив е шифрован, което не се поддържа</string>
+    <string name="file_list_error_unknown">Папката не може да бъде отворена</string>
     <string name="file_list_action_create">Създаване</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>

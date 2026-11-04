@@ -73,6 +73,7 @@
     <string name="file_action_archive_password_title">Parola este necesară</string>
     <string name="file_action_archive_password_message_format">\"%1$s\" este protejat de o parolă.</string>
     <string name="file_action_archive_password_error_empty">Câmpul parolă nu poate fi gol</string>
+    <string name="file_action_archive_password_error_incorrect">Parolă incorectă</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Ss pregătesc de compresie %1$,d fișier (%2$s)</item>
@@ -342,8 +343,8 @@
     <string name="file_list_press_back_again_to_exit">Apasă din nou înapoi pentru a ieși</string>
     <string name="file_list_error_folder_not_found">Acest folder nu mai există</string>
     <string name="file_list_error_permission_denied">Nu aveți permisiunea de a deschide acest folder</string>
-    <string name="file_list_error_unknown">Nu se poate deschide acest folder</string>
     <string name="file_list_error_archive_header_encrypted">Lista de fișiere a acestei arhive este criptată, ceea ce nu este acceptat</string>
+    <string name="file_list_error_unknown">Nu se poate deschide acest folder</string>
     <string name="file_list_action_create">Creează</string>
     <string name="file_list_action_create_file">Fișier</string>
     <string name="file_list_action_create_directory">Dosar</string>

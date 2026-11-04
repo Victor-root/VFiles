@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Passwort erforderlich</string>
     <string name="file_action_archive_password_message_format">“%1$s” ist passwortgeschützt.</string>
     <string name="file_action_archive_password_error_empty">Passwort darf nicht leer sein</string>
+    <string name="file_action_archive_password_error_incorrect">Falsches Passwort</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Bereite Komprimierung für %1$,d Datei vor (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Zum Beenden erneut „Zurück“ drücken</string>
     <string name="file_list_error_folder_not_found">Dieser Ordner existiert nicht mehr</string>
     <string name="file_list_error_permission_denied">Sie haben keine Berechtigung, diesen Ordner zu öffnen</string>
-    <string name="file_list_error_unknown">Dieser Ordner kann nicht geöffnet werden</string>
     <string name="file_list_error_archive_header_encrypted">Die Dateiliste dieses Archivs ist verschlüsselt, was nicht unterstützt wird</string>
+    <string name="file_list_error_unknown">Dieser Ordner kann nicht geöffnet werden</string>
     <string name="file_list_action_create">Erstellen</string>
     <string name="file_list_action_create_file">Datei</string>
     <string name="file_list_action_create_directory">Ordner</string>

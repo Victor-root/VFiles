@@ -69,6 +69,7 @@
     <string name="file_action_archive_password_title">需要密碼</string>
     <string name="file_action_archive_password_message_format">“%1$s”受密碼保護。</string>
     <string name="file_action_archive_password_error_empty">密碼不能為空</string>
+    <string name="file_action_archive_password_error_incorrect">密碼不正確</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">正在準備壓縮 %1$,d 個檔案（%2$s）</item>
@@ -282,8 +283,8 @@
     <string name="file_list_press_back_again_to_exit">再按一次返回鍵即可退出</string>
     <string name="file_list_error_folder_not_found">此資料夾已不存在</string>
     <string name="file_list_error_permission_denied">您沒有權限開啟此資料夾</string>
-    <string name="file_list_error_unknown">無法開啟此資料夾</string>
     <string name="file_list_error_archive_header_encrypted">此壓縮檔的檔案清單已加密，不受支援</string>
+    <string name="file_list_error_unknown">無法開啟此資料夾</string>
     <string name="file_list_action_create">建立</string>
     <string name="file_list_action_create_file">檔案</string>
     <string name="file_list_action_create_directory">資料夾</string>

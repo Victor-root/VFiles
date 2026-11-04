@@ -72,6 +72,7 @@
     <string name="file_action_archive_password_title">Passord kreves</string>
     <string name="file_action_archive_password_message_format">«%1$s» er passordbeskyttet.</string>
     <string name="file_action_archive_password_error_empty">Passord kan ikke være tomt</string>
+    <string name="file_action_archive_password_error_incorrect">Feil passord</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Forbereder komprimering av %1$,d fil (%2$s)</item>
@@ -313,8 +314,8 @@
     <string name="file_list_press_back_again_to_exit">Trykk tilbake igjen for å avslutte</string>
     <string name="file_list_error_folder_not_found">Denne mappen finnes ikke lenger</string>
     <string name="file_list_error_permission_denied">Du har ikke tillatelse til å åpne denne mappen</string>
-    <string name="file_list_error_unknown">Kan ikke åpne denne mappen</string>
     <string name="file_list_error_archive_header_encrypted">Fillisten i dette arkivet er kryptert, noe som ikke støttes</string>
+    <string name="file_list_error_unknown">Kan ikke åpne denne mappen</string>
     <string name="file_list_action_create">Opprett</string>
     <string name="file_list_action_create_file">Fil</string>
     <string name="file_list_action_create_directory">Mappe</string>

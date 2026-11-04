@@ -73,6 +73,7 @@
     <string name="file_action_archive_password_title">Se requiere contraseña</string>
     <string name="file_action_archive_password_message_format">“%1$s” está protegido por una contraseña.</string>
     <string name="file_action_archive_password_error_empty">La contraseña no puede estar vacía</string>
+    <string name="file_action_archive_password_error_incorrect">Contraseña incorrecta</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparando para comprimir %1$,d archivos (%2$s)</item>
@@ -342,8 +343,8 @@
     <string name="file_list_press_back_again_to_exit">Pulsa Atrás de nuevo para salir</string>
     <string name="file_list_error_folder_not_found">Esta carpeta ya no existe</string>
     <string name="file_list_error_permission_denied">No tienes permiso para abrir esta carpeta</string>
-    <string name="file_list_error_unknown">No se puede abrir esta carpeta</string>
     <string name="file_list_error_archive_header_encrypted">La lista de archivos de este comprimido está cifrada, lo que no es compatible</string>
+    <string name="file_list_error_unknown">No se puede abrir esta carpeta</string>
     <string name="file_list_action_create">Crear</string>
     <string name="file_list_action_create_file">Archivo</string>
     <string name="file_list_action_create_directory">Carpeta</string>

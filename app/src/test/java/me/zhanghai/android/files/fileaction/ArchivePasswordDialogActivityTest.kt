@@ -42,7 +42,7 @@ class ArchivePasswordDialogActivityTest {
         TestDocumentsProvider.addFile("secret.zip", "application/zip", 1024)
         val archivePath = rootPath.resolve("secret.zip").createArchiveRootPath()
         var result: Boolean? = null
-        val args = ArchivePasswordDialogActivity.Args(archivePath) { result = it }
+        val args = ArchivePasswordDialogActivity.Args(archivePath, false) { result = it }
         ActivityScenario.launch<ArchivePasswordDialogActivity>(
             ArchivePasswordDialogActivity::class.createIntent().putArgs(args)
         )
@@ -55,5 +55,18 @@ class ArchivePasswordDialogActivityTest {
         composeTestRule.onNodeWithText("OK").performClick()
         composeTestRule.waitForIdle()
         assertEquals(true, result)
+    }
+
+    @Test
+    fun tellsWhenPasswordWasIncorrect() {
+        val rootPath = TestDocumentsProvider.install()
+        TestDocumentsProvider.addFile("secret.zip", "application/zip", 1024)
+        val archivePath = rootPath.resolve("secret.zip").createArchiveRootPath()
+        val args = ArchivePasswordDialogActivity.Args(archivePath, true) {}
+        ActivityScenario.launch<ArchivePasswordDialogActivity>(
+            ArchivePasswordDialogActivity::class.createIntent().putArgs(args)
+        )
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Incorrect password").assertIsDisplayed()
     }
 }
