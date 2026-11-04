@@ -156,6 +156,18 @@ class FileListActivityTest {
     }
 
     private fun addManyFiles() {
+    @Test
+    fun doesNotCountHiddenFilesInSubtitle() {
+        TestDocumentsProvider.addFile(".hidden", "application/octet-stream", 0)
+        TestDocumentsProvider.addDirectory("Silent")
+        TestDocumentsProvider.addFile("Silent/.nomedia", "application/octet-stream", 0)
+        launch()
+        composeTestRule.onNodeWithText("3 folders, 2 files").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Silent").performClick()
+        waitForText("No files")
+        composeTestRule.onNodeWithText("Empty").assertIsDisplayed()
+    }
+
         for (i in 1..40) {
             TestDocumentsProvider.addFile("zfile$i.txt", "text/plain", 1024)
         }

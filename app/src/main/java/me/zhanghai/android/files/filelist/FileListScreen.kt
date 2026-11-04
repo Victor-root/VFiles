@@ -587,6 +587,7 @@ private fun FileListScaffold(
                                                     .clearAndSetSemantics {}
                                             } else {
                                                 Modifier
+                                            files = files,
                                             }
                                         )
                                         EndRevealVisibility(
@@ -654,7 +655,7 @@ private fun FileListScaffold(
                     .focusRequester(speedDialFocusRequester)
                     .focusProperties {
                         right = FocusRequester.Cancel
-                        if (!fileListStateful.value.isNullOrEmpty()) {
+                        if (!files.isNullOrEmpty()) {
                             left = listFocusRequester
                             if (!isSpeedDialExpanded) {
                                 up = listFocusRequester
@@ -755,6 +756,7 @@ private fun FileListMainAppBar(
         textMeasurer.measure(title, titleStyle, softWrap = false, maxLines = 1).size.width
     }
     var isViewSortMenuShown by remember { mutableStateOf(false) }
+    files: List<FileItem>?,
     BoxWithConstraints(modifier = modifier) {
         // Sorting, and then searching, go to the overflow menu when the title doesn't fit next to
         // their buttons.
@@ -777,7 +779,7 @@ private fun FileListMainAppBar(
         val isViewSortFolded = foldableActionCount < 2
         FileListTopAppBar(
             title = title,
-            subtitle = fileListSubtitle(fileListStateful, isSearching),
+            subtitle = fileListSubtitle(fileListStateful, files, isSearching),
             isTitleScrolling = pickOptions != null,
             colors = colors,
             navigationIcon = {
@@ -897,12 +899,16 @@ private fun fileListTitle(
 }
 
 @Composable
-private fun fileListSubtitle(fileListStateful: Stateful<List<FileItem>>, isSearching: Boolean) =
+private fun fileListSubtitle(
+    fileListStateful: Stateful<List<FileItem>>,
+    displayedFiles: List<FileItem>?,
+    isSearching: Boolean
+) =
     when {
         fileListStateful is Failure -> stringResource(R.string.error)
         fileListStateful is Loading && !isSearching -> stringResource(R.string.loading)
         else -> {
-            val files = fileListStateful.value!!
+            val files = displayedFiles ?: fileListStateful.value!!
             val directoryCount = files.count { it.attributes.isDirectory }
             val fileCount = files.size - directoryCount
             val counts = listOfNotNull(
