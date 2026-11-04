@@ -103,11 +103,13 @@ private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
 private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
     val wallpaperColor = context.wallpaperAccentColor()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val systemColorScheme =
-            if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        val lightColorScheme = dynamicLightColorScheme(context)
         if (wallpaperColor == null ||
-            !isHueMismatched(systemColorScheme.primary.toArgb(), wallpaperColor)) {
-            return systemColorScheme
+ *
+ * It's told with the light scheme for dark mode too, whose app bar uses the light scheme: the hues
+ * of both differ a bit, and the rest of the app must not end up with another color than the app bar.
+            !isHueMismatched(lightColorScheme.primary.toArgb(), wallpaperColor)) {
+            return if (isDark) dynamicDarkColorScheme(context) else lightColorScheme
         }
     }
     return if (wallpaperColor != null) {
