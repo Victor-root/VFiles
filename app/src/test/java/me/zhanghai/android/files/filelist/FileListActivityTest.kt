@@ -383,11 +383,32 @@ class FileListActivityTest {
             composeTestRule.onNodeWithText("1 operation, 40%").performClick()
             composeTestRule.onNodeWithText("Operations in progress").assertIsDisplayed()
             composeTestRule.onNodeWithText("Copying photo.jpg").assertIsDisplayed()
-            captureScreenRoboImage("build/screenshots/file_list_file_jobs_popover.png")
+            captureScreenRoboImage("build/screenshots/file_list_file_jobs_sheet.png")
+            composeTestRule.onNodeWithText("Operations in progress")
+                .performTouchInput { swipeUp(endY = -300f) }
+            composeTestRule.waitForIdle()
+            composeTestRule.onNodeWithText("Operations in progress").assertDoesNotExist()
         } finally {
             FileJobProgresses.remove(1)
         }
         composeTestRule.onNodeWithText("2 folders, 2 files").assertIsDisplayed()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun opensFileJobsWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        FileJobProgresses.update(1, "Copying photo.jpg", "1 MB of 2 MB", 100, 40, false)
+        try {
+            val title = composeTestRule.onNodeWithText("1 operation, 40%")
+            title.requestFocus()
+            title.performKeyInput { pressKey(Key.DirectionCenter) }
+            composeTestRule.waitForIdle()
+            composeTestRule.onNodeWithText("Operations in progress").assertIsDisplayed()
+        } finally {
+            FileJobProgresses.remove(1)
+        }
     }
 
     @Test

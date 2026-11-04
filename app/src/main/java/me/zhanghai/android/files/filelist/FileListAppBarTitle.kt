@@ -19,49 +19,47 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntRect
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupPositionProvider
-import androidx.compose.ui.window.PopupProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.filejob.FileJobProgress
 import me.zhanghai.android.files.filejob.FileJobProgresses
 import me.zhanghai.android.files.filejob.FileJobService
+import me.zhanghai.android.files.ui.TopSheet
 import java.text.NumberFormat
 
 /**
  * The title and subtitle of the file list app bar. While file jobs run, the subtitle shows their
- * overall progress instead, and the title opens a popover listing them below it.
+ * overall progress instead, and the title opens a top sheet listing them.
  */
 @Composable
 fun FileListAppBarTitle(
@@ -72,11 +70,15 @@ fun FileListAppBarTitle(
 ) {
     val progresses by FileJobProgresses.flow.collectAsStateWithLifecycle()
     val isRunning = progresses.isNotEmpty()
-    var isPopoverShown by remember { mutableStateOf(false) }
-    // Closed with the last job, so that it doesn't open again on its own with the next one.
-    LaunchedEffect(isRunning) {
-        if (!isRunning) {
-            isPopoverShown = false
+    var isSheetShown by rememberSaveable { mutableStateOf(false) }
+    // What the sheet still shows while it closes after the last job.
+    var sheetProgresses by remember { mutableStateOf(progresses) }
+    LaunchedEffect(progresses) {
+        if (isRunning) {
+            sheetProgresses = progresses
+        } else {
+            // Closed with the last job, so that it doesn't open again on its own with the next one.
+            isSheetShown = false
         }
     }
     val interactionSource = remember { MutableInteractionSource() }
@@ -101,7 +103,7 @@ fun FileListAppBarTitle(
                     indication = ripple(),
                     enabled = isRunning,
                     onClickLabel = stringResource(R.string.file_job_progress_title)
-                ) { isPopoverShown = !isPopoverShown }
+                ) { isSheetShown = true }
                 .padding(horizontal = APP_BAR_TITLE_HORIZONTAL_PADDING, vertical = 2.dp)
         ) {
             Text(
@@ -130,14 +132,10 @@ fun FileListAppBarTitle(
                 }
             }
         }
-        if (isRunning && isPopoverShown) {
-            Popup(
-                popupPositionProvider = BelowPositionProvider,
-                onDismissRequest = { isPopoverShown = false },
-                properties = PopupProperties(focusable = true)
-            ) {
-                FileJobProgressPopover(progresses)
-            }
+        // Read here, since a dialog doesn't know what the screen is used with.
+        val isKeyboardMode = LocalInputModeManager.current.inputMode == InputMode.Keyboard
+        TopSheet(isOpen = isSheetShown, onDismissRequest = { isSheetShown = false }) {
+            FileJobProgressSheetContent(sheetProgresses, isKeyboardMode)
         }
     }
 }
@@ -187,25 +185,6 @@ private fun FileJobProgressSubtitle(progresses: List<FileJobProgress>, contentCo
     }
 }
 
-// Places the popover below its anchor, aligned to its start but kept within the window. The margins
-// around it are part of the popover.
-private object BelowPositionProvider : PopupPositionProvider {
-    override fun calculatePosition(
-        anchorBounds: IntRect,
-        windowSize: IntSize,
-        layoutDirection: LayoutDirection,
-        popupContentSize: IntSize
-    ): IntOffset {
-        val x = if (layoutDirection == LayoutDirection.Ltr) {
-            anchorBounds.left
-        } else {
-            anchorBounds.right - popupContentSize.width
-        }
-        val maxX = (windowSize.width - popupContentSize.width).coerceAtLeast(0)
-        return IntOffset(x.coerceIn(0, maxX), anchorBounds.bottom)
-    }
-}
-
 internal val APP_BAR_TITLE_HORIZONTAL_PADDING = 8.dp
 private val TITLE_SHAPE = RoundedCornerShape(12.dp)
 private const val BACKGROUND_ALPHA = 0.14f
@@ -213,31 +192,40 @@ private const val FOCUSED_BACKGROUND_ALPHA = 0.3f
 private const val TRACK_ALPHA = 0.35f
 
 @Composable
-private fun FileJobProgressPopover(progresses: List<FileJobProgress>) {
-    Surface(
-        modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .padding(top = 8.dp)
-            .width(320.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.surface,
-        shadowElevation = 8.dp
-    ) {
-        Column(modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 8.dp, bottom = 8.dp)) {
-            Text(
-                text = stringResource(R.string.file_job_progress_title),
-                modifier = Modifier.padding(bottom = 4.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            for (progress in progresses) {
-                FileJobProgressRow(progress)
+private fun FileJobProgressSheetContent(
+    progresses: List<FileJobProgress>,
+    isKeyboardMode: Boolean
+) {
+    val firstCancelFocusRequester = remember { FocusRequester() }
+    // On a D-pad, the focus has to start somewhere in the sheet.
+    LaunchedEffect(firstCancelFocusRequester) {
+        if (isKeyboardMode) {
+            firstCancelFocusRequester.requestFocus()
+        }
+    }
+    Column(modifier = Modifier.padding(start = 24.dp, top = 16.dp, end = 12.dp)) {
+        Text(
+            text = stringResource(R.string.file_job_progress_title),
+            modifier = Modifier.padding(bottom = 4.dp),
+            style = MaterialTheme.typography.titleLarge
+        )
+        progresses.forEachIndexed { index, progress ->
+            key(progress.id) {
+                FileJobProgressRow(
+                    progress,
+                    cancelModifier = if (index == 0) {
+                        Modifier.focusRequester(firstCancelFocusRequester)
+                    } else {
+                        Modifier
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-private fun FileJobProgressRow(progress: FileJobProgress) {
+private fun FileJobProgressRow(progress: FileJobProgress, cancelModifier: Modifier) {
     val fraction by animateFloatAsState(progress.fraction ?: 0f)
     Row(
         modifier = Modifier.padding(vertical = 8.dp),
@@ -268,7 +256,7 @@ private fun FileJobProgressRow(progress: FileJobProgress) {
         }
         IconButton(
             onClick = { FileJobService.cancelJob(progress.id) },
-            modifier = Modifier
+            modifier = cancelModifier
                 .padding(start = 4.dp)
                 .size(40.dp)
         ) {
