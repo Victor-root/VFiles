@@ -725,7 +725,7 @@
     <string name="ftp_server_writable_title">Autoriser l\'écriture</string>
     <string name="settings_title">Réglages</string>
     <string name="settings_interface_title">Interface</string>
-    <string name="settings_locale_title">Langage </string>
+    <string name="settings_locale_title">Langue</string>
     <string name="settings_theme_color_title">Couleur du thème</string>
     <string name="settings_theme_color_summary">Couleur qui apparaît le plus souvent dans l’application</string>
     <string name="color_picker_dynamic_color_label">Selon le fond d’écran</string>
