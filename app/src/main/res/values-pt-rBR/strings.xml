@@ -661,6 +661,7 @@
         <item quantity="other">%1$,d álbuns</item>
     </plurals>
     <string name="music_player_title">Player de música</string>
+    <string name="music_player_error_format">Não foi possível reproduzir “%1$s”</string>
     <string name="music_shuffle">Aleatório</string>
     <string name="music_repeat">Repetir</string>
     <string name="music_previous">Anterior</string>
@@ -672,8 +673,8 @@
     <string name="pdf_viewer_page_hint_format">Página, de 1 a %1$,d</string>
     <string name="pdf_viewer_page_error">Página inexistente</string>
     <string name="pdf_viewer_password_protected">Este PDF é protegido por senha, o que não é suportado</string>
-    <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="media_viewer_error">Não foi possível abrir este arquivo</string>
+    <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvar como</string>
     <string name="save_as_error">Erro ao salvar o arquivo</string>
@@ -685,8 +686,8 @@
     <string name="text_editor_reload_message">Tem certeza de que deseja recarregar? Alterações não salvas neste documento serão perdidas.</string>
     <string name="text_editor_encoding">Codificação</string>
     <string name="text_editor_close_message">Tem certeza de que deseja descartar alterações não salvas neste documento?</string>
-
     <string name="text_editor_file_too_large">Este arquivo é grande demais para ser editado</string>
+
     <string name="ftp_server_title">Servidor FTP</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Iniciando…</string>

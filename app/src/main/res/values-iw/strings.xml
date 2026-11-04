@@ -695,6 +695,7 @@
         <item quantity="other">%1$,d אלבומים</item>
     </plurals>
     <string name="music_player_title">נגן מוזיקה</string>
+    <string name="music_player_error_format">לא ניתן להפעיל את “%1$s”</string>
     <string name="music_shuffle">ערבוב</string>
     <string name="music_repeat">חזרה</string>
     <string name="music_previous">הקודם</string>
@@ -706,8 +707,8 @@
     <string name="pdf_viewer_page_hint_format">עמוד, מ־1 עד %1$,d</string>
     <string name="pdf_viewer_page_error">אין עמוד כזה</string>
     <string name="pdf_viewer_password_protected">קובץ PDF זה מוגן בסיסמה, דבר שאינו נתמך</string>
-    <string name="image_viewer_title">מציג התמונות</string>
     <string name="media_viewer_error">לא ניתן לפתוח את הקובץ הזה</string>
+    <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>
     <string name="save_as_error">שגיאה בשמירת הקובץ</string>
@@ -719,8 +720,8 @@
     <string name="text_editor_reload_message">האם בוודאות ברצונך לטעון מחדש? שינויים שלא נשמרו במסמך זה יאבדו.</string>
     <string name="text_editor_encoding">הצפנה</string>
     <string name="text_editor_close_message">האם בוודאות ברצונך למחוק שינויים שלא נשמרו במסמך זה?</string>
-
     <string name="text_editor_file_too_large">הקובץ הזה גדול מדי לעריכה</string>
+
     <string name="ftp_server_title">שרת FTP</string>
     <string name="ftp_server_state_title">סטטוס</string>
     <string name="ftp_server_state_summary_starting">מתחיל…</string>

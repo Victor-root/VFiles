@@ -695,6 +695,7 @@
         <item quantity="other">%1$,d albumów</item>
     </plurals>
     <string name="music_player_title">Odtwarzacz muzyki</string>
+    <string name="music_player_error_format">Nie można odtworzyć „%1$s”</string>
     <string name="music_shuffle">Losowo</string>
     <string name="music_repeat">Powtarzaj</string>
     <string name="music_previous">Poprzedni</string>
@@ -706,8 +707,8 @@
     <string name="pdf_viewer_page_hint_format">Strona, od 1 do %1$,d</string>
     <string name="pdf_viewer_page_error">Nie ma takiej strony</string>
     <string name="pdf_viewer_password_protected">Ten plik PDF jest chroniony hasłem, co nie jest obsługiwane</string>
-    <string name="image_viewer_title">Przeglądarka zdjęć</string>
     <string name="media_viewer_error">Nie można otworzyć tego pliku</string>
+    <string name="image_viewer_title">Przeglądarka zdjęć</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Zapisz jako</string>
     <string name="save_as_error">Błąd podczas zapisywania pliku</string>
@@ -719,8 +720,8 @@
     <string name="text_editor_reload_message">Czy na pewno chcesz załadować ponownie? Niezapisane zmiany w tym dokumencie zostaną utracone.</string>
     <string name="text_editor_encoding">Kodowanie</string>
     <string name="text_editor_close_message">Czy na pewno chcesz porzucić niezapisane zmiany w tym dokumencie?</string>
-
     <string name="text_editor_file_too_large">Ten plik jest zbyt duży, aby go edytować</string>
+
     <string name="ftp_server_title">Serwer FTP</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Uruchomianie…</string>

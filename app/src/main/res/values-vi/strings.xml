@@ -586,6 +586,7 @@
         <item quantity="other">%1$,d album</item>
     </plurals>
     <string name="music_player_title">Trình phát nhạc</string>
+    <string name="music_player_error_format">Không thể phát “%1$s”</string>
     <string name="music_shuffle">Ngẫu nhiên</string>
     <string name="music_repeat">Lặp lại</string>
     <string name="music_previous">Trước</string>
@@ -597,8 +598,8 @@
     <string name="pdf_viewer_page_hint_format">Trang, từ 1 đến %1$,d</string>
     <string name="pdf_viewer_page_error">Không có trang này</string>
     <string name="pdf_viewer_password_protected">PDF này được bảo vệ bằng mật khẩu, tính năng này không được hỗ trợ</string>
-    <string name="image_viewer_title">Trình xem hình ảnh</string>
     <string name="media_viewer_error">Không thể mở tệp này</string>
+    <string name="image_viewer_title">Trình xem hình ảnh</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Lưu thành</string>
     <string name="save_as_error">Lỗi khi lưu tệp</string>
@@ -610,8 +611,8 @@
     <string name="text_editor_reload_message">Bạn có chắc chắn muốn tải lại không? Những thay đổi chưa lưu sẽ bị mất.</string>
     <string name="text_editor_encoding">Bảng mã kí tự</string>
     <string name="text_editor_close_message">Bạn có chắc chắn muốn huỷ bỏ những thay đổi chưa lưu đối với tài liệu này?</string>
-
     <string name="text_editor_file_too_large">Tệp này quá lớn để chỉnh sửa</string>
+
     <string name="ftp_server_title">Máy chủ FTP</string>
     <string name="ftp_server_state_title">Trạng thái</string>
     <string name="ftp_server_state_summary_starting">Đang khởi động…</string>

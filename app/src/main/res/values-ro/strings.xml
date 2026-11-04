@@ -659,6 +659,7 @@
         <item quantity="other">%1$,d de albume</item>
     </plurals>
     <string name="music_player_title">Player de muzică</string>
+    <string name="music_player_error_format">Nu se poate reda „%1$s”</string>
     <string name="music_shuffle">Aleatoriu</string>
     <string name="music_repeat">Repetă</string>
     <string name="music_previous">Anterior</string>
@@ -670,8 +671,8 @@
     <string name="pdf_viewer_page_hint_format">Pagina, de la 1 la %1$,d</string>
     <string name="pdf_viewer_page_error">Pagina nu există</string>
     <string name="pdf_viewer_password_protected">Acest PDF este protejat de o parolă, ceea ce nu este acceptat</string>
-    <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="media_viewer_error">Nu se poate deschide acest fișier</string>
+    <string name="image_viewer_title">Vizualizator de imagini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Salvează ca</string>
     <string name="save_as_error">Eroare la salvarea fișierului</string>
@@ -683,8 +684,8 @@
     <string name="text_editor_reload_message">Ești sigur că dorești să reîncarci? Schimbările nesalvate la acest document vor fi pierdute.</string>
     <string name="text_editor_encoding">Codificare</string>
     <string name="text_editor_close_message">Ești sigur că dorești să renunți schimbările nesalvate la cest document?</string>
-
     <string name="text_editor_file_too_large">Acest fișier este prea mare pentru a fi editat</string>
+
     <string name="ftp_server_title">Server FTP</string>
     <string name="ftp_server_state_title">Stare</string>
     <string name="ftp_server_state_summary_starting">Pornește…</string>

@@ -621,6 +621,7 @@
         <item quantity="other">%1$,d albüm</item>
     </plurals>
     <string name="music_player_title">Müzik çalar</string>
+    <string name="music_player_error_format">“%1$s” oynatılamıyor</string>
     <string name="music_shuffle">Karıştır</string>
     <string name="music_repeat">Tekrarla</string>
     <string name="music_previous">Önceki</string>
@@ -632,8 +633,8 @@
     <string name="pdf_viewer_page_hint_format">Sayfa, 1 ile %1$,d arası</string>
     <string name="pdf_viewer_page_error">Böyle bir sayfa yok</string>
     <string name="pdf_viewer_password_protected">Bu PDF şifre korumalı ve bu desteklenmiyor</string>
-    <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="media_viewer_error">Bu dosya açılamıyor</string>
+    <string name="image_viewer_title">Resim görüntüleyici</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Farklı kaydet</string>
     <string name="save_as_error">Dosya kaydedilirken hata oluştu</string>
@@ -645,8 +646,8 @@
     <string name="text_editor_reload_message">Yeniden yüklemek istediğinizden emin misiniz? Bu belgedeki kaydedilmemiş değişiklikler kaybedilecek.</string>
     <string name="text_editor_encoding">Kodlama</string>
     <string name="text_editor_close_message">Bu belgedeki kaydedilmemiş değişiklikleri atmak istediğinizden emin misiniz?</string>
-
     <string name="text_editor_file_too_large">Bu dosya düzenlenemeyecek kadar büyük</string>
+
     <string name="ftp_server_title">FTP sunucusu</string>
     <string name="ftp_server_state_title">Durum</string>
     <string name="ftp_server_state_summary_starting">Başlatılıyor…</string>

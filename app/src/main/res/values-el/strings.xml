@@ -625,6 +625,7 @@
         <item quantity="other">%1$,d άλμπουμ</item>
     </plurals>
     <string name="music_player_title">Πρόγραμμα αναπαραγωγής μουσικής</string>
+    <string name="music_player_error_format">Δεν είναι δυνατή η αναπαραγωγή του «%1$s»</string>
     <string name="music_shuffle">Τυχαία σειρά</string>
     <string name="music_repeat">Επανάληψη</string>
     <string name="music_previous">Προηγούμενο</string>
@@ -636,8 +637,8 @@
     <string name="pdf_viewer_page_hint_format">Σελίδα, από 1 έως %1$,d</string>
     <string name="pdf_viewer_page_error">Η σελίδα δεν υπάρχει</string>
     <string name="pdf_viewer_password_protected">Αυτό το PDF προστατεύεται από κωδικό, κάτι που δεν υποστηρίζεται</string>
-    <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="media_viewer_error">Δεν είναι δυνατό το άνοιγμα αυτού του αρχείου</string>
+    <string name="image_viewer_title">Προβολέας εικόνων</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Αποθήκευση ως</string>
     <string name="save_as_error">Σφάλμα κατά την αποθήκευση του αρχείου</string>
@@ -649,8 +650,8 @@
     <string name="text_editor_reload_message">Σίγουρα θέλετε να επαναλάβετε τη φόρτωση; Οι μη αποθηκευμένες αλλαγές σε αυτό το έγγραφο θα χαθούν.</string>
     <string name="text_editor_encoding">Κωδικοποίηση</string>
     <string name="text_editor_close_message">Σίγουρα θέλετε να απορρίψετε τις μη αποθηκευμένες αλλαγές σε αυτό το έγγραφο;</string>
-
     <string name="text_editor_file_too_large">Αυτό το αρχείο είναι πολύ μεγάλο για επεξεργασία</string>
+
     <string name="ftp_server_title">Διακομιστής FTP</string>
     <string name="ftp_server_state_title">Κατάσταση</string>
     <string name="ftp_server_state_summary_starting">Εκκίνηση…</string>

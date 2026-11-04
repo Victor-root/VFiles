@@ -625,6 +625,7 @@
         <item quantity="other">%1$,d албума</item>
     </plurals>
     <string name="music_player_title">Музикален плейър</string>
+    <string name="music_player_error_format">„%1$s“ не може да бъде възпроизведен</string>
     <string name="music_shuffle">Разбъркване</string>
     <string name="music_repeat">Повторение</string>
     <string name="music_previous">Предишна</string>
@@ -636,8 +637,8 @@
     <string name="pdf_viewer_page_hint_format">Страница от 1 до %1$,d</string>
     <string name="pdf_viewer_page_error">Няма такава страница</string>
     <string name="pdf_viewer_password_protected">Този PDF е защитен с парола, което не се поддържа</string>
-    <string name="image_viewer_title">Преглед на изображение</string>
     <string name="media_viewer_error">Файлът не може да бъде отворен</string>
+    <string name="image_viewer_title">Преглед на изображение</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Запазване като</string>
     <string name="save_as_error">Грешка при запазване на файла</string>
@@ -649,8 +650,8 @@
     <string name="text_editor_reload_message">Сигурни ли сте, че желаете да презаредите? Незапазените промени в документа ще бъдат загубени.</string>
     <string name="text_editor_encoding">Кодиране на знаците</string>
     <string name="text_editor_close_message">Сигурни ли сте, че желаете да отхвърлите незапазените промени в документа?</string>
-
     <string name="text_editor_file_too_large">Файлът е твърде голям за редактиране</string>
+
     <string name="ftp_server_title">Сървър за FTP</string>
     <string name="ftp_server_state_title">Състояние</string>
     <string name="ftp_server_state_summary_starting">Стартиране…</string>

@@ -765,6 +765,7 @@
         <item quantity="other">%1$,d ألبوم</item>
     </plurals>
     <string name="music_player_title">مشغل الموسيقى</string>
+    <string name="music_player_error_format">تعذّر تشغيل “%1$s”</string>
     <string name="music_shuffle">ترتيب عشوائي</string>
     <string name="music_repeat">تكرار</string>
     <string name="music_previous">السابق</string>
@@ -776,8 +777,8 @@
     <string name="pdf_viewer_page_hint_format">الصفحة، من ١ إلى %1$,d</string>
     <string name="pdf_viewer_page_error">لا توجد صفحة بهذا الرقم</string>
     <string name="pdf_viewer_password_protected">ملف PDF هذا محمي بكلمة مرور، وهذا غير مدعوم</string>
-    <string name="image_viewer_title">عارض الصور</string>
     <string name="media_viewer_error">تعذّر فتح هذا الملف</string>
+    <string name="image_viewer_title">عارض الصور</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">حفظ كـ</string>
     <string name="save_as_error">خطأ أثناء حفظ الملف</string>
@@ -789,8 +790,8 @@
     <string name="text_editor_reload_message">هل أنت متأكد أنك تريد إعادة التحميل؟ ستفقد التغييرات غير المحفوظة على هذا المستند.</string>
     <string name="text_editor_encoding">ترميز</string>
     <string name="text_editor_close_message">هل أنت متأكد أنك تريد تجاهل التغييرات غير المحفوظة في هذا المستند؟</string>
-
     <string name="text_editor_file_too_large">هذا الملف أكبر من أن يُحرَّر</string>
+
     <string name="ftp_server_title">خادم FTP </string>
     <string name="ftp_server_state_title">الحالة</string>
     <string name="ftp_server_state_summary_starting">جاري البدء …</string>

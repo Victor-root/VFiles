@@ -697,6 +697,7 @@
         <item quantity="other">%1$,d альбомов</item>
     </plurals>
     <string name="music_player_title">Музыкальный плеер</string>
+    <string name="music_player_error_format">Не удалось воспроизвести «%1$s»</string>
     <string name="music_shuffle">Перемешать</string>
     <string name="music_repeat">Повтор</string>
     <string name="music_previous">Предыдущий</string>
@@ -708,8 +709,8 @@
     <string name="pdf_viewer_page_hint_format">Страница, от 1 до %1$,d</string>
     <string name="pdf_viewer_page_error">Такой страницы нет</string>
     <string name="pdf_viewer_password_protected">Этот PDF защищён паролем, что не поддерживается</string>
-    <string name="image_viewer_title">Просмотрщик изображений</string>
     <string name="media_viewer_error">Не удалось открыть этот файл</string>
+    <string name="image_viewer_title">Просмотрщик изображений</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Сохранить как</string>
     <string name="save_as_error">Ошибка при сохранении файла</string>
@@ -721,8 +722,8 @@
     <string name="text_editor_reload_message">Вы уверены что хотите перезагрузить? Несохраненные изменения в  документе будут потеряны.</string>
     <string name="text_editor_encoding">Кодировка</string>
     <string name="text_editor_close_message">Вы уверены что хотите отказаться от несохраненных изменений в документе?</string>
-
     <string name="text_editor_file_too_large">Этот файл слишком велик для редактирования</string>
+
     <string name="ftp_server_title">FTP-сервер</string>
     <string name="ftp_server_state_title">Статус</string>
     <string name="ftp_server_state_summary_starting">Запуск…</string>

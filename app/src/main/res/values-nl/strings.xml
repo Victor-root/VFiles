@@ -625,6 +625,7 @@
         <item quantity="other">%1$,d albums</item>
     </plurals>
     <string name="music_player_title">Muziekspeler</string>
+    <string name="music_player_error_format">Kan “%1$s” niet afspelen</string>
     <string name="music_shuffle">Shuffle</string>
     <string name="music_repeat">Herhalen</string>
     <string name="music_previous">Vorige</string>
@@ -636,8 +637,8 @@
     <string name="pdf_viewer_page_hint_format">Pagina, van 1 tot %1$,d</string>
     <string name="pdf_viewer_page_error">Deze pagina bestaat niet</string>
     <string name="pdf_viewer_password_protected">Deze PDF is beveiligd met een wachtwoord, wat niet wordt ondersteund</string>
-    <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="media_viewer_error">Kan dit bestand niet openen</string>
+    <string name="image_viewer_title">Afbeeldingsweergave</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Opslaan als</string>
     <string name="save_as_error">Fout tijdens opslaan van bestand</string>
@@ -649,8 +650,8 @@
     <string name="text_editor_reload_message">Weet je zeker dat je wilt herladen? Niet-opgeslagen wijzigingen gaan verloren.</string>
     <string name="text_editor_encoding">Versleuteling</string>
     <string name="text_editor_close_message">Weet je zeker dat je de niet-opgeslagen wijzigingen wilt verwerpen?</string>
-
     <string name="text_editor_file_too_large">Dit bestand is te groot om te bewerken</string>
+
     <string name="ftp_server_title">FTP-server</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Bezig met starten…</string>

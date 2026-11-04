@@ -763,6 +763,7 @@
         <item quantity="other">%1$,d album</item>
     </plurals>
     <string name="music_player_title">Musika-erreproduzigailua</string>
+    <string name="music_player_error_format">Ezin da «%1$s» erreproduzitu</string>
     <string name="music_shuffle">Ausazkoa</string>
     <string name="music_repeat">Errepikatu</string>
     <string name="music_previous">Aurrekoa</string>
@@ -774,6 +775,6 @@
     <string name="pdf_viewer_page_hint_format">Orria, 1 eta %1$,d artean</string>
     <string name="pdf_viewer_page_error">Ez dago orri hori</string>
     <string name="pdf_viewer_password_protected">PDF hau pasahitzez babestuta dago, eta hori ez da onartzen</string>
-    <string name="file_job_progress_title">Abian diren eragiketak</string>
     <string name="media_viewer_error">Ezin da fitxategi hau ireki</string>
+    <string name="file_job_progress_title">Abian diren eragiketak</string>
 </resources>

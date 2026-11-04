@@ -695,6 +695,7 @@
         <item quantity="other">%1$,d alb</item>
     </plurals>
     <string name="music_player_title">Přehrávač hudby</string>
+    <string name="music_player_error_format">„%1$s“ nelze přehrát</string>
     <string name="music_shuffle">Náhodně</string>
     <string name="music_repeat">Opakovat</string>
     <string name="music_previous">Předchozí</string>
@@ -706,8 +707,8 @@
     <string name="pdf_viewer_page_hint_format">Stránka, od 1 do %1$,d</string>
     <string name="pdf_viewer_page_error">Taková stránka neexistuje</string>
     <string name="pdf_viewer_password_protected">Toto PDF je chráněno heslem, což není podporováno</string>
-    <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="media_viewer_error">Tento soubor nelze otevřít</string>
+    <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Uložit jako</string>
     <string name="save_as_error">Chyba při ukládání souboru</string>
@@ -719,8 +720,8 @@
     <string name="text_editor_reload_message">Jste si jisti, že chcete dokument znovu načíst? Neuložené změny budou ztraceny.</string>
     <string name="text_editor_encoding">Kódování</string>
     <string name="text_editor_close_message">Jste si jisti, že chcete zahodit neuložené změny v tomto dokumentu?</string>
-
     <string name="text_editor_file_too_large">Tento soubor je příliš velký na úpravy</string>
+
     <string name="ftp_server_title">Server FTP</string>
     <string name="ftp_server_state_title">Stav</string>
     <string name="ftp_server_state_summary_starting">Spouštění…</string>

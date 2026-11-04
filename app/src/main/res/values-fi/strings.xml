@@ -762,6 +762,7 @@
         <item quantity="other">%1$,d albumia</item>
     </plurals>
     <string name="music_player_title">Musiikkisoitin</string>
+    <string name="music_player_error_format">Kohdetta ”%1$s” ei voi toistaa</string>
     <string name="music_shuffle">Satunnaistoisto</string>
     <string name="music_repeat">Uudelleentoisto</string>
     <string name="music_previous">Edellinen</string>
@@ -773,6 +774,6 @@
     <string name="pdf_viewer_page_hint_format">Sivu, 1–%1$,d</string>
     <string name="pdf_viewer_page_error">Sivua ei ole olemassa</string>
     <string name="pdf_viewer_password_protected">Tämä PDF on suojattu salasanalla, mitä ei tueta</string>
-    <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
     <string name="media_viewer_error">Tiedostoa ei voi avata</string>
+    <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
 </resources>

@@ -589,6 +589,7 @@
         <item quantity="other">%1$,d album</item>
     </plurals>
     <string name="music_player_title">Pemutar musik</string>
+    <string name="music_player_error_format">Tidak dapat memutar “%1$s”</string>
     <string name="music_shuffle">Acak</string>
     <string name="music_repeat">Ulangi</string>
     <string name="music_previous">Sebelumnya</string>
@@ -600,8 +601,8 @@
     <string name="pdf_viewer_page_hint_format">Halaman, dari 1 sampai %1$,d</string>
     <string name="pdf_viewer_page_error">Halaman tidak ada</string>
     <string name="pdf_viewer_password_protected">PDF ini dilindungi sandi, yang tidak didukung</string>
-    <string name="image_viewer_title">Penampil gambar</string>
     <string name="media_viewer_error">Tidak dapat membuka file ini</string>
+    <string name="image_viewer_title">Penampil gambar</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Simpan sebagai</string>
     <string name="save_as_error">Terjadi kesalahan saat menyimpan berkas</string>
@@ -613,8 +614,8 @@
     <string name="text_editor_reload_message">Apakah Anda yakin ingin memuat ulang? Perubahan yang belum disimpan pada dokumen ini akan hilang.</string>
     <string name="text_editor_encoding">Enkode</string>
     <string name="text_editor_close_message">Apakah Anda yakin ingin menghapus perubahan yang belum disimpan pada dokumen ini?</string>
-
     <string name="text_editor_file_too_large">File ini terlalu besar untuk diedit</string>
+
     <string name="ftp_server_title">Server FTP</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Memulai…</string>

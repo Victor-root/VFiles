@@ -621,6 +621,7 @@
         <item quantity="other">%1$,d album</item>
     </plurals>
     <string name="music_player_title">Zenelejátszó</string>
+    <string name="music_player_error_format">„%1$s” nem játszható le</string>
     <string name="music_shuffle">Keverés</string>
     <string name="music_repeat">Ismétlés</string>
     <string name="music_previous">Előző</string>
@@ -632,8 +633,8 @@
     <string name="pdf_viewer_page_hint_format">Oldal, 1 és %1$,d között</string>
     <string name="pdf_viewer_page_error">Nincs ilyen oldal</string>
     <string name="pdf_viewer_password_protected">Ez a PDF jelszóval védett, ami nem támogatott</string>
-    <string name="image_viewer_title">Képmegjelenítő</string>
     <string name="media_viewer_error">A fájl nem nyitható meg</string>
+    <string name="image_viewer_title">Képmegjelenítő</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Mentés másként</string>
     <string name="save_as_error">Hiba a fájl mentésekor</string>
@@ -645,8 +646,8 @@
     <string name="text_editor_reload_message">Biztos, hogy újratölti? A dokumentum összes mentetlen módosítása elvész.</string>
     <string name="text_editor_encoding">Kódolás</string>
     <string name="text_editor_close_message">Biztos, hogy elveti a dokumentum mentetlen módosításait?</string>
-
     <string name="text_editor_file_too_large">A fájl túl nagy a szerkesztéshez</string>
+
     <string name="ftp_server_title">FTP-kiszolgáló</string>
     <string name="ftp_server_state_title">Állapot</string>
     <string name="ftp_server_state_summary_starting">Indítás…</string>

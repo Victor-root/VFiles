@@ -625,6 +625,7 @@
         <item quantity="other">%1$,d album</item>
     </plurals>
     <string name="music_player_title">Musikkspiller</string>
+    <string name="music_player_error_format">Kan ikke spille av «%1$s»</string>
     <string name="music_shuffle">Bland</string>
     <string name="music_repeat">Gjenta</string>
     <string name="music_previous">Forrige</string>
@@ -636,8 +637,8 @@
     <string name="pdf_viewer_page_hint_format">Side, fra 1 til %1$,d</string>
     <string name="pdf_viewer_page_error">Siden finnes ikke</string>
     <string name="pdf_viewer_password_protected">Denne PDF-en er passordbeskyttet, noe som ikke støttes</string>
-    <string name="image_viewer_title">Bildefremviser</string>
     <string name="media_viewer_error">Kan ikke åpne denne filen</string>
+    <string name="image_viewer_title">Bildefremviser</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Lagre som</string>
     <string name="save_as_error">Feil under lagring av fil</string>
@@ -649,8 +650,8 @@
     <string name="text_editor_reload_message">Er du sikker på at du vil laste inn på nytt? Ulagrede endringer i dette dokumentet vil gå tapt.</string>
     <string name="text_editor_encoding">Tegnkoding</string>
     <string name="text_editor_close_message">Er du sikker på at du vil forkaste de ulagrede endringene i dette dokumentet?</string>
-
     <string name="text_editor_file_too_large">Denne filen er for stor til å redigeres</string>
+
     <string name="ftp_server_title">FTP-tjener</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Starter …</string>
