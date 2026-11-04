@@ -275,6 +275,23 @@ class FileListActivityTest {
     }
 
     @Test
+    fun keepsFilesToPasteAfterProcessDeath() {
+        val scenario = launch()
+        onMenuButtonOf("notes.txt").performClick()
+        composeTestRule.onNodeWithText("Copy").performClick()
+        waitForText("Copying 1")
+        val savedInstanceState = Bundle()
+        scenario.onActivity {
+            InstrumentationRegistry.getInstrumentation()
+                .callActivityOnSaveInstanceState(it, savedInstanceState)
+        }
+        scenario.close()
+        val intent = Intent(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+        Robolectric.buildActivity(FileListActivity::class.java, intent).setup(savedInstanceState)
+        waitForText("Copying 1")
+    }
+
+    @Test
     fun retriesFolderInErrorWithPull() {
         ActivityScenario.launch<FileListActivity>(
             FileListActivity.createViewIntent(rootPath.resolve("Later"))

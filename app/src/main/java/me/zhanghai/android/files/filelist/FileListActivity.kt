@@ -59,6 +59,7 @@ class FileListActivity : AppActivity() {
         }
         if (!viewModel.hasTrail) {
             viewModel.initialize(intent, savedInstanceState?.currentPath)
+            savedInstanceState?.restorePasteState()
         }
         controller = FileListController(this, viewModel, savedInstanceState)
     }
@@ -69,6 +70,7 @@ class FileListActivity : AppActivity() {
         if (::controller.isInitialized) {
             controller.saveState(outState)
             outState.putParcelable(KEY_CURRENT_PATH, viewModel.currentPath as Parcelable)
+            savePasteState(outState)
         }
     }
 
@@ -159,11 +161,31 @@ class FileListActivity : AppActivity() {
         }
     }
 
+    // Only so many, since all of the saved state has to fit in a transaction with the system.
+    private fun savePasteState(outState: Bundle) {
+        val pasteState = viewModel.pasteState
+        if (pasteState.files.size in 1..PASTE_FILES_SAVED_MAX) {
+            outState.putBoolean(KEY_PASTE_COPY, pasteState.copy)
+            outState.putParcelable(KEY_PASTE_FILES, pasteState.files)
+        }
+    }
+
+    private fun Bundle.restorePasteState() {
+        val files = BundleCompat.getParcelable(this, KEY_PASTE_FILES, FileItemSet::class.java)
+        if (files != null) {
+            viewModel.addToPasteState(getBoolean(KEY_PASTE_COPY), files)
+        }
+    }
+
     private val Bundle.currentPath: Path?
         get() = BundleCompat.getParcelable(this, KEY_CURRENT_PATH, Parcelable::class.java) as Path?
 
     companion object {
         private const val KEY_CURRENT_PATH = "current_path"
+        private const val KEY_PASTE_COPY = "paste_copy"
+        private const val KEY_PASTE_FILES = "paste_files"
+
+        private const val PASTE_FILES_SAVED_MAX = 100
 
         private const val ACTION_VIEW_DOWNLOADS =
             "me.zhanghai.android.files.intent.action.VIEW_DOWNLOADS"
