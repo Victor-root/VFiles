@@ -234,7 +234,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
                 }
             }
             is Success -> {
-                controller.restorePendingScrollState()
+                controller.updateScrollState()
                 // A finished operation may have changed the free space shown in the drawer. A
                 // hidden drawer reads it again once shown, instead of on each folder opened.
                 val isDrawerShown =

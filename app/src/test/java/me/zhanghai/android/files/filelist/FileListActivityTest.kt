@@ -256,6 +256,25 @@ class FileListActivityTest {
     }
 
     @Test
+    fun opensFolderAtTheTopAfterScrolling() {
+        for (i in 1..40) {
+            TestDocumentsProvider.addDirectory("Folder$i")
+            TestDocumentsProvider.addFile("Folder$i/first.txt", "text/plain", 1024)
+            for (j in 1..40) {
+                TestDocumentsProvider.addFile("Folder$i/other$j.txt", "text/plain", 1024)
+            }
+        }
+        ActivityScenario.launch<FileListActivity>(FileListActivity.createViewIntent(rootPath))
+        waitForText("Empty")
+        composeTestRule.onNodeWithText("Empty").performTouchInput { swipeUp() }
+        composeTestRule.waitForIdle()
+        composeTestRule.onAllNodesWithText("Folder", substring = true).onFirst().performClick()
+        waitForText("41 files")
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("first.txt").assertIsDisplayed()
+    }
+
+    @Test
     fun retriesFolderInErrorWithPull() {
         ActivityScenario.launch<FileListActivity>(
             FileListActivity.createViewIntent(rootPath.resolve("Later"))

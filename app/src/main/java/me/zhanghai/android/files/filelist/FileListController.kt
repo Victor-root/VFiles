@@ -111,6 +111,9 @@ class FileListController(
 
     val gridState: LazyGridState
 
+    // The folder that the scroll position of the list is for.
+    private var scrolledPath = viewModel.currentPath
+
     var dialog: FileListDialog? by mutableStateOf(null)
 
     private val _overflowMenuRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -177,10 +180,18 @@ class FileListController(
         viewModel.navigateUp()
     }
 
-    /** Scrolls back to where the list was when the current folder was left, if it was. */
-    suspend fun restorePendingScrollState() {
-        val state = viewModel.pendingState as? FileListScrollState ?: return
-        gridState.scrollToItem(state.index, state.offset)
+    /**
+     * Scrolls back to where the list was when the current folder was left, if it was, or to the
+     * top of a newly opened folder.
+     */
+    suspend fun updateScrollState() {
+        val state = viewModel.pendingState as? FileListScrollState
+        if (state != null) {
+            gridState.scrollToItem(state.index, state.offset)
+        } else if (currentPath != scrolledPath) {
+            gridState.scrollToItem(0)
+        }
+        scrolledPath = currentPath
     }
 
     fun refresh() {
