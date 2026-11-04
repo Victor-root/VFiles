@@ -299,13 +299,17 @@ private fun FileJob.getErrorMessage(e: IOException): String =
         e.toString()
     }
 
+// Directories have a size on some file systems, but nothing of it is transferred.
+private val BasicFileAttributes.transferSize: Long
+    get() = if (isDirectory) 0 else size()
+
 private fun FileJob.scanPath(
     attributes: BasicFileAttributes,
     scanInfo: ScanInfo,
     @PluralsRes notificationTitleRes: Int
 ) {
     scanInfo.incrementFileCount()
-    scanInfo.addToSize(attributes.size())
+    scanInfo.addToSize(attributes.transferSize)
     postScanNotification(scanInfo, notificationTitleRes)
 }
 
@@ -454,7 +458,7 @@ private class TransferInfo(scanInfo: ScanInfo, val target: Path?) {
         try {
             transferredSize += path.readAttributes(
                 BasicFileAttributes::class.java, LinkOption.NOFOLLOW_LINKS
-            ).size()
+            ).transferSize
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -465,7 +469,7 @@ private class TransferInfo(scanInfo: ScanInfo, val target: Path?) {
         try {
             size -= path.readAttributes(
                 BasicFileAttributes::class.java, LinkOption.NOFOLLOW_LINKS
-            ).size()
+            ).transferSize
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -780,7 +784,7 @@ class CopyFileJob(private val sources: List<Path>, private val targetDirectory: 
             ): FileVisitResult {
                 val directoryInTarget = target.resolveForeign(source.relativize(directory))
                 val copied = copy(
-                    directory, directoryInTarget, isExtract, transferInfo, actionAllInfo
+                    directory, directoryInTarget, isExtract, true, transferInfo, actionAllInfo
                 )
                 throwIfInterrupted()
                 return if (copied) FileVisitResult.CONTINUE else FileVisitResult.SKIP_SUBTREE
@@ -789,7 +793,7 @@ class CopyFileJob(private val sources: List<Path>, private val targetDirectory: 
             @Throws(IOException::class)
             override fun visitFile(file: Path, attributes: BasicFileAttributes): FileVisitResult {
                 val fileInTarget = target.resolveForeign(source.relativize(file))
-                copy(file, fileInTarget, isExtract, transferInfo, actionAllInfo)
+                copy(file, fileInTarget, isExtract, false, transferInfo, actionAllInfo)
                 throwIfInterrupted()
                 return FileVisitResult.CONTINUE
             }
@@ -889,12 +893,13 @@ private fun FileJob.copy(
     source: Path,
     target: Path,
     isExtract: Boolean,
+    isDirectory: Boolean,
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
 ): Boolean =
     copyOrMove(
-        source, target, if (isExtract) CopyMoveType.EXTRACT else CopyMoveType.COPY, true, false,
-        transferInfo, actionAllInfo
+        source, target, if (isExtract) CopyMoveType.EXTRACT else CopyMoveType.COPY, isDirectory,
+        true, false, transferInfo, actionAllInfo
     )
 
 class CreateFileJob(private val path: Path, private val createDirectory: Boolean) : FileJob() {
@@ -1172,7 +1177,8 @@ private fun FileJob.copyForMove(
     target: Path,
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
-): Boolean = copyOrMove(source, target, CopyMoveType.MOVE, true, true, transferInfo, actionAllInfo)
+): Boolean =
+    copyOrMove(source, target, CopyMoveType.MOVE, true, true, true, transferInfo, actionAllInfo)
 
 @Throws(IOException::class)
 private fun FileJob.moveAtomically(source: Path, target: Path) {
@@ -1186,7 +1192,7 @@ private fun FileJob.moveByCopy(
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
 ): Boolean =
-    copyOrMove(source, target, CopyMoveType.MOVE, false, true, transferInfo, actionAllInfo)
+    copyOrMove(source, target, CopyMoveType.MOVE, false, false, true, transferInfo, actionAllInfo)
 
 // @see https://github.com/GNOME/nautilus/blob/master/src/nautilus-file-operations.c copy_move_file
 @Throws(IOException::class)
@@ -1194,6 +1200,7 @@ private fun FileJob.copyOrMove(
     source: Path,
     target: Path,
     type: CopyMoveType,
+    isDirectory: Boolean,
     useCopy: Boolean,
     copyAttributes: Boolean,
     transferInfo: TransferInfo,
@@ -1294,7 +1301,9 @@ private fun FileJob.copyOrMove(
                 this += StandardCopyOption.REPLACE_EXISTING
             }
             this += ProgressCopyOption(PROGRESS_INTERVAL_MILLIS) {
-                transferInfo.addToTransferredSize(it)
+                if (!isDirectory) {
+                    transferInfo.addToTransferredSize(it)
+                }
                 postCopyMoveNotification(transferInfo, source, type)
             }
         }.toTypedArray()
@@ -1527,7 +1536,7 @@ private fun FileJob.open(
     val targetFile = cacheDirectory.resolveForeign(targetFileName)
     val transferInfo = TransferInfo(scanInfo, cacheDirectory)
     val actionAllInfo = ActionAllInfo(replace = true)
-    val copied = copy(file, targetFile, isExtract, transferInfo, actionAllInfo)
+    val copied = copy(file, targetFile, isExtract, false, transferInfo, actionAllInfo)
     if (!copied) {
         return
     }
@@ -1722,7 +1731,7 @@ private fun FileJob.save(source: Path, target: Path) {
     val targetParent = target.parent
     val transferInfo = TransferInfo(scanInfo, targetParent)
     val actionAllInfo = ActionAllInfo(replace = true)
-    val copied = copy(source, target, false, transferInfo, actionAllInfo)
+    val copied = copy(source, target, false, false, transferInfo, actionAllInfo)
     if (!copied) {
         return
     }
