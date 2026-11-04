@@ -343,6 +343,7 @@
     <string name="file_list_error_folder_not_found">Esta carpeta ya no existe</string>
     <string name="file_list_error_permission_denied">No tienes permiso para abrir esta carpeta</string>
     <string name="file_list_error_unknown">No se puede abrir esta carpeta</string>
+    <string name="file_list_error_archive_header_encrypted">La lista de archivos de este comprimido está cifrada, lo que no es compatible</string>
     <string name="file_list_action_create">Crear</string>
     <string name="file_list_action_create_file">Archivo</string>
     <string name="file_list_action_create_directory">Carpeta</string>

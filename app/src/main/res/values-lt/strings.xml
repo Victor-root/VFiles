@@ -371,6 +371,7 @@
     <string name="file_list_error_folder_not_found">Šio aplanko nebėra</string>
     <string name="file_list_error_permission_denied">Neturite leidimo atidaryti šio aplanko</string>
     <string name="file_list_error_unknown">Nepavyko atidaryti šio aplanko</string>
+    <string name="file_list_error_archive_header_encrypted">Šio archyvo failų sąrašas užšifruotas, tai nepalaikoma</string>
     <string name="file_list_action_create">Sukurti</string>
     <string name="file_list_action_create_file">Failas</string>
     <string name="file_list_action_create_directory">Aplankas</string>

@@ -316,6 +316,7 @@
     <string name="file_list_error_folder_not_found">Þessi mappa er ekki lengur til</string>
     <string name="file_list_error_permission_denied">Þú hefur ekki heimild til að opna þessa möppu</string>
     <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
+    <string name="file_list_error_archive_header_encrypted">Skráalisti þessa safns er dulkóðaður, sem er ekki stutt</string>
     <string name="file_list_action_create">Útbúa</string>
     <string name="file_list_action_create_file">Skrá</string>
     <string name="file_list_action_create_directory">Mappa</string>

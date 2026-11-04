@@ -26,6 +26,9 @@ fun ArchiveException.toFileSystemOrInterruptedIOException(file: Path): IOExcepti
             message == "Incorrect passphrase" || message == "Passphrase required for this entry"
         ) -> ArchivePasswordRequiredException(file, message)
         else -> FileSystemException(file.toString(), null, message)
+        // See also libarchive/archive_read_support_format_7zip.c .
+        message == "The archive header is encrypted, but currently not supported" ->
+            ArchiveHeaderEncryptedException(file.toString(), message)
     }.apply { initCause(this@toFileSystemOrInterruptedIOException) }
 
 class ArchiveExceptionInputStream(

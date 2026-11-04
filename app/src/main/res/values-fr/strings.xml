@@ -346,6 +346,7 @@
     <string name="file_list_error_folder_not_found">Ce dossier n\'existe plus</string>
     <string name="file_list_error_permission_denied">Vous n\'avez pas l\'autorisation d\'ouvrir ce dossier</string>
     <string name="file_list_error_unknown">Impossible d\'ouvrir ce dossier</string>
+    <string name="file_list_error_archive_header_encrypted">La liste des fichiers de cette archive est chiffrée, ce qui n\'est pas pris en charge</string>
     <string name="file_list_action_create">Créer</string>
     <string name="file_list_action_create_file">Fichier</string>
     <string name="file_list_action_create_directory">Dossier</string>

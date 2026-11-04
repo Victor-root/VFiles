@@ -372,6 +372,7 @@
     <string name="file_list_error_folder_not_found">Ten folder już nie istnieje</string>
     <string name="file_list_error_permission_denied">Nie masz uprawnień do otwarcia tego folderu</string>
     <string name="file_list_error_unknown">Nie można otworzyć tego folderu</string>
+    <string name="file_list_error_archive_header_encrypted">Lista plików tego archiwum jest zaszyfrowana, co nie jest obsługiwane</string>
     <string name="file_list_action_create">Utwórz</string>
     <string name="file_list_action_create_file">Plik</string>
     <string name="file_list_action_create_directory">Katalog</string>

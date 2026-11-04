@@ -325,6 +325,7 @@
     <string name="file_list_error_folder_not_found">This folder no longer exists</string>
     <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
     <string name="file_list_error_unknown">Unable to open this folder</string>
+    <string name="file_list_error_archive_header_encrypted">The list of files of this archive is encrypted, which isn\'t supported</string>
     <string name="file_list_action_create">Create</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Folder</string>

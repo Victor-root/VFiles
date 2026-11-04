@@ -314,6 +314,7 @@
     <string name="file_list_error_folder_not_found">Deze map bestaat niet meer</string>
     <string name="file_list_error_permission_denied">Je hebt geen toestemming om deze map te openen</string>
     <string name="file_list_error_unknown">Kan deze map niet openen</string>
+    <string name="file_list_error_archive_header_encrypted">De bestandslijst van dit archief is versleuteld, wat niet wordt ondersteund</string>
     <string name="file_list_action_create">Maken</string>
     <string name="file_list_action_create_file">Bestand</string>
     <string name="file_list_action_create_directory">Map</string>

@@ -282,6 +282,7 @@
     <string name="file_list_error_folder_not_found">Thư mục này không còn tồn tại</string>
     <string name="file_list_error_permission_denied">Bạn không có quyền mở thư mục này</string>
     <string name="file_list_error_unknown">Không thể mở thư mục này</string>
+    <string name="file_list_error_archive_header_encrypted">Danh sách tệp của kho lưu trữ này được mã hóa, điều này không được hỗ trợ</string>
     <string name="file_list_action_create">Tạo</string>
     <string name="file_list_action_create_file">Tệp</string>
     <string name="file_list_action_create_directory">Thư mục</string>

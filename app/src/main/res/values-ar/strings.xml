@@ -430,6 +430,7 @@
     <string name="file_list_error_folder_not_found">لم يعد هذا المجلد موجودًا</string>
     <string name="file_list_error_permission_denied">ليس لديك إذن لفتح هذا المجلد</string>
     <string name="file_list_error_unknown">تعذّر فتح هذا المجلد</string>
+    <string name="file_list_error_archive_header_encrypted">قائمة ملفات هذا الأرشيف مشفرة، وهذا غير مدعوم</string>
     <string name="file_list_action_create">إنشاء</string>
     <string name="file_list_action_create_file">ملف</string>
     <string name="file_list_action_create_directory">مجلد</string>

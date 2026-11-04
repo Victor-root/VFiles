@@ -313,6 +313,7 @@
     <string name="file_list_error_folder_not_found">این پوشه دیگر وجود ندارد</string>
     <string name="file_list_error_permission_denied">شما اجازهٔ باز کردن این پوشه را ندارید</string>
     <string name="file_list_error_unknown">باز کردن این پوشه ممکن نیست</string>
+    <string name="file_list_error_archive_header_encrypted">فهرست فایل‌های این بایگانی رمزگذاری شده است و پشتیبانی نمی‌شود</string>
     <string name="file_list_action_create">ایجاد</string>
     <string name="file_list_action_create_file">پرونده</string>
     <string name="file_list_action_create_directory">شاخه</string>

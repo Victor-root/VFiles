@@ -372,6 +372,7 @@
     <string name="file_list_error_folder_not_found">Tato složka již neexistuje</string>
     <string name="file_list_error_permission_denied">Nemáte oprávnění k otevření této složky</string>
     <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
+    <string name="file_list_error_archive_header_encrypted">Seznam souborů tohoto archivu je zašifrovaný, což není podporováno</string>
     <string name="file_list_action_create">Vytvořit</string>
     <string name="file_list_action_create_file">Soubor</string>
     <string name="file_list_action_create_directory">Složka</string>

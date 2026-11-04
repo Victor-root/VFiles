@@ -374,6 +374,7 @@
     <string name="file_list_error_folder_not_found">Эта папка больше не существует</string>
     <string name="file_list_error_permission_denied">У вас нет разрешения на открытие этой папки</string>
     <string name="file_list_error_unknown">Не удалось открыть эту папку</string>
+    <string name="file_list_error_archive_header_encrypted">Список файлов этого архива зашифрован, это не поддерживается</string>
     <string name="file_list_action_create">Создать</string>
     <string name="file_list_action_create_file">Файл</string>
     <string name="file_list_action_create_directory">Папка</string>

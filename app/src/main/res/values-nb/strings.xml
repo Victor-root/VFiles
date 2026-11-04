@@ -314,6 +314,7 @@
     <string name="file_list_error_folder_not_found">Denne mappen finnes ikke lenger</string>
     <string name="file_list_error_permission_denied">Du har ikke tillatelse til å åpne denne mappen</string>
     <string name="file_list_error_unknown">Kan ikke åpne denne mappen</string>
+    <string name="file_list_error_archive_header_encrypted">Fillisten i dette arkivet er kryptert, noe som ikke støttes</string>
     <string name="file_list_action_create">Opprett</string>
     <string name="file_list_action_create_file">Fil</string>
     <string name="file_list_action_create_directory">Mappe</string>

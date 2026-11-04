@@ -311,6 +311,7 @@
     <string name="file_list_error_folder_not_found">Bu klasör artık mevcut değil</string>
     <string name="file_list_error_permission_denied">Bu klasörü açma izniniz yok</string>
     <string name="file_list_error_unknown">Bu klasör açılamıyor</string>
+    <string name="file_list_error_archive_header_encrypted">Bu arşivin dosya listesi şifreli, bu desteklenmiyor</string>
     <string name="file_list_action_create">Oluştur</string>
     <string name="file_list_action_create_file">Dosya</string>
     <string name="file_list_action_create_directory">Klasör</string>

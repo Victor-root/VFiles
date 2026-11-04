@@ -314,6 +314,7 @@
     <string name="file_list_error_folder_not_found">Aquesta carpeta ja no existeix</string>
     <string name="file_list_error_permission_denied">No teniu permís per obrir aquesta carpeta</string>
     <string name="file_list_error_unknown">No s\'ha pogut obrir aquesta carpeta</string>
+    <string name="file_list_error_archive_header_encrypted">La llista de fitxers d\'aquest arxiu està xifrada, cosa que no és compatible</string>
     <string name="file_list_action_create">Crea</string>
     <string name="file_list_action_create_file">Fitxer</string>
     <string name="file_list_action_create_directory">Carpeta</string>

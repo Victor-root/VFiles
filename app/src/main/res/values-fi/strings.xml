@@ -310,6 +310,7 @@
     <string name="file_list_error_folder_not_found">Tätä kansiota ei ole enää olemassa</string>
     <string name="file_list_error_permission_denied">Sinulla ei ole oikeutta avata tätä kansiota</string>
     <string name="file_list_error_unknown">Kansiota ei voi avata</string>
+    <string name="file_list_error_archive_header_encrypted">Tämän arkiston tiedostoluettelo on salattu, mitä ei tueta</string>
     <string name="file_list_action_create">Luo</string>
     <string name="file_list_action_create_file">Tiedosto</string>
     <string name="file_list_action_create_directory">Kansio</string>

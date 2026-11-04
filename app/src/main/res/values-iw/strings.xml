@@ -372,6 +372,7 @@
     <string name="file_list_error_folder_not_found">התיקייה הזו כבר לא קיימת</string>
     <string name="file_list_error_permission_denied">אין לך הרשאה לפתוח את התיקייה הזו</string>
     <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
+    <string name="file_list_error_archive_header_encrypted">רשימת הקבצים של ארכיון זה מוצפנת, ואין תמיכה בכך</string>
     <string name="file_list_action_create">יצירה</string>
     <string name="file_list_action_create_file">קובץ</string>
     <string name="file_list_action_create_directory">תיקייה</string>

@@ -136,6 +136,7 @@ import me.zhanghai.android.files.music.MusicPlaybackService
 import me.zhanghai.android.files.music.MusicPlayerDestination
 import me.zhanghai.android.files.music.rememberMusicController
 import me.zhanghai.android.files.navigation.NavigationDrawerContent
+import me.zhanghai.android.files.provider.archive.ArchiveHeaderEncryptedException
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.theme.StatusBarBackgroundEffect
@@ -1020,6 +1021,8 @@ private val Throwable.errorMessageRes: Int
         findCauseByClass<NoSuchFileException>() != null -> R.string.file_list_error_folder_not_found
         findCauseByClass<AccessDeniedException>() != null ->
             R.string.file_list_error_permission_denied
+        findCauseByClass<ArchiveHeaderEncryptedException>() != null ->
+            R.string.file_list_error_archive_header_encrypted
         else -> R.string.file_list_error_unknown
     }
 
