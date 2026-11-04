@@ -213,6 +213,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Υπήρξε σφάλμα κατά την επαναφορά του SELinux context για “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Σφάλμα κατά την εγγραφή</string>
     <string name="file_job_write_error_message_format">Υπήρξε σφάλμα κατά την εγγραφή “%1$s”.\n%2$s</string>
+    <string name="file_job_error_no_space">Δεν υπάρχει αρκετός αποθηκευτικός χώρος.</string>
     <string name="file_job_remount_format">Επαναπροσάρτηση “%1$s” ως read-write</string>
     <string name="file_job_remount_loading_format">Γίνεται επαναπροσάρτηση “%1$s” ως read-write…</string>
     <string name="file_job_remount_success_format">“%1$s” έχει επαναπροσαρτηθεί ως read-write</string>

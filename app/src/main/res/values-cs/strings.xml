@@ -255,6 +255,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Nastala chyba při obnově kontextu SELinuxu pro \"%1$s\".\n%2$s</string>
     <string name="file_job_write_error_title">Chyba při zapisování</string>
     <string name="file_job_write_error_message_format">Nastala chyba při zapisování \"%1$s\".\n%2$s</string>
+    <string name="file_job_error_no_space">Nedostatek místa v úložišti.</string>
     <string name="file_job_remount_format">Nastavit \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_loading_format">Nastavování \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_success_format">\"%1$s\" bylo nastaveno jako čtení-zápis</string>

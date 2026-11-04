@@ -192,6 +192,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Telah terjadi kesalahan saat mengembalikan koteks SELinux untuk “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Terjadi kesalahan saat menyimpan</string>
     <string name="file_job_write_error_message_format">Telah terjadi kesalahan saat menyimpan “%1$s”.\n%2$s</string>
+    <string name="file_job_error_no_space">Ruang penyimpanan tidak cukup.</string>
     <string name="file_job_remount_format">Mount ulang “%1$s” sebagai read-write</string>
     <string name="file_job_remount_loading_format">Mount ulang “%1$s” sebagai read-write…</string>
     <string name="file_job_remount_success_format">“%1$s” telah dimount sebagai read-write</string>
