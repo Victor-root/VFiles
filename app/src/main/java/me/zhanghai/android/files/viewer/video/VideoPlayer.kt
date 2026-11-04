@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
@@ -47,6 +49,7 @@ import androidx.media3.ui.compose.ContentFrame
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
 import androidx.media3.ui.compose.state.rememberPlayPauseButtonState
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.ui.MediaViewerError
 import me.zhanghai.android.files.ui.PlayerProgressBar
 
 // The pieces shared by the players of videos, in the gallery and on their own.
@@ -91,7 +94,17 @@ fun VideoPlayer(
     controlsBottomPadding: Dp,
     shutter: @Composable () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    var hasError by remember(player) { mutableStateOf(player.playerError != null) }
+    DisposableEffect(player) {
+        val listener = object : Player.Listener {
+            override fun onPlayerErrorChanged(error: PlaybackException?) {
+                hasError = error != null
+            }
+        }
+        player.addListener(listener)
+        onDispose { player.removeListener(listener) }
+    }
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         // A texture view, unlike a surface view, follows the transition between pages.
         ContentFrame(
             player = player,
@@ -100,13 +113,17 @@ fun VideoPlayer(
             contentScale = ContentScale.Fit,
             shutter = shutter
         )
-        AnimatedVisibility(
-            visible = isControlsShown,
-            modifier = Modifier.fillMaxSize(),
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            VideoControls(player, controlsBottomPadding)
+        if (hasError) {
+            MediaViewerError()
+        } else {
+            AnimatedVisibility(
+                visible = isControlsShown,
+                modifier = Modifier.fillMaxSize(),
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                VideoControls(player, controlsBottomPadding)
+            }
         }
     }
 }
