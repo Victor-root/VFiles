@@ -418,7 +418,7 @@ private const val CAROUSEL_PLACEHOLDER_ALPHA = 0.2f
 @Composable
 private fun GalleryPhotoPage(media: GalleryMedia, onClick: () -> Unit, modifier: Modifier) {
     val context = LocalContext.current
-    var error by remember(media) { mutableStateOf<Throwable?>(null) }
+    var hasError by remember(media) { mutableStateOf(false) }
     val zoomableImageState = rememberZoomableImageState()
     val request = remember(context, media) {
         ImageRequest.Builder(context)
@@ -426,15 +426,14 @@ private fun GalleryPhotoPage(media: GalleryMedia, onClick: () -> Unit, modifier:
             .listener(
                 onError = { _, result ->
                     result.throwable.printStackTrace()
-                    error = result.throwable
+                    hasError = true
                 }
             )
             .build()
     }
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        val currentError = error
-        if (currentError != null) {
-            MediaViewerError(currentError)
+        if (hasError) {
+            MediaViewerError()
             return@Box
         }
         // The thumbnail is shown at once, while the photo itself loads.

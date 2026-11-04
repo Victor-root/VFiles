@@ -84,7 +84,7 @@ class TextEditorViewModel(file: Path) : ViewModel() {
             val bytes = runInterruptible(Dispatchers.IO) {
                 val size = file.size()
                 if (size > MAX_FILE_SIZE) {
-                    throw IOException("File size $size is too large")
+                    throw FileTooLargeException("File size $size is too large")
                 }
                 file.readAllBytes()
             }
@@ -182,3 +182,5 @@ class TextEditorViewModel(file: Path) : ViewModel() {
         private const val MAX_FILE_SIZE = 1024 * 1024.toLong()
     }
 }
+    class FileTooLargeException(message: String) : IOException(message)
+

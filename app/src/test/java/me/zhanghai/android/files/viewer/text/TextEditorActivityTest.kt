@@ -118,7 +118,7 @@ class TextEditorActivityTest {
     @Test
     fun showsErrorForTooLargeFile() {
         launch("a".repeat(1024 * 1024 + 1))
-        composeTestRule.onNodeWithText("too large", substring = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText("This file is too large to be edited").assertIsDisplayed()
         captureScreenRoboImage("build/screenshots/text_editor_error.png")
     }
 }

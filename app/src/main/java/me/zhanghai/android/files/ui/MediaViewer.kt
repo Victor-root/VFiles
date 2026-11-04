@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
@@ -89,7 +90,7 @@ fun MediaViewerSystemUiEffect(isShown: Boolean) {
 }
 
 @Composable
-fun MediaViewerError(throwable: Throwable, message: String = throwable.toString()) {
+fun MediaViewerError(message: String = stringResource(R.string.media_viewer_error)) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(R.drawable.error_icon_white_240dp),

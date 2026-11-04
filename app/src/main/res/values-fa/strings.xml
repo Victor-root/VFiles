@@ -635,6 +635,7 @@
     <string name="pdf_viewer_page_error">چنین صفحه‌ای وجود ندارد</string>
     <string name="pdf_viewer_password_protected">این PDF با گذرواژه محافظت شده است که پشتیبانی نمی‌شود</string>
     <string name="image_viewer_title">نمایشگر تصویر</string>
+    <string name="media_viewer_error">باز کردن این فایل ممکن نیست</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">ذخیره به عنوان</string>
     <string name="save_as_error">خطا هنگام ذخیرهٔ پرونده</string>
@@ -647,6 +648,7 @@
     <string name="text_editor_encoding">رمزگذاری</string>
     <string name="text_editor_close_message">آیا مطمئن هستید که می‌خواهید تغییرات ذخیره نشده در این سند را دور بریزید؟</string>
 
+    <string name="text_editor_file_too_large">این فایل برای ویرایش بیش از حد بزرگ است</string>
     <string name="ftp_server_title">کارساز اف‌تی‌پی</string>
     <string name="ftp_server_state_title">وضعیت</string>
     <string name="ftp_server_state_summary_starting">در حال شروع…</string>

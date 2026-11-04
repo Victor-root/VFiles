@@ -637,6 +637,7 @@
     <string name="pdf_viewer_page_error">No existeix aquesta pàgina</string>
     <string name="pdf_viewer_password_protected">Aquest PDF està protegit amb contrasenya, cosa que no és compatible</string>
     <string name="image_viewer_title">Visor d\'imatges</string>
+    <string name="media_viewer_error">No s\'ha pogut obrir aquest fitxer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Desa com a</string>
     <string name="save_as_error">S\'ha produït un error en desar el fitxer</string>
@@ -649,6 +650,7 @@
     <string name="text_editor_encoding">Codificació</string>
     <string name="text_editor_close_message">Esteu segur que voleu descartar els canvis no desats en aquest document?</string>
 
+    <string name="text_editor_file_too_large">Aquest fitxer és massa gran per editar-lo</string>
     <string name="ftp_server_title">Servidor FTP</string>
     <string name="ftp_server_state_title">Estat</string>
     <string name="ftp_server_state_summary_starting">S\'està iniciant...</string>

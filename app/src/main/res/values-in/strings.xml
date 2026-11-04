@@ -601,6 +601,7 @@
     <string name="pdf_viewer_page_error">Halaman tidak ada</string>
     <string name="pdf_viewer_password_protected">PDF ini dilindungi sandi, yang tidak didukung</string>
     <string name="image_viewer_title">Penampil gambar</string>
+    <string name="media_viewer_error">Tidak dapat membuka file ini</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Simpan sebagai</string>
     <string name="save_as_error">Terjadi kesalahan saat menyimpan berkas</string>
@@ -613,6 +614,7 @@
     <string name="text_editor_encoding">Enkode</string>
     <string name="text_editor_close_message">Apakah Anda yakin ingin menghapus perubahan yang belum disimpan pada dokumen ini?</string>
 
+    <string name="text_editor_file_too_large">File ini terlalu besar untuk diedit</string>
     <string name="ftp_server_title">Server FTP</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Memulai…</string>

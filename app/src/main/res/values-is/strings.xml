@@ -639,6 +639,7 @@
     <string name="pdf_viewer_page_error">Þessi síða er ekki til</string>
     <string name="pdf_viewer_password_protected">Þetta PDF er varið með lykilorði, sem er ekki stutt</string>
     <string name="image_viewer_title">Myndaskoðari</string>
+    <string name="media_viewer_error">Ekki tókst að opna þessa skrá</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Vista sem</string>
     <string name="save_as_error">Villa kom upp við að vista skrá</string>
@@ -651,6 +652,7 @@
     <string name="text_editor_encoding">Kóðun</string>
     <string name="text_editor_close_message">Ertu viss um að þú viljir henda óvistuðum breytingum á þessu skjali?</string>
 
+    <string name="text_editor_file_too_large">Þessi skrá er of stór til að breyta henni</string>
     <string name="ftp_server_title">FTP-netþjónn</string>
     <string name="ftp_server_state_title">Staða</string>
     <string name="ftp_server_state_summary_starting">Ræsing…</string>

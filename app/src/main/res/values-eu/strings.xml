@@ -593,6 +593,7 @@
     <string name="text_editor_reload_message">Ziur birkargatu nahi duzula? Dokumentu honi egindako gorde gabeko aldaketak galduko dira.</string>
     <string name="text_editor_encoding">Kodeketa</string>
     <string name="text_editor_close_message">Ziur dokumentu honi egindako gorde gabeko aldaketak baztertu nahi dituzula?</string>
+    <string name="text_editor_file_too_large">Fitxategi hau handiegia da editatzeko</string>
 
     <string name="ftp_server_title">FTP zerbitzaria</string>
     <string name="ftp_server_state_title">Egoera</string>
@@ -774,4 +775,5 @@
     <string name="pdf_viewer_page_error">Ez dago orri hori</string>
     <string name="pdf_viewer_password_protected">PDF hau pasahitzez babestuta dago, eta hori ez da onartzen</string>
     <string name="file_job_progress_title">Abian diren eragiketak</string>
+    <string name="media_viewer_error">Ezin da fitxategi hau ireki</string>
 </resources>

@@ -253,7 +253,13 @@ private fun TextEditorError(throwable: Throwable?) {
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
-            text = throwable.toString(),
+            text = stringResource(
+                if (throwable is TextEditorViewModel.FileTooLargeException) {
+                    R.string.text_editor_file_too_large
+                } else {
+                    R.string.media_viewer_error
+                }
+            ),
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge

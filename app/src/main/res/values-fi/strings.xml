@@ -592,6 +592,7 @@
     <string name="text_editor_reload_message">Haluatko varmasti ladata tiedoston uudelleen? Tallentamattomat muutokset häviävät.</string>
     <string name="text_editor_encoding">Merkistökoodaus</string>
     <string name="text_editor_close_message">Haluatko varmasti hylätä tiedoston tallentamattomat muutokset?</string>
+    <string name="text_editor_file_too_large">Tiedosto on liian suuri muokattavaksi</string>
 
     <string name="ftp_server_title">FTP-palvelin</string>
     <string name="ftp_server_state_title">Tila</string>
@@ -773,4 +774,5 @@
     <string name="pdf_viewer_page_error">Sivua ei ole olemassa</string>
     <string name="pdf_viewer_password_protected">Tämä PDF on suojattu salasanalla, mitä ei tueta</string>
     <string name="file_job_progress_title">Käynnissä olevat toiminnot</string>
+    <string name="media_viewer_error">Tiedostoa ei voi avata</string>
 </resources>

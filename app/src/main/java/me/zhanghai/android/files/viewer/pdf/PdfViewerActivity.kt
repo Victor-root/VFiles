@@ -231,14 +231,11 @@ private fun PdfViewerScreen(uri: Uri, fileName: String?) {
             result == null -> CircularProgressIndicator()
             document == null -> {
                 val throwable = result.exceptionOrNull()!!
-                MediaViewerError(
-                    throwable,
-                    if (throwable is SecurityException) {
-                        stringResource(R.string.pdf_viewer_password_protected)
-                    } else {
-                        throwable.toString()
-                    }
-                )
+                if (throwable is SecurityException) {
+                    MediaViewerError(stringResource(R.string.pdf_viewer_password_protected))
+                } else {
+                    MediaViewerError()
+                }
             }
             isFitWidth ->
                 PdfWidePages(
@@ -369,7 +366,7 @@ private fun PdfPageView(
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
-    var error by remember(document, index) { mutableStateOf<Throwable?>(null) }
+    var hasError by remember(document, index) { mutableStateOf(false) }
     val zoomableImageState = rememberZoomableImageState()
     val request = remember(context, document, index) {
         ImageRequest.Builder(context)
@@ -377,15 +374,14 @@ private fun PdfPageView(
             .listener(
                 onError = { _, result ->
                     result.throwable.printStackTrace()
-                    error = result.throwable
+                    hasError = true
                 }
             )
             .build()
     }
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        val currentError = error
-        if (currentError != null) {
-            MediaViewerError(currentError)
+        if (hasError) {
+            MediaViewerError()
         } else {
             ZoomableAsyncImage(
                 model = request,

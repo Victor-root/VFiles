@@ -215,7 +215,7 @@ private fun ImageViewerScreen(initialPaths: List<Path>, initialPosition: Int) {
 @Composable
 private fun ImageViewerPage(path: Path, modifier: Modifier, onClick: () -> Unit) {
     val context = LocalContext.current
-    var error by remember(path) { mutableStateOf<Throwable?>(null) }
+    var hasError by remember(path) { mutableStateOf(false) }
     val zoomableImageState = rememberZoomableImageState()
     // Images are loaded through the file provider, which lets large ones be sub-sampled.
     val request = remember(context, path) {
@@ -224,15 +224,14 @@ private fun ImageViewerPage(path: Path, modifier: Modifier, onClick: () -> Unit)
             .listener(
                 onError = { _, result ->
                     result.throwable.printStackTrace()
-                    error = result.throwable
+                    hasError = true
                 }
             )
             .build()
     }
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        val currentError = error
-        if (currentError != null) {
-            MediaViewerError(currentError)
+        if (hasError) {
+            MediaViewerError()
         } else {
             ZoomableAsyncImage(
                 model = request,

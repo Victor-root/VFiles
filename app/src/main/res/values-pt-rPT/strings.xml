@@ -674,6 +674,7 @@
     <string name="pdf_viewer_page_error">Página inexistente</string>
     <string name="pdf_viewer_password_protected">Este PDF está protegido por palavra-passe, o que não é suportado</string>
     <string name="image_viewer_title">Visualizador de imagens</string>
+    <string name="media_viewer_error">Não foi possível abrir este ficheiro</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Guardar como</string>
     <string name="save_as_error">Erro ao guardar o ficheiro</string>
@@ -686,6 +687,7 @@
     <string name="text_editor_encoding">Codificação</string>
     <string name="text_editor_close_message">Tem certeza de que deseja descartar as alterações efetuadas a este documento?</string>
 
+    <string name="text_editor_file_too_large">Este ficheiro é demasiado grande para ser editado</string>
     <string name="ftp_server_title">Servidor FTP</string>
     <string name="ftp_server_state_title">Estado</string>
     <string name="ftp_server_state_summary_starting">A iniciar…</string>

@@ -684,6 +684,7 @@
     <string name="pdf_viewer_page_error">Cette page n\'existe pas</string>
     <string name="pdf_viewer_password_protected">Ce PDF est protégé par un mot de passe, ce qui n\'est pas pris en charge</string>
     <string name="image_viewer_title">Visionneuse d\'images</string>
+    <string name="media_viewer_error">Impossible d\'ouvrir ce fichier</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Enregistrer sous</string>
     <string name="save_as_error">Erreur lors de l\'enregistrement du fichier</string>
@@ -696,6 +697,7 @@
     <string name="text_editor_encoding">Encodage</string>
     <string name="text_editor_close_message">Êtes-vous sûr de vouloir rejeter les modifications non enregistrées apportées à ce document ?</string>
 
+    <string name="text_editor_file_too_large">Ce fichier est trop volumineux pour être modifié</string>
     <string name="ftp_server_title">Serveur FTP</string>
     <string name="ftp_server_state_title">Status</string>
     <string name="ftp_server_state_summary_starting">Démarrage…</string>

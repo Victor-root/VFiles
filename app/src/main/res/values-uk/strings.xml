@@ -709,6 +709,7 @@
     <string name="pdf_viewer_page_error">Такої сторінки немає</string>
     <string name="pdf_viewer_password_protected">Цей PDF захищений паролем, що не підтримується</string>
     <string name="image_viewer_title">Переглядач зображень</string>
+    <string name="media_viewer_error">Не вдалося відкрити цей файл</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Зберегти як</string>
     <string name="save_as_error">Помилка при збереженні файлу</string>
@@ -721,6 +722,7 @@
     <string name="text_editor_encoding">Кодування</string>
     <string name="text_editor_close_message">Ви впевнені, що бажаєте скасувати незбережені зміни в цьому документі?</string>
 
+    <string name="text_editor_file_too_large">Цей файл завеликий для редагування</string>
     <string name="ftp_server_title">FTP-сервер</string>
     <string name="ftp_server_state_title">Стан</string>
     <string name="ftp_server_state_summary_starting">Запуск…</string>

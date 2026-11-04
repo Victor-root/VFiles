@@ -602,6 +602,7 @@
     <string name="pdf_viewer_page_error">そのページはありません</string>
     <string name="pdf_viewer_password_protected">この PDF はパスワードで保護されているため、開けません</string>
     <string name="image_viewer_title">画像ビューアー</string>
+    <string name="media_viewer_error">このファイルを開けません</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">保存</string>
     <string name="save_as_error">ファイルを保存中にエラーが発生しました</string>
@@ -614,6 +615,7 @@
     <string name="text_editor_encoding">エンコーディング</string>
     <string name="text_editor_close_message">本当にこのドキュメントの保存していない変更は破棄しますか？</string>
 
+    <string name="text_editor_file_too_large">このファイルは大きすぎて編集できません</string>
     <string name="ftp_server_title">FTP サーバー</string>
     <string name="ftp_server_state_title">状態</string>
     <string name="ftp_server_state_summary_starting">開始中…</string>
