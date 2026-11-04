@@ -64,6 +64,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -250,13 +251,31 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             navigationIconFocusRequester.requestFocus()
         }
     }
-    // It moves there in a newly opened folder.
+    val focusTarget = remember { FileFocusTarget() }
+    var lastLoadedPath by remember { mutableStateOf(currentPath) }
+    // It moves there in a newly opened folder, or back to the folder that was left in its parent.
     val isFileListLoaded = fileListStateful is Success
     LaunchedEffect(currentPath, isFileListLoaded) {
-        if (!isFileListLoaded || !isKeyboardMode || drawerState.isOpen) {
+        if (!isFileListLoaded) {
             return@LaunchedEffect
         }
-        focusContent()
+        val leftPath = lastLoadedPath
+        lastLoadedPath = currentPath
+        if (!isKeyboardMode || drawerState.isOpen) {
+            return@LaunchedEffect
+        }
+        val displayedFiles = viewModel.displayedFiles
+        val leftFileIndex = if (leftPath != currentPath && leftPath.startsWith(currentPath)) {
+            displayedFiles.indexOfFirst { leftPath.startsWith(it.listablePath) }
+        } else {
+            -1
+        }
+        val isLeftFileFocused = leftFileIndex != -1 && focusTarget.requestFocus(
+            displayedFiles[leftFileIndex].path, leftFileIndex, controller.gridState
+        )
+        if (!isLeftFileFocused) {
+            focusContent()
+        }
     }
 
     LaunchedEffect(drawerState) {
@@ -359,6 +378,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
                 }
             },
             listFocusRequester = listFocusRequester,
+            focusTarget = focusTarget,
             navigationIconFocusRequester = navigationIconFocusRequester,
             persistentDrawer = if (hasPersistentDrawer) {
                 { drawerContent(it) }
@@ -510,6 +530,7 @@ private fun FileListScaffold(
     onNavigationIconClick: () -> Unit,
     onLeftEdgeReached: () -> Unit,
     listFocusRequester: FocusRequester,
+    focusTarget: FileFocusTarget,
     navigationIconFocusRequester: FocusRequester,
     persistentDrawer: (@Composable (Modifier) -> Unit)?,
     isPersistentDrawerOpen: Boolean
@@ -566,6 +587,7 @@ private fun FileListScaffold(
                                             viewModel = viewModel,
                                             breadcrumbData = breadcrumbData,
                                             fileListStateful = fileListStateful,
+                                            files = files,
                                             isSearching = isSearching,
                                             viewType = viewType,
                                             sortOptions = sortOptions,
@@ -587,7 +609,6 @@ private fun FileListScaffold(
                                                     .clearAndSetSemantics {}
                                             } else {
                                                 Modifier
-                                            files = files,
                                             }
                                         )
                                         EndRevealVisibility(
@@ -717,7 +738,8 @@ private fun FileListScaffold(
                     // button.
                     onTopEdgeReached = { navigationIconFocusRequester.requestFocus() },
                     onRightEdgeReached = { speedDialFocusRequester.requestFocus() },
-                    focusRequester = listFocusRequester
+                    focusRequester = listFocusRequester,
+                    focusTarget = focusTarget
                 )
                 SpeedDialScrim(
                     isExpanded = isSpeedDialExpanded,
@@ -734,6 +756,7 @@ private fun FileListMainAppBar(
     viewModel: FileListViewModel,
     breadcrumbData: BreadcrumbData,
     fileListStateful: Stateful<List<FileItem>>,
+    files: List<FileItem>?,
     isSearching: Boolean,
     viewType: FileViewType,
     sortOptions: FileSortOptions,
@@ -756,7 +779,6 @@ private fun FileListMainAppBar(
         textMeasurer.measure(title, titleStyle, softWrap = false, maxLines = 1).size.width
     }
     var isViewSortMenuShown by remember { mutableStateOf(false) }
-    files: List<FileItem>?,
     BoxWithConstraints(modifier = modifier) {
         // Sorting, and then searching, go to the overflow menu when the title doesn't fit next to
         // their buttons.
@@ -998,6 +1020,33 @@ private val Throwable.errorMessageRes: Int
         else -> R.string.file_list_error_unknown
     }
 
+/** Gives the focus to a file of the list, which may first have to be composed for it. */
+@Stable
+private class FileFocusTarget {
+    private var path by mutableStateOf<Path?>(null)
+    private val requester = FocusRequester()
+
+    fun modifierFor(filePath: Path, modifier: Modifier): Modifier =
+        if (filePath == path) modifier.focusRequester(requester) else modifier
+
+    suspend fun requestFocus(filePath: Path, index: Int, gridState: LazyGridState): Boolean {
+        fun isComposed() =
+            gridState.layoutInfo.visibleItemsInfo.any { it.key == filePath.toString() }
+
+        path = filePath
+        awaitLayout()
+        if (!isComposed()) {
+            gridState.scrollToItem(index)
+            awaitLayout()
+        }
+        return (isComposed() && requester.requestFocus()).also { path = null }
+    }
+
+    private suspend fun awaitLayout() {
+        repeat(2) { withFrameNanos {} }
+    }
+}
+
 @Composable
 private fun FileListContent(
     controller: FileListController,
@@ -1015,7 +1064,8 @@ private fun FileListContent(
     onLeftEdgeReached: () -> Unit,
     onTopEdgeReached: () -> Unit,
     onRightEdgeReached: () -> Unit,
-    focusRequester: FocusRequester
+    focusRequester: FocusRequester,
+    focusTarget: FileFocusTarget
 ) {
     // Hidden files aren't shown, so a folder with only them is empty too.
     val hasFiles = !files.isNullOrEmpty()
@@ -1055,7 +1105,8 @@ private fun FileListContent(
                 onLeftEdgeReached = onLeftEdgeReached,
                 onTopEdgeReached = onTopEdgeReached,
                 onRightEdgeReached = onRightEdgeReached,
-                focusRequester = focusRequester
+                focusRequester = focusRequester,
+                focusTarget = focusTarget
             )
         }
         AnimatedVisibility(
@@ -1140,7 +1191,8 @@ private fun FileGrid(
     onLeftEdgeReached: () -> Unit,
     onTopEdgeReached: () -> Unit,
     onRightEdgeReached: () -> Unit,
-    focusRequester: FocusRequester
+    focusRequester: FocusRequester,
+    focusTarget: FileFocusTarget
 ) {
     val context = LocalContext.current
     val nameEllipsize by Settings.FILE_NAME_ELLIPSIZE.flow.collectAsState()
@@ -1234,7 +1286,7 @@ private fun FileGrid(
                                 onLongClick = { controller.onFileLongClick(file) },
                                 onIconClick = { controller.toggleFileSelection(file) },
                                 actions = controller,
-                                modifier = itemModifier
+                                modifier = focusTarget.modifierFor(file.path, itemModifier)
                             )
                         FileViewType.GRID ->
                             FileGridItem(
@@ -1246,7 +1298,7 @@ private fun FileGrid(
                                 onLongClick = { controller.onFileLongClick(file) },
                                 onIconClick = { controller.toggleFileSelection(file) },
                                 actions = controller,
-                                modifier = itemModifier
+                                modifier = focusTarget.modifierFor(file.path, itemModifier)
                             )
                     }
                 }

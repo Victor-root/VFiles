@@ -30,6 +30,7 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onAllNodesWithText
@@ -155,7 +156,6 @@ class FileListActivityTest {
         captureScreenRoboImage("build/screenshots/file_list.png")
     }
 
-    private fun addManyFiles() {
     @Test
     fun doesNotCountHiddenFilesInSubtitle() {
         TestDocumentsProvider.addFile(".hidden", "application/octet-stream", 0)
@@ -168,6 +168,7 @@ class FileListActivityTest {
         composeTestRule.onNodeWithText("Empty").assertIsDisplayed()
     }
 
+    private fun addManyFiles() {
         for (i in 1..40) {
             TestDocumentsProvider.addFile("zfile$i.txt", "text/plain", 1024)
         }
@@ -525,6 +526,22 @@ class FileListActivityTest {
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithText("Gallery").assertIsDisplayed()
         navigationIcon.assertIsNotFocused()
+    }
+
+    @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun focusesFolderLeftWhenGoingBackWithDpad() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val projects = composeTestRule.onNodeWithText("Projects")
+        projects.requestFocus()
+        projects.performKeyInput { pressKey(Key.DirectionCenter) }
+        waitForText("plan.md")
+        composeTestRule.waitForIdle()
+        scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        waitForText("notes.txt")
+        composeTestRule.waitForIdle()
+        composeTestRule.onNode(hasText("Projects") and isFocused()).assertIsDisplayed()
     }
 
     @Test
