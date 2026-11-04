@@ -9,12 +9,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java8.nio.file.Path
 import java8.nio.file.Paths
@@ -56,7 +58,7 @@ class FileListActivity : AppActivity() {
             return
         }
         if (!viewModel.hasTrail) {
-            viewModel.initialize(intent)
+            viewModel.initialize(intent, savedInstanceState?.currentPath)
         }
         controller = FileListController(this, viewModel, savedInstanceState)
     }
@@ -66,6 +68,7 @@ class FileListActivity : AppActivity() {
 
         if (::controller.isInitialized) {
             controller.saveState(outState)
+            outState.putParcelable(KEY_CURRENT_PATH, viewModel.currentPath as Parcelable)
         }
     }
 
@@ -97,8 +100,9 @@ class FileListActivity : AppActivity() {
         FileListScreen(controller, viewModel)
     }
 
-    // Opens the folder and picking options asked for by the intent.
-    private fun FileListViewModel.initialize(intent: Intent) {
+    // Opens the folder and picking options asked for by the intent, or the folder that was open
+    // before the process died.
+    private fun FileListViewModel.initialize(intent: Intent, restoredPath: Path?) {
         var path = intent.extraPath
         var pickOptions: PickOptions? = null
         when (val action = intent.action) {
@@ -149,13 +153,18 @@ class FileListActivity : AppActivity() {
                     }
                 }
         }
-        resetTo(path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
+        resetTo(restoredPath ?: path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
         if (pickOptions != null) {
             this.pickOptions = pickOptions
         }
     }
 
+    private val Bundle.currentPath: Path?
+        get() = BundleCompat.getParcelable(this, KEY_CURRENT_PATH, Parcelable::class.java) as Path?
+
     companion object {
+        private const val KEY_CURRENT_PATH = "current_path"
+
         private const val ACTION_VIEW_DOWNLOADS =
             "me.zhanghai.android.files.intent.action.VIEW_DOWNLOADS"
 

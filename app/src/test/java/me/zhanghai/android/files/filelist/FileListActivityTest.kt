@@ -11,6 +11,7 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Bundle
 import android.os.Process
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -52,6 +53,7 @@ import androidx.core.content.getSystemService
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
@@ -74,6 +76,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
@@ -232,6 +235,24 @@ class FileListActivityTest {
         captureScreenRoboImage("build/screenshots/file_list_subfolder.png")
         scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
         waitForText("notes.txt")
+    }
+
+    @Test
+    fun comesBackToFolderAfterProcessDeath() {
+        val scenario = launch()
+        composeTestRule.onNodeWithText("Projects").performClick()
+        waitForText("plan.md")
+        val savedInstanceState = Bundle()
+        scenario.onActivity {
+            InstrumentationRegistry.getInstrumentation()
+                .callActivityOnSaveInstanceState(it, savedInstanceState)
+        }
+        scenario.close()
+        // Built apart from the scenario, without the view model that would have survived.
+        val intent = Intent(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+        Robolectric.buildActivity(FileListActivity::class.java, intent).setup(savedInstanceState)
+        waitForText("plan.md")
+        composeTestRule.onNodeWithText("1 file").assertIsDisplayed()
     }
 
     @Test
