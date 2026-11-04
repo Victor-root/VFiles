@@ -10,15 +10,13 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
-import me.zhanghai.android.files.compat.getColorCompat
+import me.zhanghai.android.files.theme.appBarThemeColor
 
 class NotificationTemplate(
     val channelTemplate: NotificationChannelTemplate,
-    @param:ColorRes val colorRes: Int? = null,
     @param:DrawableRes val smallIcon: Int? = null,
     @param:StringRes val contentTitleRes: Int? = null,
     @param:StringRes val contentTextRes: Int? = null,
@@ -30,7 +28,7 @@ class NotificationTemplate(
 ) {
     fun createBuilder(context: Context): NotificationCompat.Builder =
         NotificationCompat.Builder(context, channelTemplate.id).apply {
-            colorRes?.let { setColor(context.getColorCompat(it)) }
+            color = context.appBarThemeColor()
             smallIcon?.let { setSmallIcon(it) }
             contentTitleRes?.let { setContentTitle(context.getText(contentTitleRes)) }
             contentTextRes?.let { setContentText(context.getText(contentTextRes)) }

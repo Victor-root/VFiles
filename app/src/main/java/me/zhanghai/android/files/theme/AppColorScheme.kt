@@ -21,6 +21,7 @@ import com.materialkolor.dynamiccolor.DynamicScheme
 import com.materialkolor.hct.Hct
 import com.materialkolor.scheme.SchemeContent
 import com.materialkolor.scheme.SchemeFidelity
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.custom.wallpaperAccentColor
 import me.zhanghai.android.files.theme.night.withNightMode
@@ -43,6 +44,12 @@ fun appColorScheme(
     val neutralColorScheme = colorScheme.withNeutralColors(isDark)
     return if (isDark && isBlack) neutralColorScheme.toBlack() else neutralColorScheme
 }
+
+/** The theme color as shown in the app bar, for what is outside of the app. */
+@ColorInt
+fun Context.appBarThemeColor(): Int =
+    appColorScheme(this, Settings.THEME_COLOR.value, isDark = false, isBlack = false)
+        .primary.toArgb()
 
 // Backgrounds, surfaces and text are white, black and greys, instead of tinted with the theme
 // color, which is kept for the app bar and the controls.
@@ -99,15 +106,15 @@ private val NEUTRAL_DARK_SURFACE = Color(0xFF121212)
  * derives its scheme from, tell it: when their hue is way off the one of the system, the scheme is
  * derived from the wallpaper instead, like the system does. Before Android 12, there's only the
  * wallpaper to follow.
+ *
+ * It's told with the light scheme for dark mode too, whose app bar uses the light scheme: the hues
+ * of both differ a bit, and the rest of the app must not end up with another color than the app bar.
  */
 private fun dynamicColorScheme(context: Context, isDark: Boolean): ColorScheme {
     val wallpaperColor = context.wallpaperAccentColor()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val lightColorScheme = dynamicLightColorScheme(context)
         if (wallpaperColor == null ||
- *
- * It's told with the light scheme for dark mode too, whose app bar uses the light scheme: the hues
- * of both differ a bit, and the rest of the app must not end up with another color than the app bar.
             !isHueMismatched(lightColorScheme.primary.toArgb(), wallpaperColor)) {
             return if (isDark) dynamicDarkColorScheme(context) else lightColorScheme
         }

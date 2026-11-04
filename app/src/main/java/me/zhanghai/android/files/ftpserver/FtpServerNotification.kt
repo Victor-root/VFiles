@@ -26,7 +26,6 @@ val ftpServerServiceNotificationTemplate =
             descriptionRes = R.string.notification_channel_ftp_server_description,
             showBadge = false
         ),
-        colorRes = R.color.color_primary,
         smallIcon = R.drawable.notification_icon,
         contentTitleRes = R.string.ftp_server_notification_title,
         ongoing = true,

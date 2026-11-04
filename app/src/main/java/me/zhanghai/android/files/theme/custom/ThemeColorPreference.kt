@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.colorpicker.ColorPickerDialog
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.appColorScheme
 import me.zhanghai.android.files.ui.Preference
 
 @Composable
@@ -62,10 +63,11 @@ fun ThemeColorPreference() {
     }
 }
 
-// The wallpaper color is the real one instead of the system accent, which doesn't follow the
-// wallpaper on some OEM skins.
+// The color that is really applied, instead of the system accent, which doesn't follow the wallpaper
+// on some OEM skins.
 private fun ThemeColor.displayColor(context: Context): Color =
-    Color(
-        (if (this == ThemeColor.DYNAMIC) context.wallpaperAccentColor() else null)
-            ?: ContextCompat.getColor(context, resourceId)
-    )
+    if (this == ThemeColor.DYNAMIC) {
+        appColorScheme(context, this, isDark = false, isBlack = false).primary
+    } else {
+        Color(ContextCompat.getColor(context, resourceId))
+    }
