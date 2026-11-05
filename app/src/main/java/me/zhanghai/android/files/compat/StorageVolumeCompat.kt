@@ -15,6 +15,9 @@ import android.provider.DocumentsContract
 import me.zhanghai.android.files.util.lazyReflectedMethod
 import java.io.File
 
+const val ACTION_OPEN_EXTERNAL_DIRECTORY = "android.os.storage.action.OPEN_EXTERNAL_DIRECTORY"
+const val EXTRA_DIRECTORY_NAME = "android.os.storage.extra.DIRECTORY_NAME"
+
 // Work around @SuppressLint not applicable to top level property with delegate.
 @SuppressLint("NewApi")
 private val storageVolumeClass = StorageVolume::class.java

@@ -60,7 +60,9 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
+import me.zhanghai.android.files.compat.ACTION_OPEN_EXTERNAL_DIRECTORY
 import me.zhanghai.android.files.file.documentUri
+import me.zhanghai.android.files.file.treeDocumentUri
 import me.zhanghai.android.files.filejob.FileJobProgresses
 import me.zhanghai.android.files.settings.FileOpenAppCategory
 import me.zhanghai.android.files.settings.FileOpenDefaultApps
@@ -763,6 +765,17 @@ class FileListActivityTest {
         composeTestRule.onNodeWithText("photo.jpg").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("photo.jpg").documentUri, scenario.result.resultData.data)
+    }
+
+    @Test
+    fun picksFolderForOldAccessRequest() {
+        val intent = Intent(ACTION_OPEN_EXTERNAL_DIRECTORY)
+            .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+            .apply { extraPath = rootPath }
+        val scenario = launch(intent)
+        composeTestRule.onNodeWithContentDescription("Select").performClick()
+        assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
+        assertEquals(rootPath.treeDocumentUri, scenario.result.resultData.data)
     }
 
     @Test

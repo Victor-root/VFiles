@@ -31,6 +31,7 @@ import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.file.extension
+import me.zhanghai.android.files.compat.ACTION_OPEN_EXTERNAL_DIRECTORY
 import me.zhanghai.android.files.gallery.GalleryDestination
 import me.zhanghai.android.files.music.MusicDestination
 import me.zhanghai.android.files.onboarding.OnboardingActivity
@@ -168,7 +169,7 @@ class FileListActivity : AppActivity() {
                 pickOptions =
                     PickOptions(mode, fileName, readOnly, mimeTypes, localOnly, allowMultiple)
             }
-            Intent.ACTION_OPEN_DOCUMENT_TREE -> {
+            Intent.ACTION_OPEN_DOCUMENT_TREE, ACTION_OPEN_EXTERNAL_DIRECTORY -> {
                 val localOnly = intent.getBooleanExtra(Intent.EXTRA_LOCAL_ONLY, false)
                 pickOptions = PickOptions(
                     PickOptions.Mode.OPEN_DIRECTORY, null, false, emptyList(), localOnly, false

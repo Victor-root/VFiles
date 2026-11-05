@@ -9,11 +9,13 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
+import android.os.storage.StorageVolume
 import android.provider.DocumentsContract
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.compat.DocumentsContractCompat
+import me.zhanghai.android.files.compat.EXTRA_DIRECTORY_NAME
 import me.zhanghai.android.files.compat.directoryCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.uuidCompat
@@ -53,12 +55,21 @@ var Intent.extraPath: Path?
  */
 val Intent.pickInitialDirectory: Path?
     get() {
-        var path = extraPath ?: return null
+        var path = extraPath ?: externalDirectoryPath ?: return null
         if (path.isContentPath) {
             val uri = data ?: getParcelableExtraSafe(DocumentsContractCompat.EXTRA_INITIAL_URI)
             path = uri?.externalStoragePathOrNull(requiresDirectory = false) ?: return null
         }
         return if (path.isLinuxPath && path.toFile().isFile) path.parent else path
+    }
+
+// What StorageVolume.createAccessIntent() asks for on Android versions before 10.
+private val Intent.externalDirectoryPath: Path?
+    get() {
+        val volume = getParcelableExtraSafe<StorageVolume>(StorageVolume.EXTRA_STORAGE_VOLUME)
+        val directory = volume?.directoryCompat ?: return null
+        val name = getStringExtra(EXTRA_DIRECTORY_NAME)
+        return Paths.get((if (name != null) File(directory, name) else directory).path)
     }
 
 val Intent.saveAsPath: Path?
