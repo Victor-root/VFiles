@@ -311,6 +311,7 @@
     <string name="file_list_press_back_again_to_exit">Sakatu atzera berriro irteteko</string>
     <string name="file_list_error_folder_not_found">Karpeta hau jada ez dago</string>
     <string name="file_list_error_permission_denied">Ez duzu baimenik karpeta hau irekitzeko</string>
+    <string name="file_list_create_file_error">Ezin da fitxategi hau sortu</string>
     <string name="file_list_error_archive_header_encrypted">Artxibo honen fitxategi-zerrenda zifratuta dago, eta hori ez da onartzen</string>
     <string name="file_list_error_unknown">Ezin da karpeta hau ireki</string>
     <string name="file_list_action_create">Sortu</string>

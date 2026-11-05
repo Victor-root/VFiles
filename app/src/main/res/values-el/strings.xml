@@ -314,6 +314,7 @@
     <string name="file_list_press_back_again_to_exit">Πατήστε ξανά Πίσω για έξοδο</string>
     <string name="file_list_error_folder_not_found">Αυτός ο φάκελος δεν υπάρχει πλέον</string>
     <string name="file_list_error_permission_denied">Δεν έχετε δικαίωμα να ανοίξετε αυτόν τον φάκελο</string>
+    <string name="file_list_create_file_error">Δεν είναι δυνατή η δημιουργία αυτού του αρχείου</string>
     <string name="file_list_error_archive_header_encrypted">Η λίστα αρχείων αυτού του συμπιεσμένου αρχείου είναι κρυπτογραφημένη, κάτι που δεν υποστηρίζεται</string>
     <string name="file_list_error_unknown">Δεν είναι δυνατό το άνοιγμα αυτού του φακέλου</string>
     <string name="file_list_action_create">Δημιουργία</string>

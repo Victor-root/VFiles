@@ -14,6 +14,9 @@ import android.os.ParcelFileDescriptor
 import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.DocumentsProvider
+import android.provider.MediaStore
+import java8.nio.file.FileVisitResult
+import java8.nio.file.Files
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import java8.nio.file.attribute.BasicFileAttributes
@@ -197,6 +200,43 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     }
 
     private fun MatrixCursor.includeDocument(path: Path) {
+    override fun moveDocument(
+        sourceDocumentId: String,
+        sourceParentDocumentId: String,
+        targetParentDocumentId: String
+    ): String {
+        val source = sourceDocumentId.toPath()
+        val target = targetParentDocumentId.toPath().getUniqueChildPath(source.displayName)
+        try {
+            StrictMode::class.withoutPenaltyDeathOnNetwork { source.moveTo(target) }
+        } catch (e: IOException) {
+            throw e.toFileNotFoundException()
+        }
+        notifyChildrenChanged(sourceParentDocumentId)
+        notifyChildrenChanged(targetParentDocumentId)
+        return target.documentId
+    }
+
+    private fun Path.deleteRecursively() {
+        Files.walkFileTree(this, object : SimpleFileVisitor<Path>() {
+            override fun visitFile(file: Path, attributes: BasicFileAttributes): FileVisitResult {
+                file.delete()
+                return FileVisitResult.CONTINUE
+            }
+
+            override fun postVisitDirectory(
+                directory: Path,
+                exception: IOException?
+            ): FileVisitResult {
+                if (exception != null) {
+                    throw exception
+                }
+                directory.delete()
+                return FileVisitResult.CONTINUE
+            }
+        })
+    }
+
         val attributes = try {
             StrictMode::class.withoutPenaltyDeathOnNetwork {
                 path.readAttributes(BasicFileAttributes::class.java)
@@ -229,6 +269,8 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
             .add(DocumentsContract.Document.COLUMN_FLAGS, flags)
     }
 
+            // Asked for by apps looking for a path they can use directly.
+            .add(MediaStore.MediaColumns.DATA, path.localFilePathOrNull)
     private fun notifyChildrenChanged(parentDocumentId: String) {
         val context = context ?: return
         context.contentResolver.notifyChange(
@@ -265,6 +307,13 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         get() = fileName?.toString() ?: toString()
 
     private fun String.toPath(): Path = Paths.get(URI.create(this))
+
+    private val Path.localFilePathOrNull: String?
+        get() = try {
+            toFile().absolutePath
+        } catch (e: UnsupportedOperationException) {
+            null
+        }
 
     private fun IOException.toFileNotFoundException(): FileNotFoundException {
         if (this is FileNotFoundException) {

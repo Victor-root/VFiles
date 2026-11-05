@@ -117,8 +117,7 @@ class FileListActivity : AppActivity() {
                 }
                 val mimeType = intent.type?.asMimeTypeOrNull() ?: MimeType.ANY
                 val fileName = if (mode == PickOptions.Mode.CREATE_FILE) {
-                    intent.getStringExtra(Intent.EXTRA_TITLE)?.asFileNameOrNull()?.value
-                        ?: mimeType.extension?.let { "file.$it" } ?: "file"
+                    createFileName(intent.getStringExtra(Intent.EXTRA_TITLE), mimeType)
                 } else {
                     null
                 }
@@ -192,6 +191,18 @@ class FileListActivity : AppActivity() {
 
         fun createViewIntent(path: Path): Intent =
             FileListActivity::class.createIntent()
+    // The name asked for with the extension of its type if it has none, like the system picker.
+    private fun createFileName(title: String?, mimeType: MimeType): String {
+        val fileName = title?.asFileNameOrNull() ?: return mimeType.extension?.let { "file.$it" }
+            ?: "file"
+        val extension = mimeType.extension
+        return if (fileName.extensions.isEmpty() && extension != null) {
+            "${fileName.value}.$extension"
+        } else {
+            fileName.value
+        }
+    }
+
                 .setAction(Intent.ACTION_VIEW)
                 .apply { extraPath = path }
     }

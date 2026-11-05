@@ -26,6 +26,7 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasScrollToNodeAction
@@ -57,6 +58,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import java8.nio.file.Path
+import me.zhanghai.android.files.file.documentUri
 import me.zhanghai.android.files.filejob.FileJobProgresses
 import me.zhanghai.android.files.settings.FileOpenAppCategory
 import me.zhanghai.android.files.settings.FileOpenDefaultApps
@@ -745,21 +747,40 @@ class FileListActivityTest {
         composeTestRule.onNodeWithText("notes.txt").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("notes.txt"), scenario.result.resultData.extraPath)
+        assertEquals(rootPath.resolve("notes.txt").documentUri, scenario.result.resultData.data)
     }
 
     @Test
     fun picksWhereToCreateFile() {
+        TestDocumentsProvider.addFile("report.txt", "text/plain", 1024)
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
             .setType("text/plain")
             .putExtra(Intent.EXTRA_TITLE, "report.txt")
             .apply { extraPath = rootPath }
         val scenario = launch(intent)
-        composeTestRule.onNodeWithText("report.txt").assertIsDisplayed()
+        onTextField().assertTextEquals("report.txt")
         captureScreenRoboImage("build/screenshots/file_list_create_document.png")
         composeTestRule.onNodeWithContentDescription("Save").performClick()
+        composeTestRule.onNodeWithText("OK").performClick()
+        composeTestRule.waitForBackgroundWork {
+            var isFinishing = false
+            scenario.onActivity { isFinishing = it.isFinishing }
+            isFinishing
+        }
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("report.txt"), scenario.result.resultData.extraPath)
+    }
+
+    @Test
+    fun addsExtensionOfTypeToFileToCreate() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+            .setType("text/plain")
+            .putExtra(Intent.EXTRA_TITLE, "report")
+            .apply { extraPath = rootPath }
+        launch(intent)
+        composeTestRule.onNodeWithText("report.txt").assertIsDisplayed()
     }
 
     companion object {

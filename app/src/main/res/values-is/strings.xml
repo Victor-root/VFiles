@@ -316,6 +316,7 @@
     <string name="file_list_press_back_again_to_exit">Ýttu aftur á Til baka til að hætta</string>
     <string name="file_list_error_folder_not_found">Þessi mappa er ekki lengur til</string>
     <string name="file_list_error_permission_denied">Þú hefur ekki heimild til að opna þessa möppu</string>
+    <string name="file_list_create_file_error">Ekki tókst að búa til þessa skrá</string>
     <string name="file_list_error_archive_header_encrypted">Skráalisti þessa safns er dulkóðaður, sem er ekki stutt</string>
     <string name="file_list_error_unknown">Ekki tókst að opna þessa möppu</string>
     <string name="file_list_action_create">Útbúa</string>

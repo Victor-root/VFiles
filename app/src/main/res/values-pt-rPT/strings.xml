@@ -345,6 +345,7 @@
     <string name="file_list_press_back_again_to_exit">Prima novamente voltar para sair</string>
     <string name="file_list_error_folder_not_found">Esta pasta já não existe</string>
     <string name="file_list_error_permission_denied">Não tem permissão para abrir esta pasta</string>
+    <string name="file_list_create_file_error">Não foi possível criar este ficheiro</string>
     <string name="file_list_error_archive_header_encrypted">A lista de ficheiros deste arquivo está encriptada, o que não é suportado</string>
     <string name="file_list_error_unknown">Não foi possível abrir esta pasta</string>
     <string name="file_list_action_create">Criar</string>

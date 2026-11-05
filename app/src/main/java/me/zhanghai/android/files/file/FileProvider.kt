@@ -121,8 +121,6 @@ class FileProvider : ContentProvider() {
                     columns += column
                     values += file.absolutePath
                 }
-                // TODO: We should actually implement a DocumentsProvider since we are handling
-                //  ACTION_OPEN_DOCUMENT.
                 DocumentsContract.Document.COLUMN_MIME_TYPE -> {
                     columns += column
                     values += MimeType.guessFromPath(path.toString()).value

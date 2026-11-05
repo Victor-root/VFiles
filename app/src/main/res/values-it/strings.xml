@@ -343,6 +343,7 @@
     <string name="file_list_press_back_again_to_exit">Premi di nuovo Indietro per uscire</string>
     <string name="file_list_error_folder_not_found">Questa cartella non esiste più</string>
     <string name="file_list_error_permission_denied">Non hai i permessi per aprire questa cartella</string>
+    <string name="file_list_create_file_error">Impossibile creare questo file</string>
     <string name="file_list_error_archive_header_encrypted">L\'elenco dei file di questo archivio è crittografato e ciò non è supportato</string>
     <string name="file_list_error_unknown">Impossibile aprire questa cartella</string>
     <string name="file_list_action_create">Crea</string>

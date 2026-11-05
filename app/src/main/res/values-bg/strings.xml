@@ -314,6 +314,7 @@
     <string name="file_list_press_back_again_to_exit">Натиснете „Назад“ отново за изход</string>
     <string name="file_list_error_folder_not_found">Тази папка вече не съществува</string>
     <string name="file_list_error_permission_denied">Нямате разрешение да отворите тази папка</string>
+    <string name="file_list_create_file_error">Файлът не може да бъде създаден</string>
     <string name="file_list_error_archive_header_encrypted">Списъкът с файлове на този архив е шифрован, което не се поддържа</string>
     <string name="file_list_error_unknown">Папката не може да бъде отворена</string>
     <string name="file_list_action_create">Създаване</string>

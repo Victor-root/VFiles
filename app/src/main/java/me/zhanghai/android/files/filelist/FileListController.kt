@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.filelist
 
+import java.io.IOException
 import android.Manifest
 import android.app.Activity
 import android.content.ClipData
@@ -41,9 +42,13 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.BundleCompat
+import androidx.lifecycle.lifecycleScope
 import java8.nio.file.Path
+import java8.nio.file.StandardOpenOption
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.application
@@ -52,6 +57,7 @@ import me.zhanghai.android.files.compat.checkSelfPermissionCompat
 import me.zhanghai.android.files.file.FileItem
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.canActAsExternalStoragePicker
+import me.zhanghai.android.files.file.documentUri
 import me.zhanghai.android.files.file.externalStorageDocumentUriOrNull
 import me.zhanghai.android.files.file.externalStorageTreeUriOrNull
 import me.zhanghai.android.files.file.fileProviderUri
@@ -64,6 +70,7 @@ import me.zhanghai.android.files.music.MusicPlayerActivity
 import me.zhanghai.android.files.navigation.BookmarkDirectories
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.provider.archive.isArchivePath
+import me.zhanghai.android.files.provider.common.newOutputStream
 import me.zhanghai.android.files.provider.linux.isLinuxPath
 import me.zhanghai.android.files.settings.FileOpenAppCategory
 import me.zhanghai.android.files.settings.FileOpenDefaultApps
@@ -651,20 +658,39 @@ class FileListController(
     }
 
     private fun pickPaths(paths: LinkedHashSet<Path>) {
+        if (viewModel.pickOptions!!.mode != PickOptions.Mode.CREATE_FILE) {
+            finishPicking(paths)
+            return
+        }
+        // Like the system picker, the file exists once picked, for the app to query or open it. A
+        // replaced file starts empty, since apps usually don't truncate what they write to.
+        activity.lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                paths.single().newOutputStream(
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE
+                ).close()
+                activity.runOnUiThread { finishPicking(paths) }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                activity.showToast(R.string.file_list_create_file_error)
+            }
+        }
+    }
+
+    private fun finishPicking(paths: LinkedHashSet<Path>) {
         val pickOptions = viewModel.pickOptions!!
-        // Resolve each selected path to the URI handed back to the caller. Files are shared through
-        // the (private) FileProvider - the long-proven path that also works for SMB/FTP/archives;
-        // only ACTION_OPEN_DOCUMENT_TREE needs a SAF tree URI, which must come from
-        // FileSystemDocumentsProvider.
+        // Resolve each selected path to the URI handed back to the caller, a document of
+        // FileSystemDocumentsProvider like those of the system picker, which also works for
+        // SMB/FTP/archives.
         val singlePath = paths.singleOrNull()
         // When VFiles is the platform document picker (systemPicker builds signed with the
         // platform key, holding MANAGE_DOCUMENTS), hand back the same
         // com.android.externalstorage.documents URIs that DocumentsUI would, so apps that require
         // ExternalStorageProvider URIs accept the result and the real I/O goes through the genuine
         // ExternalStorageProvider. Everything this doesn't cover - the whole standard build (the
-        // permission is never held there), remote backends, unmounted volumes, Android/data|obb,
-        // and CREATE_FILE (ESP only serves an existing document; the file is created lazily on
-        // first write through our FileProvider) - falls back to our own provider URIs, unchanged.
+        // permission is never held there), remote backends, unmounted volumes and Android/data|obb
+        // - falls back to our own provider URIs, unchanged.
         // See ExternalStoragePickerUri.kt.
         val canUseExternalStorage = activity.canActAsExternalStoragePicker()
         fun pickUriForPath(path: Path): Uri {
@@ -672,15 +698,14 @@ class FileListController(
                 when (pickOptions.mode) {
                     PickOptions.Mode.OPEN_DIRECTORY ->
                         path.externalStorageTreeUriOrNull()?.let { return it }
-                    PickOptions.Mode.OPEN_FILE ->
+                    PickOptions.Mode.OPEN_FILE, PickOptions.Mode.CREATE_FILE ->
                         path.externalStorageDocumentUriOrNull()?.let { return it }
-                    PickOptions.Mode.CREATE_FILE -> {}
                 }
             }
             return if (pickOptions.mode == PickOptions.Mode.OPEN_DIRECTORY) {
                 path.treeDocumentUri
             } else {
-                path.fileProviderUri
+                path.documentUri
             }
         }
         val uris = paths.map { pickUriForPath(it) }

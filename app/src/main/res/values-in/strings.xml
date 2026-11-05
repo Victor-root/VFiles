@@ -285,6 +285,7 @@
     <string name="file_list_press_back_again_to_exit">Tekan kembali sekali lagi untuk keluar</string>
     <string name="file_list_error_folder_not_found">Folder ini sudah tidak ada</string>
     <string name="file_list_error_permission_denied">Anda tidak memiliki izin untuk membuka folder ini</string>
+    <string name="file_list_create_file_error">Tidak dapat membuat file ini</string>
     <string name="file_list_error_archive_header_encrypted">Daftar file arsip ini dienkripsi, yang tidak didukung</string>
     <string name="file_list_error_unknown">Tidak dapat membuka folder ini</string>
     <string name="file_list_action_create">Buat</string>

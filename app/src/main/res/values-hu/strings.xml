@@ -311,6 +311,7 @@
     <string name="file_list_press_back_again_to_exit">Nyomja meg újra a Vissza gombot a kilépéshez</string>
     <string name="file_list_error_folder_not_found">Ez a mappa már nem létezik</string>
     <string name="file_list_error_permission_denied">Nincs jogosultsága a mappa megnyitásához</string>
+    <string name="file_list_create_file_error">A fájl nem hozható létre</string>
     <string name="file_list_error_archive_header_encrypted">Az archívum fájllistája titkosított, ami nem támogatott</string>
     <string name="file_list_error_unknown">A mappa nem nyitható meg</string>
     <string name="file_list_action_create">Létrehozás</string>

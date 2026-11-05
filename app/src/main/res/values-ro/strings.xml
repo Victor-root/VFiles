@@ -343,6 +343,7 @@
     <string name="file_list_press_back_again_to_exit">Apasă din nou înapoi pentru a ieși</string>
     <string name="file_list_error_folder_not_found">Acest folder nu mai există</string>
     <string name="file_list_error_permission_denied">Nu aveți permisiunea de a deschide acest folder</string>
+    <string name="file_list_create_file_error">Nu se poate crea acest fișier</string>
     <string name="file_list_error_archive_header_encrypted">Lista de fișiere a acestei arhive este criptată, ceea ce nu este acceptat</string>
     <string name="file_list_error_unknown">Nu se poate deschide acest folder</string>
     <string name="file_list_action_create">Creează</string>
