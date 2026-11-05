@@ -226,7 +226,8 @@
             android:exported="true"
             android:label="@string/save_as_title"
             android:theme="@style/Theme.VFiles.Translucent">
-            <intent-filter>
+            <!-- Only offered for what no app can open, saving isn't opening. -->
+            <intent-filter android:priority="-1">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
