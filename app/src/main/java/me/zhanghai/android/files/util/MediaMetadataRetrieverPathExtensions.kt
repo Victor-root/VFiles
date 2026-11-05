@@ -9,6 +9,7 @@ import android.media.MediaDataSource
 import android.media.MediaMetadataRetriever
 import java8.nio.channels.SeekableByteChannel
 import java8.nio.file.Path
+import me.zhanghai.android.files.provider.archive.isArchivePath
 import me.zhanghai.android.files.provider.common.newByteChannel
 import me.zhanghai.android.files.provider.document.isDocumentPath
 import me.zhanghai.android.files.provider.document.resolver.DocumentResolver
@@ -18,7 +19,7 @@ import java.io.IOException
 import java.nio.ByteBuffer
 
 val Path.isMediaMetadataRetrieverCompatible: Boolean
-    get() = !isFtpPath
+    get() = !isFtpPath && !isArchivePath
 
 fun MediaMetadataRetriever.setDataSource(path: Path) {
     when {
