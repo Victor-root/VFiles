@@ -22,6 +22,7 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -765,6 +766,18 @@ class FileListActivityTest {
         composeTestRule.onNodeWithText("photo.jpg").performClick()
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("photo.jpg").documentUri, scenario.result.resultData.data)
+    }
+
+    @Test
+    fun entersArchiveThatIsNotWhatIsBeingPicked() {
+        TestDocumentsProvider.addFile("bundle.zip", "application/zip", 1024)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+            .setType("text/plain")
+            .apply { extraPath = rootPath }
+        launch(intent)
+        composeTestRule.onNodeWithText("photo.jpg").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("bundle.zip").assertIsEnabled()
     }
 
     @Test

@@ -270,6 +270,14 @@ class FileListController(
         }
     }
 
+    // An archive that isn't what's being asked for can still hold it.
+    private fun canEnterArchiveToPick(file: FileItem): Boolean =
+        viewModel.pickOptions?.mode == PickOptions.Mode.OPEN_FILE && file.isListable &&
+            !isFileSelectable(file)
+
+    fun isFileEnabled(file: FileItem): Boolean =
+        isFileSelectable(file) || file.attributes.isDirectory || canEnterArchiveToPick(file)
+
     // A click opens the file, unless files are being selected.
     fun onFileClick(file: FileItem) {
         if (viewModel.selectedFiles.isEmpty()) {
@@ -320,6 +328,8 @@ class FileListController(
         if (pickOptions != null) {
             if (file.attributes.isDirectory) {
                 navigateTo(file.path)
+            } else if (canEnterArchiveToPick(file)) {
+                navigateTo(file.listablePath)
             } else {
                 when (pickOptions.mode) {
                     PickOptions.Mode.OPEN_FILE -> pickPaths(linkedSetOf(file.path))

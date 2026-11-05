@@ -1261,7 +1261,7 @@ private fun FileGrid(
                     key = { _, file -> file.path.toString() },
                     contentType = { _, _ -> viewType }
                 ) { index, file ->
-                    val isEnabled = controller.isFileSelectable(file) || file.attributes.isDirectory
+                    val isEnabled = controller.isFileEnabled(file)
                     val itemAppearance = remember(appearance) {
                         appearance.takeIf { it.startItem(index) }
                     }
