@@ -140,20 +140,21 @@ class FileListActivity : AppActivity() {
         var path = intent.extraPath
         var pickOptions: PickOptions? = null
         when (val action = intent.action) {
-            Intent.ACTION_GET_CONTENT, Intent.ACTION_OPEN_DOCUMENT,
+            Intent.ACTION_GET_CONTENT, Intent.ACTION_OPEN_DOCUMENT, Intent.ACTION_PICK,
             Intent.ACTION_CREATE_DOCUMENT -> {
                 val mode = if (action == Intent.ACTION_CREATE_DOCUMENT) {
                     PickOptions.Mode.CREATE_FILE
                 } else {
                     PickOptions.Mode.OPEN_FILE
                 }
-                val mimeType = intent.type?.asMimeTypeOrNull() ?: MimeType.ANY
+                val mimeType = intent.pickMimeType
                 val fileName = if (mode == PickOptions.Mode.CREATE_FILE) {
                     createFileName(intent.getStringExtra(Intent.EXTRA_TITLE), mimeType)
                 } else {
                     null
                 }
-                val readOnly = action == Intent.ACTION_GET_CONTENT
+                val readOnly = action != Intent.ACTION_OPEN_DOCUMENT &&
+                    action != Intent.ACTION_CREATE_DOCUMENT
                 val extraMimeTypes = if (mode == PickOptions.Mode.OPEN_FILE) {
                     intent.getStringArrayExtra(Intent.EXTRA_MIME_TYPES)
                         ?.mapNotNull { it.asMimeTypeOrNull() }?.takeIfNotEmpty()
@@ -195,6 +196,18 @@ class FileListActivity : AppActivity() {
         }
     }
 
+    // ACTION_PICK can ask for the media of a content URI, like the images of the media store.
+    private val Intent.pickMimeType: MimeType
+        get() {
+            val type = resolveType(this@FileListActivity)
+            val mediaType = type?.removePrefix(CURSOR_DIRECTORY_TYPE_PREFIX)
+            return if (mediaType != type) {
+                "$mediaType/*".asMimeTypeOrNull()
+            } else {
+                type?.asMimeTypeOrNull()
+            } ?: MimeType.ANY
+        }
+
     // The name asked for with the extension of its type if it has none, like the system picker.
     private fun createFileName(title: String?, mimeType: MimeType): String {
         val fileName = title?.asFileNameOrNull() ?: return mimeType.extension?.let { "file.$it" }
@@ -227,6 +240,8 @@ class FileListActivity : AppActivity() {
         get() = BundleCompat.getParcelable(this, KEY_CURRENT_PATH, Parcelable::class.java) as Path?
 
     companion object {
+        private const val CURSOR_DIRECTORY_TYPE_PREFIX = "vnd.android.cursor.dir/"
+
         private const val KEY_CURRENT_PATH = "current_path"
         private const val KEY_PASTE_COPY = "paste_copy"
         private const val KEY_PASTE_FILES = "paste_files"

@@ -24,6 +24,7 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
@@ -749,6 +750,19 @@ class FileListActivityTest {
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("notes.txt"), scenario.result.resultData.extraPath)
         assertEquals(rootPath.resolve("notes.txt").documentUri, scenario.result.resultData.data)
+    }
+
+    @Test
+    fun picksMediaWithActionPick() {
+        val intent = Intent(Intent.ACTION_PICK)
+            .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+            .setType("vnd.android.cursor.dir/image")
+            .apply { extraPath = rootPath }
+        val scenario = launch(intent)
+        composeTestRule.onNodeWithText("notes.txt").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("photo.jpg").performClick()
+        assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
+        assertEquals(rootPath.resolve("photo.jpg").documentUri, scenario.result.resultData.data)
     }
 
     @Test
