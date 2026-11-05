@@ -16,6 +16,12 @@ object DocumentsContractCompat {
 
     const val EXTERNAL_STORAGE_PROVIDER_AUTHORITY = "com.android.externalstorage.documents"
     const val EXTERNAL_STORAGE_PRIMARY_EMULATED_ROOT_ID = "primary"
+    const val DOWNLOADS_PROVIDER_AUTHORITY = "com.android.providers.downloads.documents"
+    const val MEDIA_PROVIDER_AUTHORITY = "com.android.providers.media.documents"
+    const val MEDIA_PROVIDER_IMAGES_ROOT_ID = "images_root"
+    const val MEDIA_PROVIDER_VIDEOS_ROOT_ID = "videos_root"
+    const val MEDIA_PROVIDER_AUDIO_ROOT_ID = "audio_root"
+    const val MEDIA_PROVIDER_DOCUMENTS_ROOT_ID = "documents_root"
 
     private const val PATH_DOCUMENT = "document"
     private const val PATH_CHILDREN = "children"

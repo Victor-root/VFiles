@@ -8,6 +8,7 @@ package me.zhanghai.android.files.util
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.provider.DocumentsContract
 import java8.nio.file.Path
 import java8.nio.file.Paths
@@ -57,7 +58,9 @@ val Intent.saveAsPath: Path?
 private fun Uri.toPathOrNull(): Path? =
     when (scheme) {
         ContentResolver.SCHEME_FILE, null -> path?.takeIfNotEmpty()?.let { Paths.get(it) }
-        ContentResolver.SCHEME_CONTENT -> {
+        ContentResolver.SCHEME_CONTENT -> if (mediaRootIdOrNull != null) {
+            mediaRootPathOrNull()
+        } else {
             // A content:// URI resolves to a ContentPath, which is a single stream that cannot be
             // listed as a directory. When it's an ExternalStorageProvider folder URI on a mounted
             // volume - e.g. LocalSend's "open folder", which hands over a
@@ -76,6 +79,33 @@ private fun Uri.toPathOrNull(): Path? =
         else -> null
     }
 
+/**
+ * The ID of the root of the media or downloads of the system this URI is for, like what the storage
+ * page of the settings opens.
+ */
+val Uri.mediaRootIdOrNull: String?
+    get() = if (
+        (authority == DocumentsContractCompat.MEDIA_PROVIDER_AUTHORITY ||
+            authority == DocumentsContractCompat.DOWNLOADS_PROVIDER_AUTHORITY) &&
+        pathSegments.size == 2 && pathSegments[0] == ROOT_PATH_SEGMENT
+    ) {
+        pathSegments[1]
+    } else {
+        null
+    }
+
+// Images, videos and audio have no folder of their own.
+private fun Uri.mediaRootPathOrNull(): Path? {
+    val directoryType = when {
+        authority == DocumentsContractCompat.DOWNLOADS_PROVIDER_AUTHORITY ->
+            Environment.DIRECTORY_DOWNLOADS
+        mediaRootIdOrNull == DocumentsContractCompat.MEDIA_PROVIDER_DOCUMENTS_ROOT_ID ->
+            Environment.DIRECTORY_DOCUMENTS
+        else -> return null
+    }
+    return Paths.get(Environment.getExternalStoragePublicDirectory(directoryType).path)
+}
+
 // Resolves an ExternalStorageProvider (com.android.externalstorage.documents) tree/document/bare
 // URI that points to an existing directory on a mounted storage volume to the corresponding local
 // Path, or null otherwise. Lets VFiles browse a folder another app opens via a SAF URI
@@ -88,6 +118,8 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
         val documentId = when {
             DocumentsContractCompat.isDocumentUri(this) -> DocumentsContract.getDocumentId(this)
             DocumentsContract.isTreeUri(this) -> DocumentsContract.getTreeDocumentId(this)
+            // Like the storage opened from the settings of the system.
+            pathSegments.size == 2 && pathSegments[0] == ROOT_PATH_SEGMENT -> "${pathSegments[1]}:"
             else -> return@runCatching null
         }
         val colonIndex = documentId.indexOf(':')
@@ -128,3 +160,5 @@ var Intent.extraPathList: List<Path>
         val pathUris = value.map { it.toUri() }
         putExtra(EXTRA_PATH_URI_LIST, pathUris as Serializable)
     }
+
+private const val ROOT_PATH_SEGMENT = "root"

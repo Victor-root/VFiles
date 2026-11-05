@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.filelist
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,16 +15,24 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.asMimeTypeOrNull
 import me.zhanghai.android.files.file.extension
+import me.zhanghai.android.files.gallery.GalleryDestination
+import me.zhanghai.android.files.music.MusicDestination
 import me.zhanghai.android.files.onboarding.OnboardingActivity
 import me.zhanghai.android.files.provider.archive.createArchiveRootPath
 import me.zhanghai.android.files.settings.Settings
@@ -31,6 +40,7 @@ import me.zhanghai.android.files.util.asFileNameOrNull
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
+import me.zhanghai.android.files.util.mediaRootIdOrNull
 import me.zhanghai.android.files.util.takeIfNotEmpty
 
 class FileListActivity : AppActivity() {
@@ -100,6 +110,27 @@ class FileListActivity : AppActivity() {
             return
         }
         FileListScreen(controller, viewModel)
+        OpenMediaRootEffect()
+    }
+
+    // The storage page of the settings opens the media of the system, shown by these screens.
+    @Composable
+    private fun OpenMediaRootEffect() {
+        val navigator = LocalNavigator.current
+        var isOpened by rememberSaveable { mutableStateOf(false) }
+        LaunchedEffect(Unit) {
+            if (isOpened) {
+                return@LaunchedEffect
+            }
+            isOpened = true
+            when (intent.data?.mediaRootIdOrNull) {
+                DocumentsContractCompat.MEDIA_PROVIDER_IMAGES_ROOT_ID,
+                DocumentsContractCompat.MEDIA_PROVIDER_VIDEOS_ROOT_ID ->
+                    navigator.navigate(GalleryDestination)
+                DocumentsContractCompat.MEDIA_PROVIDER_AUDIO_ROOT_ID ->
+                    navigator.navigate(MusicDestination)
+            }
+        }
     }
 
     // Opens the folder and picking options asked for by the intent, or the folder that was open
@@ -141,7 +172,7 @@ class FileListActivity : AppActivity() {
                     PickOptions.Mode.OPEN_DIRECTORY, null, false, emptyList(), localOnly, false
                 )
             }
-            ACTION_VIEW_DOWNLOADS ->
+            ACTION_VIEW_DOWNLOADS, DownloadManager.ACTION_VIEW_DOWNLOADS ->
                 path = Paths.get(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                         .path
@@ -157,6 +188,18 @@ class FileListActivity : AppActivity() {
         resetTo(restoredPath ?: path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
         if (pickOptions != null) {
             this.pickOptions = pickOptions
+        }
+    }
+
+    // The name asked for with the extension of its type if it has none, like the system picker.
+    private fun createFileName(title: String?, mimeType: MimeType): String {
+        val fileName = title?.asFileNameOrNull() ?: return mimeType.extension?.let { "file.$it" }
+            ?: "file"
+        val extension = mimeType.extension
+        return if (fileName.extensions.isEmpty() && extension != null) {
+            "${fileName.value}.$extension"
+        } else {
+            fileName.value
         }
     }
 
@@ -191,18 +234,6 @@ class FileListActivity : AppActivity() {
 
         fun createViewIntent(path: Path): Intent =
             FileListActivity::class.createIntent()
-    // The name asked for with the extension of its type if it has none, like the system picker.
-    private fun createFileName(title: String?, mimeType: MimeType): String {
-        val fileName = title?.asFileNameOrNull() ?: return mimeType.extension?.let { "file.$it" }
-            ?: "file"
-        val extension = mimeType.extension
-        return if (fileName.extensions.isEmpty() && extension != null) {
-            "${fileName.value}.$extension"
-        } else {
-            fileName.value
-        }
-    }
-
                 .setAction(Intent.ACTION_VIEW)
                 .apply { extraPath = path }
     }
