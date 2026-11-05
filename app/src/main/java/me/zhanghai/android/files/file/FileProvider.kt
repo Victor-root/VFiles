@@ -221,27 +221,6 @@ class FileProvider : ContentProvider() {
         return !((needRead && !file.canRead()) || (needWrite && !file.canWrite()))
     }
 
-    private fun Int.toOpenOptions(): Set<OpenOption> =
-        mutableSetOf<OpenOption>().apply {
-            // May be "r" for read-only access, "rw" for read and write access, or "rwt" for
-            // read and write access that truncates any existing file.
-            require(!hasBits(ParcelFileDescriptor.MODE_APPEND)) { "mode ${this@toOpenOptions}" }
-            if (hasBits(ParcelFileDescriptor.MODE_READ_ONLY)
-                || hasBits(ParcelFileDescriptor.MODE_READ_WRITE)) {
-                this += StandardOpenOption.READ
-            }
-            if (hasBits(ParcelFileDescriptor.MODE_WRITE_ONLY)
-                || hasBits(ParcelFileDescriptor.MODE_READ_WRITE)) {
-                this += StandardOpenOption.WRITE
-            }
-            if (hasBits(ParcelFileDescriptor.MODE_CREATE)) {
-                this += StandardOpenOption.CREATE
-            }
-            if (hasBits(ParcelFileDescriptor.MODE_TRUNCATE)) {
-                this += StandardOpenOption.TRUNCATE_EXISTING
-            }
-        }
-
     private fun IOException.toFileNotFoundException(): FileNotFoundException =
         if (this is FileNotFoundException) {
             this
@@ -402,4 +381,27 @@ internal val Uri.fileProviderPath: Path
         // path must start with a slash.
         val uriPath = Uri.decode(path).substring(1)
         return Paths.get(URI.create(uriPath))
+    }
+
+internal fun Int.toOpenOptions(): Set<OpenOption> =
+    mutableSetOf<OpenOption>().apply {
+        val read = hasBits(ParcelFileDescriptor.MODE_READ_ONLY)
+        val write = hasBits(ParcelFileDescriptor.MODE_WRITE_ONLY)
+        val append = hasBits(ParcelFileDescriptor.MODE_APPEND)
+        if (read) {
+            this += StandardOpenOption.READ
+        }
+        if (write) {
+            this += StandardOpenOption.WRITE
+        }
+        if (hasBits(ParcelFileDescriptor.MODE_CREATE)) {
+            this += StandardOpenOption.CREATE
+        }
+        if (append) {
+            this += StandardOpenOption.APPEND
+        }
+        // "w" may or may not truncate, and FTP and WebDAV can only replace a whole file.
+        if (hasBits(ParcelFileDescriptor.MODE_TRUNCATE) || (write && !read && !append)) {
+            this += StandardOpenOption.TRUNCATE_EXISTING
+        }
     }
