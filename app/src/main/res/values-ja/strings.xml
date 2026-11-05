@@ -703,7 +703,7 @@
     <string name="settings_backup_restore_summary">すべてをバックアップファイルの内容に置き換えます</string>
     <string name="settings_backup_password_title">バックアップのパスワード</string>
     <string name="settings_backup_password_error_empty">パスワードを入力してください</string>
-    <string name="settings_backup_create_password_message">サーバーのパスワードを含むファイルを保護します。忘れた場合は復元できません。</string>
+    <string name="settings_backup_create_password_message">任意です。パスワードがないと、このファイルを持つ人は誰でもサーバーのパスワードを読み取れます。忘れたパスワードは復元できません。</string>
     <string name="settings_backup_restore_password_message">現在の設定はすべて置き換えられ、アプリが再起動します。</string>
     <string name="settings_backup_create_success">設定をバックアップしました</string>
     <string name="settings_backup_create_error">バックアップを保存できません</string>

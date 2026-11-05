@@ -682,7 +682,7 @@
     <string name="settings_backup_restore_summary">Ordeztu dena babeskopia-fitxategi batekin</string>
     <string name="settings_backup_password_title">Babeskopiaren pasahitza</string>
     <string name="settings_backup_password_error_empty">Idatzi pasahitz bat</string>
-    <string name="settings_backup_create_password_message">Fitxategia babesten du, zure zerbitzarien pasahitzak dituena. Ezin da berreskuratu ahazten baduzu.</string>
+    <string name="settings_backup_create_password_message">Aukerakoa. Pasahitzik gabe, fitxategi hau duen edonork irakur ditzake zure zerbitzarien pasahitzak. Ahaztutako pasahitza ezin da berreskuratu.</string>
     <string name="settings_backup_restore_password_message">Uneko ezarpen guztiak ordeztuko dira eta aplikazioa berrabiaraziko da.</string>
     <string name="settings_backup_create_success">Ezarpenen babeskopia egin da</string>
     <string name="settings_backup_create_error">Ezin da babeskopia gorde</string>

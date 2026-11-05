@@ -775,7 +775,7 @@
     <string name="settings_backup_restore_summary">Sostituisci tutto con un file di backup</string>
     <string name="settings_backup_password_title">Password del backup</string>
     <string name="settings_backup_password_error_empty">Inserisci una password</string>
-    <string name="settings_backup_create_password_message">Protegge il file, che contiene le password dei tuoi server. Non può essere recuperata se la dimentichi.</string>
+    <string name="settings_backup_create_password_message">Facoltativa. Senza password, chiunque abbia questo file può leggere le password dei tuoi server. Una password dimenticata non può essere recuperata.</string>
     <string name="settings_backup_restore_password_message">Tutte le impostazioni attuali verranno sostituite e l\'app verrà riavviata.</string>
     <string name="settings_backup_create_success">Backup delle impostazioni eseguito</string>
     <string name="settings_backup_create_error">Impossibile salvare il backup</string>

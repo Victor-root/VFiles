@@ -13,6 +13,8 @@ import me.zhanghai.android.files.test.AppProviderRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
+import org.json.JSONObject
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,10 +31,10 @@ class SettingsBackupTest {
         getSettingSharedPreferences(PathSettings.NAME_SUFFIX)
     }
 
-    private fun backUp(password: String = PASSWORD): ByteArray =
+    private fun backUp(password: String? = PASSWORD): ByteArray =
         ByteArrayOutputStream().also { SettingsBackup.write(it, password) }.toByteArray()
 
-    private fun restore(bytes: ByteArray, password: String = PASSWORD) {
+    private fun restore(bytes: ByteArray, password: String? = PASSWORD) {
         SettingsBackup.restore(bytes.inputStream(), password)
     }
 
@@ -106,15 +108,50 @@ class SettingsBackupTest {
 
     @Test
     fun detectsDamagedFile() {
+        val backup = JSONObject(String(backUp()))
+        val data = backup.getString("data")
+        val damagedData = (if (data[0] == 'A') 'B' else 'A') + data.substring(1)
+        val damagedBackup = backup.put("data", damagedData).toString().toByteArray()
+        assertThrows(WrongSettingsBackupPasswordException::class.java) { restore(damagedBackup) }
+    }
+
+    @Test
+    fun readsBackupWithoutPasswordAsPlainJson() {
+        preferences.edit(commit = true) { putString("string", "readable") }
+        val backup = backUp(null)
+        assertFalse(SettingsBackup.isEncrypted(backup.inputStream()))
+        val json = JSONObject(String(backup))
+        assertEquals(
+            "readable",
+            json.getJSONObject("preferences").getJSONObject("default").getJSONObject("string")
+                .getString("value")
+        )
+
+        preferences.edit(commit = true) { putString("string", "after") }
+        restore(backup, null)
+        assertEquals("readable", preferences.getString("string", null))
+    }
+
+    @Test
+    fun needsPasswordOfEncryptedBackup() {
         val backup = backUp()
-        backup[backup.size - 1] = (backup.last() + 1).toByte()
-        assertThrows(WrongSettingsBackupPasswordException::class.java) { restore(backup) }
+        assertTrue(SettingsBackup.isEncrypted(backup.inputStream()))
+        assertThrows(WrongSettingsBackupPasswordException::class.java) { restore(backup, null) }
+    }
+
+    @Test
+    fun rejectsBackupOfNewerFormat() {
+        val backup = JSONObject(String(backUp(null))).put("format", 2).toString().toByteArray()
+        assertThrows(NewerSettingsBackupException::class.java) { restore(backup, null) }
     }
 
     @Test
     fun rejectsOtherFiles() {
         assertThrows(InvalidSettingsBackupException::class.java) {
             restore("not a backup".toByteArray())
+        }
+        assertThrows(InvalidSettingsBackupException::class.java) {
+            restore("{}".toByteArray())
         }
         assertThrows(InvalidSettingsBackupException::class.java) { restore(ByteArray(0)) }
     }

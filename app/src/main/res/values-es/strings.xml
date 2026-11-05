@@ -775,7 +775,7 @@
     <string name="settings_backup_restore_summary">Reemplazarlo todo con un archivo de copia</string>
     <string name="settings_backup_password_title">Contraseña de la copia</string>
     <string name="settings_backup_password_error_empty">Introduce una contraseña</string>
-    <string name="settings_backup_create_password_message">Protege el archivo, que contiene las contraseñas de tus servidores. No se puede recuperar si la olvidas.</string>
+    <string name="settings_backup_create_password_message">Opcional. Sin contraseña, cualquiera que tenga este archivo puede leer las contraseñas de tus servidores. Una contraseña olvidada no se puede recuperar.</string>
     <string name="settings_backup_restore_password_message">Se reemplazarán todos los ajustes actuales y la aplicación se reiniciará.</string>
     <string name="settings_backup_create_success">Copia de los ajustes realizada</string>
     <string name="settings_backup_create_error">No se puede guardar la copia</string>

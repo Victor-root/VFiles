@@ -34,6 +34,7 @@ import kotlinx.coroutines.withContext
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.filejob.FileJobService
 import me.zhanghai.android.files.filelist.FileListActivity
+import me.zhanghai.android.files.ui.ConfirmationDialog
 import me.zhanghai.android.files.ui.Preference
 import me.zhanghai.android.files.ui.TextFieldDialog
 import me.zhanghai.android.files.util.showToast
@@ -42,8 +43,8 @@ import java.io.IOException
 import java.time.LocalDate
 import kotlin.system.exitProcess
 
-private const val BACKUP_MIME_TYPE = "application/octet-stream"
-private const val BACKUP_FILE_EXTENSION = "vfbackup"
+private const val BACKUP_MIME_TYPE = "application/json"
+private const val BACKUP_FILE_EXTENSION = "json"
 
 @Composable
 fun SettingsBackupPreferences() {
@@ -51,12 +52,20 @@ fun SettingsBackupPreferences() {
     val coroutineScope = rememberCoroutineScope()
     var uriToBackUpTo by rememberSaveable { mutableStateOf<Uri?>(null) }
     var uriToRestore by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var isRestoreEncrypted by rememberSaveable { mutableStateOf(false) }
     val backupLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument(BACKUP_MIME_TYPE)
     ) { uriToBackUpTo = it }
     val restoreLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
-    ) { uriToRestore = it }
+    ) { uri ->
+        uri?.let {
+            coroutineScope.checkBackup(context, it) { isEncrypted ->
+                isRestoreEncrypted = isEncrypted
+                uriToRestore = it
+            }
+        }
+    }
     Preference(
         title = stringResource(R.string.settings_backup_create_title),
         icon = painterResource(R.drawable.save_icon_white_24dp),
@@ -76,49 +85,52 @@ fun SettingsBackupPreferences() {
         }
     )
     uriToBackUpTo?.let { uri ->
-        PasswordDialog(
-            message = stringResource(R.string.settings_backup_create_password_message),
-            onConfirm = { password -> coroutineScope.backUp(context, uri, password) },
+        TextFieldDialog(
+            title = stringResource(R.string.settings_backup_password_title),
+            onConfirm = { coroutineScope.backUp(context, uri, it.ifEmpty { null }) },
             onDismissRequest = { uriToBackUpTo = null },
+            keyboardType = KeyboardType.Password,
+            extraContent = {
+                PasswordMessage(stringResource(R.string.settings_backup_create_password_message))
+            },
+            trim = false,
             onCancel = { context.deleteDocument(uri) }
         )
     }
     uriToRestore?.let { uri ->
-        PasswordDialog(
-            message = stringResource(R.string.settings_backup_restore_password_message),
-            onConfirm = { password -> coroutineScope.restore(context, uri, password) },
-            onDismissRequest = { uriToRestore = null }
-        )
+        val message = stringResource(R.string.settings_backup_restore_password_message)
+        if (isRestoreEncrypted) {
+            val emptyError = stringResource(R.string.settings_backup_password_error_empty)
+            TextFieldDialog(
+                title = stringResource(R.string.settings_backup_password_title),
+                onConfirm = { coroutineScope.restore(context, uri, it) },
+                onDismissRequest = { uriToRestore = null },
+                validate = { if (it.isEmpty()) emptyError else null },
+                keyboardType = KeyboardType.Password,
+                extraContent = { PasswordMessage(message) },
+                trim = false
+            )
+        } else {
+            ConfirmationDialog(
+                text = message,
+                onConfirm = { coroutineScope.restore(context, uri, null) },
+                onDismissRequest = { uriToRestore = null },
+                title = stringResource(R.string.settings_backup_restore_title)
+            )
+        }
     }
 }
 
 @Composable
-private fun PasswordDialog(
-    message: String,
-    onConfirm: (String) -> Unit,
-    onDismissRequest: () -> Unit,
-    onCancel: () -> Unit = {}
-) {
-    val emptyError = stringResource(R.string.settings_backup_password_error_empty)
-    TextFieldDialog(
-        title = stringResource(R.string.settings_backup_password_title),
-        onConfirm = onConfirm,
-        onDismissRequest = onDismissRequest,
-        validate = { if (it.isEmpty()) emptyError else null },
-        keyboardType = KeyboardType.Password,
-        trim = false,
-        extraContent = {
-            Text(
-                text = message,
-                modifier = Modifier.padding(top = 16.dp),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        },
-        onCancel = onCancel
+private fun PasswordMessage(text: String) {
+    Text(
+        text = text,
+        modifier = Modifier.padding(top = 16.dp),
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 
-private fun CoroutineScope.backUp(context: Context, uri: Uri, password: String) {
+private fun CoroutineScope.backUp(context: Context, uri: Uri, password: String?) {
     launch {
         val success = withContext(Dispatchers.IO) {
             try {
@@ -140,14 +152,39 @@ private fun CoroutineScope.backUp(context: Context, uri: Uri, password: String) 
     }
 }
 
-private fun CoroutineScope.restore(context: Context, uri: Uri, password: String) {
+private fun CoroutineScope.checkBackup(
+    context: Context,
+    uri: Uri,
+    onChecked: (isEncrypted: Boolean) -> Unit
+) {
+    launch {
+        val isEncrypted = withContext(Dispatchers.IO) {
+            try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                    ?: throw FileNotFoundException(uri.toString())
+                inputStream.use { SettingsBackup.isEncrypted(it) }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                null
+            }
+        }
+        if (isEncrypted != null) {
+            onChecked(isEncrypted)
+        } else {
+            context.showToast(R.string.settings_backup_restore_error_file)
+        }
+    }
+}
+
+private fun CoroutineScope.restore(context: Context, uri: Uri, password: String?) {
     launch {
         val errorRes = withContext(Dispatchers.IO) {
             try {
                 val inputStream = context.contentResolver.openInputStream(uri)
                     ?: throw FileNotFoundException(uri.toString())
                 inputStream.use { SettingsBackup.restore(it, password) }
-                null
+                // Right away, as restoring the language can recreate the activity and cancel us.
+                context.restartApp()
             } catch (e: SettingsBackupException) {
                 e.printStackTrace()
                 e.messageRes
@@ -156,11 +193,7 @@ private fun CoroutineScope.restore(context: Context, uri: Uri, password: String)
                 R.string.settings_backup_restore_error_file
             }
         }
-        if (errorRes != null) {
-            context.showToast(errorRes)
-        } else {
-            context.restartApp()
-        }
+        context.showToast(errorRes)
     }
 }
 
@@ -174,7 +207,7 @@ private fun Context.deleteDocument(uri: Uri) {
 }
 
 // Every setting and what's derived from them has to be loaded again, and upgraded if needed.
-private fun Context.restartApp() {
+private fun Context.restartApp(): Nothing {
     startActivity(
         Intent.makeRestartActivityTask(ComponentName(this, FileListActivity::class.java))
     )

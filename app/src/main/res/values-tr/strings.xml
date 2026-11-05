@@ -735,7 +735,7 @@
     <string name="settings_backup_restore_summary">Her şeyi bir yedek dosyasıyla değiştir</string>
     <string name="settings_backup_password_title">Yedek parolası</string>
     <string name="settings_backup_password_error_empty">Bir parola girin</string>
-    <string name="settings_backup_create_password_message">Sunucularınızın parolalarını içeren dosyayı korur. Unutursanız kurtarılamaz.</string>
+    <string name="settings_backup_create_password_message">İsteğe bağlı. Parola olmadan bu dosyaya sahip olan herkes sunucularınızın parolalarını okuyabilir. Unutulan parola kurtarılamaz.</string>
     <string name="settings_backup_restore_password_message">Tüm mevcut ayarlar değiştirilecek ve uygulama yeniden başlayacak.</string>
     <string name="settings_backup_create_success">Ayarlar yedeklendi</string>
     <string name="settings_backup_create_error">Yedek kaydedilemiyor</string>

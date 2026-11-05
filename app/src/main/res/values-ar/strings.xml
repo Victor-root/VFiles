@@ -883,7 +883,7 @@
     <string name="settings_backup_restore_summary">استبدال كل شيء بملف نسخة احتياطية</string>
     <string name="settings_backup_password_title">كلمة مرور النسخة الاحتياطية</string>
     <string name="settings_backup_password_error_empty">أدخل كلمة مرور</string>
-    <string name="settings_backup_create_password_message">تحمي الملف الذي يحتوي على كلمات مرور خوادمك. لا يمكن استرجاعها إذا نسيتها.</string>
+    <string name="settings_backup_create_password_message">اختياري. بدون كلمة مرور، يمكن لأي شخص لديه هذا الملف قراءة كلمات مرور خوادمك. لا يمكن استرجاع كلمة المرور إذا نسيتها.</string>
     <string name="settings_backup_restore_password_message">سيتم استبدال جميع الإعدادات الحالية وإعادة تشغيل التطبيق.</string>
     <string name="settings_backup_create_success">تم نسخ الإعدادات احتياطيًا</string>
     <string name="settings_backup_create_error">تعذّر حفظ النسخة الاحتياطية</string>

@@ -809,7 +809,7 @@
     <string name="settings_backup_restore_summary">Pakeisti viską atsarginės kopijos failu</string>
     <string name="settings_backup_password_title">Atsarginės kopijos slaptažodis</string>
     <string name="settings_backup_password_error_empty">Įveskite slaptažodį</string>
-    <string name="settings_backup_create_password_message">Jis saugo failą, kuriame yra jūsų serverių slaptažodžiai. Pamiršto jo atkurti negalima.</string>
+    <string name="settings_backup_create_password_message">Neprivaloma. Be slaptažodžio bet kas, turintis šį failą, gali perskaityti jūsų serverių slaptažodžius. Pamiršto slaptažodžio atkurti negalima.</string>
     <string name="settings_backup_restore_password_message">Visi dabartiniai nustatymai bus pakeisti, o programa bus paleista iš naujo.</string>
     <string name="settings_backup_create_success">Nustatymų kopija sukurta</string>
     <string name="settings_backup_create_error">Nepavyko išsaugoti kopijos</string>

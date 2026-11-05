@@ -799,7 +799,7 @@
     <string name="settings_backup_restore_summary">Tout remplacer par un fichier de sauvegarde</string>
     <string name="settings_backup_password_title">Mot de passe de la sauvegarde</string>
     <string name="settings_backup_password_error_empty">Saisissez un mot de passe</string>
-    <string name="settings_backup_create_password_message">Il protège le fichier, qui contient les mots de passe de vos serveurs. Il ne peut pas être récupéré si vous l\'oubliez.</string>
+    <string name="settings_backup_create_password_message">Facultatif. Sans mot de passe, toute personne qui a ce fichier peut lire les mots de passe de vos serveurs. Un mot de passe oublié ne peut pas être récupéré.</string>
     <string name="settings_backup_restore_password_message">Tous les réglages actuels seront remplacés et l\'application redémarrera.</string>
     <string name="settings_backup_create_success">Réglages sauvegardés</string>
     <string name="settings_backup_create_error">Impossible d\'enregistrer la sauvegarde</string>

@@ -776,7 +776,7 @@
     <string name="settings_backup_restore_summary">Substituir tudo por um arquivo de backup</string>
     <string name="settings_backup_password_title">Senha do backup</string>
     <string name="settings_backup_password_error_empty">Digite uma senha</string>
-    <string name="settings_backup_create_password_message">Ela protege o arquivo, que contém as senhas dos seus servidores. Não pode ser recuperada se você esquecê-la.</string>
+    <string name="settings_backup_create_password_message">Opcional. Sem senha, qualquer pessoa com este arquivo pode ler as senhas dos seus servidores. Uma senha esquecida não pode ser recuperada.</string>
     <string name="settings_backup_restore_password_message">Todas as configurações atuais serão substituídas e o app será reiniciado.</string>
     <string name="settings_backup_create_success">Backup das configurações feito</string>
     <string name="settings_backup_create_error">Não foi possível salvar o backup</string>

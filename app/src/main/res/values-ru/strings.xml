@@ -813,7 +813,7 @@
     <string name="settings_backup_restore_summary">Заменить всё файлом резервной копии</string>
     <string name="settings_backup_password_title">Пароль резервной копии</string>
     <string name="settings_backup_password_error_empty">Введите пароль</string>
-    <string name="settings_backup_create_password_message">Он защищает файл, в котором хранятся пароли ваших серверов. Если вы его забудете, восстановить его нельзя.</string>
+    <string name="settings_backup_create_password_message">Необязательно. Без пароля любой, у кого есть этот файл, сможет прочитать пароли ваших серверов. Забытый пароль восстановить нельзя.</string>
     <string name="settings_backup_restore_password_message">Все текущие настройки будут заменены, и приложение перезапустится.</string>
     <string name="settings_backup_create_success">Копия настроек создана</string>
     <string name="settings_backup_create_error">Не удалось сохранить копию</string>

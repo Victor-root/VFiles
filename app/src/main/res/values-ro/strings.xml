@@ -774,7 +774,7 @@
     <string name="settings_backup_restore_summary">Înlocuiește totul cu un fișier de rezervă</string>
     <string name="settings_backup_password_title">Parola copiei de rezervă</string>
     <string name="settings_backup_password_error_empty">Introdu o parolă</string>
-    <string name="settings_backup_create_password_message">Protejează fișierul, care conține parolele serverelor tale. Nu poate fi recuperată dacă o uiți.</string>
+    <string name="settings_backup_create_password_message">Opțional. Fără parolă, oricine are acest fișier poate citi parolele serverelor tale. O parolă uitată nu poate fi recuperată.</string>
     <string name="settings_backup_restore_password_message">Toate setările actuale vor fi înlocuite, iar aplicația va reporni.</string>
     <string name="settings_backup_create_success">Setările au fost salvate</string>
     <string name="settings_backup_create_error">Copia de rezervă nu poate fi salvată</string>

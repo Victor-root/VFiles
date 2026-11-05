@@ -699,7 +699,7 @@
     <string name="settings_backup_restore_summary">Thay thế mọi thứ bằng tệp sao lưu</string>
     <string name="settings_backup_password_title">Mật khẩu sao lưu</string>
     <string name="settings_backup_password_error_empty">Nhập mật khẩu</string>
-    <string name="settings_backup_create_password_message">Mật khẩu này bảo vệ tệp chứa mật khẩu máy chủ của bạn. Không thể khôi phục nếu bạn quên.</string>
+    <string name="settings_backup_create_password_message">Không bắt buộc. Nếu không có mật khẩu, bất kỳ ai có tệp này đều đọc được mật khẩu máy chủ của bạn. Không thể khôi phục mật khẩu đã quên.</string>
     <string name="settings_backup_restore_password_message">Tất cả cài đặt hiện tại sẽ bị thay thế và ứng dụng sẽ khởi động lại.</string>
     <string name="settings_backup_create_success">Đã sao lưu cài đặt</string>
     <string name="settings_backup_create_error">Không thể lưu bản sao lưu</string>

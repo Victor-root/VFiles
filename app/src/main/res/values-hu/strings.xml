@@ -735,7 +735,7 @@
     <string name="settings_backup_restore_summary">Minden lecserélése egy mentési fájllal</string>
     <string name="settings_backup_password_title">A mentés jelszava</string>
     <string name="settings_backup_password_error_empty">Adjon meg egy jelszót</string>
-    <string name="settings_backup_create_password_message">Védi a fájlt, amely a szerverei jelszavait tartalmazza. Ha elfelejti, nem állítható vissza.</string>
+    <string name="settings_backup_create_password_message">Nem kötelező. Jelszó nélkül bárki, akinél ez a fájl van, elolvashatja a szerverei jelszavait. Az elfelejtett jelszó nem állítható vissza.</string>
     <string name="settings_backup_restore_password_message">Minden jelenlegi beállítás lecserélődik, és az alkalmazás újraindul.</string>
     <string name="settings_backup_create_success">Beállítások elmentve</string>
     <string name="settings_backup_create_error">A mentés nem menthető</string>

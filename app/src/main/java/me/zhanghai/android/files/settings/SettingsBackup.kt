@@ -27,9 +27,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
-import java.io.DataInputStream
-import java.io.DataOutputStream
-import java.io.EOFException
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -56,11 +53,11 @@ class NewerSettingsBackupException :
     SettingsBackupException(R.string.settings_backup_restore_error_version)
 
 /**
- * All the shared preferences in a file encrypted with a password, because they include the
- * passwords of the servers.
+ * All the shared preferences in a JSON file, which can be encrypted with a password as they include
+ * the passwords of the servers.
  */
 object SettingsBackup {
-    private val MAGIC = "VFILESBK".toByteArray()
+    private const val APP_NAME = "VFiles"
     private const val FORMAT_VERSION = 1
     private const val MAX_FILE_SIZE = 16 * 1024 * 1024
 
@@ -73,6 +70,14 @@ object SettingsBackup {
     private const val SALT_SIZE = 16
     private const val IV_SIZE = 12
 
+    private const val JSON_APP = "app"
+    private const val JSON_FORMAT = "format"
+    private const val JSON_ENCRYPTION = "encryption"
+    private const val JSON_KEY_ITERATIONS = "keyIterations"
+    private const val JSON_SALT = "salt"
+    private const val JSON_IV = "iv"
+    private const val JSON_DATA = "data"
+    private const val JSON_INDENT_SPACES = 2
     private const val JSON_VERSION_CODE = "versionCode"
     private const val JSON_LOCALES = "locales"
     private const val JSON_PREFERENCES = "preferences"
@@ -109,9 +114,10 @@ object SettingsBackup {
             }
         }
 
+    /** Without a password, everything including the passwords of the servers can be read. */
     @Throws(IOException::class)
-    fun write(outputStream: OutputStream, password: String) {
-        val json = JSONObject()
+    fun write(outputStream: OutputStream, password: String?) {
+        val content = createHeader()
             .put(JSON_VERSION_CODE, BuildConfig.VERSION_CODE)
             .put(JSON_LOCALES, locales)
             .put(
@@ -122,24 +128,19 @@ object SettingsBackup {
                     }
                 }
             )
-        val random = SecureRandom()
-        val salt = ByteArray(SALT_SIZE).also { random.nextBytes(it) }
-        val iv = ByteArray(IV_SIZE).also { random.nextBytes(it) }
-        val header = createHeader(KEY_ITERATIONS, salt, iv)
-        val encryptedJson = try {
-            createCipher(Cipher.ENCRYPT_MODE, password, KEY_ITERATIONS, salt, iv, header)
-                .doFinal(json.toString().toByteArray())
-        } catch (e: GeneralSecurityException) {
-            throw IOException(e)
-        }
-        outputStream.write(header)
-        outputStream.write(encryptedJson)
+        val json = if (password != null) content.encrypt(password) else content
+        outputStream.write(json.toString(JSON_INDENT_SPACES).toByteArray())
     }
+
+    @Throws(IOException::class)
+    fun isEncrypted(inputStream: InputStream): Boolean =
+        parseFile(inputStream).has(JSON_ENCRYPTION)
 
     /** Nothing is changed unless the whole backup is valid. The app has to restart afterwards. */
     @Throws(IOException::class)
-    fun restore(inputStream: InputStream, password: String) {
-        val json = decrypt(inputStream.readAllBytesUpTo(MAX_FILE_SIZE), password)
+    fun restore(inputStream: InputStream, password: String?) {
+        val file = parseFile(inputStream)
+        val json = if (file.has(JSON_ENCRYPTION)) file.decrypt(password) else file
         val editors = try {
             if (json.getInt(JSON_VERSION_CODE) > BuildConfig.VERSION_CODE) {
                 throw NewerSettingsBackupException()
@@ -163,6 +164,25 @@ object SettingsBackup {
             throw IOException("SharedPreferences.Editor.commit() failed")
         }
         this.locales = locales
+    }
+
+    private fun createHeader(): JSONObject =
+        JSONObject().put(JSON_APP, APP_NAME).put(JSON_FORMAT, FORMAT_VERSION)
+
+    @Throws(IOException::class)
+    private fun parseFile(inputStream: InputStream): JSONObject {
+        val json = try {
+            JSONObject(String(inputStream.readAllBytesUpTo(MAX_FILE_SIZE)))
+        } catch (e: JSONException) {
+            throw InvalidSettingsBackupException().apply { initCause(e) }
+        }
+        if (json.optString(JSON_APP) != APP_NAME) {
+            throw InvalidSettingsBackupException()
+        }
+        if (json.optInt(JSON_FORMAT) > FORMAT_VERSION) {
+            throw NewerSettingsBackupException()
+        }
+        return json
     }
 
     private fun Map<String, *>.toJson(): JSONObject =
@@ -255,51 +275,56 @@ object SettingsBackup {
         }
     }
 
-    private fun createHeader(keyIterations: Int, salt: ByteArray, iv: ByteArray): ByteArray =
-        ByteArrayOutputStream().use { bytes ->
-            DataOutputStream(bytes).apply {
-                write(MAGIC)
-                writeByte(FORMAT_VERSION)
-                writeInt(keyIterations)
-                write(salt)
-                write(iv)
-            }
-            bytes.toByteArray()
+    @Throws(IOException::class)
+    private fun JSONObject.encrypt(password: String): JSONObject {
+        val random = SecureRandom()
+        val salt = ByteArray(SALT_SIZE).also { random.nextBytes(it) }
+        val iv = ByteArray(IV_SIZE).also { random.nextBytes(it) }
+        val data = try {
+            createCipher(Cipher.ENCRYPT_MODE, password, KEY_ITERATIONS, salt, iv)
+                .doFinal(toString().toByteArray())
+        } catch (e: GeneralSecurityException) {
+            throw IOException(e)
         }
+        return createHeader()
+            .put(
+                JSON_ENCRYPTION,
+                JSONObject()
+                    .put(JSON_KEY_ITERATIONS, KEY_ITERATIONS)
+                    .put(JSON_SALT, salt.toBase64().value)
+                    .put(JSON_IV, iv.toBase64().value)
+            )
+            .put(JSON_DATA, data.toBase64().value)
+    }
 
     @Throws(IOException::class)
-    private fun decrypt(bytes: ByteArray, password: String): JSONObject {
-        val salt = ByteArray(SALT_SIZE)
-        val iv = ByteArray(IV_SIZE)
-        val keyIterations = try {
-            DataInputStream(bytes.inputStream()).run {
-                val magic = ByteArray(MAGIC.size).also { readFully(it) }
-                if (!magic.contentEquals(MAGIC) || readByte().toInt() != FORMAT_VERSION) {
-                    throw InvalidSettingsBackupException()
-                }
-                readInt().also {
-                    readFully(salt)
-                    readFully(iv)
-                }
+    private fun JSONObject.decrypt(password: String?): JSONObject {
+        if (password == null) {
+            throw WrongSettingsBackupPasswordException()
+        }
+        return try {
+            val encryption = getJSONObject(JSON_ENCRYPTION)
+            val keyIterations = encryption.getInt(JSON_KEY_ITERATIONS)
+            if (keyIterations !in 1..MAX_KEY_ITERATIONS) {
+                throw InvalidSettingsBackupException()
             }
-        } catch (e: EOFException) {
-            throw InvalidSettingsBackupException().apply { initCause(e) }
-        }
-        if (keyIterations !in 1..MAX_KEY_ITERATIONS) {
-            throw InvalidSettingsBackupException()
-        }
-        val header = createHeader(keyIterations, salt, iv)
-        val decryptedBytes = try {
-            createCipher(Cipher.DECRYPT_MODE, password, keyIterations, salt, iv, header)
-                .doFinal(bytes, header.size, bytes.size - header.size)
+            val salt = encryption.getString(JSON_SALT).asBase64().toByteArray()
+            val iv = encryption.getString(JSON_IV).asBase64().toByteArray()
+            val data = getString(JSON_DATA).asBase64().toByteArray()
+            JSONObject(
+                String(
+                    createCipher(Cipher.DECRYPT_MODE, password, keyIterations, salt, iv)
+                        .doFinal(data)
+                )
+            )
         } catch (e: AEADBadTagException) {
             throw WrongSettingsBackupPasswordException().apply { initCause(e) }
         } catch (e: GeneralSecurityException) {
             throw InvalidSettingsBackupException().apply { initCause(e) }
-        }
-        return try {
-            JSONObject(String(decryptedBytes))
         } catch (e: JSONException) {
+            throw InvalidSettingsBackupException().apply { initCause(e) }
+        } catch (e: IllegalArgumentException) {
+            // Not Base64.
             throw InvalidSettingsBackupException().apply { initCause(e) }
         }
     }
@@ -310,14 +335,12 @@ object SettingsBackup {
         password: String,
         keyIterations: Int,
         salt: ByteArray,
-        iv: ByteArray,
-        header: ByteArray
+        iv: ByteArray
     ): Cipher {
         val keySpec = PBEKeySpec(password.toCharArray(), salt, keyIterations, KEY_SIZE_BITS)
         val key = SecretKeyFactory.getInstance(KEY_ALGORITHM).generateSecret(keySpec).encoded
         return Cipher.getInstance(CIPHER_TRANSFORMATION).apply {
             init(mode, SecretKeySpec(key, "AES"), GCMParameterSpec(TAG_SIZE_BITS, iv))
-            updateAAD(header)
         }
     }
 

@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Αντικατάσταση όλων με αρχείο αντιγράφου</string>
     <string name="settings_backup_password_title">Κωδικός αντιγράφου ασφαλείας</string>
     <string name="settings_backup_password_error_empty">Εισαγάγετε κωδικό</string>
-    <string name="settings_backup_create_password_message">Προστατεύει το αρχείο, που περιέχει τους κωδικούς των διακομιστών σας. Δεν ανακτάται αν τον ξεχάσετε.</string>
+    <string name="settings_backup_create_password_message">Προαιρετικό. Χωρίς κωδικό, όποιος έχει αυτό το αρχείο μπορεί να διαβάσει τους κωδικούς των διακομιστών σας. Ένας ξεχασμένος κωδικός δεν ανακτάται.</string>
     <string name="settings_backup_restore_password_message">Όλες οι τρέχουσες ρυθμίσεις θα αντικατασταθούν και η εφαρμογή θα επανεκκινηθεί.</string>
     <string name="settings_backup_create_success">Οι ρυθμίσεις αποθηκεύτηκαν</string>
     <string name="settings_backup_create_error">Δεν είναι δυνατή η αποθήκευση του αντιγράφου</string>

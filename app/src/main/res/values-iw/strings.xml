@@ -811,7 +811,7 @@
     <string name="settings_backup_restore_summary">החלפת הכול בקובץ גיבוי</string>
     <string name="settings_backup_password_title">סיסמת הגיבוי</string>
     <string name="settings_backup_password_error_empty">יש להזין סיסמה</string>
-    <string name="settings_backup_create_password_message">היא מגינה על הקובץ, שמכיל את הסיסמאות של השרתים שלך. אי אפשר לשחזר אותה אם שוכחים אותה.</string>
+    <string name="settings_backup_create_password_message">אופציונלי. ללא סיסמה, כל מי שיש לו את הקובץ הזה יכול לקרוא את הסיסמאות של השרתים שלך. אי אפשר לשחזר סיסמה שנשכחה.</string>
     <string name="settings_backup_restore_password_message">כל ההגדרות הנוכחיות יוחלפו והאפליקציה תופעל מחדש.</string>
     <string name="settings_backup_create_success">ההגדרות גובו</string>
     <string name="settings_backup_create_error">לא ניתן לשמור את הגיבוי</string>

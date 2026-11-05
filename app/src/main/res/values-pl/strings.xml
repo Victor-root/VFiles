@@ -811,7 +811,7 @@
     <string name="settings_backup_restore_summary">Zastąp wszystko plikiem kopii zapasowej</string>
     <string name="settings_backup_password_title">Hasło kopii zapasowej</string>
     <string name="settings_backup_password_error_empty">Wpisz hasło</string>
-    <string name="settings_backup_create_password_message">Chroni plik zawierający hasła do Twoich serwerów. Nie można go odzyskać, jeśli je zapomnisz.</string>
+    <string name="settings_backup_create_password_message">Opcjonalne. Bez hasła każdy, kto ma ten plik, może odczytać hasła do Twoich serwerów. Zapomnianego hasła nie można odzyskać.</string>
     <string name="settings_backup_restore_password_message">Wszystkie bieżące ustawienia zostaną zastąpione, a aplikacja uruchomi się ponownie.</string>
     <string name="settings_backup_create_success">Utworzono kopię ustawień</string>
     <string name="settings_backup_create_error">Nie można zapisać kopii</string>

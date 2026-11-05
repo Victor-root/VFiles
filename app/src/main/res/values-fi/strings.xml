@@ -681,7 +681,7 @@
     <string name="settings_backup_restore_summary">Korvaa kaikki varmuuskopiotiedostolla</string>
     <string name="settings_backup_password_title">Varmuuskopion salasana</string>
     <string name="settings_backup_password_error_empty">Anna salasana</string>
-    <string name="settings_backup_create_password_message">Se suojaa tiedostoa, joka sisältää palvelimiesi salasanat. Sitä ei voi palauttaa, jos unohdat sen.</string>
+    <string name="settings_backup_create_password_message">Valinnainen. Ilman salasanaa kuka tahansa, jolla on tämä tiedosto, voi lukea palvelimiesi salasanat. Unohdettua salasanaa ei voi palauttaa.</string>
     <string name="settings_backup_restore_password_message">Kaikki nykyiset asetukset korvataan ja sovellus käynnistyy uudelleen.</string>
     <string name="settings_backup_create_success">Asetukset varmuuskopioitu</string>
     <string name="settings_backup_create_error">Varmuuskopiota ei voi tallentaa</string>

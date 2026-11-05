@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Erstatt alt med en sikkerhetskopifil</string>
     <string name="settings_backup_password_title">Passord for sikkerhetskopien</string>
     <string name="settings_backup_password_error_empty">Skriv inn et passord</string>
-    <string name="settings_backup_create_password_message">Det beskytter filen, som inneholder passordene til serverne dine. Det kan ikke gjenopprettes hvis du glemmer det.</string>
+    <string name="settings_backup_create_password_message">Valgfritt. Uten passord kan alle som har denne filen, lese passordene til serverne dine. Et glemt passord kan ikke gjenopprettes.</string>
     <string name="settings_backup_restore_password_message">Alle gjeldende innstillinger blir erstattet, og appen starter på nytt.</string>
     <string name="settings_backup_create_success">Innstillinger sikkerhetskopiert</string>
     <string name="settings_backup_create_error">Kan ikke lagre sikkerhetskopien</string>

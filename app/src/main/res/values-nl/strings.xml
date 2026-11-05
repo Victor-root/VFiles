@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Alles vervangen door een back-upbestand</string>
     <string name="settings_backup_password_title">Wachtwoord van de back-up</string>
     <string name="settings_backup_password_error_empty">Voer een wachtwoord in</string>
-    <string name="settings_backup_create_password_message">Het beschermt het bestand, dat de wachtwoorden van je servers bevat. Het kan niet worden hersteld als je het vergeet.</string>
+    <string name="settings_backup_create_password_message">Optioneel. Zonder wachtwoord kan iedereen met dit bestand de wachtwoorden van je servers lezen. Een vergeten wachtwoord kan niet worden hersteld.</string>
     <string name="settings_backup_restore_password_message">Alle huidige instellingen worden vervangen en de app wordt opnieuw gestart.</string>
     <string name="settings_backup_create_success">Back-up van instellingen gemaakt</string>
     <string name="settings_backup_create_error">Kan de back-up niet opslaan</string>

@@ -704,7 +704,7 @@
     <string name="settings_backup_restore_summary">用备份文件替换所有内容</string>
     <string name="settings_backup_password_title">备份密码</string>
     <string name="settings_backup_password_error_empty">请输入密码</string>
-    <string name="settings_backup_create_password_message">它保护包含服务器密码的文件。如果忘记，将无法找回。</string>
+    <string name="settings_backup_create_password_message">可选。没有密码时，任何拥有此文件的人都能读取你的服务器密码。忘记的密码无法找回。</string>
     <string name="settings_backup_restore_password_message">当前所有设置都将被替换，应用将重新启动。</string>
     <string name="settings_backup_create_success">设置已备份</string>
     <string name="settings_backup_create_error">无法保存备份</string>

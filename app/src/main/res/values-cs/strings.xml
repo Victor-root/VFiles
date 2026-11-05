@@ -811,7 +811,7 @@
     <string name="settings_backup_restore_summary">Nahradit vše souborem zálohy</string>
     <string name="settings_backup_password_title">Heslo zálohy</string>
     <string name="settings_backup_password_error_empty">Zadejte heslo</string>
-    <string name="settings_backup_create_password_message">Chrání soubor, který obsahuje hesla vašich serverů. Pokud ho zapomenete, nelze ho obnovit.</string>
+    <string name="settings_backup_create_password_message">Volitelné. Bez hesla si kdokoli s tímto souborem může přečíst hesla vašich serverů. Zapomenuté heslo nelze obnovit.</string>
     <string name="settings_backup_restore_password_message">Všechna aktuální nastavení budou nahrazena a aplikace se restartuje.</string>
     <string name="settings_backup_create_success">Nastavení zálohováno</string>
     <string name="settings_backup_create_error">Zálohu nelze uložit</string>

@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Alles durch eine Sicherungsdatei ersetzen</string>
     <string name="settings_backup_password_title">Passwort der Sicherung</string>
     <string name="settings_backup_password_error_empty">Passwort eingeben</string>
-    <string name="settings_backup_create_password_message">Es schützt die Datei, die die Passwörter deiner Server enthält. Wenn du es vergisst, kann es nicht wiederhergestellt werden.</string>
+    <string name="settings_backup_create_password_message">Optional. Ohne Passwort kann jeder mit dieser Datei die Passwörter deiner Server lesen. Ein vergessenes Passwort kann nicht wiederhergestellt werden.</string>
     <string name="settings_backup_restore_password_message">Alle aktuellen Einstellungen werden ersetzt und die App wird neu gestartet.</string>
     <string name="settings_backup_create_success">Einstellungen gesichert</string>
     <string name="settings_backup_create_error">Sicherung kann nicht gespeichert werden</string>

@@ -777,7 +777,7 @@
     <string name="settings_backup_restore_summary">Substituir tudo por um ficheiro de cópia</string>
     <string name="settings_backup_password_title">Palavra-passe da cópia</string>
     <string name="settings_backup_password_error_empty">Introduza uma palavra-passe</string>
-    <string name="settings_backup_create_password_message">Protege o ficheiro, que contém as palavras-passe dos seus servidores. Não pode ser recuperada se a esquecer.</string>
+    <string name="settings_backup_create_password_message">Opcional. Sem palavra-passe, qualquer pessoa com este ficheiro pode ler as palavras-passe dos seus servidores. Uma palavra-passe esquecida não pode ser recuperada.</string>
     <string name="settings_backup_restore_password_message">Todas as definições atuais serão substituídas e a aplicação será reiniciada.</string>
     <string name="settings_backup_create_success">Cópia das definições criada</string>
     <string name="settings_backup_create_error">Não foi possível guardar a cópia</string>

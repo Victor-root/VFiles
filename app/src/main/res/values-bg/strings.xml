@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Замяна на всичко с файл с резервно копие</string>
     <string name="settings_backup_password_title">Парола за резервното копие</string>
     <string name="settings_backup_password_error_empty">Въведете парола</string>
-    <string name="settings_backup_create_password_message">Тя защитава файла, който съдържа паролите на сървърите ви. Не може да бъде възстановена, ако я забравите.</string>
+    <string name="settings_backup_create_password_message">По избор. Без парола всеки с този файл може да прочете паролите на сървърите ви. Забравена парола не може да бъде възстановена.</string>
     <string name="settings_backup_restore_password_message">Всички текущи настройки ще бъдат заменени и приложението ще се рестартира.</string>
     <string name="settings_backup_create_success">Настройките са запазени</string>
     <string name="settings_backup_create_error">Резервното копие не може да бъде запазено</string>

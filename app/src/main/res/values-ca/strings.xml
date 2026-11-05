@@ -739,7 +739,7 @@
     <string name="settings_backup_restore_summary">Substitueix-ho tot per un fitxer de còpia</string>
     <string name="settings_backup_password_title">Contrasenya de la còpia</string>
     <string name="settings_backup_password_error_empty">Introduïu una contrasenya</string>
-    <string name="settings_backup_create_password_message">Protegeix el fitxer, que conté les contrasenyes dels vostres servidors. No es pot recuperar si l\'oblideu.</string>
+    <string name="settings_backup_create_password_message">Opcional. Sense contrasenya, qualsevol que tingui aquest fitxer pot llegir les contrasenyes dels vostres servidors. Una contrasenya oblidada no es pot recuperar.</string>
     <string name="settings_backup_restore_password_message">Es substituirà tota la configuració actual i l\'aplicació es reiniciarà.</string>
     <string name="settings_backup_create_success">S\'ha fet la còpia de la configuració</string>
     <string name="settings_backup_create_error">No s\'ha pogut desar la còpia</string>

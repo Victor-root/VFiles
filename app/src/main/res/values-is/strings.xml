@@ -741,7 +741,7 @@
     <string name="settings_backup_restore_summary">Skipta öllu út fyrir öryggisafrit</string>
     <string name="settings_backup_password_title">Lykilorð öryggisafrits</string>
     <string name="settings_backup_password_error_empty">Sláðu inn lykilorð</string>
-    <string name="settings_backup_create_password_message">Það verndar skrána, sem geymir lykilorð þjónanna þinna. Ekki er hægt að endurheimta það ef þú gleymir því.</string>
+    <string name="settings_backup_create_password_message">Valfrjálst. Án lykilorðs getur hver sem er með þessa skrá lesið lykilorð þjónanna þinna. Ekki er hægt að endurheimta gleymt lykilorð.</string>
     <string name="settings_backup_restore_password_message">Öllum núverandi stillingum verður skipt út og forritið endurræsist.</string>
     <string name="settings_backup_create_success">Afrit tekið af stillingum</string>
     <string name="settings_backup_create_error">Ekki tókst að vista öryggisafritið</string>

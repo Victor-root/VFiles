@@ -737,7 +737,7 @@
     <string name="settings_backup_restore_summary">جایگزینی همه چیز با یک فایل پشتیبان</string>
     <string name="settings_backup_password_title">گذرواژه پشتیبان</string>
     <string name="settings_backup_password_error_empty">یک گذرواژه وارد کنید</string>
-    <string name="settings_backup_create_password_message">از فایلی که گذرواژه‌های سرورهای شما را دارد محافظت می‌کند. اگر فراموشش کنید قابل بازیابی نیست.</string>
+    <string name="settings_backup_create_password_message">اختیاری. بدون گذرواژه، هر کسی که این فایل را داشته باشد می‌تواند گذرواژه‌های سرورهای شما را بخواند. گذرواژه فراموش‌شده قابل بازیابی نیست.</string>
     <string name="settings_backup_restore_password_message">همه تنظیمات فعلی جایگزین می‌شوند و برنامه دوباره راه‌اندازی می‌شود.</string>
     <string name="settings_backup_create_success">از تنظیمات پشتیبان گرفته شد</string>
     <string name="settings_backup_create_error">ذخیره پشتیبان ممکن نیست</string>
