@@ -15,6 +15,16 @@ import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.app.defaultSharedPreferences
 import me.zhanghai.android.files.compat.PreferenceManagerCompat
 
+internal fun getSettingSharedPreferences(nameSuffix: String?): SharedPreferences =
+    if (nameSuffix == null) {
+        defaultSharedPreferences
+    } else {
+        val name = "${PreferenceManagerCompat.getDefaultSharedPreferencesName(application)
+        }_$nameSuffix"
+        val mode = PreferenceManagerCompat.defaultSharedPreferencesMode
+        application.getSharedPreferences(name, mode)
+    }
+
 /**
  * A value of the shared preferences, kept up to date in [flow], including when it's changed from
  * elsewhere.
@@ -25,7 +35,7 @@ abstract class Setting<T>(
     keySuffix: String?,
     @param:AnyRes private val defaultValueRes: Int
 ) : OnSharedPreferenceChangeListener {
-    private val sharedPreferences = getSharedPreferences(nameSuffix)
+    private val sharedPreferences = getSettingSharedPreferences(nameSuffix)
     private val key = getKey(keyRes, keySuffix)
     private var defaultValue: T? = null
 
@@ -46,16 +56,6 @@ abstract class Setting<T>(
         // Only a weak reference is stored so we don't need to worry about unregistering.
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
-
-    private fun getSharedPreferences(nameSuffix: String?): SharedPreferences =
-        if (nameSuffix == null) {
-            defaultSharedPreferences
-        } else {
-            val name = "${PreferenceManagerCompat.getDefaultSharedPreferencesName(application)
-            }_$nameSuffix"
-            val mode = PreferenceManagerCompat.defaultSharedPreferencesMode
-            application.getSharedPreferences(name, mode)
-        }
 
     private fun getKey(@StringRes keyRes: Int, keySuffix: String?): String {
         val key = application.getString(keyRes)

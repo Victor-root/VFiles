@@ -695,6 +695,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Tampilkan thumbnail untuk dokumen PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Mungkin membuat apl tidak stabil pada versi Android lama</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Baca berkas remote untuk thumbnail</string>
+    <string name="settings_backup_title">Cadangan</string>
+    <string name="settings_backup_create_title">Cadangkan setelan</string>
+    <string name="settings_backup_create_summary">Simpan setelan, bookmark, dan server ke file</string>
+    <string name="settings_backup_restore_title">Pulihkan setelan</string>
+    <string name="settings_backup_restore_summary">Ganti semuanya dengan file cadangan</string>
+    <string name="settings_backup_password_title">Sandi cadangan</string>
+    <string name="settings_backup_password_error_empty">Masukkan sandi</string>
+    <string name="settings_backup_create_password_message">Sandi ini melindungi file yang berisi sandi server Anda. Sandi tidak dapat dipulihkan jika Anda lupa.</string>
+    <string name="settings_backup_restore_password_message">Semua setelan saat ini akan diganti dan aplikasi akan dimulai ulang.</string>
+    <string name="settings_backup_create_success">Setelan dicadangkan</string>
+    <string name="settings_backup_create_error">Tidak dapat menyimpan cadangan</string>
+    <string name="settings_backup_restore_error_file">File ini bukan cadangan VFiles</string>
+    <string name="settings_backup_restore_error_password">Sandi salah atau file rusak</string>
+    <string name="settings_backup_restore_error_version">Cadangan ini berasal dari versi VFiles yang lebih baru</string>
+    <string name="settings_backup_restore_error_jobs">Tunggu hingga operasi file selesai</string>
 
     <string name="about_title">Tentang</string>
     <string name="about_version_title">Versi</string>

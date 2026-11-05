@@ -728,6 +728,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">PDF belgeleri için küçük resim göster</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Uygulamayı Android\'in eski versiyonlarında kararsız yapabilir</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Küçük resim için uzak dosyaları okuyun</string>
+    <string name="settings_backup_title">Yedekleme</string>
+    <string name="settings_backup_create_title">Ayarları yedekle</string>
+    <string name="settings_backup_create_summary">Ayarları, yer imlerini ve sunucuları bir dosyaya kaydet</string>
+    <string name="settings_backup_restore_title">Ayarları geri yükle</string>
+    <string name="settings_backup_restore_summary">Her şeyi bir yedek dosyasıyla değiştir</string>
+    <string name="settings_backup_password_title">Yedek parolası</string>
+    <string name="settings_backup_password_error_empty">Bir parola girin</string>
+    <string name="settings_backup_create_password_message">Sunucularınızın parolalarını içeren dosyayı korur. Unutursanız kurtarılamaz.</string>
+    <string name="settings_backup_restore_password_message">Tüm mevcut ayarlar değiştirilecek ve uygulama yeniden başlayacak.</string>
+    <string name="settings_backup_create_success">Ayarlar yedeklendi</string>
+    <string name="settings_backup_create_error">Yedek kaydedilemiyor</string>
+    <string name="settings_backup_restore_error_file">Bu dosya bir VFiles yedeği değil</string>
+    <string name="settings_backup_restore_error_password">Yanlış parola veya hasarlı dosya</string>
+    <string name="settings_backup_restore_error_version">Bu yedek VFiles\'ın daha yeni bir sürümünden geliyor</string>
+    <string name="settings_backup_restore_error_jobs">Dosya işlemlerinin bitmesini bekleyin</string>
 
     <string name="about_title">Hakkında</string>
     <string name="about_version_title">Sürüm</string>

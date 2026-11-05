@@ -63,7 +63,7 @@ fun ConfirmationDialog(
 /**
  * A dialog asking for a line of text, with the keyboard shown. [validate] returns an error message
  * that keeps the dialog open, or null to confirm the text, which is trimmed unless [trim] is false.
- * [neutralButton] goes before the cancel button.
+ * [neutralButton] goes before the cancel button. [onCancel] is called when it's left unconfirmed.
  */
 @Composable
 fun TextFieldDialog(
@@ -79,7 +79,8 @@ fun TextFieldDialog(
     extraContent: (@Composable () -> Unit)? = null,
     placeholder: String? = null,
     trim: Boolean = true,
-    neutralButton: (@Composable () -> Unit)? = null
+    neutralButton: (@Composable () -> Unit)? = null,
+    onCancel: () -> Unit = {}
 ) {
     val state = rememberTextFieldState(initialText, initialSelection)
     var error by rememberSaveable { mutableStateOf<String?>(null) }
@@ -94,16 +95,20 @@ fun TextFieldDialog(
             onConfirm(text)
         }
     }
+    val cancel = {
+        onDismissRequest()
+        onCancel()
+    }
     val focusRequester = remember { FocusRequester() }
     AlertDialog(
-        onDismissRequest = onDismissRequest,
+        onDismissRequest = cancel,
         confirmButton = {
             TextButton(onClick = confirm) { Text(stringResource(android.R.string.ok)) }
         },
         dismissButton = {
             Row {
                 neutralButton?.invoke()
-                TextButton(onClick = onDismissRequest) {
+                TextButton(onClick = cancel) {
                     Text(stringResource(android.R.string.cancel))
                 }
             }

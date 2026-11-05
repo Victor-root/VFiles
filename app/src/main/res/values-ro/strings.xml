@@ -767,6 +767,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Arată miniatura pentru documentele PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Ar putea face aplicația instabilă pe versiunile vechi de Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Citește fișiere la distanță pentru miniaturi</string>
+    <string name="settings_backup_title">Copie de rezervă</string>
+    <string name="settings_backup_create_title">Copie de rezervă a setărilor</string>
+    <string name="settings_backup_create_summary">Salvează setările, marcajele și serverele într-un fișier</string>
+    <string name="settings_backup_restore_title">Restaurează setările</string>
+    <string name="settings_backup_restore_summary">Înlocuiește totul cu un fișier de rezervă</string>
+    <string name="settings_backup_password_title">Parola copiei de rezervă</string>
+    <string name="settings_backup_password_error_empty">Introdu o parolă</string>
+    <string name="settings_backup_create_password_message">Protejează fișierul, care conține parolele serverelor tale. Nu poate fi recuperată dacă o uiți.</string>
+    <string name="settings_backup_restore_password_message">Toate setările actuale vor fi înlocuite, iar aplicația va reporni.</string>
+    <string name="settings_backup_create_success">Setările au fost salvate</string>
+    <string name="settings_backup_create_error">Copia de rezervă nu poate fi salvată</string>
+    <string name="settings_backup_restore_error_file">Acest fișier nu este o copie de rezervă VFiles</string>
+    <string name="settings_backup_restore_error_password">Parolă greșită sau fișier deteriorat</string>
+    <string name="settings_backup_restore_error_version">Această copie provine dintr-o versiune mai nouă de VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Așteaptă finalizarea operațiunilor cu fișiere</string>
 
     <string name="about_title">Despre</string>
     <string name="about_version_title">Versiune</string>

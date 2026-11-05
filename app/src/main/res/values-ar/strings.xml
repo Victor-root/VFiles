@@ -876,6 +876,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">عرض الصور المصغرة لمستندات PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">قد يجعل التطبيق غير مستقر على الإصدارات الأقدم من Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">قراءة الملفات البعيدة للصور المصغرة</string>
+    <string name="settings_backup_title">نسخ احتياطي</string>
+    <string name="settings_backup_create_title">نسخ الإعدادات احتياطيًا</string>
+    <string name="settings_backup_create_summary">حفظ الإعدادات والإشارات المرجعية والخوادم في ملف</string>
+    <string name="settings_backup_restore_title">استعادة الإعدادات</string>
+    <string name="settings_backup_restore_summary">استبدال كل شيء بملف نسخة احتياطية</string>
+    <string name="settings_backup_password_title">كلمة مرور النسخة الاحتياطية</string>
+    <string name="settings_backup_password_error_empty">أدخل كلمة مرور</string>
+    <string name="settings_backup_create_password_message">تحمي الملف الذي يحتوي على كلمات مرور خوادمك. لا يمكن استرجاعها إذا نسيتها.</string>
+    <string name="settings_backup_restore_password_message">سيتم استبدال جميع الإعدادات الحالية وإعادة تشغيل التطبيق.</string>
+    <string name="settings_backup_create_success">تم نسخ الإعدادات احتياطيًا</string>
+    <string name="settings_backup_create_error">تعذّر حفظ النسخة الاحتياطية</string>
+    <string name="settings_backup_restore_error_file">هذا الملف ليس نسخة احتياطية من VFiles</string>
+    <string name="settings_backup_restore_error_password">كلمة المرور خاطئة أو الملف تالف</string>
+    <string name="settings_backup_restore_error_version">هذه النسخة الاحتياطية من إصدار أحدث من VFiles</string>
+    <string name="settings_backup_restore_error_jobs">انتظر حتى تنتهي عمليات الملفات</string>
 
     <string name="about_title">حول</string>
     <string name="about_version_title">الإصدار</string>

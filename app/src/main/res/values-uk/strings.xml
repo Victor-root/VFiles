@@ -806,6 +806,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Показувати прев\'ю для PDF-документів</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Може зробити застосунок нестабільним на старих версіях Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Зчитувати віддалені файли для ескізів</string>
+    <string name="settings_backup_title">Резервна копія</string>
+    <string name="settings_backup_create_title">Створити копію налаштувань</string>
+    <string name="settings_backup_create_summary">Зберегти налаштування, закладки та сервери у файл</string>
+    <string name="settings_backup_restore_title">Відновити налаштування</string>
+    <string name="settings_backup_restore_summary">Замінити все файлом резервної копії</string>
+    <string name="settings_backup_password_title">Пароль резервної копії</string>
+    <string name="settings_backup_password_error_empty">Введіть пароль</string>
+    <string name="settings_backup_create_password_message">Він захищає файл, у якому зберігаються паролі ваших серверів. Якщо ви його забудете, відновити його не можна.</string>
+    <string name="settings_backup_restore_password_message">Усі поточні налаштування буде замінено, і застосунок перезапуститься.</string>
+    <string name="settings_backup_create_success">Копію налаштувань створено</string>
+    <string name="settings_backup_create_error">Не вдалося зберегти копію</string>
+    <string name="settings_backup_restore_error_file">Цей файл не є резервною копією VFiles</string>
+    <string name="settings_backup_restore_error_password">Неправильний пароль або пошкоджений файл</string>
+    <string name="settings_backup_restore_error_version">Ця копія створена в новішій версії VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Дочекайтеся завершення операцій із файлами</string>
 
     <string name="about_title">Про застосунок</string>
     <string name="about_version_title">Версія</string>

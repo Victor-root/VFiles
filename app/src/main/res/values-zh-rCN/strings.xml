@@ -697,6 +697,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">显示 PDF 文档缩略图</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">可能导致应用在旧版 Android 上不稳定</string>
     <string name="settings_read_remote_files_for_thumbnail_title">读取远程文件以显示缩略图</string>
+    <string name="settings_backup_title">备份</string>
+    <string name="settings_backup_create_title">备份设置</string>
+    <string name="settings_backup_create_summary">将设置、书签和服务器保存到文件</string>
+    <string name="settings_backup_restore_title">恢复设置</string>
+    <string name="settings_backup_restore_summary">用备份文件替换所有内容</string>
+    <string name="settings_backup_password_title">备份密码</string>
+    <string name="settings_backup_password_error_empty">请输入密码</string>
+    <string name="settings_backup_create_password_message">它保护包含服务器密码的文件。如果忘记，将无法找回。</string>
+    <string name="settings_backup_restore_password_message">当前所有设置都将被替换，应用将重新启动。</string>
+    <string name="settings_backup_create_success">设置已备份</string>
+    <string name="settings_backup_create_error">无法保存备份</string>
+    <string name="settings_backup_restore_error_file">此文件不是 VFiles 备份</string>
+    <string name="settings_backup_restore_error_password">密码错误或文件已损坏</string>
+    <string name="settings_backup_restore_error_version">此备份来自较新版本的 VFiles</string>
+    <string name="settings_backup_restore_error_jobs">请等待文件操作完成</string>
 
     <string name="about_title">关于</string>
     <string name="about_version_title">版本</string>

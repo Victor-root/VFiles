@@ -732,6 +732,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Vis miniatyrbilde for PDF-filer</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Kan gjøre appen ustabil på eldre Android-versjoner</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Les eksterne filer for miniatyrbilder</string>
+    <string name="settings_backup_title">Sikkerhetskopi</string>
+    <string name="settings_backup_create_title">Sikkerhetskopier innstillinger</string>
+    <string name="settings_backup_create_summary">Lagre innstillinger, bokmerker og servere i en fil</string>
+    <string name="settings_backup_restore_title">Gjenopprett innstillinger</string>
+    <string name="settings_backup_restore_summary">Erstatt alt med en sikkerhetskopifil</string>
+    <string name="settings_backup_password_title">Passord for sikkerhetskopien</string>
+    <string name="settings_backup_password_error_empty">Skriv inn et passord</string>
+    <string name="settings_backup_create_password_message">Det beskytter filen, som inneholder passordene til serverne dine. Det kan ikke gjenopprettes hvis du glemmer det.</string>
+    <string name="settings_backup_restore_password_message">Alle gjeldende innstillinger blir erstattet, og appen starter på nytt.</string>
+    <string name="settings_backup_create_success">Innstillinger sikkerhetskopiert</string>
+    <string name="settings_backup_create_error">Kan ikke lagre sikkerhetskopien</string>
+    <string name="settings_backup_restore_error_file">Denne filen er ikke en VFiles-sikkerhetskopi</string>
+    <string name="settings_backup_restore_error_password">Feil passord eller skadet fil</string>
+    <string name="settings_backup_restore_error_version">Denne sikkerhetskopien er fra en nyere versjon av VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Vent til filoperasjonene er ferdige</string>
 
     <string name="about_title">Om appen</string>
     <string name="about_version_title">Versjon</string>

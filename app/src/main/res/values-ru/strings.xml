@@ -806,6 +806,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Показывать миниатюры для документов PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Приложение может стать нестабильным на старых версиях Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Считывать удалённые (сетевые) файлы для миниатюр</string>
+    <string name="settings_backup_title">Резервная копия</string>
+    <string name="settings_backup_create_title">Создать копию настроек</string>
+    <string name="settings_backup_create_summary">Сохранить настройки, закладки и серверы в файл</string>
+    <string name="settings_backup_restore_title">Восстановить настройки</string>
+    <string name="settings_backup_restore_summary">Заменить всё файлом резервной копии</string>
+    <string name="settings_backup_password_title">Пароль резервной копии</string>
+    <string name="settings_backup_password_error_empty">Введите пароль</string>
+    <string name="settings_backup_create_password_message">Он защищает файл, в котором хранятся пароли ваших серверов. Если вы его забудете, восстановить его нельзя.</string>
+    <string name="settings_backup_restore_password_message">Все текущие настройки будут заменены, и приложение перезапустится.</string>
+    <string name="settings_backup_create_success">Копия настроек создана</string>
+    <string name="settings_backup_create_error">Не удалось сохранить копию</string>
+    <string name="settings_backup_restore_error_file">Этот файл не является резервной копией VFiles</string>
+    <string name="settings_backup_restore_error_password">Неверный пароль или повреждённый файл</string>
+    <string name="settings_backup_restore_error_version">Эта копия создана в более новой версии VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Дождитесь завершения операций с файлами</string>
 
     <string name="about_title">О программе</string>
     <string name="about_version_title">Версия</string>

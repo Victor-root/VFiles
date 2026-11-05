@@ -732,6 +732,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Εμφάνιση μικρογραφίας για έγγραφα PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Μπορεί να κάνει την εφαρμογή ασταθή σε παλαιότερες εκδόσεις Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Ανάγνωση απόμακρων αρχείων για μικρογραφία</string>
+    <string name="settings_backup_title">Αντίγραφο ασφαλείας</string>
+    <string name="settings_backup_create_title">Δημιουργία αντιγράφου ρυθμίσεων</string>
+    <string name="settings_backup_create_summary">Αποθήκευση ρυθμίσεων, σελιδοδεικτών και διακομιστών σε αρχείο</string>
+    <string name="settings_backup_restore_title">Επαναφορά ρυθμίσεων</string>
+    <string name="settings_backup_restore_summary">Αντικατάσταση όλων με αρχείο αντιγράφου</string>
+    <string name="settings_backup_password_title">Κωδικός αντιγράφου ασφαλείας</string>
+    <string name="settings_backup_password_error_empty">Εισαγάγετε κωδικό</string>
+    <string name="settings_backup_create_password_message">Προστατεύει το αρχείο, που περιέχει τους κωδικούς των διακομιστών σας. Δεν ανακτάται αν τον ξεχάσετε.</string>
+    <string name="settings_backup_restore_password_message">Όλες οι τρέχουσες ρυθμίσεις θα αντικατασταθούν και η εφαρμογή θα επανεκκινηθεί.</string>
+    <string name="settings_backup_create_success">Οι ρυθμίσεις αποθηκεύτηκαν</string>
+    <string name="settings_backup_create_error">Δεν είναι δυνατή η αποθήκευση του αντιγράφου</string>
+    <string name="settings_backup_restore_error_file">Αυτό το αρχείο δεν είναι αντίγραφο του VFiles</string>
+    <string name="settings_backup_restore_error_password">Λάθος κωδικός ή κατεστραμμένο αρχείο</string>
+    <string name="settings_backup_restore_error_version">Αυτό το αντίγραφο προέρχεται από νεότερη έκδοση του VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Περιμένετε να ολοκληρωθούν οι λειτουργίες αρχείων</string>
 
     <string name="about_title">Σχετικά</string>
     <string name="about_version_title">Έκδοση</string>

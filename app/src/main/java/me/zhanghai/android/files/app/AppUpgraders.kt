@@ -62,8 +62,8 @@ internal fun upgradeAppTo1_1_0() {
     }
 }
 
-private const val PARCEL_VAL_PARCELABLE = 4
-private const val PARCEL_VAL_LIST = 11
+internal const val PARCEL_VAL_PARCELABLE = 4
+internal const val PARCEL_VAL_LIST = 11
 
 private fun migratePathSetting1_1_0(@StringRes keyRes: Int) {
     val key = application.getString(keyRes)

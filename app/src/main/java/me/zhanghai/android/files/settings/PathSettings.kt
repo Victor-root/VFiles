@@ -12,7 +12,7 @@ import me.zhanghai.android.files.filelist.FileSortOptions
 import me.zhanghai.android.files.filelist.FileViewType
 
 object PathSettings {
-    private const val NAME_SUFFIX = "path"
+    internal const val NAME_SUFFIX = "path"
 
     @Suppress("UNCHECKED_CAST")
     fun getFileListViewType(path: Path): Setting<FileViewType?> =

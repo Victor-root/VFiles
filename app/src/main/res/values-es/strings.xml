@@ -768,6 +768,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Mostrar miniaturas de documentos PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Podría hacer que la aplicación se vuelva inestable en versiones antiguas de Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Leer archivos remotos para obtener una miniatura</string>
+    <string name="settings_backup_title">Copia de seguridad</string>
+    <string name="settings_backup_create_title">Hacer copia de los ajustes</string>
+    <string name="settings_backup_create_summary">Guardar los ajustes, marcadores y servidores en un archivo</string>
+    <string name="settings_backup_restore_title">Restaurar ajustes</string>
+    <string name="settings_backup_restore_summary">Reemplazarlo todo con un archivo de copia</string>
+    <string name="settings_backup_password_title">Contraseña de la copia</string>
+    <string name="settings_backup_password_error_empty">Introduce una contraseña</string>
+    <string name="settings_backup_create_password_message">Protege el archivo, que contiene las contraseñas de tus servidores. No se puede recuperar si la olvidas.</string>
+    <string name="settings_backup_restore_password_message">Se reemplazarán todos los ajustes actuales y la aplicación se reiniciará.</string>
+    <string name="settings_backup_create_success">Copia de los ajustes realizada</string>
+    <string name="settings_backup_create_error">No se puede guardar la copia</string>
+    <string name="settings_backup_restore_error_file">Este archivo no es una copia de VFiles</string>
+    <string name="settings_backup_restore_error_password">Contraseña incorrecta o archivo dañado</string>
+    <string name="settings_backup_restore_error_version">Esta copia procede de una versión más reciente de VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Espera a que terminen las operaciones de archivos</string>
 
     <string name="about_title">Información</string>
     <string name="about_version_title">Versión</string>

@@ -734,6 +734,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Birta smámyndir fyrir PDF-skjöl</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Gæti gert forritið óstöðugt í eldri útgáfum Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Lesa fjartengdar skrár til að útbúa smámyndir</string>
+    <string name="settings_backup_title">Öryggisafrit</string>
+    <string name="settings_backup_create_title">Taka öryggisafrit af stillingum</string>
+    <string name="settings_backup_create_summary">Vista stillingar, bókamerki og þjóna í skrá</string>
+    <string name="settings_backup_restore_title">Endurheimta stillingar</string>
+    <string name="settings_backup_restore_summary">Skipta öllu út fyrir öryggisafrit</string>
+    <string name="settings_backup_password_title">Lykilorð öryggisafrits</string>
+    <string name="settings_backup_password_error_empty">Sláðu inn lykilorð</string>
+    <string name="settings_backup_create_password_message">Það verndar skrána, sem geymir lykilorð þjónanna þinna. Ekki er hægt að endurheimta það ef þú gleymir því.</string>
+    <string name="settings_backup_restore_password_message">Öllum núverandi stillingum verður skipt út og forritið endurræsist.</string>
+    <string name="settings_backup_create_success">Afrit tekið af stillingum</string>
+    <string name="settings_backup_create_error">Ekki tókst að vista öryggisafritið</string>
+    <string name="settings_backup_restore_error_file">Þessi skrá er ekki VFiles-öryggisafrit</string>
+    <string name="settings_backup_restore_error_password">Rangt lykilorð eða skemmd skrá</string>
+    <string name="settings_backup_restore_error_version">Þetta öryggisafrit er úr nýrri útgáfu af VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Bíddu þar til skráaaðgerðum lýkur</string>
 
     <string name="about_title">Um hugbúnaðinn</string>
     <string name="about_version_title">Útgáfa</string>

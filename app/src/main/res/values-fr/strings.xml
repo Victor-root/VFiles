@@ -792,6 +792,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Afficher la miniature des fichiers PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pourrait rendre l’application instable sur les anciennes versions d’Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Lire les fichiers distants pour les vignettes</string>
+    <string name="settings_backup_title">Sauvegarde</string>
+    <string name="settings_backup_create_title">Sauvegarder les réglages</string>
+    <string name="settings_backup_create_summary">Enregistrer les réglages, marque-pages et serveurs dans un fichier</string>
+    <string name="settings_backup_restore_title">Restaurer les réglages</string>
+    <string name="settings_backup_restore_summary">Tout remplacer par un fichier de sauvegarde</string>
+    <string name="settings_backup_password_title">Mot de passe de la sauvegarde</string>
+    <string name="settings_backup_password_error_empty">Saisissez un mot de passe</string>
+    <string name="settings_backup_create_password_message">Il protège le fichier, qui contient les mots de passe de vos serveurs. Il ne peut pas être récupéré si vous l\'oubliez.</string>
+    <string name="settings_backup_restore_password_message">Tous les réglages actuels seront remplacés et l\'application redémarrera.</string>
+    <string name="settings_backup_create_success">Réglages sauvegardés</string>
+    <string name="settings_backup_create_error">Impossible d\'enregistrer la sauvegarde</string>
+    <string name="settings_backup_restore_error_file">Ce fichier n\'est pas une sauvegarde VFiles</string>
+    <string name="settings_backup_restore_error_password">Mot de passe incorrect, ou fichier endommagé</string>
+    <string name="settings_backup_restore_error_version">Cette sauvegarde provient d\'une version plus récente de VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Attendez la fin des opérations sur les fichiers</string>
 
     <string name="about_title">A propos</string>
     <string name="about_version_title">Version</string>

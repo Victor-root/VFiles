@@ -802,6 +802,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Rodyti PDF dokumentų miniatiūras</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Gali padaryti programėlę nestabilią senesnėse Android versijose</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Rodyti nuotolinių failų miniatiūras</string>
+    <string name="settings_backup_title">Atsarginė kopija</string>
+    <string name="settings_backup_create_title">Kurti nustatymų kopiją</string>
+    <string name="settings_backup_create_summary">Išsaugoti nustatymus, žymes ir serverius faile</string>
+    <string name="settings_backup_restore_title">Atkurti nustatymus</string>
+    <string name="settings_backup_restore_summary">Pakeisti viską atsarginės kopijos failu</string>
+    <string name="settings_backup_password_title">Atsarginės kopijos slaptažodis</string>
+    <string name="settings_backup_password_error_empty">Įveskite slaptažodį</string>
+    <string name="settings_backup_create_password_message">Jis saugo failą, kuriame yra jūsų serverių slaptažodžiai. Pamiršto jo atkurti negalima.</string>
+    <string name="settings_backup_restore_password_message">Visi dabartiniai nustatymai bus pakeisti, o programa bus paleista iš naujo.</string>
+    <string name="settings_backup_create_success">Nustatymų kopija sukurta</string>
+    <string name="settings_backup_create_error">Nepavyko išsaugoti kopijos</string>
+    <string name="settings_backup_restore_error_file">Šis failas nėra VFiles atsarginė kopija</string>
+    <string name="settings_backup_restore_error_password">Neteisingas slaptažodis arba sugadintas failas</string>
+    <string name="settings_backup_restore_error_version">Ši kopija sukurta naujesne VFiles versija</string>
+    <string name="settings_backup_restore_error_jobs">Palaukite, kol baigsis failų operacijos</string>
 
     <string name="about_title">Apie</string>
     <string name="about_version_title">Versija</string>

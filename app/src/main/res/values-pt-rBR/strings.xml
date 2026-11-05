@@ -769,6 +769,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Mostrar miniatura de documentos PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pode tornar-se instável nas versões mais antigas do Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Ler arquivos remotos para as miniaturas</string>
+    <string name="settings_backup_title">Backup</string>
+    <string name="settings_backup_create_title">Fazer backup das configurações</string>
+    <string name="settings_backup_create_summary">Salvar as configurações, favoritos e servidores em um arquivo</string>
+    <string name="settings_backup_restore_title">Restaurar configurações</string>
+    <string name="settings_backup_restore_summary">Substituir tudo por um arquivo de backup</string>
+    <string name="settings_backup_password_title">Senha do backup</string>
+    <string name="settings_backup_password_error_empty">Digite uma senha</string>
+    <string name="settings_backup_create_password_message">Ela protege o arquivo, que contém as senhas dos seus servidores. Não pode ser recuperada se você esquecê-la.</string>
+    <string name="settings_backup_restore_password_message">Todas as configurações atuais serão substituídas e o app será reiniciado.</string>
+    <string name="settings_backup_create_success">Backup das configurações feito</string>
+    <string name="settings_backup_create_error">Não foi possível salvar o backup</string>
+    <string name="settings_backup_restore_error_file">Este arquivo não é um backup do VFiles</string>
+    <string name="settings_backup_restore_error_password">Senha incorreta ou arquivo danificado</string>
+    <string name="settings_backup_restore_error_version">Este backup vem de uma versão mais recente do VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Aguarde o término das operações de arquivos</string>
 
     <string name="about_title">Sobre</string>
     <string name="about_version_title">Versão</string>

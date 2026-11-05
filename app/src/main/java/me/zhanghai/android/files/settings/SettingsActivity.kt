@@ -121,6 +121,8 @@ private fun SettingsScreen() {
                 stringResource(R.string.settings_read_remote_files_for_thumbnail_title),
                 icon = painterResource(R.drawable.image_icon_white_24dp)
             )
+            PreferenceCategory(stringResource(R.string.settings_backup_title))
+            SettingsBackupPreferences()
         }
     }
 }

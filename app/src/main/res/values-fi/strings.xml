@@ -674,6 +674,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Näytä PDF-dokumenttien esikatselukuvat</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Saattaa aiheuttaa sovelluksen epävakauden vanhemmilla Android-versioilla</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Hae esikatselukuvat etätiedostoista</string>
+    <string name="settings_backup_title">Varmuuskopio</string>
+    <string name="settings_backup_create_title">Varmuuskopioi asetukset</string>
+    <string name="settings_backup_create_summary">Tallenna asetukset, kirjanmerkit ja palvelimet tiedostoon</string>
+    <string name="settings_backup_restore_title">Palauta asetukset</string>
+    <string name="settings_backup_restore_summary">Korvaa kaikki varmuuskopiotiedostolla</string>
+    <string name="settings_backup_password_title">Varmuuskopion salasana</string>
+    <string name="settings_backup_password_error_empty">Anna salasana</string>
+    <string name="settings_backup_create_password_message">Se suojaa tiedostoa, joka sisältää palvelimiesi salasanat. Sitä ei voi palauttaa, jos unohdat sen.</string>
+    <string name="settings_backup_restore_password_message">Kaikki nykyiset asetukset korvataan ja sovellus käynnistyy uudelleen.</string>
+    <string name="settings_backup_create_success">Asetukset varmuuskopioitu</string>
+    <string name="settings_backup_create_error">Varmuuskopiota ei voi tallentaa</string>
+    <string name="settings_backup_restore_error_file">Tämä tiedosto ei ole VFiles-varmuuskopio</string>
+    <string name="settings_backup_restore_error_password">Väärä salasana tai vioittunut tiedosto</string>
+    <string name="settings_backup_restore_error_version">Tämä varmuuskopio on VFilesin uudemmasta versiosta</string>
+    <string name="settings_backup_restore_error_jobs">Odota, että tiedostotoiminnot päättyvät</string>
 
     <string name="about_title">Tietoa</string>
     <string name="about_version_title">Versio</string>

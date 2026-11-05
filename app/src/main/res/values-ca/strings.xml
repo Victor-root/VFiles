@@ -732,6 +732,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Mostra la miniatura dels documents PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pot fer que l\'aplicació sigui inestable en versions anteriors d\'Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Lectura remota de miniatures</string>
+    <string name="settings_backup_title">Còpia de seguretat</string>
+    <string name="settings_backup_create_title">Fes una còpia de la configuració</string>
+    <string name="settings_backup_create_summary">Desa la configuració, les adreces d\'interès i els servidors en un fitxer</string>
+    <string name="settings_backup_restore_title">Restaura la configuració</string>
+    <string name="settings_backup_restore_summary">Substitueix-ho tot per un fitxer de còpia</string>
+    <string name="settings_backup_password_title">Contrasenya de la còpia</string>
+    <string name="settings_backup_password_error_empty">Introduïu una contrasenya</string>
+    <string name="settings_backup_create_password_message">Protegeix el fitxer, que conté les contrasenyes dels vostres servidors. No es pot recuperar si l\'oblideu.</string>
+    <string name="settings_backup_restore_password_message">Es substituirà tota la configuració actual i l\'aplicació es reiniciarà.</string>
+    <string name="settings_backup_create_success">S\'ha fet la còpia de la configuració</string>
+    <string name="settings_backup_create_error">No s\'ha pogut desar la còpia</string>
+    <string name="settings_backup_restore_error_file">Aquest fitxer no és una còpia de VFiles</string>
+    <string name="settings_backup_restore_error_password">Contrasenya incorrecta o fitxer malmès</string>
+    <string name="settings_backup_restore_error_version">Aquesta còpia prové d\'una versió més recent de VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Espereu que acabin les operacions amb fitxers</string>
 
     <string name="about_title">Quant a</string>
     <string name="about_version_title">Versió</string>

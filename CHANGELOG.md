@@ -5,6 +5,7 @@
 A full rewrite of the interface in Jetpack Compose, with a gallery, a music player, a video player and a PDF viewer built in, Shizuku support, and a smoother app on phones and Android TV alike.
 
 ### ➕ Added
+- **Backup and restore of the settings:** settings, bookmarks and servers in a file protected by a password, from the settings screen, to bring them back after a reinstall or on another device.
 - **A gallery** in the sidebar: photos and videos by day, or by month with a pinch, albums of folders, selection to share or move to the trash, and a full screen viewer with zoomable photos, a video player and a carousel of the media around.
 - **A music player:** songs, albums and artists from the sidebar, playback in the background controlled from the notification, and a mini player above the library.
 - **A video player** and **a PDF viewer**: pages one at a time or fit to the width of the screen, pinch to zoom, go to page, share.

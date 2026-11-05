@@ -232,7 +232,8 @@ class ParcelValueSetting<T>(
         defaultValue: T
     ): T =
         try {
-            sharedPreferences.getString(key, null)?.asBase64()?.toParcelValue()
+            @Suppress("UNCHECKED_CAST")
+            sharedPreferences.getString(key, null)?.asBase64()?.toParcelValue() as T?
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -241,22 +242,21 @@ class ParcelValueSetting<T>(
     override fun putValue(sharedPreferences: SharedPreferences, key: String, value: T) {
         sharedPreferences.edit { putString(key, value?.toParcelBase64()?.value) }
     }
+}
 
-    private fun Base64.toParcelValue(): T {
-        val bytes = toByteArray()
-        return Parcel.obtain().use { parcel ->
-            parcel.unmarshall(bytes, 0, bytes.size)
-            parcel.setDataPosition(0)
-            @Suppress("UNCHECKED_CAST")
-            parcel.readValue(appClassLoader) as T
-        }
+internal fun Base64.toParcelValue(): Any? {
+    val bytes = toByteArray()
+    return Parcel.obtain().use { parcel ->
+        parcel.unmarshall(bytes, 0, bytes.size)
+        parcel.setDataPosition(0)
+        parcel.readValue(appClassLoader)
     }
+}
 
-    private fun T.toParcelBase64(): Base64 {
-        val bytes = Parcel.obtain().use { parcel ->
-            parcel.writeValue(this)
-            parcel.marshall()
-        }
-        return bytes.toBase64()
+internal fun Any?.toParcelBase64(): Base64 {
+    val bytes = Parcel.obtain().use { parcel ->
+        parcel.writeValue(this)
+        parcel.marshall()
     }
+    return bytes.toBase64()
 }

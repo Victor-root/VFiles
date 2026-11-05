@@ -692,6 +692,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Hiển thị ảnh xem trước cho tài liệu PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Có thể làm ứng dụng không ổn định trên các phiên bản Android thấp hơn</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Đọc tệp từ xa để lấy ảnh xem trước</string>
+    <string name="settings_backup_title">Sao lưu</string>
+    <string name="settings_backup_create_title">Sao lưu cài đặt</string>
+    <string name="settings_backup_create_summary">Lưu cài đặt, dấu trang và máy chủ vào một tệp</string>
+    <string name="settings_backup_restore_title">Khôi phục cài đặt</string>
+    <string name="settings_backup_restore_summary">Thay thế mọi thứ bằng tệp sao lưu</string>
+    <string name="settings_backup_password_title">Mật khẩu sao lưu</string>
+    <string name="settings_backup_password_error_empty">Nhập mật khẩu</string>
+    <string name="settings_backup_create_password_message">Mật khẩu này bảo vệ tệp chứa mật khẩu máy chủ của bạn. Không thể khôi phục nếu bạn quên.</string>
+    <string name="settings_backup_restore_password_message">Tất cả cài đặt hiện tại sẽ bị thay thế và ứng dụng sẽ khởi động lại.</string>
+    <string name="settings_backup_create_success">Đã sao lưu cài đặt</string>
+    <string name="settings_backup_create_error">Không thể lưu bản sao lưu</string>
+    <string name="settings_backup_restore_error_file">Tệp này không phải bản sao lưu VFiles</string>
+    <string name="settings_backup_restore_error_password">Sai mật khẩu hoặc tệp bị hỏng</string>
+    <string name="settings_backup_restore_error_version">Bản sao lưu này từ phiên bản VFiles mới hơn</string>
+    <string name="settings_backup_restore_error_jobs">Hãy đợi các thao tác tệp hoàn tất</string>
 
     <string name="about_title">Giới thiệu</string>
     <string name="about_version_title">Phiên bản</string>

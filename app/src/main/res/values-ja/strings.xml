@@ -696,6 +696,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">PDF ドキュメントのサムネイルを表示する</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">古いバージョンの Android ではアプリが不安定になる可能性があります</string>
     <string name="settings_read_remote_files_for_thumbnail_title">リモートファイルのサムネイルを読み込む</string>
+    <string name="settings_backup_title">バックアップ</string>
+    <string name="settings_backup_create_title">設定をバックアップ</string>
+    <string name="settings_backup_create_summary">設定、ブックマーク、サーバーをファイルに保存します</string>
+    <string name="settings_backup_restore_title">設定を復元</string>
+    <string name="settings_backup_restore_summary">すべてをバックアップファイルの内容に置き換えます</string>
+    <string name="settings_backup_password_title">バックアップのパスワード</string>
+    <string name="settings_backup_password_error_empty">パスワードを入力してください</string>
+    <string name="settings_backup_create_password_message">サーバーのパスワードを含むファイルを保護します。忘れた場合は復元できません。</string>
+    <string name="settings_backup_restore_password_message">現在の設定はすべて置き換えられ、アプリが再起動します。</string>
+    <string name="settings_backup_create_success">設定をバックアップしました</string>
+    <string name="settings_backup_create_error">バックアップを保存できません</string>
+    <string name="settings_backup_restore_error_file">このファイルは VFiles のバックアップではありません</string>
+    <string name="settings_backup_restore_error_password">パスワードが間違っているか、ファイルが破損しています</string>
+    <string name="settings_backup_restore_error_version">このバックアップは新しいバージョンの VFiles で作成されました</string>
+    <string name="settings_backup_restore_error_jobs">ファイル操作が終わるまでお待ちください</string>
 
     <string name="about_title">このアプリについて</string>
     <string name="about_version_title">バージョン</string>

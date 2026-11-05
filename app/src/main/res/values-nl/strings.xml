@@ -732,6 +732,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Miniaturen van pdf-bestanden tonen</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Dit kan leiden tot instabiliteit op oudere Android-versies</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Miniaturen laden van externe bestanden</string>
+    <string name="settings_backup_title">Back-up</string>
+    <string name="settings_backup_create_title">Back-up van instellingen maken</string>
+    <string name="settings_backup_create_summary">Instellingen, bladwijzers en servers in een bestand opslaan</string>
+    <string name="settings_backup_restore_title">Instellingen herstellen</string>
+    <string name="settings_backup_restore_summary">Alles vervangen door een back-upbestand</string>
+    <string name="settings_backup_password_title">Wachtwoord van de back-up</string>
+    <string name="settings_backup_password_error_empty">Voer een wachtwoord in</string>
+    <string name="settings_backup_create_password_message">Het beschermt het bestand, dat de wachtwoorden van je servers bevat. Het kan niet worden hersteld als je het vergeet.</string>
+    <string name="settings_backup_restore_password_message">Alle huidige instellingen worden vervangen en de app wordt opnieuw gestart.</string>
+    <string name="settings_backup_create_success">Back-up van instellingen gemaakt</string>
+    <string name="settings_backup_create_error">Kan de back-up niet opslaan</string>
+    <string name="settings_backup_restore_error_file">Dit bestand is geen VFiles-back-up</string>
+    <string name="settings_backup_restore_error_password">Verkeerd wachtwoord of beschadigd bestand</string>
+    <string name="settings_backup_restore_error_version">Deze back-up komt van een nieuwere versie van VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Wacht tot de bestandsbewerkingen zijn voltooid</string>
 
     <string name="about_title">Over</string>
     <string name="about_version_title">Versie</string>

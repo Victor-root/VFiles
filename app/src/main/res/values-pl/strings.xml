@@ -804,6 +804,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Pokaż miniaturę dokumentów PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Może spowodować niestabilność aplikacji w starszych wersjach systemu Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Odczytaj zdalne pliki w celu uzyskania miniatury</string>
+    <string name="settings_backup_title">Kopia zapasowa</string>
+    <string name="settings_backup_create_title">Utwórz kopię ustawień</string>
+    <string name="settings_backup_create_summary">Zapisz ustawienia, zakładki i serwery w pliku</string>
+    <string name="settings_backup_restore_title">Przywróć ustawienia</string>
+    <string name="settings_backup_restore_summary">Zastąp wszystko plikiem kopii zapasowej</string>
+    <string name="settings_backup_password_title">Hasło kopii zapasowej</string>
+    <string name="settings_backup_password_error_empty">Wpisz hasło</string>
+    <string name="settings_backup_create_password_message">Chroni plik zawierający hasła do Twoich serwerów. Nie można go odzyskać, jeśli je zapomnisz.</string>
+    <string name="settings_backup_restore_password_message">Wszystkie bieżące ustawienia zostaną zastąpione, a aplikacja uruchomi się ponownie.</string>
+    <string name="settings_backup_create_success">Utworzono kopię ustawień</string>
+    <string name="settings_backup_create_error">Nie można zapisać kopii</string>
+    <string name="settings_backup_restore_error_file">Ten plik nie jest kopią zapasową VFiles</string>
+    <string name="settings_backup_restore_error_password">Błędne hasło lub uszkodzony plik</string>
+    <string name="settings_backup_restore_error_version">Ta kopia pochodzi z nowszej wersji VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Poczekaj na zakończenie operacji na plikach</string>
 
     <string name="about_title">O aplikacji</string>
     <string name="about_version_title">Wersja</string>

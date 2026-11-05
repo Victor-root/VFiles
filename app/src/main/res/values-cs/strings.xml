@@ -804,6 +804,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Zobrazit náhled pro PDF soubory</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Aplikace může být nestabilní na starších verzích systému Android.</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Přečíst vzdálené soubory pro náhled</string>
+    <string name="settings_backup_title">Záloha</string>
+    <string name="settings_backup_create_title">Zálohovat nastavení</string>
+    <string name="settings_backup_create_summary">Uložit nastavení, záložky a servery do souboru</string>
+    <string name="settings_backup_restore_title">Obnovit nastavení</string>
+    <string name="settings_backup_restore_summary">Nahradit vše souborem zálohy</string>
+    <string name="settings_backup_password_title">Heslo zálohy</string>
+    <string name="settings_backup_password_error_empty">Zadejte heslo</string>
+    <string name="settings_backup_create_password_message">Chrání soubor, který obsahuje hesla vašich serverů. Pokud ho zapomenete, nelze ho obnovit.</string>
+    <string name="settings_backup_restore_password_message">Všechna aktuální nastavení budou nahrazena a aplikace se restartuje.</string>
+    <string name="settings_backup_create_success">Nastavení zálohováno</string>
+    <string name="settings_backup_create_error">Zálohu nelze uložit</string>
+    <string name="settings_backup_restore_error_file">Tento soubor není záloha VFiles</string>
+    <string name="settings_backup_restore_error_password">Nesprávné heslo nebo poškozený soubor</string>
+    <string name="settings_backup_restore_error_version">Tato záloha pochází z novější verze VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Počkejte na dokončení operací se soubory</string>
 
     <string name="about_title">O aplikaci</string>
     <string name="about_version_title">Verze</string>

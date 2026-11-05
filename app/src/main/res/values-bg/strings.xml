@@ -732,6 +732,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Показване на миниатюри за PDF документи</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Има опасност да направи приложението нестабилно под по-ранни издания на Андроид</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Четене на отдалечени файлове за миниатюри</string>
+    <string name="settings_backup_title">Резервно копие</string>
+    <string name="settings_backup_create_title">Резервно копие на настройките</string>
+    <string name="settings_backup_create_summary">Запазване на настройките, отметките и сървърите във файл</string>
+    <string name="settings_backup_restore_title">Възстановяване на настройките</string>
+    <string name="settings_backup_restore_summary">Замяна на всичко с файл с резервно копие</string>
+    <string name="settings_backup_password_title">Парола за резервното копие</string>
+    <string name="settings_backup_password_error_empty">Въведете парола</string>
+    <string name="settings_backup_create_password_message">Тя защитава файла, който съдържа паролите на сървърите ви. Не може да бъде възстановена, ако я забравите.</string>
+    <string name="settings_backup_restore_password_message">Всички текущи настройки ще бъдат заменени и приложението ще се рестартира.</string>
+    <string name="settings_backup_create_success">Настройките са запазени</string>
+    <string name="settings_backup_create_error">Резервното копие не може да бъде запазено</string>
+    <string name="settings_backup_restore_error_file">Този файл не е резервно копие на VFiles</string>
+    <string name="settings_backup_restore_error_password">Грешна парола или повреден файл</string>
+    <string name="settings_backup_restore_error_version">Това резервно копие е от по-нова версия на VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Изчакайте файловите операции да приключат</string>
 
     <string name="about_title">Относно</string>
     <string name="about_version_title">Версия</string>

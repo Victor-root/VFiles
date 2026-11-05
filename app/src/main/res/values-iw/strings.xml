@@ -804,6 +804,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">הצגת תמונה ממוזערת למסמכי PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">עלול להפוך את היישום לבלתי יציב בגרסאות ישנות יותר של אנדרואיד</string>
     <string name="settings_read_remote_files_for_thumbnail_title">קרא קבצים מרוחקים עבור תמונה ממוזערת</string>
+    <string name="settings_backup_title">גיבוי</string>
+    <string name="settings_backup_create_title">גיבוי ההגדרות</string>
+    <string name="settings_backup_create_summary">שמירת ההגדרות, הסימניות והשרתים בקובץ</string>
+    <string name="settings_backup_restore_title">שחזור ההגדרות</string>
+    <string name="settings_backup_restore_summary">החלפת הכול בקובץ גיבוי</string>
+    <string name="settings_backup_password_title">סיסמת הגיבוי</string>
+    <string name="settings_backup_password_error_empty">יש להזין סיסמה</string>
+    <string name="settings_backup_create_password_message">היא מגינה על הקובץ, שמכיל את הסיסמאות של השרתים שלך. אי אפשר לשחזר אותה אם שוכחים אותה.</string>
+    <string name="settings_backup_restore_password_message">כל ההגדרות הנוכחיות יוחלפו והאפליקציה תופעל מחדש.</string>
+    <string name="settings_backup_create_success">ההגדרות גובו</string>
+    <string name="settings_backup_create_error">לא ניתן לשמור את הגיבוי</string>
+    <string name="settings_backup_restore_error_file">קובץ זה אינו גיבוי של VFiles</string>
+    <string name="settings_backup_restore_error_password">סיסמה שגויה או קובץ פגום</string>
+    <string name="settings_backup_restore_error_version">גיבוי זה הגיע מגרסה חדשה יותר של VFiles</string>
+    <string name="settings_backup_restore_error_jobs">יש להמתין לסיום פעולות הקבצים</string>
 
     <string name="about_title">אודות</string>
     <string name="about_version_title">גירסה</string>

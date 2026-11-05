@@ -770,6 +770,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Mostrar miniatura dos documentos PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pode tornar-se instável nas versões mais antigas do Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Ler ficheiros remotos das miniaturas</string>
+    <string name="settings_backup_title">Cópia de segurança</string>
+    <string name="settings_backup_create_title">Criar cópia das definições</string>
+    <string name="settings_backup_create_summary">Guardar as definições, marcadores e servidores num ficheiro</string>
+    <string name="settings_backup_restore_title">Restaurar definições</string>
+    <string name="settings_backup_restore_summary">Substituir tudo por um ficheiro de cópia</string>
+    <string name="settings_backup_password_title">Palavra-passe da cópia</string>
+    <string name="settings_backup_password_error_empty">Introduza uma palavra-passe</string>
+    <string name="settings_backup_create_password_message">Protege o ficheiro, que contém as palavras-passe dos seus servidores. Não pode ser recuperada se a esquecer.</string>
+    <string name="settings_backup_restore_password_message">Todas as definições atuais serão substituídas e a aplicação será reiniciada.</string>
+    <string name="settings_backup_create_success">Cópia das definições criada</string>
+    <string name="settings_backup_create_error">Não foi possível guardar a cópia</string>
+    <string name="settings_backup_restore_error_file">Este ficheiro não é uma cópia do VFiles</string>
+    <string name="settings_backup_restore_error_password">Palavra-passe incorreta ou ficheiro danificado</string>
+    <string name="settings_backup_restore_error_version">Esta cópia provém de uma versão mais recente do VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Aguarde o fim das operações de ficheiros</string>
 
     <string name="about_title">Acerca</string>
     <string name="about_version_title">Versão</string>

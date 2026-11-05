@@ -730,6 +730,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">نمایش بندانگشتی برای اسناد PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">ممکن است برنامه را در نگارش‌های قدیمی‌تر اندروید ناپایدار کند</string>
     <string name="settings_read_remote_files_for_thumbnail_title">پرونده‌های دوردست را برای بندانگشتی بخوان</string>
+    <string name="settings_backup_title">پشتیبان‌گیری</string>
+    <string name="settings_backup_create_title">پشتیبان‌گیری از تنظیمات</string>
+    <string name="settings_backup_create_summary">ذخیره تنظیمات، نشانک‌ها و سرورها در یک فایل</string>
+    <string name="settings_backup_restore_title">بازیابی تنظیمات</string>
+    <string name="settings_backup_restore_summary">جایگزینی همه چیز با یک فایل پشتیبان</string>
+    <string name="settings_backup_password_title">گذرواژه پشتیبان</string>
+    <string name="settings_backup_password_error_empty">یک گذرواژه وارد کنید</string>
+    <string name="settings_backup_create_password_message">از فایلی که گذرواژه‌های سرورهای شما را دارد محافظت می‌کند. اگر فراموشش کنید قابل بازیابی نیست.</string>
+    <string name="settings_backup_restore_password_message">همه تنظیمات فعلی جایگزین می‌شوند و برنامه دوباره راه‌اندازی می‌شود.</string>
+    <string name="settings_backup_create_success">از تنظیمات پشتیبان گرفته شد</string>
+    <string name="settings_backup_create_error">ذخیره پشتیبان ممکن نیست</string>
+    <string name="settings_backup_restore_error_file">این فایل پشتیبان VFiles نیست</string>
+    <string name="settings_backup_restore_error_password">گذرواژه اشتباه یا فایل آسیب‌دیده</string>
+    <string name="settings_backup_restore_error_version">این پشتیبان از نسخه جدیدتر VFiles است</string>
+    <string name="settings_backup_restore_error_jobs">تا پایان عملیات فایل‌ها صبر کنید</string>
 
     <string name="about_title">درباره</string>
     <string name="about_version_title">نگارش</string>

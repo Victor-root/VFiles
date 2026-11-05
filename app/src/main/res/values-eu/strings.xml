@@ -675,6 +675,21 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Erakutsi PDF dokumentuen iruditxoak</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Aplikazioa ezegonkor bihur dezake Android bertsio zaharretan</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Irakurri iruditxoen urruneko fitxategiak</string>
+    <string name="settings_backup_title">Babeskopia</string>
+    <string name="settings_backup_create_title">Egin ezarpenen babeskopia</string>
+    <string name="settings_backup_create_summary">Gorde ezarpenak, laster-markak eta zerbitzariak fitxategi batean</string>
+    <string name="settings_backup_restore_title">Leheneratu ezarpenak</string>
+    <string name="settings_backup_restore_summary">Ordeztu dena babeskopia-fitxategi batekin</string>
+    <string name="settings_backup_password_title">Babeskopiaren pasahitza</string>
+    <string name="settings_backup_password_error_empty">Idatzi pasahitz bat</string>
+    <string name="settings_backup_create_password_message">Fitxategia babesten du, zure zerbitzarien pasahitzak dituena. Ezin da berreskuratu ahazten baduzu.</string>
+    <string name="settings_backup_restore_password_message">Uneko ezarpen guztiak ordeztuko dira eta aplikazioa berrabiaraziko da.</string>
+    <string name="settings_backup_create_success">Ezarpenen babeskopia egin da</string>
+    <string name="settings_backup_create_error">Ezin da babeskopia gorde</string>
+    <string name="settings_backup_restore_error_file">Fitxategi hau ez da VFiles babeskopia bat</string>
+    <string name="settings_backup_restore_error_password">Pasahitz okerra edo fitxategi hondatua</string>
+    <string name="settings_backup_restore_error_version">Babeskopia hau VFiles-en bertsio berriago batekoa da</string>
+    <string name="settings_backup_restore_error_jobs">Itxaron fitxategi-eragiketak amaitu arte</string>
 
     <string name="about_title">Honi buruz</string>
     <string name="about_version_title">Bertsioa</string>
