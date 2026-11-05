@@ -24,6 +24,7 @@ import java8.nio.file.attribute.FileAttributeView
 import java8.nio.file.spi.FileSystemProvider
 import me.zhanghai.android.files.provider.common.ByteStringPath
 import me.zhanghai.android.files.provider.common.FileSystemCache
+import me.zhanghai.android.files.provider.common.InputStreamSeekableByteChannel
 import me.zhanghai.android.files.provider.common.PathListDirectoryStream
 import me.zhanghai.android.files.provider.common.PathObservable
 import me.zhanghai.android.files.provider.common.PathObservableProvider
@@ -33,6 +34,7 @@ import me.zhanghai.android.files.provider.common.WalkFileTreeSearchable
 import me.zhanghai.android.files.provider.common.decodedPathByteString
 import me.zhanghai.android.files.provider.common.decodedQueryByteString
 import me.zhanghai.android.files.provider.common.isSameFile
+import me.zhanghai.android.files.provider.common.size
 import me.zhanghai.android.files.provider.common.toAccessModes
 import me.zhanghai.android.files.provider.common.toByteString
 import me.zhanghai.android.files.provider.common.toOpenOptions
@@ -113,6 +115,7 @@ object ArchiveFileSystemProvider : FileSystemProvider(), PathObservableProvider,
         throw UnsupportedOperationException()
     }
 
+    @Throws(IOException::class)
     override fun newByteChannel(
         file: Path,
         options: Set<OpenOption>,
@@ -123,7 +126,7 @@ object ArchiveFileSystemProvider : FileSystemProvider(), PathObservableProvider,
         if (attributes.isNotEmpty()) {
             throw UnsupportedOperationException(attributes.contentToString())
         }
-        throw UnsupportedOperationException()
+        return InputStreamSeekableByteChannel(file.size()) { file.fileSystem.newInputStream(file) }
     }
 
     @Throws(IOException::class)
