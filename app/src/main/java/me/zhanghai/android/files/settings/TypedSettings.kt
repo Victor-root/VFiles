@@ -6,7 +6,9 @@
 package me.zhanghai.android.files.settings
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Parcel
+import android.os.Parcelable
 import androidx.annotation.AnyRes
 import androidx.annotation.ArrayRes
 import androidx.annotation.BoolRes
@@ -15,6 +17,8 @@ import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
+import me.zhanghai.android.files.app.PARCEL_VAL_LIST
+import me.zhanghai.android.files.app.PARCEL_VAL_PARCELABLE
 import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.util.Base64
@@ -26,6 +30,8 @@ import me.zhanghai.android.files.util.getStringArray
 import me.zhanghai.android.files.util.toBase64
 import me.zhanghai.android.files.util.toByteArray
 import me.zhanghai.android.files.util.use
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 class StringSetting(
     nameSuffix: String?,
@@ -249,9 +255,38 @@ internal fun Base64.toParcelValue(): Any? {
     return Parcel.obtain().use { parcel ->
         parcel.unmarshall(bytes, 0, bytes.size)
         parcel.setDataPosition(0)
-        parcel.readValue(appClassLoader)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            isParcelValueBeforeTiramisu(bytes)) {
+            parcel.readParcelValueBeforeTiramisu()
+        } else {
+            parcel.readValue(appClassLoader)
+        }
     }
 }
+
+/**
+ * Android 13 added the length of the value after its type, so what was stored before updating to
+ * it can't be read with [Parcel.readValue] anymore.
+ */
+internal fun isParcelValueBeforeTiramisu(bytes: ByteArray): Boolean {
+    if (bytes.size < 2 * Int.SIZE_BYTES) {
+        return false
+    }
+    val buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+    val valueType = buffer.getInt()
+    if (valueType != PARCEL_VAL_PARCELABLE && valueType != PARCEL_VAL_LIST) {
+        return false
+    }
+    val isEmptyList = valueType == PARCEL_VAL_LIST && bytes.size == 2 * Int.SIZE_BYTES
+    return isEmptyList || buffer.getInt() != buffer.remaining()
+}
+
+private fun Parcel.readParcelValueBeforeTiramisu(): Any? =
+    when (val valueType = readInt()) {
+        PARCEL_VAL_PARCELABLE -> readParcelable<Parcelable>(appClassLoader)
+        PARCEL_VAL_LIST -> List(readInt()) { readParcelValueBeforeTiramisu() }
+        else -> throw IllegalArgumentException("Unexpected value type $valueType")
+    }
 
 internal fun Any?.toParcelBase64(): Base64 {
     val bytes = Parcel.obtain().use { parcel ->
