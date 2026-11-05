@@ -107,13 +107,16 @@ Dans tous les cas, l'application qui ouvre le fichier (navigateur, gestionnaire 
 
 VFiles expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android, pas seulement le stockage local : les partages SMB, FTP, SFTP et WebDAV, ainsi que le contenu des archives, apparaissent comme de simples dossiers dans la boîte de dialogue « Ouvrir » ou « Enregistrer » de n'importe quelle app, exactement comme un dossier local.
 
-Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **Google DocumentsUI** (`com.google.android.documentsui`), même si VFiles est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers VFiles comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
+Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **DocumentsUI** (`com.google.android.documentsui`, ou `com.android.documentsui` sur les ROM basées sur AOSP), même si VFiles est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers VFiles comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
 
 ### Désactiver (faire de VFiles le sélecteur par défaut)
 
 ```sh
 # Désactiver l'application DocumentsUI principale
 adb shell pm disable-user --user 0 com.google.android.documentsui
+
+# Sur les ROM basées sur AOSP, elle porte ce nom à la place
+adb shell pm disable-user --user 0 com.android.documentsui
 
 # Désactiver son module overlay (présent sur certaines ROM ; ignorer l'erreur s'il est absent)
 adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
@@ -125,6 +128,7 @@ Après ces commandes, toute application qui ouvre un sélecteur de fichier ou de
 
 ```sh
 adb shell pm enable com.google.android.documentsui
+adb shell pm enable com.android.documentsui
 adb shell pm enable com.google.android.overlay.modules.documentsui
 ```
 
@@ -133,7 +137,13 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 - **Sans root** : `pm disable-user --user 0` s'exécute via une connexion ADB standard (débogage USB).
 - Testé sur **LineageOS** et d'autres ROM basées sur AOSP. Sur les ROM constructeur stock, le nom du module overlay peut différer ou être absent ; la commande `pm disable-user` sur le paquet principal est suffisante dans ce cas.
 - Le changement survit aux redémarrages, mais est **par utilisateur** (affecte uniquement l'utilisateur actif lors de l'exécution ADB, en général l'utilisateur 0).
-- Si une autre application avec un DocumentsProvider est installée, Android peut afficher un sélecteur. N'installez qu'un seul fournisseur si vous voulez éviter toute invite.
+- `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT` et `ACTION_OPEN_DOCUMENT_TREE` arrivent directement dans VFiles. `ACTION_GET_CONTENT` et `ACTION_PICK` s'adressent aussi aux autres apps qui les gèrent, comme Drive ou une galerie, donc Android affiche un choix. Choisissez VFiles puis **Toujours** : Android le retient par type de fichier demandé, il peut donc redemander pour un autre type.
+- **Versions récentes d'Android** (constaté sur Android 16, pas sur 13) : les apps qui demandent des images ou des vidéos avec `ACTION_GET_CONTENT`, et toutes celles qui utilisent `ACTION_PICK_IMAGES`, obtiennent le sélecteur de photos du système, qu'une app normale ne peut pas remplacer. Désactiver `com.google.android.photopicker` ramène l'ancien sélecteur là où il existe, dont l'entrée **Parcourir** ouvre VFiles pour `ACTION_GET_CONTENT`.
+- **Android TV :** DocumentsUI n'est pas installé, et un faux composant qui ne fait rien apparaît dans le choix. Choisissez VFiles puis **Toujours**, ou désactivez-le avec `adb shell pm disable-user --user 0 com.android.tv.frameworkpackagestubs`.
+- Le reste de ce que fait le gestionnaire de fichiers système passe aussi à VFiles une fois désactivé : les tuiles de stockage des Paramètres, l'ouverture des téléchargements, et les demandes d'accès à un dossier des apps d'avant Android 10.
+- Si une autre app de ce genre est installée (un gestionnaire de fichiers tiers, par exemple), Android peut afficher un choix. N'en installez qu'une seule si vous voulez éviter toute invite.
+- **Archives :** une archive qui ne correspond pas à ce que l'app demande s'ouvre comme un dossier, pour choisir un fichier à l'intérieur. Sinon, la toucher choisit l'archive elle-même. Les fichiers dans les archives sont en lecture seule.
+- **FTP et WebDAV** ne savent que remplacer un fichier entier, donc les apps qui écrivent une partie d'un fichier, ou ajoutent à sa fin, reçoivent une erreur. SMB et SFTP n'ont pas cette limite.
 
 ### 🔧 Pour les créateurs de ROM : en faire le vrai sélecteur système
 

@@ -22,6 +22,7 @@ A full rewrite of the interface in Jetpack Compose, with a gallery, a music play
 - **Android 8 or newer is now required.** The Material Design 2 style and its setting are gone.
 
 ### 🐛 Fixed
+- **As the default file picker, for apps that open and save files:** files are created when picked and get the extension of their type, folders open where the app asks, images, videos and audio can be picked by apps asking the old way, files inside archives can be picked, writing to FTP and WebDAV files works, and folder access requests of apps from before Android 10 are answered.
 - **Opening Android/data or Android/obb from the sidebar crashed** the app.
 - **"Save as" no longer shows up** when opening or sharing a file from VFiles itself.
 - **On TVs whose maker replaced the settings page,** like TCL, the access to all files page of the system settings is opened directly, and an access granted through adb is recognized.
