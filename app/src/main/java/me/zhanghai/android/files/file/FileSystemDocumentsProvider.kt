@@ -19,6 +19,7 @@ import java8.nio.file.FileVisitResult
 import java8.nio.file.Files
 import java8.nio.file.Path
 import java8.nio.file.Paths
+import java8.nio.file.SimpleFileVisitor
 import java8.nio.file.attribute.BasicFileAttributes
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
@@ -179,7 +180,7 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     override fun deleteDocument(documentId: String) {
         val path = documentId.toPath()
         try {
-            StrictMode::class.withoutPenaltyDeathOnNetwork { path.delete() }
+            StrictMode::class.withoutPenaltyDeathOnNetwork { path.deleteRecursively() }
         } catch (e: IOException) {
             throw e.toFileNotFoundException()
         }
@@ -199,7 +200,6 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         return newPath.documentId
     }
 
-    private fun MatrixCursor.includeDocument(path: Path) {
     override fun moveDocument(
         sourceDocumentId: String,
         sourceParentDocumentId: String,
@@ -237,6 +237,7 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         })
     }
 
+    private fun MatrixCursor.includeDocument(path: Path) {
         val attributes = try {
             StrictMode::class.withoutPenaltyDeathOnNetwork {
                 path.readAttributes(BasicFileAttributes::class.java)
@@ -253,7 +254,8 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         var flags = 0
         if (!path.fileSystem.isReadOnly) {
             flags = flags or DocumentsContract.Document.FLAG_SUPPORTS_DELETE or
-                DocumentsContract.Document.FLAG_SUPPORTS_RENAME
+                DocumentsContract.Document.FLAG_SUPPORTS_RENAME or
+                DocumentsContract.Document.FLAG_SUPPORTS_MOVE
             flags = flags or if (isDirectory) {
                 DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE
             } else {
@@ -267,10 +269,10 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
             .add(DocumentsContract.Document.COLUMN_SIZE, attributes.size())
             .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, attributes.lastModifiedTime().toMillis())
             .add(DocumentsContract.Document.COLUMN_FLAGS, flags)
-    }
-
             // Asked for by apps looking for a path they can use directly.
             .add(MediaStore.MediaColumns.DATA, path.localFilePathOrNull)
+    }
+
     private fun notifyChildrenChanged(parentDocumentId: String) {
         val context = context ?: return
         context.contentResolver.notifyChange(
@@ -306,14 +308,14 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     private val Path.displayName: String
         get() = fileName?.toString() ?: toString()
 
-    private fun String.toPath(): Path = Paths.get(URI.create(this))
-
     private val Path.localFilePathOrNull: String?
         get() = try {
             toFile().absolutePath
         } catch (e: UnsupportedOperationException) {
             null
         }
+
+    private fun String.toPath(): Path = Paths.get(URI.create(this))
 
     private fun IOException.toFileNotFoundException(): FileNotFoundException {
         if (this is FileNotFoundException) {
