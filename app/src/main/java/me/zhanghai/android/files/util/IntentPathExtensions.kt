@@ -17,6 +17,9 @@ import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.compat.directoryCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.uuidCompat
+import me.zhanghai.android.files.file.fileProviderPath
+import me.zhanghai.android.files.provider.content.isContentPath
+import me.zhanghai.android.files.provider.linux.isLinuxPath
 import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.createOrLog
 import java.io.File
@@ -44,6 +47,20 @@ var Intent.extraPath: Path?
         putExtra(EXTRA_PATH_URI, value?.toUri()?.toString())
     }
 
+/**
+ * The folder to start picking in. Apps may ask for a file, like the last one picked, which the
+ * system picker opens the folder of, or for something else that isn't a folder to list.
+ */
+val Intent.pickInitialDirectory: Path?
+    get() {
+        var path = extraPath ?: return null
+        if (path.isContentPath) {
+            val uri = data ?: getParcelableExtraSafe(DocumentsContractCompat.EXTRA_INITIAL_URI)
+            path = uri?.externalStoragePathOrNull(requiresDirectory = false) ?: return null
+        }
+        return if (path.isLinuxPath && path.toFile().isFile) path.parent else path
+    }
+
 val Intent.saveAsPath: Path?
     get() {
         val uri =
@@ -58,7 +75,11 @@ val Intent.saveAsPath: Path?
 private fun Uri.toPathOrNull(): Path? =
     when (scheme) {
         ContentResolver.SCHEME_FILE, null -> path?.takeIfNotEmpty()?.let { Paths.get(it) }
-        ContentResolver.SCHEME_CONTENT -> if (mediaRootIdOrNull != null) {
+        ContentResolver.SCHEME_CONTENT -> if (authority == BuildConfig.DOCUMENTS_PROVIDER_AUTHORITY) {
+            documentsProviderPathOrNull()
+        } else if (authority == BuildConfig.FILE_PROVIDIER_AUTHORITY) {
+            fileProviderPath
+        } else if (mediaRootIdOrNull != null) {
             mediaRootPathOrNull()
         } else {
             // A content:// URI resolves to a ContentPath, which is a single stream that cannot be
@@ -67,7 +88,7 @@ private fun Uri.toPathOrNull(): Path? =
             // com.android.externalstorage.documents tree/document URI - resolve it to the real local
             // path so we can actually browse it. Restricted to existing directories, so opening a
             // document/file keeps its current content-resolver behavior.
-            externalStorageDirectoryPathOrNull()
+            externalStoragePathOrNull(requiresDirectory = true)
                 ?: run {
                     val uri = URI::class.createOrLog(toString())
                         // Some people use Uri.parse() without encoding their path. Let's try saving
@@ -94,6 +115,17 @@ val Uri.mediaRootIdOrNull: String?
         null
     }
 
+// A document handed back by this app, which the app is often given again to start from.
+private fun Uri.documentsProviderPathOrNull(): Path? =
+    runCatching {
+        val documentId = if (DocumentsContract.isTreeUri(this)) {
+            DocumentsContract.getTreeDocumentId(this)
+        } else {
+            DocumentsContract.getDocumentId(this)
+        }
+        Paths.get(URI(documentId))
+    }.getOrNull()
+
 // Images, videos and audio have no folder of their own.
 private fun Uri.mediaRootPathOrNull(): Path? {
     val directoryType = when {
@@ -107,10 +139,11 @@ private fun Uri.mediaRootPathOrNull(): Path? {
 }
 
 // Resolves an ExternalStorageProvider (com.android.externalstorage.documents) tree/document/bare
-// URI that points to an existing directory on a mounted storage volume to the corresponding local
-// Path, or null otherwise. Lets VFiles browse a folder another app opens via a SAF URI
-// (which ContentPath can't list) by falling back to direct local access.
-private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
+// URI that points to an existing directory, unless [requiresDirectory] is false, on a mounted
+// storage volume to the corresponding local Path, or null otherwise. Lets VFiles browse a folder
+// another app opens via a SAF URI (which ContentPath can't list) by falling back to direct local
+// access.
+private fun Uri.externalStoragePathOrNull(requiresDirectory: Boolean): Path? {
     if (authority != DocumentsContractCompat.EXTERNAL_STORAGE_PROVIDER_AUTHORITY) {
         return null
     }
@@ -137,7 +170,7 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
             if (volumeRootId == rootId) storageVolume.directoryCompat else null
         } ?: return@runCatching null
         val file = if (relativePath.isEmpty()) directory else File(directory, relativePath)
-        if (!file.isDirectory) {
+        if (requiresDirectory && !file.isDirectory) {
             return@runCatching null
         }
         Paths.get(file.path)

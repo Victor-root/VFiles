@@ -41,6 +41,7 @@ import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
 import me.zhanghai.android.files.util.mediaRootIdOrNull
+import me.zhanghai.android.files.util.pickInitialDirectory
 import me.zhanghai.android.files.util.takeIfNotEmpty
 
 class FileListActivity : AppActivity() {
@@ -184,6 +185,9 @@ class FileListActivity : AppActivity() {
                         path = path.createArchiveRootPath()
                     }
                 }
+        }
+        if (pickOptions != null) {
+            path = intent.pickInitialDirectory
         }
         resetTo(restoredPath ?: path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
         if (pickOptions != null) {

@@ -395,7 +395,7 @@ val Path.fileProviderUri: Uri
             .build()
     }
 
-private val Uri.fileProviderPath: Path
+internal val Uri.fileProviderPath: Path
     get() {
         // Strip the prepended slash. A slash is always prepended because our Uri path starts with
         // our URI scheme, which can never start with a slash; but our Uri has an authority so its

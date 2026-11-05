@@ -13,6 +13,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Process
+import android.provider.DocumentsContract
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -748,6 +749,16 @@ class FileListActivityTest {
         assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
         assertEquals(rootPath.resolve("notes.txt"), scenario.result.resultData.extraPath)
         assertEquals(rootPath.resolve("notes.txt").documentUri, scenario.result.resultData.data)
+    }
+
+    @Test
+    fun startsPickingInFolderOfUriHandedBackBefore() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            .setClass(ApplicationProvider.getApplicationContext(), FileListActivity::class.java)
+            .setType("text/*")
+            .putExtra(DocumentsContract.EXTRA_INITIAL_URI, rootPath.resolve("Projects").documentUri)
+        ActivityScenario.launchActivityForResult<FileListActivity>(intent)
+        waitForText("plan.md")
     }
 
     @Test
