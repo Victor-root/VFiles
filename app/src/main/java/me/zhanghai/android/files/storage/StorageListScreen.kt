@@ -26,8 +26,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
@@ -41,9 +46,12 @@ import me.zhanghai.android.files.app.LocalNavigator
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderDragHandle
+import me.zhanghai.android.files.ui.ReorderableItemFocus
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
+import me.zhanghai.android.files.ui.reorderDragHandleFocus
 import me.zhanghai.android.files.ui.reorderableItem
+import me.zhanghai.android.files.ui.reorderableItemFocus
 
 @Parcelize
 data object StorageListDestination : Destination {
@@ -57,11 +65,17 @@ data object StorageListDestination : Destination {
 internal fun StorageListScreen() {
     val navigator = LocalNavigator.current
     val storages by Settings.STORAGES.flow.collectAsState()
+    val listFocusRequester = remember { FocusRequester() }
     AppScaffold(
         title = stringResource(R.string.storage_list_title),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navigator.navigate(AddStorageDestination) }
+                onClick = { navigator.navigate(AddStorageDestination) },
+                modifier = Modifier.focusProperties {
+                    if (storages.isNotEmpty()) {
+                        up = listFocusRequester
+                    }
+                }
             ) {
                 Icon(
                     painter = painterResource(R.drawable.add_icon_white_24dp),
@@ -90,7 +104,10 @@ internal fun StorageListScreen() {
             }
             val layoutDirection = LocalLayoutDirection.current
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .focusRequester(listFocusRequester)
+                    .focusRestorer(),
                 state = lazyListState,
                 // Leaves room for the floating action button below the last item.
                 contentPadding = PaddingValues(
@@ -122,6 +139,7 @@ private fun StorageItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val focus = remember { ReorderableItemFocus() }
     ListItem(
         headlineContent = {
             Text(
@@ -137,6 +155,7 @@ private fun StorageItem(
         },
         modifier = modifier
             .reorderableItem(reorderableListState, storage.id)
+            .reorderableItemFocus(focus)
             .clickable(onClick = onClick),
         supportingContent = {
             Text(text = storage.description, overflow = TextOverflow.Ellipsis, maxLines = 1)
@@ -145,7 +164,11 @@ private fun StorageItem(
             Icon(painter = painterResource(storage.iconRes), contentDescription = null)
         },
         trailingContent = {
-            ReorderDragHandle(state = reorderableListState, key = storage.id)
+            ReorderDragHandle(
+                state = reorderableListState,
+                key = storage.id,
+                modifier = Modifier.reorderDragHandleFocus(focus)
+            )
         }
     )
 }

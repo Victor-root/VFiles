@@ -33,8 +33,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,9 +56,12 @@ import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.EditBookmarkDirectoryDestination
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.ReorderDragHandle
+import me.zhanghai.android.files.ui.ReorderableItemFocus
 import me.zhanghai.android.files.ui.ReorderableListState
 import me.zhanghai.android.files.ui.rememberReorderableListState
+import me.zhanghai.android.files.ui.reorderDragHandleFocus
 import me.zhanghai.android.files.ui.reorderableItem
+import me.zhanghai.android.files.ui.reorderableItemFocus
 
 @Parcelize
 data object BookmarkDirectoryListDestination : Destination {
@@ -73,10 +81,18 @@ private fun BookmarkDirectoryListScreen() {
                 BookmarkDirectories.add(BookmarkDirectory(null, it))
             }
         }
+    val listFocusRequester = remember { FocusRequester() }
     AppScaffold(
         title = stringResource(R.string.settings_bookmark_directory_list_title),
         floatingActionButton = {
-            FloatingActionButton(onClick = { openPathLauncher.launch(null) }) {
+            FloatingActionButton(
+                onClick = { openPathLauncher.launch(null) },
+                modifier = Modifier.focusProperties {
+                    if (bookmarkDirectories.isNotEmpty()) {
+                        up = listFocusRequester
+                    }
+                }
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.add_icon_white_24dp),
                     contentDescription =
@@ -107,6 +123,9 @@ private fun BookmarkDirectoryListScreen() {
             }
             val layoutDirection = LocalLayoutDirection.current
             LazyColumn(
+                modifier = Modifier
+                    .focusRequester(listFocusRequester)
+                    .focusRestorer(),
                 state = lazyListState,
                 // Leave room for the floating action button below the last item.
                 contentPadding = PaddingValues(
@@ -143,10 +162,12 @@ private fun BookmarkDirectoryItem(
     modifier: Modifier = Modifier
 ) {
     val key = bookmarkDirectory.id
+    val focus = remember { ReorderableItemFocus() }
     Row(
         modifier = modifier
             .reorderableItem(reorderableListState, key)
             .background(MaterialTheme.colorScheme.background)
+            .reorderableItemFocus(focus)
             .clickable(onClick = onClick)
             .fillMaxWidth()
             .height(72.dp),
@@ -178,7 +199,9 @@ private fun BookmarkDirectoryItem(
         ReorderDragHandle(
             state = reorderableListState,
             key = key,
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
+            modifier = Modifier
+                .reorderDragHandleFocus(focus)
+                .padding(start = 4.dp, end = 4.dp),
             tint = iconTint
         )
     }

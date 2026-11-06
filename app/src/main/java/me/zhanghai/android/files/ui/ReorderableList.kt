@@ -31,6 +31,9 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -215,6 +218,20 @@ fun Modifier.reorderableItem(state: ReorderableListState, key: Any): Modifier {
         }
     )
 }
+
+/** Links a clickable item with the handle it holds, which a D-pad doesn't move to by itself. */
+class ReorderableItemFocus {
+    val item = FocusRequester()
+    val handle = FocusRequester()
+}
+
+fun Modifier.reorderableItemFocus(focus: ReorderableItemFocus): Modifier =
+    focusRequester(focus.item)
+        .focusProperties { right = focus.handle }
+        .ignoreClickKeyRepeat()
+
+fun Modifier.reorderDragHandleFocus(focus: ReorderableItemFocus): Modifier =
+    focusRequester(focus.handle).focusProperties { left = focus.item }
 
 /**
  * The handle that drags the item with [key], or moves it with a D-pad: the center key picks the item
