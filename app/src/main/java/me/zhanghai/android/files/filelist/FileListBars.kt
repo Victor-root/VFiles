@@ -517,7 +517,7 @@ private fun FileListBottomBar(
 fun PasteBar(
     pasteState: PasteState,
     currentPath: Path,
-    controller: FileListController,
+    onPaste: () -> Unit,
     onClose: () -> Unit
 ) {
     val files = pasteState.files
@@ -545,7 +545,7 @@ fun PasteBar(
             style = MaterialTheme.typography.titleMedium
         )
         IconButton(
-            onClick = controller::pasteFiles,
+            onClick = onPaste,
             enabled = !currentPath.fileSystem.isReadOnly
         ) {
             Icon(

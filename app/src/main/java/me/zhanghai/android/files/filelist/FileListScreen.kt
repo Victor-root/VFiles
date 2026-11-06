@@ -382,6 +382,12 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
                     openDrawer()
                 }
             },
+            // The focus would otherwise go to the top of the screen with the bar it was in.
+            onPasteBarGone = {
+                if (inputModeManager.inputMode == InputMode.Keyboard) {
+                    focusContent()
+                }
+            },
             listFocusRequester = listFocusRequester,
             focusTarget = focusTarget,
             navigationIconFocusRequester = navigationIconFocusRequester,
@@ -534,6 +540,7 @@ private fun FileListScaffold(
     onSpeedDialExpandedChange: (Boolean) -> Unit,
     onNavigationIconClick: () -> Unit,
     onLeftEdgeReached: () -> Unit,
+    onPasteBarGone: () -> Unit,
     listFocusRequester: FocusRequester,
     focusTarget: FileFocusTarget,
     navigationIconFocusRequester: FocusRequester,
@@ -671,7 +678,9 @@ private fun FileListScaffold(
             }
         },
         bottomBar = {
-            FileListBottomBars(pickOptions, pasteState, currentPath, controller, viewModel)
+            FileListBottomBars(
+                pickOptions, pasteState, currentPath, controller, viewModel, onPasteBarGone
+            )
         },
         floatingActionButton = {
             SpeedDial(
@@ -970,7 +979,8 @@ private fun FileListBottomBars(
     pasteState: PasteState,
     currentPath: Path,
     controller: FileListController,
-    viewModel: FileListViewModel
+    viewModel: FileListViewModel,
+    onPasteBarGone: () -> Unit
 ) {
     // Like in the music library, the music playing can be gone back to from the files.
     val isMusicServiceRunning by MusicPlaybackService.isRunning.collectAsStateWithLifecycle()
@@ -995,7 +1005,18 @@ private fun FileListBottomBars(
             BottomBar.CREATE_FILE -> CreateFileBar(controller)
             BottomBar.OPEN_DIRECTORY -> OpenDirectoryBar(currentPath, controller)
             BottomBar.PASTE ->
-                PasteBar(pasteState, currentPath, controller, onClose = viewModel::clearPasteState)
+                PasteBar(
+                    pasteState,
+                    currentPath,
+                    onPaste = {
+                        controller.pasteFiles()
+                        onPasteBarGone()
+                    },
+                    onClose = {
+                        viewModel.clearPasteState()
+                        onPasteBarGone()
+                    }
+                )
             BottomBar.MUSIC ->
                 musicController?.let { player ->
                     MiniMusicPlayer(
