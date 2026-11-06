@@ -537,6 +537,24 @@ class FileListActivityTest {
     }
 
     @Test
+    @Config(qualifiers = "w960dp-h540dp-land-television")
+    fun keepsFocusOnFileSelectedByHoldingCenter() {
+        val scenario = launch()
+        scenario.onActivity { it.leaveTouchMode() }
+        val photo = composeTestRule.onNodeWithText("photo.jpg")
+        photo.requestFocus()
+        // Long enough for the key to repeat, like when holding a key of a remote.
+        photo.performKeyInput {
+            keyDown(Key.DirectionCenter)
+            advanceEventTime(1000)
+            keyUp(Key.DirectionCenter)
+        }
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("1").assertIsDisplayed()
+        photo.assertIsFocused()
+    }
+
+    @Test
     fun movesWithDpad() {
         val scenario = launch()
         scenario.onActivity { it.leaveTouchMode() }
