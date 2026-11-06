@@ -17,10 +17,10 @@ import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.PARCEL_VAL_LIST
 import me.zhanghai.android.files.app.PARCEL_VAL_PARCELABLE
-import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.theme.custom.LauncherIcon
 import me.zhanghai.android.files.util.asBase64
+import me.zhanghai.android.files.util.readParcelable
 import me.zhanghai.android.files.util.toBase64
 import me.zhanghai.android.files.util.toByteArray
 import me.zhanghai.android.files.util.use
@@ -244,7 +244,7 @@ object SettingsBackup {
         return Parcel.obtain().use { parcel ->
             parcel.unmarshall(bytes, 0, bytes.size)
             parcel.setDataPosition(0)
-            parcel.readParcelable(appClassLoader)
+            parcel.readParcelable<Parcelable>()
         } ?: throw JSONException("Null parcelable")
     }
 

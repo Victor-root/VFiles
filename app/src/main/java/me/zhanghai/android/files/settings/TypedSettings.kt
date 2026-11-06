@@ -23,6 +23,7 @@ import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.util.Base64
 import me.zhanghai.android.files.util.asBase64
+import me.zhanghai.android.files.util.readParcelable
 import me.zhanghai.android.files.util.getBoolean
 import me.zhanghai.android.files.util.getFloat
 import me.zhanghai.android.files.util.getInteger
@@ -283,7 +284,7 @@ internal fun isParcelValueBeforeTiramisu(bytes: ByteArray): Boolean {
 
 private fun Parcel.readParcelValueBeforeTiramisu(): Any? =
     when (val valueType = readInt()) {
-        PARCEL_VAL_PARCELABLE -> readParcelable<Parcelable>(appClassLoader)
+        PARCEL_VAL_PARCELABLE -> readParcelable<Parcelable>()
         PARCEL_VAL_LIST -> List(readInt()) { readParcelValueBeforeTiramisu() }
         else -> throw IllegalArgumentException("Unexpected value type $valueType")
     }

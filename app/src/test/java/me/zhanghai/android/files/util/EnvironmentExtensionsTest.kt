@@ -8,9 +8,9 @@ package me.zhanghai.android.files.util
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
-import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.provider.Settings
 import androidx.test.core.app.ApplicationProvider
@@ -54,16 +54,22 @@ class EnvironmentExtensionsTest {
     }
 
     private fun addActivity(intent: Intent, packageName: String, name: String, priority: Int = 0) {
-        val resolveInfo = ResolveInfo().apply {
-            activityInfo = ActivityInfo().apply {
+        val shadowPackageManager = shadowOf(packageManager)
+        shadowPackageManager.addOrUpdateActivity(
+            ActivityInfo().apply {
                 this.packageName = packageName
                 this.name = name
                 exported = true
                 applicationInfo = ApplicationInfo().apply { this.packageName = packageName }
             }
+        )
+        val intentFilter = IntentFilter(intent.action).apply {
             this.priority = priority
+            intent.scheme?.let { addDataScheme(it) }
         }
-        shadowOf(packageManager).addResolveInfoForIntent(intent, resolveInfo)
+        shadowPackageManager.addIntentFilterForActivity(
+            ComponentName(packageName, name), intentFilter
+        )
     }
 
     companion object {
