@@ -268,7 +268,8 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             return@LaunchedEffect
         }
         val displayedFiles = viewModel.displayedFiles
-        val leftFileIndex = if (leftPath != currentPath && leftPath.startsWith(currentPath)) {
+        // An archive that was left isn't below this folder, it's a file system of its own.
+        val leftFileIndex = if (leftPath != currentPath) {
             displayedFiles.indexOfFirst { leftPath.startsWith(it.listablePath) }
         } else {
             -1
