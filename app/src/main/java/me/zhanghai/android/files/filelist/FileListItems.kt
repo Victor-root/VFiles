@@ -56,11 +56,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -87,6 +82,7 @@ import me.zhanghai.android.files.ui.MenuDivider
 import me.zhanghai.android.files.ui.MenuItem
 import me.zhanghai.android.files.ui.RoundedDropdownMenu
 import me.zhanghai.android.files.ui.cachedIconPainter
+import me.zhanghai.android.files.ui.ignoreClickKeyRepeat
 import me.zhanghai.android.files.ui.onMenuKey
 
 /** What the menu of a file can do. */
@@ -282,16 +278,6 @@ private fun selectedBackgroundColor(isSelected: Boolean): Color =
         MaterialTheme.colorScheme.primary.copy(alpha = SELECTED_ALPHA)
     } else {
         Color.Transparent
-    }
-
-/**
- * Holding the key to select the file repeats it, and the clickable only handles the first press,
- * so the others would move the focus into the item, to its menu button.
- */
-private fun Modifier.ignoreClickKeyRepeat(): Modifier =
-    onKeyEvent {
-        it.type == KeyEventType.KeyDown && it.nativeKeyEvent.repeatCount > 0 &&
-            (it.key == Key.DirectionCenter || it.key == Key.Enter || it.key == Key.NumPadEnter)
     }
 
 private class FileItemControls {

@@ -111,3 +111,13 @@ fun Modifier.onMenuKey(onMenuKey: () -> Unit): Modifier =
         }
         isMenuKey
     }
+
+/**
+ * Holding the key of a click repeats it, and a clickable only handles the first press, so the
+ * others would move the focus into it, to the first button it holds.
+ */
+fun Modifier.ignoreClickKeyRepeat(): Modifier =
+    onKeyEvent {
+        it.type == KeyEventType.KeyDown && it.nativeKeyEvent.repeatCount > 0 &&
+            (it.key == Key.DirectionCenter || it.key == Key.Enter || it.key == Key.NumPadEnter)
+    }

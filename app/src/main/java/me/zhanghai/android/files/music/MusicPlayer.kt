@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,6 +59,7 @@ import me.zhanghai.android.files.R
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.Cover
 import me.zhanghai.android.files.ui.PlayerProgressBar
+import me.zhanghai.android.files.ui.ignoreClickKeyRepeat
 
 private val COVER_SHAPE = RoundedCornerShape(16.dp)
 
@@ -301,8 +303,14 @@ fun MiniMusicPlayer(player: Player, onClick: () -> Unit, modifier: Modifier = Mo
                 modifier = Modifier.fillMaxWidth(),
                 drawStopIndicator = {}
             )
+            val rowFocusRequester = remember { FocusRequester() }
+            val playPauseFocusRequester = remember { FocusRequester() }
             Row(
                 modifier = Modifier
+                    .focusRequester(rowFocusRequester)
+                    // A D-pad doesn't move to what is inside by itself.
+                    .focusProperties { right = playPauseFocusRequester }
+                    .ignoreClickKeyRepeat()
                     .clickable(onClick = onClick)
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -334,9 +342,13 @@ fun MiniMusicPlayer(player: Player, onClick: () -> Unit, modifier: Modifier = Mo
                     )
                 }
                 val playPauseState = rememberPlayPauseButtonState(player)
-                IconButton(onClick = playPauseState::onClick, enabled = playPauseState.isEnabled) {
-                    PlayPauseIcon(playPauseState.showPlay)
-                }
+                IconButton(
+                    onClick = playPauseState::onClick,
+                    modifier = Modifier
+                        .focusRequester(playPauseFocusRequester)
+                        .focusProperties { left = rowFocusRequester },
+                    enabled = playPauseState.isEnabled
+                ) { PlayPauseIcon(playPauseState.showPlay) }
                 val nextState = rememberNextButtonState(player)
                 IconButton(onClick = nextState::onClick, enabled = nextState.isEnabled) {
                     Icon(
@@ -344,7 +356,10 @@ fun MiniMusicPlayer(player: Player, onClick: () -> Unit, modifier: Modifier = Mo
                         contentDescription = stringResource(R.string.music_next)
                     )
                 }
-                IconButton(onClick = player::stopMusic) {
+                IconButton(
+                    onClick = player::stopMusic,
+                    modifier = Modifier.focusProperties { right = FocusRequester.Cancel }
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.stop_icon_white_24dp),
                         contentDescription = stringResource(R.string.stop)
