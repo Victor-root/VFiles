@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Sprache</string>
     <string name="settings_theme_color_title">Themenfarbe</string>
     <string name="settings_theme_color_summary">Die am häufigsten vorkommende Farbe in der App</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Auch auf das App-Symbol anwenden</string>
+    <string name="settings_launcher_icon_color_title">Farbe des App-Symbols</string>
+    <string name="settings_launcher_icon_color_summary">Farbe des Symbols auf deinem Startbildschirm</string>
+    <string name="settings_launcher_icon_change_title">App-Symbol ändern?</string>
+    <string name="settings_launcher_icon_change_message">VFiles wird geschlossen, damit dein Startbildschirm das neue Symbol übernimmt. Öffne es gleich danach wieder.</string>
+    <string name="settings_launcher_icon_change_confirm">Ändern und schließen</string>
     <string name="settings_night_mode_title">Nachtmodus</string>
     <string-array name="settings_night_mode_entries">
         <item>Nutze Systemeinstellung</item>

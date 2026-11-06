@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Taal</string>
     <string name="settings_theme_color_title">Themakleur</string>
     <string name="settings_theme_color_summary">De kleur die het vaakst wordt gebruikt in de app</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Ook toepassen op het app-pictogram</string>
+    <string name="settings_launcher_icon_color_title">Kleur van pictogram</string>
+    <string name="settings_launcher_icon_color_summary">Kleur van het pictogram op je startscherm</string>
+    <string name="settings_launcher_icon_change_title">App-pictogram wijzigen?</string>
+    <string name="settings_launcher_icon_change_message">VFiles wordt gesloten zodat je startscherm het nieuwe pictogram toont. Open de app direct daarna opnieuw.</string>
+    <string name="settings_launcher_icon_change_confirm">Wijzigen en sluiten</string>
     <string name="settings_night_mode_title">Nachtmodus</string>
     <string-array name="settings_night_mode_entries">
         <item>Systeeminstellingen gebruiken</item>

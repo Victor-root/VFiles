@@ -38,6 +38,7 @@ import me.zhanghai.android.files.filelist.OpenApkDefaultAction
 import me.zhanghai.android.files.navigation.StandardDirectories
 import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.storage.StorageListDestination
+import me.zhanghai.android.files.theme.custom.LauncherIconPreferences
 import me.zhanghai.android.files.theme.custom.ThemeColorPreference
 import me.zhanghai.android.files.theme.night.NightMode
 import me.zhanghai.android.files.ui.AppScaffold
@@ -74,6 +75,7 @@ private fun SettingsScreen() {
             PreferenceCategory(stringResource(R.string.settings_interface_title))
             LocalePreference()
             ThemeColorPreference()
+            LauncherIconPreferences()
             NightModePreference()
             SettingSwitchPreference(
                 Settings.BLACK_NIGHT_MODE, stringResource(R.string.settings_black_night_mode),

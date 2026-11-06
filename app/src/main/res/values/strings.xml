@@ -821,6 +821,12 @@
     <string name="settings_locale_title">Language</string>
     <string name="settings_theme_color_title">Theme color</string>
     <string name="settings_theme_color_summary">Color that appears most frequently in the app</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Also apply to the app icon</string>
+    <string name="settings_launcher_icon_color_title">App icon color</string>
+    <string name="settings_launcher_icon_color_summary">Color of the icon on your home screen</string>
+    <string name="settings_launcher_icon_change_title">Change the app icon?</string>
+    <string name="settings_launcher_icon_change_message">VFiles will close so your home screen can pick up the new icon. Open it again straight after.</string>
+    <string name="settings_launcher_icon_change_confirm">Change and close</string>
     <string name="color_picker_dynamic_color_label">Based on wallpaper</string>
     <string name="color_picker_preset_colors_label">Other colors</string>
     <string name="settings_night_mode_title">Night mode</string>

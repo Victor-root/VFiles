@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Språk</string>
     <string name="settings_theme_color_title">Temafarge</string>
     <string name="settings_theme_color_summary">Den mest brukte fargen i appen</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Bruk også på appikonet</string>
+    <string name="settings_launcher_icon_color_title">Ikonfarge</string>
+    <string name="settings_launcher_icon_color_summary">Fargen på ikonet på startskjermen</string>
+    <string name="settings_launcher_icon_change_title">Vil du endre appikonet?</string>
+    <string name="settings_launcher_icon_change_message">VFiles lukkes slik at startskjermen kan vise det nye ikonet. Åpne appen igjen rett etterpå.</string>
+    <string name="settings_launcher_icon_change_confirm">Endre og lukk</string>
     <string name="settings_night_mode_title">Nattmodus</string>
     <string-array name="settings_night_mode_entries">
         <item>Følg systemet</item>

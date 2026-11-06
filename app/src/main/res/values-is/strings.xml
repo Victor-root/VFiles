@@ -686,6 +686,12 @@
     <string name="settings_locale_title">Tungumál</string>
     <string name="settings_theme_color_title">Litur þema</string>
     <string name="settings_theme_color_summary">Litur sem birtist oftast í forritinu</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Nota einnig á forritstákn</string>
+    <string name="settings_launcher_icon_color_title">Litur tákns</string>
+    <string name="settings_launcher_icon_color_summary">Litur táknsins á heimaskjánum</string>
+    <string name="settings_launcher_icon_change_title">Breyta forritstákni?</string>
+    <string name="settings_launcher_icon_change_message">VFiles lokast svo að heimaskjárinn sýni nýja táknið. Opnaðu það aftur strax á eftir.</string>
+    <string name="settings_launcher_icon_change_confirm">Breyta og loka</string>
     <string name="settings_night_mode_title">Næturhamur</string>
     <string-array name="settings_night_mode_entries">
         <item>Fylgja kerfi</item>

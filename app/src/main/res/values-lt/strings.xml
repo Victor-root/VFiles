@@ -752,6 +752,12 @@
     <string name="settings_locale_title">Kalba</string>
     <string name="settings_theme_color_title">Temos spalva</string>
     <string name="settings_theme_color_summary">Dažniausiai programėlėje pasitaikanti spalva</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Taikyti ir programos piktogramai</string>
+    <string name="settings_launcher_icon_color_title">Piktogramos spalva</string>
+    <string name="settings_launcher_icon_color_summary">Piktogramos spalva pagrindiniame ekrane</string>
+    <string name="settings_launcher_icon_change_title">Pakeisti programos piktogramą?</string>
+    <string name="settings_launcher_icon_change_message">VFiles užsidarys, kad pagrindinis ekranas parodytų naują piktogramą. Iškart po to atidarykite ją vėl.</string>
+    <string name="settings_launcher_icon_change_confirm">Keisti ir uždaryti</string>
     <string name="settings_night_mode_title">Nakties režimas</string>
     <string-array name="settings_night_mode_entries">
         <item>Sekti sistemą</item>

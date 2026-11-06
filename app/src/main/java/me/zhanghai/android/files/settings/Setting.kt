@@ -46,6 +46,11 @@ abstract class Setting<T>(
     val value: T
         get() = _flow.value
 
+    /** What is stored right now, before [flow] gets to know about a change from elsewhere. */
+    val storedValue: T
+        @Suppress("UNCHECKED_CAST")
+        get() = getValue(sharedPreferences, key, defaultValue as T)
+
     constructor(@StringRes keyRes: Int, @AnyRes defaultValueRes: Int) : this(
         null, keyRes, null, defaultValueRes
     )

@@ -680,6 +680,12 @@
     <string name="settings_locale_title">Dil</string>
     <string name="settings_theme_color_title">Tema rengi</string>
     <string name="settings_theme_color_summary">Uygulamada en sık görünen renk</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Uygulama simgesine de uygula</string>
+    <string name="settings_launcher_icon_color_title">Simge rengi</string>
+    <string name="settings_launcher_icon_color_summary">Ana ekrandaki simgenin rengi</string>
+    <string name="settings_launcher_icon_change_title">Uygulama simgesi değiştirilsin mi?</string>
+    <string name="settings_launcher_icon_change_message">Ana ekranın yeni simgeyi göstermesi için VFiles kapanacak. Hemen ardından yeniden açın.</string>
+    <string name="settings_launcher_icon_change_confirm">Değiştir ve kapat</string>
     <string name="settings_night_mode_title">Gece modu</string>
     <string-array name="settings_night_mode_entries">
         <item>Sistemi takip et</item>

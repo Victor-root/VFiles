@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Език</string>
     <string name="settings_theme_color_title">Цвят на темата</string>
     <string name="settings_theme_color_summary">Цвят, който се ползва най-често в приложението</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Прилагане и към иконата на приложението</string>
+    <string name="settings_launcher_icon_color_title">Цвят на иконата</string>
+    <string name="settings_launcher_icon_color_summary">Цвят на иконата на началния екран</string>
+    <string name="settings_launcher_icon_change_title">Да се смени ли иконата на приложението?</string>
+    <string name="settings_launcher_icon_change_message">VFiles ще се затвори, за да покаже началният екран новата икона. Отворете го отново веднага след това.</string>
+    <string name="settings_launcher_icon_change_confirm">Смяна и затваряне</string>
     <string name="settings_night_mode_title">Нощен режим</string>
     <string-array name="settings_night_mode_entries">
         <item>Спрямо системата</item>

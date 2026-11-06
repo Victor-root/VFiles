@@ -626,6 +626,12 @@
     <string name="settings_locale_title">Kieli</string>
     <string name="settings_theme_color_title">Teemaväri</string>
     <string name="settings_theme_color_summary">Eniten näytetty väri sovelluksessa</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Käytä myös sovelluskuvakkeessa</string>
+    <string name="settings_launcher_icon_color_title">Kuvakkeen väri</string>
+    <string name="settings_launcher_icon_color_summary">Kuvakkeen väri aloitusnäytöllä</string>
+    <string name="settings_launcher_icon_change_title">Vaihdetaanko sovelluskuvake?</string>
+    <string name="settings_launcher_icon_change_message">VFiles sulkeutuu, jotta aloitusnäyttö näyttää uuden kuvakkeen. Avaa se heti sen jälkeen uudelleen.</string>
+    <string name="settings_launcher_icon_change_confirm">Vaihda ja sulje</string>
     <string name="settings_night_mode_title">Yötila</string>
     <string-array name="settings_night_mode_entries">
         <item>Seuraa järjestelmää</item>

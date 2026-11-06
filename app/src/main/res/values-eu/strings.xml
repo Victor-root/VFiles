@@ -627,6 +627,12 @@
     <string name="settings_locale_title">Hizkuntza</string>
     <string name="settings_theme_color_title">Gaiaren kolorea</string>
     <string name="settings_theme_color_summary">Aplikazioan gehien agertzen den kolorea</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Aplikatu aplikazioaren ikonoari ere</string>
+    <string name="settings_launcher_icon_color_title">Ikonoaren kolorea</string>
+    <string name="settings_launcher_icon_color_summary">Ikonoaren kolorea hasierako pantailan</string>
+    <string name="settings_launcher_icon_change_title">Aplikazioaren ikonoa aldatu?</string>
+    <string name="settings_launcher_icon_change_message">VFiles itxi egingo da hasierako pantailak ikono berria erakuts dezan. Ireki berriro berehala.</string>
+    <string name="settings_launcher_icon_change_confirm">Aldatu eta itxi</string>
     <string name="settings_night_mode_title">Gauerako modua</string>
     <string-array name="settings_night_mode_entries">
         <item>Jarraitu sistemari</item>

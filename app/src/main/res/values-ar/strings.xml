@@ -824,6 +824,12 @@
     <string name="settings_locale_title">لغة</string>
     <string name="settings_theme_color_title">لون الثيم</string>
     <string name="settings_theme_color_summary">اللون الذي يظهر بشكل متكرر في التطبيق</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">تطبيقه أيضًا على أيقونة التطبيق</string>
+    <string name="settings_launcher_icon_color_title">لون أيقونة التطبيق</string>
+    <string name="settings_launcher_icon_color_summary">لون الأيقونة على شاشتك الرئيسية</string>
+    <string name="settings_launcher_icon_change_title">هل تريد تغيير أيقونة التطبيق؟</string>
+    <string name="settings_launcher_icon_change_message">سيُغلق VFiles حتى تعرض شاشتك الرئيسية الأيقونة الجديدة. افتحه مجددًا بعد ذلك مباشرة.</string>
+    <string name="settings_launcher_icon_change_confirm">تغيير وإغلاق</string>
     <string name="settings_night_mode_title">الوضع الليلي</string>
     <string-array name="settings_night_mode_entries">
         <item>اتبع النظام</item>

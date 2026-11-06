@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Idioma</string>
     <string name="settings_theme_color_title">Color del tema</string>
     <string name="settings_theme_color_summary">El color que apareix amb més freqüència a l\'aplicació</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Aplica-ho també a la icona de l\'aplicació</string>
+    <string name="settings_launcher_icon_color_title">Color de la icona</string>
+    <string name="settings_launcher_icon_color_summary">Color de la icona a la pantalla d\'inici</string>
+    <string name="settings_launcher_icon_change_title">Voleu canviar la icona de l\'aplicació?</string>
+    <string name="settings_launcher_icon_change_message">VFiles es tancarà perquè la pantalla d\'inici mostri la icona nova. Torneu-lo a obrir tot seguit.</string>
+    <string name="settings_launcher_icon_change_confirm">Canvia i tanca</string>
     <string name="settings_night_mode_title">Mode nocturn</string>
     <string-array name="settings_night_mode_entries">
         <item>Segueix el sistema</item>

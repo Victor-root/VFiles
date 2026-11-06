@@ -33,12 +33,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.app.Destination
+import me.zhanghai.android.files.theme.custom.LauncherIcon
+import me.zhanghai.android.files.theme.custom.launcherAlias
 import me.zhanghai.android.files.ui.AppScaffold
 import me.zhanghai.android.files.ui.LicensesDialog
 import me.zhanghai.android.files.util.createViewIntent
@@ -75,7 +76,7 @@ private fun AboutScreen() {
                             style = MaterialTheme.typography.titleLarge
                         )
                     },
-                    leadingContent = { LauncherIcon() },
+                    leadingContent = { AppIcon() },
                     colors = transparentListItemColors()
                 )
                 AboutItem(
@@ -143,11 +144,12 @@ private fun AboutItem(
 }
 
 @Composable
-private fun LauncherIcon() {
+private fun AppIcon() {
     val context = LocalContext.current
     // The launcher icon is an adaptive icon, which painterResource() doesn't support.
     val bitmap = remember(context) {
-        ContextCompat.getDrawable(context, R.mipmap.launcher_icon)!!.toBitmap().asImageBitmap()
+        context.packageManager.getActivityIcon(LauncherIcon.currentColor.launcherAlias)
+            .toBitmap().asImageBitmap()
     }
     Image(bitmap = bitmap, contentDescription = null, modifier = Modifier.size(40.dp))
 }

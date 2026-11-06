@@ -75,8 +75,6 @@
             tools:ignore="UnusedAttribute">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
                 <category android:name="android.intent.category.APP_FILES" />
             </intent-filter>
             <intent-filter tools:ignore="AppLinkUrlError">
@@ -154,10 +152,349 @@
                 <action android:name="me.zhanghai.android.files.intent.action.VIEW_DOWNLOADS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <!-- LAUNCHER lives on these aliases, so that changing the icon is enabling another one. -->
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Default"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Red"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_red"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_red"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Pink"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_pink"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_pink"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Purple"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_purple"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_purple"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_DeepPurple"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_deep_purple"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_deep_purple"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Indigo"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_indigo"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_indigo"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Blue"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_blue"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_blue"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_LightBlue"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_light_blue"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_light_blue"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Cyan"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_cyan"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_cyan"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Teal"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_teal"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_teal"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Green"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_green"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_green"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_LightGreen"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_light_green"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_light_green"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Lime"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_lime"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_lime"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Yellow"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_yellow"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_yellow"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Amber"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_amber"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_amber"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Orange"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_orange"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_orange"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_DeepOrange"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_deep_orange"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_deep_orange"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Brown"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_brown"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_brown"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Grey"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_grey"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_grey"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_BlueGrey"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_blue_grey"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_blue_grey"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
 
         <!--
           ~ Using android:documentLaunchMode="always" gives a better result than

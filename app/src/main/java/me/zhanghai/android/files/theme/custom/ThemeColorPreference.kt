@@ -65,7 +65,7 @@ fun ThemeColorPreference() {
 
 // The color that is really applied, instead of the system accent, which doesn't follow the wallpaper
 // on some OEM skins.
-private fun ThemeColor.displayColor(context: Context): Color =
+internal fun ThemeColor.displayColor(context: Context): Color =
     if (this == ThemeColor.DYNAMIC) {
         appColorScheme(context, this, isDark = false, isBlack = false).primary
     } else {

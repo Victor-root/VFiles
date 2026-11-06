@@ -756,6 +756,12 @@
     <string name="settings_locale_title">Язык</string>
     <string name="settings_theme_color_title">Цвет темы</string>
     <string name="settings_theme_color_summary">Цвет который чаще всего используется в приложении</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Применить также к значку приложения</string>
+    <string name="settings_launcher_icon_color_title">Цвет значка</string>
+    <string name="settings_launcher_icon_color_summary">Цвет значка на главном экране</string>
+    <string name="settings_launcher_icon_change_title">Изменить значок приложения?</string>
+    <string name="settings_launcher_icon_change_message">VFiles закроется, чтобы главный экран показал новый значок. Сразу после этого откройте его снова.</string>
+    <string name="settings_launcher_icon_change_confirm">Изменить и закрыть</string>
     <string name="settings_night_mode_title">Ночной режим</string>
     <string-array name="settings_night_mode_entries">
         <item>Использовать системную тему</item>

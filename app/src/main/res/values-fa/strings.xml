@@ -682,6 +682,12 @@
     <string name="settings_locale_title">زبان</string>
     <string name="settings_theme_color_title">رنگ زمینه</string>
     <string name="settings_theme_color_summary">رنگی که بیشتر در برنامه ظاهر می‌شود</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">اعمال روی آیکون برنامه نیز</string>
+    <string name="settings_launcher_icon_color_title">رنگ آیکون</string>
+    <string name="settings_launcher_icon_color_summary">رنگ آیکون در صفحه اصلی</string>
+    <string name="settings_launcher_icon_change_title">آیکون برنامه تغییر کند؟</string>
+    <string name="settings_launcher_icon_change_message">VFiles بسته می‌شود تا صفحه اصلی آیکون جدید را نشان دهد. بلافاصله دوباره آن را باز کنید.</string>
+    <string name="settings_launcher_icon_change_confirm">تغییر و بستن</string>
     <string name="settings_night_mode_title">حالت شب</string>
     <string-array name="settings_night_mode_entries">
         <item>پی‌روی از سامانه</item>

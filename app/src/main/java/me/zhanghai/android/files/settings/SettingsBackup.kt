@@ -19,6 +19,7 @@ import me.zhanghai.android.files.app.PARCEL_VAL_LIST
 import me.zhanghai.android.files.app.PARCEL_VAL_PARCELABLE
 import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
+import me.zhanghai.android.files.theme.custom.LauncherIcon
 import me.zhanghai.android.files.util.asBase64
 import me.zhanghai.android.files.util.toBase64
 import me.zhanghai.android.files.util.toByteArray
@@ -164,6 +165,7 @@ object SettingsBackup {
             throw IOException("SharedPreferences.Editor.commit() failed")
         }
         this.locales = locales
+        LauncherIcon.applySavedColor()
     }
 
     private fun createHeader(): JSONObject =

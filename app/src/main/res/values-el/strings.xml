@@ -684,6 +684,12 @@
     <string name="settings_locale_title">Γλώσσα</string>
     <string name="settings_theme_color_title">Χρώμα θέματος</string>
     <string name="settings_theme_color_summary">Χρώμα που εμφανίζεται συχνότερα στην εφαρμογή</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Εφαρμογή και στο εικονίδιο της εφαρμογής</string>
+    <string name="settings_launcher_icon_color_title">Χρώμα εικονιδίου</string>
+    <string name="settings_launcher_icon_color_summary">Χρώμα του εικονιδίου στην αρχική οθόνη</string>
+    <string name="settings_launcher_icon_change_title">Αλλαγή εικονιδίου εφαρμογής;</string>
+    <string name="settings_launcher_icon_change_message">Το VFiles θα κλείσει για να εμφανίσει η αρχική οθόνη το νέο εικονίδιο. Ανοίξτε το ξανά αμέσως μετά.</string>
+    <string name="settings_launcher_icon_change_confirm">Αλλαγή και κλείσιμο</string>
     <string name="settings_night_mode_title">Νυχτερινή λειτουργία</string>
     <string-array name="settings_night_mode_entries">
         <item>Ακολουθεί το σύστημα</item>

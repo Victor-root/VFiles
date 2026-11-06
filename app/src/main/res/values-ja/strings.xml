@@ -649,6 +649,12 @@
     <string name="settings_locale_title">言語</string>
     <string name="settings_theme_color_title">テーマカラー</string>
     <string name="settings_theme_color_summary">アプリ内で優先して使用する色です</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">アプリアイコンにも適用</string>
+    <string name="settings_launcher_icon_color_title">アイコンの色</string>
+    <string name="settings_launcher_icon_color_summary">ホーム画面のアイコンの色</string>
+    <string name="settings_launcher_icon_change_title">アプリアイコンを変更しますか？</string>
+    <string name="settings_launcher_icon_change_message">ホーム画面に新しいアイコンを反映するため VFiles を閉じます。すぐにもう一度開いてください。</string>
+    <string name="settings_launcher_icon_change_confirm">変更して閉じる</string>
     <string name="settings_night_mode_title">夜間モード</string>
     <string-array name="settings_night_mode_entries">
         <item>システム設定に従う</item>

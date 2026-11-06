@@ -718,6 +718,12 @@
     <string name="settings_locale_title">Limbă</string>
     <string name="settings_theme_color_title">Culoarea temei</string>
     <string name="settings_theme_color_summary">Culoarea ce apare cel mai frecvent în aplicație</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Aplică și pictogramei aplicației</string>
+    <string name="settings_launcher_icon_color_title">Culoarea pictogramei</string>
+    <string name="settings_launcher_icon_color_summary">Culoarea pictogramei pe ecranul de pornire</string>
+    <string name="settings_launcher_icon_change_title">Schimbi pictograma aplicației?</string>
+    <string name="settings_launcher_icon_change_message">VFiles se va închide pentru ca ecranul de pornire să afișeze noua pictogramă. Deschide-l din nou imediat după.</string>
+    <string name="settings_launcher_icon_change_confirm">Schimbă și închide</string>
     <string name="settings_night_mode_title">Mod de noapte</string>
     <string-array name="settings_night_mode_entries">
         <item>Urmează sistemul</item>

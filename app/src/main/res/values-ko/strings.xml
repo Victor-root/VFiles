@@ -649,6 +649,12 @@
     <string name="settings_locale_title">언어</string>
     <string name="settings_theme_color_title">테마 색상</string>
     <string name="settings_theme_color_summary">앱에서 가장 많이 보이는 색상</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">앱 아이콘에도 적용</string>
+    <string name="settings_launcher_icon_color_title">아이콘 색상</string>
+    <string name="settings_launcher_icon_color_summary">홈 화면의 아이콘 색상</string>
+    <string name="settings_launcher_icon_change_title">앱 아이콘을 변경할까요?</string>
+    <string name="settings_launcher_icon_change_message">홈 화면에 새 아이콘이 표시되도록 VFiles가 닫힙니다. 바로 다시 열어 주세요.</string>
+    <string name="settings_launcher_icon_change_confirm">변경 후 닫기</string>
     <string name="settings_night_mode_title">다크 모드</string>
     <string-array name="settings_night_mode_entries">
         <item>시스템 설정에 따름</item>

@@ -754,6 +754,12 @@
     <string name="settings_locale_title">Jazyk</string>
     <string name="settings_theme_color_title">Barva motivu</string>
     <string name="settings_theme_color_summary">Barva, která se v aplikaci vyskytuje nejvíce</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Použít také na ikonu aplikace</string>
+    <string name="settings_launcher_icon_color_title">Barva ikony</string>
+    <string name="settings_launcher_icon_color_summary">Barva ikony na domovské obrazovce</string>
+    <string name="settings_launcher_icon_change_title">Změnit ikonu aplikace?</string>
+    <string name="settings_launcher_icon_change_message">VFiles se zavře, aby domovská obrazovka zobrazila novou ikonu. Hned poté ho znovu otevřete.</string>
+    <string name="settings_launcher_icon_change_confirm">Změnit a zavřít</string>
     <string name="settings_night_mode_title">Noční režim</string>
     <string-array name="settings_night_mode_entries">
         <item>Podle systému</item>

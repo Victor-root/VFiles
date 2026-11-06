@@ -645,6 +645,12 @@
     <string name="settings_locale_title">Ngôn ngữ</string>
     <string name="settings_theme_color_title">Màu chủ đề</string>
     <string name="settings_theme_color_summary">Màu thường xuyên xuất hiện nhất trong ứng dụng</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Áp dụng cho cả biểu tượng ứng dụng</string>
+    <string name="settings_launcher_icon_color_title">Màu biểu tượng</string>
+    <string name="settings_launcher_icon_color_summary">Màu của biểu tượng trên màn hình chính</string>
+    <string name="settings_launcher_icon_change_title">Đổi biểu tượng ứng dụng?</string>
+    <string name="settings_launcher_icon_change_message">VFiles sẽ đóng để màn hình chính hiển thị biểu tượng mới. Hãy mở lại ngay sau đó.</string>
+    <string name="settings_launcher_icon_change_confirm">Đổi và đóng</string>
     <string name="settings_night_mode_title">Chế độ ban đêm</string>
     <string-array name="settings_night_mode_entries">
         <item>Theo hệ thống</item>

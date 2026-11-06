@@ -111,6 +111,18 @@ object Settings {
             ThemeColor::class.java
         )
 
+    val APPLY_THEME_COLOR_TO_LAUNCHER_ICON: Setting<Boolean> =
+        BooleanSetting(
+            R.string.pref_key_apply_theme_color_to_launcher_icon,
+            R.bool.pref_default_value_apply_theme_color_to_launcher_icon
+        )
+
+    val LAUNCHER_ICON_COLOR: Setting<ThemeColor> =
+        EnumSetting(
+            R.string.pref_key_launcher_icon_color, R.string.pref_default_value_launcher_icon_color,
+            ThemeColor::class.java
+        )
+
     val NIGHT_MODE: Setting<NightMode> =
         EnumSetting(
             R.string.pref_key_night_mode, R.string.pref_default_value_night_mode,

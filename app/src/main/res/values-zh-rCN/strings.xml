@@ -650,6 +650,12 @@
     <string name="settings_locale_title">语言</string>
     <string name="settings_theme_color_title">主题色</string>
     <string name="settings_theme_color_summary">应用中最常见的颜色</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">同时应用到应用图标</string>
+    <string name="settings_launcher_icon_color_title">图标颜色</string>
+    <string name="settings_launcher_icon_color_summary">主屏幕上图标的颜色</string>
+    <string name="settings_launcher_icon_change_title">更改应用图标？</string>
+    <string name="settings_launcher_icon_change_message">VFiles 将关闭，以便主屏幕显示新图标。请随后立即重新打开。</string>
+    <string name="settings_launcher_icon_change_confirm">更改并关闭</string>
     <string name="settings_night_mode_title">夜间模式</string>
     <string-array name="settings_night_mode_entries">
         <item>跟随系统</item>

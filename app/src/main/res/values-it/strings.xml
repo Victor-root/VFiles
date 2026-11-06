@@ -719,6 +719,12 @@
     <string name="settings_locale_title">Lingua</string>
     <string name="settings_theme_color_title">Colore tema</string>
     <string name="settings_theme_color_summary">Colore che appare più spesso nell\'app</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Applica anche all\'icona dell\'app</string>
+    <string name="settings_launcher_icon_color_title">Colore dell\'icona</string>
+    <string name="settings_launcher_icon_color_summary">Colore dell\'icona nella schermata Home</string>
+    <string name="settings_launcher_icon_change_title">Cambiare l\'icona dell\'app?</string>
+    <string name="settings_launcher_icon_change_message">VFiles si chiuderà per far mostrare la nuova icona alla schermata Home. Riaprilo subito dopo.</string>
+    <string name="settings_launcher_icon_change_confirm">Cambia e chiudi</string>
     <string name="settings_night_mode_title">Modalità notte</string>
     <string-array name="settings_night_mode_entries">
         <item>Segui il sistema</item>

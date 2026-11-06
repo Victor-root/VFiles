@@ -648,6 +648,12 @@
     <string name="settings_locale_title">Bahasa</string>
     <string name="settings_theme_color_title">Warna tema</string>
     <string name="settings_theme_color_summary">Warna yang muncul paling sering di dalam apl</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Terapkan juga ke ikon aplikasi</string>
+    <string name="settings_launcher_icon_color_title">Warna ikon</string>
+    <string name="settings_launcher_icon_color_summary">Warna ikon di layar utama</string>
+    <string name="settings_launcher_icon_change_title">Ubah ikon aplikasi?</string>
+    <string name="settings_launcher_icon_change_message">VFiles akan ditutup agar layar utama menampilkan ikon baru. Buka lagi segera setelahnya.</string>
+    <string name="settings_launcher_icon_change_confirm">Ubah dan tutup</string>
     <string name="settings_night_mode_title">Mode malam</string>
     <string-array name="settings_night_mode_entries">
         <item>Ikuti sistem</item>

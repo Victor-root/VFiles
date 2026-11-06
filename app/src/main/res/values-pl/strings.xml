@@ -754,6 +754,12 @@
     <string name="settings_locale_title">Język</string>
     <string name="settings_theme_color_title">Kolor motywu</string>
     <string name="settings_theme_color_summary">Kolor pojawiający się najczęściej w aplikacji</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Zastosuj też do ikony aplikacji</string>
+    <string name="settings_launcher_icon_color_title">Kolor ikony</string>
+    <string name="settings_launcher_icon_color_summary">Kolor ikony na ekranie głównym</string>
+    <string name="settings_launcher_icon_change_title">Zmienić ikonę aplikacji?</string>
+    <string name="settings_launcher_icon_change_message">VFiles zostanie zamknięty, aby ekran główny pokazał nową ikonę. Otwórz go ponownie zaraz potem.</string>
+    <string name="settings_launcher_icon_change_confirm">Zmień i zamknij</string>
     <string name="settings_night_mode_title">Ciemny motyw</string>
     <string-array name="settings_night_mode_entries">
         <item>Zgodnie z ustawieniem systemu</item>
