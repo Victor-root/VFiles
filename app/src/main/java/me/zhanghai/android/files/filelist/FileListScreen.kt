@@ -277,6 +277,8 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             displayedFiles[leftFileIndex].path, leftFileIndex, controller.gridState
         )
         if (!isLeftFileFocused) {
+            // Lets the list lay out its first items, like when picking for another app.
+            withFrameNanos {}
             focusContent()
         }
     }
