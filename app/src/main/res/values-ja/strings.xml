@@ -758,6 +758,7 @@
     <string name="settings_default_apps_summary">ファイルの種類ごとに開くアプリを選択</string>
     <string name="settings_system_file_picker_title">VFiles を既定のファイル選択にする</string>
     <string name="settings_system_file_picker_summary">Android のファイル選択を Shizuku で無効にし、アプリは VFiles を開いてファイルを選びます</string>
+    <string name="settings_system_file_picker_not_found">このデバイスでは Android のファイル選択が見つかりませんでした</string>
     <string name="settings_system_file_picker_confirm_title">Android のファイル選択を無効にしますか？</string>
     <string name="settings_system_file_picker_confirm_message">ファイルを要求するアプリは、Android のファイル選択の代わりに VFiles を開きます。\n\n何もアンインストールされません。このオプションをオフにすると、すべて元に戻ります。\n\n重要: VFiles をアンインストールする前に、このオプションをオフにしてください。オフにしないと、どのアプリもファイルを選べなくなり、一部のアプリがクラッシュする場合があります。修復するには、VFiles を再インストールしてオプションをオフにするか、パソコンから次を実行してください:\n%1$s\n\n最近の Android では写真選択ツールは引き続き使われ、Android が使用するアプリを尋ねることもあります。</string>
     <string name="settings_system_file_picker_confirm_action">無効にする</string>

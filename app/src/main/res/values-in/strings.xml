@@ -757,6 +757,7 @@
     <string name="settings_default_apps_summary">Pilih aplikasi yang membuka setiap jenis file</string>
     <string name="settings_system_file_picker_title">VFiles sebagai pemilih file default</string>
     <string name="settings_system_file_picker_summary">Aplikasi membuka VFiles untuk memilih file, dengan pemilih file Android dinonaktifkan melalui Shizuku</string>
+    <string name="settings_system_file_picker_not_found">Pemilih file Android tidak ditemukan di perangkat ini</string>
     <string name="settings_system_file_picker_confirm_title">Nonaktifkan pemilih file Android?</string>
     <string name="settings_system_file_picker_confirm_message">Aplikasi yang meminta file akan membuka VFiles, bukan pemilih file Android.\n\nTidak ada yang dicopot: menonaktifkan opsi ini mengembalikan semuanya seperti semula.\n\nPenting: nonaktifkan opsi ini sebelum mencopot VFiles. Jika tidak, tidak ada aplikasi yang bisa memilih file, dan beberapa mungkin error. Untuk memperbaikinya, instal ulang VFiles lalu nonaktifkan opsi ini, atau jalankan ini dari komputer:\n%1$s\n\nPada versi Android terbaru, pemilih foto tetap digunakan, dan Android mungkin masih menanyakan aplikasi mana yang digunakan.</string>
     <string name="settings_system_file_picker_confirm_action">Nonaktifkan</string>

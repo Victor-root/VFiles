@@ -794,6 +794,7 @@
     <string name="settings_default_apps_summary">Trieu quina aplicació obre cada tipus de fitxer</string>
     <string name="settings_system_file_picker_title">VFiles com a selector de fitxers predeterminat</string>
     <string name="settings_system_file_picker_summary">Les aplicacions obren VFiles per triar fitxers, amb el selector d\'Android desactivat mitjançant Shizuku</string>
+    <string name="settings_system_file_picker_not_found">No s\'ha trobat el selector de fitxers d\'Android en aquest dispositiu</string>
     <string name="settings_system_file_picker_confirm_title">Voleu desactivar el selector de fitxers d\'Android?</string>
     <string name="settings_system_file_picker_confirm_message">Les aplicacions que demanin fitxers obriran VFiles en lloc del selector d\'Android.\n\nNo es desinstal·la res: desactivar aquesta opció ho deixa tot com estava.\n\nImportant: desactiveu aquesta opció abans de desinstal·lar VFiles. Si no, cap aplicació podrà triar fitxers i algunes podrien fallar. Per reparar-ho, torneu a instal·lar VFiles i desactiveu l\'opció, o executeu això des d\'un ordinador:\n%1$s\n\nA les versions recents d\'Android es continua usant el selector de fotos, i Android encara pot preguntar quina aplicació voleu fer servir.</string>
     <string name="settings_system_file_picker_confirm_action">Desactiva</string>

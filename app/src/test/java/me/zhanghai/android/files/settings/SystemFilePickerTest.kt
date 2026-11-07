@@ -5,11 +5,8 @@
 
 package me.zhanghai.android.files.settings
 
-import android.content.ComponentName
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.test.AppProviderRule
@@ -28,25 +25,14 @@ class SystemFilePickerTest {
     val appProviderRule = AppProviderRule()
 
     private fun addSystemFileApp(packageName: String) {
-        val shadowPackageManager = shadowOf(packageManager)
-        shadowPackageManager.addOrUpdateActivity(
-            ActivityInfo().apply {
+        shadowOf(packageManager).installPackage(
+            PackageInfo().apply {
                 this.packageName = packageName
-                name = "Picker"
-                exported = true
                 applicationInfo = ApplicationInfo().apply {
                     this.packageName = packageName
                     flags = ApplicationInfo.FLAG_SYSTEM
                 }
             }
-        )
-        val intentFilter = IntentFilter(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_DEFAULT)
-            addCategory(Intent.CATEGORY_OPENABLE)
-            addDataType("*/*")
-        }
-        shadowPackageManager.addIntentFilterForActivity(
-            ComponentName(packageName, "Picker"), intentFilter
         )
     }
 
@@ -58,6 +44,13 @@ class SystemFilePickerTest {
     fun ignoresOtherFileAppsOfTheSystem() {
         addSystemFileApp(DOCUMENTS_UI)
         addSystemFileApp("com.maker.files")
+        assertEquals(listOf(DOCUMENTS_UI), SystemFilePicker.packageNames)
+    }
+
+    @Test
+    fun findsPickerOnceDisabled() {
+        addSystemFileApp(DOCUMENTS_UI)
+        setEnabledSetting(DOCUMENTS_UI, PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER)
         assertEquals(listOf(DOCUMENTS_UI), SystemFilePicker.packageNames)
     }
 

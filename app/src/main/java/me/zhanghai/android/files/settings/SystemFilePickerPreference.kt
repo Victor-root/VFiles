@@ -5,6 +5,8 @@
 
 package me.zhanghai.android.files.settings
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -21,7 +23,9 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.provider.root.ShizukuFileServiceLauncher
 import me.zhanghai.android.files.ui.ConfirmationDialog
 import me.zhanghai.android.files.ui.SwitchPreference
@@ -36,9 +40,6 @@ fun SystemFilePickerPreference() {
     var refreshCount by remember { mutableIntStateOf(0) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { refreshCount++ }
     val hasPicker = remember(refreshCount) { SystemFilePicker.packageNames.isNotEmpty() }
-    if (!hasPicker) {
-        return
-    }
     val isDisabled = remember(refreshCount) { SystemFilePicker.isDisabled }
     var isChanging by remember { mutableStateOf(false) }
     val setDisabled = { disabled: Boolean ->
@@ -69,7 +70,12 @@ fun SystemFilePickerPreference() {
                 else -> setDisabled(false)
             }
         },
-        summary = stringResource(R.string.settings_system_file_picker_summary),
+        summary = if (hasPicker) {
+            stringResource(R.string.settings_system_file_picker_summary)
+        } else {
+            stringResource(R.string.settings_system_file_picker_not_found)
+        } + debugFilePickers,
+        enabled = hasPicker,
         icon = painterResource(R.drawable.apps_icon_white_24dp)
     )
     if (isConfirmationShown) {
@@ -96,3 +102,19 @@ fun SystemFilePickerPreference() {
         )
     }
 }
+
+// Temporary, to find out what answers on devices where the file picker isn't found.
+private val debugFilePickers: String
+    get() {
+        if (BuildConfig.BUILD_TYPE != "debug") {
+            return ""
+        }
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            .addCategory(Intent.CATEGORY_OPENABLE)
+            .setType("*/*")
+        val handlers = packageManager
+            .queryIntentActivities(intent, PackageManager.MATCH_DISABLED_COMPONENTS)
+            .map { it.activityInfo.packageName }
+            .distinct()
+        return "\n[debug] ${SystemFilePicker.packageNames} / $handlers"
+    }

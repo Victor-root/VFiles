@@ -794,6 +794,7 @@
     <string name="settings_default_apps_summary">Kies welke app elk bestandstype opent</string>
     <string name="settings_system_file_picker_title">VFiles als standaard bestandskiezer</string>
     <string name="settings_system_file_picker_summary">Apps openen VFiles om bestanden te kiezen, met de bestandskiezer van Android uitgeschakeld via Shizuku</string>
+    <string name="settings_system_file_picker_not_found">De bestandskiezer van Android is niet gevonden op dit apparaat</string>
     <string name="settings_system_file_picker_confirm_title">Bestandskiezer van Android uitschakelen?</string>
     <string name="settings_system_file_picker_confirm_message">Apps die om bestanden vragen, openen VFiles in plaats van de bestandskiezer van Android.\n\nEr wordt niets verwijderd: als je deze optie uitzet, wordt alles weer zoals het was.\n\nBelangrijk: zet deze optie uit voordat je VFiles verwijdert. Anders kan geen enkele app nog bestanden kiezen en kunnen sommige crashen. Installeer VFiles opnieuw en zet de optie uit om dit te herstellen, of voer dit uit vanaf een computer:\n%1$s\n\nOp recente Android-versies blijft de fotokiezer in gebruik, en Android kan nog steeds vragen welke app je wilt gebruiken.</string>
     <string name="settings_system_file_picker_confirm_action">Uitschakelen</string>

@@ -794,6 +794,7 @@
     <string name="settings_default_apps_summary">Wähle, welche App jeden Dateityp öffnet</string>
     <string name="settings_system_file_picker_title">VFiles als Standard-Dateiauswahl</string>
     <string name="settings_system_file_picker_summary">Apps öffnen VFiles zur Dateiauswahl, die Dateiauswahl von Android wird über Shizuku deaktiviert</string>
+    <string name="settings_system_file_picker_not_found">Die Dateiauswahl von Android wurde auf diesem Gerät nicht gefunden</string>
     <string name="settings_system_file_picker_confirm_title">Dateiauswahl von Android deaktivieren?</string>
     <string name="settings_system_file_picker_confirm_message">Apps, die Dateien anfordern, öffnen VFiles statt der Dateiauswahl von Android.\n\nNichts wird deinstalliert: Wenn du diese Option ausschaltest, ist alles wieder wie vorher.\n\nWichtig: Schalte diese Option aus, bevor du VFiles deinstallierst. Sonst kann keine App mehr Dateien auswählen und manche könnten abstürzen. Installiere zur Reparatur VFiles erneut und schalte die Option aus, oder führe dies an einem Computer aus:\n%1$s\n\nAuf neueren Android-Versionen bleibt die Fotoauswahl in Gebrauch, und Android kann weiterhin fragen, welche App verwendet werden soll.</string>
     <string name="settings_system_file_picker_confirm_action">Deaktivieren</string>

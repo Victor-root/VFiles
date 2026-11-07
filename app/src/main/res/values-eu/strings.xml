@@ -737,6 +737,7 @@
     <string name="settings_default_apps_summary">Aukeratu zein aplikaziok irekitzen duen fitxategi mota bakoitza</string>
     <string name="settings_system_file_picker_title">VFiles fitxategi-hautatzaile lehenetsi gisa</string>
     <string name="settings_system_file_picker_summary">Aplikazioek VFiles irekitzen dute fitxategiak hautatzeko, Android-en hautatzailea Shizuku bidez desgaituta</string>
+    <string name="settings_system_file_picker_not_found">Ez da Android-en fitxategi-hautatzailea aurkitu gailu honetan</string>
     <string name="settings_system_file_picker_confirm_title">Android-en fitxategi-hautatzailea desgaitu?</string>
     <string name="settings_system_file_picker_confirm_message">Fitxategiak eskatzen dituzten aplikazioek VFiles irekiko dute Android-en hautatzailearen ordez.\n\nEz da ezer desinstalatzen: aukera hau desgaitzean dena lehen bezala geratzen da.\n\nGarrantzitsua: desgaitu aukera hau VFiles desinstalatu aurretik. Bestela, aplikazio batek ere ezin izango du fitxategirik hautatu, eta batzuk itxi egin daitezke. Konpontzeko, instalatu berriro VFiles eta desgaitu aukera, edo exekutatu hau ordenagailu batetik:\n%1$s\n\nAndroid-en bertsio berrietan argazki-hautatzailea erabiltzen jarraitzen da, eta Android-ek oraindik galde dezake zein aplikazio erabili.</string>
     <string name="settings_system_file_picker_confirm_action">Desgaitu</string>

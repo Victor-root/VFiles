@@ -796,6 +796,7 @@
     <string name="settings_default_apps_summary">Veldu hvaða forrit opnar hverja skráartegund</string>
     <string name="settings_system_file_picker_title">VFiles sem sjálfgefinn skráaveljari</string>
     <string name="settings_system_file_picker_summary">Forrit opna VFiles til að velja skrár, og skráaveljari Android er óvirkur í gegnum Shizuku</string>
+    <string name="settings_system_file_picker_not_found">Skráaveljari Android fannst ekki í þessu tæki</string>
     <string name="settings_system_file_picker_confirm_title">Slökkva á skráaveljara Android?</string>
     <string name="settings_system_file_picker_confirm_message">Forrit sem biðja um skrár opna VFiles í stað skráaveljara Android.\n\nEkkert er fjarlægt: ef slökkt er á þessum valkosti verður allt eins og áður.\n\nMikilvægt: slökktu á þessum valkosti áður en þú fjarlægir VFiles. Annars getur ekkert forrit valið skrár lengur og sum gætu hrunið. Til að laga það skaltu setja VFiles upp aftur og slökkva á valkostinum, eða keyra þetta úr tölvu:\n%1$s\n\nÍ nýlegum útgáfum Android er myndaveljarinn áfram notaður og Android gæti enn spurt hvaða forrit skuli nota.</string>
     <string name="settings_system_file_picker_confirm_action">Slökkva</string>

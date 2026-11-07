@@ -5,11 +5,12 @@
 
 package me.zhanghai.android.files.settings
 
-import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Process
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.provider.root.RootFileService
+import me.zhanghai.android.files.util.hasBits
 import java.io.IOException
 
 /**
@@ -23,22 +24,16 @@ object SystemFilePicker {
     private const val TV_STUBS_PACKAGE_NAME = "com.android.tv.frameworkpackagestubs"
 
     /**
-     * The packages of the system answering requests for files, including disabled ones. Only the
-     * known ones count, since a maker may have other apps of its own among them.
+     * The packages of the system file picker, whether disabled or not, by name rather than by what
+     * they handle, since a maker may have other apps of its own handling the same requests.
      */
     val packageNames: List<String>
-        get() {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("*/*")
-            return packageManager.queryIntentActivities(
-                intent,
-                PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_SYSTEM_ONLY
-            )
-                .map { it.activityInfo.packageName }
+        get() =
+            packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
+                .filter { it.flags.hasBits(ApplicationInfo.FLAG_SYSTEM) }
+                .map { it.packageName }
                 .filter { DOCUMENTS_UI_NAME in it || it == TV_STUBS_PACKAGE_NAME }
-                .distinct()
-        }
+                .sorted()
 
     val isDisabled: Boolean
         get() = packageNames.let { names -> names.isNotEmpty() && names.all { it.isDisabled } }

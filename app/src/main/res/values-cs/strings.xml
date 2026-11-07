@@ -866,6 +866,7 @@
     <string name="settings_default_apps_summary">Vyberte, která aplikace otevírá každý typ souboru</string>
     <string name="settings_system_file_picker_title">VFiles jako výchozí výběr souborů</string>
     <string name="settings_system_file_picker_summary">Aplikace otevírají VFiles pro výběr souborů, výběr souborů Androidu je vypnutý přes Shizuku</string>
+    <string name="settings_system_file_picker_not_found">Výběr souborů Androidu nebyl v tomto zařízení nalezen</string>
     <string name="settings_system_file_picker_confirm_title">Vypnout výběr souborů Androidu?</string>
     <string name="settings_system_file_picker_confirm_message">Aplikace žádající o soubory otevřou VFiles místo výběru souborů Androidu.\n\nNic se neodinstaluje: vypnutím této možnosti se vše vrátí do původního stavu.\n\nDůležité: před odinstalací VFiles tuto možnost vypněte. Jinak už žádná aplikace nebude moci vybírat soubory a některé mohou spadnout. Opravíte to opětovnou instalací VFiles a vypnutím možnosti, nebo spuštěním tohoto z počítače:\n%1$s\n\nV novějších verzích Androidu se dál používá výběr fotek a Android se může stále ptát, kterou aplikaci použít.</string>
     <string name="settings_system_file_picker_confirm_action">Vypnout</string>

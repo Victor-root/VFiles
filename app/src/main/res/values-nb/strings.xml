@@ -794,6 +794,7 @@
     <string name="settings_default_apps_summary">Velg hvilken app som åpner hver filtype</string>
     <string name="settings_system_file_picker_title">VFiles som standard filvelger</string>
     <string name="settings_system_file_picker_summary">Apper åpner VFiles for å velge filer, med filvelgeren i Android slått av via Shizuku</string>
+    <string name="settings_system_file_picker_not_found">Fant ikke filvelgeren i Android på denne enheten</string>
     <string name="settings_system_file_picker_confirm_title">Vil du slå av filvelgeren i Android?</string>
     <string name="settings_system_file_picker_confirm_message">Apper som ber om filer, åpner VFiles i stedet for filvelgeren i Android.\n\nIngenting avinstalleres: Når du slår av dette valget, blir alt som før.\n\nViktig: Slå av dette valget før du avinstallerer VFiles. Ellers kan ingen apper velge filer, og noen kan krasje. For å reparere, installer VFiles på nytt og slå av valget, eller kjør dette fra en datamaskin:\n%1$s\n\nPå nyere Android-versjoner brukes fortsatt bildevelgeren, og Android kan fortsatt spørre hvilken app som skal brukes.</string>
     <string name="settings_system_file_picker_confirm_action">Slå av</string>
