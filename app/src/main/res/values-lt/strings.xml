@@ -862,6 +862,14 @@
     <string name="settings_default_apps_image">Vaizdai</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Pasirinkite, kuri programa atidaro kiekvieną failo tipą</string>
+    <string name="settings_system_file_picker_title">VFiles kaip numatytoji failų parinkimo priemonė</string>
+    <string name="settings_system_file_picker_summary">Programos atidaro VFiles failams pasirinkti, o Android parinkimo priemonė išjungta per Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">Išjungti Android failų parinkimo priemonę?</string>
+    <string name="settings_system_file_picker_confirm_message">Failų prašančios programos atidarys VFiles vietoj Android failų parinkimo priemonės.\n\nNieko nepašalinama: išjungus šią parinktį viskas grįžta kaip buvo.\n\nSvarbu: išjunkite šią parinktį prieš pašalindami VFiles. Kitaip jokia programa nebegalės rinktis failų, o kai kurios gali strigti. Kad pataisytumėte, įdiekite VFiles iš naujo ir išjunkite parinktį arba paleiskite tai iš kompiuterio:\n%1$s\n\nNaujose Android versijose nuotraukų parinkimo priemonė lieka naudojama, o Android vis tiek gali klausti, kurią programą naudoti.</string>
+    <string name="settings_system_file_picker_confirm_action">Išjungti</string>
+    <string name="settings_system_file_picker_shizuku_title">Reikia Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Paleiskite Shizuku, kad pakeistumėte tai čia, arba paleiskite tai iš kompiuterio:\n%1$s</string>
+    <string name="settings_system_file_picker_error">Nepavyko pakeisti failų parinkimo priemonės</string>
     <string name="settings_default_apps_text">Tekstas</string>
     <string name="settings_default_apps_title">Numatytosios programos</string>
     <string name="settings_default_apps_video">Vaizdo įrašai</string>

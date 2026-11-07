@@ -936,6 +936,14 @@
     <string name="settings_default_apps_image">الصور</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">اختر التطبيق الذي يفتح كل نوع من الملفات</string>
+    <string name="settings_system_file_picker_title">VFiles كمنتقي الملفات الافتراضي</string>
+    <string name="settings_system_file_picker_summary">تفتح التطبيقات VFiles لاختيار الملفات، مع إيقاف منتقي ملفات Android عبر Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">هل تريد إيقاف منتقي ملفات Android؟</string>
+    <string name="settings_system_file_picker_confirm_message">ستفتح التطبيقات التي تطلب ملفات VFiles بدلًا من منتقي ملفات Android.\n\nلن تتم إزالة أي شيء: إيقاف هذا الخيار يعيد كل شيء كما كان.\n\nمهم: أوقف هذا الخيار قبل إلغاء تثبيت VFiles. وإلا فلن يتمكن أي تطبيق من اختيار الملفات، وقد يتعطل بعضها. للإصلاح، أعد تثبيت VFiles وأوقف هذا الخيار، أو نفّذ هذا من كمبيوتر:\n%1$s\n\nفي إصدارات Android الحديثة، يبقى منتقي الصور مستخدمًا، وقد يسأل Android عن التطبيق الذي تريد استخدامه.</string>
+    <string name="settings_system_file_picker_confirm_action">إيقاف</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku مطلوب</string>
+    <string name="settings_system_file_picker_shizuku_message">شغّل Shizuku لتغيير هذا من هنا، أو نفّذ هذا من كمبيوتر:\n%1$s</string>
+    <string name="settings_system_file_picker_error">تعذّر تغيير منتقي الملفات</string>
     <string name="settings_default_apps_text">نص</string>
     <string name="settings_default_apps_title">التطبيقات الافتراضية</string>
     <string name="settings_default_apps_video">الفيديو</string>

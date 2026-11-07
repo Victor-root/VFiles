@@ -35,4 +35,11 @@ abstract class RemoteFileService(private val remoteInterface: RemoteInterface<IR
     fun allowExternalStorageManager() {
         remoteInterface.get().call { exception -> allowExternalStorageManager(exception) }
     }
+
+    @Throws(IOException::class)
+    fun setPackageEnabled(packageName: String, userId: Int, isEnabled: Boolean) {
+        remoteInterface.get().call { exception ->
+            setPackageEnabled(packageName, userId, isEnabled, exception)
+        }
+    }
 }

@@ -19,4 +19,8 @@ interface IRemoteFileService {
     );
 
     void allowExternalStorageManager(out ParcelableException exception);
+
+    void setPackageEnabled(
+        String packageName, int userId, boolean isEnabled, out ParcelableException exception
+    );
 }

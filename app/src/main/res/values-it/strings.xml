@@ -828,6 +828,14 @@
     <string name="settings_default_apps_image">Immagini</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Scegli quale app apre ogni tipo di file</string>
+    <string name="settings_system_file_picker_title">VFiles come selettore di file predefinito</string>
+    <string name="settings_system_file_picker_summary">Le app aprono VFiles per scegliere i file, con il selettore di Android disattivato tramite Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">Disattivare il selettore di file di Android?</string>
+    <string name="settings_system_file_picker_confirm_message">Le app che chiedono file apriranno VFiles invece del selettore di Android.\n\nNon viene disinstallato nulla: disattivando questa opzione torna tutto com\'era.\n\nImportante: disattiva questa opzione prima di disinstallare VFiles. Altrimenti nessuna app potrà più scegliere file e alcune potrebbero bloccarsi. Per rimediare, reinstalla VFiles e disattiva l\'opzione, oppure esegui questo da un computer:\n%1$s\n\nSulle versioni recenti di Android il selettore di foto resta in uso, e Android può ancora chiedere quale app usare.</string>
+    <string name="settings_system_file_picker_confirm_action">Disattiva</string>
+    <string name="settings_system_file_picker_shizuku_title">Serve Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Avvia Shizuku per cambiarlo da qui, oppure esegui questo da un computer:\n%1$s</string>
+    <string name="settings_system_file_picker_error">Impossibile cambiare il selettore di file</string>
     <string name="settings_default_apps_text">Testo</string>
     <string name="settings_default_apps_title">App predefinite</string>
     <string name="settings_default_apps_video">Video</string>

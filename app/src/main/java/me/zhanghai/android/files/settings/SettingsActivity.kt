@@ -107,6 +107,7 @@ private fun SettingsScreen() {
             StandardDirectoriesPreference()
             BookmarkDirectoriesPreference()
             DefaultAppsPreference()
+            SystemFilePickerPreference()
             RootStrategyPreference()
             ArchiveFileNameEncodingPreference()
             OpenApkDefaultActionPreference()

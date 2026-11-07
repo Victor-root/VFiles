@@ -864,6 +864,14 @@
     <string name="settings_default_apps_image">תמונות</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">בחר איזו אפליקציה תפתח כל סוג קובץ</string>
+    <string name="settings_system_file_picker_title">VFiles כבורר הקבצים המוגדר כברירת מחדל</string>
+    <string name="settings_system_file_picker_summary">אפליקציות פותחות את VFiles כדי לבחור קבצים, ובורר הקבצים של Android מושבת דרך Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">להשבית את בורר הקבצים של Android?</string>
+    <string name="settings_system_file_picker_confirm_message">אפליקציות שמבקשות קבצים יפתחו את VFiles במקום את בורר הקבצים של Android.\n\nשום דבר לא מוסר: כיבוי האפשרות הזו מחזיר הכול למצב הקודם.\n\nחשוב: יש לכבות את האפשרות הזו לפני הסרת VFiles. אחרת אף אפליקציה לא תוכל לבחור קבצים, וחלקן עלולות לקרוס. כדי לתקן, יש להתקין מחדש את VFiles ולכבות את האפשרות, או להריץ את זה ממחשב:\n%1$s\n\nבגרסאות חדשות של Android בורר התמונות נשאר בשימוש, ו-Android עשוי עדיין לשאול באיזו אפליקציה להשתמש.</string>
+    <string name="settings_system_file_picker_confirm_action">השבתה</string>
+    <string name="settings_system_file_picker_shizuku_title">נדרש Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">יש להפעיל את Shizuku כדי לשנות זאת מכאן, או להריץ את זה ממחשב:\n%1$s</string>
+    <string name="settings_system_file_picker_error">לא ניתן לשנות את בורר הקבצים</string>
     <string name="settings_default_apps_text">טקסט</string>
     <string name="settings_default_apps_title">אפליקציות ברירת מחדל</string>
     <string name="settings_default_apps_video">סרטונים</string>

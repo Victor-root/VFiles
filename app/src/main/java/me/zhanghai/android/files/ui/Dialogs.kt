@@ -56,7 +56,7 @@ fun ConfirmationDialog(
         },
         dismissButton = { TextButton(onClick = onDismissRequest) { Text(dismissText) } },
         title = title?.let { { Text(it) } },
-        text = { Text(text) }
+        text = { Text(text, modifier = Modifier.verticalScroll(rememberScrollState())) }
     )
 }
 

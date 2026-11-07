@@ -792,6 +792,14 @@
     <string name="settings_default_apps_image">Bilder</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Wähle, welche App jeden Dateityp öffnet</string>
+    <string name="settings_system_file_picker_title">VFiles als Standard-Dateiauswahl</string>
+    <string name="settings_system_file_picker_summary">Apps öffnen VFiles zur Dateiauswahl, die Dateiauswahl von Android wird über Shizuku deaktiviert</string>
+    <string name="settings_system_file_picker_confirm_title">Dateiauswahl von Android deaktivieren?</string>
+    <string name="settings_system_file_picker_confirm_message">Apps, die Dateien anfordern, öffnen VFiles statt der Dateiauswahl von Android.\n\nNichts wird deinstalliert: Wenn du diese Option ausschaltest, ist alles wieder wie vorher.\n\nWichtig: Schalte diese Option aus, bevor du VFiles deinstallierst. Sonst kann keine App mehr Dateien auswählen und manche könnten abstürzen. Installiere zur Reparatur VFiles erneut und schalte die Option aus, oder führe dies an einem Computer aus:\n%1$s\n\nAuf neueren Android-Versionen bleibt die Fotoauswahl in Gebrauch, und Android kann weiterhin fragen, welche App verwendet werden soll.</string>
+    <string name="settings_system_file_picker_confirm_action">Deaktivieren</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku wird benötigt</string>
+    <string name="settings_system_file_picker_shizuku_message">Starte Shizuku, um dies hier zu ändern, oder führe dies an einem Computer aus:\n%1$s</string>
+    <string name="settings_system_file_picker_error">Dateiauswahl kann nicht geändert werden</string>
     <string name="settings_default_apps_text">Text</string>
     <string name="settings_default_apps_title">Standard-Apps</string>
     <string name="settings_default_apps_video">Videos</string>

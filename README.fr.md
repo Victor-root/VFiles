@@ -109,6 +109,12 @@ VFiles expose **tous les back-ends qu'il gère** via le sélecteur de fichiers A
 
 Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **DocumentsUI** (`com.google.android.documentsui`, ou `com.android.documentsui` sur les ROM basées sur AOSP), même si VFiles est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers VFiles comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
 
+### Depuis l'app, avec Shizuku
+
+Avec [Shizuku](https://shizuku.rikka.app/) en marche, activez **VFiles comme sélecteur de fichiers par défaut** dans les réglages. VFiles explique ce qui va se passer avant de faire quoi que ce soit, et désactiver l'option remet le sélecteur dans son état d'origine. Les commandes ci-dessous font la même chose depuis un ordinateur.
+
+**Désactivez l'option avant de désinstaller VFiles.** Android ne réactive pas son sélecteur tout seul, donc plus aucune app ne pourrait choisir de fichiers. Pour réparer, réinstallez VFiles et désactivez l'option, ou lancez les commandes depuis un ordinateur.
+
 ### Désactiver (faire de VFiles le sélecteur par défaut)
 
 ```sh

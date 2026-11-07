@@ -866,6 +866,14 @@
     <string name="file_job_progress_title">Operations in progress</string>
     <string name="settings_default_apps_title">Default apps</string>
     <string name="settings_default_apps_summary">Choose which app opens each type of file</string>
+    <string name="settings_system_file_picker_title">VFiles as the default file picker</string>
+    <string name="settings_system_file_picker_summary">Apps open VFiles to pick files, with the file picker of Android turned off through Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">Turn off the file picker of Android?</string>
+    <string name="settings_system_file_picker_confirm_message">Apps asking for files will open VFiles instead of the file picker of Android.\n\nNothing is uninstalled: turning this option off brings everything back as it was.\n\nImportant: turn this option off before uninstalling VFiles. Otherwise no app can pick files anymore, and some may crash. To repair that, install VFiles again and turn this option off, or run this from a computer:\n%1$s\n\nOn recent versions of Android, the photo picker stays in use, and Android may still ask which app to use.</string>
+    <string name="settings_system_file_picker_confirm_action">Turn off</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku is needed</string>
+    <string name="settings_system_file_picker_shizuku_message">Start Shizuku to change this from here, or run this from a computer:\n%1$s</string>
+    <string name="settings_system_file_picker_error">Unable to change the file picker</string>
     <string name="settings_default_apps_ask">Ask every time</string>
     <string name="settings_default_apps_android_default_format">Android default (%1$s)</string>
     <string name="settings_default_apps_image">Images</string>

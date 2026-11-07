@@ -792,6 +792,14 @@
     <string name="settings_default_apps_image">Εικόνες</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Επιλέξτε ποια εφαρμογή ανοίγει κάθε τύπο αρχείου</string>
+    <string name="settings_system_file_picker_title">Το VFiles ως προεπιλεγμένη επιλογή αρχείων</string>
+    <string name="settings_system_file_picker_summary">Οι εφαρμογές ανοίγουν το VFiles για επιλογή αρχείων, με την επιλογή αρχείων του Android απενεργοποιημένη μέσω Shizuku</string>
+    <string name="settings_system_file_picker_confirm_title">Απενεργοποίηση της επιλογής αρχείων του Android;</string>
+    <string name="settings_system_file_picker_confirm_message">Οι εφαρμογές που ζητούν αρχεία θα ανοίγουν το VFiles αντί για την επιλογή αρχείων του Android.\n\nΔεν απεγκαθίσταται τίποτα: η απενεργοποίηση αυτής της ρύθμισης επαναφέρει τα πάντα.\n\nΣημαντικό: απενεργοποιήστε αυτή τη ρύθμιση πριν απεγκαταστήσετε το VFiles. Διαφορετικά καμία εφαρμογή δεν θα μπορεί να επιλέγει αρχεία και κάποιες μπορεί να κλείνουν απροσδόκητα. Για επιδιόρθωση, εγκαταστήστε ξανά το VFiles και απενεργοποιήστε τη ρύθμιση, ή εκτελέστε αυτό από υπολογιστή:\n%1$s\n\nΣε πρόσφατες εκδόσεις του Android, η επιλογή φωτογραφιών παραμένει σε χρήση και το Android μπορεί ακόμα να ρωτά ποια εφαρμογή θα χρησιμοποιηθεί.</string>
+    <string name="settings_system_file_picker_confirm_action">Απενεργοποίηση</string>
+    <string name="settings_system_file_picker_shizuku_title">Απαιτείται το Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Ξεκινήστε το Shizuku για να το αλλάξετε από εδώ, ή εκτελέστε αυτό από υπολογιστή:\n%1$s</string>
+    <string name="settings_system_file_picker_error">Δεν είναι δυνατή η αλλαγή της επιλογής αρχείων</string>
     <string name="settings_default_apps_text">Κείμενο</string>
     <string name="settings_default_apps_title">Προεπιλεγμένες εφαρμογές</string>
     <string name="settings_default_apps_video">Βίντεο</string>
