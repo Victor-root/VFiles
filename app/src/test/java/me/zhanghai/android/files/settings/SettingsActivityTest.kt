@@ -29,8 +29,10 @@ import androidx.compose.ui.test.requestFocus
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import kotlinx.coroutines.runBlocking
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
+import me.zhanghai.android.files.theme.custom.LauncherIcon
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.night.NightMode
 import org.junit.Assert.assertEquals
@@ -57,6 +59,19 @@ class SettingsActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.FOLLOW_SYSTEM)
         Settings.BLACK_NIGHT_MODE.putValue(false)
         Settings.THEME_COLOR.putValue(ThemeColor.COLOR_PRIMARY)
+    }
+
+    @Test
+    fun offersDefaultIconOnceItStopsFollowingTheme() {
+        runBlocking { LauncherIcon.apply(ThemeColor.MATERIAL_RED) }
+        Settings.THEME_COLOR.putValue(ThemeColor.MATERIAL_RED)
+        val option = composeTestRule.onNodeWithText("Also apply to the app icon")
+        option.performScrollTo().performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Change the app icon?").assertDoesNotExist()
+        option.performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Change the app icon?").assertIsDisplayed()
     }
 
     @Test

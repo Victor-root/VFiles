@@ -55,11 +55,13 @@ fun LauncherIconPreferences() {
     LaunchedEffect(themeToApply) {
         if (themeToApply != offeredTheme) {
             offeredTheme = themeToApply
-            if (themeToApply != null) {
-                offerColor(
+            offerColor(
+                if (themeToApply != null) {
                     LauncherIcon.nearestColor(themeToApply.displayColor(context).toArgb())
-                )
-            }
+                } else {
+                    ThemeColor.COLOR_PRIMARY
+                }
+            )
         }
     }
 
