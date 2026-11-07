@@ -753,7 +753,9 @@
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Chọn ứng dụng mở từng loại tệp</string>
     <string name="settings_system_file_picker_title">VFiles làm trình chọn tệp mặc định</string>
-    <string name="settings_system_file_picker_summary">Ứng dụng mở VFiles để chọn tệp, trình chọn của Android bị tắt qua Shizuku</string>
+    <string name="settings_system_file_picker_summary">Ứng dụng mở VFiles để chọn tệp, trình chọn của Android bị tắt</string>
+    <string name="settings_system_file_picker_shizuku_required">Cần Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku chưa chạy, hãy khởi động để thay đổi tùy chọn này</string>
     <string name="settings_system_file_picker_not_found">Không tìm thấy trình chọn tệp của Android trên thiết bị này</string>
     <string name="settings_system_file_picker_confirm_title">Tắt trình chọn tệp của Android?</string>
     <string name="settings_system_file_picker_confirm_message">Ứng dụng yêu cầu tệp sẽ mở VFiles thay vì trình chọn của Android.\n\nKhông có gì bị gỡ cài đặt: tắt tùy chọn này sẽ đưa mọi thứ trở lại như cũ.\n\nQuan trọng: hãy tắt tùy chọn này trước khi gỡ VFiles. Nếu không, sẽ không ứng dụng nào chọn được tệp và một số có thể bị lỗi. Để khắc phục, hãy cài lại VFiles rồi tắt tùy chọn, hoặc chạy lệnh này từ máy tính:\n%1$s\n\nTrên các phiên bản Android mới, trình chọn ảnh vẫn được dùng và Android vẫn có thể hỏi dùng ứng dụng nào.</string>

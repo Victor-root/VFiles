@@ -831,7 +831,9 @@
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Escolha que aplicação abre cada tipo de ficheiro</string>
     <string name="settings_system_file_picker_title">VFiles como seletor de ficheiros predefinido</string>
-    <string name="settings_system_file_picker_summary">As aplicações abrem o VFiles para escolher ficheiros, com o seletor do Android desativado através do Shizuku</string>
+    <string name="settings_system_file_picker_summary">As aplicações abrem o VFiles para escolher ficheiros, com o seletor do Android desativado</string>
+    <string name="settings_system_file_picker_shizuku_required">Requer Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">O Shizuku não está em execução, inicie-o para alterar esta opção</string>
     <string name="settings_system_file_picker_not_found">O seletor de ficheiros do Android não foi encontrado neste dispositivo</string>
     <string name="settings_system_file_picker_confirm_title">Desativar o seletor de ficheiros do Android?</string>
     <string name="settings_system_file_picker_confirm_message">As aplicações que pedem ficheiros abrirão o VFiles em vez do seletor do Android.\n\nNada é desinstalado: desativar esta opção deixa tudo como estava.\n\nImportante: desative esta opção antes de desinstalar o VFiles. Caso contrário, nenhuma aplicação poderá escolher ficheiros e algumas podem bloquear. Para corrigir, reinstale o VFiles e desative a opção, ou execute isto num computador:\n%1$s\n\nEm versões recentes do Android, o seletor de fotos continua em uso, e o Android ainda pode perguntar que aplicação usar.</string>

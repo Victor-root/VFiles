@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,6 +38,8 @@ fun SystemFilePickerPreference() {
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { refreshCount++ }
     val hasPicker = remember(refreshCount) { SystemFilePicker.isAvailable }
     val isDisabled = remember(refreshCount) { SystemFilePicker.isDisabled }
+    val isShizukuAvailable by ShizukuFileServiceLauncher.isAvailableFlow
+        .collectAsStateWithLifecycle(ShizukuFileServiceLauncher.isAvailable())
     var isChanging by remember { mutableStateOf(false) }
     val setDisabled = { disabled: Boolean ->
         isChanging = true
@@ -61,18 +64,25 @@ fun SystemFilePickerPreference() {
             // Not disabled meanwhile, which would take the focus away from it on a D-pad.
             when {
                 isChanging -> {}
-                !ShizukuFileServiceLauncher.isAvailable() -> isShizukuMessageShown = true
+                !isShizukuAvailable -> isShizukuMessageShown = true
                 it -> isConfirmationShown = true
                 else -> setDisabled(false)
             }
         },
-        summary = if (hasPicker) {
-            stringResource(R.string.settings_system_file_picker_summary)
-        } else {
-            stringResource(R.string.settings_system_file_picker_not_found)
+        summary = when {
+            !hasPicker -> stringResource(R.string.settings_system_file_picker_not_found)
+            isShizukuAvailable ->
+                stringResource(R.string.settings_system_file_picker_summary) + "\n" +
+                    stringResource(R.string.settings_system_file_picker_shizuku_required)
+            else -> stringResource(R.string.settings_system_file_picker_summary)
         },
         enabled = hasPicker,
-        icon = painterResource(R.drawable.apps_icon_white_24dp)
+        icon = painterResource(R.drawable.apps_icon_white_24dp),
+        warning = if (hasPicker && !isShizukuAvailable) {
+            stringResource(R.string.settings_system_file_picker_shizuku_missing)
+        } else {
+            null
+        }
     )
     if (isConfirmationShown) {
         ConfirmationDialog(

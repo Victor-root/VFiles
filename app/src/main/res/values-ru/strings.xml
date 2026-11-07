@@ -867,7 +867,9 @@
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Выберите приложение для каждого типа файлов</string>
     <string name="settings_system_file_picker_title">VFiles как средство выбора файлов по умолчанию</string>
-    <string name="settings_system_file_picker_summary">Приложения открывают VFiles для выбора файлов, а средство выбора Android отключается через Shizuku</string>
+    <string name="settings_system_file_picker_summary">Приложения открывают VFiles для выбора файлов, а средство выбора Android отключено</string>
+    <string name="settings_system_file_picker_shizuku_required">Требуется Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku не запущен, запустите его, чтобы изменить этот параметр</string>
     <string name="settings_system_file_picker_not_found">Средство выбора файлов Android не найдено на этом устройстве</string>
     <string name="settings_system_file_picker_confirm_title">Отключить средство выбора файлов Android?</string>
     <string name="settings_system_file_picker_confirm_message">Приложения, запрашивающие файлы, будут открывать VFiles вместо средства выбора Android.\n\nНичего не удаляется: при выключении этого параметра всё вернётся как было.\n\nВажно: выключите этот параметр перед удалением VFiles. Иначе ни одно приложение не сможет выбирать файлы, а некоторые могут аварийно завершаться. Чтобы исправить это, установите VFiles заново и выключите параметр или выполните на компьютере:\n%1$s\n\nВ новых версиях Android средство выбора фото продолжает использоваться, и Android всё ещё может спрашивать, какое приложение использовать.</string>

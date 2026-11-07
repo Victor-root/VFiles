@@ -5,6 +5,8 @@
 
 package me.zhanghai.android.files.settings
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.text.TextUtils
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.assertIsDisplayed
@@ -30,6 +32,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import kotlinx.coroutines.runBlocking
+import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.custom.LauncherIcon
@@ -42,6 +45,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -59,6 +63,23 @@ class SettingsActivityTest {
         Settings.NIGHT_MODE.putValue(NightMode.FOLLOW_SYSTEM)
         Settings.BLACK_NIGHT_MODE.putValue(false)
         Settings.THEME_COLOR.putValue(ThemeColor.COLOR_PRIMARY)
+    }
+
+    @Test
+    fun warnsThatShizukuIsMissingForFilePicker() {
+        shadowOf(packageManager).installPackage(
+            PackageInfo().apply {
+                packageName = "com.android.documentsui"
+                applicationInfo = ApplicationInfo().apply {
+                    packageName = "com.android.documentsui"
+                    flags = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_INSTALLED
+                }
+            }
+        )
+        composeTestRule.activityRule.scenario.recreate()
+        composeTestRule.onNodeWithText(
+            "Shizuku isn't running, start it to change this option"
+        ).performScrollTo().assertIsDisplayed()
     }
 
     @Test

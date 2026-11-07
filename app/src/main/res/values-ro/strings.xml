@@ -828,7 +828,9 @@
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Alege ce aplicație deschide fiecare tip de fișier</string>
     <string name="settings_system_file_picker_title">VFiles ca selector de fișiere implicit</string>
-    <string name="settings_system_file_picker_summary">Aplicațiile deschid VFiles pentru a alege fișiere, cu selectorul Android dezactivat prin Shizuku</string>
+    <string name="settings_system_file_picker_summary">Aplicațiile deschid VFiles pentru a alege fișiere, cu selectorul Android dezactivat</string>
+    <string name="settings_system_file_picker_shizuku_required">Necesită Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku nu rulează, pornește-l pentru a schimba această opțiune</string>
     <string name="settings_system_file_picker_not_found">Selectorul de fișiere Android nu a fost găsit pe acest dispozitiv</string>
     <string name="settings_system_file_picker_confirm_title">Dezactivezi selectorul de fișiere Android?</string>
     <string name="settings_system_file_picker_confirm_message">Aplicațiile care cer fișiere vor deschide VFiles în locul selectorului Android.\n\nNu se dezinstalează nimic: dezactivarea acestei opțiuni readuce totul ca înainte.\n\nImportant: dezactivează această opțiune înainte de a dezinstala VFiles. Altfel, nicio aplicație nu va mai putea alege fișiere, iar unele s-ar putea bloca. Pentru reparare, reinstalează VFiles și dezactivează opțiunea sau rulează asta de pe un calculator:\n%1$s\n\nPe versiunile recente de Android, selectorul de fotografii rămâne în uz, iar Android poate întreba în continuare ce aplicație să folosească.</string>

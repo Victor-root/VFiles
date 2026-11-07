@@ -99,13 +99,15 @@ fun SwitchPreference(
     modifier: Modifier = Modifier,
     summary: String? = null,
     enabled: Boolean = true,
-    icon: Painter? = null
+    icon: Painter? = null,
+    warning: String? = null
 ) {
     PreferenceLayout(
         title = title,
         summary = summary,
         enabled = enabled,
         icon = icon,
+        warning = warning,
         modifier = modifier.toggleable(
             value = checked,
             enabled = enabled,
@@ -339,6 +341,7 @@ private fun PreferenceLayout(
     modifier: Modifier = Modifier,
     summaryMaxLines: Int = Int.MAX_VALUE,
     icon: Painter? = null,
+    warning: String? = null,
     trailingContent: (@Composable () -> Unit)? = null
 ) {
     Row(
@@ -374,6 +377,13 @@ private fun PreferenceLayout(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+            }
+            if (warning != null) {
+                Text(
+                    text = warning,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
         if (trailingContent != null) {
