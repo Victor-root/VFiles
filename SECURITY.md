@@ -6,4 +6,4 @@ Only the latest version of this app is currently being supported with security u
 
 ## Reporting a Vulnerability
 
-Please email dreaming.in.code.zh@gmail.com to report a vulnerability.
+Please report vulnerabilities privately through [GitHub](https://github.com/Victor-root/VFiles/security/advisories/new), from the Security tab of this repository. Do not open a public issue for them.
