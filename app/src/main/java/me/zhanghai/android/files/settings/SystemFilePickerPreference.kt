@@ -61,14 +61,15 @@ fun SystemFilePickerPreference() {
         title = stringResource(R.string.settings_system_file_picker_title),
         checked = isDisabled,
         onCheckedChange = {
+            // Not disabled meanwhile, which would take the focus away from it on a D-pad.
             when {
+                isChanging -> {}
                 !ShizukuFileServiceLauncher.isAvailable() -> isShizukuMessageShown = true
                 it -> isConfirmationShown = true
                 else -> setDisabled(false)
             }
         },
         summary = stringResource(R.string.settings_system_file_picker_summary),
-        enabled = !isChanging,
         icon = painterResource(R.drawable.apps_icon_white_24dp)
     )
     if (isConfirmationShown) {
