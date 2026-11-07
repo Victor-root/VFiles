@@ -113,6 +113,8 @@ Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `
 
 Avec [Shizuku](https://shizuku.rikka.app/) en marche, activez **VFiles comme sélecteur de fichiers par défaut** dans les réglages. VFiles explique ce qui va se passer avant de faire quoi que ce soit, et désactiver l'option remet le sélecteur dans son état d'origine. Les commandes ci-dessous font la même chose depuis un ordinateur.
 
+Si le sélecteur a été retiré avec `pm uninstall --user 0` au lieu d'être désactivé, l'option apparaît activée, et la désactiver le ramène depuis la copie qu'Android conserve.
+
 **Désactivez l'option avant de désinstaller VFiles.** Android ne réactive pas son sélecteur tout seul, donc plus aucune app ne pourrait choisir de fichiers. Pour réparer, réinstallez VFiles et désactivez l'option, ou lancez les commandes depuis un ordinateur.
 
 ### Désactiver (faire de VFiles le sélecteur par défaut)

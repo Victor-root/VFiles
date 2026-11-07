@@ -36,8 +36,8 @@ open class RemoteFileServiceInterface : IRemoteFileService.Stub() {
         }
     }
 
-    // Only the disabling that can be undone, which keeps the package and its data, and undoing it
-    // puts back the state the package had from the start.
+    // Only the disabling that can be undone, which keeps the package and its data. Undoing it also
+    // brings the package back if it was removed for the user, and puts back its original state.
     override fun setPackageEnabled(
         packageName: String,
         userId: Int,
@@ -45,8 +45,13 @@ open class RemoteFileServiceInterface : IRemoteFileService.Stub() {
         exception: ParcelableException
     ) {
         tryRun(exception) {
-            val command = if (isEnabled) "default-state" else "disable-user"
-            runCommand("/system/bin/pm", command, "--user", userId.toString(), packageName)
+            val user = userId.toString()
+            if (isEnabled) {
+                runCommand("/system/bin/pm", "install-existing", "--user", user, packageName)
+                runCommand("/system/bin/pm", "default-state", "--user", user, packageName)
+            } else {
+                runCommand("/system/bin/pm", "disable-user", "--user", user, packageName)
+            }
         }
     }
 

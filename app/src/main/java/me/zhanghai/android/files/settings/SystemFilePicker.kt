@@ -15,67 +15,73 @@ import java.io.IOException
 
 /**
  * The file picker of Android, which VFiles takes the place of once disabled. It's only ever
- * disabled, like with `pm disable-user`, so that enabling it again brings everything back.
+ * disabled, like with `pm disable-user`, so that enabling it again brings everything back. It may
+ * also have been removed for the user with adb, which Android keeps it around for.
  */
 object SystemFilePicker {
     private const val DOCUMENTS_UI_NAME = "documentsui"
-    val KNOWN_PACKAGE_NAMES = listOf("com.android.documentsui", "com.google.android.documentsui")
 
     // Android TV has no file picker, but this stub that does nothing takes the same requests.
     private const val TV_STUBS_PACKAGE_NAME = "com.android.tv.frameworkpackagestubs"
 
     /**
-     * The packages of the system file picker, whether disabled or not, by name rather than by what
-     * they handle, since a maker may have other apps of its own handling the same requests. Some
-     * devices leave disabled packages out of the list, but they can still be asked for by name.
+     * Found by name rather than by what they handle, since a maker may have other apps of its own
+     * handling the same requests.
      */
-    val packageNames: List<String>
-        get() {
-            val listedNames =
-                packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
-                    .filter { it.flags.hasBits(ApplicationInfo.FLAG_SYSTEM) }
-                    .map { it.packageName }
-                    .filter { DOCUMENTS_UI_NAME in it || it == TV_STUBS_PACKAGE_NAME }
-            return (listedNames + KNOWN_PACKAGE_NAMES.filter { it.isInstalled }).distinct().sorted()
-        }
-
-    private val String.isInstalled: Boolean
+    private val applications: List<ApplicationInfo>
         get() =
-            try {
-                packageManager.getApplicationEnabledSetting(this)
-                true
-            } catch (e: IllegalArgumentException) {
-                false
-            }
+            packageManager
+                .getInstalledApplications(
+                    PackageManager.MATCH_DISABLED_COMPONENTS or
+                        PackageManager.MATCH_UNINSTALLED_PACKAGES
+                )
+                .filter {
+                    it.flags.hasBits(ApplicationInfo.FLAG_SYSTEM) &&
+                        (DOCUMENTS_UI_NAME in it.packageName ||
+                            it.packageName == TV_STUBS_PACKAGE_NAME)
+                }
+                .sortedBy { it.packageName }
+
+    val isAvailable: Boolean
+        get() = applications.isNotEmpty()
 
     val isDisabled: Boolean
-        get() = packageNames.let { names -> names.isNotEmpty() && names.all { it.isDisabled } }
+        get() = applications.let { it.isNotEmpty() && it.all { app -> app.isDisabledOrRemoved } }
 
-    private val String.isDisabled: Boolean
+    private val ApplicationInfo.isRemoved: Boolean
+        get() = !flags.hasBits(ApplicationInfo.FLAG_INSTALLED)
+
+    private val ApplicationInfo.isDisabledOrRemoved: Boolean
         get() =
-            when (packageManager.getApplicationEnabledSetting(this)) {
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER -> true
-                else -> false
-            }
+            isRemoved ||
+                when (packageManager.getApplicationEnabledSetting(packageName)) {
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER -> true
+                    else -> false
+                }
 
     /** What restores the file picker from a computer, for when the app can't do it anymore. */
     val enableCommand: String
-        get() = createCommand("enable")
+        get() =
+            applications.joinToString("\n") {
+                val command = if (it.isRemoved) "install-existing" else "enable"
+                createCommand(command, it.packageName)
+            }
 
     val disableCommand: String
-        get() = createCommand("disable-user")
+        get() =
+            applications.joinToString("\n") { createCommand("disable-user", it.packageName) }
 
-    private fun createCommand(command: String): String =
-        packageNames.joinToString("\n") { "adb shell pm $command --user $userId $it" }
+    private fun createCommand(command: String, packageName: String): String =
+        "adb shell pm $command --user $userId $packageName"
 
     private val userId: Int
         get() = Process.myUserHandle().hashCode()
 
     @Throws(IOException::class)
     fun setDisabled(isDisabled: Boolean) {
-        for (packageName in packageNames) {
-            RootFileService.setPackageEnabled(packageName, userId, !isDisabled)
+        for (application in applications) {
+            RootFileService.setPackageEnabled(application.packageName, userId, !isDisabled)
         }
         if (this.isDisabled != isDisabled) {
             throw IOException("The file picker didn't change, it's disabled: ${this.isDisabled}")

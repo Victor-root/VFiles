@@ -30,7 +30,7 @@ class SystemFilePickerTest {
                 this.packageName = packageName
                 applicationInfo = ApplicationInfo().apply {
                     this.packageName = packageName
-                    flags = ApplicationInfo.FLAG_SYSTEM
+                    flags = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_INSTALLED
                 }
             }
         )
@@ -42,22 +42,21 @@ class SystemFilePickerTest {
 
     @Test
     fun ignoresOtherFileAppsOfTheSystem() {
-        addSystemFileApp(DOCUMENTS_UI)
         addSystemFileApp("com.maker.files")
-        assertEquals(listOf(DOCUMENTS_UI), SystemFilePicker.packageNames)
+        assertFalse(SystemFilePicker.isAvailable)
     }
 
     @Test
     fun findsPickerOnceDisabled() {
         addSystemFileApp(DOCUMENTS_UI)
         setEnabledSetting(DOCUMENTS_UI, PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER)
-        assertEquals(listOf(DOCUMENTS_UI), SystemFilePicker.packageNames)
+        assertTrue(SystemFilePicker.isAvailable)
     }
 
     @Test
     fun includesStubOfAndroidTv() {
         addSystemFileApp(TV_STUBS)
-        assertEquals(listOf(TV_STUBS), SystemFilePicker.packageNames)
+        assertTrue(SystemFilePicker.isAvailable)
     }
 
     @Test

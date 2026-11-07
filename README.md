@@ -109,6 +109,8 @@ Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DO
 
 With [Shizuku](https://shizuku.rikka.app/) running, turn on **VFiles as the default file picker** in the settings. VFiles explains what will happen before doing anything, and turning the option off puts back the state the picker had. The commands below do the same from a computer.
 
+If the picker was removed with `pm uninstall --user 0` instead of disabled, the option shows as turned on, and turning it off brings the picker back from the copy Android keeps.
+
 **Turn the option off before uninstalling VFiles.** Android doesn't turn its picker back on by itself, so no app could pick files anymore. To repair that, install VFiles again and turn the option off, or run the commands from a computer.
 
 ### Disable (make VFiles the default picker)
