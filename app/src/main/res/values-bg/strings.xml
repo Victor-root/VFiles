@@ -798,10 +798,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku не работи, стартирайте го, за да промените тази опция</string>
     <string name="settings_system_file_picker_not_found">Изборът на файлове на Android не е намерен на това устройство</string>
     <string name="settings_system_file_picker_confirm_title">Да се изключи ли изборът на файлове на Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Приложенията, които искат файлове, ще отварят VFiles вместо избора на файлове на Android.\n\nНищо не се деинсталира: изключването на тази опция връща всичко както е било.\n\nВажно: изключете тази опция, преди да деинсталирате VFiles. Иначе никое приложение няма да може да избира файлове и някои може да се сринат. За поправка инсталирайте отново VFiles и изключете опцията или изпълнете това от компютър:\n%1$s\n\nВ новите версии на Android изборът на снимки остава в употреба и Android може пак да пита кое приложение да се използва.</string>
+    <string name="settings_system_file_picker_confirm_message">Приложенията, които искат файлове, ще отварят VFiles вместо избора на файлове на Android.\n\nНищо не се деинсталира: изключването на тази опция връща всичко както е било.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Важно</string>
+    <string name="settings_system_file_picker_confirm_important">Изключете тази опция, преди да деинсталирате VFiles. Иначе никое приложение няма да може да избира файлове и някои може да се сринат. За поправка инсталирайте отново VFiles и изключете опцията или изпълнете това от компютър:</string>
+    <string name="settings_system_file_picker_confirm_note">В новите версии на Android изборът на снимки остава в употреба и Android може пак да пита кое приложение да се използва.</string>
     <string name="settings_system_file_picker_confirm_action">Изключване</string>
     <string name="settings_system_file_picker_shizuku_title">Нужен е Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Стартирайте Shizuku, за да промените това оттук, или изпълнете това от компютър:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Стартирайте Shizuku, за да промените това оттук, или изпълнете това от компютър:</string>
     <string name="settings_system_file_picker_error">Изборът на файлове не може да бъде променен</string>
     <string name="settings_default_apps_text">Текст</string>
     <string name="settings_default_apps_title">Приложения по подразбиране</string>

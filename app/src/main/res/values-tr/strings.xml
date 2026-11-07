@@ -794,10 +794,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku çalışmıyor, bu seçeneği değiştirmek için başlatın</string>
     <string name="settings_system_file_picker_not_found">Bu cihazda Android dosya seçicisi bulunamadı</string>
     <string name="settings_system_file_picker_confirm_title">Android dosya seçicisi kapatılsın mı?</string>
-    <string name="settings_system_file_picker_confirm_message">Dosya isteyen uygulamalar Android dosya seçicisi yerine VFiles\'ı açar.\n\nHiçbir şey kaldırılmaz: bu seçeneği kapatmak her şeyi eski haline getirir.\n\nÖnemli: VFiles\'ı kaldırmadan önce bu seçeneği kapatın. Aksi takdirde hiçbir uygulama dosya seçemez ve bazıları kilitlenebilir. Düzeltmek için VFiles\'ı yeniden yükleyip seçeneği kapatın veya bunu bir bilgisayardan çalıştırın:\n%1$s\n\nYeni Android sürümlerinde fotoğraf seçici kullanılmaya devam eder ve Android hangi uygulamanın kullanılacağını yine sorabilir.</string>
+    <string name="settings_system_file_picker_confirm_message">Dosya isteyen uygulamalar Android dosya seçicisi yerine VFiles\'ı açar.\n\nHiçbir şey kaldırılmaz: bu seçeneği kapatmak her şeyi eski haline getirir.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Önemli</string>
+    <string name="settings_system_file_picker_confirm_important">VFiles\'ı kaldırmadan önce bu seçeneği kapatın. Aksi takdirde hiçbir uygulama dosya seçemez ve bazıları kilitlenebilir. Düzeltmek için VFiles\'ı yeniden yükleyip seçeneği kapatın veya bunu bir bilgisayardan çalıştırın:</string>
+    <string name="settings_system_file_picker_confirm_note">Yeni Android sürümlerinde fotoğraf seçici kullanılmaya devam eder ve Android hangi uygulamanın kullanılacağını yine sorabilir.</string>
     <string name="settings_system_file_picker_confirm_action">Kapat</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku gerekli</string>
-    <string name="settings_system_file_picker_shizuku_message">Bunu buradan değiştirmek için Shizuku\'yu başlatın veya bunu bir bilgisayardan çalıştırın:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Bunu buradan değiştirmek için Shizuku\'yu başlatın veya bunu bir bilgisayardan çalıştırın:</string>
     <string name="settings_system_file_picker_error">Dosya seçici değiştirilemiyor</string>
     <string name="settings_default_apps_text">Metin</string>
     <string name="settings_default_apps_title">Varsayılan uygulamalar</string>

@@ -794,10 +794,13 @@
     <string name="settings_system_file_picker_shizuku_missing">A Shizuku nem fut, indítsa el a beállítás módosításához</string>
     <string name="settings_system_file_picker_not_found">Az Android fájlválasztója nem található ezen az eszközön</string>
     <string name="settings_system_file_picker_confirm_title">Kikapcsolja az Android fájlválasztóját?</string>
-    <string name="settings_system_file_picker_confirm_message">A fájlokat kérő alkalmazások a VFilest nyitják meg az Android fájlválasztója helyett.\n\nSemmi sem lesz eltávolítva: ennek a beállításnak a kikapcsolása mindent visszaállít.\n\nFontos: a VFiles eltávolítása előtt kapcsolja ki ezt a beállítást. Különben egyetlen alkalmazás sem tud fájlt választani, és néhány összeomolhat. Javításhoz telepítse újra a VFilest és kapcsolja ki a beállítást, vagy futtassa ezt számítógépről:\n%1$s\n\nAz Android újabb verzióin továbbra is a fotóválasztó használatos, és az Android továbbra is rákérdezhet, melyik alkalmazást használja.</string>
+    <string name="settings_system_file_picker_confirm_message">A fájlokat kérő alkalmazások a VFilest nyitják meg az Android fájlválasztója helyett.\n\nSemmi sem lesz eltávolítva: ennek a beállításnak a kikapcsolása mindent visszaállít.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Fontos</string>
+    <string name="settings_system_file_picker_confirm_important">A VFiles eltávolítása előtt kapcsolja ki ezt a beállítást. Különben egyetlen alkalmazás sem tud fájlt választani, és néhány összeomolhat. Javításhoz telepítse újra a VFilest és kapcsolja ki a beállítást, vagy futtassa ezt számítógépről:</string>
+    <string name="settings_system_file_picker_confirm_note">Az Android újabb verzióin továbbra is a fotóválasztó használatos, és az Android továbbra is rákérdezhet, melyik alkalmazást használja.</string>
     <string name="settings_system_file_picker_confirm_action">Kikapcsolás</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku szükséges</string>
-    <string name="settings_system_file_picker_shizuku_message">Indítsa el a Shizukut a módosításhoz, vagy futtassa ezt számítógépről:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Indítsa el a Shizukut a módosításhoz, vagy futtassa ezt számítógépről:</string>
     <string name="settings_system_file_picker_error">A fájlválasztó nem módosítható</string>
     <string name="settings_default_apps_text">Szöveg</string>
     <string name="settings_default_apps_title">Alapértelmezett alkalmazások</string>

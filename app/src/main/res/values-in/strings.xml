@@ -761,10 +761,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku tidak berjalan, mulai untuk mengubah opsi ini</string>
     <string name="settings_system_file_picker_not_found">Pemilih file Android tidak ditemukan di perangkat ini</string>
     <string name="settings_system_file_picker_confirm_title">Nonaktifkan pemilih file Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Aplikasi yang meminta file akan membuka VFiles, bukan pemilih file Android.\n\nTidak ada yang dicopot: menonaktifkan opsi ini mengembalikan semuanya seperti semula.\n\nPenting: nonaktifkan opsi ini sebelum mencopot VFiles. Jika tidak, tidak ada aplikasi yang bisa memilih file, dan beberapa mungkin error. Untuk memperbaikinya, instal ulang VFiles lalu nonaktifkan opsi ini, atau jalankan ini dari komputer:\n%1$s\n\nPada versi Android terbaru, pemilih foto tetap digunakan, dan Android mungkin masih menanyakan aplikasi mana yang digunakan.</string>
+    <string name="settings_system_file_picker_confirm_message">Aplikasi yang meminta file akan membuka VFiles, bukan pemilih file Android.\n\nTidak ada yang dicopot: menonaktifkan opsi ini mengembalikan semuanya seperti semula.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Penting</string>
+    <string name="settings_system_file_picker_confirm_important">Nonaktifkan opsi ini sebelum mencopot VFiles. Jika tidak, tidak ada aplikasi yang bisa memilih file, dan beberapa mungkin error. Untuk memperbaikinya, instal ulang VFiles lalu nonaktifkan opsi ini, atau jalankan ini dari komputer:</string>
+    <string name="settings_system_file_picker_confirm_note">Pada versi Android terbaru, pemilih foto tetap digunakan, dan Android mungkin masih menanyakan aplikasi mana yang digunakan.</string>
     <string name="settings_system_file_picker_confirm_action">Nonaktifkan</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku diperlukan</string>
-    <string name="settings_system_file_picker_shizuku_message">Mulai Shizuku untuk mengubahnya dari sini, atau jalankan ini dari komputer:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Mulai Shizuku untuk mengubahnya dari sini, atau jalankan ini dari komputer:</string>
     <string name="settings_system_file_picker_error">Tidak dapat mengubah pemilih file</string>
     <string name="settings_default_apps_text">Teks</string>
     <string name="settings_default_apps_title">Aplikasi default</string>

@@ -798,10 +798,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku draait niet, start het om deze optie te wijzigen</string>
     <string name="settings_system_file_picker_not_found">De bestandskiezer van Android is niet gevonden op dit apparaat</string>
     <string name="settings_system_file_picker_confirm_title">Bestandskiezer van Android uitschakelen?</string>
-    <string name="settings_system_file_picker_confirm_message">Apps die om bestanden vragen, openen VFiles in plaats van de bestandskiezer van Android.\n\nEr wordt niets verwijderd: als je deze optie uitzet, wordt alles weer zoals het was.\n\nBelangrijk: zet deze optie uit voordat je VFiles verwijdert. Anders kan geen enkele app nog bestanden kiezen en kunnen sommige crashen. Installeer VFiles opnieuw en zet de optie uit om dit te herstellen, of voer dit uit vanaf een computer:\n%1$s\n\nOp recente Android-versies blijft de fotokiezer in gebruik, en Android kan nog steeds vragen welke app je wilt gebruiken.</string>
+    <string name="settings_system_file_picker_confirm_message">Apps die om bestanden vragen, openen VFiles in plaats van de bestandskiezer van Android.\n\nEr wordt niets verwijderd: als je deze optie uitzet, wordt alles weer zoals het was.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Belangrijk</string>
+    <string name="settings_system_file_picker_confirm_important">Zet deze optie uit voordat je VFiles verwijdert. Anders kan geen enkele app nog bestanden kiezen en kunnen sommige crashen. Installeer VFiles opnieuw en zet de optie uit om dit te herstellen, of voer dit uit vanaf een computer:</string>
+    <string name="settings_system_file_picker_confirm_note">Op recente Android-versies blijft de fotokiezer in gebruik, en Android kan nog steeds vragen welke app je wilt gebruiken.</string>
     <string name="settings_system_file_picker_confirm_action">Uitschakelen</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku is nodig</string>
-    <string name="settings_system_file_picker_shizuku_message">Start Shizuku om dit hier te wijzigen, of voer dit uit vanaf een computer:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Start Shizuku om dit hier te wijzigen, of voer dit uit vanaf een computer:</string>
     <string name="settings_system_file_picker_error">Kan de bestandskiezer niet wijzigen</string>
     <string name="settings_default_apps_text">Tekst</string>
     <string name="settings_default_apps_title">Standaard-apps</string>

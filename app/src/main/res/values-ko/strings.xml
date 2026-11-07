@@ -762,10 +762,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku가 실행되고 있지 않습니다. 이 옵션을 변경하려면 시작하세요</string>
     <string name="settings_system_file_picker_not_found">이 기기에서 Android 파일 선택기를 찾지 못했습니다</string>
     <string name="settings_system_file_picker_confirm_title">Android 파일 선택기를 끌까요?</string>
-    <string name="settings_system_file_picker_confirm_message">파일을 요청하는 앱은 Android 파일 선택기 대신 VFiles를 엽니다.\n\n아무것도 제거되지 않습니다. 이 옵션을 끄면 모든 것이 이전으로 돌아갑니다.\n\n중요: VFiles를 제거하기 전에 이 옵션을 끄세요. 그렇지 않으면 어떤 앱도 파일을 선택할 수 없고 일부 앱은 다운될 수 있습니다. 복구하려면 VFiles를 다시 설치하고 옵션을 끄거나, 컴퓨터에서 다음을 실행하세요:\n%1$s\n\n최신 Android에서는 사진 선택기가 계속 사용되며, Android가 사용할 앱을 물어볼 수도 있습니다.</string>
+    <string name="settings_system_file_picker_confirm_message">파일을 요청하는 앱은 Android 파일 선택기 대신 VFiles를 엽니다.\n\n아무것도 제거되지 않습니다. 이 옵션을 끄면 모든 것이 이전으로 돌아갑니다.</string>
+    <string name="settings_system_file_picker_confirm_important_title">중요</string>
+    <string name="settings_system_file_picker_confirm_important">VFiles를 제거하기 전에 이 옵션을 끄세요. 그렇지 않으면 어떤 앱도 파일을 선택할 수 없고 일부 앱은 다운될 수 있습니다. 복구하려면 VFiles를 다시 설치하고 옵션을 끄거나, 컴퓨터에서 다음을 실행하세요:</string>
+    <string name="settings_system_file_picker_confirm_note">최신 Android에서는 사진 선택기가 계속 사용되며, Android가 사용할 앱을 물어볼 수도 있습니다.</string>
     <string name="settings_system_file_picker_confirm_action">끄기</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku가 필요합니다</string>
-    <string name="settings_system_file_picker_shizuku_message">Shizuku를 시작해 여기에서 변경하거나, 컴퓨터에서 다음을 실행하세요:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Shizuku를 시작해 여기에서 변경하거나, 컴퓨터에서 다음을 실행하세요:</string>
     <string name="settings_system_file_picker_error">파일 선택기를 변경할 수 없습니다</string>
     <string name="settings_default_apps_text">텍스트</string>
     <string name="settings_default_apps_title">기본 앱</string>

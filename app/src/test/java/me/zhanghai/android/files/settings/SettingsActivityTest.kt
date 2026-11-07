@@ -32,12 +32,14 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import kotlinx.coroutines.runBlocking
+import me.zhanghai.android.files.app.clipboardManager
 import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.test.AppProviderRule
 import me.zhanghai.android.files.test.leaveTouchMode
 import me.zhanghai.android.files.theme.custom.LauncherIcon
 import me.zhanghai.android.files.theme.custom.ThemeColor
 import me.zhanghai.android.files.theme.night.NightMode
+import me.zhanghai.android.files.util.primaryText
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -65,8 +67,7 @@ class SettingsActivityTest {
         Settings.THEME_COLOR.putValue(ThemeColor.COLOR_PRIMARY)
     }
 
-    @Test
-    fun warnsThatShizukuIsMissingForFilePicker() {
+    private fun installFilePicker() {
         shadowOf(packageManager).installPackage(
             PackageInfo().apply {
                 packageName = "com.android.documentsui"
@@ -77,9 +78,26 @@ class SettingsActivityTest {
             }
         )
         composeTestRule.activityRule.scenario.recreate()
+    }
+
+    @Test
+    fun warnsThatShizukuIsMissingForFilePicker() {
+        installFilePicker()
         composeTestRule.onNodeWithText(
             "Shizuku isn't running, start it to change this option"
         ).performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun copiesCommandOfFilePickerWithoutShizuku() {
+        installFilePicker()
+        composeTestRule.onNodeWithText("VFiles as the default file picker")
+            .performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Copy").performClick()
+        assertEquals(
+            "adb shell pm disable-user --user 0 com.android.documentsui",
+            clipboardManager.primaryText.toString()
+        )
     }
 
     @Test

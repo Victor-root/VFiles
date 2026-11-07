@@ -796,10 +796,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku اجرا نمی‌شود، برای تغییر این گزینه آن را راه‌اندازی کنید</string>
     <string name="settings_system_file_picker_not_found">انتخابگر فایل Android در این دستگاه پیدا نشد</string>
     <string name="settings_system_file_picker_confirm_title">انتخابگر فایل Android خاموش شود؟</string>
-    <string name="settings_system_file_picker_confirm_message">برنامه‌هایی که فایل می‌خواهند به‌جای انتخابگر Android، VFiles را باز می‌کنند.\n\nچیزی حذف نمی‌شود: خاموش کردن این گزینه همه چیز را به حالت قبل برمی‌گرداند.\n\nمهم: پیش از حذف VFiles این گزینه را خاموش کنید. در غیر این صورت هیچ برنامه‌ای نمی‌تواند فایل انتخاب کند و بعضی ممکن است از کار بیفتند. برای رفع مشکل، VFiles را دوباره نصب کنید و گزینه را خاموش کنید، یا این را از رایانه اجرا کنید:\n%1$s\n\nدر نسخه‌های جدید Android، انتخابگر عکس همچنان استفاده می‌شود و Android ممکن است باز هم بپرسد کدام برنامه استفاده شود.</string>
+    <string name="settings_system_file_picker_confirm_message">برنامه‌هایی که فایل می‌خواهند به‌جای انتخابگر Android، VFiles را باز می‌کنند.\n\nچیزی حذف نمی‌شود: خاموش کردن این گزینه همه چیز را به حالت قبل برمی‌گرداند.</string>
+    <string name="settings_system_file_picker_confirm_important_title">مهم</string>
+    <string name="settings_system_file_picker_confirm_important">پیش از حذف VFiles این گزینه را خاموش کنید. در غیر این صورت هیچ برنامه‌ای نمی‌تواند فایل انتخاب کند و بعضی ممکن است از کار بیفتند. برای رفع مشکل، VFiles را دوباره نصب کنید و گزینه را خاموش کنید، یا این را از رایانه اجرا کنید:</string>
+    <string name="settings_system_file_picker_confirm_note">در نسخه‌های جدید Android، انتخابگر عکس همچنان استفاده می‌شود و Android ممکن است باز هم بپرسد کدام برنامه استفاده شود.</string>
     <string name="settings_system_file_picker_confirm_action">خاموش کردن</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku لازم است</string>
-    <string name="settings_system_file_picker_shizuku_message">Shizuku را راه‌اندازی کنید تا از اینجا تغییر دهید، یا این را از رایانه اجرا کنید:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Shizuku را راه‌اندازی کنید تا از اینجا تغییر دهید، یا این را از رایانه اجرا کنید:</string>
     <string name="settings_system_file_picker_error">تغییر انتخابگر فایل ممکن نیست</string>
     <string name="settings_default_apps_text">متن</string>
     <string name="settings_default_apps_title">برنامه‌های پیش‌فرض</string>

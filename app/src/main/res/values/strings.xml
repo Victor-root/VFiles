@@ -872,10 +872,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku isn\'t running, start it to change this option</string>
     <string name="settings_system_file_picker_not_found">Android\'s file picker wasn\'t found on this device</string>
     <string name="settings_system_file_picker_confirm_title">Turn off the file picker of Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Apps asking for files will open VFiles instead of the file picker of Android.\n\nNothing is uninstalled: turning this option off brings everything back as it was.\n\nImportant: turn this option off before uninstalling VFiles. Otherwise no app can pick files anymore, and some may crash. To repair that, install VFiles again and turn this option off, or run this from a computer:\n%1$s\n\nOn recent versions of Android, the photo picker stays in use, and Android may still ask which app to use.</string>
+    <string name="settings_system_file_picker_confirm_message">Apps asking for files will open VFiles instead of the file picker of Android.\n\nNothing is uninstalled: turning this option off brings everything back as it was.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Important</string>
+    <string name="settings_system_file_picker_confirm_important">Turn this option off before uninstalling VFiles. Otherwise no app can pick files anymore, and some may crash. To repair that, install VFiles again and turn this option off, or run this from a computer:</string>
+    <string name="settings_system_file_picker_confirm_note">On recent versions of Android, the photo picker stays in use, and Android may still ask which app to use.</string>
     <string name="settings_system_file_picker_confirm_action">Turn off</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku is needed</string>
-    <string name="settings_system_file_picker_shizuku_message">Start Shizuku to change this from here, or run this from a computer:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Start Shizuku to change this from here, or run this from a computer:</string>
     <string name="settings_system_file_picker_error">Unable to change the file picker</string>
     <string name="settings_default_apps_ask">Ask every time</string>
     <string name="settings_default_apps_android_default_format">Android default (%1$s)</string>

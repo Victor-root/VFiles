@@ -740,10 +740,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku ei ole käynnissä, käynnistä se muuttaaksesi tämän asetuksen</string>
     <string name="settings_system_file_picker_not_found">Androidin tiedostonvalitsinta ei löytynyt tästä laitteesta</string>
     <string name="settings_system_file_picker_confirm_title">Poistetaanko Androidin tiedostonvalitsin käytöstä?</string>
-    <string name="settings_system_file_picker_confirm_message">Tiedostoja pyytävät sovellukset avaavat VFilesin Androidin tiedostonvalitsimen sijaan.\n\nMitään ei poisteta: tämän asetuksen poistaminen käytöstä palauttaa kaiken ennalleen.\n\nTärkeää: poista tämä asetus käytöstä ennen VFilesin poistamista. Muuten mikään sovellus ei voi enää valita tiedostoja, ja jotkin voivat kaatua. Korjaa asentamalla VFiles uudelleen ja poistamalla asetus käytöstä, tai suorita tämä tietokoneelta:\n%1$s\n\nUudemmissa Android-versioissa kuvavalitsin pysyy käytössä, ja Android voi yhä kysyä, mitä sovellusta käytetään.</string>
+    <string name="settings_system_file_picker_confirm_message">Tiedostoja pyytävät sovellukset avaavat VFilesin Androidin tiedostonvalitsimen sijaan.\n\nMitään ei poisteta: tämän asetuksen poistaminen käytöstä palauttaa kaiken ennalleen.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Tärkeää</string>
+    <string name="settings_system_file_picker_confirm_important">Poista tämä asetus käytöstä ennen VFilesin poistamista. Muuten mikään sovellus ei voi enää valita tiedostoja, ja jotkin voivat kaatua. Korjaa asentamalla VFiles uudelleen ja poistamalla asetus käytöstä, tai suorita tämä tietokoneelta:</string>
+    <string name="settings_system_file_picker_confirm_note">Uudemmissa Android-versioissa kuvavalitsin pysyy käytössä, ja Android voi yhä kysyä, mitä sovellusta käytetään.</string>
     <string name="settings_system_file_picker_confirm_action">Poista käytöstä</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku tarvitaan</string>
-    <string name="settings_system_file_picker_shizuku_message">Käynnistä Shizuku muuttaaksesi tämän täältä, tai suorita tämä tietokoneelta:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Käynnistä Shizuku muuttaaksesi tämän täältä, tai suorita tämä tietokoneelta:</string>
     <string name="settings_system_file_picker_error">Tiedostonvalitsinta ei voi vaihtaa</string>
     <string name="settings_default_apps_text">Teksti</string>
     <string name="settings_default_apps_title">Oletussovellukset</string>

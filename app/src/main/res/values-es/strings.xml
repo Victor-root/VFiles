@@ -834,10 +834,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku no está en marcha, inícialo para cambiar esta opción</string>
     <string name="settings_system_file_picker_not_found">No se ha encontrado el selector de archivos de Android en este dispositivo</string>
     <string name="settings_system_file_picker_confirm_title">¿Desactivar el selector de archivos de Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Las aplicaciones que pidan archivos abrirán VFiles en lugar del selector de Android.\n\nNo se desinstala nada: desactivar esta opción lo deja todo como estaba.\n\nImportante: desactiva esta opción antes de desinstalar VFiles. Si no, ninguna aplicación podrá elegir archivos y algunas podrían cerrarse. Para repararlo, reinstala VFiles y desactiva la opción, o ejecuta esto desde un ordenador:\n%1$s\n\nEn versiones recientes de Android se sigue usando el selector de fotos, y Android aún puede preguntar qué aplicación usar.</string>
+    <string name="settings_system_file_picker_confirm_message">Las aplicaciones que pidan archivos abrirán VFiles en lugar del selector de Android.\n\nNo se desinstala nada: desactivar esta opción lo deja todo como estaba.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Importante</string>
+    <string name="settings_system_file_picker_confirm_important">Desactiva esta opción antes de desinstalar VFiles. Si no, ninguna aplicación podrá elegir archivos y algunas podrían cerrarse. Para repararlo, reinstala VFiles y desactiva la opción, o ejecuta esto desde un ordenador:</string>
+    <string name="settings_system_file_picker_confirm_note">En versiones recientes de Android se sigue usando el selector de fotos, y Android aún puede preguntar qué aplicación usar.</string>
     <string name="settings_system_file_picker_confirm_action">Desactivar</string>
     <string name="settings_system_file_picker_shizuku_title">Se necesita Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Inicia Shizuku para cambiarlo desde aquí, o ejecuta esto desde un ordenador:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Inicia Shizuku para cambiarlo desde aquí, o ejecuta esto desde un ordenador:</string>
     <string name="settings_system_file_picker_error">No se puede cambiar el selector de archivos</string>
     <string name="settings_default_apps_text">Texto</string>
     <string name="settings_default_apps_title">Apps predeterminadas</string>

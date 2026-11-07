@@ -870,10 +870,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku neběží, spusťte ho, abyste mohli tuto možnost změnit</string>
     <string name="settings_system_file_picker_not_found">Výběr souborů Androidu nebyl v tomto zařízení nalezen</string>
     <string name="settings_system_file_picker_confirm_title">Vypnout výběr souborů Androidu?</string>
-    <string name="settings_system_file_picker_confirm_message">Aplikace žádající o soubory otevřou VFiles místo výběru souborů Androidu.\n\nNic se neodinstaluje: vypnutím této možnosti se vše vrátí do původního stavu.\n\nDůležité: před odinstalací VFiles tuto možnost vypněte. Jinak už žádná aplikace nebude moci vybírat soubory a některé mohou spadnout. Opravíte to opětovnou instalací VFiles a vypnutím možnosti, nebo spuštěním tohoto z počítače:\n%1$s\n\nV novějších verzích Androidu se dál používá výběr fotek a Android se může stále ptát, kterou aplikaci použít.</string>
+    <string name="settings_system_file_picker_confirm_message">Aplikace žádající o soubory otevřou VFiles místo výběru souborů Androidu.\n\nNic se neodinstaluje: vypnutím této možnosti se vše vrátí do původního stavu.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Důležité</string>
+    <string name="settings_system_file_picker_confirm_important">Před odinstalací VFiles tuto možnost vypněte. Jinak už žádná aplikace nebude moci vybírat soubory a některé mohou spadnout. Opravíte to opětovnou instalací VFiles a vypnutím možnosti, nebo spuštěním tohoto z počítače:</string>
+    <string name="settings_system_file_picker_confirm_note">V novějších verzích Androidu se dál používá výběr fotek a Android se může stále ptát, kterou aplikaci použít.</string>
     <string name="settings_system_file_picker_confirm_action">Vypnout</string>
     <string name="settings_system_file_picker_shizuku_title">Je potřeba Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Spusťte Shizuku a změňte to odtud, nebo spusťte toto z počítače:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Spusťte Shizuku a změňte to odtud, nebo spusťte toto z počítače:</string>
     <string name="settings_system_file_picker_error">Výběr souborů nelze změnit</string>
     <string name="settings_default_apps_text">Text</string>
     <string name="settings_default_apps_title">Výchozí aplikace</string>

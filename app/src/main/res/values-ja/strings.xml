@@ -762,10 +762,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku が実行されていません。このオプションを変更するには起動してください</string>
     <string name="settings_system_file_picker_not_found">このデバイスでは Android のファイル選択が見つかりませんでした</string>
     <string name="settings_system_file_picker_confirm_title">Android のファイル選択を無効にしますか？</string>
-    <string name="settings_system_file_picker_confirm_message">ファイルを要求するアプリは、Android のファイル選択の代わりに VFiles を開きます。\n\n何もアンインストールされません。このオプションをオフにすると、すべて元に戻ります。\n\n重要: VFiles をアンインストールする前に、このオプションをオフにしてください。オフにしないと、どのアプリもファイルを選べなくなり、一部のアプリがクラッシュする場合があります。修復するには、VFiles を再インストールしてオプションをオフにするか、パソコンから次を実行してください:\n%1$s\n\n最近の Android では写真選択ツールは引き続き使われ、Android が使用するアプリを尋ねることもあります。</string>
+    <string name="settings_system_file_picker_confirm_message">ファイルを要求するアプリは、Android のファイル選択の代わりに VFiles を開きます。\n\n何もアンインストールされません。このオプションをオフにすると、すべて元に戻ります。</string>
+    <string name="settings_system_file_picker_confirm_important_title">重要</string>
+    <string name="settings_system_file_picker_confirm_important">VFiles をアンインストールする前に、このオプションをオフにしてください。オフにしないと、どのアプリもファイルを選べなくなり、一部のアプリがクラッシュする場合があります。修復するには、VFiles を再インストールしてオプションをオフにするか、パソコンから次を実行してください:</string>
+    <string name="settings_system_file_picker_confirm_note">最近の Android では写真選択ツールは引き続き使われ、Android が使用するアプリを尋ねることもあります。</string>
     <string name="settings_system_file_picker_confirm_action">無効にする</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku が必要です</string>
-    <string name="settings_system_file_picker_shizuku_message">Shizuku を起動してここから変更するか、パソコンから次を実行してください:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Shizuku を起動してここから変更するか、パソコンから次を実行してください:</string>
     <string name="settings_system_file_picker_error">ファイル選択を変更できません</string>
     <string name="settings_default_apps_text">テキスト</string>
     <string name="settings_default_apps_title">デフォルトのアプリ</string>

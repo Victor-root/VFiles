@@ -872,10 +872,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku не запущен, запустите его, чтобы изменить этот параметр</string>
     <string name="settings_system_file_picker_not_found">Средство выбора файлов Android не найдено на этом устройстве</string>
     <string name="settings_system_file_picker_confirm_title">Отключить средство выбора файлов Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Приложения, запрашивающие файлы, будут открывать VFiles вместо средства выбора Android.\n\nНичего не удаляется: при выключении этого параметра всё вернётся как было.\n\nВажно: выключите этот параметр перед удалением VFiles. Иначе ни одно приложение не сможет выбирать файлы, а некоторые могут аварийно завершаться. Чтобы исправить это, установите VFiles заново и выключите параметр или выполните на компьютере:\n%1$s\n\nВ новых версиях Android средство выбора фото продолжает использоваться, и Android всё ещё может спрашивать, какое приложение использовать.</string>
+    <string name="settings_system_file_picker_confirm_message">Приложения, запрашивающие файлы, будут открывать VFiles вместо средства выбора Android.\n\nНичего не удаляется: при выключении этого параметра всё вернётся как было.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Важно</string>
+    <string name="settings_system_file_picker_confirm_important">Выключите этот параметр перед удалением VFiles. Иначе ни одно приложение не сможет выбирать файлы, а некоторые могут аварийно завершаться. Чтобы исправить это, установите VFiles заново и выключите параметр или выполните на компьютере:</string>
+    <string name="settings_system_file_picker_confirm_note">В новых версиях Android средство выбора фото продолжает использоваться, и Android всё ещё может спрашивать, какое приложение использовать.</string>
     <string name="settings_system_file_picker_confirm_action">Отключить</string>
     <string name="settings_system_file_picker_shizuku_title">Нужен Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Запустите Shizuku, чтобы изменить это здесь, или выполните на компьютере:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Запустите Shizuku, чтобы изменить это здесь, или выполните на компьютере:</string>
     <string name="settings_system_file_picker_error">Не удалось изменить средство выбора файлов</string>
     <string name="settings_default_apps_text">Текст</string>
     <string name="settings_default_apps_title">Приложения по умолчанию</string>

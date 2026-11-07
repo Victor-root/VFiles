@@ -800,10 +800,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku er ekki í gangi, ræstu það til að breyta þessum valkosti</string>
     <string name="settings_system_file_picker_not_found">Skráaveljari Android fannst ekki í þessu tæki</string>
     <string name="settings_system_file_picker_confirm_title">Slökkva á skráaveljara Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Forrit sem biðja um skrár opna VFiles í stað skráaveljara Android.\n\nEkkert er fjarlægt: ef slökkt er á þessum valkosti verður allt eins og áður.\n\nMikilvægt: slökktu á þessum valkosti áður en þú fjarlægir VFiles. Annars getur ekkert forrit valið skrár lengur og sum gætu hrunið. Til að laga það skaltu setja VFiles upp aftur og slökkva á valkostinum, eða keyra þetta úr tölvu:\n%1$s\n\nÍ nýlegum útgáfum Android er myndaveljarinn áfram notaður og Android gæti enn spurt hvaða forrit skuli nota.</string>
+    <string name="settings_system_file_picker_confirm_message">Forrit sem biðja um skrár opna VFiles í stað skráaveljara Android.\n\nEkkert er fjarlægt: ef slökkt er á þessum valkosti verður allt eins og áður.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Mikilvægt</string>
+    <string name="settings_system_file_picker_confirm_important">Slökktu á þessum valkosti áður en þú fjarlægir VFiles. Annars getur ekkert forrit valið skrár lengur og sum gætu hrunið. Til að laga það skaltu setja VFiles upp aftur og slökkva á valkostinum, eða keyra þetta úr tölvu:</string>
+    <string name="settings_system_file_picker_confirm_note">Í nýlegum útgáfum Android er myndaveljarinn áfram notaður og Android gæti enn spurt hvaða forrit skuli nota.</string>
     <string name="settings_system_file_picker_confirm_action">Slökkva</string>
     <string name="settings_system_file_picker_shizuku_title">Shizuku er nauðsynlegt</string>
-    <string name="settings_system_file_picker_shizuku_message">Ræstu Shizuku til að breyta þessu héðan, eða keyrðu þetta úr tölvu:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Ræstu Shizuku til að breyta þessu héðan, eða keyrðu þetta úr tölvu:</string>
     <string name="settings_system_file_picker_error">Ekki tókst að breyta skráaveljaranum</string>
     <string name="settings_default_apps_text">Texti</string>
     <string name="settings_default_apps_title">Sjálfgefin forrit</string>

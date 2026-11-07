@@ -763,10 +763,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku 未运行，请启动它以更改此选项</string>
     <string name="settings_system_file_picker_not_found">未在此设备上找到 Android 文件选择器</string>
     <string name="settings_system_file_picker_confirm_title">要停用 Android 文件选择器吗？</string>
-    <string name="settings_system_file_picker_confirm_message">请求文件的应用将打开 VFiles，而不是 Android 文件选择器。\n\n不会卸载任何内容：关闭此选项后一切都会恢复原样。\n\n重要：卸载 VFiles 之前请先关闭此选项。否则任何应用都无法再选择文件，部分应用可能会崩溃。要修复此问题，请重新安装 VFiles 并关闭此选项，或在电脑上运行：\n%1$s\n\n在较新版本的 Android 上，仍会使用照片选择器，Android 也可能仍会询问使用哪个应用。</string>
+    <string name="settings_system_file_picker_confirm_message">请求文件的应用将打开 VFiles，而不是 Android 文件选择器。\n\n不会卸载任何内容：关闭此选项后一切都会恢复原样。</string>
+    <string name="settings_system_file_picker_confirm_important_title">重要</string>
+    <string name="settings_system_file_picker_confirm_important">卸载 VFiles 之前请先关闭此选项。否则任何应用都无法再选择文件，部分应用可能会崩溃。要修复此问题，请重新安装 VFiles 并关闭此选项，或在电脑上运行：</string>
+    <string name="settings_system_file_picker_confirm_note">在较新版本的 Android 上，仍会使用照片选择器，Android 也可能仍会询问使用哪个应用。</string>
     <string name="settings_system_file_picker_confirm_action">停用</string>
     <string name="settings_system_file_picker_shizuku_title">需要 Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">启动 Shizuku 以在此处更改，或在电脑上运行：\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">启动 Shizuku 以在此处更改，或在电脑上运行：</string>
     <string name="settings_system_file_picker_error">无法更改文件选择器</string>
     <string name="settings_default_apps_text">文本</string>
     <string name="settings_default_apps_title">默认应用</string>

@@ -833,10 +833,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku nu rulează, pornește-l pentru a schimba această opțiune</string>
     <string name="settings_system_file_picker_not_found">Selectorul de fișiere Android nu a fost găsit pe acest dispozitiv</string>
     <string name="settings_system_file_picker_confirm_title">Dezactivezi selectorul de fișiere Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Aplicațiile care cer fișiere vor deschide VFiles în locul selectorului Android.\n\nNu se dezinstalează nimic: dezactivarea acestei opțiuni readuce totul ca înainte.\n\nImportant: dezactivează această opțiune înainte de a dezinstala VFiles. Altfel, nicio aplicație nu va mai putea alege fișiere, iar unele s-ar putea bloca. Pentru reparare, reinstalează VFiles și dezactivează opțiunea sau rulează asta de pe un calculator:\n%1$s\n\nPe versiunile recente de Android, selectorul de fotografii rămâne în uz, iar Android poate întreba în continuare ce aplicație să folosească.</string>
+    <string name="settings_system_file_picker_confirm_message">Aplicațiile care cer fișiere vor deschide VFiles în locul selectorului Android.\n\nNu se dezinstalează nimic: dezactivarea acestei opțiuni readuce totul ca înainte.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Important</string>
+    <string name="settings_system_file_picker_confirm_important">Dezactivează această opțiune înainte de a dezinstala VFiles. Altfel, nicio aplicație nu va mai putea alege fișiere, iar unele s-ar putea bloca. Pentru reparare, reinstalează VFiles și dezactivează opțiunea sau rulează asta de pe un calculator:</string>
+    <string name="settings_system_file_picker_confirm_note">Pe versiunile recente de Android, selectorul de fotografii rămâne în uz, iar Android poate întreba în continuare ce aplicație să folosească.</string>
     <string name="settings_system_file_picker_confirm_action">Dezactivează</string>
     <string name="settings_system_file_picker_shizuku_title">Este necesar Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Pornește Shizuku pentru a schimba asta de aici sau rulează asta de pe un calculator:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Pornește Shizuku pentru a schimba asta de aici sau rulează asta de pe un calculator:</string>
     <string name="settings_system_file_picker_error">Selectorul de fișiere nu poate fi schimbat</string>
     <string name="settings_default_apps_text">Text</string>
     <string name="settings_default_apps_title">Aplicații implicite</string>

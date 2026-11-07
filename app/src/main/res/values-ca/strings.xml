@@ -798,10 +798,13 @@
     <string name="settings_system_file_picker_shizuku_missing">Shizuku no s\'està executant, inicieu-lo per canviar aquesta opció</string>
     <string name="settings_system_file_picker_not_found">No s\'ha trobat el selector de fitxers d\'Android en aquest dispositiu</string>
     <string name="settings_system_file_picker_confirm_title">Voleu desactivar el selector de fitxers d\'Android?</string>
-    <string name="settings_system_file_picker_confirm_message">Les aplicacions que demanin fitxers obriran VFiles en lloc del selector d\'Android.\n\nNo es desinstal·la res: desactivar aquesta opció ho deixa tot com estava.\n\nImportant: desactiveu aquesta opció abans de desinstal·lar VFiles. Si no, cap aplicació podrà triar fitxers i algunes podrien fallar. Per reparar-ho, torneu a instal·lar VFiles i desactiveu l\'opció, o executeu això des d\'un ordinador:\n%1$s\n\nA les versions recents d\'Android es continua usant el selector de fotos, i Android encara pot preguntar quina aplicació voleu fer servir.</string>
+    <string name="settings_system_file_picker_confirm_message">Les aplicacions que demanin fitxers obriran VFiles en lloc del selector d\'Android.\n\nNo es desinstal·la res: desactivar aquesta opció ho deixa tot com estava.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Important</string>
+    <string name="settings_system_file_picker_confirm_important">Desactiveu aquesta opció abans de desinstal·lar VFiles. Si no, cap aplicació podrà triar fitxers i algunes podrien fallar. Per reparar-ho, torneu a instal·lar VFiles i desactiveu l\'opció, o executeu això des d\'un ordinador:</string>
+    <string name="settings_system_file_picker_confirm_note">A les versions recents d\'Android es continua usant el selector de fotos, i Android encara pot preguntar quina aplicació voleu fer servir.</string>
     <string name="settings_system_file_picker_confirm_action">Desactiva</string>
     <string name="settings_system_file_picker_shizuku_title">Cal Shizuku</string>
-    <string name="settings_system_file_picker_shizuku_message">Inicieu Shizuku per canviar-ho des d\'aquí, o executeu això des d\'un ordinador:\n%1$s</string>
+    <string name="settings_system_file_picker_shizuku_message">Inicieu Shizuku per canviar-ho des d\'aquí, o executeu això des d\'un ordinador:</string>
     <string name="settings_system_file_picker_error">No s\'ha pogut canviar el selector de fitxers</string>
     <string name="settings_default_apps_text">Text</string>
     <string name="settings_default_apps_title">Aplicacions predeterminades</string>
