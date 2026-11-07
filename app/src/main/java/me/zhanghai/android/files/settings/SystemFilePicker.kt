@@ -19,21 +19,34 @@ import java.io.IOException
  */
 object SystemFilePicker {
     private const val DOCUMENTS_UI_NAME = "documentsui"
+    val KNOWN_PACKAGE_NAMES = listOf("com.android.documentsui", "com.google.android.documentsui")
 
     // Android TV has no file picker, but this stub that does nothing takes the same requests.
     private const val TV_STUBS_PACKAGE_NAME = "com.android.tv.frameworkpackagestubs"
 
     /**
      * The packages of the system file picker, whether disabled or not, by name rather than by what
-     * they handle, since a maker may have other apps of its own handling the same requests.
+     * they handle, since a maker may have other apps of its own handling the same requests. Some
+     * devices leave disabled packages out of the list, but they can still be asked for by name.
      */
     val packageNames: List<String>
+        get() {
+            val listedNames =
+                packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
+                    .filter { it.flags.hasBits(ApplicationInfo.FLAG_SYSTEM) }
+                    .map { it.packageName }
+                    .filter { DOCUMENTS_UI_NAME in it || it == TV_STUBS_PACKAGE_NAME }
+            return (listedNames + KNOWN_PACKAGE_NAMES.filter { it.isInstalled }).distinct().sorted()
+        }
+
+    private val String.isInstalled: Boolean
         get() =
-            packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
-                .filter { it.flags.hasBits(ApplicationInfo.FLAG_SYSTEM) }
-                .map { it.packageName }
-                .filter { DOCUMENTS_UI_NAME in it || it == TV_STUBS_PACKAGE_NAME }
-                .sorted()
+            try {
+                packageManager.getApplicationEnabledSetting(this)
+                true
+            } catch (e: IllegalArgumentException) {
+                false
+            }
 
     val isDisabled: Boolean
         get() = packageNames.let { names -> names.isNotEmpty() && names.all { it.isDisabled } }

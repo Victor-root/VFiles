@@ -116,5 +116,12 @@ private val debugFilePickers: String
             .queryIntentActivities(intent, PackageManager.MATCH_DISABLED_COMPONENTS)
             .map { it.activityInfo.packageName }
             .distinct()
-        return "\n[debug] ${SystemFilePicker.packageNames} / $handlers"
+        val states = SystemFilePicker.KNOWN_PACKAGE_NAMES.map {
+            try {
+                packageManager.getApplicationEnabledSetting(it).toString()
+            } catch (e: IllegalArgumentException) {
+                "absent"
+            }
+        }
+        return "\n[debug] ${SystemFilePicker.packageNames} / $handlers / $states"
     }
