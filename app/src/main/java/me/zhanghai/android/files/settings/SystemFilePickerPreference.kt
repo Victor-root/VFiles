@@ -6,6 +6,7 @@
 package me.zhanghai.android.files.settings
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -75,7 +76,11 @@ fun SystemFilePickerPreference() {
                 withContext(Dispatchers.IO) { SystemFilePicker.setDisabled(disabled) }
             } catch (e: IOException) {
                 e.printStackTrace()
-                context.showToast(R.string.settings_system_file_picker_error)
+                context.showToast(
+                    context.getString(R.string.settings_system_file_picker_error) + "\n" +
+                        (e.message ?: e.toString()),
+                    Toast.LENGTH_LONG
+                )
             }
             isChanging = false
             refreshCount++
