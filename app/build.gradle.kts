@@ -97,7 +97,8 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            // Left unsigned without a key, to be signed elsewhere.
+            signingConfig = signingConfigs.getByName("release").takeIf { it.storeFile != null }
         }
         debug {
             // Optimized like release, to judge the smoothness of the app on a device. This makes
