@@ -27,7 +27,7 @@ android {
         // Android 17 needs the local network permission for LAN servers and the FTP server.
         //noinspection OldTargetApi
         targetSdk = 36
-        versionCode = 45
+        versionCode = 46
         versionName = "2.0.0"
         resValue("string", "app_version", "$versionName ($versionCode)")
         buildConfigField(
