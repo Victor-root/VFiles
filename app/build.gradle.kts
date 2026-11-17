@@ -4,6 +4,8 @@
  */
 
 import com.android.build.api.variant.impl.VariantOutputImpl
+import java.time.Duration
+import java.time.Instant
 import java.util.Properties
 
 plugins {
@@ -12,6 +14,14 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.roborazzi)
+}
+
+// The minutes since 2024 at build time, so that every build is above the last one, as the signer of
+// the F-Droid repository requires. A value source is read again by each build, even when the
+// configuration cache is reused.
+abstract class MinutesSince2024 : ValueSource<Int, ValueSourceParameters.None> {
+    override fun obtain(): Int =
+        Duration.between(Instant.parse("2024-01-01T00:00:00Z"), Instant.now()).toMinutes().toInt()
 }
 
 android {
@@ -27,7 +37,7 @@ android {
         // Android 17 needs the local network permission for LAN servers and the FTP server.
         //noinspection OldTargetApi
         targetSdk = 36
-        versionCode = 46
+        versionCode = providers.of(MinutesSince2024::class) {}.get()
         versionName = "2.0.0"
         resValue("string", "app_version", "$versionName ($versionCode)")
         buildConfigField(
