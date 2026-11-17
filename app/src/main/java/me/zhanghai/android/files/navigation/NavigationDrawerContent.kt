@@ -36,8 +36,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -133,9 +135,21 @@ fun NavigationDrawerContent(
     val focusedIndex = checkedIndex ?: items.indexOfFirst { it != null && !it.isHeader }
     val checkedItemFocusRequester = remember { FocusRequester() }
     val bringIntoViewSpec = LocalBringIntoViewSpec.current
-    val inputModeManager = LocalInputModeManager.current
-    LaunchedEffect(isShown, focusedIndex, bringIntoViewSpec) {
-        if (isShown || focusedIndex == -1 || inputModeManager.inputMode != InputMode.Keyboard) {
+    val isKeyboardMode = LocalInputModeManager.current.inputMode == InputMode.Keyboard
+    var hasBeenShown by remember { mutableStateOf(false) }
+    LaunchedEffect(isShown, focusedIndex, bringIntoViewSpec, isKeyboardMode) {
+        if (isShown) {
+            hasBeenShown = true
+            return@LaunchedEffect
+        }
+        if (focusedIndex == -1) {
+            return@LaunchedEffect
+        }
+        if (!isKeyboardMode) {
+            // Undoes the scroll for a D-pad of the first frames, still in keyboard mode at startup.
+            if (!hasBeenShown) {
+                listState.scrollToItem(0)
+            }
             return@LaunchedEffect
         }
         listState.scrollToItem(focusedIndex)
