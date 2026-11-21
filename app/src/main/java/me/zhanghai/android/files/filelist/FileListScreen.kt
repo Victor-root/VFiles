@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
@@ -50,6 +51,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -339,7 +341,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
         }
     }
     val closeDrawer: () -> Unit = { coroutineScope.launch { drawerState.close() } }
-    val drawerContent = @Composable { modifier: Modifier ->
+    val drawerContent = @Composable { modifier: Modifier, contentPadding: PaddingValues ->
         NavigationDrawerContent(
             currentPath = currentPath,
             onNavigateTo = controller::navigateTo,
@@ -352,7 +354,8 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             } else {
                 drawerState.targetValue == DrawerValue.Open
             },
-            modifier = modifier.focusRequester(drawerFocusRequester)
+            modifier = modifier.focusRequester(drawerFocusRequester),
+            contentPadding = contentPadding
         )
     }
 
@@ -394,7 +397,7 @@ fun FileListScreen(controller: FileListController, viewModel: FileListViewModel)
             focusTarget = focusTarget,
             navigationIconFocusRequester = navigationIconFocusRequester,
             persistentDrawer = if (hasPersistentDrawer) {
-                { drawerContent(it) }
+                { drawerContent(it, PaddingValues()) }
             } else {
                 null
             },
@@ -476,10 +479,12 @@ private val DRAWER_SCREEN_EDGE_MARGIN = 56.dp
 @Composable
 private fun FileListModalDrawer(
     drawerState: DrawerState,
-    drawerContent: @Composable (Modifier) -> Unit,
+    drawerContent: @Composable (Modifier, PaddingValues) -> Unit,
     content: @Composable () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+    // Edge to edge, the items scroll behind the system bars instead of stopping at them.
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
     val isOpening = drawerState.targetValue == DrawerValue.Open
     if (isOpening) {
         StatusBarBackgroundEffect(MaterialTheme.colorScheme.surface)
@@ -504,9 +509,22 @@ private fun FileListModalDrawer(
                         }
                         isRight
                     },
-                drawerContainerColor = MaterialTheme.colorScheme.surface
+                drawerContainerColor = MaterialTheme.colorScheme.surface,
+                windowInsets = if (isEdgeToEdge) {
+                    DrawerDefaults.windowInsets.only(WindowInsetsSides.Start)
+                } else {
+                    DrawerDefaults.windowInsets
+                }
             ) {
-                drawerContent(Modifier.fillMaxHeight())
+                drawerContent(
+                    Modifier.fillMaxHeight(),
+                    if (isEdgeToEdge) {
+                        DrawerDefaults.windowInsets.only(WindowInsetsSides.Vertical)
+                            .asPaddingValues()
+                    } else {
+                        PaddingValues()
+                    }
+                )
             }
         },
         drawerState = drawerState
