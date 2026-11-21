@@ -5,92 +5,253 @@
 
 package me.zhanghai.android.files.filelist
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import android.view.KeyEvent
-import android.view.View
+import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.fragment.app.commit
+import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.core.os.BundleCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java8.nio.file.Path
+import java8.nio.file.Paths
 import me.zhanghai.android.files.app.AppActivity
+import me.zhanghai.android.files.app.LocalNavigator
+import me.zhanghai.android.files.compat.DocumentsContractCompat
 import me.zhanghai.android.files.file.MimeType
+import me.zhanghai.android.files.file.asMimeTypeOrNull
+import me.zhanghai.android.files.file.extension
+import me.zhanghai.android.files.compat.ACTION_OPEN_EXTERNAL_DIRECTORY
+import me.zhanghai.android.files.gallery.GalleryDestination
+import me.zhanghai.android.files.music.MusicDestination
 import me.zhanghai.android.files.onboarding.OnboardingActivity
+import me.zhanghai.android.files.provider.archive.createArchiveRootPath
 import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.util.asFileNameOrNull
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.extraPath
 import me.zhanghai.android.files.util.isExternalStorageAccessGranted
-import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
+import me.zhanghai.android.files.util.mediaRootIdOrNull
+import me.zhanghai.android.files.util.pickInitialDirectory
+import me.zhanghai.android.files.util.takeIfNotEmpty
 
 class FileListActivity : AppActivity() {
-    private lateinit var fragment: FileListFragment
+    private val viewModel by viewModels<FileListViewModel>()
+
+    private var isOnboarding = false
+
+    private lateinit var controller: FileListController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (!Settings.ONBOARDING_COMPLETED.valueCompat) {
+        if (!Settings.ONBOARDING_COMPLETED.value) {
             if (Environment::class.isExternalStorageAccessGranted()) {
                 // Existing install with permissions already granted: skip onboarding.
                 Settings.ONBOARDING_COMPLETED.putValue(true)
             } else {
-                startActivity(OnboardingActivity::class.createIntent())
-                finish()
-                return
+                isOnboarding = true
             }
         }
+        // Sets the content, which is composed after this method.
+        super.onCreate(savedInstanceState)
 
-        // Calls ensureSubDecor().
-        findViewById<View>(android.R.id.content)
-        if (savedInstanceState == null) {
-            fragment = FileListFragment().putArgs(FileListFragment.Args(intent))
-            supportFragmentManager.commit { add(android.R.id.content, fragment) }
+        if (isOnboarding) {
+            startActivity(OnboardingActivity::class.createIntent())
+            finish()
+            return
+        }
+        if (!viewModel.hasTrail) {
+            viewModel.initialize(intent, savedInstanceState?.currentPath)
+            savedInstanceState?.restorePasteState()
+        }
+        controller = FileListController(this, viewModel, savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        if (::controller.isInitialized) {
+            controller.saveState(outState)
+            outState.putParcelable(KEY_CURRENT_PATH, viewModel.currentPath as Parcelable)
+            savePasteState(outState)
+        }
+    }
+
+    // Files can be picked for another app from the screens opened above the file list too.
+    @Composable
+    override fun ProvideScreenLocals(content: @Composable () -> Unit) {
+        if (isOnboarding) {
+            content()
+            return
+        }
+        val pickOptions by viewModel.pickOptionsFlow.collectAsStateWithLifecycle()
+        val filePicker = remember(pickOptions) {
+            pickOptions?.takeIf { it.mode == PickOptions.Mode.OPEN_FILE }?.let { options ->
+                FilePicker(
+                    accepts = { mimeType -> options.mimeTypes.any { it.match(mimeType) } },
+                    allowsMultiple = options.allowMultiple,
+                    pick = controller::pickFiles
+                )
+            }
+        }
+        CompositionLocalProvider(LocalFilePicker provides filePicker, content = content)
+    }
+
+    @Composable
+    override fun Content() {
+        if (isOnboarding) {
+            return
+        }
+        FileListScreen(controller, viewModel)
+        OpenMediaRootEffect()
+    }
+
+    // The storage page of the settings opens the media of the system, shown by these screens.
+    @Composable
+    private fun OpenMediaRootEffect() {
+        val navigator = LocalNavigator.current
+        var isOpened by rememberSaveable { mutableStateOf(false) }
+        LaunchedEffect(Unit) {
+            if (isOpened) {
+                return@LaunchedEffect
+            }
+            isOpened = true
+            when (intent.data?.mediaRootIdOrNull) {
+                DocumentsContractCompat.MEDIA_PROVIDER_IMAGES_ROOT_ID,
+                DocumentsContractCompat.MEDIA_PROVIDER_VIDEOS_ROOT_ID ->
+                    navigator.navigate(GalleryDestination)
+                DocumentsContractCompat.MEDIA_PROVIDER_AUDIO_ROOT_ID ->
+                    navigator.navigate(MusicDestination)
+            }
+        }
+    }
+
+    // Opens the folder and picking options asked for by the intent, or the folder that was open
+    // before the process died.
+    private fun FileListViewModel.initialize(intent: Intent, restoredPath: Path?) {
+        var path = intent.extraPath
+        var pickOptions: PickOptions? = null
+        when (val action = intent.action) {
+            Intent.ACTION_GET_CONTENT, Intent.ACTION_OPEN_DOCUMENT, Intent.ACTION_PICK,
+            Intent.ACTION_CREATE_DOCUMENT -> {
+                val mode = if (action == Intent.ACTION_CREATE_DOCUMENT) {
+                    PickOptions.Mode.CREATE_FILE
+                } else {
+                    PickOptions.Mode.OPEN_FILE
+                }
+                val mimeType = intent.pickMimeType
+                val fileName = if (mode == PickOptions.Mode.CREATE_FILE) {
+                    createFileName(intent.getStringExtra(Intent.EXTRA_TITLE), mimeType)
+                } else {
+                    null
+                }
+                val readOnly = action != Intent.ACTION_OPEN_DOCUMENT &&
+                    action != Intent.ACTION_CREATE_DOCUMENT
+                val extraMimeTypes = if (mode == PickOptions.Mode.OPEN_FILE) {
+                    intent.getStringArrayExtra(Intent.EXTRA_MIME_TYPES)
+                        ?.mapNotNull { it.asMimeTypeOrNull() }?.takeIfNotEmpty()
+                } else {
+                    null
+                }
+                val mimeTypes = extraMimeTypes ?: listOf(mimeType)
+                val localOnly = intent.getBooleanExtra(Intent.EXTRA_LOCAL_ONLY, false)
+                val allowMultiple = mode != PickOptions.Mode.CREATE_FILE &&
+                    intent.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                pickOptions =
+                    PickOptions(mode, fileName, readOnly, mimeTypes, localOnly, allowMultiple)
+            }
+            Intent.ACTION_OPEN_DOCUMENT_TREE, ACTION_OPEN_EXTERNAL_DIRECTORY -> {
+                val localOnly = intent.getBooleanExtra(Intent.EXTRA_LOCAL_ONLY, false)
+                pickOptions = PickOptions(
+                    PickOptions.Mode.OPEN_DIRECTORY, null, false, emptyList(), localOnly, false
+                )
+            }
+            ACTION_VIEW_DOWNLOADS, DownloadManager.ACTION_VIEW_DOWNLOADS ->
+                path = Paths.get(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        .path
+                )
+            else ->
+                if (path != null) {
+                    val mimeType = intent.type?.asMimeTypeOrNull()
+                    if (mimeType != null && path.isArchiveFile(mimeType)) {
+                        path = path.createArchiveRootPath()
+                    }
+                }
+        }
+        if (pickOptions != null) {
+            path = intent.pickInitialDirectory
+        }
+        resetTo(restoredPath ?: path ?: Settings.FILE_LIST_DEFAULT_DIRECTORY.value)
+        if (pickOptions != null) {
+            this.pickOptions = pickOptions
+        }
+    }
+
+    // ACTION_PICK can ask for the media of a content URI, like the images of the media store.
+    private val Intent.pickMimeType: MimeType
+        get() {
+            val type = resolveType(this@FileListActivity)
+            val mediaType = type?.removePrefix(CURSOR_DIRECTORY_TYPE_PREFIX)
+            return if (mediaType != type) {
+                "$mediaType/*".asMimeTypeOrNull()
+            } else {
+                type?.asMimeTypeOrNull()
+            } ?: MimeType.ANY
+        }
+
+    // The name asked for with the extension of its type if it has none, like the system picker.
+    private fun createFileName(title: String?, mimeType: MimeType): String {
+        val fileName = title?.asFileNameOrNull() ?: return mimeType.extension?.let { "file.$it" }
+            ?: "file"
+        val extension = mimeType.extension
+        return if (fileName.extensions.isEmpty() && extension != null) {
+            "${fileName.value}.$extension"
         } else {
-            fragment = supportFragmentManager.findFragmentById(android.R.id.content)
-                as FileListFragment
+            fileName.value
         }
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (::fragment.isInitialized && event.action == KeyEvent.ACTION_DOWN) {
-            when (event.keyCode) {
-                KeyEvent.KEYCODE_DPAD_LEFT ->
-                    // Only open from within the file list row (isFileListFocused checks that the
-                    // focused view's parent is the RecyclerView, so the kebab is excluded).
-                    if (!fragment.isNavigationDrawerOpen() && fragment.isFileListFocused()) {
-                        if (fragment.openNavigationDrawer()) {
-                            return true
-                        }
-                    }
-                KeyEvent.KEYCODE_DPAD_RIGHT ->
-                    if (fragment.isNavigationDrawerOpen()) {
-                        fragment.closeNavigationDrawer()
-                        return true
-                    }
-                KeyEvent.KEYCODE_DPAD_UP ->
-                    // Android 16's RecyclerView no longer lets focus escape upward naturally when
-                    // the top item is focused. Intercept it and move focus to the toolbar. Only
-                    // consume the event if focus actually moved, so normal UP still works.
-                    if (!fragment.isNavigationDrawerOpen()
-                        && fragment.isFileListFocused()
-                        && fragment.isAtTopOfFileList()
-                        && fragment.focusToolbar()) {
-                        return true
-                    }
-            }
+    // Only so many, since all of the saved state has to fit in a transaction with the system.
+    private fun savePasteState(outState: Bundle) {
+        val pasteState = viewModel.pasteState
+        if (pasteState.files.size in 1..PASTE_FILES_SAVED_MAX) {
+            outState.putBoolean(KEY_PASTE_COPY, pasteState.copy)
+            outState.putParcelable(KEY_PASTE_FILES, pasteState.files)
         }
-        return super.dispatchKeyEvent(event)
     }
 
-    override fun onKeyShortcut(keyCode: Int, event: KeyEvent): Boolean {
-        if (fragment.onKeyShortcut(keyCode, event)) {
-            return true
+    private fun Bundle.restorePasteState() {
+        val files = BundleCompat.getParcelable(this, KEY_PASTE_FILES, FileItemSet::class.java)
+        if (files != null) {
+            viewModel.addToPasteState(getBoolean(KEY_PASTE_COPY), files)
         }
-        return super.onKeyUp(keyCode, event)
     }
+
+    private val Bundle.currentPath: Path?
+        get() = BundleCompat.getParcelable(this, KEY_CURRENT_PATH, Parcelable::class.java) as Path?
 
     companion object {
+        private const val CURSOR_DIRECTORY_TYPE_PREFIX = "vnd.android.cursor.dir/"
+
+        private const val KEY_CURRENT_PATH = "current_path"
+        private const val KEY_PASTE_COPY = "paste_copy"
+        private const val KEY_PASTE_FILES = "paste_files"
+
+        private const val PASTE_FILES_SAVED_MAX = 100
+
+        private const val ACTION_VIEW_DOWNLOADS =
+            "me.zhanghai.android.files.intent.action.VIEW_DOWNLOADS"
+
         fun createViewIntent(path: Path): Intent =
             FileListActivity::class.createIntent()
                 .setAction(Intent.ACTION_VIEW)

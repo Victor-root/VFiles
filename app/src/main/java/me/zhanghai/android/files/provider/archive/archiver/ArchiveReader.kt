@@ -5,11 +5,11 @@
 
 package me.zhanghai.android.files.provider.archive.archiver
 
-import androidx.preference.PreferenceManager
 import java8.nio.channels.SeekableByteChannel
 import java8.nio.charset.StandardCharsets
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.compat.PreferenceManagerCompat
 import me.zhanghai.android.files.provider.common.DelegateForceableSeekableByteChannel
 import me.zhanghai.android.files.provider.common.DelegateInputStream
 import me.zhanghai.android.files.provider.common.DelegateNonForceableSeekableByteChannel
@@ -21,7 +21,6 @@ import me.zhanghai.android.files.provider.common.newInputStream
 import me.zhanghai.android.files.provider.root.isRunningAsRoot
 import me.zhanghai.android.files.provider.root.rootContext
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 import java.io.Closeable
 import java.io.IOException
 import java.io.InputStream
@@ -192,7 +191,7 @@ object ArchiveReader {
             if (isRunningAsRoot) {
                 try {
                     val sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(rootContext)
+                        PreferenceManagerCompat.getDefaultSharedPreferences(rootContext)
                     val key = rootContext.getString(R.string.pref_key_archive_file_name_encoding)
                     val defaultValue = rootContext.getString(
                         R.string.pref_default_value_archive_file_name_encoding
@@ -203,7 +202,7 @@ object ArchiveReader {
                     StandardCharsets.UTF_8
                 }
             } else {
-                Charset.forName(Settings.ARCHIVE_FILE_NAME_ENCODING.valueCompat)
+                Charset.forName(Settings.ARCHIVE_FILE_NAME_ENCODING.value)
             }
 
     private class ArchiveCloseable(

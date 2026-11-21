@@ -5,22 +5,19 @@
 
 package me.zhanghai.android.files.fileproperties.image
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import java8.nio.file.Path
 import me.zhanghai.android.files.file.MimeType
+import kotlinx.coroutines.flow.StateFlow
+import me.zhanghai.android.files.fileproperties.pathStatefulLoader
 import me.zhanghai.android.files.util.Stateful
 
 class FilePropertiesImageTabViewModel(path: Path, mimeType: MimeType) : ViewModel() {
-    private val _imageInfoLiveData = ImageInfoLiveData(path, mimeType)
-    val imageInfoLiveData: LiveData<Stateful<ImageInfo>>
-        get() = _imageInfoLiveData
+    private val loader = pathStatefulLoader(path) { loadImageInfo(path, mimeType) }
+    val imageInfoFlow: StateFlow<Stateful<ImageInfo>>
+        get() = loader.flow
 
     fun reload() {
-        _imageInfoLiveData.loadValue()
-    }
-
-    override fun onCleared() {
-        _imageInfoLiveData.close()
+        loader.load()
     }
 }

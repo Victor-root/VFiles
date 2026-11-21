@@ -10,11 +10,9 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.net.Uri
-import android.os.Build
 import android.os.CancellationSignal
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
-import androidx.annotation.RequiresApi
 import java8.nio.file.NoSuchFileException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -81,8 +79,7 @@ object DocumentResolver {
         intervalMillis: Long,
         listener: ((Long) -> Unit)?
     ): Uri {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-            && sourcePath.hasSameAuthority(targetPath) && !sourcePath.isCopyUnsupported) {
+        return if (sourcePath.hasSameAuthority(targetPath) && !sourcePath.isCopyUnsupported) {
             copyApi24(sourcePath, targetPath, intervalMillis, listener)
         } else {
             copyManually(sourcePath, targetPath, intervalMillis, listener)
@@ -92,7 +89,6 @@ object DocumentResolver {
     private val Path.isCopyUnsupported: Boolean
         get() = treeUri.authority in COPY_UNSUPPORTED_AUTHORITIES
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(ResolverException::class)
     private fun copyApi24(
         sourcePath: Path,
@@ -276,8 +272,7 @@ object DocumentResolver {
         if (sourceParentPath == targetParentPath) {
             return rename(sourcePath, targetPath.displayName!!)
         }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-            && sourcePath.hasSameAuthority(targetPath) && !sourcePath.isMoveUnsupported) {
+        return if (sourcePath.hasSameAuthority(targetPath) && !sourcePath.isMoveUnsupported) {
             moveApi24(sourcePath, targetPath, moveOnly, intervalMillis, listener)
         } else {
             if (moveOnly) {
@@ -294,7 +289,6 @@ object DocumentResolver {
     private val Path.isMoveUnsupported: Boolean
         get() = treeUri.authority in MOVE_UNSUPPORTED_AUTHORITIES
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(ResolverException::class)
     private fun moveApi24(
         sourcePath: Path,
@@ -433,7 +427,7 @@ object DocumentResolver {
 
     @Throws(ResolverException::class)
     fun remove(path: Path) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !isRemoveUnsupported(path)) {
+        if (!isRemoveUnsupported(path)) {
             removeApi24(path)
         } else {
             @Suppress("DEPRECATION")
@@ -443,7 +437,7 @@ object DocumentResolver {
 
     @Throws(ResolverException::class)
     fun remove(uri: Uri, parentUri: Uri) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !isRemoveUnsupported(uri)) {
+        if (!isRemoveUnsupported(uri)) {
             removeApi24(uri, parentUri)
         } else {
             @Suppress("DEPRECATION")
@@ -456,7 +450,6 @@ object DocumentResolver {
     private fun isRemoveUnsupported(uri: Uri): Boolean =
         uri.authority in REMOVE_UNSUPPORTED_AUTHORITIES
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(ResolverException::class)
     private fun removeApi24(path: Path) {
         val uri = getDocumentUri(path)
@@ -468,7 +461,6 @@ object DocumentResolver {
         removeApi24(uri, parentUri)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @Throws(ResolverException::class)
     private fun removeApi24(uri: Uri, parentUri: Uri) {
         val removed = try {

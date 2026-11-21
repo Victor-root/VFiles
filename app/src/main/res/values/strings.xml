@@ -6,10 +6,10 @@
   -->
 
 <resources>
-
     <string name="app_name">VFiles</string>
     <string name="app_name_launcher">Files</string>
 
+    <string name="clear_query">Clear query</string>
     <string name="close">Close</string>
     <string name="copy">Copy</string>
     <string name="cut">Cut</string>
@@ -26,6 +26,8 @@
     <string name="loading">Loading…</string>
     <string name="maybe_later">Maybe later</string>
     <string name="merge">Merge</string>
+    <string name="more_options">More options</string>
+    <string name="navigate_up">Navigate up</string>
     <string name="none">None</string>
     <string name="open_navigation_drawer">Open navigation drawer</string>
     <string name="paste">Paste</string>
@@ -50,9 +52,8 @@
 
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">No application found to handle this action</string>
-    <string name="copied_to_clipboard_format" translatable="false">@string/preference_copied</string>
+    <string name="copied_to_clipboard_format">“%1$s” copied to clipboard.</string>
     <string name="open_settings">Open settings</string>
-    <string name="shortcut_created">Shortcut created</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -64,8 +65,6 @@
     <string name="storage_permission_rationale_message">App needs permission to access files. Please click “ALLOW” in the upcoming system dialog.</string>
     <string name="storage_permission_permanently_denied_message">App needs permission to access files. Please grant the “Storage” permission in system settings.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">App needs permission to post notifications about file operations. Please click “Allow” in the upcoming system dialog.</string>
-    <string name="notification_permission_permanently_denied_message">App needs permission to post notifications about file operations. Please grant the “Notification” permission in system settings.</string>
 
     <string name="notification_channel_background_activity_start_name">Actions while background</string>
     <string name="notification_channel_background_activity_start_description">Take actions while app is in the background</string>
@@ -77,6 +76,7 @@
     <string name="file_action_archive_password_title">Password required</string>
     <string name="file_action_archive_password_message_format">“%1$s” is password-protected.</string>
     <string name="file_action_archive_password_error_empty">Password cannot be empty</string>
+    <string name="file_action_archive_password_error_incorrect">Incorrect password</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Preparing to compress %1$,d file (%2$s)</item>
@@ -218,7 +218,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">There was an error restoring the SELinux context for “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Error while writing</string>
     <string name="file_job_write_error_message_format">There was an error writing “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">There was an error getting information about “%1$s”.</string>
+    <string name="file_job_error_no_space">There isn\'t enough storage space left.</string>
     <string name="file_job_remount_format">Remount “%1$s” as read-write</string>
     <string name="file_job_remount_loading_format">Remounting “%1$s” as read-write…</string>
     <string name="file_job_remount_success_format">“%1$s” has been remounted as read-write</string>
@@ -265,7 +265,6 @@
     <string name="file_create_file_title">New file</string>
     <string name="file_create_directory_title">New folder</string>
 
-    <string name="file_list_title">Files</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">Select a file</item>
         <item quantity="other">Select files</item>
@@ -282,6 +281,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d file</item>
         <item quantity="other">%1$,d files</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operation</item>
+        <item quantity="other">%1$,d operations</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Path cannot be empty</string>
@@ -319,9 +322,13 @@
     <string name="file_list_paste_extract_title_format">Extracting %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extract here</string>
     <string name="file_list_empty">No files</string>
+    <string name="file_list_press_back_again_to_exit">Press back again to exit</string>
     <string name="file_list_error_folder_not_found">This folder no longer exists</string>
     <string name="file_list_error_permission_denied">You don\'t have permission to open this folder</string>
+    <string name="file_list_create_file_error">Unable to create this file</string>
+    <string name="file_list_error_archive_header_encrypted">The list of files of this archive is encrypted, which isn\'t supported</string>
     <string name="file_list_error_unknown">Unable to open this folder</string>
+    <string name="file_list_action_create">Create</string>
     <string name="file_list_action_create_file">File</string>
     <string name="file_list_action_create_directory">Folder</string>
 
@@ -352,7 +359,6 @@
     <string name="file_properties_basic_parent_directory">Parent Folder</string>
     <string name="file_properties_basic_archive_file">Archive File</string>
     <string name="file_properties_basic_archive_entry">Archive Entry</string>
-    <string name="file_properties_basic_free_space">Free Space</string>
     <string name="file_properties_permission">Permissions</string>
     <string name="file_properties_permission_owner">Owner</string>
     <string name="file_properties_permission_group">Group</string>
@@ -561,7 +567,6 @@
     <string name="storage_edit_ftp_server_host_error_empty">Enter a hostname</string>
     <string name="storage_edit_ftp_server_host_error_invalid">Invalid hostname</string>
     <string name="storage_edit_ftp_server_port">Port</string>
-    <string name="storage_edit_ftp_server_port_placeholder" translatable="false">21</string>
     <string name="storage_edit_ftp_server_port_error_invalid">Invalid port</string>
     <string name="storage_edit_ftp_server_path">Path</string>
     <string name="storage_edit_ftp_server_path_placeholder">Can be left empty</string>
@@ -624,6 +629,7 @@
     <string name="storage_edit_smb_server_title_edit">Edit SMB server</string>
     <string name="storage_edit_smb_server_title_add">Add SMB server</string>
     <string name="storage_edit_smb_server_host">Hostname</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP address or network name of the server, like 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Enter a hostname</string>
     <string name="storage_edit_smb_server_host_error_invalid">Invalid hostname</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -632,7 +638,7 @@
     <string name="storage_edit_smb_server_path">Path</string>
     <string name="storage_edit_smb_server_path_placeholder">Can be left empty</string>
     <string name="storage_edit_smb_server_name">Name</string>
-    <string name="storage_edit_smb_server_name_placeholder">Use hostname</string>
+    <string name="storage_edit_smb_server_name_placeholder">Shown in the drawer, the hostname by default</string>
     <string name="storage_edit_smb_server_authentication_type">Authentication</string>
     <string-array name="storage_edit_smb_server_authentication_type_entries">
         <item>Password</item>
@@ -653,7 +659,6 @@
     <string name="storage_edit_webdav_server_host_error_empty">Enter a hostname</string>
     <string name="storage_edit_webdav_server_host_error_invalid">Invalid hostname</string>
     <string name="storage_edit_webdav_server_port">Port</string>
-    <string name="storage_edit_webdav_server_port_placeholder" translatable="false">443</string>
     <string name="storage_edit_webdav_server_port_error_invalid">Invalid port</string>
     <string name="storage_edit_webdav_server_path">Path</string>
     <string name="storage_edit_webdav_server_path_placeholder">Can be left empty</string>
@@ -709,11 +714,67 @@
     <string name="storage_volume_default_name_usb">USB drive</string>
     <string name="storage_volume_default_name_sd_card">SD card</string>
     <string name="storage_volume_partition_numbered">Partition %1$d</string>
+    <string name="navigation_gallery" translatable="false">@string/gallery_title</string>
+    <string name="navigation_music" translatable="false">@string/music_title</string>
     <string name="navigation_ftp_server" translatable="false">@string/ftp_server_title</string>
     <string name="navigation_settings" translatable="false">@string/settings_title</string>
     <string name="navigation_about" translatable="false">@string/about_title</string>
 
     <string name="archive_viewer_title">Archive viewer</string>
+    <string name="gallery_title">Gallery</string>
+    <string name="gallery_photos">Photos</string>
+    <string name="gallery_albums">Albums</string>
+    <string name="gallery_today">Today</string>
+    <string name="gallery_yesterday">Yesterday</string>
+    <string name="gallery_empty">No photos or videos</string>
+    <string name="gallery_access_denied">Allow access to files to see your photos and videos</string>
+    <string name="allow_access">Allow</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d item</item>
+        <item quantity="other">%1$,d items</item>
+    </plurals>
+    <string name="gallery_selection_title_format" translatable="false">@string/file_list_select_title_format</string>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Delete this item?</item>
+        <item quantity="other">Delete these %1$,d items?</item>
+    </plurals>
+    <string name="gallery_details">Details</string>
+    <string name="gallery_details_date">Date</string>
+    <string name="gallery_show_in_folder">Show in folder</string>
+    <string name="video_player_title">Video player</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="music_title">Music</string>
+    <string name="music_tracks">Songs</string>
+    <string name="music_albums">Albums</string>
+    <string name="music_artists">Artists</string>
+    <string name="music_empty">No music</string>
+    <string name="music_access_denied">Allow access to files to see your music</string>
+    <string name="music_shuffle_all">Shuffle all</string>
+    <string name="music_unknown_artist">Unknown artist</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d song</item>
+        <item quantity="other">%1$,d songs</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d albums</item>
+    </plurals>
+    <string name="music_player_title">Music player</string>
+    <string name="music_player_error_format">Unable to play “%1$s”</string>
+    <string name="music_shuffle">Shuffle</string>
+    <string name="music_repeat">Repeat</string>
+    <string name="music_previous">Previous</string>
+    <string name="music_next">Next</string>
+    <string name="pdf_viewer_title">PDF viewer</string>
+    <string name="pdf_viewer_subtitle_format" translatable="false">@string/image_viewer_subtitle_format</string>
+    <string name="pdf_viewer_go_to_page">Go to page</string>
+    <string name="pdf_viewer_fit_width">Fit to width</string>
+    <string name="pdf_viewer_fit_page">Fit whole page</string>
+    <string name="pdf_viewer_page_hint_format">Page, from 1 to %1$,d</string>
+    <string name="pdf_viewer_page_error">No such page</string>
+    <string name="pdf_viewer_password_protected">This PDF is protected by a password, which isn\'t supported</string>
+    <string name="media_viewer_error">Unable to open this file</string>
     <string name="image_viewer_title">Image viewer</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="image_viewer_delete_message_format" translatable="false">@string/file_delete_message_file_format</string>
@@ -727,6 +788,7 @@
     <string name="text_editor_reload_message">Are you sure you want to reload? Unsaved changes to this document will be lost.</string>
     <string name="text_editor_encoding">Encoding</string>
     <string name="text_editor_close_message">Are you sure you want to discard unsaved changes to this document?</string>
+    <string name="text_editor_file_too_large">This file is too large to be edited</string>
 
     <string name="ftp_server_title">FTP server</string>
     <string name="ftp_server_state_title">Status</string>
@@ -746,7 +808,9 @@
     <string name="ftp_server_anonymous_login_title">Anonymous login</string>
     <string name="ftp_server_username_title">Username</string>
     <string name="ftp_server_password_title">Password</string>
+    <string name="ftp_server_password_summary_empty">Not set</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Invalid port</string>
     <string name="ftp_server_home_directory_title">Root folder</string>
     <string name="ftp_server_writable_title">Allow writing</string>
     <string name="ftp_server_notification_title" translatable="false">@string/ftp_server_title</string>
@@ -757,9 +821,14 @@
     <string name="settings_locale_title">Language</string>
     <string name="settings_theme_color_title">Theme color</string>
     <string name="settings_theme_color_summary">Color that appears most frequently in the app</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Also apply to the app icon</string>
+    <string name="settings_launcher_icon_color_title">App icon color</string>
+    <string name="settings_launcher_icon_color_summary">Color of the icon on your home screen</string>
+    <string name="settings_launcher_icon_change_title">Change the app icon?</string>
+    <string name="settings_launcher_icon_change_message">VFiles will close so your home screen can pick up the new icon. Open it again straight after.</string>
+    <string name="settings_launcher_icon_change_confirm">Change and close</string>
     <string name="color_picker_dynamic_color_label">Based on wallpaper</string>
     <string name="color_picker_preset_colors_label">Other colors</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
     <string name="settings_night_mode_title">Night mode</string>
     <string-array name="settings_night_mode_entries">
         <item>Follow system</item>
@@ -770,6 +839,7 @@
     </string-array>
     <string name="settings_black_night_mode">Black night mode</string>
     <string name="settings_file_list_animation_title">File list animation</string>
+    <string name="settings_double_back_to_exit_title">Press back twice to exit</string>
     <string name="settings_edge_to_edge_title">Edge-to-edge display</string>
     <string name="settings_edge_to_edge_summary">Content scrolls behind the status and navigation bars</string>
     <string name="settings_file_name_ellipsize_title">Display long file name</string>
@@ -786,21 +856,38 @@
     <string name="settings_standard_directories_title">Standard folders</string>
     <string name="settings_standard_directories_summary_empty">No standard folders enabled</string>
     <string name="settings_standard_directory_list_title" translatable="false">@string/settings_standard_directories_title</string>
-    <string name="settings_bookmark_directory_screenshots">Screenshots</string>
+    <string name="settings_standard_directory_gallery_summary">Photos and videos of the device</string>
+    <string name="settings_standard_directory_music_summary">Songs of the device</string>
     <string name="settings_bookmark_directories_title">Bookmark folders</string>
     <string name="settings_bookmark_directories_summary_empty">No bookmark folders</string>
     <string name="settings_bookmark_directory_list_title" translatable="false">@string/settings_bookmark_directories_title</string>
     <string name="settings_bookmark_directory_list_empty" translatable="false">@string/settings_bookmark_directories_summary_empty</string>
+    <string name="settings_bookmark_directory_list_add" translatable="false">@string/file_list_action_add_bookmark</string>
     <string name="file_job_progress_title">Operations in progress</string>
     <string name="settings_default_apps_title">Default apps</string>
     <string name="settings_default_apps_summary">Choose which app opens each type of file</string>
+    <string name="settings_system_file_picker_title">VFiles as the default file picker</string>
+    <string name="settings_system_file_picker_summary">Apps open VFiles to pick files, with the file picker of Android turned off</string>
+    <string name="settings_system_file_picker_shizuku_required">Shizuku required</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku isn\'t running, start it to change this option</string>
+    <string name="settings_system_file_picker_not_found">Android\'s file picker wasn\'t found on this device</string>
+    <string name="settings_system_file_picker_confirm_title">Turn off the file picker of Android?</string>
+    <string name="settings_system_file_picker_confirm_message">Apps asking for files will open VFiles instead of the file picker of Android.\n\nNothing is uninstalled: turning this option off brings everything back as it was.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Important</string>
+    <string name="settings_system_file_picker_confirm_important">Turn this option off before uninstalling VFiles. Otherwise no app can pick files anymore, and some may crash. To repair that, install VFiles again and turn this option off, or run this from a computer:</string>
+    <string name="settings_system_file_picker_confirm_note">On recent versions of Android, the photo picker stays in use, and Android may still ask which app to use.</string>
+    <string name="settings_system_file_picker_confirm_action">Turn off</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku is needed</string>
+    <string name="settings_system_file_picker_shizuku_message">Start Shizuku to change this from here, or run this from a computer:</string>
+    <string name="settings_system_file_picker_error">Unable to change the file picker</string>
     <string name="settings_default_apps_ask">Ask every time</string>
+    <string name="settings_default_apps_android_default_format">Android default (%1$s)</string>
     <string name="settings_default_apps_image">Images</string>
     <string name="settings_default_apps_audio">Audio / Music</string>
     <string name="settings_default_apps_video">Videos</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_text">Text</string>
-    <string name="settings_root_strategy_title">Root access mode</string>
+    <string name="settings_root_strategy_title">Root or Shizuku access mode</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">You have %1$,d file operation running and changing root access mode now may result in unexpected error. Are you sure you want to change it now?</item>
         <item quantity="other">You have %1$,d file operations running and changing root access mode now may result in unexpected error. Are you sure you want to change it now?</item>
@@ -808,7 +895,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Normal access only</item>
         <item>Automatic</item>
-        <item>Root access only</item>
+        <item>Root or Shizuku access only</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archive file name encoding</string>
     <string name="settings_open_apk_default_action_title">Open Android package</string>
@@ -820,17 +907,30 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Show thumbnail for PDF documents</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Might make the app unstable on older versions of Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Read remote files for thumbnail</string>
+    <string name="settings_backup_title">Backup</string>
+    <string name="settings_backup_create_title">Back up settings</string>
+    <string name="settings_backup_create_summary">Save the settings, bookmarks and servers to a file</string>
+    <string name="settings_backup_restore_title">Restore settings</string>
+    <string name="settings_backup_restore_summary">Replace everything with a backup file</string>
+    <string name="settings_backup_password_title">Backup password</string>
+    <string name="settings_backup_password_error_empty">Enter a password</string>
+    <string name="settings_backup_create_password_message">Optional. Without a password, anyone who has this file can read the passwords of your servers. A password can\'t be recovered if you forget it.</string>
+    <string name="settings_backup_restore_password_message">All the current settings will be replaced, and the app will restart.</string>
+    <string name="settings_backup_create_success">Settings backed up</string>
+    <string name="settings_backup_create_error">Unable to save the backup</string>
+    <string name="settings_backup_restore_error_file">This file isn\'t a VFiles backup</string>
+    <string name="settings_backup_restore_error_password">Wrong password, or damaged file</string>
+    <string name="settings_backup_restore_error_version">This backup comes from a newer version of VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Wait for the file operations to finish</string>
 
     <string name="about_title">About</string>
     <string name="about_version_title">Version</string>
     <string name="about_github_title">View on GitHub</string>
     <string name="about_licenses_title">Licenses</string>
-    <string name="about_privacy_policy_title">Privacy policy</string>
     <string name="about_author_title">Author</string>
     <string name="about_author_name_title">Victor-root</string>
     <string name="about_fork_subtitle">Original by Hai Zhang</string>
     <string name="about_author_github_title">Follow on GitHub</string>
-    <string name="about_author_twitter_title">Follow on Twitter</string>
 
     <string name="shortcut_downloads_title" translatable="false">@string/navigation_standard_directory_downloads</string>
     <string name="shortcut_ftp_server_title" translatable="false">@string/ftp_server_title</string>
@@ -840,16 +940,20 @@
     <string name="onboarding_welcome_title">Welcome to %1$s</string>
     <string name="onboarding_welcome_description">Grant a few permissions to get the best experience. Optional ones can be changed later in Settings.</string>
     <string name="onboarding_grant">Grant</string>
+    <string name="onboarding_granted">Granted</string>
     <string name="onboarding_required">Required</string>
     <string name="onboarding_optional">Optional</string>
 
     <string name="onboarding_files_title">File access</string>
     <string name="onboarding_files_description">%1$s needs permission to manage all files on your device. This is essential for browsing, copying, moving and organizing your files.</string>
+    <string name="onboarding_files_adb_note">This device can\'t give the access to all files from its settings, so only your photos, videos and music are available. To use all your files, run this command from a computer:</string>
+    <string name="onboarding_files_adb_command_format" translatable="false">adb shell appops set --uid %1$s MANAGE_EXTERNAL_STORAGE allow</string>
+    <string name="onboarding_files_grant_with_shizuku">Grant with Shizuku</string>
 
     <string name="onboarding_notifications_title">Notifications</string>
     <string name="onboarding_notifications_description">Allow notifications to track the progress of file operations such as copies, moves and archives, even when the app is in the background.</string>
 
     <string name="onboarding_install_apps_title">Install apps</string>
     <string name="onboarding_install_apps_description">Allow %1$s to install APK files directly. This lets you install apps from files you download or receive, without needing a third-party installer.</string>
-
+    <string name="reorder_drag_handle">Move</string>
 </resources>

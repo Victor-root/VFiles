@@ -6,18 +6,17 @@
 package me.zhanghai.android.files.coil
 
 import android.graphics.Bitmap
-import android.os.Build
-import coil.decode.DataSource
-import coil.size.Dimension
-import coil.size.Scale
-import coil.size.Size
-import coil.size.isOriginal
-import coil.size.pxOrElse
+import coil3.decode.DataSource
+import coil3.size.Dimension
+import coil3.size.Scale
+import coil3.size.Size
+import coil3.size.isOriginal
+import coil3.size.pxOrElse
 import java8.nio.file.Path
 import me.zhanghai.android.files.filelist.isRemotePath
 
 val Bitmap.Config.isHardware: Boolean
-    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && this == Bitmap.Config.HARDWARE
+    get() = this == Bitmap.Config.HARDWARE
 
 fun Bitmap.Config.toSoftware(): Bitmap.Config = if (isHardware) Bitmap.Config.ARGB_8888 else this
 

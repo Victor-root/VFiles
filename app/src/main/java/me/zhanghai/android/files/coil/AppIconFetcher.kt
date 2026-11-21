@@ -8,12 +8,13 @@ package me.zhanghai.android.files.coil
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import androidx.core.graphics.drawable.toDrawable
-import coil.ImageLoader
-import coil.decode.DataSource
-import coil.fetch.DrawableResult
-import coil.fetch.FetchResult
-import coil.fetch.Fetcher
-import coil.request.Options
+import coil3.ImageLoader
+import coil3.asImage
+import coil3.decode.DataSource
+import coil3.fetch.FetchResult
+import coil3.fetch.Fetcher
+import coil3.fetch.ImageFetchResult
+import coil3.request.Options
 import me.zhanghai.android.appiconloader.AppIconLoader
 import java.io.Closeable
 
@@ -26,7 +27,9 @@ class AppIconFetcher(
         val (applicationInfo, closeable) = getApplicationInfo()
         val icon = closeable.use { appIconLoader.loadIcon(applicationInfo) }
         // Not sampled because we only load with one fixed size.
-        return DrawableResult(icon.toDrawable(options.context.resources), false, DataSource.DISK)
+        return ImageFetchResult(
+            icon.toDrawable(options.context.resources).asImage(), false, DataSource.DISK
+        )
     }
 
     abstract class Factory<T : Any>(

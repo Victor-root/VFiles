@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
@@ -57,26 +58,24 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/launcher_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialFiles"
+        android:theme="@style/Theme.VFiles"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
             android:name="me.zhanghai.android.files.onboarding.OnboardingActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MaterialFiles" />
+            android:exported="false" />
 
         <activity
             android:name="me.zhanghai.android.files.filelist.FileListActivity"
             android:exported="true"
             android:label="@string/app_name_launcher"
+            android:windowSoftInputMode="adjustResize"
             android:visibleToInstantApps="true"
             tools:ignore="UnusedAttribute">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.APP_FILES" />
             </intent-filter>
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -84,6 +83,7 @@
                 <data android:mimeType="inode/directory" />
                 <data android:mimeType="resource/folder" />
                 <data android:mimeType="vnd.android.document/directory" />
+                <data android:mimeType="vnd.android.document/root" />
             </intent-filter>
             <!-- @see me.zhanghai.android.files.file.isSupportedArchive -->
             <intent-filter
@@ -127,6 +127,16 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
             <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="vnd.android.cursor.dir/audio" />
+                <data android:mimeType="vnd.android.cursor.dir/image" />
+                <data android:mimeType="vnd.android.cursor.dir/video" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.CREATE_DOCUMENT" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.OPENABLE" />
@@ -134,16 +144,357 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.OPEN_DOCUMENT_TREE" />
+                <action android:name="android.os.storage.action.OPEN_EXTERNAL_DIRECTORY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
+                <action android:name="android.intent.action.VIEW_DOWNLOADS" />
                 <action android:name="me.zhanghai.android.files.intent.action.VIEW_DOWNLOADS" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- LAUNCHER lives on these aliases, so that changing the icon is enabling another one. -->
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Default"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Red"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_red"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_red"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Pink"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_pink"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_pink"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Purple"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_purple"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_purple"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_DeepPurple"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_deep_purple"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_deep_purple"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Indigo"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_indigo"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_indigo"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Blue"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_blue"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_blue"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_LightBlue"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_light_blue"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_light_blue"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Cyan"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_cyan"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_cyan"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Teal"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_teal"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_teal"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Green"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_green"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_green"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_LightGreen"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_light_green"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_light_green"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Lime"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_lime"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_lime"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Yellow"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_yellow"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_yellow"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Amber"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_amber"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_amber"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Orange"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_orange"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_orange"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_DeepOrange"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_deep_orange"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_deep_orange"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Brown"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_brown"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_brown"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_Grey"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_grey"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_grey"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity-alias
+            android:name="me.zhanghai.android.files.filelist.LauncherAlias_BlueGrey"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/launcher_icon_blue_grey"
+            android:label="@string/app_name_launcher"
+            android:roundIcon="@mipmap/launcher_icon_blue_grey"
+            android:targetActivity="me.zhanghai.android.files.filelist.FileListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
 
         <!--
           ~ Using android:documentLaunchMode="always" gives a better result than
@@ -154,7 +505,7 @@
             android:documentLaunchMode="always"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent">
+            android:theme="@style/Theme.VFiles.Translucent">
             <intent-filter>
                 <action android:name="me.zhanghai.android.files.intent.action.OPEN_FILE" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -167,86 +518,20 @@
             android:autoRemoveFromRecents="true"
             android:icon="@drawable/edit_icon"
             android:label="@string/file_edit_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.filelist.OpenFileAsDialogActivity"
             android:autoRemoveFromRecents="true"
             android:icon="@drawable/open_as_icon"
             android:label="@string/file_open_as_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.AddStorageDialogActivity"
-            android:label="@string/storage_add_storage_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditDeviceStorageDialogActivity"
-            android:label="@string/storage_edit_device_storage_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.AddExternalStorageShortcutActivity"
-            android:label="@string/storage_add_external_storage_shortcut_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditExternalStorageShortcutDialogActivity"
-            android:label="@string/storage_edit_external_storage_shortcut_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.AddDocumentTreeActivity"
-            android:label="@string/storage_add_document_tree_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditDocumentTreeDialogActivity"
-            android:label="@string/storage_edit_document_tree_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditFtpServerActivity"
-            android:label="@string/storage_edit_ftp_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditSftpServerActivity"
-            android:label="@string/storage_edit_sftp_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.AddLanSmbServerActivity"
-            android:label="@string/storage_add_lan_smb_server_title"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditSmbServerActivity"
-            android:label="@string/storage_edit_smb_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.storage.EditWebDavServerActivity"
-            android:label="@string/storage_edit_webdav_server_title_edit"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.navigation.EditBookmarkDirectoryDialogActivity"
-            android:label="@string/navigation_edit_bookmark_directory_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
-
-        <activity
-            android:name="me.zhanghai.android.files.navigation.EditStorageVolumeDialogActivity"
-            android:label="@string/storage_volume_edit_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.ftpserver.FtpServerActivity"
             android:exported="true"
             android:label="@string/ftp_server_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="me.zhanghai.android.files.intent.action.MANAGE_FTP_SERVER" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -262,7 +547,7 @@
             android:exported="true"
             android:label="@string/settings_title"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -270,57 +555,30 @@
         </activity>
 
         <activity
-            android:name="me.zhanghai.android.files.storage.StorageListActivity"
-            android:label="@string/storage_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.StandardDirectoryListActivity"
-            android:label="@string/settings_standard_directory_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.BookmarkDirectoryListActivity"
-            android:label="@string/settings_bookmark_directory_list_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.settings.DefaultAppsActivity"
-            android:label="@string/settings_default_apps_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
-            android:name="me.zhanghai.android.files.about.AboutActivity"
-            android:label="@string/about_title"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.MaterialFiles" />
-
-        <activity
             android:name="me.zhanghai.android.files.fileaction.ArchivePasswordDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.filejob.FileJobErrorDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent" />
 
         <activity
             android:name="me.zhanghai.android.files.filejob.FileJobConflictDialogActivity"
             android:autoRemoveFromRecents="true"
-            android:theme="@style/Theme.MaterialFiles.Translucent" />
+            android:theme="@style/Theme.VFiles.Translucent"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="me.zhanghai.android.files.viewer.saveas.SaveAsActivity"
             android:autoRemoveFromRecents="true"
             android:exported="true"
             android:label="@string/save_as_title"
-            android:theme="@style/Theme.MaterialFiles.Translucent">
-            <intent-filter>
+            android:theme="@style/Theme.VFiles.Translucent">
+            <!-- Only offered for what no app can open, saving isn't opening. -->
+            <intent-filter android:priority="-1">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
@@ -338,7 +596,7 @@
             android:name="me.zhanghai.android.files.viewer.text.TextEditorActivity"
             android:exported="true"
             android:label="@string/text_editor_title"
-            android:theme="@style/Theme.MaterialFiles">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -358,13 +616,59 @@
             android:name="me.zhanghai.android.files.viewer.image.ImageViewerActivity"
             android:exported="true"
             android:label="@string/image_viewer_title"
-            android:theme="@style/Theme.MaterialFiles.Immersive">
+            android:theme="@style/Theme.VFiles.Immersive">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="me.zhanghai.android.files.viewer.video.VideoPlayerActivity"
+            android:exported="true"
+            android:label="@string/video_player_title"
+            android:theme="@style/Theme.VFiles.Immersive">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="me.zhanghai.android.files.viewer.pdf.PdfViewerActivity"
+            android:exported="true"
+            android:label="@string/pdf_viewer_title"
+            android:theme="@style/Theme.VFiles.Immersive">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="me.zhanghai.android.files.music.MusicPlayerActivity"
+            android:exported="true"
+            android:label="@string/music_player_title"
+            android:launchMode="singleTop">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="me.zhanghai.android.files.music.MusicPlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
 
         <service
             android:name="me.zhanghai.android.files.filejob.FileJobService"
@@ -385,15 +689,6 @@
             </intent-filter>
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-        </service>
-
-        <service
-            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
-            android:enabled="false"
-            android:exported="false">
-            <meta-data
-                android:name="autoStoreLocales"
                 android:value="true" />
         </service>
 
@@ -418,6 +713,14 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <receiver android:name="me.zhanghai.android.files.filejob.FileJobReceiver" />
 

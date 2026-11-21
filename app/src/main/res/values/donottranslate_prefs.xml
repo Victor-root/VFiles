@@ -6,7 +6,6 @@
   -->
 
 <resources>
-
     <string name="pref_default_value_empty" />
 
     <string name="pref_key_storages">key_storages</string>
@@ -18,10 +17,13 @@
     <string name="pref_key_file_list_view_type">key_file_list_view_type</string>
     <string name="pref_default_value_file_list_view_type">0</string>
     <string name="pref_key_file_list_sort_options">key_file_list_sort_options</string>
-    <string name="pref_key_create_archive_type">key_create_archive_type</string>
+    <!-- The app locales before Android 13, which manages them itself after. -->
+    <string name="pref_key_locales">key_locales</string>
+    <string name="pref_default_value_locales" />
 
-    <string name="pref_key_ftp_server_state">key_ftp_server_state</string>
-    <bool name="pref_visible_ftp_server_add_tile">false</bool>
+    <string name="pref_key_create_archive_type">key_create_archive_type</string>
+    <string name="pref_default_value_create_archive_type">0</string>
+
     <string name="pref_key_ftp_server_anonymous_login">key_ftp_server_anonymous_login</string>
     <bool name="pref_default_value_ftp_server_anonymous_login">true</bool>
     <string name="pref_key_ftp_server_username">key_ftp_server_username</string>
@@ -33,57 +35,39 @@
     <string name="pref_key_ftp_server_writable">key_ftp_server_writable</string>
     <bool name="pref_default_value_ftp_server_writable">true</bool>
 
-    <string name="pref_key_locale">key_locale</string>
     <string name="pref_key_theme_color">key_theme_color</string>
-    <string name="pref_default_value_theme_color">0</string>
-    <string name="pref_key_material_design_3">key_material_design_3</string>
-    <bool name="pref_default_value_material_design_3">false</bool>
+    <!-- Index of ThemeColor.MATERIAL_RED. -->
+    <string name="pref_default_value_theme_color">1</string>
+    <string name="pref_key_apply_theme_color_to_launcher_icon">key_apply_theme_color_to_launcher_icon</string>
+    <bool name="pref_default_value_apply_theme_color_to_launcher_icon">false</bool>
+    <string name="pref_key_launcher_icon_color">key_launcher_icon_color</string>
+    <!-- Index of ThemeColor.COLOR_PRIMARY. -->
+    <string name="pref_default_value_launcher_icon_color">0</string>
     <string name="pref_key_night_mode">key_night_mode</string>
     <string name="pref_default_value_night_mode">0</string>
-    <string-array name="pref_entry_values_night_mode">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
     <string name="pref_key_black_night_mode">key_black_night_mode</string>
     <bool name="pref_default_value_black_night_mode">false</bool>
     <string name="pref_key_file_list_animation">key_file_list_animation</string>
     <bool name="pref_default_value_file_list_animation">true</bool>
+    <string name="pref_key_double_back_to_exit">key_double_back_to_exit</string>
+    <bool name="pref_default_value_double_back_to_exit">true</bool>
     <string name="pref_key_edge_to_edge">key_edge_to_edge</string>
     <bool name="pref_default_value_edge_to_edge">false</bool>
     <string name="pref_key_file_name_ellipsize">key_file_name_ellipsize</string>
     <string name="pref_default_value_file_name_ellipsize">1</string>
-    <string-array name="pref_entry_values_file_name_ellipsize">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
     <string name="pref_key_standard_directory_settings">key_standard_directories</string>
+    <string name="pref_key_standard_directory_order">key_standard_directory_order</string>
     <string name="pref_key_bookmark_directories">key_bookmark_directories</string>
     <string name="pref_key_storage_volume_customizations">key_storage_volume_customizations</string>
     <string name="pref_key_file_open_default_apps">key_file_open_default_apps</string>
     <string name="pref_key_root_strategy">key_root_strategy</string>
     <string name="pref_default_value_root_strategy">1</string>
-    <string-array name="pref_entry_values_root_strategy">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string name="pref_key_archive_file_name_encoding">key_archive_file_name_encoding</string>
     <string name="pref_default_value_archive_file_name_encoding">UTF-8</string>
     <string name="pref_key_open_apk_default_action">key_open_apk_default_action</string>
     <string name="pref_default_value_open_apk_default_action">2</string>
-    <string-array name="pref_entry_values_open_apk_default_action">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string name="pref_key_show_pdf_thumbnail_pre_28">key_show_pdf_thumbnail_pre_28</string>
     <bool name="pref_default_value_show_pdf_thumbnail_pre_28">false</bool>
-    <bool name="pref_visible_show_pdf_thumbnail_pre_28">true</bool>
     <string name="pref_key_read_remote_files_for_thumbnail">key_read_remote_files_for_thumbnail</string>
     <bool name="pref_default_value_read_remote_files_for_thumbnail">true</bool>
 

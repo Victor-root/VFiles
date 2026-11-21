@@ -7,9 +7,8 @@ package me.zhanghai.android.files.filejob
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Environment
+import android.system.OsConstants
 import android.widget.Toast
 import androidx.annotation.AnyRes
 import androidx.annotation.PluralsRes
@@ -38,7 +37,6 @@ import me.zhanghai.android.files.file.asFileSize
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.file.loadFileItem
 import me.zhanghai.android.files.filelist.OpenFileAsDialogActivity
-import me.zhanghai.android.files.filelist.OpenFileAsDialogFragment
 import me.zhanghai.android.files.provider.archive.archiveFile
 import me.zhanghai.android.files.provider.archive.archiver.ArchiveWriter
 import me.zhanghai.android.files.provider.archive.createArchiveRootPath
@@ -80,11 +78,13 @@ import me.zhanghai.android.files.provider.common.setSeLinuxContext
 import me.zhanghai.android.files.provider.common.toByteString
 import me.zhanghai.android.files.provider.common.toModeString
 import me.zhanghai.android.files.provider.linux.isLinuxPath
+import me.zhanghai.android.files.provider.linux.syscall.SyscallException
 import me.zhanghai.android.files.util.asFileName
 import me.zhanghai.android.files.util.createInstallPackageIntent
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.createViewIntent
 import me.zhanghai.android.files.util.extraPath
+import me.zhanghai.android.files.util.findCauseByClass
 import me.zhanghai.android.files.util.getQuantityString
 import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.showToast
@@ -137,10 +137,8 @@ private fun FileJob.postNotification(
         //setContentIntent()
         if (showCancel) {
             val intent = FileJobReceiver.createIntent(id)
-            var pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                pendingIntentFlags = pendingIntentFlags or PendingIntent.FLAG_IMMUTABLE
-            }
+            val pendingIntentFlags =
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             val pendingIntent = PendingIntent.getBroadcast(
                 service, id + 1, intent, pendingIntentFlags
             )
@@ -150,7 +148,7 @@ private fun FileJob.postNotification(
         }
     }.build()
     service.notificationManager.notify(id, notification)
-    FileJobProgressLiveData.update(id, title, text, max, progress, indeterminate)
+    FileJobProgresses.update(id, title, text, max, progress, indeterminate)
 }
 
 private const val PROGRESS_INTERVAL_MILLIS = 200L
@@ -293,13 +291,25 @@ private fun FileJob.scan(
     return scanInfo
 }
 
+// What can be understood and acted upon by the user, or else the details of the exception.
+private fun FileJob.getErrorMessage(e: IOException): String =
+    if (e.findCauseByClass<SyscallException>()?.errno == OsConstants.ENOSPC) {
+        getString(R.string.file_job_error_no_space)
+    } else {
+        e.toString()
+    }
+
+// Directories have a size on some file systems, but nothing of it is transferred.
+private val BasicFileAttributes.transferSize: Long
+    get() = if (isDirectory) 0 else size()
+
 private fun FileJob.scanPath(
     attributes: BasicFileAttributes,
     scanInfo: ScanInfo,
     @PluralsRes notificationTitleRes: Int
 ) {
     scanInfo.incrementFileCount()
-    scanInfo.addToSize(attributes.size())
+    scanInfo.addToSize(attributes.transferSize)
     postScanNotification(scanInfo, notificationTitleRes)
 }
 
@@ -448,7 +458,7 @@ private class TransferInfo(scanInfo: ScanInfo, val target: Path?) {
         try {
             transferredSize += path.readAttributes(
                 BasicFileAttributes::class.java, LinkOption.NOFOLLOW_LINKS
-            ).size()
+            ).transferSize
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -459,7 +469,7 @@ private class TransferInfo(scanInfo: ScanInfo, val target: Path?) {
         try {
             size -= path.readAttributes(
                 BasicFileAttributes::class.java, LinkOption.NOFOLLOW_LINKS
-            ).size()
+            ).transferSize
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -515,7 +525,7 @@ private fun FileJob.showErrorDialog(
             suspendCoroutine { continuation ->
                 BackgroundActivityStarter.startActivity(
                     FileJobErrorDialogActivity::class.createIntent().putArgs(
-                        FileJobErrorDialogFragment.Args(
+                        FileJobErrorDialogActivity.Args(
                             title, message, readOnlyFileStore, showAll, positiveButtonText,
                             negativeButtonText, neutralButtonText
                         ) { action, isAll ->
@@ -558,13 +568,13 @@ private fun FileJob.showConflictDialog(
             suspendCoroutine { continuation ->
                 BackgroundActivityStarter.startActivity(
                     FileJobConflictDialogActivity::class.createIntent().putArgs(
-                        FileJobConflictDialogFragment.Args(
+                        FileJobConflictDialogActivity.Args(
                             sourceFile, targetFile, type
                         ) { action, name, all ->
                             continuation.resume(ConflictResult(action, name, all))
                         }
-                    ), FileJobConflictDialogFragment.getTitle(sourceFile, targetFile, service),
-                    FileJobConflictDialogFragment.getMessage(sourceFile, targetFile, type, service),
+                    ), FileJobConflictDialogActivity.getTitle(sourceFile, targetFile, service),
+                    FileJobConflictDialogActivity.getMessage(sourceFile, targetFile, type, service),
                     service
                 )
             }
@@ -711,7 +721,7 @@ private fun FileJob.archive(
             getString(R.string.file_job_archive_error_title_format, getFileName(file)),
             getString(
                 R.string.file_job_archive_error_message_format, getFileName(archiveFile),
-                e.toString()
+                getErrorMessage(e)
             ),
             getReadOnlyFileStore(archiveFile, e),
             false,
@@ -774,7 +784,7 @@ class CopyFileJob(private val sources: List<Path>, private val targetDirectory: 
             ): FileVisitResult {
                 val directoryInTarget = target.resolveForeign(source.relativize(directory))
                 val copied = copy(
-                    directory, directoryInTarget, isExtract, transferInfo, actionAllInfo
+                    directory, directoryInTarget, isExtract, true, transferInfo, actionAllInfo
                 )
                 throwIfInterrupted()
                 return if (copied) FileVisitResult.CONTINUE else FileVisitResult.SKIP_SUBTREE
@@ -783,7 +793,7 @@ class CopyFileJob(private val sources: List<Path>, private val targetDirectory: 
             @Throws(IOException::class)
             override fun visitFile(file: Path, attributes: BasicFileAttributes): FileVisitResult {
                 val fileInTarget = target.resolveForeign(source.relativize(file))
-                copy(file, fileInTarget, isExtract, transferInfo, actionAllInfo)
+                copy(file, fileInTarget, isExtract, false, transferInfo, actionAllInfo)
                 throwIfInterrupted()
                 return FileVisitResult.CONTINUE
             }
@@ -883,12 +893,13 @@ private fun FileJob.copy(
     source: Path,
     target: Path,
     isExtract: Boolean,
+    isDirectory: Boolean,
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
 ): Boolean =
     copyOrMove(
-        source, target, if (isExtract) CopyMoveType.EXTRACT else CopyMoveType.COPY, true, false,
-        transferInfo, actionAllInfo
+        source, target, if (isExtract) CopyMoveType.EXTRACT else CopyMoveType.COPY, isDirectory,
+        true, false, transferInfo, actionAllInfo
     )
 
 class CreateFileJob(private val path: Path, private val createDirectory: Boolean) : FileJob() {
@@ -923,7 +934,7 @@ private fun FileJob.create(path: Path, createDirectory: Boolean) {
             val result = showErrorDialog(
                 getString(R.string.file_job_create_error_title),
                 getString(
-                    R.string.file_job_create_error_message_format, getFileName(path), e.toString()
+                    R.string.file_job_create_error_message_format, getFileName(path), getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 false,
@@ -1025,7 +1036,7 @@ private fun FileJob.delete(path: Path, transferInfo: TransferInfo?, actionAllInf
             val result = showErrorDialog(
                 getString(R.string.file_job_delete_error_title),
                 getString(
-                    R.string.file_job_delete_error_message_format, getFileName(path), e.toString()
+                    R.string.file_job_delete_error_message_format, getFileName(path), getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -1166,7 +1177,8 @@ private fun FileJob.copyForMove(
     target: Path,
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
-): Boolean = copyOrMove(source, target, CopyMoveType.MOVE, true, true, transferInfo, actionAllInfo)
+): Boolean =
+    copyOrMove(source, target, CopyMoveType.MOVE, true, true, true, transferInfo, actionAllInfo)
 
 @Throws(IOException::class)
 private fun FileJob.moveAtomically(source: Path, target: Path) {
@@ -1180,7 +1192,7 @@ private fun FileJob.moveByCopy(
     transferInfo: TransferInfo,
     actionAllInfo: ActionAllInfo
 ): Boolean =
-    copyOrMove(source, target, CopyMoveType.MOVE, false, true, transferInfo, actionAllInfo)
+    copyOrMove(source, target, CopyMoveType.MOVE, false, false, true, transferInfo, actionAllInfo)
 
 // @see https://github.com/GNOME/nautilus/blob/master/src/nautilus-file-operations.c copy_move_file
 @Throws(IOException::class)
@@ -1188,6 +1200,7 @@ private fun FileJob.copyOrMove(
     source: Path,
     target: Path,
     type: CopyMoveType,
+    isDirectory: Boolean,
     useCopy: Boolean,
     copyAttributes: Boolean,
     transferInfo: TransferInfo,
@@ -1288,7 +1301,9 @@ private fun FileJob.copyOrMove(
                 this += StandardCopyOption.REPLACE_EXISTING
             }
             this += ProgressCopyOption(PROGRESS_INTERVAL_MILLIS) {
-                transferInfo.addToTransferredSize(it)
+                if (!isDirectory) {
+                    transferInfo.addToTransferredSize(it)
+                }
                 postCopyMoveNotification(transferInfo, source, type)
             }
         }.toTypedArray()
@@ -1405,7 +1420,7 @@ private fun FileJob.copyOrMove(
                         R.string.file_job_copy_error_message_format,
                         R.string.file_job_extract_error_message_format,
                         R.string.file_job_move_error_message_format
-                    ), getFileName(targetParent), e.toString()
+                    ), getFileName(targetParent), getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(target, e),
                 true,
@@ -1462,13 +1477,7 @@ class InstallApkJob(private val file: Path) : FileJob() {
             file, R.string.file_install_apk_from_background_title_format,
             R.string.file_install_apk_from_background_text
         ) { file ->
-            val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                file.fileProviderUri
-            } else {
-                // PackageInstaller only supports file URI before N.
-                Uri.fromFile(file.toFile())
-            }
-            uri.createInstallPackageIntent()
+            file.fileProviderUri.createInstallPackageIntent()
         }
     }
 }
@@ -1490,7 +1499,7 @@ class OpenFileJob(
                     if (withChooser) {
                         it.withChooser(
                             OpenFileAsDialogActivity::class.createIntent()
-                                .putArgs(OpenFileAsDialogFragment.Args(file))
+                                .putArgs(OpenFileAsDialogActivity.Args(file))
                         )
                     } else {
                         it
@@ -1527,7 +1536,7 @@ private fun FileJob.open(
     val targetFile = cacheDirectory.resolveForeign(targetFileName)
     val transferInfo = TransferInfo(scanInfo, cacheDirectory)
     val actionAllInfo = ActionAllInfo(replace = true)
-    val copied = copy(file, targetFile, isExtract, transferInfo, actionAllInfo)
+    val copied = copy(file, targetFile, isExtract, false, transferInfo, actionAllInfo)
     if (!copied) {
         return
     }
@@ -1567,7 +1576,7 @@ private fun FileJob.rename(path: Path, newPath: Path) {
                 getString(R.string.file_job_rename_error_title_format, getFileName(path)),
                 getString(
                     R.string.file_job_rename_error_message_format, getFileName(newPath),
-                    e.toString()
+                    getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 false,
@@ -1667,7 +1676,7 @@ private fun FileJob.restoreSeLinuxContext(
                 getString(R.string.file_job_restore_selinux_context_error_title),
                 getString(
                     R.string.file_job_restore_selinux_context_error_message_format,
-                    getFileName(path), e.toString()
+                    getFileName(path), getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -1722,7 +1731,7 @@ private fun FileJob.save(source: Path, target: Path) {
     val targetParent = target.parent
     val transferInfo = TransferInfo(scanInfo, targetParent)
     val actionAllInfo = ActionAllInfo(replace = true)
-    val copied = copy(source, target, false, transferInfo, actionAllInfo)
+    val copied = copy(source, target, false, false, transferInfo, actionAllInfo)
     if (!copied) {
         return
     }
@@ -1811,7 +1820,7 @@ private fun FileJob.setGroup(
                 getString(R.string.file_job_set_group_error_title_format, getFileName(path)),
                 getString(
                     R.string.file_job_set_group_error_message_format, getPrincipalName(group),
-                    e.toString()
+                    getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -1956,7 +1965,7 @@ private fun FileJob.setMode(
                 getString(R.string.file_job_set_mode_error_title_format, getFileName(path)),
                 getString(
                     R.string.file_job_set_mode_error_message_format, mode.toModeString(),
-                    e.toString()
+                    getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -2075,7 +2084,7 @@ private fun FileJob.setOwner(
                 getString(R.string.file_job_set_owner_error_title_format, getFileName(path)),
                 getString(
                     R.string.file_job_set_owner_error_message_format, getPrincipalName(owner),
-                    e.toString()
+                    getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -2204,7 +2213,7 @@ private fun FileJob.setSeLinuxContext(
                 ),
                 getString(
                     R.string.file_job_set_selinux_context_error_message_format, seLinuxContext,
-                    e.toString()
+                    getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(path, e),
                 true,
@@ -2291,7 +2300,7 @@ private fun FileJob.write(file: Path, content: ByteArray): Boolean {
             val result = showErrorDialog(
                 getString(R.string.file_job_write_error_title, getFileName(file)),
                 getString(
-                    R.string.file_job_write_error_message_format, getFileName(file), e.toString()
+                    R.string.file_job_write_error_message_format, getFileName(file), getErrorMessage(e)
                 ),
                 getReadOnlyFileStore(file, e),
                 false,

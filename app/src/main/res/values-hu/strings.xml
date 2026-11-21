@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">Bezárás</string>
+    <string name="copied_to_clipboard_format">„%1$s” a vágólapra lett másolva.</string>
     <string name="copy">Másolás</string>
     <string name="cut">Kivágás</string>
     <string name="default_">Alapértelmezett</string>
@@ -23,6 +23,8 @@
     <string name="loading">Betöltés…</string>
     <string name="maybe_later">Talán később</string>
     <string name="merge">Egyesítés</string>
+    <string name="more_options">További lehetőségek</string>
+    <string name="navigate_up">Ugrás fel</string>
     <string name="none">Nincs</string>
     <string name="open_navigation_drawer">Navigációs sáv megnyitása</string>
     <string name="paste">Beillesztés</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nincs olyan alkalmazás, amely kezelné ezt a műveletet</string>
     <string name="open_settings">Beállítások megnyitása</string>
-    <string name="shortcut_created">Parancsikon létrehozva</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d bájt</item>
@@ -65,6 +66,10 @@
     <string name="notification_channel_file_job_description">Fájlműveletek megjelenítése és vezérlése</string>
     <string name="notification_channel_ftp_server_name">FTP-kiszolgáló</string>
     <string name="notification_channel_ftp_server_description">FTP-kiszolgáló megjelenítése és vezérlése</string>
+    <string name="file_action_archive_password_title">Jelszó szükséges</string>
+    <string name="file_action_archive_password_message_format">A(z) „%1$s” jelszóval védett.</string>
+    <string name="file_action_archive_password_error_empty">A jelszó nem lehet üres</string>
+    <string name="file_action_archive_password_error_incorrect">Helytelen jelszó</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Felkészülés %1$,d fájl tömörítésére (%2$s)</item>
@@ -206,7 +211,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Hiba történt a(z) „%1$s” SELinux környezetének helyreállításakor.\n%2$s</string>
     <string name="file_job_write_error_title">Hiba az íráskor</string>
     <string name="file_job_write_error_message_format">Hiba történt a(z) „%1$s” írásakor.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Hiba történt a(z) „%1$s” információinak lekérésekor.</string>
+    <string name="file_job_error_no_space">Nincs elég tárhely.</string>
     <string name="file_job_remount_format">A(z) „%1$s” újracsatolása írhatóként</string>
     <string name="file_job_remount_loading_format">A(z) „%1$s” újracsatolása írhatóként…</string>
     <string name="file_job_remount_success_format">A(z) „%1$s” újra lett csatolva írhatóként</string>
@@ -228,6 +233,7 @@
     <string name="file_name_error_empty">A fájlnév nem lehet üres</string>
     <string name="file_name_error_invalid">Érvénytelen fájlnév</string>
     <string name="file_name_error_already_exists">Már létezik egy fájl ezzel a névvel</string>
+    <string name="file_replace_message_format">Lecseréli a(z) „%1$s” fájlt?</string>
     <string name="file_delete_message_file_format">Törli a(z) „%1$s” fájlt?</string>
     <string name="file_delete_message_directory_format">Törli a(z) „%1$s” mappát és a tartalmát?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -246,11 +252,20 @@
     <string name="file_create_archive_type_zip">.zip</string>
     <string name="file_create_archive_type_tar_xz">.tar.xz</string>
     <string name="file_create_archive_type_7z">.7z</string>
+    <string name="file_create_archive_password">Jelszó (nem kötelező)</string>
     <string name="file_add_bookmark_success">Könyvjelző hozzáadva</string>
     <string name="file_create_file_title">Új fájl</string>
     <string name="file_create_directory_title">Új mappa</string>
 
-    <string name="file_list_title">Fájlok</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Fájl kiválasztása</item>
+        <item quantity="other">Fájlok kiválasztása</item>
+    </plurals>
+    <string name="file_list_title_create_file">Fájl mentése</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Mappa kiválasztása</item>
+        <item quantity="other">Mappák kiválasztása</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d mappa</item>
         <item quantity="other">%1$,d mappa</item>
@@ -258,6 +273,10 @@
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="one">%1$,d fájl</item>
         <item quantity="other">%1$,d fájl</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d művelet</item>
+        <item quantity="other">%1$,d művelet</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Az útvonal nem lehet üres</string>
@@ -282,14 +301,20 @@
     <string name="file_list_action_create_shortcut">Parancsikon létrehozása</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Megnyitás új ablakban</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Fájlnév</string>
+    <string name="file_list_open_current_directory_format">„%1$s” kiválasztása</string>
     <string name="file_list_paste_move_title_format">%1$,d áthelyezése</string>
     <string name="file_list_paste_copy_title_format">%1$,d másolása</string>
     <string name="file_list_paste_extract_title_format">%1$,d fájl kibontása</string>
     <string name="file_list_paste_action_extract_here">Kibontás ide</string>
     <string name="file_list_empty">Nincsenek fájlok</string>
+    <string name="file_list_press_back_again_to_exit">Nyomja meg újra a Vissza gombot a kilépéshez</string>
     <string name="file_list_error_folder_not_found">Ez a mappa már nem létezik</string>
     <string name="file_list_error_permission_denied">Nincs jogosultsága a mappa megnyitásához</string>
+    <string name="file_list_create_file_error">A fájl nem hozható létre</string>
+    <string name="file_list_error_archive_header_encrypted">Az archívum fájllistája titkosított, ami nem támogatott</string>
     <string name="file_list_error_unknown">A mappa nem nyitható meg</string>
+    <string name="file_list_action_create">Létrehozás</string>
     <string name="file_list_action_create_file">Fájl</string>
     <string name="file_list_action_create_directory">Mappa</string>
 
@@ -317,7 +342,39 @@
     <string name="file_properties_basic_parent_directory"> Szülőmappa</string>
     <string name="file_properties_basic_archive_file">Fájl archiválása</string>
     <string name="file_properties_basic_archive_entry">Bejegyzés archiválása</string>
-    <string name="file_properties_basic_free_space">Szabad hely</string>
+    <string name="file_properties_permission">Jogosultságok</string>
+    <string name="file_properties_permission_owner">Tulajdonos</string>
+    <string name="file_properties_permission_group">Csoport</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Tulajdonos módosítása</string>
+    <string name="file_properties_permission_set_group_title">Csoport módosítása</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Adjon meg egy nevet vagy azonosítót</string>
+    <string name="file_properties_permission_set_principal_system">Rendszer</string>
+    <string name="file_properties_permission_mode">Mód</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Mód módosítása</string>
+    <string name="file_properties_permission_set_mode_others">Mások</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Olvasás</item>
+        <item>Írás</item>
+        <item>Végrehajtás</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Olvasás</item>
+        <item>Írás</item>
+        <item>Keresés</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Speciális</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Ne adjon „Végrehajtás” jogot a benne lévő fájloknak</string>
+    <string name="file_properties_permission_selinux_context">SELinux-környezet</string>
+    <string name="file_properties_permission_set_selinux_context_title">SELinux-környezet módosítása</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Visszaállítás</string>
+    <string name="file_properties_permission_recursive">Alkalmazás a benne lévő fájlokra</string>
     <string name="file_properties_image">Kép</string>
     <string name="file_properties_media_dimensions">Méretek</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -372,6 +429,12 @@
     <string name="file_properties_apk_signature_digests">Aláírások</string>
     <string name="file_properties_apk_signature_digests_empty">Nincsenek érvényes aláírások</string>
     <string name="file_properties_apk_past_signature_digests">Régi aláírások</string>
+    <string name="file_properties_checksum">Ellenőrzőösszegek</string>
+    <string name="file_properties_checksum_compare">Összehasonlítás</string>
+    <string name="file_properties_checksum_compare_placeholder">Bármely ellenőrzőösszeg</string>
+    <string name="file_properties_checksum_compare_match_format">Egyezik a(z) %1$s ellenőrzőösszeggel</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Egyezik a(z) %1$s ellenőrzőösszeg elejével</string>
+    <string name="file_properties_checksum_compare_no_match">Nincs egyező ellenőrzőösszeg</string>
     <string name="storage_file_system_root_title">Gyökér</string>
     <string name="storage_internal_storage">Belső tárhely</string>
     <string name="storage_list_title">Tároló</string>
@@ -381,9 +444,15 @@
     <string name="storage_add_storage_ftp_server">FTP-kiszolgáló</string>
     <string name="storage_add_storage_sftp_server">SFTP-kiszolgáló</string>
     <string name="storage_add_storage_smb_server">SMB-kiszolgáló</string>
+    <string name="storage_add_storage_webdav_server">WebDAV-kiszolgáló</string>
     <string name="storage_edit_device_storage_title">Tárolóeszköz szerkesztése</string>
     <string name="storage_edit_device_storage_name">Név</string>
     <string name="storage_edit_device_storage_path">Útvonal</string>
+    <string name="storage_add_external_storage_shortcut_title">Külső tároló parancsikonjának hozzáadása</string>
+    <string name="storage_edit_external_storage_shortcut_title">Külső tároló parancsikonjának szerkesztése</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Tárolókötet</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Adjon meg egy tárolókötetet</string>
+    <string name="storage_edit_external_storage_shortcut_path">Útvonal</string>
     <string name="storage_add_document_tree_title">Külső tároló hozzáadása</string>
     <string name="storage_edit_document_tree_title">Külső tároló szerkesztése</string>
     <string name="storage_edit_document_tree_name">Név</string>
@@ -450,6 +519,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB-kiszolgáló szerkesztése</string>
     <string name="storage_edit_smb_server_title_add">SMB-kiszolgáló hozzáadása</string>
     <string name="storage_edit_smb_server_host">Gépnév</string>
+    <string name="storage_edit_smb_server_host_placeholder">A kiszolgáló IP-címe vagy hálózati neve, pl. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Adjon meg egy gépnevet</string>
     <string name="storage_edit_smb_server_host_error_invalid">Érvénytelen gépnév</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -472,6 +542,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">Bekapcsolja az SMB3-titkosítás támogatását. Egyes kiszolgálók megkövetelik; ha nem támogatott, visszavált a titkosítatlan SMB-re.</string>
     <string name="storage_edit_smb_server_connect_and_add">Kapcsolódás és hozzáadás</string>
     <string name="storage_edit_smb_server_add">Hozzáadás</string>
+    <string name="storage_edit_webdav_server_title_edit">WebDAV-kiszolgáló szerkesztése</string>
+    <string name="storage_edit_webdav_server_title_add">WebDAV-kiszolgáló hozzáadása</string>
+    <string name="storage_edit_webdav_server_host">Gépnév</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Adjon meg egy gépnevet</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Érvénytelen gépnév</string>
+    <string name="storage_edit_webdav_server_port">Port</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Érvénytelen port</string>
+    <string name="storage_edit_webdav_server_path">Útvonal</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Üresen hagyható</string>
+    <string name="storage_edit_webdav_server_name">Név</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Gépnév használata</string>
+    <string name="storage_edit_webdav_server_protocol">Protokoll</string>
+    <string name="storage_edit_webdav_server_authentication_type">Hitelesítés</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Jelszó</item>
+        <item>Hozzáférési token</item>
+        <item>Nincs</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Felhasználónév</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Adjon meg egy felhasználónevet</string>
+    <string name="storage_edit_webdav_server_password">Jelszó</string>
+    <string name="storage_edit_webdav_server_access_token">Hozzáférési token</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Adjon meg egy hozzáférési tokent</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Kapcsolódás és hozzáadás</string>
+    <string name="storage_edit_webdav_server_add">Hozzáadás</string>
     <string name="navigation_storage_subtitle_format">%1$s szabad ennyiből: %2$s</string>
     <string name="navigation_add_storage">Tároló hozzáadása…</string>
     <string name="navigation_standard_directory_alarms">Riasztások</string>
@@ -491,8 +586,63 @@
     <string name="navigation_edit_bookmark_directory_name">Név</string>
     <string name="navigation_edit_bookmark_directory_path">Útvonal</string>
     <string name="archive_viewer_title">Archívum megjelenítő</string>
+    <string name="gallery_title">Galéria</string>
+    <string name="gallery_photos">Fotók</string>
+    <string name="gallery_albums">Albumok</string>
+    <string name="gallery_today">Ma</string>
+    <string name="gallery_yesterday">Tegnap</string>
+    <string name="gallery_empty">Nincsenek fotók vagy videók</string>
+    <string name="gallery_access_denied">Engedélyezze a fájlokhoz való hozzáférést a fotók és videók megtekintéséhez</string>
+    <string name="allow_access">Engedélyezés</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d elem</item>
+        <item quantity="other">%1$,d elem</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Törli ezt az elemet?</item>
+        <item quantity="other">Törli ezt a(z) %1$,d elemet?</item>
+    </plurals>
+    <string name="gallery_details">Részletek</string>
+    <string name="gallery_details_date">Dátum</string>
+    <string name="gallery_show_in_folder">Megjelenítés a mappában</string>
+    <string name="video_player_title">Videólejátszó</string>
+    <string name="play">Lejátszás</string>
+    <string name="pause">Szünet</string>
+    <string name="music_title">Zene</string>
+    <string name="music_tracks">Dalok</string>
+    <string name="music_albums">Albumok</string>
+    <string name="music_artists">Előadók</string>
+    <string name="music_empty">Nincs zene</string>
+    <string name="music_access_denied">Engedélyezze a fájlokhoz való hozzáférést a zenék megtekintéséhez</string>
+    <string name="music_shuffle_all">Összes keverve</string>
+    <string name="music_unknown_artist">Ismeretlen előadó</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d dal</item>
+        <item quantity="other">%1$,d dal</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="other">%1$,d album</item>
+    </plurals>
+    <string name="music_player_title">Zenelejátszó</string>
+    <string name="music_player_error_format">„%1$s” nem játszható le</string>
+    <string name="music_shuffle">Keverés</string>
+    <string name="music_repeat">Ismétlés</string>
+    <string name="music_previous">Előző</string>
+    <string name="music_next">Következő</string>
+    <string name="pdf_viewer_title">PDF-megjelenítő</string>
+    <string name="pdf_viewer_go_to_page">Ugrás oldalra</string>
+    <string name="pdf_viewer_fit_width">Szélességhez igazítás</string>
+    <string name="pdf_viewer_fit_page">Teljes oldal</string>
+    <string name="pdf_viewer_page_hint_format">Oldal, 1 és %1$,d között</string>
+    <string name="pdf_viewer_page_error">Nincs ilyen oldal</string>
+    <string name="pdf_viewer_password_protected">Ez a PDF jelszóval védett, ami nem támogatott</string>
+    <string name="media_viewer_error">A fájl nem nyitható meg</string>
     <string name="image_viewer_title">Képmegjelenítő</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Mentés másként</string>
+    <string name="save_as_error">Hiba a fájl mentésekor</string>
+    <string name="save_as_success_format">A(z) „%1$s” mentve ide: „%2$s”</string>
     <string name="text_editor_title">Szövegszerkesztő</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -500,6 +650,7 @@
     <string name="text_editor_reload_message">Biztos, hogy újratölti? A dokumentum összes mentetlen módosítása elvész.</string>
     <string name="text_editor_encoding">Kódolás</string>
     <string name="text_editor_close_message">Biztos, hogy elveti a dokumentum mentetlen módosításait?</string>
+    <string name="text_editor_file_too_large">A fájl túl nagy a szerkesztéshez</string>
 
     <string name="ftp_server_title">FTP-kiszolgáló</string>
     <string name="ftp_server_state_title">Állapot</string>
@@ -512,11 +663,16 @@
     <string name="ftp_server_url_menu_copy_url">Webcím másolása</string>
     <string name="ftp_server_url_menu_copy_password">Jelszó másolása</string>
     <string name="ftp_server_add_tile_title">Hozzáadás a gyors beállításokhoz</string>
+    <string name="ftp_server_add_tile_result_added">Az „FTP-kiszolgáló” hozzáadva a gyors beállításokhoz</string>
+    <string name="ftp_server_add_tile_result_already_added">Az „FTP-kiszolgáló” már szerepel a gyors beállításokban</string>
+    <string name="ftp_server_add_tile_result_error">Hiba az „FTP-kiszolgáló” gyors beállításokhoz adásakor</string>
     <string name="ftp_server_configuration_title">Beállítás</string>
     <string name="ftp_server_anonymous_login_title">Névtelen bejelentkezés</string>
     <string name="ftp_server_username_title">Felhasználónév</string>
     <string name="ftp_server_password_title">Jelszó</string>
+    <string name="ftp_server_password_summary_empty">Nincs beállítva</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Érvénytelen port</string>
     <string name="ftp_server_home_directory_title">Gyökérmappa</string>
     <string name="ftp_server_writable_title">Írás engedélyezése</string>
     <string name="settings_title">Beállítások</string>
@@ -524,7 +680,12 @@
     <string name="settings_locale_title">Nyelv</string>
     <string name="settings_theme_color_title">Téma színe</string>
     <string name="settings_theme_color_summary">A szín, amely a leggyakrabban megjelenik az alkalmazásban</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Alkalmazás az alkalmazás ikonjára is</string>
+    <string name="settings_launcher_icon_color_title">Ikon színe</string>
+    <string name="settings_launcher_icon_color_summary">Az ikon színe a kezdőképernyőn</string>
+    <string name="settings_launcher_icon_change_title">Módosítja az alkalmazás ikonját?</string>
+    <string name="settings_launcher_icon_change_message">A VFiles bezárul, hogy a kezdőképernyő megjelenítse az új ikont. Utána rögtön nyissa meg újra.</string>
+    <string name="settings_launcher_icon_change_confirm">Módosítás és bezárás</string>
     <string name="settings_night_mode_title">Éjszakai mód</string>
     <string-array name="settings_night_mode_entries">
         <item>Rendszertéma követése</item>
@@ -535,6 +696,9 @@
     </string-array>
     <string name="settings_black_night_mode">Fekete éjszakai mód</string>
     <string name="settings_file_list_animation_title">Fájllista animáció</string>
+    <string name="settings_double_back_to_exit_title">Kilépés a Vissza gomb kétszeri megnyomásával</string>
+    <string name="settings_edge_to_edge_title">Teljes képernyős megjelenítés</string>
+    <string name="settings_edge_to_edge_summary">A tartalom az állapotsor és a navigációs sáv mögé is görgethető</string>
     <string name="settings_file_name_ellipsize_title">Hosszú fájlnév megjelenítése</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Kipontozás az elején</item>
@@ -546,10 +710,11 @@
     <string name="settings_default_directory_title">Alapértelmezett mappa</string>
     <string name="settings_standard_directories_title">Szokásos mappák</string>
     <string name="settings_standard_directories_summary_empty">A szokásos mappák nem engedélyezettek</string>
-    <string name="settings_bookmark_directory_screenshots">Képernyőképek</string>
+    <string name="settings_standard_directory_gallery_summary">Az eszközön lévő fotók és videók</string>
+    <string name="settings_standard_directory_music_summary">Az eszközön lévő dalok</string>
     <string name="settings_bookmark_directories_title">Mappák könyvjelzőzése</string>
     <string name="settings_bookmark_directories_summary_empty">Nincsenek könyvjelzőzött mappák</string>
-    <string name="settings_root_strategy_title">Root hozzáférési mód</string>
+    <string name="settings_root_strategy_title">Root vagy Shizuku hozzáférési mód</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">%1$,d fájlművelet fut, és a root hozzáférési mód átváltása váratlan hibát okozhat. Biztos, hogy most módosítja?</item>
         <item quantity="other">%1$,d fájlművelet fut, és a root hozzáférési mód átváltása váratlan hibát okozhat. Biztos, hogy most módosítja?</item>
@@ -557,7 +722,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Csak normál hozzáférés</item>
         <item>Automatikus</item>
-        <item>Csak root hozzéférés</item>
+        <item>Csak root vagy Shizuku hozzáférés</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archívum fájlnévkódolása</string>
     <string name="settings_open_apk_default_action_title">Androidos csomag megnyitása</string>
@@ -566,19 +731,34 @@
         <item>Tartalom megtekintése</item>
         <item>Kérdezze meg, hogy mit tegyen</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Bélyegkép megjelenítése PDF-dokumentumokhoz</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Az Android régebbi verzióinál instabillá teheti az alkalmazást</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Távoli fájlok olvasása a bélyegképekhez</string>
+    <string name="settings_backup_title">Biztonsági mentés</string>
+    <string name="settings_backup_create_title">Beállítások mentése</string>
+    <string name="settings_backup_create_summary">A beállítások, könyvjelzők és szerverek mentése fájlba</string>
+    <string name="settings_backup_restore_title">Beállítások visszaállítása</string>
+    <string name="settings_backup_restore_summary">Minden lecserélése egy mentési fájllal</string>
+    <string name="settings_backup_password_title">A mentés jelszava</string>
+    <string name="settings_backup_password_error_empty">Adjon meg egy jelszót</string>
+    <string name="settings_backup_create_password_message">Nem kötelező. Jelszó nélkül bárki, akinél ez a fájl van, elolvashatja a szerverei jelszavait. Az elfelejtett jelszó nem állítható vissza.</string>
+    <string name="settings_backup_restore_password_message">Minden jelenlegi beállítás lecserélődik, és az alkalmazás újraindul.</string>
+    <string name="settings_backup_create_success">Beállítások elmentve</string>
+    <string name="settings_backup_create_error">A mentés nem menthető</string>
+    <string name="settings_backup_restore_error_file">Ez a fájl nem VFiles-mentés</string>
+    <string name="settings_backup_restore_error_password">Hibás jelszó vagy sérült fájl</string>
+    <string name="settings_backup_restore_error_version">Ez a mentés a VFiles újabb verziójából származik</string>
+    <string name="settings_backup_restore_error_jobs">Várja meg a fájlműveletek befejezését</string>
 
     <string name="about_title">Névjegy</string>
     <string name="about_version_title">Verzió</string>
     <string name="about_github_title">Megtekintés a GitHubon</string>
     <string name="about_licenses_title">Licencek</string>
-    <string name="about_privacy_policy_title">Adatvédelmi nyilatkozat</string>
     <string name="about_author_title">Szerző</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Követés a GitHubon</string>
-    <string name="about_author_twitter_title">Követés Twitteren</string>
     <string name="app_name_launcher">Fájlok</string>
+    <string name="clear_query">Keresés törlése</string>
     <string name="about_fork_subtitle">Eredeti: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">A háttérkép alapján</string>
     <string name="color_picker_preset_colors_label">Más színek</string>
@@ -586,23 +766,42 @@
     <string name="navigation_bookmarks_hint_title">Könyvjelzők</string>
     <string name="navigation_bookmarks_hint_toast">Nyisson meg egy mappát, koppintson a ⋮ ikonra, majd a „Könyvjelző hozzáadása” elemre</string>
     <string name="onboarding_files_description">A %1$s engedélyt kér az eszközön lévő összes fájl kezeléséhez. Ez elengedhetetlen a fájlok böngészéséhez, másolásához, áthelyezéséhez és rendszerezéséhez.</string>
+    <string name="onboarding_files_adb_note">Ez az eszköz a beállításaiban nem tud hozzáférést adni az összes fájlhoz, ezért csak a fényképei, videói és zenéi érhetők el. Az összes fájl használatához futtassa ezt a parancsot egy számítógépről:</string>
+    <string name="onboarding_files_grant_with_shizuku">Megadás Shizukuval</string>
     <string name="onboarding_files_title">Fájlhozzáférés</string>
     <string name="onboarding_finish">Kezdés</string>
     <string name="onboarding_grant">Megadás</string>
+    <string name="onboarding_granted">Megadva</string>
     <string name="onboarding_notifications_description">Engedélyezze az értesítéseket a fájlműveletek – például másolás, áthelyezés és archiválás – előrehaladásának követéséhez, akkor is, ha az alkalmazás a háttérben fut.</string>
 
     <string name="onboarding_install_apps_title">Alkalmazások telepítése</string>
     <string name="onboarding_install_apps_description">Engedélyezze, hogy a(z) %1$s közvetlenül telepítsen APK-fájlokat. Így letöltött vagy kapott fájlokból telepíthet alkalmazásokat harmadik féltől származó telepítő nélkül.</string>
+    <string name="reorder_drag_handle">Áthelyezés</string>
     <string name="onboarding_notifications_title">Értesítések</string>
     <string name="onboarding_optional">Választható</string>
     <string name="onboarding_required">Kötelező</string>
     <string name="onboarding_welcome_description">Adjon meg néhány engedélyt a legjobb élményért. A választhatók később a Beállításokban módosíthatók.</string>
     <string name="onboarding_welcome_title">Üdvözli a %1$s</string>
     <string name="settings_default_apps_ask">Mindig kérdezzen</string>
+    <string name="settings_default_apps_android_default_format">Android alapértelmezett (%1$s)</string>
     <string name="settings_default_apps_audio">Hang / Zene</string>
     <string name="settings_default_apps_image">Képek</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Válassza ki, melyik alkalmazás nyissa meg az egyes fájltípusokat</string>
+    <string name="settings_system_file_picker_title">A VFiles mint alapértelmezett fájlválasztó</string>
+    <string name="settings_system_file_picker_summary">Az alkalmazások a VFilest nyitják meg fájlválasztáshoz, az Android fájlválasztója ki van kapcsolva</string>
+    <string name="settings_system_file_picker_shizuku_required">Shizuku szükséges</string>
+    <string name="settings_system_file_picker_shizuku_missing">A Shizuku nem fut, indítsa el a beállítás módosításához</string>
+    <string name="settings_system_file_picker_not_found">Az Android fájlválasztója nem található ezen az eszközön</string>
+    <string name="settings_system_file_picker_confirm_title">Kikapcsolja az Android fájlválasztóját?</string>
+    <string name="settings_system_file_picker_confirm_message">A fájlokat kérő alkalmazások a VFilest nyitják meg az Android fájlválasztója helyett.\n\nSemmi sem lesz eltávolítva: ennek a beállításnak a kikapcsolása mindent visszaállít.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Fontos</string>
+    <string name="settings_system_file_picker_confirm_important">A VFiles eltávolítása előtt kapcsolja ki ezt a beállítást. Különben egyetlen alkalmazás sem tud fájlt választani, és néhány összeomolhat. Javításhoz telepítse újra a VFilest és kapcsolja ki a beállítást, vagy futtassa ezt számítógépről:</string>
+    <string name="settings_system_file_picker_confirm_note">Az Android újabb verzióin továbbra is a fotóválasztó használatos, és az Android továbbra is rákérdezhet, melyik alkalmazást használja.</string>
+    <string name="settings_system_file_picker_confirm_action">Kikapcsolás</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku szükséges</string>
+    <string name="settings_system_file_picker_shizuku_message">Indítsa el a Shizukut a módosításhoz, vagy futtassa ezt számítógépről:</string>
+    <string name="settings_system_file_picker_error">A fájlválasztó nem módosítható</string>
     <string name="settings_default_apps_text">Szöveg</string>
     <string name="settings_default_apps_title">Alapértelmezett alkalmazások</string>
     <string name="settings_default_apps_video">Videók</string>

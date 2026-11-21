@@ -14,8 +14,12 @@ import android.os.ParcelFileDescriptor
 import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.DocumentsProvider
+import android.provider.MediaStore
+import java8.nio.file.FileVisitResult
+import java8.nio.file.Files
 import java8.nio.file.Path
 import java8.nio.file.Paths
+import java8.nio.file.SimpleFileVisitor
 import java8.nio.file.attribute.BasicFileAttributes
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.R
@@ -28,14 +32,13 @@ import me.zhanghai.android.files.provider.common.moveTo
 import me.zhanghai.android.files.provider.common.newDirectoryStream
 import me.zhanghai.android.files.provider.common.readAttributes
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 import me.zhanghai.android.files.util.withoutPenaltyDeathOnNetwork
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.net.URI
 
 /**
- * A [DocumentsProvider] that exposes the whole file system MaterialFiles can browse - not only local
+ * A [DocumentsProvider] that exposes the whole file system VFiles can browse - not only local
  * storage but also SMB/FTP/SFTP/WebDAV servers and archives - so that other apps can pick a tree or
  * document from any of them via the Storage Access Framework.
  *
@@ -49,7 +52,7 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     override fun queryRoots(projection: Array<out String>?): Cursor {
         val context = context!!
         val cursor = MatrixCursor(projection ?: DEFAULT_ROOT_PROJECTION)
-        for (storage in Settings.STORAGES.valueCompat) {
+        for (storage in Settings.STORAGES.value) {
             if (!storage.isVisible) {
                 continue
             }
@@ -177,7 +180,7 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
     override fun deleteDocument(documentId: String) {
         val path = documentId.toPath()
         try {
-            StrictMode::class.withoutPenaltyDeathOnNetwork { path.delete() }
+            StrictMode::class.withoutPenaltyDeathOnNetwork { path.deleteRecursively() }
         } catch (e: IOException) {
             throw e.toFileNotFoundException()
         }
@@ -197,6 +200,43 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         return newPath.documentId
     }
 
+    override fun moveDocument(
+        sourceDocumentId: String,
+        sourceParentDocumentId: String,
+        targetParentDocumentId: String
+    ): String {
+        val source = sourceDocumentId.toPath()
+        val target = targetParentDocumentId.toPath().getUniqueChildPath(source.displayName)
+        try {
+            StrictMode::class.withoutPenaltyDeathOnNetwork { source.moveTo(target) }
+        } catch (e: IOException) {
+            throw e.toFileNotFoundException()
+        }
+        notifyChildrenChanged(sourceParentDocumentId)
+        notifyChildrenChanged(targetParentDocumentId)
+        return target.documentId
+    }
+
+    private fun Path.deleteRecursively() {
+        Files.walkFileTree(this, object : SimpleFileVisitor<Path>() {
+            override fun visitFile(file: Path, attributes: BasicFileAttributes): FileVisitResult {
+                file.delete()
+                return FileVisitResult.CONTINUE
+            }
+
+            override fun postVisitDirectory(
+                directory: Path,
+                exception: IOException?
+            ): FileVisitResult {
+                if (exception != null) {
+                    throw exception
+                }
+                directory.delete()
+                return FileVisitResult.CONTINUE
+            }
+        })
+    }
+
     private fun MatrixCursor.includeDocument(path: Path) {
         val attributes = try {
             StrictMode::class.withoutPenaltyDeathOnNetwork {
@@ -214,7 +254,8 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
         var flags = 0
         if (!path.fileSystem.isReadOnly) {
             flags = flags or DocumentsContract.Document.FLAG_SUPPORTS_DELETE or
-                DocumentsContract.Document.FLAG_SUPPORTS_RENAME
+                DocumentsContract.Document.FLAG_SUPPORTS_RENAME or
+                DocumentsContract.Document.FLAG_SUPPORTS_MOVE
             flags = flags or if (isDirectory) {
                 DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE
             } else {
@@ -228,6 +269,8 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
             .add(DocumentsContract.Document.COLUMN_SIZE, attributes.size())
             .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, attributes.lastModifiedTime().toMillis())
             .add(DocumentsContract.Document.COLUMN_FLAGS, flags)
+            // Asked for by apps looking for a path they can use directly.
+            .add(MediaStore.MediaColumns.DATA, path.localFilePathOrNull)
     }
 
     private fun notifyChildrenChanged(parentDocumentId: String) {
@@ -264,6 +307,13 @@ class FileSystemDocumentsProvider : DocumentsProvider() {
 
     private val Path.displayName: String
         get() = fileName?.toString() ?: toString()
+
+    private val Path.localFilePathOrNull: String?
+        get() = try {
+            toFile().absolutePath
+        } catch (e: UnsupportedOperationException) {
+            null
+        }
 
     private fun String.toPath(): Path = Paths.get(URI.create(this))
 

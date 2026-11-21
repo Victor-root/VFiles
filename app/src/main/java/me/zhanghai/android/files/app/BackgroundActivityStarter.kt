@@ -9,7 +9,6 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
@@ -28,7 +27,6 @@ val backgroundActivityStartNotificationTemplate =
             descriptionRes = R.string.notification_channel_background_activity_start_description,
             showBadge = false
         ),
-        colorRes = R.color.color_primary,
         smallIcon = R.drawable.notification_icon,
         ongoing = true,
         autoCancel = true,
@@ -61,10 +59,8 @@ object BackgroundActivityStarter {
         text: CharSequence?,
         context: Context
     ) {
-        var pendingIntentFlags = PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_CANCEL_CURRENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            pendingIntentFlags = pendingIntentFlags or PendingIntent.FLAG_IMMUTABLE
-        }
+        val pendingIntentFlags = PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_CANCEL_CURRENT or
+            PendingIntent.FLAG_IMMUTABLE
         val pendingIntent = PendingIntent.getActivity(
             context, intent.hashCode(), intent, pendingIntentFlags
         )

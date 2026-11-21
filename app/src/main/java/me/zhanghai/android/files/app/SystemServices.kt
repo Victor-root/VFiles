@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.files.app
 
+import android.app.AppOpsManager
 import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.SharedPreferences
@@ -14,27 +15,24 @@ import android.os.PowerManager
 import android.os.storage.StorageManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import androidx.preference.PreferenceManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import me.zhanghai.android.files.compat.PreferenceManagerCompat
 import me.zhanghai.android.files.compat.getSystemServiceCompat
 import me.zhanghai.android.files.compat.mainExecutorCompat
 import okhttp3.OkHttpClient
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
 
 val appClassLoader = AppProvider::class.java.classLoader
 
-// Same sizing android.os.AsyncTask.THREAD_POOL_EXECUTOR used (a shared pool for short, bursty
-// background work), without depending on that deprecated field.
-val backgroundExecutor: ExecutorService by lazy {
-    val cpuCount = Runtime.getRuntime().availableProcessors()
-    val corePoolSize = (cpuCount - 1).coerceIn(2, 4)
-    val maximumPoolSize = cpuCount * 2 + 1
-    ThreadPoolExecutor(
-        corePoolSize, maximumPoolSize, 30L, TimeUnit.SECONDS, LinkedBlockingQueue(128)
-    )
+// For the state kept while the app runs, updated on the main thread like the UI reading it.
+val applicationScope: CoroutineScope by lazy {
+    CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+}
+
+val appOpsManager: AppOpsManager by lazy {
+    application.getSystemServiceCompat(AppOpsManager::class.java)
 }
 
 val clipboardManager: ClipboardManager by lazy {
@@ -44,7 +42,7 @@ val clipboardManager: ClipboardManager by lazy {
 val contentResolver: ContentResolver by lazy { application.contentResolver }
 
 val defaultSharedPreferences: SharedPreferences by lazy {
-    PreferenceManager.getDefaultSharedPreferences(application)
+    PreferenceManagerCompat.getDefaultSharedPreferences(application)
 }
 
 val okHttpClient: OkHttpClient by lazy { OkHttpClient() }

@@ -15,7 +15,8 @@ import me.zhanghai.android.files.file.isVideo
 
 /**
  * A broad file category for which the user can pick a default app to open with, à la Windows'
- * "Default apps". [queryMimeType] is the representative MIME used to list candidate apps.
+ * "Default apps". [queryMimeType] is the representative MIME used to list candidate apps. Without
+ * a choice, the user is asked.
  */
 enum class FileOpenAppCategory(
     @param:StringRes val titleRes: Int,

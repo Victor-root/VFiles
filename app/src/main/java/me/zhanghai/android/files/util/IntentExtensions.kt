@@ -5,77 +5,27 @@
 
 package me.zhanghai.android.files.util
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
-import android.provider.MediaStore
-import android.provider.Settings
 import androidx.core.app.ShareCompat
+import androidx.core.net.toUri
 import me.zhanghai.android.files.app.appClassLoader
 import me.zhanghai.android.files.app.application
-import me.zhanghai.android.files.app.packageManager
 import me.zhanghai.android.files.compat.DocumentsContractCompat
-import me.zhanghai.android.files.compat.removeFlagsCompat
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.intentType
+import me.zhanghai.android.files.viewer.saveas.SaveAsActivity
 import kotlin.reflect.KClass
 
 fun <T : Context> KClass<T>.createIntent(): Intent = Intent(application, java)
 
-fun CharSequence.createSendTextIntent(htmlText: String? = null): Intent =
-    // The context parameter here is only used for passing calling activity information and starting
-    // chooser activity, neither of which we care about.
-    ShareCompat.IntentBuilder(application)
-        .setType(MimeType.TEXT_PLAIN.value)
-        .setText(this)
-        .apply { htmlText?.let { setHtmlText(it) } }
-        .intent
-        // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET is unnecessarily added by ShareCompat.IntentBuilder.
-        .apply {
-            @Suppress("DEPRECATION")
-            removeFlagsCompat(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
-        }
-
-fun KClass<Intent>.createLaunchApp(packageName: String): Intent? =
-    packageManager.getLaunchIntentForPackage(packageName)
-
-fun KClass<Intent>.createPickImage(allowMultiple: Boolean = false): Intent =
-    MimeType.IMAGE_ANY.createPickFileIntent(allowMultiple)
-
-fun KClass<Intent>.createPickOrCaptureImageWithChooser(
-    allowPickMultiple: Boolean = false,
-    captureOutputUri: Uri
-): Intent =
-    createPickImage(allowPickMultiple)
-        .withChooser(captureOutputUri.createCaptureImage())
-
-fun KClass<Intent>.createSyncSettings(
-    authorities: Array<out String>? = null,
-    accountTypes: Array<out String>? = null
-): Intent =
-    Intent(Settings.ACTION_SYNC_SETTINGS).apply {
-        if (!authorities.isNullOrEmpty()) {
-            putExtra(Settings.EXTRA_AUTHORITIES, authorities)
-        }
-        if (!accountTypes.isNullOrEmpty()) {
-            putExtra(Settings.EXTRA_ACCOUNT_TYPES, accountTypes)
-        }
-    }
-
-fun KClass<Intent>.createSyncSettingsWithAuthorities(vararg authorities: String) =
-    createSyncSettings(authorities = authorities)
-
-fun KClass<Intent>.createSyncSettingsWithAccountType(vararg accountTypes: String) =
-    createSyncSettings(accountTypes = accountTypes)
-
-fun KClass<Intent>.createViewAppInMarket(packageName: String): Intent =
-    Uri.parse("market://details?id=$packageName").createViewIntent()
-
 // @see com.android.documentsui.inspector.InspectorController.createGeoIntent
 // @see https://developer.android.com/guide/components/intents-common.html#Maps
 fun KClass<Intent>.createViewLocation(latitude: Float, longitude: Float, label: String): Intent =
-    Uri.parse("geo:0,0?q=$latitude,$longitude(${Uri.encode(label)})").createViewIntent()
+    "geo:0,0?q=$latitude,$longitude(${Uri.encode(label)})".toUri().createViewIntent()
 
 // Generic: no Class<T> available at these call sites for the API-33+ typed replacements.
 @Suppress("DEPRECATION")
@@ -84,21 +34,15 @@ fun <T : Parcelable> Intent.getParcelableExtraSafe(key: String?): T? {
     return getParcelableExtra(key)
 }
 
-@Suppress("DEPRECATION")
-fun Intent.getParcelableArrayExtraSafe(key: String?): Array<Parcelable>? {
-    setExtrasClassLoader(appClassLoader)
-    return getParcelableArrayExtra(key)
-}
-
-@Suppress("DEPRECATION")
-fun <T : Parcelable?> Intent.getParcelableArrayListExtraSafe(key: String?): ArrayList<T>? {
-    setExtrasClassLoader(appClassLoader)
-    return getParcelableArrayListExtra(key)
-}
-
+// Saving a file as another one is only of use for those of other apps, so it isn't offered for
+// those of this app.
 fun Intent.withChooser(title: CharSequence? = null, vararg initialIntents: Intent): Intent =
     Intent.createChooser(this, title).apply {
         putExtra(Intent.EXTRA_INITIAL_INTENTS, initialIntents)
+        putExtra(
+            Intent.EXTRA_EXCLUDE_COMPONENTS,
+            arrayOf(ComponentName(application, SaveAsActivity::class.java))
+        )
     }
 
 fun Intent.withChooser(vararg initialIntents: Intent) = withChooser(null, *initialIntents)
@@ -155,12 +99,16 @@ fun Collection<Uri>.createSendStreamIntent(mimeTypes: Collection<MimeType>): Int
         // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET is unnecessarily added by ShareCompat.IntentBuilder.
         .apply {
             @Suppress("DEPRECATION")
-            removeFlagsCompat(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+            removeFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
         }
 
+// The files app of the system can read any directory, unlike this app which can't grant it the
+// permission for directories like Android/data and would crash trying to.
 fun Uri.createDocumentsUiViewDirectoryIntent(): Intent =
-    createViewIntent(MimeType.DIRECTORY)
-        .apply { DocumentsContractCompat.getDocumentsUiPackage()?.let { setPackage(it) } }
+    createViewIntent(MimeType.DIRECTORY).apply {
+        removeFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        DocumentsContractCompat.getDocumentsUiPackage()?.let { setPackage(it) }
+    }
 
 fun Uri.createViewIntent(): Intent = Intent(Intent.ACTION_VIEW, this)
 
@@ -175,7 +123,3 @@ fun Uri.createInstallPackageIntent(): Intent =
     Intent(Intent.ACTION_INSTALL_PACKAGE)
         .setDataAndType(this, MimeType.APK.value)
         .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-fun Uri.createCaptureImage(): Intent =
-    Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        .putExtra(MediaStore.EXTRA_OUTPUT, this)

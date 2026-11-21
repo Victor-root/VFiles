@@ -1,39 +1,60 @@
 /*
- * Copyright (c) 2019 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * Copyright (c) 2026 Hai Zhang <dreaming.in.code.zh@gmail.com>
  * All Rights Reserved.
  */
 
 package me.zhanghai.android.files.app
 
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import me.zhanghai.android.files.theme.custom.CustomThemeHelper
-import me.zhanghai.android.files.theme.night.NightModeHelper
+import android.os.LocaleList
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.AppTheme
 
-abstract class AppActivity : AppCompatActivity() {
-    private var isDelegateCreated = false
+abstract class AppActivity : ComponentActivity() {
+    private var appliedLocales: String? = null
 
-    override fun getDelegate(): AppCompatDelegate {
-        val delegate = super.getDelegate()
+    // The system applies the app locales on Android 13+, and we do it ourselves before.
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(newBase)
 
-        if (!isDelegateCreated) {
-            isDelegateCreated = true
-            NightModeHelper.apply(this)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            val locales = Settings.LOCALES.value
+            appliedLocales = locales
+            if (locales.isNotEmpty()) {
+                applyOverrideConfiguration(
+                    Configuration().apply { setLocales(LocaleList.forLanguageTags(locales)) }
+                )
+            }
         }
-        return delegate
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        CustomThemeHelper.apply(this)
-
         super.onCreate(savedInstanceState)
+
+        setContent { AppTheme { ProvideScreenLocals { ScreenStack { Content() } } } }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        if (!super.onSupportNavigateUp()) {
-            finish()
+    override fun onResume() {
+        super.onResume()
+
+        val appliedLocales = appliedLocales
+        if (appliedLocales != null && Settings.LOCALES.value != appliedLocales) {
+            recreate()
         }
-        return true
     }
+
+    /** Provides what every screen of the activity reads, like the ones opened above [Content]. */
+    @Composable
+    protected open fun ProvideScreenLocals(content: @Composable () -> Unit) {
+        content()
+    }
+
+    @Composable
+    protected abstract fun Content()
 }

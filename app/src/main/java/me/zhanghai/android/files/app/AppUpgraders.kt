@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.StringRes
+import androidx.core.app.LocaleManagerCompat
 import androidx.core.content.edit
 import me.zhanghai.android.files.R
 import me.zhanghai.android.files.compat.PreferenceManagerCompat
@@ -22,6 +23,7 @@ import me.zhanghai.android.files.file.DocumentTreeUri
 import me.zhanghai.android.files.file.asExternalStorageUriOrNull
 import me.zhanghai.android.files.file.displayName
 import me.zhanghai.android.files.file.storageVolume
+import me.zhanghai.android.files.filelist.ArchiveType
 import me.zhanghai.android.files.filelist.FileSortOptions
 import me.zhanghai.android.files.navigation.BookmarkDirectory
 import me.zhanghai.android.files.navigation.StandardDirectorySettings
@@ -35,6 +37,7 @@ import me.zhanghai.android.files.provider.linux.LinuxFileSystem
 import me.zhanghai.android.files.provider.root.RootStrategy
 import me.zhanghai.android.files.provider.sftp.SftpFileSystem
 import me.zhanghai.android.files.provider.smb.SmbFileSystem
+import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.DocumentTree
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.PrimaryStorageVolume
@@ -59,8 +62,8 @@ internal fun upgradeAppTo1_1_0() {
     }
 }
 
-private const val PARCEL_VAL_PARCELABLE = 4
-private const val PARCEL_VAL_LIST = 11
+internal const val PARCEL_VAL_PARCELABLE = 4
+internal const val PARCEL_VAL_LIST = 11
 
 private fun migratePathSetting1_1_0(@StringRes keyRes: Int) {
     val key = application.getString(keyRes)
@@ -629,4 +632,31 @@ private fun readWriteLengthPrefixedValue(oldParcel: Parcel, newParcel: Parcel, b
         newParcel.writeInt(endPosition - startPosition)
         newParcel.setDataPosition(endPosition)
     }
+}
+
+internal fun upgradeAppTo2_0_0() {
+    migrateCreateArchiveTypeSetting2_0_0()
+    migrateLocalesSetting2_0_0()
+}
+
+// The archive type used to be stored as the resource name of its radio button.
+private fun migrateCreateArchiveTypeSetting2_0_0() {
+    val key = application.getString(R.string.pref_key_create_archive_type)
+    val oldValue = defaultSharedPreferences.getString(key, null) ?: return
+    val type = when (oldValue.substringAfterLast('/')) {
+        "tarXzRadio" -> ArchiveType.TAR_XZ
+        "sevenZRadio" -> ArchiveType.SEVEN_Z
+        else -> ArchiveType.ZIP
+    }
+    defaultSharedPreferences.edit { putString(key, type.ordinal.toString()) }
+}
+
+// The app locales before Android 13 used to be stored by AppCompat, which LocaleManagerCompat
+// still reads.
+private fun migrateLocalesSetting2_0_0() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return
+    }
+    val locales = LocaleManagerCompat.getApplicationLocales(application)
+    Settings.LOCALES.putValue(locales.toLanguageTags())
 }

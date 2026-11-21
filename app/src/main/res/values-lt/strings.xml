@@ -8,8 +8,8 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity">
-
     <string name="close">Uždaryti</string>
+    <string name="copied_to_clipboard_format">Suvestinė „%1$s“ nukopijuota į iškarpinę.</string>
     <string name="copy">Kopijuoti</string>
     <string name="cut">Iškirpti</string>
     <string name="default_">Numatytasis</string>
@@ -25,6 +25,8 @@
     <string name="loading">Kraunama…</string>
     <string name="maybe_later">Gal vėliau</string>
     <string name="merge">Sujungti</string>
+    <string name="more_options">Daugiau parinkčių</string>
+    <string name="navigate_up">Eiti į viršų</string>
     <string name="none">Nėra</string>
     <string name="open_navigation_drawer">Atidaryti navigacijos dėklą</string>
     <string name="paste">Įklijuoti</string>
@@ -50,7 +52,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nerasta jokių programų, galinčių atlikti šį veiksmą</string>
     <string name="open_settings">Atidaryti nustatymus</string>
-    <string name="shortcut_created">Sukurtas trumpasis kelias</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d baitas</item>
@@ -69,6 +70,10 @@
     <string name="notification_channel_file_job_description">Rodyti ir valdyti failų operacijas</string>
     <string name="notification_channel_ftp_server_name">FTP serveris</string>
     <string name="notification_channel_ftp_server_description">Rodyti ir valdyti FTP serverį</string>
+    <string name="file_action_archive_password_title">Reikalingas slaptažodis</string>
+    <string name="file_action_archive_password_message_format">„%1$s“ apsaugotas slaptažodžiu.</string>
+    <string name="file_action_archive_password_error_empty">Slaptažodis negali būti tuščias</string>
+    <string name="file_action_archive_password_error_incorrect">Neteisingas slaptažodis</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Ruošiamasi suspausti %1$,d failą (%2$s)</item>
@@ -250,7 +255,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Įvyko klaida atkuriant SELinux kontekstą „%1$s“.\n%2$s</string>
     <string name="file_job_write_error_title">Klaida rašant</string>
     <string name="file_job_write_error_message_format">Įvyko klaida rašant “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Įvyko klaida gaunant informaciją apie “%1$s”.</string>
+    <string name="file_job_error_no_space">Nepakanka vietos saugykloje.</string>
     <string name="file_job_remount_format">Permontuoti „%1$s“ kaip skaitymo ir rašymo</string>
     <string name="file_job_remount_loading_format">Permontavimas „%1$s“ kaip skaitymo ir rašymo…</string>
     <string name="file_job_remount_success_format">„%1$s“ buvo permontuotas kaip skaitymo ir rašymo</string>
@@ -272,6 +277,7 @@
     <string name="file_name_error_empty">Failo pavadinimas negali būti tuščias</string>
     <string name="file_name_error_invalid">Netinkamas failo pavadinimas</string>
     <string name="file_name_error_already_exists">Failas šiuo pavadinimu jau egzistuoja</string>
+    <string name="file_replace_message_format">Pakeisti „%1$s“?</string>
     <string name="file_delete_message_file_format">Ištrinti \"%1$s\"?</string>
     <string name="file_delete_message_directory_format">Ištrinti aplanką \"%1$s\" ir jo turinį?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -296,11 +302,24 @@
     <string name="file_create_archive_type_zip">.zip</string>
     <string name="file_create_archive_type_tar_xz">.tar.xz</string>
     <string name="file_create_archive_type_7z">.7z</string>
+    <string name="file_create_archive_password">Slaptažodis (neprivaloma)</string>
     <string name="file_add_bookmark_success">Pridėta žymė</string>
     <string name="file_create_file_title">Naujas failas</string>
     <string name="file_create_directory_title">Naujas aplankas</string>
 
-    <string name="file_list_title">Failai</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Pasirinkite failą</item>
+        <item quantity="few">Pasirinkite failus</item>
+        <item quantity="many">Pasirinkite failus</item>
+        <item quantity="other">Pasirinkite failus</item>
+    </plurals>
+    <string name="file_list_title_create_file">Išsaugoti failą</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Pasirinkite aplanką</item>
+        <item quantity="few">Pasirinkite aplankus</item>
+        <item quantity="many">Pasirinkite aplankus</item>
+        <item quantity="other">Pasirinkite aplankus</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d aplankas</item>
         <item quantity="few">%1$,d aplankai</item>
@@ -312,6 +331,12 @@
         <item quantity="few">%1$,d failai</item>
         <item quantity="many">%1$,d failų</item>
         <item quantity="other">%1$,d failai</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operacija</item>
+        <item quantity="few">%1$,d operacijos</item>
+        <item quantity="many">%1$,d operacijos</item>
+        <item quantity="other">%1$,d operacijų</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Kelias negali būti tuščias</string>
@@ -336,14 +361,20 @@
     <string name="file_list_action_create_shortcut">Sukurti spartųjį kelią</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Atidaryti naujame lange</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Failo pavadinimas</string>
+    <string name="file_list_open_current_directory_format">Pasirinkti „%1$s“</string>
     <string name="file_list_paste_move_title_format">Perkeliama %1$,d</string>
     <string name="file_list_paste_copy_title_format">Kopijuojama %1$,d</string>
     <string name="file_list_paste_extract_title_format">Išskleidžiama %1$,d</string>
     <string name="file_list_paste_action_extract_here">Išskleisti čia</string>
     <string name="file_list_empty">Nėra failų</string>
+    <string name="file_list_press_back_again_to_exit">Paspauskite „Atgal“ dar kartą, kad išeitumėte</string>
     <string name="file_list_error_folder_not_found">Šio aplanko nebėra</string>
     <string name="file_list_error_permission_denied">Neturite leidimo atidaryti šio aplanko</string>
+    <string name="file_list_create_file_error">Nepavyko sukurti šio failo</string>
+    <string name="file_list_error_archive_header_encrypted">Šio archyvo failų sąrašas užšifruotas, tai nepalaikoma</string>
     <string name="file_list_error_unknown">Nepavyko atidaryti šio aplanko</string>
+    <string name="file_list_action_create">Sukurti</string>
     <string name="file_list_action_create_file">Failas</string>
     <string name="file_list_action_create_directory">Aplankas</string>
 
@@ -373,7 +404,39 @@
     <string name="file_properties_basic_parent_directory">Pirminis aplankas</string>
     <string name="file_properties_basic_archive_file">Archyvo failas</string>
     <string name="file_properties_basic_archive_entry">Archyvo įrašas</string>
-    <string name="file_properties_basic_free_space">Laisvos vietos</string>
+    <string name="file_properties_permission">Leidimai</string>
+    <string name="file_properties_permission_owner">Savininkas</string>
+    <string name="file_properties_permission_group">Grupė</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Keisti savininką</string>
+    <string name="file_properties_permission_set_group_title">Keisti grupę</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Įveskite pavadinimą arba ID</string>
+    <string name="file_properties_permission_set_principal_system">Sistema</string>
+    <string name="file_properties_permission_mode">Režimas</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Keisti režimą</string>
+    <string name="file_properties_permission_set_mode_others">Kiti</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Skaityti</item>
+        <item>Rašyti</item>
+        <item>Vykdyti</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Skaityti</item>
+        <item>Rašyti</item>
+        <item>Ieškoti</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Specialūs</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Nepridėti „Vykdyti“ esantiems failams</string>
+    <string name="file_properties_permission_selinux_context">SELinux kontekstas</string>
+    <string name="file_properties_permission_set_selinux_context_title">Keisti SELinux kontekstą</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Atkurti</string>
+    <string name="file_properties_permission_recursive">Taikyti esantiems failams</string>
     <string name="file_properties_image">Nuotrauka</string>
     <string name="file_properties_media_dimensions">Matmenys</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -430,6 +493,12 @@
     <string name="file_properties_apk_signature_digests">Parašai</string>
     <string name="file_properties_apk_signature_digests_empty">Nėra tinkamų parašų</string>
     <string name="file_properties_apk_past_signature_digests">Seni parašai</string>
+    <string name="file_properties_checksum">Kontrolinės sumos</string>
+    <string name="file_properties_checksum_compare">Palyginti</string>
+    <string name="file_properties_checksum_compare_placeholder">Bet kuri kontrolinė suma</string>
+    <string name="file_properties_checksum_compare_match_format">Sutampa su %1$s kontroline suma</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Sutampa su %1$s kontrolinės sumos pradžia</string>
+    <string name="file_properties_checksum_compare_no_match">Sutampančios kontrolinės sumos nerasta</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Vidinė atmintis</string>
     <string name="storage_list_title">Saugykla</string>
@@ -439,9 +508,15 @@
     <string name="storage_add_storage_ftp_server">FTP serveris</string>
     <string name="storage_add_storage_sftp_server">SFTP serveris</string>
     <string name="storage_add_storage_smb_server">SMB serveris</string>
+    <string name="storage_add_storage_webdav_server">WebDAV serveris</string>
     <string name="storage_edit_device_storage_title">Redaguoti įrenginio saugylką</string>
     <string name="storage_edit_device_storage_name">Pavadinimas</string>
     <string name="storage_edit_device_storage_path">Kelias</string>
+    <string name="storage_add_external_storage_shortcut_title">Pridėti išorinės saugyklos spartųjį kelią</string>
+    <string name="storage_edit_external_storage_shortcut_title">Redaguoti išorinės saugyklos spartųjį kelią</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Saugyklos tomas</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Įveskite saugyklos tomą</string>
+    <string name="storage_edit_external_storage_shortcut_path">Kelias</string>
     <string name="storage_add_document_tree_title">Pridėti išorinę saugyklą</string>
     <string name="storage_edit_document_tree_title">Redaguoti išorinę saugyklą</string>
     <string name="storage_edit_document_tree_name">Pavadinimas</string>
@@ -508,6 +583,7 @@
     <string name="storage_edit_smb_server_title_edit">Redaguoti SMB serverį</string>
     <string name="storage_edit_smb_server_title_add">Pridėti SMB serverį</string>
     <string name="storage_edit_smb_server_host">Serverio vardas</string>
+    <string name="storage_edit_smb_server_host_placeholder">Serverio IP adresas arba tinklo vardas, pvz., 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Įveskite serverio vardą</string>
     <string name="storage_edit_smb_server_host_error_invalid">Netinkamas serverio vardas</string>
     <string name="storage_edit_smb_server_port">Prievadas</string>
@@ -530,6 +606,31 @@
     <string name="storage_edit_smb_server_encrypt_summary">Įjungia SMB3 šifravimo palaikymą. Reikalingas kai kuriems serveriams; jei nepalaikoma, grįžtama prie nešifruoto SMB.</string>
     <string name="storage_edit_smb_server_connect_and_add">Prisijungti ir pridėti</string>
     <string name="storage_edit_smb_server_add">Pridėti</string>
+    <string name="storage_edit_webdav_server_title_edit">Redaguoti WebDAV serverį</string>
+    <string name="storage_edit_webdav_server_title_add">Pridėti WebDAV serverį</string>
+    <string name="storage_edit_webdav_server_host">Serverio vardas</string>
+    <string name="storage_edit_webdav_server_host_error_empty">Įveskite serverio vardą</string>
+    <string name="storage_edit_webdav_server_host_error_invalid">Netinkamas serverio vardas</string>
+    <string name="storage_edit_webdav_server_port">Prievadas</string>
+    <string name="storage_edit_webdav_server_port_error_invalid">Netinkamas prievadas</string>
+    <string name="storage_edit_webdav_server_path">Kelias</string>
+    <string name="storage_edit_webdav_server_path_placeholder">Gali būti paliktas tuščias</string>
+    <string name="storage_edit_webdav_server_name">Pavadinimas</string>
+    <string name="storage_edit_webdav_server_name_placeholder">Naudoti serverio vardą</string>
+    <string name="storage_edit_webdav_server_protocol">Protokolas</string>
+    <string name="storage_edit_webdav_server_authentication_type">Autentifikacija</string>
+    <string-array name="storage_edit_webdav_server_authentication_type_entries">
+        <item>Slaptažodis</item>
+        <item>Prieigos raktas</item>
+        <item>Nėra</item>
+    </string-array>
+    <string name="storage_edit_webdav_server_username">Naudotojo vardas</string>
+    <string name="storage_edit_webdav_server_username_error_empty">Įveskite naudotojo vardą</string>
+    <string name="storage_edit_webdav_server_password">Slaptažodis</string>
+    <string name="storage_edit_webdav_server_access_token">Prieigos raktas</string>
+    <string name="storage_edit_webdav_server_access_token_error_empty">Įveskite prieigos raktą</string>
+    <string name="storage_edit_webdav_server_connect_and_add">Prisijungti ir pridėti</string>
+    <string name="storage_edit_webdav_server_add">Pridėti</string>
     <string name="navigation_storage_subtitle_format">%1$s laisva iš %2$s</string>
     <string name="navigation_add_storage">Pridėti saugyklą…</string>
     <string name="navigation_standard_directory_alarms">Aliarmai</string>
@@ -549,8 +650,71 @@
     <string name="navigation_edit_bookmark_directory_name">Pavadinimas</string>
     <string name="navigation_edit_bookmark_directory_path">Kelias</string>
     <string name="archive_viewer_title">Archyvų žiūryklė</string>
+    <string name="gallery_title">Galerija</string>
+    <string name="gallery_photos">Nuotraukos</string>
+    <string name="gallery_albums">Albumai</string>
+    <string name="gallery_today">Šiandien</string>
+    <string name="gallery_yesterday">Vakar</string>
+    <string name="gallery_empty">Nėra nuotraukų ar vaizdo įrašų</string>
+    <string name="gallery_access_denied">Leiskite pasiekti failus, kad matytumėte nuotraukas ir vaizdo įrašus</string>
+    <string name="allow_access">Leisti</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d elementas</item>
+        <item quantity="few">%1$,d elementai</item>
+        <item quantity="many">%1$,d elementų</item>
+        <item quantity="other">%1$,d elemento</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Ištrinti šį elementą?</item>
+        <item quantity="few">Ištrinti šiuos %1$,d elementus?</item>
+        <item quantity="many">Ištrinti šiuos %1$,d elementų?</item>
+        <item quantity="other">Ištrinti šiuos %1$,d elemento?</item>
+    </plurals>
+    <string name="gallery_details">Išsami informacija</string>
+    <string name="gallery_details_date">Data</string>
+    <string name="gallery_show_in_folder">Rodyti aplanke</string>
+    <string name="video_player_title">Vaizdo grotuvas</string>
+    <string name="play">Leisti</string>
+    <string name="pause">Pristabdyti</string>
+    <string name="music_title">Muzika</string>
+    <string name="music_tracks">Dainos</string>
+    <string name="music_albums">Albumai</string>
+    <string name="music_artists">Atlikėjai</string>
+    <string name="music_empty">Nėra muzikos</string>
+    <string name="music_access_denied">Leiskite pasiekti failus, kad matytumėte muziką</string>
+    <string name="music_shuffle_all">Maišyti viską</string>
+    <string name="music_unknown_artist">Nežinomas atlikėjas</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d daina</item>
+        <item quantity="few">%1$,d dainos</item>
+        <item quantity="many">%1$,d dainų</item>
+        <item quantity="other">%1$,d dainos</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d albumas</item>
+        <item quantity="few">%1$,d albumai</item>
+        <item quantity="many">%1$,d albumų</item>
+        <item quantity="other">%1$,d albumo</item>
+    </plurals>
+    <string name="music_player_title">Muzikos grotuvas</string>
+    <string name="music_player_error_format">Nepavyko paleisti „%1$s“</string>
+    <string name="music_shuffle">Maišyti</string>
+    <string name="music_repeat">Kartoti</string>
+    <string name="music_previous">Ankstesnis</string>
+    <string name="music_next">Kitas</string>
+    <string name="pdf_viewer_title">PDF žiūryklė</string>
+    <string name="pdf_viewer_go_to_page">Eiti į puslapį</string>
+    <string name="pdf_viewer_fit_width">Pritaikyti pagal plotį</string>
+    <string name="pdf_viewer_fit_page">Rodyti visą puslapį</string>
+    <string name="pdf_viewer_page_hint_format">Puslapis, nuo 1 iki %1$,d</string>
+    <string name="pdf_viewer_page_error">Tokio puslapio nėra</string>
+    <string name="pdf_viewer_password_protected">Šis PDF apsaugotas slaptažodžiu, o tai nepalaikoma</string>
+    <string name="media_viewer_error">Nepavyko atidaryti šio failo</string>
     <string name="image_viewer_title">Nuotraukų žiūryklė</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Išsaugoti kaip</string>
+    <string name="save_as_error">Klaida išsaugant failą</string>
+    <string name="save_as_success_format">„%1$s“ išsaugotas į „%2$s“</string>
     <string name="text_editor_title">Teksto redaktorius</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -558,6 +722,7 @@
     <string name="text_editor_reload_message">Ar tikrai norite įkelti iš naujo? Neišsaugoti šio dokumento pakeitimai bus prarasti.</string>
     <string name="text_editor_encoding">Kodavimas</string>
     <string name="text_editor_close_message">Ar tikrai norite atmesti neišsaugotus šio dokumento pakeitimus?</string>
+    <string name="text_editor_file_too_large">Šis failas per didelis, kad būtų galima redaguoti</string>
 
     <string name="ftp_server_title">FTP serveris</string>
     <string name="ftp_server_state_title">Būsena</string>
@@ -570,11 +735,16 @@
     <string name="ftp_server_url_menu_copy_url">Kopijuoti URL</string>
     <string name="ftp_server_url_menu_copy_password">Kopijuoti slaptažodį</string>
     <string name="ftp_server_add_tile_title">Pridėti prie greitųjų nustatymų</string>
+    <string name="ftp_server_add_tile_result_added">„FTP serveris“ pridėtas prie greitųjų nustatymų</string>
+    <string name="ftp_server_add_tile_result_already_added">„FTP serveris“ jau pridėtas prie greitųjų nustatymų</string>
+    <string name="ftp_server_add_tile_result_error">Klaida pridedant „FTP serveris“ prie greitųjų nustatymų</string>
     <string name="ftp_server_configuration_title">Konfigūracija</string>
     <string name="ftp_server_anonymous_login_title">Anonimiškas prisijungimas</string>
     <string name="ftp_server_username_title">Naudotojo vardas</string>
     <string name="ftp_server_password_title">Slaptažodis</string>
+    <string name="ftp_server_password_summary_empty">Nenustatytas</string>
     <string name="ftp_server_port_title">Prievadas</string>
+    <string name="ftp_server_port_error_invalid">Netinkamas prievadas</string>
     <string name="ftp_server_home_directory_title">Root aplankas</string>
     <string name="ftp_server_writable_title">Leisti rašyti</string>
     <string name="settings_title">Nustatymai</string>
@@ -582,7 +752,12 @@
     <string name="settings_locale_title">Kalba</string>
     <string name="settings_theme_color_title">Temos spalva</string>
     <string name="settings_theme_color_summary">Dažniausiai programėlėje pasitaikanti spalva</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Taikyti ir programos piktogramai</string>
+    <string name="settings_launcher_icon_color_title">Piktogramos spalva</string>
+    <string name="settings_launcher_icon_color_summary">Piktogramos spalva pagrindiniame ekrane</string>
+    <string name="settings_launcher_icon_change_title">Pakeisti programos piktogramą?</string>
+    <string name="settings_launcher_icon_change_message">VFiles užsidarys, kad pagrindinis ekranas parodytų naują piktogramą. Iškart po to atidarykite ją vėl.</string>
+    <string name="settings_launcher_icon_change_confirm">Keisti ir uždaryti</string>
     <string name="settings_night_mode_title">Nakties režimas</string>
     <string-array name="settings_night_mode_entries">
         <item>Sekti sistemą</item>
@@ -593,6 +768,9 @@
     </string-array>
     <string name="settings_black_night_mode">Juodos nakties režimas</string>
     <string name="settings_file_list_animation_title">Failų sąrašo animacija</string>
+    <string name="settings_double_back_to_exit_title">Paspausti „Atgal“ du kartus, kad išeitumėte</string>
+    <string name="settings_edge_to_edge_title">Rodymas per visą ekraną</string>
+    <string name="settings_edge_to_edge_summary">Turinys slenka po būsenos ir naršymo juostomis</string>
     <string name="settings_file_name_ellipsize_title">Rodyti ilgą failo pavadinimą</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Elipsuok pradžią</item>
@@ -604,10 +782,11 @@
     <string name="settings_default_directory_title">Numatytas aplankas</string>
     <string name="settings_standard_directories_title">Standartiniai aplankai</string>
     <string name="settings_standard_directories_summary_empty">Neįjungti jokie standartiniai aplankai</string>
-    <string name="settings_bookmark_directory_screenshots">Ekrano nuotraukos</string>
+    <string name="settings_standard_directory_gallery_summary">Įrenginio nuotraukos ir vaizdo įrašai</string>
+    <string name="settings_standard_directory_music_summary">Įrenginio dainos</string>
     <string name="settings_bookmark_directories_title">Pažymėti aplankai</string>
     <string name="settings_bookmark_directories_summary_empty">Nėra pažymėtų aplankų</string>
-    <string name="settings_root_strategy_title">Root prieigos režimas</string>
+    <string name="settings_root_strategy_title">Root arba Shizuku prieigos režimas</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Vykdoma %1$,d failų operacija, todėl dabar pakeitus root prieigos režimą gali įvykti netikėta klaida. Ar tikrai norite jį keisti dabar?</item>
         <item quantity="few">Vykdomos %1$,d failų operacijos, todėl dabar pakeitus root prieigos režimą gali įvykti netikėta klaida. Ar tikrai norite jį keisti dabar?</item>
@@ -617,7 +796,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Tik įprasta prieiga</item>
         <item>Automatinis</item>
-        <item>Tik root prieiga</item>
+        <item>Tik root arba Shizuku prieiga</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Archyvo failo pavadinimo kodavimas</string>
     <string name="settings_open_apk_default_action_title">Atidaryti Android paketą</string>
@@ -626,19 +805,34 @@
         <item>Peržiūrėti turinį</item>
         <item>Klausti ką daryti</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Rodyti PDF dokumentų miniatiūras</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Gali padaryti programėlę nestabilią senesnėse Android versijose</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Rodyti nuotolinių failų miniatiūras</string>
+    <string name="settings_backup_title">Atsarginė kopija</string>
+    <string name="settings_backup_create_title">Kurti nustatymų kopiją</string>
+    <string name="settings_backup_create_summary">Išsaugoti nustatymus, žymes ir serverius faile</string>
+    <string name="settings_backup_restore_title">Atkurti nustatymus</string>
+    <string name="settings_backup_restore_summary">Pakeisti viską atsarginės kopijos failu</string>
+    <string name="settings_backup_password_title">Atsarginės kopijos slaptažodis</string>
+    <string name="settings_backup_password_error_empty">Įveskite slaptažodį</string>
+    <string name="settings_backup_create_password_message">Neprivaloma. Be slaptažodžio bet kas, turintis šį failą, gali perskaityti jūsų serverių slaptažodžius. Pamiršto slaptažodžio atkurti negalima.</string>
+    <string name="settings_backup_restore_password_message">Visi dabartiniai nustatymai bus pakeisti, o programa bus paleista iš naujo.</string>
+    <string name="settings_backup_create_success">Nustatymų kopija sukurta</string>
+    <string name="settings_backup_create_error">Nepavyko išsaugoti kopijos</string>
+    <string name="settings_backup_restore_error_file">Šis failas nėra VFiles atsarginė kopija</string>
+    <string name="settings_backup_restore_error_password">Neteisingas slaptažodis arba sugadintas failas</string>
+    <string name="settings_backup_restore_error_version">Ši kopija sukurta naujesne VFiles versija</string>
+    <string name="settings_backup_restore_error_jobs">Palaukite, kol baigsis failų operacijos</string>
 
     <string name="about_title">Apie</string>
     <string name="about_version_title">Versija</string>
     <string name="about_github_title">Peržiūrėti GitHub svetainėje</string>
     <string name="about_licenses_title">Licencijos</string>
-    <string name="about_privacy_policy_title">Privatumo Politika</string>
     <string name="about_author_title">Autorius</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sekti GitHub svetainėje</string>
-    <string name="about_author_twitter_title">Sekti Twitter svetainėje</string>
     <string name="app_name_launcher">Failai</string>
+    <string name="clear_query">Išvalyti paiešką</string>
     <string name="about_fork_subtitle">Originalas: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Pagal ekrano foną</string>
     <string name="color_picker_preset_colors_label">Kitos spalvos</string>
@@ -646,23 +840,42 @@
     <string name="navigation_bookmarks_hint_title">Žymės</string>
     <string name="navigation_bookmarks_hint_toast">Atidarykite aplanką, palieskite ⋮ ir pasirinkite „Pridėti žymę“</string>
     <string name="onboarding_files_description">„%1$s“ reikia leidimo tvarkyti visus įrenginio failus. Jis būtinas norint naršyti, kopijuoti, perkelti ir tvarkyti failus.</string>
+    <string name="onboarding_files_adb_note">Šis įrenginys negali suteikti prieigos prie visų failų savo nustatymuose, todėl pasiekiamos tik jūsų nuotraukos, vaizdo įrašai ir muzika. Norėdami naudoti visus failus, paleiskite šią komandą iš kompiuterio:</string>
+    <string name="onboarding_files_grant_with_shizuku">Suteikti per Shizuku</string>
     <string name="onboarding_files_title">Failų prieiga</string>
     <string name="onboarding_finish">Pradėti</string>
     <string name="onboarding_grant">Suteikti</string>
+    <string name="onboarding_granted">Suteikta</string>
     <string name="onboarding_notifications_description">Leiskite pranešimus, kad galėtumėte stebėti failų operacijų, pvz., kopijavimo, perkėlimo ir archyvavimo, eigą net kai programa veikia fone.</string>
 
     <string name="onboarding_install_apps_title">Programų diegimas</string>
     <string name="onboarding_install_apps_description">Leiskite „%1$s“ tiesiogiai diegti APK failus. Taip galėsite diegti programas iš atsisiųstų ar gautų failų be trečiosios šalies diegimo priemonės.</string>
+    <string name="reorder_drag_handle">Perkelti</string>
     <string name="onboarding_notifications_title">Pranešimai</string>
     <string name="onboarding_optional">Pasirinktinai</string>
     <string name="onboarding_required">Privaloma</string>
     <string name="onboarding_welcome_description">Suteikite kelis leidimus, kad patirtis būtų geriausia. Pasirinktinius galėsite pakeisti vėliau nustatymuose.</string>
     <string name="onboarding_welcome_title">Sveiki atvykę į „%1$s“</string>
     <string name="settings_default_apps_ask">Klausti kiekvieną kartą</string>
+    <string name="settings_default_apps_android_default_format">Numatytoji Android (%1$s)</string>
     <string name="settings_default_apps_audio">Garsas / Muzika</string>
     <string name="settings_default_apps_image">Vaizdai</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Pasirinkite, kuri programa atidaro kiekvieną failo tipą</string>
+    <string name="settings_system_file_picker_title">VFiles kaip numatytoji failų parinkimo priemonė</string>
+    <string name="settings_system_file_picker_summary">Programos atidaro VFiles failams pasirinkti, o Android parinkimo priemonė išjungta</string>
+    <string name="settings_system_file_picker_shizuku_required">Reikia Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku neveikia, paleiskite jį, kad pakeistumėte šią parinktį</string>
+    <string name="settings_system_file_picker_not_found">Šiame įrenginyje Android failų parinkimo priemonė nerasta</string>
+    <string name="settings_system_file_picker_confirm_title">Išjungti Android failų parinkimo priemonę?</string>
+    <string name="settings_system_file_picker_confirm_message">Failų prašančios programos atidarys VFiles vietoj Android failų parinkimo priemonės.\n\nNieko nepašalinama: išjungus šią parinktį viskas grįžta kaip buvo.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Svarbu</string>
+    <string name="settings_system_file_picker_confirm_important">Išjunkite šią parinktį prieš pašalindami VFiles. Kitaip jokia programa nebegalės rinktis failų, o kai kurios gali strigti. Kad pataisytumėte, įdiekite VFiles iš naujo ir išjunkite parinktį arba paleiskite tai iš kompiuterio:</string>
+    <string name="settings_system_file_picker_confirm_note">Naujose Android versijose nuotraukų parinkimo priemonė lieka naudojama, o Android vis tiek gali klausti, kurią programą naudoti.</string>
+    <string name="settings_system_file_picker_confirm_action">Išjungti</string>
+    <string name="settings_system_file_picker_shizuku_title">Reikia Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Paleiskite Shizuku, kad pakeistumėte tai čia, arba paleiskite tai iš kompiuterio:</string>
+    <string name="settings_system_file_picker_error">Nepavyko pakeisti failų parinkimo priemonės</string>
     <string name="settings_default_apps_text">Tekstas</string>
     <string name="settings_default_apps_title">Numatytosios programos</string>
     <string name="settings_default_apps_video">Vaizdo įrašai</string>

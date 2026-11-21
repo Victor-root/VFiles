@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">Zavřít</string>
+    <string name="copied_to_clipboard_format">Položka %1$s byla zkopírována do schránky.</string>
     <string name="copy">Kopírovat</string>
     <string name="cut">Vyjmout</string>
     <string name="default_">Výchozí</string>
@@ -23,6 +23,8 @@
     <string name="loading">Načítání…</string>
     <string name="maybe_later">Možná později</string>
     <string name="merge">Sloučit</string>
+    <string name="more_options">Další možnosti</string>
+    <string name="navigate_up">Přejít nahoru</string>
     <string name="none">Nic</string>
     <string name="open_navigation_drawer">Otevřít navigační panel</string>
     <string name="paste">Vložit</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Nebyla nalezena vhodná aplikace pro tuto akci</string>
     <string name="open_settings">Otevřít nastavení</string>
-    <string name="shortcut_created">Zkratka byla vytvořena</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -62,8 +63,6 @@
     <string name="storage_permission_rationale_message">Aplikace vyžaduje povolení přístupu k souborům. V dalším dialogu klikněte na \"POVOLIT\", prosím.</string>
     <string name="storage_permission_permanently_denied_message">Aplikace potřebuje povolení přístupu k souborům. Prosím udělte povolení \"Úložiště\" v nastavení.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">Aplikace potřebuje oprávnění pro posílání oznámení o operacích se soubory. Prosíme vyberte \"Povolit\" v následující výzvě systému.</string>
-    <string name="notification_permission_permanently_denied_message">Aplikace potřebuje oprávnění pro posílání oznámení o operacích se soubory. Prosíme udělte oprávnění \"Oznámení\" v nastavení systému.</string>
 
     <string name="notification_channel_background_activity_start_name">Akce probíhají v pozadí</string>
     <string name="notification_channel_background_activity_start_description">Podnikněte kroky, když aplikace běžela na pozadí</string>
@@ -75,6 +74,7 @@
     <string name="file_action_archive_password_title">Heslo vyžadováno</string>
     <string name="file_action_archive_password_message_format">\"%1$s\" je chráněno heslem.</string>
     <string name="file_action_archive_password_error_empty">Heslo nemůže být prázdné</string>
+    <string name="file_action_archive_password_error_incorrect">Nesprávné heslo</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">Příprava ke kompresi %1$,d souboru (%2$s)</item>
@@ -256,7 +256,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Nastala chyba při obnově kontextu SELinuxu pro \"%1$s\".\n%2$s</string>
     <string name="file_job_write_error_title">Chyba při zapisování</string>
     <string name="file_job_write_error_message_format">Nastala chyba při zapisování \"%1$s\".\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Nastala chyba při získávání informací o \"%1$s\".</string>
+    <string name="file_job_error_no_space">Nedostatek místa v úložišti.</string>
     <string name="file_job_remount_format">Nastavit \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_loading_format">Nastavování \"%1$s\" jako čtení-zápis</string>
     <string name="file_job_remount_success_format">\"%1$s\" bylo nastaveno jako čtení-zápis</string>
@@ -308,8 +308,19 @@
     <string name="file_create_file_title">Nový soubor</string>
     <string name="file_create_directory_title">Nová složka</string>
 
-    <string name="file_list_title">Soubory</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Vyberte soubor</item>
+        <item quantity="few">Vyberte soubory</item>
+        <item quantity="many">Vyberte soubory</item>
+        <item quantity="other">Vyberte soubory</item>
+    </plurals>
     <string name="file_list_title_create_file">Uložit soubor</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Vyberte složku</item>
+        <item quantity="few">Vyberte složky</item>
+        <item quantity="many">Vyberte složky</item>
+        <item quantity="other">Vyberte složky</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d složka</item>
         <item quantity="few">%1$,d složky</item>
@@ -321,6 +332,12 @@
         <item quantity="few">%1$,d soubory</item>
         <item quantity="many">%1$,d souborů</item>
         <item quantity="other">%1$,d souborů</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operace</item>
+        <item quantity="few">%1$,d operace</item>
+        <item quantity="many">%1$,d operace</item>
+        <item quantity="other">%1$,d operací</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Cesta nemůže být prázná</string>
@@ -344,15 +361,21 @@
     <string name="file_list_action_add_bookmark">Přidat záložku</string>
     <string name="file_list_action_create_shortcut">Vytvořit zástupce</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Otevřít v novém okně</string>
+    <string name="file_list_select_title_format">%1$,d</string>
     <string name="file_list_create_file_name_hint">Název souboru</string>
+    <string name="file_list_open_current_directory_format">Vybrat „%1$s“</string>
     <string name="file_list_paste_move_title_format">Přesouvání %1$,d</string>
     <string name="file_list_paste_copy_title_format">Kopírování %1$,d</string>
     <string name="file_list_paste_extract_title_format">Rozbalování %1$,d</string>
     <string name="file_list_paste_action_extract_here">Rozbalit zde</string>
     <string name="file_list_empty">Žádné soubory</string>
+    <string name="file_list_press_back_again_to_exit">Pro ukončení stiskněte znovu Zpět</string>
     <string name="file_list_error_folder_not_found">Tato složka již neexistuje</string>
     <string name="file_list_error_permission_denied">Nemáte oprávnění k otevření této složky</string>
+    <string name="file_list_create_file_error">Tento soubor nelze vytvořit</string>
+    <string name="file_list_error_archive_header_encrypted">Seznam souborů tohoto archivu je zašifrovaný, což není podporováno</string>
     <string name="file_list_error_unknown">Tuto složku nelze otevřít</string>
+    <string name="file_list_action_create">Vytvořit</string>
     <string name="file_list_action_create_file">Soubor</string>
     <string name="file_list_action_create_directory">Složka</string>
 
@@ -382,14 +405,16 @@
     <string name="file_properties_basic_parent_directory">Mateřská složka</string>
     <string name="file_properties_basic_archive_file">Archivovaný soubor</string>
     <string name="file_properties_basic_archive_entry">Archivovaná položka</string>
-    <string name="file_properties_basic_free_space">Volné místo</string>
     <string name="file_properties_permission">Oprávnění</string>
     <string name="file_properties_permission_owner">Vlastník</string>
     <string name="file_properties_permission_group">Skupina</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
     <string name="file_properties_permission_set_owner_title">Změnit vlastníka</string>
     <string name="file_properties_permission_set_group_title">Změnit skupinu</string>
     <string name="file_properties_permission_set_principal_filter_hint">Zadejte název nebo ID</string>
+    <string name="file_properties_permission_set_principal_system">Systém</string>
     <string name="file_properties_permission_mode">Režim</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
     <string name="file_properties_permission_set_mode_title">Změnit režim</string>
     <string name="file_properties_permission_set_mode_others">Ostatní</string>
     <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
@@ -408,7 +433,11 @@
         <item>Nastavit GID</item>
         <item>Sticky bit</item>
     </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Nepřidávat „Spuštění“ pro obsažené soubory</string>
+    <string name="file_properties_permission_selinux_context">Kontext SELinuxu</string>
+    <string name="file_properties_permission_set_selinux_context_title">Změnit kontext SELinuxu</string>
     <string name="file_properties_permission_set_selinux_context_restore">Obnovit</string>
+    <string name="file_properties_permission_recursive">Použít na obsažené soubory</string>
     <string name="file_properties_image">Obrázek</string>
     <string name="file_properties_media_dimensions">Rozměry</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -468,6 +497,8 @@
     <string name="file_properties_checksum">Kontrolní součty</string>
     <string name="file_properties_checksum_compare">Porovnat</string>
     <string name="file_properties_checksum_compare_placeholder">Jakýkoli kontrolní součet</string>
+    <string name="file_properties_checksum_compare_match_format">Odpovídá kontrolnímu součtu %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Odpovídá začátku kontrolního součtu %1$s</string>
     <string name="file_properties_checksum_compare_no_match">Žádný odpovídající kontrolní součet</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Vnitřní úložiště</string>
@@ -482,6 +513,11 @@
     <string name="storage_edit_device_storage_title">Upravit úložiště zařízení</string>
     <string name="storage_edit_device_storage_name">Název</string>
     <string name="storage_edit_device_storage_path">Cesta</string>
+    <string name="storage_add_external_storage_shortcut_title">Přidat zástupce externího úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_title">Upravit zástupce externího úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Svazek úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Zadejte svazek úložiště</string>
+    <string name="storage_edit_external_storage_shortcut_path">Cesta</string>
     <string name="storage_add_document_tree_title">Přidat externí úložiště</string>
     <string name="storage_edit_document_tree_title">Upravit externí úložiště</string>
     <string name="storage_edit_document_tree_name">Název</string>
@@ -548,6 +584,7 @@
     <string name="storage_edit_smb_server_title_edit">Upravit server SMB</string>
     <string name="storage_edit_smb_server_title_add">Přidat server SMB</string>
     <string name="storage_edit_smb_server_host">Název hostitele</string>
+    <string name="storage_edit_smb_server_host_placeholder">IP adresa nebo síťový název serveru, např. 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Vložit název hostitele</string>
     <string name="storage_edit_smb_server_host_error_invalid">Neplatný název hostitele</string>
     <string name="storage_edit_smb_server_port">Port</string>
@@ -615,6 +652,66 @@
     <string name="navigation_edit_bookmark_directory_name">Název</string>
     <string name="navigation_edit_bookmark_directory_path">Cesta</string>
     <string name="archive_viewer_title">Prohlížeč archivů</string>
+    <string name="gallery_title">Galerie</string>
+    <string name="gallery_photos">Fotky</string>
+    <string name="gallery_albums">Alba</string>
+    <string name="gallery_today">Dnes</string>
+    <string name="gallery_yesterday">Včera</string>
+    <string name="gallery_empty">Žádné fotky ani videa</string>
+    <string name="gallery_access_denied">Povolte přístup k souborům, abyste viděli své fotky a videa</string>
+    <string name="allow_access">Povolit</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d položka</item>
+        <item quantity="few">%1$,d položky</item>
+        <item quantity="many">%1$,d položek</item>
+        <item quantity="other">%1$,d položek</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Odstranit tuto položku?</item>
+        <item quantity="few">Odstranit tyto %1$,d položky?</item>
+        <item quantity="many">Odstranit těchto %1$,d položek?</item>
+        <item quantity="other">Odstranit těchto %1$,d položek?</item>
+    </plurals>
+    <string name="gallery_details">Podrobnosti</string>
+    <string name="gallery_details_date">Datum</string>
+    <string name="gallery_show_in_folder">Zobrazit ve složce</string>
+    <string name="video_player_title">Přehrávač videa</string>
+    <string name="play">Přehrát</string>
+    <string name="pause">Pozastavit</string>
+    <string name="music_title">Hudba</string>
+    <string name="music_tracks">Skladby</string>
+    <string name="music_albums">Alba</string>
+    <string name="music_artists">Interpreti</string>
+    <string name="music_empty">Žádná hudba</string>
+    <string name="music_access_denied">Povolte přístup k souborům, abyste viděli svou hudbu</string>
+    <string name="music_shuffle_all">Náhodně přehrát vše</string>
+    <string name="music_unknown_artist">Neznámý interpret</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d skladba</item>
+        <item quantity="few">%1$,d skladby</item>
+        <item quantity="many">%1$,d skladeb</item>
+        <item quantity="other">%1$,d skladeb</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d album</item>
+        <item quantity="few">%1$,d alba</item>
+        <item quantity="many">%1$,d alb</item>
+        <item quantity="other">%1$,d alb</item>
+    </plurals>
+    <string name="music_player_title">Přehrávač hudby</string>
+    <string name="music_player_error_format">„%1$s“ nelze přehrát</string>
+    <string name="music_shuffle">Náhodně</string>
+    <string name="music_repeat">Opakovat</string>
+    <string name="music_previous">Předchozí</string>
+    <string name="music_next">Další</string>
+    <string name="pdf_viewer_title">Prohlížeč PDF</string>
+    <string name="pdf_viewer_go_to_page">Přejít na stránku</string>
+    <string name="pdf_viewer_fit_width">Přizpůsobit šířce</string>
+    <string name="pdf_viewer_fit_page">Zobrazit celou stránku</string>
+    <string name="pdf_viewer_page_hint_format">Stránka, od 1 do %1$,d</string>
+    <string name="pdf_viewer_page_error">Taková stránka neexistuje</string>
+    <string name="pdf_viewer_password_protected">Toto PDF je chráněno heslem, což není podporováno</string>
+    <string name="media_viewer_error">Tento soubor nelze otevřít</string>
     <string name="image_viewer_title">Prohlížeč obrázků</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">Uložit jako</string>
@@ -627,6 +724,7 @@
     <string name="text_editor_reload_message">Jste si jisti, že chcete dokument znovu načíst? Neuložené změny budou ztraceny.</string>
     <string name="text_editor_encoding">Kódování</string>
     <string name="text_editor_close_message">Jste si jisti, že chcete zahodit neuložené změny v tomto dokumentu?</string>
+    <string name="text_editor_file_too_large">Tento soubor je příliš velký na úpravy</string>
 
     <string name="ftp_server_title">Server FTP</string>
     <string name="ftp_server_state_title">Stav</string>
@@ -646,7 +744,9 @@
     <string name="ftp_server_anonymous_login_title">Anonymní přihlášení</string>
     <string name="ftp_server_username_title">Uživatelské jméno</string>
     <string name="ftp_server_password_title">Heslo</string>
+    <string name="ftp_server_password_summary_empty">Nenastaveno</string>
     <string name="ftp_server_port_title">Port</string>
+    <string name="ftp_server_port_error_invalid">Neplatný port</string>
     <string name="ftp_server_home_directory_title">Složka Root</string>
     <string name="ftp_server_writable_title">Povolit zapisování</string>
     <string name="settings_title">Nastavení</string>
@@ -654,7 +754,12 @@
     <string name="settings_locale_title">Jazyk</string>
     <string name="settings_theme_color_title">Barva motivu</string>
     <string name="settings_theme_color_summary">Barva, která se v aplikaci vyskytuje nejvíce</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Použít také na ikonu aplikace</string>
+    <string name="settings_launcher_icon_color_title">Barva ikony</string>
+    <string name="settings_launcher_icon_color_summary">Barva ikony na domovské obrazovce</string>
+    <string name="settings_launcher_icon_change_title">Změnit ikonu aplikace?</string>
+    <string name="settings_launcher_icon_change_message">VFiles se zavře, aby domovská obrazovka zobrazila novou ikonu. Hned poté ho znovu otevřete.</string>
+    <string name="settings_launcher_icon_change_confirm">Změnit a zavřít</string>
     <string name="settings_night_mode_title">Noční režim</string>
     <string-array name="settings_night_mode_entries">
         <item>Podle systému</item>
@@ -665,6 +770,9 @@
     </string-array>
     <string name="settings_black_night_mode">Režim černá noc</string>
     <string name="settings_file_list_animation_title">Animace při zobrazení souborů</string>
+    <string name="settings_double_back_to_exit_title">Pro ukončení stisknout dvakrát Zpět</string>
+    <string name="settings_edge_to_edge_title">Zobrazení od okraje k okraji</string>
+    <string name="settings_edge_to_edge_summary">Obsah se posouvá pod stavovou a navigační lištou</string>
     <string name="settings_file_name_ellipsize_title">Způsob zobrazení dlouhého názvu souboru</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Zobrazit od konce</item>
@@ -676,10 +784,11 @@
     <string name="settings_default_directory_title">Výchozí složka</string>
     <string name="settings_standard_directories_title">Standartní složky</string>
     <string name="settings_standard_directories_summary_empty">Nejsou povoleny žádné standartní složky</string>
-    <string name="settings_bookmark_directory_screenshots">Snímky obrazovky</string>
+    <string name="settings_standard_directory_gallery_summary">Fotky a videa v zařízení</string>
+    <string name="settings_standard_directory_music_summary">Skladby v zařízení</string>
     <string name="settings_bookmark_directories_title">Založené složky</string>
     <string name="settings_bookmark_directories_summary_empty">Žádné založené složky</string>
-    <string name="settings_root_strategy_title">Režim přístupu root</string>
+    <string name="settings_root_strategy_title">Režim přístupu root nebo Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Právě probíhá %1$,d souborová operace a změna režimu přístupu root by mohla mít za následek nečekanou chybu. Jste si jisit, že ho chcete změnit nyní?</item>
         <item quantity="few">Právě probíhá %1$,d souborové operace a změna režimu přístupu root by mohla mít za následek nečekanou chybu. Jste si jisti, že ho chcete změnit nyní?</item>
@@ -689,7 +798,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Pouze normální přístup</item>
         <item>Automatický</item>
-        <item>Pouze přístup root</item>
+        <item>Pouze přístup root nebo Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Kódování názvu archivovaného souboru</string>
     <string name="settings_open_apk_default_action_title">Otevírání balíčku Android</string>
@@ -701,17 +810,31 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">Zobrazit náhled pro PDF soubory</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Aplikace může být nestabilní na starších verzích systému Android.</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Přečíst vzdálené soubory pro náhled</string>
+    <string name="settings_backup_title">Záloha</string>
+    <string name="settings_backup_create_title">Zálohovat nastavení</string>
+    <string name="settings_backup_create_summary">Uložit nastavení, záložky a servery do souboru</string>
+    <string name="settings_backup_restore_title">Obnovit nastavení</string>
+    <string name="settings_backup_restore_summary">Nahradit vše souborem zálohy</string>
+    <string name="settings_backup_password_title">Heslo zálohy</string>
+    <string name="settings_backup_password_error_empty">Zadejte heslo</string>
+    <string name="settings_backup_create_password_message">Volitelné. Bez hesla si kdokoli s tímto souborem může přečíst hesla vašich serverů. Zapomenuté heslo nelze obnovit.</string>
+    <string name="settings_backup_restore_password_message">Všechna aktuální nastavení budou nahrazena a aplikace se restartuje.</string>
+    <string name="settings_backup_create_success">Nastavení zálohováno</string>
+    <string name="settings_backup_create_error">Zálohu nelze uložit</string>
+    <string name="settings_backup_restore_error_file">Tento soubor není záloha VFiles</string>
+    <string name="settings_backup_restore_error_password">Nesprávné heslo nebo poškozený soubor</string>
+    <string name="settings_backup_restore_error_version">Tato záloha pochází z novější verze VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Počkejte na dokončení operací se soubory</string>
 
     <string name="about_title">O aplikaci</string>
     <string name="about_version_title">Verze</string>
     <string name="about_github_title">Podívat se na GitHubu</string>
     <string name="about_licenses_title">Licence</string>
-    <string name="about_privacy_policy_title">Zásady ochrany soukromí</string>
     <string name="about_author_title">Autor</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Sledovat na GitHubu</string>
-    <string name="about_author_twitter_title">Sledovat na Twitteru</string>
     <string name="app_name_launcher">Soubory</string>
+    <string name="clear_query">Vymazat dotaz</string>
     <string name="about_fork_subtitle">Originál: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Podle tapety</string>
     <string name="color_picker_preset_colors_label">Další barvy</string>
@@ -719,23 +842,42 @@
     <string name="navigation_bookmarks_hint_title">Záložky</string>
     <string name="navigation_bookmarks_hint_toast">Otevřete složku, klepněte na ⋮ a zvolte „Přidat záložku“</string>
     <string name="onboarding_files_description">%1$s potřebuje oprávnění ke správě všech souborů v zařízení. Je nezbytné pro procházení, kopírování, přesouvání a organizaci souborů.</string>
+    <string name="onboarding_files_adb_note">Toto zařízení nedokáže v nastavení udělit přístup ke všem souborům, proto jsou dostupné jen vaše fotky, videa a hudba. Chcete-li používat všechny soubory, spusťte z počítače tento příkaz:</string>
+    <string name="onboarding_files_grant_with_shizuku">Udělit pomocí Shizuku</string>
     <string name="onboarding_files_title">Přístup k souborům</string>
     <string name="onboarding_finish">Začít</string>
     <string name="onboarding_grant">Udělit</string>
+    <string name="onboarding_granted">Uděleno</string>
     <string name="onboarding_notifications_description">Povolte oznámení, abyste mohli sledovat průběh operací se soubory, jako je kopírování, přesouvání a archivace, i když je aplikace na pozadí.</string>
 
     <string name="onboarding_install_apps_title">Instalace aplikací</string>
     <string name="onboarding_install_apps_description">Povolte aplikaci %1$s přímo instalovat soubory APK. Díky tomu budete moci instalovat aplikace ze stažených nebo přijatých souborů bez instalátoru třetí strany.</string>
+    <string name="reorder_drag_handle">Přesunout</string>
     <string name="onboarding_notifications_title">Oznámení</string>
     <string name="onboarding_optional">Volitelné</string>
     <string name="onboarding_required">Povinné</string>
     <string name="onboarding_welcome_description">Udělte několik oprávnění pro nejlepší zážitek. Volitelná lze změnit později v Nastavení.</string>
     <string name="onboarding_welcome_title">Vítejte v %1$s</string>
     <string name="settings_default_apps_ask">Vždy se zeptat</string>
+    <string name="settings_default_apps_android_default_format">Výchozí v Androidu (%1$s)</string>
     <string name="settings_default_apps_audio">Zvuk / Hudba</string>
     <string name="settings_default_apps_image">Obrázky</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Vyberte, která aplikace otevírá každý typ souboru</string>
+    <string name="settings_system_file_picker_title">VFiles jako výchozí výběr souborů</string>
+    <string name="settings_system_file_picker_summary">Aplikace otevírají VFiles pro výběr souborů, výběr souborů Androidu je vypnutý</string>
+    <string name="settings_system_file_picker_shizuku_required">Vyžaduje Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku neběží, spusťte ho, abyste mohli tuto možnost změnit</string>
+    <string name="settings_system_file_picker_not_found">Výběr souborů Androidu nebyl v tomto zařízení nalezen</string>
+    <string name="settings_system_file_picker_confirm_title">Vypnout výběr souborů Androidu?</string>
+    <string name="settings_system_file_picker_confirm_message">Aplikace žádající o soubory otevřou VFiles místo výběru souborů Androidu.\n\nNic se neodinstaluje: vypnutím této možnosti se vše vrátí do původního stavu.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Důležité</string>
+    <string name="settings_system_file_picker_confirm_important">Před odinstalací VFiles tuto možnost vypněte. Jinak už žádná aplikace nebude moci vybírat soubory a některé mohou spadnout. Opravíte to opětovnou instalací VFiles a vypnutím možnosti, nebo spuštěním tohoto z počítače:</string>
+    <string name="settings_system_file_picker_confirm_note">V novějších verzích Androidu se dál používá výběr fotek a Android se může stále ptát, kterou aplikaci použít.</string>
+    <string name="settings_system_file_picker_confirm_action">Vypnout</string>
+    <string name="settings_system_file_picker_shizuku_title">Je potřeba Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Spusťte Shizuku a změňte to odtud, nebo spusťte toto z počítače:</string>
+    <string name="settings_system_file_picker_error">Výběr souborů nelze změnit</string>
     <string name="settings_default_apps_text">Text</string>
     <string name="settings_default_apps_title">Výchozí aplikace</string>
     <string name="settings_default_apps_video">Videa</string>

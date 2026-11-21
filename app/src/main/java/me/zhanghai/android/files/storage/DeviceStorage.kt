@@ -6,18 +6,15 @@
 package me.zhanghai.android.files.storage
 
 import android.content.Context
-import android.content.Intent
 import android.os.storage.StorageVolume
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.pathCompat
-import me.zhanghai.android.files.util.createIntent
-import me.zhanghai.android.files.util.putArgs
-import me.zhanghai.android.files.util.valueCompat
 
 sealed class DeviceStorage : Storage() {
     override val description: String
@@ -28,9 +25,7 @@ sealed class DeviceStorage : Storage() {
 
     abstract override val linuxPath: String
 
-    override fun createEditIntent(): Intent =
-        EditDeviceStorageDialogActivity::class.createIntent()
-            .putArgs(EditDeviceStorageDialogFragment.Args(this))
+    override fun createEditDestination(): Destination = EditDeviceStorageDestination(this)
 
     fun copy_(
         customName: String? = this.customName,
@@ -75,7 +70,7 @@ data class PrimaryStorageVolume(
 
     override val iconRes: Int
         @DrawableRes
-        get() = R.drawable.device_mobile_icon_white_24dp
+        get() = R.drawable.internal_storage_icon_white_24dp
 
     override fun getDefaultName(context: Context): String =
         context.getString(R.string.storage_internal_storage)
@@ -84,5 +79,5 @@ data class PrimaryStorageVolume(
         get() = storageVolume.pathCompat
 
     private val storageVolume: StorageVolume
-        get() = StorageVolumeListLiveData.valueCompat.find { it.isPrimaryCompat }!!
+        get() = StorageVolumeList.value.find { it.isPrimaryCompat }!!
 }

@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">关闭</string>
+    <string name="copied_to_clipboard_format">已将“%1$s”复制到剪贴板。</string>
     <string name="copy">复制</string>
     <string name="cut">剪切</string>
     <string name="default_">默认</string>
@@ -23,6 +23,8 @@
     <string name="loading">正在加载…</string>
     <string name="maybe_later">以后再说</string>
     <string name="merge">合并</string>
+    <string name="more_options">更多选项</string>
+    <string name="navigate_up">向上导航</string>
     <string name="none">无</string>
     <string name="open_navigation_drawer">打开抽屉式导航栏</string>
     <string name="paste">粘贴</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">未找到可处理此操作的应用</string>
     <string name="open_settings">打开设置</string>
-    <string name="shortcut_created">已创建快捷方式</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d 字节</item>
@@ -57,8 +58,6 @@
     <string name="all_files_access_rationale_message">应用需要管理所有文件的权限。请在接下来的系统设置中授予权限。</string>
     <string name="storage_permission_rationale_message">应用需要访问文件的权限。请在接下来的系统对话框中点击“允许”。</string>
     <string name="storage_permission_permanently_denied_message">应用需要访问文件的权限。请在系统设置中授予“存储空间”权限。</string>
-    <string name="notification_permission_rationale_message">应用需要发布文件操作相关通知的权限。请在接下来的系统对话框中点击“允许”。</string>
-    <string name="notification_permission_permanently_denied_message">应用需要发布文件操作相关通知的权限。请在系统设置中授予“通知”权限。</string>
 
     <string name="notification_channel_background_activity_start_name">后台期间动作</string>
     <string name="notification_channel_background_activity_start_description">在应用处于后台期间采取动作</string>
@@ -70,6 +69,7 @@
     <string name="file_action_archive_password_title">需要密码</string>
     <string name="file_action_archive_password_message_format">“%1$s”受密码保护。</string>
     <string name="file_action_archive_password_error_empty">密码不能为空</string>
+    <string name="file_action_archive_password_error_incorrect">密码不正确</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">正在准备压缩 %1$,d 个文件（%2$s）</item>
@@ -191,7 +191,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">在还原“%1$s”的 SELinux 上下文时发生错误。\n%2$s</string>
     <string name="file_job_write_error_title">写入时发生错误</string>
     <string name="file_job_write_error_message_format">在写入“%1$s”时发生错误。\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">在获取“%1$s”的信息时发生错误。</string>
+    <string name="file_job_error_no_space">存储空间不足。</string>
     <string name="file_job_remount_format">重新挂载“%1$s”为读写模式</string>
     <string name="file_job_remount_loading_format">正在重新挂载“%1$s”为读写模式…</string>
     <string name="file_job_remount_success_format">“%1$s”已被重新挂载为读写模式</string>
@@ -234,7 +234,6 @@
     <string name="file_create_file_title">新建文件</string>
     <string name="file_create_directory_title">新建文件夹</string>
 
-    <string name="file_list_title">文件</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">选择文件</item>
     </plurals>
@@ -247,6 +246,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">%1$,d 个文件</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">%1$,d 个操作</item>
     </plurals>
     <string name="file_list_subtitle_separator">，</string>
     <string name="file_list_path_error_empty">路径不能为空</string>
@@ -278,9 +280,13 @@
     <string name="file_list_paste_extract_title_format">提取 %1$,d</string>
     <string name="file_list_paste_action_extract_here">提取到此处</string>
     <string name="file_list_empty">无文件</string>
+    <string name="file_list_press_back_again_to_exit">再按一次返回键退出</string>
     <string name="file_list_error_folder_not_found">此文件夹已不存在</string>
     <string name="file_list_error_permission_denied">您没有权限打开此文件夹</string>
+    <string name="file_list_create_file_error">无法创建此文件</string>
+    <string name="file_list_error_archive_header_encrypted">此压缩文件的文件列表已加密，不受支持</string>
     <string name="file_list_error_unknown">无法打开此文件夹</string>
+    <string name="file_list_action_create">创建</string>
     <string name="file_list_action_create_file">文件</string>
     <string name="file_list_action_create_directory">文件夹</string>
 
@@ -307,7 +313,6 @@
     <string name="file_properties_basic_parent_directory">父文件夹</string>
     <string name="file_properties_basic_archive_file">归档文件</string>
     <string name="file_properties_basic_archive_entry">归档条目</string>
-    <string name="file_properties_basic_free_space">可用空间</string>
     <string name="file_properties_permission">权限</string>
     <string name="file_properties_permission_owner">所有者</string>
     <string name="file_properties_permission_group">组</string>
@@ -485,6 +490,7 @@
     <string name="storage_edit_smb_server_title_edit">编辑 SMB 服务器</string>
     <string name="storage_edit_smb_server_title_add">添加 SMB 服务器</string>
     <string name="storage_edit_smb_server_host">主机名</string>
+    <string name="storage_edit_smb_server_host_placeholder">服务器的 IP 地址或网络名称，例如 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">输入主机名</string>
     <string name="storage_edit_smb_server_host_error_invalid">无效主机名</string>
     <string name="storage_edit_smb_server_port">端口</string>
@@ -553,6 +559,54 @@
     <string name="navigation_edit_bookmark_directory_path">路径</string>
 
     <string name="archive_viewer_title">归档文件查看器</string>
+    <string name="gallery_title">图库</string>
+    <string name="gallery_photos">照片</string>
+    <string name="gallery_albums">相册</string>
+    <string name="gallery_today">今天</string>
+    <string name="gallery_yesterday">昨天</string>
+    <string name="gallery_empty">没有照片或视频</string>
+    <string name="gallery_access_denied">允许访问文件以查看您的照片和视频</string>
+    <string name="allow_access">允许</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="other">%1$,d 项</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="other">删除这 %1$,d 项？</item>
+    </plurals>
+    <string name="gallery_details">详细信息</string>
+    <string name="gallery_details_date">日期</string>
+    <string name="gallery_show_in_folder">在文件夹中显示</string>
+    <string name="video_player_title">视频播放器</string>
+    <string name="play">播放</string>
+    <string name="pause">暂停</string>
+    <string name="music_title">音乐</string>
+    <string name="music_tracks">歌曲</string>
+    <string name="music_albums">专辑</string>
+    <string name="music_artists">艺术家</string>
+    <string name="music_empty">没有音乐</string>
+    <string name="music_access_denied">允许访问文件以查看您的音乐</string>
+    <string name="music_shuffle_all">随机播放全部</string>
+    <string name="music_unknown_artist">未知艺术家</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d 首歌曲</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">%1$,d 张专辑</item>
+    </plurals>
+    <string name="music_player_title">音乐播放器</string>
+    <string name="music_player_error_format">无法播放“%1$s”</string>
+    <string name="music_shuffle">随机播放</string>
+    <string name="music_repeat">重复播放</string>
+    <string name="music_previous">上一首</string>
+    <string name="music_next">下一首</string>
+    <string name="pdf_viewer_title">PDF 查看器</string>
+    <string name="pdf_viewer_go_to_page">跳转到页面</string>
+    <string name="pdf_viewer_fit_width">适合宽度</string>
+    <string name="pdf_viewer_fit_page">显示整页</string>
+    <string name="pdf_viewer_page_hint_format">页码，1 到 %1$,d</string>
+    <string name="pdf_viewer_page_error">没有这一页</string>
+    <string name="pdf_viewer_password_protected">此 PDF 受密码保护，暂不支持</string>
+    <string name="media_viewer_error">无法打开此文件</string>
     <string name="image_viewer_title">图片查看器</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">另存为</string>
@@ -565,6 +619,7 @@
     <string name="text_editor_reload_message">您确定要重新加载吗？对此文档未保存的变更将丢失。</string>
     <string name="text_editor_encoding">编码</string>
     <string name="text_editor_close_message">您确定要舍弃对此文档未保存的变更吗？</string>
+    <string name="text_editor_file_too_large">此文件太大，无法编辑</string>
 
     <string name="ftp_server_title">FTP 服务器</string>
     <string name="ftp_server_state_title">状态</string>
@@ -584,7 +639,9 @@
     <string name="ftp_server_anonymous_login_title">匿名登录</string>
     <string name="ftp_server_username_title">用户名</string>
     <string name="ftp_server_password_title">密码</string>
+    <string name="ftp_server_password_summary_empty">未设置</string>
     <string name="ftp_server_port_title">端口</string>
+    <string name="ftp_server_port_error_invalid">无效端口</string>
     <string name="ftp_server_home_directory_title">根文件夹</string>
     <string name="ftp_server_writable_title">允许写入</string>
 
@@ -593,7 +650,12 @@
     <string name="settings_locale_title">语言</string>
     <string name="settings_theme_color_title">主题色</string>
     <string name="settings_theme_color_summary">应用中最常见的颜色</string>
-    <string name="settings_material_design_3_title">质感设计 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">同时应用到应用图标</string>
+    <string name="settings_launcher_icon_color_title">图标颜色</string>
+    <string name="settings_launcher_icon_color_summary">主屏幕上图标的颜色</string>
+    <string name="settings_launcher_icon_change_title">更改应用图标？</string>
+    <string name="settings_launcher_icon_change_message">VFiles 将关闭，以便主屏幕显示新图标。请随后立即重新打开。</string>
+    <string name="settings_launcher_icon_change_confirm">更改并关闭</string>
     <string name="settings_night_mode_title">夜间模式</string>
     <string-array name="settings_night_mode_entries">
         <item>跟随系统</item>
@@ -604,6 +666,9 @@
     </string-array>
     <string name="settings_black_night_mode">黑色夜间模式</string>
     <string name="settings_file_list_animation_title">文件列表动画</string>
+    <string name="settings_double_back_to_exit_title">按两次返回键退出</string>
+    <string name="settings_edge_to_edge_title">边到边显示</string>
+    <string name="settings_edge_to_edge_summary">内容在状态栏和导航栏后方滚动</string>
     <string name="settings_file_name_ellipsize_title">显示长文件名</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>省略开头</item>
@@ -615,14 +680,15 @@
     <string name="settings_default_directory_title">默认文件夹</string>
     <string name="settings_standard_directories_title">标准文件夹</string>
     <string name="settings_standard_directories_summary_empty">未启用标准文件夹</string>
-    <string name="settings_bookmark_directory_screenshots">屏幕截图</string>
+    <string name="settings_standard_directory_gallery_summary">设备上的照片和视频</string>
+    <string name="settings_standard_directory_music_summary">设备上的歌曲</string>
     <string name="settings_bookmark_directories_title">书签文件夹</string>
     <string name="settings_bookmark_directories_summary_empty">无书签文件夹</string>
-    <string name="settings_root_strategy_title">Root 访问模式</string>
+    <string name="settings_root_strategy_title">Root 或 Shizuku 访问模式</string>
     <string-array name="settings_root_strategy_entries">
         <item>仅普通访问</item>
         <item>自动</item>
-        <item>仅 root 访问</item>
+        <item>仅 root 或 Shizuku 访问</item>
     </string-array>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">您有 %1$,d 个正在运行的文件操作，因此现在更改 root 访问模式可能会导致意外错误。您确定要现在更改它吗？</item>
@@ -637,17 +703,31 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">显示 PDF 文档缩略图</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">可能导致应用在旧版 Android 上不稳定</string>
     <string name="settings_read_remote_files_for_thumbnail_title">读取远程文件以显示缩略图</string>
+    <string name="settings_backup_title">备份</string>
+    <string name="settings_backup_create_title">备份设置</string>
+    <string name="settings_backup_create_summary">将设置、书签和服务器保存到文件</string>
+    <string name="settings_backup_restore_title">恢复设置</string>
+    <string name="settings_backup_restore_summary">用备份文件替换所有内容</string>
+    <string name="settings_backup_password_title">备份密码</string>
+    <string name="settings_backup_password_error_empty">请输入密码</string>
+    <string name="settings_backup_create_password_message">可选。没有密码时，任何拥有此文件的人都能读取你的服务器密码。忘记的密码无法找回。</string>
+    <string name="settings_backup_restore_password_message">当前所有设置都将被替换，应用将重新启动。</string>
+    <string name="settings_backup_create_success">设置已备份</string>
+    <string name="settings_backup_create_error">无法保存备份</string>
+    <string name="settings_backup_restore_error_file">此文件不是 VFiles 备份</string>
+    <string name="settings_backup_restore_error_password">密码错误或文件已损坏</string>
+    <string name="settings_backup_restore_error_version">此备份来自较新版本的 VFiles</string>
+    <string name="settings_backup_restore_error_jobs">请等待文件操作完成</string>
 
     <string name="about_title">关于</string>
     <string name="about_version_title">版本</string>
     <string name="about_github_title">在 GitHub 上查看</string>
     <string name="about_licenses_title">许可证</string>
-    <string name="about_privacy_policy_title">隐私权政策</string>
     <string name="about_author_title">作者</string>
     <string name="about_author_name_title">张海</string>
     <string name="about_author_github_title">在 GitHub 上关注</string>
-    <string name="about_author_twitter_title">在 Twitter 上关注</string>
     <string name="app_name_launcher">文件</string>
+    <string name="clear_query">清除查询</string>
     <string name="about_fork_subtitle">原作者：Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">根据壁纸</string>
     <string name="color_picker_preset_colors_label">其他颜色</string>
@@ -655,23 +735,42 @@
     <string name="navigation_bookmarks_hint_title">书签</string>
     <string name="navigation_bookmarks_hint_toast">打开文件夹，然后点按 ⋮ 并选择“添加书签”</string>
     <string name="onboarding_files_description">%1$s 需要管理设备上所有文件的权限。这对于浏览、复制、移动和整理文件至关重要。</string>
+    <string name="onboarding_files_adb_note">此设备无法在设置中授予所有文件访问权限，因此只能使用你的照片、视频和音乐。要使用所有文件，请在电脑上运行以下命令：</string>
+    <string name="onboarding_files_grant_with_shizuku">通过 Shizuku 授予</string>
     <string name="onboarding_files_title">文件访问</string>
     <string name="onboarding_finish">开始使用</string>
     <string name="onboarding_grant">授予</string>
+    <string name="onboarding_granted">已授予</string>
     <string name="onboarding_notifications_description">允许通知，即可在应用处于后台时跟踪复制、移动和压缩等文件操作的进度。</string>
 
     <string name="onboarding_install_apps_title">安装应用</string>
     <string name="onboarding_install_apps_description">允许%1$s直接安装 APK 文件。这样您就可以从下载或接收的文件安装应用，而无需借助第三方安装程序。</string>
+    <string name="reorder_drag_handle">移动</string>
     <string name="onboarding_notifications_title">通知</string>
     <string name="onboarding_optional">可选</string>
     <string name="onboarding_required">必需</string>
     <string name="onboarding_welcome_description">授予一些权限以获得最佳体验。可选权限稍后可在设置中更改。</string>
     <string name="onboarding_welcome_title">欢迎使用 %1$s</string>
     <string name="settings_default_apps_ask">每次都询问</string>
+    <string name="settings_default_apps_android_default_format">Android 默认（%1$s）</string>
     <string name="settings_default_apps_audio">音频 / 音乐</string>
     <string name="settings_default_apps_image">图片</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">选择用哪个应用打开每种文件类型</string>
+    <string name="settings_system_file_picker_title">将 VFiles 设为默认文件选择器</string>
+    <string name="settings_system_file_picker_summary">应用会打开 VFiles 选择文件，Android 文件选择器已停用</string>
+    <string name="settings_system_file_picker_shizuku_required">需要 Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku 未运行，请启动它以更改此选项</string>
+    <string name="settings_system_file_picker_not_found">未在此设备上找到 Android 文件选择器</string>
+    <string name="settings_system_file_picker_confirm_title">要停用 Android 文件选择器吗？</string>
+    <string name="settings_system_file_picker_confirm_message">请求文件的应用将打开 VFiles，而不是 Android 文件选择器。\n\n不会卸载任何内容：关闭此选项后一切都会恢复原样。</string>
+    <string name="settings_system_file_picker_confirm_important_title">重要</string>
+    <string name="settings_system_file_picker_confirm_important">卸载 VFiles 之前请先关闭此选项。否则任何应用都无法再选择文件，部分应用可能会崩溃。要修复此问题，请重新安装 VFiles 并关闭此选项，或在电脑上运行：</string>
+    <string name="settings_system_file_picker_confirm_note">在较新版本的 Android 上，仍会使用照片选择器，Android 也可能仍会询问使用哪个应用。</string>
+    <string name="settings_system_file_picker_confirm_action">停用</string>
+    <string name="settings_system_file_picker_shizuku_title">需要 Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">启动 Shizuku 以在此处更改，或在电脑上运行：</string>
+    <string name="settings_system_file_picker_error">无法更改文件选择器</string>
     <string name="settings_default_apps_text">文本</string>
     <string name="settings_default_apps_title">默认应用</string>
     <string name="settings_default_apps_video">视频</string>

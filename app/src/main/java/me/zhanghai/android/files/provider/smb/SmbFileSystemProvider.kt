@@ -5,7 +5,7 @@
 
 package me.zhanghai.android.files.provider.smb
 
-import android.net.Uri
+import androidx.core.net.toUri
 import com.hierynomus.msdtyp.AccessMask
 import java8.nio.channels.FileChannel
 import java8.nio.channels.SeekableByteChannel
@@ -120,7 +120,7 @@ object SmbFileSystemProvider : FileSystemProvider(), PathObservableProvider, Sea
                 username = userInfo
                 domain = null
             }
-            val queryUri = decodedQueryByteString?.toString()?.let { Uri.parse("?$it") }
+            val queryUri = decodedQueryByteString?.toString()?.let { "?$it".toUri() }
             val encrypt = queryUri?.getQueryParameter(SmbPath.QUERY_PARAMETER_ENCRYPT)?.toBoolean()
                 ?: Authority.DEFAULT_ENCRYPT
             return Authority(host, port, username, domain, encrypt)

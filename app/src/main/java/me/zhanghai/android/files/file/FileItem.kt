@@ -10,6 +10,7 @@ import androidx.annotation.WorkerThread
 import java8.nio.file.LinkOption
 import java8.nio.file.Path
 import java8.nio.file.attribute.BasicFileAttributes
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import me.zhanghai.android.files.filelist.getCollationKeyForFileName
@@ -33,6 +34,10 @@ data class FileItem(
     val isHidden: Boolean,
     val mimeType: MimeType
 ) : Parcelable {
+    // Computed once, since a path decodes its name on every call and lists use it a lot.
+    @IgnoredOnParcel
+    val name: String by lazy(LazyThreadSafetyMode.PUBLICATION) { path.name }
+
     val attributes: BasicFileAttributes
         get() = symbolicLinkTargetAttributes ?: attributesNoFollowLinks
 

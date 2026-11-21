@@ -10,7 +10,6 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.util.removeFirst
 import me.zhanghai.android.files.util.takeIfNotEmpty
-import me.zhanghai.android.files.util.valueCompat
 
 /** Which icon to show for a removable volume in the navigation drawer. */
 enum class VolumeIconType {
@@ -37,10 +36,10 @@ data class StorageVolumeCustomization(
 
 object StorageVolumeCustomizations {
     fun get(uuid: String): StorageVolumeCustomization? =
-        Settings.STORAGE_VOLUME_CUSTOMIZATIONS.valueCompat.firstOrNull { it.uuid == uuid }
+        Settings.STORAGE_VOLUME_CUSTOMIZATIONS.value.firstOrNull { it.uuid == uuid }
 
     fun set(uuid: String, customName: String?, iconType: VolumeIconType) {
-        val customizations = Settings.STORAGE_VOLUME_CUSTOMIZATIONS.valueCompat.toMutableList()
+        val customizations = Settings.STORAGE_VOLUME_CUSTOMIZATIONS.value.toMutableList()
             .apply { removeFirst { it.uuid == uuid } }
         val name = customName?.takeIfNotEmpty()
         // Only keep an entry when there's actually something to remember, so cleared customizations

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-This build of Material Files (`fr.vroot.vfiles`) does **not** collect,
+VFiles (`fr.vroot.vfiles`) does **not** collect,
 transmit, or share any personal information.
 
 - **No analytics.** There is no Firebase/Google Analytics or any other

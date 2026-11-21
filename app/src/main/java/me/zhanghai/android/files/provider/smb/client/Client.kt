@@ -49,14 +49,19 @@ import java.net.UnknownHostException
 import java.util.Collections
 import java.util.WeakHashMap
 import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 
 object Client {
     @Volatile
     lateinit var authenticator: Authenticator
 
-    private val client = SMBClient()
+    private val client = SMBClient(createConfigBuilder().build())
 
-    private val encryptingClient = SMBClient(SmbConfig.builder().withEncryptData(true).build())
+    private val encryptingClient = SMBClient(createConfigBuilder().withEncryptData(true).build())
+
+    // Requests other than reading and writing are short, so a server that went away shows soon.
+    private fun createConfigBuilder(): SmbConfig.Builder =
+        SmbConfig.builder().withTransactTimeout(TRANSACT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
 
     private fun clientForAuthority(authority: Authority): SMBClient =
         if (authority.encrypt) encryptingClient else client
@@ -660,6 +665,8 @@ object Client {
     private fun getDiskShare(session: Session, shareName: String): DiskShare =
         getShare(session, shareName) as? DiskShare
             ?: throw ClientException("$shareName is not a DiskShare")
+
+    private const val TRANSACT_TIMEOUT_SECONDS = 15L
 
     interface Path {
         val authority: Authority

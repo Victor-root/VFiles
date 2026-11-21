@@ -5,9 +5,10 @@
 
 package me.zhanghai.android.files.app
 
-import android.os.Build
 import android.webkit.WebView
 import jcifs.context.SingletonContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.coil.initializeCoil
 import me.zhanghai.android.files.filejob.fileJobNotificationTemplate
@@ -18,10 +19,8 @@ import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.FtpServerAuthenticator
 import me.zhanghai.android.files.storage.SftpServerAuthenticator
 import me.zhanghai.android.files.storage.SmbServerAuthenticator
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.WebDavServerAuthenticator
-import me.zhanghai.android.files.theme.custom.CustomThemeHelper
-import me.zhanghai.android.files.theme.night.NightModeHelper
 import java.util.Properties
 import me.zhanghai.android.files.provider.ftp.client.Client as FtpClient
 import me.zhanghai.android.files.provider.sftp.client.Client as SftpClient
@@ -34,9 +33,7 @@ val appInitializers = listOf(
     ::initializeCoil,
     ::initializeFileSystemProviders,
     ::upgradeApp,
-    ::initializeLiveDataObjects,
-    ::initializeCustomTheme,
-    ::initializeNightMode,
+    ::initializeStateObjects,
     ::createNotificationChannels
 )
 
@@ -50,46 +47,37 @@ private fun initializeWebViewDebugging() {
     }
 }
 
+/** The configuration of jCIFS, which scanning the LAN for SMB servers adjusts too. */
+fun createJcifsProperties(): Properties =
+    Properties().apply {
+        setProperty("jcifs.netbios.cachePolicy", "0")
+        setProperty("jcifs.smb.client.maxVersion", "SMB1")
+    }
+
 private fun initializeFileSystemProviders() {
     FileSystemProviders.install()
     FileSystemProviders.overflowWatchEvents = true
     // SingletonContext.init() calls NameServiceClientImpl.initCache() which connects to network.
-    backgroundExecutor.execute {
-        SingletonContext.init(
-            Properties().apply {
-                setProperty("jcifs.netbios.cachePolicy", "0")
-                setProperty("jcifs.smb.client.maxVersion", "SMB1")
-            }
-        )
-    }
+    applicationScope.launch(Dispatchers.IO) { SingletonContext.init(createJcifsProperties()) }
     FtpClient.authenticator = FtpServerAuthenticator
     SftpClient.authenticator = SftpServerAuthenticator
     SmbClient.authenticator = SmbServerAuthenticator
     WebDavClient.authenticator = WebDavServerAuthenticator
 }
 
-private fun initializeLiveDataObjects() {
-    // Force initialization of LiveData objects so that it won't happen on a background thread.
-    StorageVolumeListLiveData.value
+private fun initializeStateObjects() {
+    // Force initialization of the objects holding state so that it won't happen on a background
+    // thread.
+    StorageVolumeList.value
     Settings.FILE_LIST_DEFAULT_DIRECTORY.value
 }
 
-private fun initializeCustomTheme() {
-    CustomThemeHelper.initialize(application)
-}
-
-private fun initializeNightMode() {
-    NightModeHelper.initialize(application)
-}
-
 private fun createNotificationChannels() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        notificationManager.createNotificationChannels(
-            listOf(
-                backgroundActivityStartNotificationTemplate.channelTemplate,
-                fileJobNotificationTemplate.channelTemplate,
-                ftpServerServiceNotificationTemplate.channelTemplate
-            ).map { it.create(application) }
-        )
-    }
+    notificationManager.createNotificationChannels(
+        listOf(
+            backgroundActivityStartNotificationTemplate.channelTemplate,
+            fileJobNotificationTemplate.channelTemplate,
+            ftpServerServiceNotificationTemplate.channelTemplate
+        ).map { it.create(application) }
+    )
 }

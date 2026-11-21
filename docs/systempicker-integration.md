@@ -14,7 +14,7 @@ By default Android routes the Storage Access Framework intents (`OPEN_DOCUMENT`,
 though it does not own the provider.
 
 A normal build of VFiles returns URIs from **its own** providers instead
-(`…documents` / `…file_provider`). That works for most apps, but apps that require genuine
+(`…documents`). That works for most apps, but apps that require genuine
 `ExternalStorageProvider` URIs (the whole SimpleMobileTools / **Fossify** family, which compares the
 returned tree URI for strict equality and then `takePersistableUriPermission()`s it) reject them.
 
@@ -88,10 +88,7 @@ build:
 
 ## Scope / known limitations
 
-- **`CREATE_DOCUMENT`** keeps VFiles' own `file_provider` URI (it works for generic
-  consumers). `ExternalStorageProvider` only serves an *existing* document, and VFiles
-  creates the file lazily on first write, so emitting an ESP document URI for a not-yet-created file
-  would be a dead URI. Folder grants (`OPEN_DOCUMENT_TREE`) and opening existing files
-  (`OPEN_DOCUMENT`/`GET_CONTENT`) are the covered cases.
+- **`CREATE_DOCUMENT`** is covered too: VFiles creates the file before handing back its URI, so
+  the `ExternalStorageProvider` document it returns exists, like with DocumentsUI.
 - Apps like Fossify only accept the **first-level** folder they ask for (e.g. `primary:Music`), not
   a deep sub-folder. This is their own constraint, unchanged by this flavor.

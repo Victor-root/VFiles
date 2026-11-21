@@ -1,0 +1,125 @@
+/*
+ * Copyright (c) 2026 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
+ */
+
+package me.zhanghai.android.files.music
+
+import android.app.PendingIntent
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import me.zhanghai.android.files.R
+import me.zhanghai.android.files.util.createIntent
+import me.zhanghai.android.files.util.showToast
+
+/**
+ * Plays music in the background, with its controls in a notification, on the lock screen and on
+ * the keys of headsets and remotes.
+ */
+class MusicPlaybackService : MediaSessionService() {
+    private var mediaSession: MediaSession? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        _isRunning.value = true
+        val player = ExoPlayer.Builder(this)
+            .setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                    .build(),
+                // Pauses for calls and other players.
+                true
+            )
+            // Pauses when the headphones are unplugged.
+            .setHandleAudioBecomingNoisy(true)
+            .setWakeMode(C.WAKE_MODE_LOCAL)
+            .build()
+        player.addListener(ErrorSkipper(player))
+        // The notification opens the player.
+        val sessionActivity = PendingIntent.getActivity(
+            this, 0, MusicPlayerActivity::class.createIntent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        mediaSession = MediaSession.Builder(this, player)
+            .setSessionActivity(sessionActivity)
+            .setCallback(Callback())
+            .build()
+    }
+
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+        mediaSession
+
+    /** Tells about the songs that can't be played and goes on with the next ones. */
+    private inner class ErrorSkipper(private val player: Player) : Player.Listener {
+        // In a row, to stop once none of the songs can be played.
+        private var failureCount = 0
+
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            if (isPlaying) {
+                failureCount = 0
+            }
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            error.printStackTrace()
+            val metadata = player.currentMediaItem?.mediaMetadata
+            showToast(
+                getString(
+                    R.string.music_player_error_format, metadata?.title ?: metadata?.displayTitle
+                )
+            )
+            ++failureCount
+            if (player.hasNextMediaItem() && failureCount < player.mediaItemCount) {
+                player.seekToNextMediaItem()
+                player.prepare()
+            } else {
+                player.stopMusic()
+            }
+        }
+    }
+
+    private inner class Callback : MediaSession.Callback {
+        // The songs are only given by this app, whose controller can't pass their URI as is.
+        override fun onAddMediaItems(
+            mediaSession: MediaSession,
+            controller: MediaSession.ControllerInfo,
+            mediaItems: List<MediaItem>
+        ): ListenableFuture<List<MediaItem>> {
+            if (controller.packageName != packageName) {
+                return Futures.immediateFailedFuture(UnsupportedOperationException())
+            }
+            return Futures.immediateFuture(
+                mediaItems.map { it.buildUpon().setUri(it.requestMetadata.mediaUri).build() }
+            )
+        }
+    }
+
+    override fun onDestroy() {
+        mediaSession?.run {
+            player.release()
+            release()
+        }
+        mediaSession = null
+        _isRunning.value = false
+        super.onDestroy()
+    }
+
+    companion object {
+        private val _isRunning = MutableStateFlow(false)
+
+        /** Whether it's running, so that screens only connect to it then to show what's playing. */
+        val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
+    }
+}

@@ -6,15 +6,21 @@
 package me.zhanghai.android.files.coil
 
 import android.os.Build
-import coil.Coil
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.decode.SvgDecoder
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.gif.AnimatedImageDecoder
+import coil3.gif.GifDecoder
+import coil3.svg.SvgDecoder
 import me.zhanghai.android.files.app.application
+import me.zhanghai.android.files.gallery.GalleryMediaKeyer
+import me.zhanghai.android.files.gallery.GalleryThumbnailFetcher
+import me.zhanghai.android.files.music.MusicArtworkFetcher
+import me.zhanghai.android.files.music.MusicTrackKeyer
+import me.zhanghai.android.files.viewer.pdf.PdfPageFetcher
+import me.zhanghai.android.files.viewer.pdf.PdfPageKeyer
 
 fun initializeCoil() {
-    Coil.setImageLoader(
+    SingletonImageLoader.setSafe {
         ImageLoader.Builder(application)
             .components {
                 add(AppIconApplicationInfoKeyer())
@@ -23,15 +29,21 @@ fun initializeCoil() {
                 add(AppIconPackageNameFetcherFactory(application))
                 add(PathAttributesKeyer())
                 add(PathAttributesFetcher.Factory(application))
+                add(GalleryMediaKeyer())
+                add(GalleryThumbnailFetcher.Factory(application))
+                add(MusicTrackKeyer())
+                add(MusicArtworkFetcher.Factory(application))
+                add(PdfPageKeyer())
+                add(PdfPageFetcher.Factory(application))
                 add(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        ImageDecoderDecoder.Factory()
+                        AnimatedImageDecoder.Factory()
                     } else {
                         GifDecoder.Factory()
                     }
                 )
-                add(SvgDecoder.Factory(false))
+                add(SvgDecoder.Factory(useViewBoundsAsIntrinsicSize = false))
             }
             .build()
-    )
+    }
 }

@@ -6,7 +6,6 @@
 package me.zhanghai.android.files.navigation
 
 import android.content.Context
-import android.content.Intent
 import android.hardware.usb.UsbConstants
 import android.hardware.usb.UsbManager
 import android.os.Build
@@ -18,7 +17,8 @@ import androidx.annotation.StringRes
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.R
-import me.zhanghai.android.files.about.AboutActivity
+import me.zhanghai.android.files.about.AboutDestination
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.app.application
 import me.zhanghai.android.files.compat.getDescriptionCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
@@ -26,22 +26,22 @@ import me.zhanghai.android.files.compat.pathCompat
 import me.zhanghai.android.files.compat.uuidCompat
 import me.zhanghai.android.files.file.JavaFile
 import me.zhanghai.android.files.file.asFileSize
-import me.zhanghai.android.files.ftpserver.FtpServerActivity
+import me.zhanghai.android.files.ftpserver.FtpServerDestination
+import me.zhanghai.android.files.gallery.GalleryDestination
+import me.zhanghai.android.files.music.MusicDestination
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.settings.SettingsActivity
-import me.zhanghai.android.files.settings.StandardDirectoryListActivity
-import me.zhanghai.android.files.storage.AddStorageDialogActivity
+import me.zhanghai.android.files.settings.SettingsDestination
+import me.zhanghai.android.files.settings.StandardDirectoryListDestination
+import me.zhanghai.android.files.storage.AddStorageDestination
 import me.zhanghai.android.files.storage.FileSystemRoot
 import me.zhanghai.android.files.storage.Storage
 import me.zhanghai.android.files.storage.StorageVolumeCustomization
 import me.zhanghai.android.files.storage.StorageVolumeCustomizations
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.VolumeIconType
 import me.zhanghai.android.files.util.createIntent
 import me.zhanghai.android.files.util.isMounted
-import me.zhanghai.android.files.util.putArgs
 import me.zhanghai.android.files.util.supportsExternalStorageManager
-import me.zhanghai.android.files.util.valueCompat
 
 val navigationItems: List<NavigationItem?>
     get() =
@@ -80,12 +80,13 @@ val navigationItems: List<NavigationItem?>
 private val storageItems: List<NavigationItem>
     @Size(min = 0)
     get() =
-        Settings.STORAGES.valueCompat.filter { it.isVisible }.map {
+        Settings.STORAGES.value.filter { it.isVisible }.map {
             if (it.path != null) PathStorageItem(it) else IntentStorageItem(it)
         }
 
 private abstract class PathItem(val path: Path) : NavigationItem() {
-    override fun isChecked(listener: Listener): Boolean = listener.currentPath == path
+    override val checkedPath: Path
+        get() = path
 
     override fun onClick(listener: Listener) {
         if (this is NavigationRoot) {
@@ -117,7 +118,7 @@ private class PathStorageItem(
         storage.linuxPath?.let { getStorageSubtitle(it, context) }
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(storage.createEditIntent())
+        listener.navigate(storage.createEditDestination())
         return true
     }
 
@@ -142,11 +143,10 @@ private class IntentStorageItem(
 
     override fun onClick(listener: Listener) {
         listener.launchIntent(storage.createIntent()!!)
-        listener.closeNavigationDrawer()
     }
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(storage.createEditIntent())
+        listener.navigate(storage.createEditDestination())
         return true
     }
 }
@@ -154,7 +154,7 @@ private class IntentStorageItem(
 private val storageVolumeItems: List<NavigationItem>
     @Size(min = 0)
     get() {
-        val volumes = StorageVolumeListLiveData.valueCompat
+        val volumes = StorageVolumeList.value
             .filter { !it.isPrimaryCompat && it.isMounted }
         if (volumes.isEmpty()) {
             return emptyList()
@@ -277,10 +277,7 @@ private class StorageVolumeItem(
     // Long-press opens a small dialog to rename the volume, choose its icon, or eject it.
     override fun onLongClick(listener: Listener): Boolean {
         val uuid = storageVolume.uuidCompat ?: return false
-        listener.launchIntent(
-            EditStorageVolumeDialogActivity::class.createIntent()
-                .putArgs(EditStorageVolumeDialogFragment.Args(uuid, defaultName(application)))
-        )
+        listener.navigate(EditStorageVolumeDestination(uuid, defaultName(application)))
         return true
     }
 }
@@ -391,16 +388,49 @@ private class AddStorageItem : NavigationItem() {
         context.getString(R.string.navigation_add_storage)
 
     override fun onClick(listener: Listener) {
-        listener.launchIntent(AddStorageDialogActivity::class.createIntent())
+        listener.navigate(AddStorageDestination)
     }
 }
 
 private val standardDirectoryItems: List<NavigationItem>
     @Size(min = 0)
     get() =
-        StandardDirectoriesLiveData.valueCompat
+        StandardDirectories.value
             .filter { it.isEnabled }
-            .map { StandardDirectoryItem(it) }
+            .map {
+                when {
+                    it.isGallery -> LibraryItem(it, GalleryDestination)
+                    it.isMusic -> LibraryItem(it, MusicDestination)
+                    else -> StandardDirectoryItem(it)
+                }
+            }
+
+// A library of media in place of a standard directory, like the gallery.
+private class LibraryItem(
+    private val standardDirectory: StandardDirectory,
+    private val destination: Destination
+) : NavigationItem() {
+    override val id: Long
+        get() = standardDirectory.id
+
+    override val iconRes: Int
+        @DrawableRes
+        get() = standardDirectory.iconRes
+
+    override val iconColor: NavigationIconColor?
+        get() = standardDirectory.iconColor
+
+    override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
+
+    override fun onClick(listener: Listener) {
+        listener.navigate(destination)
+    }
+
+    override fun onLongClick(listener: Listener): Boolean {
+        listener.navigate(StandardDirectoryListDestination)
+        return true
+    }
+}
 
 private class StandardDirectoryItem(
     private val standardDirectory: StandardDirectory
@@ -416,22 +446,51 @@ private class StandardDirectoryItem(
         @DrawableRes
         get() = standardDirectory.iconRes
 
+    override val iconColor: NavigationIconColor?
+        get() = standardDirectory.iconColor
+
     override fun getTitle(context: Context): String = standardDirectory.getTitle(context)
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(StandardDirectoryListActivity::class.createIntent())
+        listener.navigate(StandardDirectoryListDestination)
         return true
     }
 }
 
 val standardDirectories: List<StandardDirectory>
     get() {
-        val settingsMap = Settings.STANDARD_DIRECTORY_SETTINGS.valueCompat.associateBy { it.id }
-        return defaultStandardDirectories.map {
-            val settings = settingsMap[it.key]
-            if (settings != null) it.withSettings(settings) else it
+        val settingsMap = Settings.STANDARD_DIRECTORY_SETTINGS.value.associateBy { it.id }
+        return defaultStandardDirectories
+            .map {
+                val settings = settingsMap[it.key]
+                if (settings != null) it.withSettings(settings) else it
+            }
+            .sortedByOrder(Settings.STANDARD_DIRECTORY_ORDER.value)
+    }
+
+// In the order chosen by the user, with the directories added since then after the one before them
+// by default.
+private fun List<StandardDirectory>.sortedByOrder(order: List<String>): List<StandardDirectory> {
+    if (order.isEmpty()) {
+        return this
+    }
+    val directories = associateBy { it.key }
+    val sortedDirectories = order.mapNotNullTo(mutableListOf()) { directories[it] }
+    for ((index, directory) in withIndex()) {
+        if (directory.key !in order) {
+            val previousIndex = if (index > 0) sortedDirectories.indexOf(this[index - 1]) else -1
+            sortedDirectories.add(previousIndex + 1, directory)
         }
     }
+    return sortedDirectories
+}
+
+/** Moves a standard directory from one position to another, in the drawer too. */
+fun moveStandardDirectory(fromIndex: Int, toIndex: Int) {
+    val order = standardDirectories.mapTo(mutableListOf()) { it.key }
+        .apply { add(toIndex, removeAt(fromIndex)) }
+    Settings.STANDARD_DIRECTORY_ORDER.putValue(order)
+}
 
 private const val relativePathSeparator = ":"
 
@@ -462,28 +521,44 @@ private val defaultStandardDirectories: List<StandardDirectory>
 // @see android.os.Environment#STANDARD_DIRECTORIES
 private val DEFAULT_STANDARD_DIRECTORIES = listOf(
     StandardDirectory(
+        R.drawable.gallery_icon_white_24dp, R.string.navigation_gallery,
+        StandardDirectory.GALLERY_KEY, true,
+        NavigationIconColor.PINK
+    ),
+    StandardDirectory(
+        R.drawable.music_library_icon_white_24dp, R.string.navigation_music,
+        StandardDirectory.MUSIC_KEY, false,
+        NavigationIconColor.ORANGE
+    ),
+    StandardDirectory(
         R.drawable.camera_icon_white_24dp, R.string.navigation_standard_directory_dcim,
-        Environment.DIRECTORY_DCIM, true
+        Environment.DIRECTORY_DCIM, true,
+        NavigationIconColor.TEAL
     ),
     StandardDirectory(
         R.drawable.document_icon_white_24dp, R.string.navigation_standard_directory_documents,
-        Environment.DIRECTORY_DOCUMENTS, true
+        Environment.DIRECTORY_DOCUMENTS, true,
+        NavigationIconColor.GREY
     ),
     StandardDirectory(
         R.drawable.image_icon_white_24dp, R.string.navigation_standard_directory_pictures,
-        Environment.DIRECTORY_PICTURES, true
+        Environment.DIRECTORY_PICTURES, true,
+        NavigationIconColor.BLUE
     ),
     StandardDirectory(
         R.drawable.audio_icon_white_24dp, R.string.navigation_standard_directory_music,
-        Environment.DIRECTORY_MUSIC, true
+        Environment.DIRECTORY_MUSIC, true,
+        NavigationIconColor.ORANGE
     ),
     StandardDirectory(
         R.drawable.download_icon_white_24dp, R.string.navigation_standard_directory_downloads,
-        Environment.DIRECTORY_DOWNLOADS, true
+        Environment.DIRECTORY_DOWNLOADS, true,
+        NavigationIconColor.GREEN
     ),
     StandardDirectory(
         R.drawable.video_icon_white_24dp, R.string.navigation_standard_directory_movies,
-        Environment.DIRECTORY_MOVIES, true
+        Environment.DIRECTORY_MOVIES, true,
+        NavigationIconColor.PURPLE
     ),
     StandardDirectory(
         R.drawable.alarm_icon_white_24dp, R.string.navigation_standard_directory_alarms,
@@ -542,7 +617,7 @@ private class BookmarksHintItem : NavigationItem() {
 
 private val bookmarkDirectoryItems: List<NavigationItem>
     @Size(min = 0)
-    get() = Settings.BOOKMARK_DIRECTORIES.valueCompat.map { BookmarkDirectoryItem(it) }
+    get() = Settings.BOOKMARK_DIRECTORIES.value.map { BookmarkDirectoryItem(it) }
 
 private class BookmarkDirectoryItem(
     private val bookmarkDirectory: BookmarkDirectory
@@ -558,10 +633,7 @@ private class BookmarkDirectoryItem(
     override fun getTitle(context: Context): String = bookmarkDirectory.name
 
     override fun onLongClick(listener: Listener): Boolean {
-        listener.launchIntent(
-            EditBookmarkDirectoryDialogActivity::class.createIntent()
-                .putArgs(EditBookmarkDirectoryDialogFragment.Args(bookmarkDirectory))
-        )
+        listener.navigate(EditBookmarkDirectoryDestination(bookmarkDirectory))
         return true
     }
 }
@@ -569,17 +641,16 @@ private class BookmarkDirectoryItem(
 private val menuItems: List<NavigationItem>
     @Size(3)
     get() = listOf(
-        IntentMenuItem(
+        DestinationMenuItem(
             R.drawable.ftp_server_icon_white_24dp, R.string.navigation_ftp_server,
-            FtpServerActivity::class.createIntent()
+            FtpServerDestination
         ),
-        IntentMenuItem(
+        DestinationMenuItem(
             R.drawable.settings_icon_white_24dp, R.string.navigation_settings,
-            SettingsActivity::class.createIntent()
+            SettingsDestination
         ),
-        IntentMenuItem(
-            R.drawable.about_icon_white_24dp, R.string.navigation_about,
-            AboutActivity::class.createIntent()
+        DestinationMenuItem(
+            R.drawable.about_icon_white_24dp, R.string.navigation_about, AboutDestination
         )
     )
 
@@ -590,16 +661,15 @@ private abstract class MenuItem(
     override fun getTitle(context: Context): String = context.getString(titleRes)
 }
 
-private class IntentMenuItem(
+private class DestinationMenuItem(
     @DrawableRes iconRes: Int,
     @StringRes titleRes: Int,
-    private val intent: Intent
+    private val destination: Destination
 ) : MenuItem(iconRes, titleRes) {
     override val id: Long
-        get() = intent.component.hashCode().toLong()
+        get() = titleRes.toLong()
 
     override fun onClick(listener: Listener) {
-        listener.launchIntent(intent)
-        listener.closeNavigationDrawer()
+        listener.navigate(destination)
     }
 }

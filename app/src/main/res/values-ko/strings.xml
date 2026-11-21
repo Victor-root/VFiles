@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">닫기</string>
+    <string name="copied_to_clipboard_format">\'%1$s\'이(가) 클립보드에 복사되었습니다.</string>
     <string name="copy">복사</string>
     <string name="cut">잘라내기</string>
     <string name="default_">기본</string>
@@ -23,6 +23,8 @@
     <string name="loading">불러오는 중…</string>
     <string name="maybe_later">나중에</string>
     <string name="merge">합치기</string>
+    <string name="more_options">옵션 더보기</string>
+    <string name="navigate_up">위로 이동</string>
     <string name="none">없음</string>
     <string name="open_navigation_drawer">탐색 창 열기</string>
     <string name="paste">붙여넣기</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">해당 작업을 위한 애플리케이션이 없습니다</string>
     <string name="open_settings">설정 열기</string>
-    <string name="shortcut_created">바로가기가 생성되었습니다</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d 바이트</item>
@@ -59,8 +60,6 @@
     <string name="storage_permission_rationale_message">파일에 접근하기 위한 권한이 필요합니다. 곧 나타날 대화 상자에서 \'허용\'을 선택해 주세요.</string>
     <string name="storage_permission_permanently_denied_message">파일에 접근하기 위한 권한이 필요합니다. 시스템 설정에서 \'저장용량\' 권한을 허용해 주세요.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">파일 작업과 관련된 알림을 띄우기 위한 권한이 필요합니다. 곧 나타날 대화 상자에서 “허용”을 선택해 주세요.</string>
-    <string name="notification_permission_permanently_denied_message">파일 작업과 관련된 알림을 띄우기 위한 권한이 필요합니다. 시스템 설정에서 “알림” 권한을 허용해 주세요.</string>
 
     <string name="notification_channel_background_activity_start_name">백그라운드에서 작업</string>
     <string name="notification_channel_background_activity_start_description">앱이 백그라운드에 있는 동안 작업합니다</string>
@@ -72,6 +71,7 @@
     <string name="file_action_archive_password_title">비밀번호 필요</string>
     <string name="file_action_archive_password_message_format">“%1$s” 파일은 비밀번호로 보호되어 있습니다.</string>
     <string name="file_action_archive_password_error_empty">비밀번호를 입력하세요</string>
+    <string name="file_action_archive_password_error_incorrect">비밀번호가 올바르지 않습니다</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">%1$,d개 파일 압축 준비 중 (%2$s)</item>
@@ -193,7 +193,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">“%1$s” 항목의 SELinux 컨텍스트를 복원하는 중에 오류가 발생하였습니다.\n%2$s</string>
     <string name="file_job_write_error_title">쓰기 중 오류</string>
     <string name="file_job_write_error_message_format">“%1$s” 항목을 쓰는 중에 오류가 발생하였습니다.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">“%1$s” 항목의 정보를 가져오는 중에 오류가 발생하였습니다.</string>
+    <string name="file_job_error_no_space">저장 공간이 부족합니다.</string>
     <string name="file_job_remount_format">“%1$s” 을(를) 쓰기 허용으로 다시 마운트</string>
     <string name="file_job_remount_loading_format">쓰기 허용으로 “%1$s” 다시 마운트 중…</string>
     <string name="file_job_remount_success_format">“%1$s” 을(를) 쓰기 허용으로 다시 마운트했습니다</string>
@@ -236,7 +236,6 @@
     <string name="file_create_file_title">새 파일</string>
     <string name="file_create_directory_title">새 폴더</string>
 
-    <string name="file_list_title">파일</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">파일 선택</item>
     </plurals>
@@ -249,6 +248,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">%1$,d개 파일</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">작업 %1$,d개</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">경로를 입력하세요</string>
@@ -280,9 +282,13 @@
     <string name="file_list_paste_extract_title_format">%1$,d개 항목 압축 해제</string>
     <string name="file_list_paste_action_extract_here">여기에 압축 풀기</string>
     <string name="file_list_empty">파일 없음</string>
+    <string name="file_list_press_back_again_to_exit">종료하려면 뒤로를 한 번 더 누르세요</string>
     <string name="file_list_error_folder_not_found">이 폴더가 더 이상 존재하지 않습니다</string>
     <string name="file_list_error_permission_denied">이 폴더를 열 권한이 없습니다</string>
+    <string name="file_list_create_file_error">이 파일을 만들 수 없습니다</string>
+    <string name="file_list_error_archive_header_encrypted">이 압축 파일의 파일 목록은 암호화되어 있어 지원되지 않습니다</string>
     <string name="file_list_error_unknown">이 폴더를 열 수 없습니다</string>
+    <string name="file_list_action_create">만들기</string>
     <string name="file_list_action_create_file">파일</string>
     <string name="file_list_action_create_directory">폴더</string>
 
@@ -309,7 +315,6 @@
     <string name="file_properties_basic_parent_directory">상위 폴더</string>
     <string name="file_properties_basic_archive_file">압축 파일</string>
     <string name="file_properties_basic_archive_entry">압축된 항목</string>
-    <string name="file_properties_basic_free_space">빈 공간</string>
     <string name="file_properties_permission">권한</string>
     <string name="file_properties_permission_owner">소유자</string>
     <string name="file_properties_permission_group">그룹</string>
@@ -486,6 +491,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB 서버 편집</string>
     <string name="storage_edit_smb_server_title_add">SMB 서버 추가</string>
     <string name="storage_edit_smb_server_host">호스트 이름</string>
+    <string name="storage_edit_smb_server_host_placeholder">서버의 IP 주소 또는 네트워크 이름 (예: 192.168.1.10)</string>
     <string name="storage_edit_smb_server_host_error_empty">호스트 이름을 입력하세요</string>
     <string name="storage_edit_smb_server_host_error_invalid">올바르지 않은 호스트 이름</string>
     <string name="storage_edit_smb_server_port">포트</string>
@@ -553,6 +559,54 @@
     <string name="navigation_edit_bookmark_directory_name">이름</string>
     <string name="navigation_edit_bookmark_directory_path">경로</string>
     <string name="archive_viewer_title">압축 파일 뷰어</string>
+    <string name="gallery_title">갤러리</string>
+    <string name="gallery_photos">사진</string>
+    <string name="gallery_albums">앨범</string>
+    <string name="gallery_today">오늘</string>
+    <string name="gallery_yesterday">어제</string>
+    <string name="gallery_empty">사진 또는 동영상 없음</string>
+    <string name="gallery_access_denied">사진과 동영상을 보려면 파일 접근을 허용하세요</string>
+    <string name="allow_access">허용</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="other">%1$,d개 항목</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="other">%1$,d개 항목을 삭제하시겠습니까?</item>
+    </plurals>
+    <string name="gallery_details">세부정보</string>
+    <string name="gallery_details_date">날짜</string>
+    <string name="gallery_show_in_folder">폴더에서 보기</string>
+    <string name="video_player_title">동영상 플레이어</string>
+    <string name="play">재생</string>
+    <string name="pause">일시정지</string>
+    <string name="music_title">음악</string>
+    <string name="music_tracks">노래</string>
+    <string name="music_albums">앨범</string>
+    <string name="music_artists">아티스트</string>
+    <string name="music_empty">음악 없음</string>
+    <string name="music_access_denied">음악을 보려면 파일 접근을 허용하세요</string>
+    <string name="music_shuffle_all">모두 셔플</string>
+    <string name="music_unknown_artist">알 수 없는 아티스트</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d곡</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">앨범 %1$,d개</item>
+    </plurals>
+    <string name="music_player_title">음악 플레이어</string>
+    <string name="music_player_error_format">“%1$s”을(를) 재생할 수 없습니다</string>
+    <string name="music_shuffle">셔플</string>
+    <string name="music_repeat">반복</string>
+    <string name="music_previous">이전</string>
+    <string name="music_next">다음</string>
+    <string name="pdf_viewer_title">PDF 뷰어</string>
+    <string name="pdf_viewer_go_to_page">페이지로 이동</string>
+    <string name="pdf_viewer_fit_width">너비에 맞추기</string>
+    <string name="pdf_viewer_fit_page">전체 페이지 보기</string>
+    <string name="pdf_viewer_page_hint_format">페이지 (1~%1$,d)</string>
+    <string name="pdf_viewer_page_error">해당 페이지가 없습니다</string>
+    <string name="pdf_viewer_password_protected">이 PDF는 비밀번호로 보호되어 있으며, 이는 지원되지 않습니다</string>
+    <string name="media_viewer_error">이 파일을 열 수 없습니다</string>
     <string name="image_viewer_title">이미지 뷰어</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">다른 이름으로 저장</string>
@@ -565,6 +619,7 @@
     <string name="text_editor_reload_message">정말 다시 불러오시겠습니까? 이 문서의 저장하지 않은 내용은 사라집니다.</string>
     <string name="text_editor_encoding">인코딩</string>
     <string name="text_editor_close_message">정말 이 문서의 저장하지 않은 내용을 버리시겠습니까?</string>
+    <string name="text_editor_file_too_large">이 파일은 너무 커서 편집할 수 없습니다</string>
 
     <string name="ftp_server_title">FTP 서버</string>
     <string name="ftp_server_state_title">상태</string>
@@ -584,7 +639,9 @@
     <string name="ftp_server_anonymous_login_title">익명으로 로그인 허용</string>
     <string name="ftp_server_username_title">사용자 이름</string>
     <string name="ftp_server_password_title">비밀번호</string>
+    <string name="ftp_server_password_summary_empty">설정되지 않음</string>
     <string name="ftp_server_port_title">포트</string>
+    <string name="ftp_server_port_error_invalid">올바르지 않은 포트</string>
     <string name="ftp_server_home_directory_title">루트 폴더</string>
     <string name="ftp_server_writable_title">쓰기 허용</string>
     <string name="settings_title">설정</string>
@@ -592,7 +649,12 @@
     <string name="settings_locale_title">언어</string>
     <string name="settings_theme_color_title">테마 색상</string>
     <string name="settings_theme_color_summary">앱에서 가장 많이 보이는 색상</string>
-    <string name="settings_material_design_3_title">머티리얼 디자인 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">앱 아이콘에도 적용</string>
+    <string name="settings_launcher_icon_color_title">아이콘 색상</string>
+    <string name="settings_launcher_icon_color_summary">홈 화면의 아이콘 색상</string>
+    <string name="settings_launcher_icon_change_title">앱 아이콘을 변경할까요?</string>
+    <string name="settings_launcher_icon_change_message">홈 화면에 새 아이콘이 표시되도록 VFiles가 닫힙니다. 바로 다시 열어 주세요.</string>
+    <string name="settings_launcher_icon_change_confirm">변경 후 닫기</string>
     <string name="settings_night_mode_title">다크 모드</string>
     <string-array name="settings_night_mode_entries">
         <item>시스템 설정에 따름</item>
@@ -603,6 +665,9 @@
     </string-array>
     <string name="settings_black_night_mode">다크 모드에 검정색 사용</string>
     <string name="settings_file_list_animation_title">파일 목록 애니메이션</string>
+    <string name="settings_double_back_to_exit_title">뒤로를 두 번 눌러 종료</string>
+    <string name="settings_edge_to_edge_title">엣지 투 엣지 화면</string>
+    <string name="settings_edge_to_edge_summary">콘텐츠가 상태 표시줄과 탐색 표시줄 뒤로 스크롤됩니다</string>
     <string name="settings_file_name_ellipsize_title">긴 파일 이름 표시</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>앞부분 생략</item>
@@ -614,17 +679,18 @@
     <string name="settings_default_directory_title">기본 폴더</string>
     <string name="settings_standard_directories_title">주요 폴더</string>
     <string name="settings_standard_directories_summary_empty">설정된 주요 폴더 없음</string>
-    <string name="settings_bookmark_directory_screenshots">스크린샷</string>
+    <string name="settings_standard_directory_gallery_summary">기기의 사진 및 동영상</string>
+    <string name="settings_standard_directory_music_summary">기기의 노래</string>
     <string name="settings_bookmark_directories_title">즐겨찾기 폴더</string>
     <string name="settings_bookmark_directories_summary_empty">즐겨찾기된 폴더 없음</string>
-    <string name="settings_root_strategy_title">루트 액세스 모드</string>
+    <string name="settings_root_strategy_title">루트 또는 Shizuku 액세스 모드</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">아직 %1$,d개의 파일 작업이 진행 중입니다. 지금 루트 액세스 모드를 변경하면 예기치 못한 오류가 발생할 수 있습니다. 정말 지금 변경하시겠습니까?</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>일반 액세스만</item>
         <item>자동</item>
-        <item>루트 액세스만</item>
+        <item>루트 또는 Shizuku 액세스만</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">압축 파일 이름 인코딩</string>
     <string name="settings_open_apk_default_action_title">Android 패키지(APK)를 열 때 작업</string>
@@ -636,17 +702,31 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">PDF 문서 섬네일 표시</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Android 버전이 낮을 경우 앱이 불안정해질 수 있습니다.</string>
     <string name="settings_read_remote_files_for_thumbnail_title">원격 파일에서 섬네일 읽기</string>
+    <string name="settings_backup_title">백업</string>
+    <string name="settings_backup_create_title">설정 백업</string>
+    <string name="settings_backup_create_summary">설정, 북마크, 서버를 파일에 저장합니다</string>
+    <string name="settings_backup_restore_title">설정 복원</string>
+    <string name="settings_backup_restore_summary">모든 항목을 백업 파일로 대체합니다</string>
+    <string name="settings_backup_password_title">백업 비밀번호</string>
+    <string name="settings_backup_password_error_empty">비밀번호를 입력하세요</string>
+    <string name="settings_backup_create_password_message">선택 사항입니다. 비밀번호가 없으면 이 파일을 가진 누구나 서버 비밀번호를 읽을 수 있습니다. 잊어버린 비밀번호는 복구할 수 없습니다.</string>
+    <string name="settings_backup_restore_password_message">현재 설정이 모두 대체되고 앱이 다시 시작됩니다.</string>
+    <string name="settings_backup_create_success">설정을 백업했습니다</string>
+    <string name="settings_backup_create_error">백업을 저장할 수 없습니다</string>
+    <string name="settings_backup_restore_error_file">이 파일은 VFiles 백업이 아닙니다</string>
+    <string name="settings_backup_restore_error_password">비밀번호가 틀렸거나 파일이 손상되었습니다</string>
+    <string name="settings_backup_restore_error_version">이 백업은 더 새로운 버전의 VFiles에서 만들어졌습니다</string>
+    <string name="settings_backup_restore_error_jobs">파일 작업이 끝날 때까지 기다리세요</string>
 
     <string name="about_title">정보</string>
     <string name="about_version_title">버전</string>
     <string name="about_github_title">GitHub에서 보기</string>
     <string name="about_licenses_title">라이선스</string>
-    <string name="about_privacy_policy_title">개인 정보 보호 정책</string>
     <string name="about_author_title">제작자</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">GitHub 팔로우하기</string>
-    <string name="about_author_twitter_title">Twitter 팔로우하기</string>
     <string name="app_name_launcher">파일</string>
+    <string name="clear_query">검색어 지우기</string>
     <string name="about_fork_subtitle">원작자: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">배경화면 기반</string>
     <string name="color_picker_preset_colors_label">다른 색상</string>
@@ -654,23 +734,42 @@
     <string name="navigation_bookmarks_hint_title">북마크</string>
     <string name="navigation_bookmarks_hint_toast">폴더를 연 다음 ⋮ 를 탭하고 “북마크 추가”를 선택하세요</string>
     <string name="onboarding_files_description">%1$s가 기기의 모든 파일을 관리하려면 권한이 필요합니다. 파일을 탐색, 복사, 이동, 정리하는 데 필수적입니다.</string>
+    <string name="onboarding_files_adb_note">이 기기는 설정에서 모든 파일에 대한 액세스를 허용할 수 없으므로 사진, 동영상, 음악만 사용할 수 있습니다. 모든 파일을 사용하려면 컴퓨터에서 다음 명령을 실행하세요:</string>
+    <string name="onboarding_files_grant_with_shizuku">Shizuku로 허용</string>
     <string name="onboarding_files_title">파일 액세스</string>
     <string name="onboarding_finish">시작하기</string>
     <string name="onboarding_grant">허용</string>
+    <string name="onboarding_granted">허용됨</string>
     <string name="onboarding_notifications_description">알림을 허용하면 앱이 백그라운드에 있을 때에도 복사, 이동, 압축 등 파일 작업의 진행 상황을 추적할 수 있습니다.</string>
 
     <string name="onboarding_install_apps_title">앱 설치</string>
     <string name="onboarding_install_apps_description">%1$s이(가) APK 파일을 직접 설치하도록 허용합니다. 이렇게 하면 타사 설치 프로그램 없이 다운로드하거나 받은 파일에서 앱을 설치할 수 있습니다.</string>
+    <string name="reorder_drag_handle">이동</string>
     <string name="onboarding_notifications_title">알림</string>
     <string name="onboarding_optional">선택사항</string>
     <string name="onboarding_required">필수</string>
     <string name="onboarding_welcome_description">최상의 환경을 위해 몇 가지 권한을 허용하세요. 선택 권한은 나중에 설정에서 변경할 수 있습니다.</string>
     <string name="onboarding_welcome_title">%1$s에 오신 것을 환영합니다</string>
     <string name="settings_default_apps_ask">매번 묻기</string>
+    <string name="settings_default_apps_android_default_format">Android 기본값(%1$s)</string>
     <string name="settings_default_apps_audio">오디오 / 음악</string>
     <string name="settings_default_apps_image">이미지</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">각 파일 형식을 열 앱을 선택하세요</string>
+    <string name="settings_system_file_picker_title">VFiles를 기본 파일 선택기로 사용</string>
+    <string name="settings_system_file_picker_summary">Android 파일 선택기를 끄고, 앱이 VFiles를 열어 파일을 선택합니다</string>
+    <string name="settings_system_file_picker_shizuku_required">Shizuku 필요</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku가 실행되고 있지 않습니다. 이 옵션을 변경하려면 시작하세요</string>
+    <string name="settings_system_file_picker_not_found">이 기기에서 Android 파일 선택기를 찾지 못했습니다</string>
+    <string name="settings_system_file_picker_confirm_title">Android 파일 선택기를 끌까요?</string>
+    <string name="settings_system_file_picker_confirm_message">파일을 요청하는 앱은 Android 파일 선택기 대신 VFiles를 엽니다.\n\n아무것도 제거되지 않습니다. 이 옵션을 끄면 모든 것이 이전으로 돌아갑니다.</string>
+    <string name="settings_system_file_picker_confirm_important_title">중요</string>
+    <string name="settings_system_file_picker_confirm_important">VFiles를 제거하기 전에 이 옵션을 끄세요. 그렇지 않으면 어떤 앱도 파일을 선택할 수 없고 일부 앱은 다운될 수 있습니다. 복구하려면 VFiles를 다시 설치하고 옵션을 끄거나, 컴퓨터에서 다음을 실행하세요:</string>
+    <string name="settings_system_file_picker_confirm_note">최신 Android에서는 사진 선택기가 계속 사용되며, Android가 사용할 앱을 물어볼 수도 있습니다.</string>
+    <string name="settings_system_file_picker_confirm_action">끄기</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku가 필요합니다</string>
+    <string name="settings_system_file_picker_shizuku_message">Shizuku를 시작해 여기에서 변경하거나, 컴퓨터에서 다음을 실행하세요:</string>
+    <string name="settings_system_file_picker_error">파일 선택기를 변경할 수 없습니다</string>
     <string name="settings_default_apps_text">텍스트</string>
     <string name="settings_default_apps_title">기본 앱</string>
     <string name="settings_default_apps_video">동영상</string>

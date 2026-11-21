@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">閉じる</string>
+    <string name="copied_to_clipboard_format">「%1$s」をクリップボードにコピーしました。</string>
     <string name="copy">コピー</string>
     <string name="cut">切り取り</string>
     <string name="default_">デフォルト</string>
@@ -23,6 +23,8 @@
     <string name="loading">読み込み中…</string>
     <string name="maybe_later">あとで</string>
     <string name="merge">マージ</string>
+    <string name="more_options">その他のオプション</string>
+    <string name="navigate_up">上へ移動</string>
     <string name="none">なし</string>
     <string name="open_navigation_drawer">ナビゲーションドロワーを開く</string>
     <string name="paste">貼り付け</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">この操作を処理できるアプリが見つかりません</string>
     <string name="open_settings">設定を開く</string>
-    <string name="shortcut_created">ショートカットを作成しました</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="other">%1$,d バイト</item>
@@ -59,8 +60,6 @@
     <string name="storage_permission_rationale_message">ファイルにアクセスするには、アプリに権限が必要です。次に表示されるシステムダイアログで「許可」を選択してください。</string>
     <string name="storage_permission_permanently_denied_message">ファイルにアクセスするには、アプリに権限が必要です。システム設定で「ストレージ」の権限を付与してください。</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">ファイル操作に関する通知を表示するには、アプリに権限が必要です。次に表示されるシステムダイアログで「許可」を選択してください。</string>
-    <string name="notification_permission_permanently_denied_message">ファイル操作に関する通知を表示するには、アプリに権限が必要です。システム設定で「通知」の権限を付与してください。</string>
 
     <string name="notification_channel_background_activity_start_name">バックグラウンド処理</string>
     <string name="notification_channel_background_activity_start_description">バックグラウンドでのアプリの実行です</string>
@@ -72,6 +71,7 @@
     <string name="file_action_archive_password_title">パスワードが必要</string>
     <string name="file_action_archive_password_message_format">「%1$s」はパスワードで保護されています。</string>
     <string name="file_action_archive_password_error_empty">パスワードは空白にはできません</string>
+    <string name="file_action_archive_password_error_incorrect">パスワードが正しくありません</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="other">ファイル %1$,d 件の圧縮を準備中 (%2$s)</item>
@@ -193,7 +193,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">「%1$s」の SELinux コンテキストを復元中にエラーが発生しました。\n%2$s</string>
     <string name="file_job_write_error_title">書き込み中にエラーが発生しました</string>
     <string name="file_job_write_error_message_format">「%1$s」の書き込み中にエラーが発生しました。\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">「%1$s」の情報を取得中にエラーが発生しました。</string>
+    <string name="file_job_error_no_space">ストレージの空き容量が不足しています。</string>
     <string name="file_job_remount_format">「%1$s」を読み書き可として再マウント</string>
     <string name="file_job_remount_loading_format">「%1$s」を読み書き可として再マウントしています…</string>
     <string name="file_job_remount_success_format">「%1$s」が読み書き可として再マウントされました</string>
@@ -236,7 +236,6 @@
     <string name="file_create_file_title">新しいファイル</string>
     <string name="file_create_directory_title">新しいフォルダ</string>
 
-    <string name="file_list_title">ファイル</string>
     <plurals name="file_list_title_open_file">
         <item quantity="other">ファイルを選択</item>
     </plurals>
@@ -249,6 +248,9 @@
     </plurals>
     <plurals name="file_list_subtitle_file_count_format">
         <item quantity="other">ファイル %1$,d 件</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="other">%1$,d 件の操作</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">パスは空白にできません</string>
@@ -280,9 +282,13 @@
     <string name="file_list_paste_extract_title_format">%1$,d 件を展開中</string>
     <string name="file_list_paste_action_extract_here">ここに展開</string>
     <string name="file_list_empty">ファイルがありません</string>
+    <string name="file_list_press_back_again_to_exit">もう一度戻るを押すと終了します</string>
     <string name="file_list_error_folder_not_found">このフォルダは存在しません</string>
     <string name="file_list_error_permission_denied">このフォルダを開く権限がありません</string>
+    <string name="file_list_create_file_error">このファイルを作成できません</string>
+    <string name="file_list_error_archive_header_encrypted">このアーカイブのファイル一覧は暗号化されており、対応していません</string>
     <string name="file_list_error_unknown">このフォルダを開けません</string>
+    <string name="file_list_action_create">作成</string>
     <string name="file_list_action_create_file">ファイル</string>
     <string name="file_list_action_create_directory">フォルダ</string>
 
@@ -309,7 +315,6 @@
     <string name="file_properties_basic_parent_directory">親フォルダ</string>
     <string name="file_properties_basic_archive_file">圧縮ファイル</string>
     <string name="file_properties_basic_archive_entry">アーカイブエントリー</string>
-    <string name="file_properties_basic_free_space">空き容量</string>
     <string name="file_properties_permission">権限</string>
     <string name="file_properties_permission_owner">所有者</string>
     <string name="file_properties_permission_group">グループ</string>
@@ -486,6 +491,7 @@
     <string name="storage_edit_smb_server_title_edit">SMB サーバーを編集</string>
     <string name="storage_edit_smb_server_title_add">SMB サーバーを追加</string>
     <string name="storage_edit_smb_server_host">ホスト名</string>
+    <string name="storage_edit_smb_server_host_placeholder">サーバーの IP アドレスまたはネットワーク名 (例: 192.168.1.10)</string>
     <string name="storage_edit_smb_server_host_error_empty">ホスト名を入力してください</string>
     <string name="storage_edit_smb_server_host_error_invalid">無効なホスト名です</string>
     <string name="storage_edit_smb_server_port">ポート</string>
@@ -553,6 +559,54 @@
     <string name="navigation_edit_bookmark_directory_name">名前</string>
     <string name="navigation_edit_bookmark_directory_path">パス</string>
     <string name="archive_viewer_title">アーカイブビューアー</string>
+    <string name="gallery_title">ギャラリー</string>
+    <string name="gallery_photos">写真</string>
+    <string name="gallery_albums">アルバム</string>
+    <string name="gallery_today">今日</string>
+    <string name="gallery_yesterday">昨日</string>
+    <string name="gallery_empty">写真や動画はありません</string>
+    <string name="gallery_access_denied">写真や動画を表示するにはファイルへのアクセスを許可してください</string>
+    <string name="allow_access">許可</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="other">%1$,d 件</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="other">アイテム %1$,d 件を削除しますか？</item>
+    </plurals>
+    <string name="gallery_details">詳細</string>
+    <string name="gallery_details_date">日付</string>
+    <string name="gallery_show_in_folder">フォルダで表示</string>
+    <string name="video_player_title">動画プレーヤー</string>
+    <string name="play">再生</string>
+    <string name="pause">一時停止</string>
+    <string name="music_title">音楽</string>
+    <string name="music_tracks">曲</string>
+    <string name="music_albums">アルバム</string>
+    <string name="music_artists">アーティスト</string>
+    <string name="music_empty">音楽はありません</string>
+    <string name="music_access_denied">音楽を表示するにはファイルへのアクセスを許可してください</string>
+    <string name="music_shuffle_all">すべてシャッフル</string>
+    <string name="music_unknown_artist">不明なアーティスト</string>
+    <plurals name="music_track_count_format">
+        <item quantity="other">%1$,d 曲</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="other">アルバム %1$,d 枚</item>
+    </plurals>
+    <string name="music_player_title">音楽プレーヤー</string>
+    <string name="music_player_error_format">「%1$s」を再生できません</string>
+    <string name="music_shuffle">シャッフル</string>
+    <string name="music_repeat">リピート</string>
+    <string name="music_previous">前へ</string>
+    <string name="music_next">次へ</string>
+    <string name="pdf_viewer_title">PDF ビューアー</string>
+    <string name="pdf_viewer_go_to_page">ページへ移動</string>
+    <string name="pdf_viewer_fit_width">幅に合わせる</string>
+    <string name="pdf_viewer_fit_page">ページ全体を表示</string>
+    <string name="pdf_viewer_page_hint_format">ページ (1～%1$,d)</string>
+    <string name="pdf_viewer_page_error">そのページはありません</string>
+    <string name="pdf_viewer_password_protected">この PDF はパスワードで保護されているため、開けません</string>
+    <string name="media_viewer_error">このファイルを開けません</string>
     <string name="image_viewer_title">画像ビューアー</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">保存</string>
@@ -565,6 +619,7 @@
     <string name="text_editor_reload_message">本当に再読み込みしますか？ このドキュメントの保存していない変更は破棄されます。</string>
     <string name="text_editor_encoding">エンコーディング</string>
     <string name="text_editor_close_message">本当にこのドキュメントの保存していない変更は破棄しますか？</string>
+    <string name="text_editor_file_too_large">このファイルは大きすぎて編集できません</string>
 
     <string name="ftp_server_title">FTP サーバー</string>
     <string name="ftp_server_state_title">状態</string>
@@ -584,7 +639,9 @@
     <string name="ftp_server_anonymous_login_title">匿名ログイン</string>
     <string name="ftp_server_username_title">ユーザー名</string>
     <string name="ftp_server_password_title">パスワード</string>
+    <string name="ftp_server_password_summary_empty">未設定</string>
     <string name="ftp_server_port_title">ポート</string>
+    <string name="ftp_server_port_error_invalid">無効なポートです</string>
     <string name="ftp_server_home_directory_title">Root フォルダ</string>
     <string name="ftp_server_writable_title">書き込みを許可</string>
     <string name="settings_title">設定</string>
@@ -592,7 +649,12 @@
     <string name="settings_locale_title">言語</string>
     <string name="settings_theme_color_title">テーマカラー</string>
     <string name="settings_theme_color_summary">アプリ内で優先して使用する色です</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">アプリアイコンにも適用</string>
+    <string name="settings_launcher_icon_color_title">アイコンの色</string>
+    <string name="settings_launcher_icon_color_summary">ホーム画面のアイコンの色</string>
+    <string name="settings_launcher_icon_change_title">アプリアイコンを変更しますか？</string>
+    <string name="settings_launcher_icon_change_message">ホーム画面に新しいアイコンを反映するため VFiles を閉じます。すぐにもう一度開いてください。</string>
+    <string name="settings_launcher_icon_change_confirm">変更して閉じる</string>
     <string name="settings_night_mode_title">夜間モード</string>
     <string-array name="settings_night_mode_entries">
         <item>システム設定に従う</item>
@@ -603,6 +665,9 @@
     </string-array>
     <string name="settings_black_night_mode">夜間モードで黒を使用</string>
     <string name="settings_file_list_animation_title">ファイル一覧のアニメーション</string>
+    <string name="settings_double_back_to_exit_title">戻るを 2 回押して終了</string>
+    <string name="settings_edge_to_edge_title">エッジツーエッジ表示</string>
+    <string name="settings_edge_to_edge_summary">コンテンツがステータスバーとナビゲーションバーの背後までスクロールします</string>
     <string name="settings_file_name_ellipsize_title">長いファイル名の表示方法</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>先頭を省略</item>
@@ -614,17 +679,18 @@
     <string name="settings_default_directory_title">デフォルトのフォルダ</string>
     <string name="settings_standard_directories_title">標準フォルダ</string>
     <string name="settings_standard_directories_summary_empty">標準フォルダが有効化されていません</string>
-    <string name="settings_bookmark_directory_screenshots">スクリーンショット</string>
+    <string name="settings_standard_directory_gallery_summary">端末内の写真と動画</string>
+    <string name="settings_standard_directory_music_summary">端末内の曲</string>
     <string name="settings_bookmark_directories_title">ブックマークフォルダ</string>
     <string name="settings_bookmark_directories_summary_empty">ブックマークフォルダがありません</string>
-    <string name="settings_root_strategy_title">Root アクセスモード</string>
+    <string name="settings_root_strategy_title">Root / Shizuku アクセスモード</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="other">%1$,d 件のファイルが操作を実行中です。ルートアクセスモードを変更すると予期せぬエラーが発生することがあります。本当に今すぐ変更しますか？</item>
     </plurals>
     <string-array name="settings_root_strategy_entries">
         <item>通常アクセスのみ</item>
         <item>自動</item>
-        <item>Root アクセスのみ</item>
+        <item>Root / Shizuku アクセスのみ</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">アーカイブのファイル名のエンコーディング</string>
     <string name="settings_open_apk_default_action_title">Android パッケージを開く</string>
@@ -636,17 +702,31 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">PDF ドキュメントのサムネイルを表示する</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">古いバージョンの Android ではアプリが不安定になる可能性があります</string>
     <string name="settings_read_remote_files_for_thumbnail_title">リモートファイルのサムネイルを読み込む</string>
+    <string name="settings_backup_title">バックアップ</string>
+    <string name="settings_backup_create_title">設定をバックアップ</string>
+    <string name="settings_backup_create_summary">設定、ブックマーク、サーバーをファイルに保存します</string>
+    <string name="settings_backup_restore_title">設定を復元</string>
+    <string name="settings_backup_restore_summary">すべてをバックアップファイルの内容に置き換えます</string>
+    <string name="settings_backup_password_title">バックアップのパスワード</string>
+    <string name="settings_backup_password_error_empty">パスワードを入力してください</string>
+    <string name="settings_backup_create_password_message">任意です。パスワードがないと、このファイルを持つ人は誰でもサーバーのパスワードを読み取れます。忘れたパスワードは復元できません。</string>
+    <string name="settings_backup_restore_password_message">現在の設定はすべて置き換えられ、アプリが再起動します。</string>
+    <string name="settings_backup_create_success">設定をバックアップしました</string>
+    <string name="settings_backup_create_error">バックアップを保存できません</string>
+    <string name="settings_backup_restore_error_file">このファイルは VFiles のバックアップではありません</string>
+    <string name="settings_backup_restore_error_password">パスワードが間違っているか、ファイルが破損しています</string>
+    <string name="settings_backup_restore_error_version">このバックアップは新しいバージョンの VFiles で作成されました</string>
+    <string name="settings_backup_restore_error_jobs">ファイル操作が終わるまでお待ちください</string>
 
     <string name="about_title">このアプリについて</string>
     <string name="about_version_title">バージョン</string>
     <string name="about_github_title">GitHub で見る</string>
     <string name="about_licenses_title">ライセンス</string>
-    <string name="about_privacy_policy_title">プライバシーポリシー</string>
     <string name="about_author_title">開発者</string>
     <string name="about_author_name_title">張海</string>
     <string name="about_author_github_title">GitHub でフォロー</string>
-    <string name="about_author_twitter_title">Twitter でフォロー</string>
     <string name="app_name_launcher">ファイル</string>
+    <string name="clear_query">検索をクリア</string>
     <string name="about_fork_subtitle">オリジナル: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">壁紙に基づく</string>
     <string name="color_picker_preset_colors_label">その他の色</string>
@@ -654,23 +734,42 @@
     <string name="navigation_bookmarks_hint_title">ブックマーク</string>
     <string name="navigation_bookmarks_hint_toast">フォルダを開き、⋮ をタップして「ブックマークに追加」を選択</string>
     <string name="onboarding_files_description">%1$s がデバイス上のすべてのファイルを管理するには権限が必要です。ファイルの閲覧、コピー、移動、整理に不可欠です。</string>
+    <string name="onboarding_files_adb_note">このデバイスでは設定からすべてのファイルへのアクセスを許可できないため、写真、動画、音楽のみ利用できます。すべてのファイルを使うには、パソコンから次のコマンドを実行してください：</string>
+    <string name="onboarding_files_grant_with_shizuku">Shizuku で許可</string>
     <string name="onboarding_files_title">ファイルアクセス</string>
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_grant">許可</string>
+    <string name="onboarding_granted">許可済み</string>
     <string name="onboarding_notifications_description">通知を許可すると、アプリがバックグラウンドにあるときでも、コピー・移動・圧縮などのファイル操作の進行状況を確認できます。</string>
 
     <string name="onboarding_install_apps_title">アプリのインストール</string>
     <string name="onboarding_install_apps_description">%1$s に APK ファイルを直接インストールする権限を許可します。これにより、サードパーティのインストーラーを使わずに、ダウンロードまたは受信したファイルからアプリをインストールできます。</string>
+    <string name="reorder_drag_handle">移動</string>
     <string name="onboarding_notifications_title">通知</string>
     <string name="onboarding_optional">任意</string>
     <string name="onboarding_required">必須</string>
     <string name="onboarding_welcome_description">最適な体験のためにいくつかの権限を許可してください。任意の権限は後で設定から変更できます。</string>
     <string name="onboarding_welcome_title">%1$s へようこそ</string>
     <string name="settings_default_apps_ask">毎回確認</string>
+    <string name="settings_default_apps_android_default_format">Android のデフォルト（%1$s）</string>
     <string name="settings_default_apps_audio">オーディオ / 音楽</string>
     <string name="settings_default_apps_image">画像</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">ファイルの種類ごとに開くアプリを選択</string>
+    <string name="settings_system_file_picker_title">VFiles を既定のファイル選択にする</string>
+    <string name="settings_system_file_picker_summary">Android のファイル選択を無効にし、アプリは VFiles を開いてファイルを選びます</string>
+    <string name="settings_system_file_picker_shizuku_required">Shizuku が必要です</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku が実行されていません。このオプションを変更するには起動してください</string>
+    <string name="settings_system_file_picker_not_found">このデバイスでは Android のファイル選択が見つかりませんでした</string>
+    <string name="settings_system_file_picker_confirm_title">Android のファイル選択を無効にしますか？</string>
+    <string name="settings_system_file_picker_confirm_message">ファイルを要求するアプリは、Android のファイル選択の代わりに VFiles を開きます。\n\n何もアンインストールされません。このオプションをオフにすると、すべて元に戻ります。</string>
+    <string name="settings_system_file_picker_confirm_important_title">重要</string>
+    <string name="settings_system_file_picker_confirm_important">VFiles をアンインストールする前に、このオプションをオフにしてください。オフにしないと、どのアプリもファイルを選べなくなり、一部のアプリがクラッシュする場合があります。修復するには、VFiles を再インストールしてオプションをオフにするか、パソコンから次を実行してください:</string>
+    <string name="settings_system_file_picker_confirm_note">最近の Android では写真選択ツールは引き続き使われ、Android が使用するアプリを尋ねることもあります。</string>
+    <string name="settings_system_file_picker_confirm_action">無効にする</string>
+    <string name="settings_system_file_picker_shizuku_title">Shizuku が必要です</string>
+    <string name="settings_system_file_picker_shizuku_message">Shizuku を起動してここから変更するか、パソコンから次を実行してください:</string>
+    <string name="settings_system_file_picker_error">ファイル選択を変更できません</string>
     <string name="settings_default_apps_text">テキスト</string>
     <string name="settings_default_apps_title">デフォルトのアプリ</string>
     <string name="settings_default_apps_video">動画</string>

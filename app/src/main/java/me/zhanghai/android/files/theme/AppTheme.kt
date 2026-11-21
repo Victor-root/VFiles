@@ -1,0 +1,179 @@
+/*
+ * Copyright (c) 2026 Hai Zhang <dreaming.in.code.zh@gmail.com>
+ * All Rights Reserved.
+ */
+
+package me.zhanghai.android.files.theme
+
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LifecycleStartEffect
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.theme.custom.ThemeColor
+import me.zhanghai.android.files.theme.custom.rememberWallpaperColorsVersion
+import me.zhanghai.android.files.theme.night.isNightModeActive
+import me.zhanghai.android.files.theme.night.withNightMode
+import android.graphics.Color as AndroidColor
+
+@Immutable
+class AppColors(
+    val isDark: Boolean,
+    val appBarContainer: Color,
+    val onAppBar: Color
+)
+
+val LocalAppColors = staticCompositionLocalOf<AppColors> { error("No AppColors provided") }
+
+// What is drawn behind the status bar when it isn't the app bar, like an open drawer. The last one
+// added wins, so that effects can overlap.
+private val LocalStatusBarBackgrounds =
+    staticCompositionLocalOf<SnapshotStateList<Color>> {
+        error("No status bar backgrounds provided")
+    }
+
+// The same for the navigation bar, whose default background depends on edge to edge.
+private val LocalNavigationBarBackgrounds =
+    staticCompositionLocalOf<SnapshotStateList<Color>> {
+        error("No navigation bar backgrounds provided")
+    }
+
+/**
+ * Makes the status bar icons follow [color] instead of the app bar while this is shown, which is
+ * while it's composed and started.
+ */
+@Composable
+fun StatusBarBackgroundEffect(color: Color) {
+    BarBackgroundEffect(LocalStatusBarBackgrounds.current, color)
+}
+
+/**
+ * Makes the navigation bar icons follow [color] instead of the content while this is shown, which
+ * is while it's composed and started.
+ */
+@Composable
+fun NavigationBarBackgroundEffect(color: Color) {
+    BarBackgroundEffect(LocalNavigationBarBackgrounds.current, color)
+}
+
+@Composable
+private fun BarBackgroundEffect(backgrounds: SnapshotStateList<Color>, color: Color) {
+    LifecycleStartEffect(backgrounds, color) {
+        backgrounds += color
+        onStopOrDispose { backgrounds.removeAt(backgrounds.lastIndexOf(color)) }
+    }
+}
+
+// The number of screens shown that always draw dark content behind the system bars.
+private val LocalDarkSystemBarsCount =
+    staticCompositionLocalOf<MutableIntState> { error("No dark system bars count provided") }
+
+/**
+ * Makes the system bar icons light, for content that is always dark behind them, while this is
+ * shown, which is while it's composed and started.
+ */
+@Composable
+fun DarkSystemBarsEffect() {
+    val darkSystemBarsCount = LocalDarkSystemBarsCount.current
+    LifecycleStartEffect(darkSystemBarsCount) {
+        ++darkSystemBarsCount.intValue
+        onStopOrDispose { --darkSystemBarsCount.intValue }
+    }
+}
+
+@Composable
+fun AppTheme(content: @Composable () -> Unit) {
+    val nightMode by Settings.NIGHT_MODE.flow.collectAsState()
+    val themeColor by Settings.THEME_COLOR.flow.collectAsState()
+    val isBlackNightMode by Settings.BLACK_NIGHT_MODE.flow.collectAsState()
+    val isEdgeToEdge by Settings.EDGE_TO_EDGE.flow.collectAsState()
+    val isDark = nightMode.isNightModeActive()
+    val baseContext = LocalContext.current
+    val baseConfiguration = LocalConfiguration.current
+    val context = remember(baseContext, baseConfiguration, isDark) {
+        baseContext.withNightMode(isDark)
+    }
+    val wallpaperColorsVersion = rememberWallpaperColorsVersion(themeColor == ThemeColor.DYNAMIC)
+    val colorScheme =
+        remember(context, themeColor, isDark, isBlackNightMode, wallpaperColorsVersion) {
+            appColorScheme(context, themeColor, isDark, isBlackNightMode)
+        }
+    // The app bar keeps the theme color of light mode in dark mode too.
+    val appColors = remember(context, themeColor, colorScheme, isDark) {
+        val lightColorScheme = if (isDark) {
+            appColorScheme(context, themeColor, isDark = false, isBlack = false)
+        } else {
+            colorScheme
+        }
+        AppColors(isDark, lightColorScheme.primary, lightColorScheme.onPrimary)
+    }
+    val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
+    val navigationBarBackgrounds = remember { mutableStateListOf<Color>() }
+    val darkSystemBarsCount = remember { mutableIntStateOf(0) }
+    SystemBarsEffect(
+        statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer,
+        navigationBarBackgrounds.lastOrNull()?.let { it.luminance() < 0.5f }
+            // Unless edge to edge, the navigation bar is drawn over the color of the app bar.
+            ?: if (isEdgeToEdge) appColors.isDark else appColors.appBarContainer.luminance() < 0.5f,
+        darkSystemBarsCount.intValue > 0
+    )
+    CompositionLocalProvider(
+        LocalContext provides context,
+        LocalConfiguration provides context.resources.configuration,
+        LocalAppColors provides appColors,
+        LocalStatusBarBackgrounds provides statusBarBackgrounds,
+        LocalNavigationBarBackgrounds provides navigationBarBackgrounds,
+        LocalDarkSystemBarsCount provides darkSystemBarsCount
+    ) {
+        MaterialTheme(colorScheme = colorScheme, content = content)
+    }
+}
+
+// Status bar icons follow what is drawn behind them, navigation bar icons follow the content.
+@Composable
+private fun SystemBarsEffect(
+    statusBarBackground: Color,
+    isNavigationBarBackgroundDark: Boolean,
+    hasDarkSystemBars: Boolean
+) {
+    val activity = LocalActivity.current as? ComponentActivity ?: return
+    val isStatusBarDark = hasDarkSystemBars || statusBarBackground.luminance() < 0.5f
+    val isNavigationBarDark = hasDarkSystemBars || isNavigationBarBackgroundDark
+    DisposableEffect(activity, isStatusBarDark, isNavigationBarDark) {
+        activity.enableEdgeToEdge(
+            SystemBarStyle.auto(AndroidColor.TRANSPARENT, AndroidColor.TRANSPARENT) {
+                isStatusBarDark
+            },
+            // An explicit style, unlike auto(), keeps the system from adding its own scrim to the
+            // three-button navigation bar, so it's fully transparent like before.
+            if (isNavigationBarDark) {
+                SystemBarStyle.dark(AndroidColor.TRANSPARENT)
+            } else {
+                // Android 8.0 can't draw dark navigation bar icons, so they need a dark scrim.
+                SystemBarStyle.light(AndroidColor.TRANSPARENT, DARK_NAVIGATION_BAR_SCRIM)
+            }
+        )
+        onDispose {}
+    }
+}
+
+// The scrim enableEdgeToEdge() uses by default for the three-button navigation bar.
+private val DARK_NAVIGATION_BAR_SCRIM = AndroidColor.argb(0x80, 0x1B, 0x1B, 0x1B)

@@ -8,15 +8,21 @@ package me.zhanghai.android.files.util
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
+import android.os.storage.StorageVolume
 import android.provider.DocumentsContract
 import java8.nio.file.Path
 import java8.nio.file.Paths
 import me.zhanghai.android.files.BuildConfig
 import me.zhanghai.android.files.compat.DocumentsContractCompat
+import me.zhanghai.android.files.compat.EXTRA_DIRECTORY_NAME
 import me.zhanghai.android.files.compat.directoryCompat
 import me.zhanghai.android.files.compat.isPrimaryCompat
 import me.zhanghai.android.files.compat.uuidCompat
-import me.zhanghai.android.files.storage.StorageVolumeListLiveData
+import me.zhanghai.android.files.file.fileProviderPath
+import me.zhanghai.android.files.provider.content.isContentPath
+import me.zhanghai.android.files.provider.linux.isLinuxPath
+import me.zhanghai.android.files.storage.StorageVolumeList
 import me.zhanghai.android.files.storage.createOrLog
 import java.io.File
 import java.io.Serializable
@@ -43,6 +49,29 @@ var Intent.extraPath: Path?
         putExtra(EXTRA_PATH_URI, value?.toUri()?.toString())
     }
 
+/**
+ * The folder to start picking in. Apps may ask for a file, like the last one picked, which the
+ * system picker opens the folder of, or for something else that isn't a folder to list.
+ */
+val Intent.pickInitialDirectory: Path?
+    get() {
+        var path = extraPath ?: externalDirectoryPath ?: return null
+        if (path.isContentPath) {
+            val uri = data ?: getParcelableExtraSafe(DocumentsContractCompat.EXTRA_INITIAL_URI)
+            path = uri?.externalStoragePathOrNull(requiresDirectory = false) ?: return null
+        }
+        return if (path.isLinuxPath && path.toFile().isFile) path.parent else path
+    }
+
+// What StorageVolume.createAccessIntent() asks for on Android versions before 10.
+private val Intent.externalDirectoryPath: Path?
+    get() {
+        val volume = getParcelableExtraSafe<StorageVolume>(StorageVolume.EXTRA_STORAGE_VOLUME)
+        val directory = volume?.directoryCompat ?: return null
+        val name = getStringExtra(EXTRA_DIRECTORY_NAME)
+        return Paths.get((if (name != null) File(directory, name) else directory).path)
+    }
+
 val Intent.saveAsPath: Path?
     get() {
         val uri =
@@ -57,14 +86,20 @@ val Intent.saveAsPath: Path?
 private fun Uri.toPathOrNull(): Path? =
     when (scheme) {
         ContentResolver.SCHEME_FILE, null -> path?.takeIfNotEmpty()?.let { Paths.get(it) }
-        ContentResolver.SCHEME_CONTENT -> {
+        ContentResolver.SCHEME_CONTENT -> if (authority == BuildConfig.DOCUMENTS_PROVIDER_AUTHORITY) {
+            documentsProviderPathOrNull()
+        } else if (authority == BuildConfig.FILE_PROVIDIER_AUTHORITY) {
+            fileProviderPath
+        } else if (mediaRootIdOrNull != null) {
+            mediaRootPathOrNull()
+        } else {
             // A content:// URI resolves to a ContentPath, which is a single stream that cannot be
             // listed as a directory. When it's an ExternalStorageProvider folder URI on a mounted
             // volume - e.g. LocalSend's "open folder", which hands over a
             // com.android.externalstorage.documents tree/document URI - resolve it to the real local
             // path so we can actually browse it. Restricted to existing directories, so opening a
             // document/file keeps its current content-resolver behavior.
-            externalStorageDirectoryPathOrNull()
+            externalStoragePathOrNull(requiresDirectory = true)
                 ?: run {
                     val uri = URI::class.createOrLog(toString())
                         // Some people use Uri.parse() without encoding their path. Let's try saving
@@ -76,18 +111,59 @@ private fun Uri.toPathOrNull(): Path? =
         else -> null
     }
 
+/**
+ * The ID of the root of the media or downloads of the system this URI is for, like what the storage
+ * page of the settings opens.
+ */
+val Uri.mediaRootIdOrNull: String?
+    get() = if (
+        (authority == DocumentsContractCompat.MEDIA_PROVIDER_AUTHORITY ||
+            authority == DocumentsContractCompat.DOWNLOADS_PROVIDER_AUTHORITY) &&
+        pathSegments.size == 2 && pathSegments[0] == ROOT_PATH_SEGMENT
+    ) {
+        pathSegments[1]
+    } else {
+        null
+    }
+
+// A document handed back by this app, which the app is often given again to start from.
+private fun Uri.documentsProviderPathOrNull(): Path? =
+    runCatching {
+        val documentId = if (DocumentsContract.isTreeUri(this)) {
+            DocumentsContract.getTreeDocumentId(this)
+        } else {
+            DocumentsContract.getDocumentId(this)
+        }
+        Paths.get(URI(documentId))
+    }.getOrNull()
+
+// Images, videos and audio have no folder of their own.
+private fun Uri.mediaRootPathOrNull(): Path? {
+    val directoryType = when {
+        authority == DocumentsContractCompat.DOWNLOADS_PROVIDER_AUTHORITY ->
+            Environment.DIRECTORY_DOWNLOADS
+        mediaRootIdOrNull == DocumentsContractCompat.MEDIA_PROVIDER_DOCUMENTS_ROOT_ID ->
+            Environment.DIRECTORY_DOCUMENTS
+        else -> return null
+    }
+    return Paths.get(Environment.getExternalStoragePublicDirectory(directoryType).path)
+}
+
 // Resolves an ExternalStorageProvider (com.android.externalstorage.documents) tree/document/bare
-// URI that points to an existing directory on a mounted storage volume to the corresponding local
-// Path, or null otherwise. Lets Material Files browse a folder another app opens via a SAF URI
-// (which ContentPath can't list) by falling back to direct local access.
-private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
+// URI that points to an existing directory, unless [requiresDirectory] is false, on a mounted
+// storage volume to the corresponding local Path, or null otherwise. Lets VFiles browse a folder
+// another app opens via a SAF URI (which ContentPath can't list) by falling back to direct local
+// access.
+private fun Uri.externalStoragePathOrNull(requiresDirectory: Boolean): Path? {
     if (authority != DocumentsContractCompat.EXTERNAL_STORAGE_PROVIDER_AUTHORITY) {
         return null
     }
     return runCatching {
         val documentId = when {
             DocumentsContractCompat.isDocumentUri(this) -> DocumentsContract.getDocumentId(this)
-            DocumentsContractCompat.isTreeUri(this) -> DocumentsContract.getTreeDocumentId(this)
+            DocumentsContract.isTreeUri(this) -> DocumentsContract.getTreeDocumentId(this)
+            // Like the storage opened from the settings of the system.
+            pathSegments.size == 2 && pathSegments[0] == ROOT_PATH_SEGMENT -> "${pathSegments[1]}:"
             else -> return@runCatching null
         }
         val colonIndex = documentId.indexOf(':')
@@ -96,7 +172,7 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
         }
         val rootId = documentId.substring(0, colonIndex)
         val relativePath = documentId.substring(colonIndex + 1)
-        val directory = StorageVolumeListLiveData.valueCompat.firstNotNullOfOrNull { storageVolume ->
+        val directory = StorageVolumeList.value.firstNotNullOfOrNull { storageVolume ->
             val volumeRootId = if (storageVolume.isPrimaryCompat) {
                 DocumentsContractCompat.EXTERNAL_STORAGE_PRIMARY_EMULATED_ROOT_ID
             } else {
@@ -105,7 +181,7 @@ private fun Uri.externalStorageDirectoryPathOrNull(): Path? {
             if (volumeRootId == rootId) storageVolume.directoryCompat else null
         } ?: return@runCatching null
         val file = if (relativePath.isEmpty()) directory else File(directory, relativePath)
-        if (!file.isDirectory) {
+        if (requiresDirectory && !file.isDirectory) {
             return@runCatching null
         }
         Paths.get(file.path)
@@ -128,3 +204,5 @@ var Intent.extraPathList: List<Path>
         val pathUris = value.map { it.toUri() }
         putExtra(EXTRA_PATH_URI_LIST, pathUris as Serializable)
     }
+
+private const val ROOT_PATH_SEGMENT = "root"

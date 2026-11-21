@@ -11,6 +11,7 @@ import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
 import me.zhanghai.android.files.R
+import me.zhanghai.android.files.app.Destination
 import me.zhanghai.android.files.util.takeIfNotEmpty
 
 abstract class Storage : Parcelable {
@@ -36,5 +37,5 @@ abstract class Storage : Parcelable {
 
     open fun createIntent(): Intent? = null
 
-    abstract fun createEditIntent(): Intent
+    abstract fun createEditDestination(): Destination
 }

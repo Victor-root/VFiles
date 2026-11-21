@@ -7,18 +7,18 @@ package me.zhanghai.android.files.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import java8.nio.file.Path
-import me.zhanghai.android.files.compat.getDrawableCompat
+import me.zhanghai.android.files.app.Destination
 
 abstract class NavigationItem {
     abstract val id: Long
 
-    fun getIcon(context: Context): Drawable = context.getDrawableCompat(iconRes!!)
-
     @get:DrawableRes
-    protected abstract val iconRes: Int?
+    abstract val iconRes: Int
+
+    // The icon is tinted like the title when there's no color for it.
+    open val iconColor: NavigationIconColor? = null
 
     abstract fun getTitle(context: Context): String
 
@@ -32,7 +32,9 @@ abstract class NavigationItem {
     // whose partitions are listed beneath it). Such rows aren't clickable or focusable.
     open val isHeader: Boolean = false
 
-    open fun isChecked(listener: Listener): Boolean = false
+    // The folder this item opens, which it's checked in, as well as in its subfolders when no other
+    // item opens them.
+    open val checkedPath: Path? = null
 
     abstract fun onClick(listener: Listener)
 
@@ -43,6 +45,7 @@ abstract class NavigationItem {
         fun navigateTo(path: Path)
         fun navigateToRoot(path: Path)
         fun launchIntent(intent: Intent)
+        fun navigate(destination: Destination)
         fun showToast(textRes: Int)
         fun closeNavigationDrawer()
     }

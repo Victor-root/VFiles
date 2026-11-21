@@ -8,8 +8,8 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ImpliedQuantity">
-
     <string name="close">Fechar</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" copiado para a área de transferência.</string>
     <string name="copy">Copiar</string>
     <string name="cut">Cortar</string>
     <string name="default_">Padrão</string>
@@ -25,6 +25,8 @@
     <string name="loading">A carregar…</string>
     <string name="maybe_later">Talvez mais tarde</string>
     <string name="merge">Juntar</string>
+    <string name="more_options">Mais opções</string>
+    <string name="navigate_up">Navegar para cima</string>
     <string name="none">Nenhum</string>
     <string name="open_navigation_drawer">Abrir menu de navegação</string>
     <string name="paste">Colar</string>
@@ -50,7 +52,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">Não existe uma aplicação para gerir esta ação</string>
     <string name="open_settings">Abrir definições</string>
-    <string name="shortcut_created">Atalho criado</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">%1$,d byte</item>
@@ -63,8 +64,6 @@
     <string name="storage_permission_rationale_message">A aplicação precisa da permissão para aceder aos ficheiros. Clique em “PERMITIR” na próxima caixa de diálogo.</string>
     <string name="storage_permission_permanently_denied_message">A aplicação precisa da permissão para aceder aos ficheiros. Por favor, conceda a permissão de “Armazenamento” nas definições de sistema.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">A aplicação precisa de aceder às notificações para poder mostrar as operações de ficheiros. Toque em \"Permitir\" no próximo ecrã.</string>
-    <string name="notification_permission_permanently_denied_message">A aplicação precisa de aceder às notificações para poder mostrar as operações de ficheiros. Deve conceder a permissão \"Notificação\" nas definições do sistema.</string>
 
     <string name="notification_channel_background_activity_start_name">Ações em segundo plano</string>
     <string name="notification_channel_background_activity_start_description">Executar ações se a aplicação estiver em segundo plano</string>
@@ -76,6 +75,7 @@
     <string name="file_action_archive_password_title">Requer palavra-passe</string>
     <string name="file_action_archive_password_message_format">\"%1$s\" está protegido por palavra-passe.</string>
     <string name="file_action_archive_password_error_empty">A palavra-passe não pode estar vazia</string>
+    <string name="file_action_archive_password_error_incorrect">Palavra-passe incorreta</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">A preparar para comprimir %1$,d ficheiro (%2$s)</item>
@@ -237,7 +237,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">Ocorreu um erro ao repor o contexto SELinux para “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">Erro ao escrever</string>
     <string name="file_job_write_error_message_format">Ocorreu um erro ao escrever “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">Ocorreu um erro ao obter informação de “%1$s”.</string>
+    <string name="file_job_error_no_space">Não há espaço de armazenamento suficiente.</string>
     <string name="file_job_remount_format">Remontar “%1$s” como apenas leitura</string>
     <string name="file_job_remount_loading_format">A remontar “%1$s” como apenas leitura…</string>
     <string name="file_job_remount_success_format">“%1$s” foi remontado como apenas leitura</string>
@@ -259,6 +259,7 @@
     <string name="file_name_error_empty">O nome do ficheiro não pode estar vazio</string>
     <string name="file_name_error_invalid">Nome de ficheiro inválido</string>
     <string name="file_name_error_already_exists">Já existe um ficheiro com este nome</string>
+    <string name="file_replace_message_format">Substituir “%1$s”?</string>
     <string name="file_delete_message_file_format">Eliminar “%1$s”?</string>
     <string name="file_delete_message_directory_format">Eliminar a pasta “%1$s” e todo o seu conteúdo?</string>
     <plurals name="file_delete_message_multiple_files_format">
@@ -285,7 +286,17 @@
     <string name="file_create_file_title">Novo ficheiro</string>
     <string name="file_create_directory_title">Nova pasta</string>
 
-    <string name="file_list_title">Ficheiros</string>
+    <plurals name="file_list_title_open_file">
+        <item quantity="one">Selecionar um ficheiro</item>
+        <item quantity="many">Selecionar ficheiros</item>
+        <item quantity="other">Selecionar ficheiros</item>
+    </plurals>
+    <string name="file_list_title_create_file">Guardar ficheiro</string>
+    <plurals name="file_list_title_open_directory">
+        <item quantity="one">Selecionar uma pasta</item>
+        <item quantity="many">Selecionar pastas</item>
+        <item quantity="other">Selecionar pastas</item>
+    </plurals>
     <plurals name="file_list_subtitle_directory_count_format">
         <item quantity="one">%1$,d pasta</item>
         <item quantity="many">%1$,d pastas</item>
@@ -295,6 +306,11 @@
         <item quantity="one">%1$,d ficheiro</item>
         <item quantity="many">%1$,d ficheiros</item>
         <item quantity="other">%1$,d ficheiros</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">%1$,d operação</item>
+        <item quantity="many">%1$,d operações</item>
+        <item quantity="other">%1$,d operações</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">Caminho não pode estar vazio</string>
@@ -319,14 +335,20 @@
     <string name="file_list_action_create_shortcut">Criar atalho</string>
     <string name="file_list_breadcrumb_action_open_in_new_task">Abrir em nova janela</string>
     <string name="file_list_select_title_format">%1$,d</string>
+    <string name="file_list_create_file_name_hint">Nome do ficheiro</string>
+    <string name="file_list_open_current_directory_format">Selecionar “%1$s”</string>
     <string name="file_list_paste_move_title_format">A mover %1$,d</string>
     <string name="file_list_paste_copy_title_format">A copiar %1$,d</string>
     <string name="file_list_paste_extract_title_format">A extrair %1$,d</string>
     <string name="file_list_paste_action_extract_here">Extrair aqui</string>
     <string name="file_list_empty">Sem ficheiros</string>
+    <string name="file_list_press_back_again_to_exit">Prima novamente voltar para sair</string>
     <string name="file_list_error_folder_not_found">Esta pasta já não existe</string>
     <string name="file_list_error_permission_denied">Não tem permissão para abrir esta pasta</string>
+    <string name="file_list_create_file_error">Não foi possível criar este ficheiro</string>
+    <string name="file_list_error_archive_header_encrypted">A lista de ficheiros deste arquivo está encriptada, o que não é suportado</string>
     <string name="file_list_error_unknown">Não foi possível abrir esta pasta</string>
+    <string name="file_list_action_create">Criar</string>
     <string name="file_list_action_create_file">Ficheiro</string>
     <string name="file_list_action_create_directory">Pastas</string>
 
@@ -355,7 +377,39 @@
     <string name="file_properties_basic_parent_directory">Pasta principal</string>
     <string name="file_properties_basic_archive_file">Arquivo</string>
     <string name="file_properties_basic_archive_entry">Entrada de arquivo</string>
-    <string name="file_properties_basic_free_space">Espaço livre</string>
+    <string name="file_properties_permission">Permissões</string>
+    <string name="file_properties_permission_owner">Proprietário</string>
+    <string name="file_properties_permission_group">Grupo</string>
+    <string name="file_properties_permission_principal_format">%1$s (%2$d)</string>
+    <string name="file_properties_permission_set_owner_title">Alterar proprietário</string>
+    <string name="file_properties_permission_set_group_title">Alterar grupo</string>
+    <string name="file_properties_permission_set_principal_filter_hint">Introduza um nome ou ID</string>
+    <string name="file_properties_permission_set_principal_system">Sistema</string>
+    <string name="file_properties_permission_mode">Modo</string>
+    <string name="file_properties_permission_mode_format">%1$s (%2$04o)</string>
+    <string name="file_properties_permission_set_mode_title">Alterar modo</string>
+    <string name="file_properties_permission_set_mode_others">Outros</string>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_file">
+        <item>Leitura</item>
+        <item>Escrita</item>
+        <item>Execução</item>
+    </string-array>
+    <string-array name="file_properties_permission_set_mode_normal_mode_bits_directory">
+        <item>Leitura</item>
+        <item>Escrita</item>
+        <item>Pesquisa</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_special">Especial</string>
+    <string-array name="file_properties_permission_set_mode_special_mode_bits">
+        <item>Set UID</item>
+        <item>Set GID</item>
+        <item>Sticky bit</item>
+    </string-array>
+    <string name="file_properties_permission_set_mode_uppercase_x">Não adicionar “Execução” aos ficheiros contidos</string>
+    <string name="file_properties_permission_selinux_context">Contexto SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_title">Alterar contexto SELinux</string>
+    <string name="file_properties_permission_set_selinux_context_restore">Repor</string>
+    <string name="file_properties_permission_recursive">Aplicar aos ficheiros contidos</string>
     <string name="file_properties_image">Imagem</string>
     <string name="file_properties_media_dimensions">Dimensões</string>
     <string name="file_properties_media_dimensions_format">%1$d \u00d7 %2$d</string>
@@ -411,6 +465,12 @@
     <string name="file_properties_apk_signature_digests">Assinaturas</string>
     <string name="file_properties_apk_signature_digests_empty">Não há assinaturas válidas</string>
     <string name="file_properties_apk_past_signature_digests">Assinaturas antigas</string>
+    <string name="file_properties_checksum">Somas de verificação</string>
+    <string name="file_properties_checksum_compare">Comparar</string>
+    <string name="file_properties_checksum_compare_placeholder">Qualquer soma de verificação</string>
+    <string name="file_properties_checksum_compare_match_format">Corresponde à soma de verificação %1$s</string>
+    <string name="file_properties_checksum_compare_prefix_match_format">Corresponde ao prefixo da soma de verificação %1$s</string>
+    <string name="file_properties_checksum_compare_no_match">Nenhuma soma de verificação correspondente</string>
     <string name="storage_file_system_root_title">Root</string>
     <string name="storage_internal_storage">Armazenamento interno</string>
     <string name="storage_list_title">Armazenamento</string>
@@ -424,6 +484,11 @@
     <string name="storage_edit_device_storage_title">Editar armazenamento</string>
     <string name="storage_edit_device_storage_name">Nome</string>
     <string name="storage_edit_device_storage_path">Caminho</string>
+    <string name="storage_add_external_storage_shortcut_title">Adicionar atalho de armazenamento externo</string>
+    <string name="storage_edit_external_storage_shortcut_title">Editar atalho de armazenamento externo</string>
+    <string name="storage_edit_external_storage_shortcut_root_id">Volume de armazenamento</string>
+    <string name="storage_edit_external_storage_shortcut_root_id_error_empty">Introduza um volume de armazenamento</string>
+    <string name="storage_edit_external_storage_shortcut_path">Caminho</string>
     <string name="storage_add_document_tree_title">Adicionar armazenamento externo</string>
     <string name="storage_edit_document_tree_title">Editar armazenamento externo</string>
     <string name="storage_edit_document_tree_name">Nome</string>
@@ -490,6 +555,7 @@
     <string name="storage_edit_smb_server_title_edit">Editar servidor SMB</string>
     <string name="storage_edit_smb_server_title_add">Adicionar servidor SMB</string>
     <string name="storage_edit_smb_server_host">Nome do servidor</string>
+    <string name="storage_edit_smb_server_host_placeholder">Endereço IP ou nome de rede do servidor, por exemplo 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">Introduza um nome</string>
     <string name="storage_edit_smb_server_host_error_invalid">Nome inválido</string>
     <string name="storage_edit_smb_server_port">Porta</string>
@@ -557,8 +623,67 @@
     <string name="navigation_edit_bookmark_directory_name">Nome</string>
     <string name="navigation_edit_bookmark_directory_path">Caminho</string>
     <string name="archive_viewer_title">Visualizador de arquivos</string>
+    <string name="gallery_title">Galeria</string>
+    <string name="gallery_photos">Fotos</string>
+    <string name="gallery_albums">Álbuns</string>
+    <string name="gallery_today">Hoje</string>
+    <string name="gallery_yesterday">Ontem</string>
+    <string name="gallery_empty">Sem fotos nem vídeos</string>
+    <string name="gallery_access_denied">Permita o acesso aos ficheiros para ver as suas fotos e vídeos</string>
+    <string name="allow_access">Permitir</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">%1$,d item</item>
+        <item quantity="many">%1$,d itens</item>
+        <item quantity="other">%1$,d itens</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">Eliminar este item?</item>
+        <item quantity="many">Eliminar estes %1$,d itens?</item>
+        <item quantity="other">Eliminar estes %1$,d itens?</item>
+    </plurals>
+    <string name="gallery_details">Detalhes</string>
+    <string name="gallery_details_date">Data</string>
+    <string name="gallery_show_in_folder">Mostrar na pasta</string>
+    <string name="video_player_title">Leitor de vídeo</string>
+    <string name="play">Reproduzir</string>
+    <string name="pause">Pausa</string>
+    <string name="music_title">Música</string>
+    <string name="music_tracks">Músicas</string>
+    <string name="music_albums">Álbuns</string>
+    <string name="music_artists">Artistas</string>
+    <string name="music_empty">Sem música</string>
+    <string name="music_access_denied">Permita o acesso aos ficheiros para ver a sua música</string>
+    <string name="music_shuffle_all">Reproduzir tudo aleatoriamente</string>
+    <string name="music_unknown_artist">Artista desconhecido</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">%1$,d música</item>
+        <item quantity="many">%1$,d músicas</item>
+        <item quantity="other">%1$,d músicas</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">%1$,d álbum</item>
+        <item quantity="many">%1$,d álbuns</item>
+        <item quantity="other">%1$,d álbuns</item>
+    </plurals>
+    <string name="music_player_title">Leitor de música</string>
+    <string name="music_player_error_format">Não foi possível reproduzir “%1$s”</string>
+    <string name="music_shuffle">Aleatório</string>
+    <string name="music_repeat">Repetir</string>
+    <string name="music_previous">Anterior</string>
+    <string name="music_next">Seguinte</string>
+    <string name="pdf_viewer_title">Visualizador de PDF</string>
+    <string name="pdf_viewer_go_to_page">Ir para a página</string>
+    <string name="pdf_viewer_fit_width">Ajustar à largura</string>
+    <string name="pdf_viewer_fit_page">Mostrar página inteira</string>
+    <string name="pdf_viewer_page_hint_format">Página, de 1 a %1$,d</string>
+    <string name="pdf_viewer_page_error">Página inexistente</string>
+    <string name="pdf_viewer_password_protected">Este PDF está protegido por palavra-passe, o que não é suportado</string>
+    <string name="media_viewer_error">Não foi possível abrir este ficheiro</string>
     <string name="image_viewer_title">Visualizador de imagens</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
+    <string name="save_as_title">Guardar como</string>
+    <string name="save_as_error">Erro ao guardar o ficheiro</string>
+    <string name="save_as_success_format">“%1$s” foi guardado em “%2$s”</string>
     <string name="text_editor_title">Editor de texto</string>
     <string name="text_editor_title_format">%1$s</string>
     <string name="text_editor_title_changed_format">*%1$s</string>
@@ -566,6 +691,7 @@
     <string name="text_editor_reload_message">Tem a certeza de que deseja recarregar? As alterações não guardadas serão perdidas.</string>
     <string name="text_editor_encoding">Codificação</string>
     <string name="text_editor_close_message">Tem certeza de que deseja descartar as alterações efetuadas a este documento?</string>
+    <string name="text_editor_file_too_large">Este ficheiro é demasiado grande para ser editado</string>
 
     <string name="ftp_server_title">Servidor FTP</string>
     <string name="ftp_server_state_title">Estado</string>
@@ -585,7 +711,9 @@
     <string name="ftp_server_anonymous_login_title">Sessão anónima</string>
     <string name="ftp_server_username_title">Nome de utilizador</string>
     <string name="ftp_server_password_title">Palavra-passe</string>
+    <string name="ftp_server_password_summary_empty">Não definida</string>
     <string name="ftp_server_port_title">Porta</string>
+    <string name="ftp_server_port_error_invalid">Porta inválida</string>
     <string name="ftp_server_home_directory_title">Pasta root</string>
     <string name="ftp_server_writable_title">Permitir escrita</string>
     <string name="settings_title">Definições</string>
@@ -593,7 +721,12 @@
     <string name="settings_locale_title">Idioma</string>
     <string name="settings_theme_color_title">Cor do tema</string>
     <string name="settings_theme_color_summary">A cor que aparece com mais frequência na aplicação</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">Aplicar também ao ícone da aplicação</string>
+    <string name="settings_launcher_icon_color_title">Cor do ícone</string>
+    <string name="settings_launcher_icon_color_summary">Cor do ícone no ecrã principal</string>
+    <string name="settings_launcher_icon_change_title">Alterar o ícone da aplicação?</string>
+    <string name="settings_launcher_icon_change_message">O VFiles será fechado para que o ecrã principal mostre o novo ícone. Abra-o novamente logo a seguir.</string>
+    <string name="settings_launcher_icon_change_confirm">Alterar e fechar</string>
     <string name="settings_night_mode_title">Modo noturno</string>
     <string-array name="settings_night_mode_entries">
         <item>Cor do sistema</item>
@@ -604,6 +737,9 @@
     </string-array>
     <string name="settings_black_night_mode">Modo noite escura</string>
     <string name="settings_file_list_animation_title">Animação da lista de ficheiros</string>
+    <string name="settings_double_back_to_exit_title">Premir voltar duas vezes para sair</string>
+    <string name="settings_edge_to_edge_title">Ecrã de margem a margem</string>
+    <string name="settings_edge_to_edge_summary">O conteúdo desliza por trás das barras de estado e de navegação</string>
     <string name="settings_file_name_ellipsize_title">Mostrar nome longo</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>Elipse no início</item>
@@ -615,10 +751,11 @@
     <string name="settings_default_directory_title">Pasta padrão</string>
     <string name="settings_standard_directories_title">Pastas padrão</string>
     <string name="settings_standard_directories_summary_empty">Não existem pastas padrão</string>
-    <string name="settings_bookmark_directory_screenshots">Capturas de ecrã</string>
+    <string name="settings_standard_directory_gallery_summary">Fotos e vídeos do dispositivo</string>
+    <string name="settings_standard_directory_music_summary">Músicas do dispositivo</string>
     <string name="settings_bookmark_directories_title">Pastas de marcadores</string>
     <string name="settings_bookmark_directories_summary_empty">Não existem pastas de marcadores</string>
-    <string name="settings_root_strategy_title">Modo de acesso root</string>
+    <string name="settings_root_strategy_title">Modo de acesso root ou Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">Tem %1$,d operação de ficheiro em execução e se alterar o modo de acesso root agora podem ocorrer erros inesperados. Tem a certeza de que deseja alterar agora?</item>
         <item quantity="many">Tem %1$,d operações de ficheiro em execução e se alterar o modo de acesso root agora podem ocorrer erros inesperados. Tem a certeza de que deseja alterar agora?</item>
@@ -627,7 +764,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>Apenas acesso normal</item>
         <item>Automático</item>
-        <item>Apenas acesso root</item>
+        <item>Apenas acesso root ou Shizuku</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">Codificação para o nome do arquivo</string>
     <string name="settings_open_apk_default_action_title">Abrir pacote Android</string>
@@ -636,19 +773,34 @@
         <item>Ver conteúdo</item>
         <item>Perguntar o que fazer</item>
     </string-array>
+    <string name="settings_show_pdf_thumbnail_pre_28_title">Mostrar miniatura dos documentos PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">Pode tornar-se instável nas versões mais antigas do Android</string>
     <string name="settings_read_remote_files_for_thumbnail_title">Ler ficheiros remotos das miniaturas</string>
+    <string name="settings_backup_title">Cópia de segurança</string>
+    <string name="settings_backup_create_title">Criar cópia das definições</string>
+    <string name="settings_backup_create_summary">Guardar as definições, marcadores e servidores num ficheiro</string>
+    <string name="settings_backup_restore_title">Restaurar definições</string>
+    <string name="settings_backup_restore_summary">Substituir tudo por um ficheiro de cópia</string>
+    <string name="settings_backup_password_title">Palavra-passe da cópia</string>
+    <string name="settings_backup_password_error_empty">Introduza uma palavra-passe</string>
+    <string name="settings_backup_create_password_message">Opcional. Sem palavra-passe, qualquer pessoa com este ficheiro pode ler as palavras-passe dos seus servidores. Uma palavra-passe esquecida não pode ser recuperada.</string>
+    <string name="settings_backup_restore_password_message">Todas as definições atuais serão substituídas e a aplicação será reiniciada.</string>
+    <string name="settings_backup_create_success">Cópia das definições criada</string>
+    <string name="settings_backup_create_error">Não foi possível guardar a cópia</string>
+    <string name="settings_backup_restore_error_file">Este ficheiro não é uma cópia do VFiles</string>
+    <string name="settings_backup_restore_error_password">Palavra-passe incorreta ou ficheiro danificado</string>
+    <string name="settings_backup_restore_error_version">Esta cópia provém de uma versão mais recente do VFiles</string>
+    <string name="settings_backup_restore_error_jobs">Aguarde o fim das operações de ficheiros</string>
 
     <string name="about_title">Acerca</string>
     <string name="about_version_title">Versão</string>
     <string name="about_github_title">Ver no GitHub</string>
     <string name="about_licenses_title">Licenças</string>
-    <string name="about_privacy_policy_title">Política de privacidade</string>
     <string name="about_author_title">Autor</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">Seguir em GitHub</string>
-    <string name="about_author_twitter_title">Seguir em Twitter</string>
     <string name="app_name_launcher">Ficheiros</string>
+    <string name="clear_query">Limpar pesquisa</string>
     <string name="about_fork_subtitle">Original de Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">Com base na imagem de fundo</string>
     <string name="color_picker_preset_colors_label">Outras cores</string>
@@ -656,23 +808,42 @@
     <string name="navigation_bookmarks_hint_title">Marcadores</string>
     <string name="navigation_bookmarks_hint_toast">Abra uma pasta, toque em ⋮ e em «Adicionar marcador»</string>
     <string name="onboarding_files_description">O %1$s precisa de permissão para gerir todos os ficheiros do seu dispositivo. É essencial para navegar, copiar, mover e organizar os seus ficheiros.</string>
+    <string name="onboarding_files_adb_note">Este dispositivo não consegue conceder acesso a todos os ficheiros a partir das definições, por isso só estão disponíveis as suas fotos, vídeos e música. Para utilizar todos os seus ficheiros, execute este comando a partir de um computador:</string>
+    <string name="onboarding_files_grant_with_shizuku">Conceder com Shizuku</string>
     <string name="onboarding_files_title">Acesso a ficheiros</string>
     <string name="onboarding_finish">Começar</string>
     <string name="onboarding_grant">Conceder</string>
+    <string name="onboarding_granted">Concedido</string>
     <string name="onboarding_notifications_description">Permita as notificações para acompanhar o progresso de operações de ficheiros, como cópias, movimentações e arquivos, mesmo com a aplicação em segundo plano.</string>
 
     <string name="onboarding_install_apps_title">Instalação de aplicações</string>
     <string name="onboarding_install_apps_description">Permita que a %1$s instale diretamente ficheiros APK. Assim, poderá instalar aplicações a partir de ficheiros transferidos ou recebidos, sem precisar de um instalador de terceiros.</string>
+    <string name="reorder_drag_handle">Mover</string>
     <string name="onboarding_notifications_title">Notificações</string>
     <string name="onboarding_optional">Opcional</string>
     <string name="onboarding_required">Obrigatório</string>
     <string name="onboarding_welcome_description">Conceda algumas permissões para a melhor experiência. As opcionais podem ser alteradas mais tarde nas Definições.</string>
     <string name="onboarding_welcome_title">Bem-vindo ao %1$s</string>
     <string name="settings_default_apps_ask">Perguntar sempre</string>
+    <string name="settings_default_apps_android_default_format">Predefinição do Android (%1$s)</string>
     <string name="settings_default_apps_audio">Áudio / Música</string>
     <string name="settings_default_apps_image">Imagens</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">Escolha que aplicação abre cada tipo de ficheiro</string>
+    <string name="settings_system_file_picker_title">VFiles como seletor de ficheiros predefinido</string>
+    <string name="settings_system_file_picker_summary">As aplicações abrem o VFiles para escolher ficheiros, com o seletor do Android desativado</string>
+    <string name="settings_system_file_picker_shizuku_required">Requer Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">O Shizuku não está em execução, inicie-o para alterar esta opção</string>
+    <string name="settings_system_file_picker_not_found">O seletor de ficheiros do Android não foi encontrado neste dispositivo</string>
+    <string name="settings_system_file_picker_confirm_title">Desativar o seletor de ficheiros do Android?</string>
+    <string name="settings_system_file_picker_confirm_message">As aplicações que pedem ficheiros abrirão o VFiles em vez do seletor do Android.\n\nNada é desinstalado: desativar esta opção deixa tudo como estava.</string>
+    <string name="settings_system_file_picker_confirm_important_title">Importante</string>
+    <string name="settings_system_file_picker_confirm_important">Desative esta opção antes de desinstalar o VFiles. Caso contrário, nenhuma aplicação poderá escolher ficheiros e algumas podem bloquear. Para corrigir, reinstale o VFiles e desative a opção, ou execute isto num computador:</string>
+    <string name="settings_system_file_picker_confirm_note">Em versões recentes do Android, o seletor de fotos continua em uso, e o Android ainda pode perguntar que aplicação usar.</string>
+    <string name="settings_system_file_picker_confirm_action">Desativar</string>
+    <string name="settings_system_file_picker_shizuku_title">É necessário o Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">Inicie o Shizuku para alterar isto aqui, ou execute isto num computador:</string>
+    <string name="settings_system_file_picker_error">Não foi possível alterar o seletor de ficheiros</string>
     <string name="settings_default_apps_text">Texto</string>
     <string name="settings_default_apps_title">Aplicações predefinidas</string>
     <string name="settings_default_apps_video">Vídeos</string>

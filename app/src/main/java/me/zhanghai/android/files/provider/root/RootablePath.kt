@@ -7,7 +7,6 @@ package me.zhanghai.android.files.provider.root
 
 import java8.nio.file.Path
 import me.zhanghai.android.files.settings.Settings
-import me.zhanghai.android.files.util.valueCompat
 import java.io.IOException
 
 interface RootablePath {
@@ -15,7 +14,7 @@ interface RootablePath {
 }
 
 private val rootStrategy: RootStrategy
-    get() = if (isRunningAsRoot) RootStrategy.NEVER else Settings.ROOT_STRATEGY.valueCompat
+    get() = if (isRunningAsRoot) RootStrategy.NEVER else Settings.ROOT_STRATEGY.value
 
 @Throws(IOException::class)
 fun <T, R> callRootable(

@@ -6,8 +6,8 @@
   -->
 
 <resources>
-
     <string name="close">סגירה</string>
+    <string name="copied_to_clipboard_format">\"%1$s\" הועתק ללוח.</string>
     <string name="copy">העתקה</string>
     <string name="cut">גזירה</string>
     <string name="default_">ברירת מחדל</string>
@@ -23,6 +23,8 @@
     <string name="loading">טעינה…</string>
     <string name="maybe_later">אולי אחר כך</string>
     <string name="merge">מיזוג</string>
+    <string name="more_options">אפשרויות נוספות</string>
+    <string name="navigate_up">ניווט למעלה</string>
     <string name="none">ללא</string>
     <string name="open_navigation_drawer">פתיחת חלונית ההזזה לניווט</string>
     <string name="paste">הדבקה</string>
@@ -48,7 +50,6 @@
     <!-- android.R.string.app_not_found -->
     <string name="activity_not_found">לא נמצא יישום מתאים לפעולה זו</string>
     <string name="open_settings">פתיחת הגדרות</string>
-    <string name="shortcut_created">נוצר קיצור דרך</string>
 
     <plurals name="size_in_bytes_format">
         <item quantity="one">בייט %1$,d</item>
@@ -62,8 +63,6 @@
     <string name="storage_permission_rationale_message">היישום זקוק להרשאה כדי לגשת לקבצים. יש ללחוץ על \"אפשר\" בתיבת הדו שיח הבאה של המערכת.</string>
     <string name="storage_permission_permanently_denied_message">היישום זקוק להרשאה כדי לגשת לקבצים. יש להעניק הרשאת \"אחסון\" בהגדרות המערכת.</string>
     <!-- The allow button is in sentence case now. -->
-    <string name="notification_permission_rationale_message">היישומון צריך הרשאה כדי לפרסם התראות על פעולות קבצים. נא ללחוץ על „הרשאה” בחלונית המערכת שכבר תופיע.</string>
-    <string name="notification_permission_permanently_denied_message">היישומון צריך הרשאה כדי לפרסם התראות על פעולות קבצים. נא להעניק את ההרשאה „התראות” בהגדרות המערכת.</string>
 
     <string name="notification_channel_background_activity_start_name">פעולות ברקע</string>
     <string name="notification_channel_background_activity_start_description">ביצוע פעולות כשהיישום פועל ברקע</string>
@@ -75,6 +74,7 @@
     <string name="file_action_archive_password_title">צריך סיסמה</string>
     <string name="file_action_archive_password_message_format">„%1$s” מוגן בסיסמה</string>
     <string name="file_action_archive_password_error_empty">הסיסמה לא יכולה להיות ריקה</string>
+    <string name="file_action_archive_password_error_incorrect">סיסמה שגויה</string>
 
     <plurals name="file_job_archive_scan_notification_title_format">
         <item quantity="one">מתכונן לדחיסת קובץ אחד (%2$s)</item>
@@ -256,7 +256,7 @@
     <string name="file_job_restore_selinux_context_error_message_format">שגיאה בעת שיחזור הקשר SELinux עבור “%1$s”.\n%2$s</string>
     <string name="file_job_write_error_title">שגיאה במהלך הכתיבה</string>
     <string name="file_job_write_error_message_format">שגיאה בעת כתיבת “%1$s”.\n%2$s</string>
-    <string name="file_job_get_information_error_message_format">אירעה שגיאה בקבלת מידע אודות “%1$s”.</string>
+    <string name="file_job_error_no_space">אין מספיק שטח אחסון.</string>
     <string name="file_job_remount_format">הצבה מחדש של “%1$s” כקריאה-כתיבה</string>
     <string name="file_job_remount_loading_format">מציב מחדשאת “%1$s” כקריאה-כתיבה…</string>
     <string name="file_job_remount_success_format">“%1$s” הוצב מחדש כקריאה-כתיבה</string>
@@ -308,7 +308,6 @@
     <string name="file_create_file_title">קובץ חדש</string>
     <string name="file_create_directory_title">תיקיה חדשה</string>
 
-    <string name="file_list_title">קבצים</string>
     <plurals name="file_list_title_open_file">
         <item quantity="one">בחירת קובץ</item>
         <item quantity="two">בחירת קבצים</item>
@@ -333,6 +332,12 @@
         <item quantity="two">%1$,d קבצים</item>
         <item quantity="many">%1$,d קבצים</item>
         <item quantity="other">%1$,d קבצים</item>
+    </plurals>
+    <plurals name="file_list_subtitle_file_job_count_format">
+        <item quantity="one">פעולה %1$,d</item>
+        <item quantity="two">%1$,d פעולות</item>
+        <item quantity="many">%1$,d פעולות</item>
+        <item quantity="other">%1$,d פעולות</item>
     </plurals>
     <string name="file_list_subtitle_separator">,\u0020</string>
     <string name="file_list_path_error_empty">נתיב אינו יכול להיות ריק</string>
@@ -364,9 +369,13 @@
     <string name="file_list_paste_extract_title_format">מחלץ את %1$,d</string>
     <string name="file_list_paste_action_extract_here">חילוץ לכאן</string>
     <string name="file_list_empty">אין קבצים</string>
+    <string name="file_list_press_back_again_to_exit">יש ללחוץ שוב על חזרה כדי לצאת</string>
     <string name="file_list_error_folder_not_found">התיקייה הזו כבר לא קיימת</string>
     <string name="file_list_error_permission_denied">אין לך הרשאה לפתוח את התיקייה הזו</string>
+    <string name="file_list_create_file_error">לא ניתן ליצור את הקובץ הזה</string>
+    <string name="file_list_error_archive_header_encrypted">רשימת הקבצים של ארכיון זה מוצפנת, ואין תמיכה בכך</string>
     <string name="file_list_error_unknown">לא ניתן לפתוח את התיקייה הזו</string>
+    <string name="file_list_action_create">יצירה</string>
     <string name="file_list_action_create_file">קובץ</string>
     <string name="file_list_action_create_directory">תיקייה</string>
 
@@ -396,7 +405,6 @@
     <string name="file_properties_basic_parent_directory">תיקיית אב</string>
     <string name="file_properties_basic_archive_file">קובץ ארכיון</string>
     <string name="file_properties_basic_archive_entry">ארכיון ריק</string>
-    <string name="file_properties_basic_free_space">שטח פנוי</string>
     <string name="file_properties_permission">הרשאות</string>
     <string name="file_properties_permission_owner">בעלים</string>
     <string name="file_properties_permission_group">קבוצה</string>
@@ -576,6 +584,7 @@
     <string name="storage_edit_smb_server_title_edit">עריכת שרת SMB</string>
     <string name="storage_edit_smb_server_title_add">הוספת שרת SMB</string>
     <string name="storage_edit_smb_server_host">שם מארח</string>
+    <string name="storage_edit_smb_server_host_placeholder">כתובת IP או שם הרשת של השרת, למשל 192.168.1.10</string>
     <string name="storage_edit_smb_server_host_error_empty">הזנת שם מארח</string>
     <string name="storage_edit_smb_server_host_error_invalid">שם מארח לא תקין</string>
     <string name="storage_edit_smb_server_port">פתחה</string>
@@ -643,6 +652,66 @@
     <string name="navigation_edit_bookmark_directory_name">שם</string>
     <string name="navigation_edit_bookmark_directory_path">נתיב</string>
     <string name="archive_viewer_title">מציג ארכיונים</string>
+    <string name="gallery_title">גלריה</string>
+    <string name="gallery_photos">תמונות</string>
+    <string name="gallery_albums">אלבומים</string>
+    <string name="gallery_today">היום</string>
+    <string name="gallery_yesterday">אתמול</string>
+    <string name="gallery_empty">אין תמונות או סרטונים</string>
+    <string name="gallery_access_denied">יש לאפשר גישה לקבצים כדי לראות את התמונות והסרטונים שלך</string>
+    <string name="allow_access">אישור</string>
+    <plurals name="gallery_album_item_count_format">
+        <item quantity="one">פריט אחד</item>
+        <item quantity="two">%1$,d פריטים</item>
+        <item quantity="many">%1$,d פריטים</item>
+        <item quantity="other">%1$,d פריטים</item>
+    </plurals>
+    <plurals name="gallery_delete_message_format">
+        <item quantity="one">למחוק את הפריט הזה?</item>
+        <item quantity="two">למחוק %1$,d פריטים אלה?</item>
+        <item quantity="many">למחוק %1$,d פריטים אלה?</item>
+        <item quantity="other">למחוק %1$,d פריטים אלה?</item>
+    </plurals>
+    <string name="gallery_details">פרטים</string>
+    <string name="gallery_details_date">תאריך</string>
+    <string name="gallery_show_in_folder">הצגה בתיקייה</string>
+    <string name="video_player_title">נגן וידאו</string>
+    <string name="play">הפעלה</string>
+    <string name="pause">השהיה</string>
+    <string name="music_title">מוזיקה</string>
+    <string name="music_tracks">שירים</string>
+    <string name="music_albums">אלבומים</string>
+    <string name="music_artists">אמנים</string>
+    <string name="music_empty">אין מוזיקה</string>
+    <string name="music_access_denied">יש לאפשר גישה לקבצים כדי לראות את המוזיקה שלך</string>
+    <string name="music_shuffle_all">ערבוב הכול</string>
+    <string name="music_unknown_artist">אמן לא ידוע</string>
+    <plurals name="music_track_count_format">
+        <item quantity="one">שיר %1$,d</item>
+        <item quantity="two">%1$,d שירים</item>
+        <item quantity="many">%1$,d שירים</item>
+        <item quantity="other">%1$,d שירים</item>
+    </plurals>
+    <plurals name="music_album_count_format">
+        <item quantity="one">אלבום %1$,d</item>
+        <item quantity="two">%1$,d אלבומים</item>
+        <item quantity="many">%1$,d אלבומים</item>
+        <item quantity="other">%1$,d אלבומים</item>
+    </plurals>
+    <string name="music_player_title">נגן מוזיקה</string>
+    <string name="music_player_error_format">לא ניתן להפעיל את “%1$s”</string>
+    <string name="music_shuffle">ערבוב</string>
+    <string name="music_repeat">חזרה</string>
+    <string name="music_previous">הקודם</string>
+    <string name="music_next">הבא</string>
+    <string name="pdf_viewer_title">מציג PDF</string>
+    <string name="pdf_viewer_go_to_page">מעבר לעמוד</string>
+    <string name="pdf_viewer_fit_width">התאמה לרוחב</string>
+    <string name="pdf_viewer_fit_page">הצגת העמוד כולו</string>
+    <string name="pdf_viewer_page_hint_format">עמוד, מ־1 עד %1$,d</string>
+    <string name="pdf_viewer_page_error">אין עמוד כזה</string>
+    <string name="pdf_viewer_password_protected">קובץ PDF זה מוגן בסיסמה, דבר שאינו נתמך</string>
+    <string name="media_viewer_error">לא ניתן לפתוח את הקובץ הזה</string>
     <string name="image_viewer_title">מציג התמונות</string>
     <string name="image_viewer_subtitle_format">%1$,d/%2$,d</string>
     <string name="save_as_title">שמירה בשם</string>
@@ -655,6 +724,7 @@
     <string name="text_editor_reload_message">האם בוודאות ברצונך לטעון מחדש? שינויים שלא נשמרו במסמך זה יאבדו.</string>
     <string name="text_editor_encoding">הצפנה</string>
     <string name="text_editor_close_message">האם בוודאות ברצונך למחוק שינויים שלא נשמרו במסמך זה?</string>
+    <string name="text_editor_file_too_large">הקובץ הזה גדול מדי לעריכה</string>
 
     <string name="ftp_server_title">שרת FTP</string>
     <string name="ftp_server_state_title">סטטוס</string>
@@ -674,7 +744,9 @@
     <string name="ftp_server_anonymous_login_title">כניסה בעילום שם</string>
     <string name="ftp_server_username_title">שם משתמש</string>
     <string name="ftp_server_password_title">סיסמה</string>
+    <string name="ftp_server_password_summary_empty">לא הוגדרה</string>
     <string name="ftp_server_port_title">פתחה</string>
+    <string name="ftp_server_port_error_invalid">פתחה אינה תקפה</string>
     <string name="ftp_server_home_directory_title">תיקיית שורש</string>
     <string name="ftp_server_writable_title">איפשור כתיבה</string>
     <string name="settings_title">הגדרות</string>
@@ -682,7 +754,12 @@
     <string name="settings_locale_title">שפה</string>
     <string name="settings_theme_color_title">צבע ערכת נושא</string>
     <string name="settings_theme_color_summary">צבע המופיע בתדירות הגבוהה ביותר ביישום</string>
-    <string name="settings_material_design_3_title">Material Design 3</string>
+    <string name="settings_apply_theme_color_to_launcher_icon_title">להחיל גם על סמל האפליקציה</string>
+    <string name="settings_launcher_icon_color_title">צבע הסמל</string>
+    <string name="settings_launcher_icon_color_summary">צבע הסמל במסך הבית</string>
+    <string name="settings_launcher_icon_change_title">לשנות את סמל האפליקציה?</string>
+    <string name="settings_launcher_icon_change_message">VFiles ייסגר כדי שמסך הבית יציג את הסמל החדש. יש לפתוח אותו שוב מיד לאחר מכן.</string>
+    <string name="settings_launcher_icon_change_confirm">שינוי וסגירה</string>
     <string name="settings_night_mode_title">מצב לילה</string>
     <string-array name="settings_night_mode_entries">
         <item>כמו במערכת</item>
@@ -693,6 +770,9 @@
     </string-array>
     <string name="settings_black_night_mode">מצב לילה שחור</string>
     <string name="settings_file_list_animation_title">אנימציית רשימת קבצים</string>
+    <string name="settings_double_back_to_exit_title">יש ללחוץ פעמיים על חזרה כדי לצאת</string>
+    <string name="settings_edge_to_edge_title">תצוגה מקצה לקצה</string>
+    <string name="settings_edge_to_edge_summary">התוכן נגלל מאחורי שורת המצב וסרגל הניווט</string>
     <string name="settings_file_name_ellipsize_title">הצגת שם קובץ ארוך</string>
     <string-array name="settings_file_name_ellipsize_entries">
         <item>התחלה אליפסית</item>
@@ -704,10 +784,11 @@
     <string name="settings_default_directory_title">תיקיית ברירת מחדל</string>
     <string name="settings_standard_directories_title">תיקיות סטנדרטיות</string>
     <string name="settings_standard_directories_summary_empty">תיקיות סטנדרטיות לא מופעל</string>
-    <string name="settings_bookmark_directory_screenshots">צילומי מסך</string>
+    <string name="settings_standard_directory_gallery_summary">תמונות וסרטונים מהמכשיר</string>
+    <string name="settings_standard_directory_music_summary">שירים מהמכשיר</string>
     <string name="settings_bookmark_directories_title">תיקיות סימניות</string>
     <string name="settings_bookmark_directories_summary_empty">אין תיקיות סימניות</string>
-    <string name="settings_root_strategy_title">מצב גישת שורש</string>
+    <string name="settings_root_strategy_title">מצב גישת שורש או Shizuku</string>
     <plurals name="settings_root_strategy_message_format">
         <item quantity="one">יש לך פעולה קובץ שרצה ושינוי מצב גישת שורש כעת עלול לגרום לשגיאה בלתי צפויה. האם בוודאות ברצונך לשנות זאת כעת?</item>
         <item quantity="two">יש לך %1$,d פעולות קבצים שרצות ושינוי מצב גישת שורש כעת עלול לגרום לשגיאה בלתי צפויה. האם בוודאות ברצונך לשנות זאת כעת?</item>
@@ -717,7 +798,7 @@
     <string-array name="settings_root_strategy_entries">
         <item>גישה רגילה בלבד</item>
         <item>אוטומטי</item>
-        <item>גישת שורש בלבד</item>
+        <item>גישת שורש או Shizuku בלבד</item>
     </string-array>
     <string name="settings_archive_file_name_encoding_title">הצפנת שם קובץ בארכיון</string>
     <string name="settings_open_apk_default_action_title">פתיחת חבילת אנדרואיד</string>
@@ -729,17 +810,31 @@
     <string name="settings_show_pdf_thumbnail_pre_28_title">הצגת תמונה ממוזערת למסמכי PDF</string>
     <string name="settings_show_pdf_thumbnail_pre_28_summary">עלול להפוך את היישום לבלתי יציב בגרסאות ישנות יותר של אנדרואיד</string>
     <string name="settings_read_remote_files_for_thumbnail_title">קרא קבצים מרוחקים עבור תמונה ממוזערת</string>
+    <string name="settings_backup_title">גיבוי</string>
+    <string name="settings_backup_create_title">גיבוי ההגדרות</string>
+    <string name="settings_backup_create_summary">שמירת ההגדרות, הסימניות והשרתים בקובץ</string>
+    <string name="settings_backup_restore_title">שחזור ההגדרות</string>
+    <string name="settings_backup_restore_summary">החלפת הכול בקובץ גיבוי</string>
+    <string name="settings_backup_password_title">סיסמת הגיבוי</string>
+    <string name="settings_backup_password_error_empty">יש להזין סיסמה</string>
+    <string name="settings_backup_create_password_message">אופציונלי. ללא סיסמה, כל מי שיש לו את הקובץ הזה יכול לקרוא את הסיסמאות של השרתים שלך. אי אפשר לשחזר סיסמה שנשכחה.</string>
+    <string name="settings_backup_restore_password_message">כל ההגדרות הנוכחיות יוחלפו והאפליקציה תופעל מחדש.</string>
+    <string name="settings_backup_create_success">ההגדרות גובו</string>
+    <string name="settings_backup_create_error">לא ניתן לשמור את הגיבוי</string>
+    <string name="settings_backup_restore_error_file">קובץ זה אינו גיבוי של VFiles</string>
+    <string name="settings_backup_restore_error_password">סיסמה שגויה או קובץ פגום</string>
+    <string name="settings_backup_restore_error_version">גיבוי זה הגיע מגרסה חדשה יותר של VFiles</string>
+    <string name="settings_backup_restore_error_jobs">יש להמתין לסיום פעולות הקבצים</string>
 
     <string name="about_title">אודות</string>
     <string name="about_version_title">גירסה</string>
     <string name="about_github_title">הצגה ב-GitHub</string>
     <string name="about_licenses_title">רשיונות</string>
-    <string name="about_privacy_policy_title">מדיניות פרטיות</string>
     <string name="about_author_title">יוצר</string>
     <string name="about_author_name_title">Hai Zhang</string>
     <string name="about_author_github_title">לעקוב ב-GitHub</string>
-    <string name="about_author_twitter_title">לעקוב בטוויטר</string>
     <string name="app_name_launcher">קבצים</string>
+    <string name="clear_query">ניקוי החיפוש</string>
     <string name="about_fork_subtitle">מקור: Hai Zhang</string>
     <string name="color_picker_dynamic_color_label">בהתאם לטפט</string>
     <string name="color_picker_preset_colors_label">צבעים אחרים</string>
@@ -747,23 +842,42 @@
     <string name="navigation_bookmarks_hint_title">סימניות</string>
     <string name="navigation_bookmarks_hint_toast">פתח תיקייה, הקש על ⋮ ובחר ב“הוספת סימנייה”</string>
     <string name="onboarding_files_description">%1$s זקוק להרשאה לניהול כל הקבצים במכשיר. ההרשאה חיונית לעיון, העתקה, העברה וארגון של הקבצים.</string>
+    <string name="onboarding_files_adb_note">מכשיר זה אינו יכול להעניק גישה לכל הקבצים מתוך ההגדרות שלו, ולכן רק התמונות, הסרטונים והמוזיקה שלך זמינים. כדי להשתמש בכל הקבצים, הריצו את הפקודה הזו ממחשב:</string>
+    <string name="onboarding_files_grant_with_shizuku">הענק באמצעות Shizuku</string>
     <string name="onboarding_files_title">גישה לקבצים</string>
     <string name="onboarding_finish">התחל</string>
     <string name="onboarding_grant">הענק</string>
+    <string name="onboarding_granted">הוענק</string>
     <string name="onboarding_notifications_description">אפשר התראות כדי לעקוב אחר התקדמות פעולות קבצים כמו העתקה, העברה ויצירת ארכיון, גם כשהאפליקציה פועלת ברקע.</string>
 
     <string name="onboarding_install_apps_title">התקנת אפליקציות</string>
     <string name="onboarding_install_apps_description">אפשרו ל-%1$s להתקין קובצי APK ישירות. כך תוכלו להתקין אפליקציות מקבצים שהורדתם או קיבלתם, בלי להזדקק למתקין צד שלישי.</string>
+    <string name="reorder_drag_handle">העברה</string>
     <string name="onboarding_notifications_title">התראות</string>
     <string name="onboarding_optional">אופציונלי</string>
     <string name="onboarding_required">חובה</string>
     <string name="onboarding_welcome_description">הענק כמה הרשאות לחוויה הטובה ביותר. ניתן לשנות את האופציונליות מאוחר יותר בהגדרות.</string>
     <string name="onboarding_welcome_title">ברוך הבא ל-%1$s</string>
     <string name="settings_default_apps_ask">שאל בכל פעם</string>
+    <string name="settings_default_apps_android_default_format">ברירת המחדל של Android (%1$s)</string>
     <string name="settings_default_apps_audio">אודיו / מוזיקה</string>
     <string name="settings_default_apps_image">תמונות</string>
     <string name="settings_default_apps_pdf">PDF</string>
     <string name="settings_default_apps_summary">בחר איזו אפליקציה תפתח כל סוג קובץ</string>
+    <string name="settings_system_file_picker_title">VFiles כבורר הקבצים המוגדר כברירת מחדל</string>
+    <string name="settings_system_file_picker_summary">אפליקציות פותחות את VFiles כדי לבחור קבצים, ובורר הקבצים של Android מושבת</string>
+    <string name="settings_system_file_picker_shizuku_required">נדרש Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_missing">Shizuku לא פועל, יש להפעיל אותו כדי לשנות את האפשרות הזו</string>
+    <string name="settings_system_file_picker_not_found">בורר הקבצים של Android לא נמצא במכשיר הזה</string>
+    <string name="settings_system_file_picker_confirm_title">להשבית את בורר הקבצים של Android?</string>
+    <string name="settings_system_file_picker_confirm_message">אפליקציות שמבקשות קבצים יפתחו את VFiles במקום את בורר הקבצים של Android.\n\nשום דבר לא מוסר: כיבוי האפשרות הזו מחזיר הכול למצב הקודם.</string>
+    <string name="settings_system_file_picker_confirm_important_title">חשוב</string>
+    <string name="settings_system_file_picker_confirm_important">יש לכבות את האפשרות הזו לפני הסרת VFiles. אחרת אף אפליקציה לא תוכל לבחור קבצים, וחלקן עלולות לקרוס. כדי לתקן, יש להתקין מחדש את VFiles ולכבות את האפשרות, או להריץ את זה ממחשב:</string>
+    <string name="settings_system_file_picker_confirm_note">בגרסאות חדשות של Android בורר התמונות נשאר בשימוש, ו-Android עשוי עדיין לשאול באיזו אפליקציה להשתמש.</string>
+    <string name="settings_system_file_picker_confirm_action">השבתה</string>
+    <string name="settings_system_file_picker_shizuku_title">נדרש Shizuku</string>
+    <string name="settings_system_file_picker_shizuku_message">יש להפעיל את Shizuku כדי לשנות זאת מכאן, או להריץ את זה ממחשב:</string>
+    <string name="settings_system_file_picker_error">לא ניתן לשנות את בורר הקבצים</string>
     <string name="settings_default_apps_text">טקסט</string>
     <string name="settings_default_apps_title">אפליקציות ברירת מחדל</string>
     <string name="settings_default_apps_video">סרטונים</string>

@@ -5,8 +5,10 @@
 
 package me.zhanghai.android.files.coil
 
-import coil.request.ImageRequest
-import coil.transition.CrossfadeTransition
+import coil3.request.ImageRequest
+import coil3.request.placeholder
+import coil3.request.transitionFactory
+import coil3.transition.CrossfadeTransition
 
 fun ImageRequest.Builder.fadeIn(durationMillis: Int): ImageRequest.Builder =
     apply {

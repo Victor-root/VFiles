@@ -6,10 +6,10 @@
 package me.zhanghai.android.files.filelist
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import java8.nio.file.Path
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
-import me.zhanghai.android.files.app.AppActivity
 import me.zhanghai.android.files.file.MimeType
 import me.zhanghai.android.files.file.fileProviderUri
 import me.zhanghai.android.files.util.ParcelableArgs
@@ -19,7 +19,7 @@ import me.zhanghai.android.files.util.createEditIntent
 import me.zhanghai.android.files.util.startActivitySafe
 
 // Use a trampoline activity so that we can have a proper icon and title.
-class EditFileActivity : AppActivity() {
+class EditFileActivity : ComponentActivity() {
     private val args by args<Args>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

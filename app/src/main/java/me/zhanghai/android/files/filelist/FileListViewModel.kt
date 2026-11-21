@@ -5,282 +5,439 @@
 
 package me.zhanghai.android.files.filelist
 
+import android.content.Context
 import android.os.Parcelable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
+import java8.nio.file.DirectoryIteratorException
+import java8.nio.file.NoSuchFileException
 import java8.nio.file.Path
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import me.zhanghai.android.files.file.FileItem
+import me.zhanghai.android.files.file.loadFileItem
 import me.zhanghai.android.files.filelist.FileSortOptions.By
 import me.zhanghai.android.files.filelist.FileSortOptions.Order
+import me.zhanghai.android.files.navigation.NavigationRoot
+import me.zhanghai.android.files.navigation.NavigationRootMap
 import me.zhanghai.android.files.provider.archive.archiveRefresh
 import me.zhanghai.android.files.provider.archive.isArchivePath
-import me.zhanghai.android.files.util.CloseableLiveData
+import me.zhanghai.android.files.provider.common.newDirectoryStream
+import me.zhanghai.android.files.provider.common.search
+import me.zhanghai.android.files.settings.PathSettings
+import me.zhanghai.android.files.settings.Settings
+import me.zhanghai.android.files.util.Failure
+import me.zhanghai.android.files.util.Loading
 import me.zhanghai.android.files.util.Stateful
-import me.zhanghai.android.files.util.valueCompat
-import java.io.Closeable
+import me.zhanghai.android.files.util.StatefulLoader
+import me.zhanghai.android.files.util.Success
+import me.zhanghai.android.files.util.findCauseByClass
+import java.io.IOException
 
 // TODO: Use SavedStateHandle to save state.
+// The getters read the state they derive from rather than the flows derived from it, so that they
+// are up to date right after a change.
+@OptIn(ExperimentalCoroutinesApi::class)
 class FileListViewModel : ViewModel() {
-    private val trailLiveData = TrailLiveData()
+    private val trail = MutableStateFlow<TrailData?>(null)
     val hasTrail: Boolean
-        get() = trailLiveData.value != null
+        get() = trail.value != null
     val pendingState: Parcelable?
-        get() = trailLiveData.valueCompat.pendingState
+        get() = trail.value!!.pendingState
 
-    fun navigateTo(lastState: Parcelable, path: Path) = trailLiveData.navigateTo(lastState, path)
+    private fun setTrail(trailData: TrailData) {
+        val path = trailData.currentPath
+        if (trail.value?.currentPath != path) {
+            _pathSettings.value = PathSettingsHolder(path)
+        }
+        trail.value = trailData
+        // Each new trail lists its directory again, even if it's the same one.
+        loadFileList()
+    }
 
-    fun resetTo(path: Path) = trailLiveData.resetTo(path)
+    fun navigateTo(lastState: Parcelable, path: Path) =
+        setTrail(trail.value?.navigateTo(lastState, path) ?: TrailData.of(path))
 
-    fun navigateUp(): Boolean = trailLiveData.navigateUp()
+    fun resetTo(path: Path) = setTrail(TrailData.of(path))
 
-    val currentPathLiveData = trailLiveData.map { it.currentPath }
+    fun navigateUp(): Boolean {
+        val trailData = trail.value?.navigateUp() ?: return false
+        setTrail(trailData)
+        return true
+    }
+
+    val currentPathFlow: StateFlow<Path?> =
+        trail.map { it?.currentPath }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     val currentPath: Path
-        get() = currentPathLiveData.valueCompat
+        get() = trail.value!!.currentPath
 
-    private val _searchStateLiveData = MutableLiveData(SearchState(false, ""))
-    val searchStateLiveData: LiveData<SearchState> = _searchStateLiveData
+    private val _searchStateFlow = MutableStateFlow(SearchState(false, ""))
+    val searchStateFlow: StateFlow<SearchState>
+        get() = _searchStateFlow
     val searchState: SearchState
-        get() = _searchStateLiveData.valueCompat
+        get() = _searchStateFlow.value
 
     fun search(query: String) {
-        val searchState = _searchStateLiveData.valueCompat
+        val searchState = searchState
         if (searchState.isSearching && searchState.query == query) {
             return
         }
-        _searchStateLiveData.value = SearchState(true, query)
+        _searchStateFlow.value = SearchState(true, query)
+        loadFileList()
     }
 
     fun stopSearching() {
-        val searchState = _searchStateLiveData.valueCompat
         if (!searchState.isSearching) {
             return
         }
-        _searchStateLiveData.value = SearchState(false, "")
+        _searchStateFlow.value = SearchState(false, "")
+        loadFileList()
     }
 
-    private val _fileListLiveData =
-        FileListSwitchMapLiveData(currentPathLiveData, _searchStateLiveData)
-    val fileListLiveData: LiveData<Stateful<List<FileItem>>>
-        get() = _fileListLiveData
+    private val _fileListFlow = MutableStateFlow<Stateful<List<FileItem>>>(Loading(null))
+    val fileListFlow: StateFlow<Stateful<List<FileItem>>>
+        get() = _fileListFlow
     val fileListStateful: Stateful<List<FileItem>>
-        get() = _fileListLiveData.valueCompat
+        get() = _fileListFlow.value
+
+    private var fileListJob: Job? = null
+
+    // The loader of the directory shown when not searching, which can load it again.
+    private var directoryLoader: StatefulLoader<List<FileItem>>? = null
+
+    // Cancelling the previous loading right away ensures that its files are never shown for the
+    // new path or search, even while it's still blocked on I/O.
+    private fun loadFileList() {
+        fileListJob?.cancel()
+        directoryLoader = null
+        val path = currentPath
+        val searchState = searchState
+        if (searchState.isSearching) {
+            _fileListFlow.value = Loading(emptyList())
+            fileListJob = viewModelScope.launch { searchFiles(path, searchState.query) }
+        } else {
+            _fileListFlow.value = Loading(null)
+            fileListJob = viewModelScope.launch { listFiles(path) }
+        }
+    }
 
     fun reload() {
         val path = currentPath
         if (path.isArchivePath) {
             path.archiveRefresh()
         }
-        _fileListLiveData.reload()
+        val directoryLoader = directoryLoader
+        if (directoryLoader != null) {
+            directoryLoader.load()
+        } else {
+            loadFileList()
+        }
     }
 
-    val searchViewExpandedLiveData = MutableLiveData(false)
+    // Lists the files of the directory, and again whenever it changes while they are shown.
+    private suspend fun listFiles(path: Path): Unit = coroutineScope {
+        val loader = StatefulLoader(this) { path.loadDirectoryFileItems() }
+        directoryLoader = loader
+        launch { loader.flow.collect { _fileListFlow.value = it } }
+        loader.load()
+        path.loadOnChanges(_fileListFlow.subscriptionCount) { loader.load() }
+    }
+
+    private fun Path.loadDirectoryFileItems(): List<FileItem> =
+        newDirectoryStream().use { directoryStream ->
+            val fileList = mutableListOf<FileItem>()
+            for (path in directoryStream) {
+                try {
+                    fileList.add(path.loadFileItem())
+                } catch (e: DirectoryIteratorException) {
+                    // TODO: Ignoring such a file can be misleading and we need to support files
+                    //  without information.
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+            fileList
+        }
+
+    // Searches the files under the directory, showing the ones found as they are.
+    private suspend fun searchFiles(path: Path, query: String) {
+        val job = currentCoroutineContext().job
+        val fileList = mutableListOf<FileItem>()
+        _fileListFlow.value = try {
+            runInterruptible(Dispatchers.IO) {
+                path.search(query, SEARCH_INTERVAL_MILLIS) { paths: List<Path> ->
+                    for (path in paths) {
+                        val fileItem = try {
+                            path.loadFileItem()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            // TODO: Support file without information.
+                            continue
+                        }
+                        fileList.add(fileItem)
+                    }
+                    // A cancelled search may still find files before it's interrupted.
+                    if (job.isActive) {
+                        _fileListFlow.value = Loading(fileList.toList())
+                    }
+                }
+            }
+            Success(fileList)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Failure(_fileListFlow.value.value, e)
+        }
+    }
+
+    val searchViewExpandedFlow = MutableStateFlow(false)
     var isSearchViewExpanded: Boolean
-        get() = searchViewExpandedLiveData.valueCompat
+        get() = searchViewExpandedFlow.value
         set(value) {
-            if (searchViewExpandedLiveData.valueCompat == value) {
-                return
-            }
-            searchViewExpandedLiveData.value = value
+            searchViewExpandedFlow.value = value
         }
 
-    private val _searchViewQueryLiveData = MutableLiveData("")
-    var searchViewQuery: String
-        get() = _searchViewQueryLiveData.valueCompat
-        set(value) {
-            if (_searchViewQueryLiveData.valueCompat == value) {
-                return
+    var searchViewQuery = ""
+
+    val breadcrumbFlow: StateFlow<BreadcrumbData?> =
+        combine(trail.filterNotNull(), NavigationRootMap.flow, ::createBreadcrumbData)
+            .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    // The settings of the current path, held here since the shared preferences only keep weak
+    // references to the settings listening to them.
+    private class PathSettingsHolder(path: Path) {
+        val viewType = PathSettings.getFileListViewType(path)
+        val sortOptions = PathSettings.getFileListSortOptions(path)
+    }
+
+    private val _pathSettings = MutableStateFlow<PathSettingsHolder?>(null)
+
+    val viewTypeFlow: StateFlow<FileViewType> = _pathSettings.filterNotNull()
+        .flatMapLatest { pathSettings ->
+            combine(pathSettings.viewType.flow, Settings.FILE_LIST_VIEW_TYPE.flow) {
+                pathViewType, viewType -> pathViewType ?: viewType
             }
-            _searchViewQueryLiveData.value = value
         }
-
-    val breadcrumbLiveData: LiveData<BreadcrumbData> = BreadcrumbLiveData(trailLiveData)
-    val canNavigateUpBreadcrumb: Boolean
-        get() = breadcrumbLiveData.valueCompat.selectedIndex > 0
-
-    private val _viewTypeLiveData = FileViewTypeLiveData(currentPathLiveData)
-    val viewTypeLiveData: LiveData<FileViewType> = _viewTypeLiveData
+        .stateIn(viewModelScope, SharingStarted.Eagerly, Settings.FILE_LIST_VIEW_TYPE.value)
     var viewType: FileViewType
-        get() = _viewTypeLiveData.valueCompat
+        get() = _pathSettings.value?.viewType?.value ?: Settings.FILE_LIST_VIEW_TYPE.value
         set(value) {
-            _viewTypeLiveData.putValue(value)
+            val pathViewType = _pathSettings.value!!.viewType
+            if (pathViewType.value != null) {
+                pathViewType.putValue(value)
+            } else {
+                Settings.FILE_LIST_VIEW_TYPE.putValue(value)
+            }
         }
 
-    private val _sortOptionsLiveData = FileSortOptionsLiveData(currentPathLiveData)
-    val sortOptionsLiveData: LiveData<FileSortOptions> = _sortOptionsLiveData
-    val sortOptions: FileSortOptions
-        get() = _sortOptionsLiveData.valueCompat
+    val sortOptionsFlow: StateFlow<FileSortOptions> = _pathSettings.filterNotNull()
+        .flatMapLatest { pathSettings ->
+            combine(pathSettings.sortOptions.flow, Settings.FILE_LIST_SORT_OPTIONS.flow) {
+                pathSortOptions, sortOptions -> pathSortOptions ?: sortOptions
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, Settings.FILE_LIST_SORT_OPTIONS.value)
+    private val sortOptions: FileSortOptions
+        get() = _pathSettings.value?.sortOptions?.value ?: Settings.FILE_LIST_SORT_OPTIONS.value
 
-    fun setSortBy(by: By) = _sortOptionsLiveData.putBy(by)
+    fun setSortBy(by: By) = setSortOptions(sortOptions.copy(by = by))
 
-    fun setSortOrder(order: Order) = _sortOptionsLiveData.putOrder(order)
+    fun setSortOrder(order: Order) = setSortOptions(sortOptions.copy(order = order))
 
     fun setSortDirectoriesFirst(isDirectoriesFirst: Boolean) =
-        _sortOptionsLiveData.putIsDirectoriesFirst(isDirectoriesFirst)
+        setSortOptions(sortOptions.copy(isDirectoriesFirst = isDirectoriesFirst))
 
-    private val _viewSortPathSpecificLiveData =
-        FileViewSortPathSpecificLiveData(currentPathLiveData)
-    val viewSortPathSpecificLiveData: LiveData<Boolean>
-        get() = _viewSortPathSpecificLiveData
+    private fun setSortOptions(sortOptions: FileSortOptions) {
+        val pathSortOptions = _pathSettings.value!!.sortOptions
+        if (pathSortOptions.value != null) {
+            pathSortOptions.putValue(sortOptions)
+        } else {
+            Settings.FILE_LIST_SORT_OPTIONS.putValue(sortOptions)
+        }
+    }
+
+    val viewSortPathSpecificFlow: StateFlow<Boolean> = _pathSettings.filterNotNull()
+        .flatMapLatest { pathSettings ->
+            combine(pathSettings.viewType.flow, pathSettings.sortOptions.flow) {
+                pathViewType, pathSortOptions -> pathViewType != null || pathSortOptions != null
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
     var isViewSortPathSpecific: Boolean
-        get() = _viewSortPathSpecificLiveData.valueCompat
+        get() = _pathSettings.value?.let {
+            it.viewType.value != null || it.sortOptions.value != null
+        } ?: false
         set(value) {
-            _viewSortPathSpecificLiveData.putValue(value)
+            val pathSettings = _pathSettings.value!!
+            if (value) {
+                if (pathSettings.viewType.value == null) {
+                    pathSettings.viewType.putValue(Settings.FILE_LIST_VIEW_TYPE.value)
+                }
+                if (pathSettings.sortOptions.value == null) {
+                    pathSettings.sortOptions.putValue(Settings.FILE_LIST_SORT_OPTIONS.value)
+                }
+            } else {
+                if (pathSettings.viewType.value != null) {
+                    pathSettings.viewType.putValue(null)
+                }
+                if (pathSettings.sortOptions.value != null) {
+                    pathSettings.sortOptions.putValue(null)
+                }
+            }
         }
 
-    private val _pickOptionsLiveData = MutableLiveData<PickOptions?>()
-    val pickOptionsLiveData: LiveData<PickOptions?>
-        get() = _pickOptionsLiveData
+    /**
+     * The files as shown: without hidden files unless they are shown, and sorted unless they are
+     * search results, which stay in the order they are found.
+     */
+    val displayedFileListFlow: StateFlow<List<FileItem>?> = combine(
+        _fileListFlow, sortOptionsFlow, Settings.FILE_LIST_SHOW_HIDDEN_FILES.flow, _searchStateFlow
+    ) { fileList, sortOptions, isShowingHiddenFiles, searchState ->
+        getDisplayedFiles(fileList, sortOptions, isShowingHiddenFiles, searchState)
+    }
+        // Only while collected, so that the file list is collected only while it's shown.
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val displayedFiles: List<FileItem>
+        get() = getDisplayedFiles(
+            fileListStateful, sortOptions, Settings.FILE_LIST_SHOW_HIDDEN_FILES.value, searchState
+        ).orEmpty()
+
+    private fun getDisplayedFiles(
+        fileList: Stateful<List<FileItem>>,
+        sortOptions: FileSortOptions,
+        isShowingHiddenFiles: Boolean,
+        searchState: SearchState
+    ): List<FileItem>? {
+        // What was listed before isn't there anymore either.
+        if ((fileList as? Failure)?.throwable?.findCauseByClass<NoSuchFileException>() != null) {
+            return null
+        }
+        var files = fileList.value ?: return null
+        if (!isShowingHiddenFiles) {
+            files = files.filterNot { it.isHidden }
+        }
+        if (!searchState.isSearching) {
+            files = files.sortedWith(sortOptions.createComparator())
+        }
+        return files
+    }
+
+    private val _pickOptionsFlow = MutableStateFlow<PickOptions?>(null)
+    val pickOptionsFlow: StateFlow<PickOptions?>
+        get() = _pickOptionsFlow
     var pickOptions: PickOptions?
-        get() = _pickOptionsLiveData.value
+        get() = _pickOptionsFlow.value
         set(value) {
-            _pickOptionsLiveData.value = value
+            _pickOptionsFlow.value = value
         }
 
-    var isCreateFileNameEditInitialized: Boolean = false
-
-    private val _selectedFilesLiveData = MutableLiveData(fileItemSetOf())
-    val selectedFilesLiveData: LiveData<FileItemSet>
-        get() = _selectedFilesLiveData
+    private val _selectedFilesFlow = MutableStateFlow(fileItemSetOf())
+    val selectedFilesFlow: StateFlow<FileItemSet>
+        get() = _selectedFilesFlow
     val selectedFiles: FileItemSet
-        get() = _selectedFilesLiveData.valueCompat
+        get() = _selectedFilesFlow.value
 
     fun selectFile(file: FileItem, selected: Boolean) {
         selectFiles(fileItemSetOf(file), selected)
     }
 
     fun selectFiles(files: FileItemSet, selected: Boolean) {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
-        if (selectedFiles === files) {
-            if (!selected && selectedFiles.isNotEmpty()) {
-                selectedFiles.clear()
-                _selectedFilesLiveData.value = selectedFiles
-            }
-            return
-        }
+        val newSelectedFiles = FileItemSet().apply { addAll(selectedFiles) }
         var changed = false
         for (file in files) {
             changed = changed or if (selected) {
-                selectedFiles.add(file)
+                newSelectedFiles.add(file)
             } else {
-                selectedFiles.remove(file)
+                newSelectedFiles.remove(file)
             }
         }
         if (changed) {
-            _selectedFilesLiveData.value = selectedFiles
+            _selectedFilesFlow.value = newSelectedFiles
         }
-    }
-
-    fun replaceSelectedFiles(files: FileItemSet) {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
-        if (selectedFiles == files) {
-            return
-        }
-        selectedFiles.clear()
-        selectedFiles.addAll(files)
-        _selectedFilesLiveData.value = selectedFiles
     }
 
     fun clearSelectedFiles() {
-        val selectedFiles = _selectedFilesLiveData.valueCompat
         if (selectedFiles.isEmpty()) {
             return
         }
-        selectedFiles.clear()
-        _selectedFilesLiveData.value = selectedFiles
+        _selectedFilesFlow.value = fileItemSetOf()
     }
 
-    val pasteStateLiveData: LiveData<PasteState> = _pasteStateLiveData
+    val pasteStateFlow: StateFlow<PasteState>
+        get() = _pasteStateFlow
     val pasteState: PasteState
-        get() = _pasteStateLiveData.valueCompat
+        get() = _pasteStateFlow.value
 
     fun addToPasteState(copy: Boolean, files: FileItemSet) {
-        val pasteState = _pasteStateLiveData.valueCompat
-        var changed = false
-        if (pasteState.copy != copy) {
-            changed = pasteState.files.isNotEmpty()
-            pasteState.files.clear()
-            pasteState.copy = copy
+        val pasteState = pasteState
+        val newFiles = FileItemSet()
+        if (pasteState.copy == copy) {
+            newFiles.addAll(pasteState.files)
         }
-        changed = changed or pasteState.files.addAll(files)
+        val changed = newFiles.addAll(files) ||
+            (pasteState.copy != copy && pasteState.files.isNotEmpty())
         if (changed) {
-            _pasteStateLiveData.value = pasteState
+            _pasteStateFlow.value = PasteState(copy, newFiles)
         }
     }
 
     fun clearPasteState() {
-        val pasteState = _pasteStateLiveData.valueCompat
+        val pasteState = pasteState
         if (pasteState.files.isEmpty()) {
             return
         }
-        pasteState.files.clear()
-        _pasteStateLiveData.value = pasteState
+        _pasteStateFlow.value = PasteState(pasteState.copy, fileItemSetOf())
     }
 
-    private val _isRequestingStorageAccessLiveData = MutableLiveData(false)
-    var isStorageAccessRequested: Boolean
-        get() = _isRequestingStorageAccessLiveData.valueCompat
-        set(value) {
-            _isRequestingStorageAccessLiveData.value = value
-        }
-
-    private val _isRequestingNotificationPermissionLiveData = MutableLiveData(false)
-    var isNotificationPermissionRequested: Boolean
-        get() = _isRequestingNotificationPermissionLiveData.valueCompat
-        set(value) {
-            _isRequestingNotificationPermissionLiveData.value = value
-        }
-
-    override fun onCleared() {
-        _fileListLiveData.close()
-    }
+    var isStorageAccessRequested = false
 
     companion object {
-        private val _pasteStateLiveData = MutableLiveData(PasteState())
+        private const val SEARCH_INTERVAL_MILLIS = 500L
+
+        // Shared by all the windows, like the clipboard.
+        private val _pasteStateFlow = MutableStateFlow(PasteState())
     }
+}
 
-    private class FileListSwitchMapLiveData(
-        private val pathLiveData: LiveData<Path>,
-        private val searchStateLiveData: LiveData<SearchState>
-    ) : MediatorLiveData<Stateful<List<FileItem>>>(), Closeable {
-        private var liveData: CloseableLiveData<Stateful<List<FileItem>>>? = null
-
-        init {
-            addSource(pathLiveData) { updateSource() }
-            addSource(searchStateLiveData) { updateSource() }
-        }
-
-        private fun updateSource() {
-            liveData?.let {
-                removeSource(it)
-                it.close()
-            }
-            val path = pathLiveData.valueCompat
-            val searchState = searchStateLiveData.valueCompat
-            val liveData = if (searchState.isSearching) {
-                SearchFileListLiveData(path, searchState.query)
-            } else {
-                FileListLiveData(path)
-            }
-            this.liveData = liveData
-            addSource(liveData) { value = it }
-        }
-
-        fun reload() {
-            when (val liveData = liveData) {
-                is FileListLiveData -> liveData.loadValue()
-                is SearchFileListLiveData -> liveData.loadValue()
-            }
-        }
-
-        override fun close() {
-            liveData?.let {
-                removeSource(it)
-                it.close()
-                this.liveData = null
-            }
+// The trail shown under the navigation root it's in, like a storage, rather than from the root of
+// the file system.
+private fun createBreadcrumbData(
+    trailData: TrailData,
+    navigationRootMap: Map<Path, NavigationRoot>
+): BreadcrumbData {
+    val paths = mutableListOf<Path>()
+    val nameProducers = mutableListOf<(Context) -> String>()
+    var selectedIndex = trailData.currentIndex
+    for (path in trailData.trail) {
+        val navigationRoot = navigationRootMap[path]
+        val itemCount = nameProducers.size
+        if (navigationRoot != null && selectedIndex >= itemCount) {
+            selectedIndex -= itemCount
+            paths.clear()
+            paths.add(navigationRoot.path)
+            nameProducers.clear()
+            nameProducers.add { navigationRoot.getName(it) }
+        } else {
+            paths.add(path)
+            nameProducers.add { path.name }
         }
     }
+    return BreadcrumbData(paths, nameProducers, selectedIndex)
 }
