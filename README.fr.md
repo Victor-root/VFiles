@@ -19,6 +19,11 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/mobile-dark.webp" />
   <img width="320" alt="VFiles sur un téléphone" src="docs/screenshots/mobile-light.webp" />
 </picture>
+&nbsp;&nbsp;
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/sidebar-dark.webp" />
+  <img width="320" alt="La sidebar de VFiles" src="docs/screenshots/sidebar-light.webp" />
+</picture>
 </p>
 
 <p align="center"><strong>📺 Android TV</strong></p>

@@ -15,6 +15,11 @@
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/mobile-dark.webp" />
   <img width="320" alt="VFiles on a phone" src="docs/screenshots/mobile-light.webp" />
 </picture>
+&nbsp;&nbsp;
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/sidebar-dark.webp" />
+  <img width="320" alt="The VFiles sidebar" src="docs/screenshots/sidebar-light.webp" />
+</picture>
 </p>
 
 <p align="center"><strong>📺 Android TV</strong></p>
