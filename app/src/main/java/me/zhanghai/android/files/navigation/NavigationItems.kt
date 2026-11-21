@@ -527,7 +527,7 @@ private val DEFAULT_STANDARD_DIRECTORIES = listOf(
     ),
     StandardDirectory(
         R.drawable.music_library_icon_white_24dp, R.string.navigation_music,
-        StandardDirectory.MUSIC_KEY, true,
+        StandardDirectory.MUSIC_KEY, false,
         NavigationIconColor.ORANGE
     ),
     StandardDirectory(
