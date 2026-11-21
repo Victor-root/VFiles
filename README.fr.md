@@ -43,103 +43,84 @@ Le dépôt d'origine reste la référence ; les sections ci-dessous décrivent *
 ## ✨ Ce que ce fork change
 
 ### 🧩 Reconstruit en Jetpack Compose
-- Toute l'interface est reconstruite en Jetpack Compose et Material 3 : fonds neutres, accent rouge par défaut, icônes de dossier ouvert, choix des réglages dans des panneaux en bas d'écran et menus d'actions regroupés.
-- Démarrage plus rapide et défilement plus fluide des gros dossiers, avec des écrans qui s'ouvrent dans l'app au lieu de fenêtres séparées.
+- Toute l'interface est reconstruite en Jetpack Compose et Material 3 : fonds neutres, accent rouge par défaut, choix des réglages dans des panneaux en bas d'écran et menus d'actions regroupés.
+- Démarrage plus rapide et défilement plus fluide des gros dossiers, avec des écrans qui s'ouvrent dans l'app.
 - Nécessite **Android 8.0 ou plus récent**.
 
 ### 🖼️ Galerie, musique, vidéo et PDF intégrés
-- **Galerie** dans la barre latérale : photos et vidéos par jour ou par mois, albums par dossier, et une visionneuse plein écran avec photos zoomables et lecteur vidéo.
-- **Lecteur de musique** : titres, albums et artistes, lecture en arrière-plan contrôlable depuis la notification.
-- **Lecteur vidéo** et **lecteur PDF** (une page à la fois ou ajusté à la largeur de l'écran, zoom au pincement, aller à une page).
+- **Galerie** dans la barre latérale : photos et vidéos par jour ou par mois, albums par dossier, et une visionneuse plein écran.
+- **Lecteur de musique** : titres, albums et artistes, lecture en arrière-plan contrôlable depuis la notification. Il s'ajoute à la barre latérale depuis Réglages → Dossiers standard.
+- **Lecteur vidéo** et **lecteur PDF** (page par page ou ajusté à la largeur, zoom au pincement, aller à une page).
 
 ### 🔑 Support de Shizuku
 - Avec [Shizuku](https://shizuku.rikka.app/) (ou Sui), Android/data et Android/obb sont accessibles sans root.
 - Un simple **« Accorder avec Shizuku »** donne l'accès à tous les fichiers, même sur les TV dont les réglages ne le permettent pas.
 
 ### 📺 Support Android TV
-- Navigation complète à la télécommande (D-pad) : la barre latérale, la barre d'outils et les listes sont accessibles et correctement surlignées.
-- Un bouton Actualiser dans l'en-tête, la touche menu de la télécommande ouvre les menus, gauche ouvre la barre latérale, et les fenêtres de choix placent le focus sur le choix actuel.
-- Les PDF s'ouvrent ajustés à la largeur de l'écran.
+- Navigation complète à la télécommande : la barre latérale, la barre d'outils et les listes sont accessibles et correctement surlignées.
+- Un bouton Actualiser dans l'en-tête, la touche menu ouvre les menus, gauche ouvre la barre latérale, et les fenêtres de choix placent le focus sur le choix actuel.
 
-### 🚀 Onboarding au premier lancement
-- Un écran d'accueil qui demande en amont les autorisations nécessaires (accès à tous les fichiers, notifications, installation d'applications), présentées en tuiles sur TV.
-- Là où seul adb peut donner l'accès à tous les fichiers, il affiche la commande exacte à lancer, ou le bouton Shizuku quand Shizuku est en marche.
+### 🚀 Accueil au premier lancement
+- Demande dès le départ les autorisations nécessaires (accès à tous les fichiers, notifications, installation d'applications), en tuiles sur TV.
+- Là où seul adb peut donner l'accès à tous les fichiers, il affiche la commande exacte, ou le bouton Shizuku quand Shizuku est en marche.
 
-### 💾 Stockage amovible (carte SD / USB), repensé
-- Les cartes SD et clés USB **apparaissent automatiquement sous « Stockage interne »** et se rafraîchissent au branchement. Fini le « Ajouter un support » manuel via SAF.
-- **Renommage** d'un volume et choix de son **icône** ; USB ou SD détecté automatiquement (avec forçage manuel possible).
-- Un disque multi-partitions est regroupé sous un seul en-tête **« Clé USB » / « Carte SD »**, avec ses partitions imbriquées en **« Partition 1, 2, … »**.
-- Raccourci **Éjecter**, et l'espace libre se met à jour en direct (par ex. juste après une suppression) au lieu d'attendre un redémarrage.
+### 💾 Stockage amovible (carte SD / USB)
+- Les cartes SD et clés USB **apparaissent automatiquement dans la barre latérale** au branchement, sans passer par « Ajouter un support ».
+- **Renommage** d'un volume et choix de son **icône** ; USB ou SD est détecté automatiquement.
+- Les partitions d'un même disque sont regroupées sous un seul en-tête **« Clé USB » / « Carte SD »**.
+- Raccourci **Éjecter**, et l'espace libre se met à jour en direct.
 
-### 🎯 Applications par défaut par type de fichier
-- Nouveau **Réglages → Applications par défaut** : choisissez quelle app ouvre les images, l'audio, les vidéos, les PDF et le texte, lecteurs de VFiles compris, pour que ces fichiers s'ouvrent directement avec la bonne app. Sans choix, Android demande à chaque fois.
-
-### 📋 Progression des opérations sur les fichiers
-- Un bouton de progression apparaît dans la barre d'outils pendant les copies, déplacements et opérations d'archive, ouvrant une popup avec le détail en direct de chaque fichier, plutôt qu'une simple notification.
+### 🎯 Applications par défaut et opérations sur les fichiers
+- **Réglages → Applications par défaut** : choisissez quelle app ouvre les images, l'audio, les vidéos, les PDF et le texte, lecteurs de VFiles compris.
+- Pendant les copies, déplacements et opérations d'archive, un bouton de la barre d'outils affiche la progression de chaque fichier en direct.
 
 ### 🔒 Confidentialité et performance
-- **Firebase (Analytics + Crashlytics) entièrement supprimé.** Rien concernant votre usage ou les plantages n'est envoyé où que ce soit, et l'application démarre aussi plus vite sans lui.
-- Sauvegarde cloud et extraction de données désactivées, pour qu'Android n'envoie jamais les données de l'app hors de l'appareil.
+- **Firebase (Analytics + Crashlytics) entièrement supprimé.** Rien sur votre usage ou les plantages ne quitte l'appareil, et l'application démarre plus vite.
+- Sauvegarde cloud et extraction de données désactivées.
 
-### 🎨 Cohérence de l'interface et thème
-- Les icônes de la barre d'état s'adaptent à la couleur de l'en-tête / du tiroir (claire ou foncée), corrigeant les cas illisibles blanc-sur-blanc et noir-sur-foncé, avec un fondu à l'ouverture du tiroir.
-- Barre d'application foncée en mode nuit au lieu de la teinte primaire claire.
-- Icônes affichées dans les menus ⋮ ; popup thémé en mode sombre.
-- Tiroir de navigation repensé et thémé pour Material You (M3), avec corrections des couleurs en mode sombre et du curseur des interrupteurs.
-- Les noms longs passent à la ligne au lieu d'être coupés par « … ».
-- Stockage interne renommé avec une icône de téléphone ; un vrai ruban marque les dossiers en marque-page ; icône du serveur FTP rafraîchie.
-- **Bord à bord** optionnel (Réglages → Interface → « Bord à bord ») : le contenu défile derrière la barre d'état et la barre de navigation au lieu de s'arrêter au-dessus. Désactivé par défaut.
+### 🎨 Interface
+- Les icônes des barres d'état et de navigation suivent ce qui est affiché derrière elles, barre latérale ouverte comprise.
+- Barre d'application foncée en mode nuit, icônes dans les menus ⋮, et barre latérale Material You.
+- Les noms longs passent à la ligne au lieu d'être coupés ; un ruban marque les dossiers en marque-page.
+- **Bord à bord** optionnel (Réglages → Interface) : le contenu défile derrière les barres du système. Désactivé par défaut.
 
 ### 🐛 Autres corrections et finitions
-- Message clair quand un dossier ne peut pas être ouvert, au lieu d'un échec silencieux.
-- **Chiffrement** optionnel par serveur pour les partages SMB, et une recherche des serveurs SMB du réseau local bien plus rapide.
-- Les dossiers standards de la barre latérale se réordonnent, par glisser-déposer ou au D-pad.
-- Correction d'un plantage sur tablette en mode paysage, et les barres de statut/navigation sont désormais colorées pour correspondre à la barre d'application.
-- Retour arrière quitte directement à la racine au lieu de rester bloqué, et les titres longs de la barre d'outils défilent désormais.
-- Toutes les chaînes propres au fork traduites en **31 langues**.
-- Identifiant d'application changé en `fr.vroot.vfiles`, pour qu'il s'installe à côté de la version Play/F-Droid sans entrer en conflit.
+- Un message clair quand un dossier ne peut pas être ouvert.
+- **Chiffrement** optionnel pour les partages SMB, et une recherche des serveurs SMB du réseau local bien plus rapide.
+- Les dossiers standard de la barre latérale se réordonnent, par glisser-déposer ou à la télécommande.
+- Correction d'un plantage sur tablette en paysage ; Retour à la racine quitte l'app ; les titres longs de la barre d'outils défilent.
+- Textes du fork traduits en **31 langues**.
+- Identifiant `fr.vroot.vfiles`, pour s'installer à côté de la version Play/F-Droid de Material Files.
 
 ## ⬆️ Mettre VFiles à jour
 
-Deux façons de faire :
+- **Téléchargement direct** : installez la dernière APK de la page des [releases](https://github.com/Victor-root/VFiles/releases) par-dessus la vôtre. Elle est toujours signée avec la même clé, donc vos fichiers et réglages sont conservés.
+- **[Omnify](https://github.com/Victor-root/Omnify)** : mon fork de client F-Droid, qui installe et met à jour les applications directement depuis leur dépôt GitHub.
 
-- **Téléchargement direct** : récupérez la dernière APK sur la page des [releases](https://github.com/Victor-root/VFiles/releases) et installez-la par-dessus votre version actuelle. Toujours signée avec la même clé, donc vos fichiers et réglages sont conservés.
-- **[Omnify](https://github.com/Victor-root/Omnify)** : mon propre fork de client F-Droid, qui installe et suit les applications directement depuis leur dépôt GitHub. Ajoutez ce dépôt et il garde VFiles à jour pour vous.
-
-Dans tous les cas, l'application qui ouvre le fichier (navigateur, gestionnaire de fichiers, ou Omnify) demandera, la première fois, l'autorisation d'installer des applications inconnues.
+La première fois, l'application qui ouvre l'APK demande l'autorisation d'installer des applications inconnues.
 
 ## 🗂️ Faire de VFiles le sélecteur de fichiers par défaut du système
 
-VFiles expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android, pas seulement le stockage local : les partages SMB, FTP, SFTP et WebDAV, ainsi que le contenu des archives, apparaissent comme de simples dossiers dans la boîte de dialogue « Ouvrir » ou « Enregistrer » de n'importe quelle app, exactement comme un dossier local.
+VFiles expose **tous les back-ends qu'il gère** via le sélecteur de fichiers Android : le stockage local, les partages SMB, FTP, SFTP et WebDAV, et le contenu des archives apparaissent comme des dossiers dans la fenêtre « Ouvrir » ou « Enregistrer » de n'importe quelle app.
 
-Android achemine les intents `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` vers **DocumentsUI** (`com.google.android.documentsui`, ou `com.android.documentsui` sur les ROM basées sur AOSP), même si VFiles est installé en tant que DocumentsProvider. Désactiver cette application système fait basculer Android vers VFiles comme sélecteur pour toutes les apps de l'appareil. Sans root, uniquement via ADB (débogage USB).
+Android envoie `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` et `ACTION_GET_CONTENT` à **DocumentsUI** (`com.google.android.documentsui`, ou `com.android.documentsui` sur les ROM basées sur AOSP). Le désactiver fait de VFiles le sélecteur de toutes les apps. Sans root.
 
 ### Depuis l'app, avec Shizuku
 
-Avec [Shizuku](https://shizuku.rikka.app/) en marche, activez **VFiles comme sélecteur de fichiers par défaut** dans les réglages. VFiles explique ce qui va se passer avant de faire quoi que ce soit, et désactiver l'option remet le sélecteur dans son état d'origine. Les commandes ci-dessous font la même chose depuis un ordinateur.
+Avec [Shizuku](https://shizuku.rikka.app/) en marche, activez **VFiles comme sélecteur de fichiers par défaut** dans les réglages. VFiles explique d'abord ce qui va se passer, et désactiver l'option remet le sélecteur comme avant. Si le sélecteur a été retiré avec `pm uninstall --user 0`, l'option apparaît activée, et la désactiver le ramène.
 
-Si le sélecteur a été retiré avec `pm uninstall --user 0` au lieu d'être désactivé, l'option apparaît activée, et la désactiver le ramène depuis la copie qu'Android conserve.
+**Désactivez l'option avant de désinstaller VFiles.** Android ne réactive pas son sélecteur tout seul, donc plus aucune app ne pourrait choisir de fichiers. Pour réparer, réinstallez VFiles et désactivez l'option, ou lancez les commandes ci-dessous.
 
-**Désactivez l'option avant de désinstaller VFiles.** Android ne réactive pas son sélecteur tout seul, donc plus aucune app ne pourrait choisir de fichiers. Pour réparer, réinstallez VFiles et désactivez l'option, ou lancez les commandes depuis un ordinateur.
-
-### Désactiver (faire de VFiles le sélecteur par défaut)
+### Depuis un ordinateur, avec ADB
 
 ```sh
-# Désactiver l'application DocumentsUI principale
+# Faire de VFiles le sélecteur par défaut (la deuxième ligne sert aux ROM basées
+# sur AOSP, la troisième aux ROM avec un module overlay ; ignorer les erreurs)
 adb shell pm disable-user --user 0 com.google.android.documentsui
-
-# Sur les ROM basées sur AOSP, elle porte ce nom à la place
 adb shell pm disable-user --user 0 com.android.documentsui
-
-# Désactiver son module overlay (présent sur certaines ROM ; ignorer l'erreur s'il est absent)
 adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
-```
 
-Après ces commandes, toute application qui ouvre un sélecteur de fichier ou de dossier utilisera VFiles.
-
-### Réactiver (remettre le sélecteur Google)
-
-```sh
+# Remettre le sélecteur du système
 adb shell pm enable com.google.android.documentsui
 adb shell pm enable com.android.documentsui
 adb shell pm enable com.google.android.overlay.modules.documentsui
@@ -147,20 +128,17 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 
 ### Notes
 
-- **Sans root** : `pm disable-user --user 0` s'exécute via une connexion ADB standard (débogage USB).
-- Testé sur **LineageOS** et d'autres ROM basées sur AOSP. Sur les ROM constructeur stock, le nom du module overlay peut différer ou être absent ; la commande `pm disable-user` sur le paquet principal est suffisante dans ce cas.
-- Le changement survit aux redémarrages, mais est **par utilisateur** (affecte uniquement l'utilisateur actif lors de l'exécution ADB, en général l'utilisateur 0).
-- `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT` et `ACTION_OPEN_DOCUMENT_TREE` arrivent directement dans VFiles. `ACTION_GET_CONTENT` et `ACTION_PICK` s'adressent aussi aux autres apps qui les gèrent, comme Drive ou une galerie, donc Android affiche un choix. Choisissez VFiles puis **Toujours** : Android le retient par type de fichier demandé, il peut donc redemander pour un autre type.
-- **Versions récentes d'Android** (constaté sur Android 16, pas sur 13) : les apps qui demandent des images ou des vidéos avec `ACTION_GET_CONTENT`, et toutes celles qui utilisent `ACTION_PICK_IMAGES`, obtiennent le sélecteur de photos du système, qu'une app normale ne peut pas remplacer. Désactiver `com.google.android.photopicker` ramène l'ancien sélecteur là où il existe, dont l'entrée **Parcourir** ouvre VFiles pour `ACTION_GET_CONTENT`.
+- Le changement survit aux redémarrages et ne vaut que pour l'utilisateur actuel (en général l'utilisateur 0). Testé sur **LineageOS** et d'autres ROM basées sur AOSP.
+- `ACTION_GET_CONTENT` et `ACTION_PICK` s'adressent aussi à des apps comme Drive ou une galerie, donc Android affiche un choix : choisissez VFiles puis **Toujours**. Android le retient par type de fichier, il peut donc redemander pour un autre type.
+- **Versions récentes d'Android** (constaté sur Android 16) : les demandes d'images et de vidéos via `ACTION_GET_CONTENT`, et toutes les demandes `ACTION_PICK_IMAGES`, obtiennent le sélecteur de photos du système, qu'une app ne peut pas remplacer. Désactiver `com.google.android.photopicker` ramène l'ancien sélecteur là où il existe, dont l'entrée **Parcourir** ouvre VFiles.
 - **Android TV :** DocumentsUI n'est pas installé, et un faux composant qui ne fait rien apparaît dans le choix. Choisissez VFiles puis **Toujours**, ou désactivez-le avec `adb shell pm disable-user --user 0 com.android.tv.frameworkpackagestubs`.
-- Le reste de ce que fait le gestionnaire de fichiers système passe aussi à VFiles une fois désactivé : les tuiles de stockage des Paramètres, l'ouverture des téléchargements, et les demandes d'accès à un dossier des apps d'avant Android 10.
-- Si une autre app de ce genre est installée (un gestionnaire de fichiers tiers, par exemple), Android peut afficher un choix. N'en installez qu'une seule si vous voulez éviter toute invite.
-- **Archives :** une archive qui ne correspond pas à ce que l'app demande s'ouvre comme un dossier, pour choisir un fichier à l'intérieur. Sinon, la toucher choisit l'archive elle-même. Les fichiers dans les archives sont en lecture seule.
-- **FTP et WebDAV** ne savent que remplacer un fichier entier, donc les apps qui écrivent une partie d'un fichier, ou ajoutent à sa fin, reçoivent une erreur. SMB et SFTP n'ont pas cette limite.
+- Les autres rôles du gestionnaire de fichiers système passent aussi à VFiles : tuiles de stockage des Paramètres, ouverture des téléchargements, et demandes d'accès à un dossier des apps d'avant Android 10.
+- **Les archives** s'ouvrent comme des dossiers pour choisir un fichier à l'intérieur, sauf si l'app demande l'archive elle-même. Les fichiers dans les archives sont en lecture seule.
+- **FTP et WebDAV** ne savent que remplacer un fichier entier, donc les apps qui en écrivent une partie reçoivent une erreur. SMB et SFTP n'ont pas cette limite.
 
-### 🔧 Pour les créateurs de ROM : en faire le vrai sélecteur système
+### 🔧 Pour les créateurs de ROM
 
-Une variante de build séparée et optionnelle, `systemPicker`, permet à un créateur de ROM de remplacer purement et simplement DocumentsUI : signé avec la clé plateforme de la ROM, VFiles renvoie exactement les mêmes URI de stockage que DocumentsUI, si bien que même les apps qui les exigent spécifiquement (pas seulement celles qui utilisent le sélecteur générique ci-dessus) fonctionnent avec lui. Voir [`docs/systempicker-integration.md`](docs/systempicker-integration.md) (en anglais) pour les prérequis et les étapes d'intégration. Cela n'affecte en rien une installation normale.
+Une variante de build optionnelle, `systemPicker`, signée avec la clé plateforme de la ROM, remplace purement et simplement DocumentsUI et renvoie les mêmes URI de stockage, si bien que même les apps qui les exigent fonctionnent. Voir [`docs/systempicker-integration.md`](docs/systempicker-integration.md) (en anglais). Cela n'affecte pas une installation normale.
 
 ---
 

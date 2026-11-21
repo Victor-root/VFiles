@@ -39,14 +39,14 @@
 ## ✨ What this fork changes
 
 ### 🧩 Rebuilt in Jetpack Compose
-- The whole interface is rebuilt in Jetpack Compose and Material 3: neutral backgrounds, a red accent by default, open folder icons, settings choices in bottom sheets and grouped action menus.
-- Faster startup and smoother scrolling of large folders, with screens opening inside the app instead of separate windows.
+- The whole interface is rebuilt in Jetpack Compose and Material 3: neutral backgrounds, a red accent by default, settings choices in bottom sheets and grouped action menus.
+- Faster startup and smoother scrolling of large folders, with screens opening inside the app.
 - Requires **Android 8.0 or newer**.
 
 ### 🖼️ Gallery, music, video and PDF built in
-- **Gallery** in the sidebar: photos and videos by day or by month, albums of folders, and a full screen viewer with zoomable photos and a video player.
-- **Music player**: songs, albums and artists, playback in the background controlled from the notification.
-- **Video player** and **PDF viewer** (one page at a time or fit to the width of the screen, pinch to zoom, go to page).
+- **Gallery** in the sidebar: photos and videos by day or month, albums of folders, and a full screen viewer.
+- **Music player**: songs, albums and artists, with background playback controlled from the notification. Add it to the sidebar from Settings → Standard folders.
+- **Video player** and **PDF viewer** (page by page or fit to width, pinch to zoom, go to page).
 
 ### 🔑 Shizuku support
 - With [Shizuku](https://shizuku.rikka.app/) (or Sui), Android/data and Android/obb can be browsed without root.
@@ -54,88 +54,69 @@
 
 ### 📺 Android TV support
 - Full D-pad navigation: the sidebar, toolbar and file lists are reachable and highlight correctly with a remote.
-- A refresh button in the header, the menu key of remotes opens menus, D-pad left opens the sidebar, and choice dialogs focus the current choice.
-- PDFs open fit to the width of the screen.
+- A refresh button in the header, the menu key opens menus, left opens the sidebar, and choice dialogs focus the current choice.
 
 ### 🚀 First-launch onboarding
-- A welcome flow that requests the permissions the app needs (all-files access, notifications, installing apps) up front, laid out as tiles on TVs.
-- Where only adb can give the access to all files, it shows the exact command to run, or the Shizuku button when Shizuku is running.
+- Asks up front for the permissions the app needs (all-files access, notifications, installing apps), laid out as tiles on TVs.
+- Where only adb can give the access to all files, it shows the exact command, or the Shizuku button when Shizuku is running.
 
-### 💾 Removable storage (SD card / USB), reworked
-- SD cards and USB drives **appear automatically under "Internal storage"** and refresh when you plug one in. No manual "Add storage" SAF dance.
-- **Rename** a volume and choose its **icon**; USB vs SD is auto-detected (with a manual override).
-- A multi-partition drive is grouped under a single **"USB drive" / "SD card"** header, with its partitions nested as **"Partition 1, 2, …"**.
-- **Eject** shortcut, and the free-space figure refreshes live (e.g. right after deleting files) instead of only after a restart.
+### 💾 Removable storage (SD card / USB)
+- SD cards and USB drives **appear automatically in the sidebar** when plugged in, with no "Add storage" step.
+- **Rename** a volume and choose its **icon**; USB or SD is detected automatically.
+- The partitions of one drive are grouped under a single **"USB drive" / "SD card"** header.
+- **Eject** shortcut, and the free space refreshes live.
 
-### 🎯 Default apps per file type
-- New **Settings → Default apps**: pick which app opens Images, Audio, Video, PDF and Text, VFiles' own viewers included, so those files open straight away in your app of choice. Without a choice, Android asks every time.
-
-### 📋 File operation progress
-- A progress button appears in the toolbar during copies, moves and archive operations, opening a popover with live per-file details instead of only a notification.
+### 🎯 Default apps and file operations
+- **Settings → Default apps**: pick which app opens images, audio, video, PDF and text, VFiles' own viewers included.
+- During copies, moves and archive operations, a toolbar button shows the live progress of each file.
 
 ### 🔒 Privacy & performance
-- **Firebase (Analytics + Crashlytics) removed entirely.** Nothing about your usage or crashes is sent anywhere, and the app also starts faster without it.
-- Cloud backup and data extraction disabled, so Android never ships app data off-device.
+- **Firebase (Analytics + Crashlytics) removed entirely.** Nothing about your usage or crashes leaves the device, and the app starts faster.
+- Cloud backup and data extraction disabled.
 
-### 🎨 UI consistency & theming
-- Status-bar icons tint themselves to the header/drawer colour (light or dark), fixing unreadable white-on-white and black-on-dark cases, with a smooth crossfade when the drawer opens.
-- Dark app bar in night mode instead of the light primary tint.
-- Icons shown in the ⋮ overflow menus; themed popup in dark mode.
-- Navigation drawer redesigned and themed for Material You (M3), including dark-mode colour and switch-thumb fixes.
-- Long names wrap instead of being cut off with "…".
-- Internal storage renamed with a phone icon; a real ribbon marks bookmarked folders; refreshed FTP-server icon.
-- Optional **edge-to-edge display** (Settings → Interface → "Edge-to-edge display"): content scrolls behind the status and navigation bars instead of stopping above them. Off by default.
+### 🎨 Interface
+- Status and navigation bar icons follow what is drawn behind them, the open drawer included.
+- Dark app bar in night mode, icons in the ⋮ menus, and a Material You drawer.
+- Long names wrap instead of being cut off; a ribbon marks bookmarked folders.
+- Optional **edge-to-edge display** (Settings → Interface): content scrolls behind the system bars. Off by default.
 
 ### 🐛 Other fixes & polish
-- Friendly message when a folder can't be opened, instead of a silent failure.
-- Optional per-server **encryption** for SMB shares, and a much faster scan for SMB servers on the local network.
-- Reorder the standard folders of the sidebar, with a drag or a D-pad.
-- Fixed a crash on tablets in landscape, and the status/navigation bars are now coloured to match the app bar.
-- Back exits at the root instead of leaving the app stuck, and long toolbar titles now marquee-scroll.
-- All fork-specific strings translated into **31 languages**.
-- App ID changed to `fr.vroot.vfiles` so it installs alongside the Play/F-Droid build rather than conflicting with it.
+- A clear message when a folder can't be opened.
+- Optional **encryption** for SMB shares, and a much faster scan for SMB servers on the local network.
+- Reorder the standard folders of the sidebar, with a drag or the D-pad.
+- Fixed a crash on tablets in landscape; Back at the root exits the app; long toolbar titles scroll.
+- Fork strings translated into **31 languages**.
+- App ID `fr.vroot.vfiles`, so it installs alongside the Play/F-Droid build of Material Files.
 
 ## ⬆️ Updating VFiles
 
-Two ways to get updates:
+- **Direct download**: install the latest APK from the [Releases page](https://github.com/Victor-root/VFiles/releases) over your current one. It's always signed with the same key, so your files and settings are kept.
+- **[Omnify](https://github.com/Victor-root/Omnify)**: my F-Droid client fork that installs and updates apps straight from their GitHub repo.
 
-- **Direct download**: grab the latest APK from the [Releases page](https://github.com/Victor-root/VFiles/releases) and install it over your current install. Signed with the same key every time, so your files and settings are kept.
-- **[Omnify](https://github.com/Victor-root/Omnify)**: my own F-Droid client fork that installs and tracks apps straight from their GitHub repo. Add this repo and it keeps VFiles up to date for you.
-
-Either way, the app opening the file (browser, file manager, or Omnify) will ask, the first time, for permission to install unknown apps.
+The first time, the app opening the APK asks for permission to install unknown apps.
 
 ## 🗂️ Making VFiles the default system file picker
 
-VFiles exposes **every backend it supports** through Android's file picker, not just local storage: SMB, FTP, SFTP and WebDAV shares, and the contents of archives, all show up as regular folders inside any app's "Open" or "Save" dialog, the same way a local folder would.
+VFiles exposes **every backend it supports** through Android's file picker: local storage, SMB, FTP, SFTP and WebDAV shares, and the contents of archives all show up as folders in any app's "Open" or "Save" dialog.
 
-Android routes `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` intents through **DocumentsUI** (`com.google.android.documentsui`, or `com.android.documentsui` on AOSP-based ROMs), even when VFiles is installed as a DocumentsProvider. Disabling that system app makes Android fall back to VFiles as the picker for every app on the device. No root required, just ADB over USB.
+Android sends `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT`, `ACTION_OPEN_DOCUMENT_TREE` and `ACTION_GET_CONTENT` to **DocumentsUI** (`com.google.android.documentsui`, or `com.android.documentsui` on AOSP-based ROMs). Disabling it makes VFiles the picker for every app. No root needed.
 
 ### From the app, with Shizuku
 
-With [Shizuku](https://shizuku.rikka.app/) running, turn on **VFiles as the default file picker** in the settings. VFiles explains what will happen before doing anything, and turning the option off puts back the state the picker had. The commands below do the same from a computer.
+With [Shizuku](https://shizuku.rikka.app/) running, turn on **VFiles as the default file picker** in the settings. VFiles explains what will happen first, and turning the option off restores the picker as it was. If the picker was removed with `pm uninstall --user 0`, the option shows as on, and turning it off brings the picker back.
 
-If the picker was removed with `pm uninstall --user 0` instead of disabled, the option shows as turned on, and turning it off brings the picker back from the copy Android keeps.
+**Turn the option off before uninstalling VFiles.** Android doesn't turn its picker back on by itself, so no app could pick files anymore. To repair that, reinstall VFiles and turn the option off, or run the commands below.
 
-**Turn the option off before uninstalling VFiles.** Android doesn't turn its picker back on by itself, so no app could pick files anymore. To repair that, install VFiles again and turn the option off, or run the commands from a computer.
-
-### Disable (make VFiles the default picker)
+### From a computer, with ADB
 
 ```sh
-# Disable the main DocumentsUI app
+# Make VFiles the default picker (the second line is for AOSP-based ROMs,
+# the third for ROMs with an overlay module; ignore errors for missing ones)
 adb shell pm disable-user --user 0 com.google.android.documentsui
-
-# On AOSP-based ROMs, it goes by this name instead
 adb shell pm disable-user --user 0 com.android.documentsui
-
-# Disable its overlay module (present on some ROMs; ignore the error if absent)
 adb shell pm disable-user --user 0 com.google.android.overlay.modules.documentsui
-```
 
-After running these, any app that opens a file or folder picker will use VFiles instead.
-
-### Re-enable (restore Google's picker)
-
-```sh
+# Restore the system picker
 adb shell pm enable com.google.android.documentsui
 adb shell pm enable com.android.documentsui
 adb shell pm enable com.google.android.overlay.modules.documentsui
@@ -143,20 +124,17 @@ adb shell pm enable com.google.android.overlay.modules.documentsui
 
 ### Notes
 
-- **No root needed**: `pm disable-user --user 0` runs over a standard ADB (USB debugging) connection.
-- Tested on **LineageOS** and other AOSP-based ROMs. On stock OEM ROMs the overlay package name may differ or be absent; the `pm disable-user` command for the main package is sufficient in that case.
-- The change survives reboots but is **per-user** (only affects the user whose session is active when ADB runs, typically user 0).
-- `ACTION_OPEN_DOCUMENT`, `ACTION_CREATE_DOCUMENT` and `ACTION_OPEN_DOCUMENT_TREE` go straight to VFiles. `ACTION_GET_CONTENT` and `ACTION_PICK` also reach other apps that handle them, such as Drive or a gallery, so Android shows a chooser. Pick VFiles and **Always**: Android remembers this per requested file type, so it may ask again for another type.
-- **Recent Android versions** (seen on Android 16, not on 13): apps asking for images or videos with `ACTION_GET_CONTENT`, and every app using `ACTION_PICK_IMAGES`, get the system Photo Picker, which a normal app can't replace. Disabling `com.google.android.photopicker` brings back the older picker where it exists, whose **Browse** entry opens VFiles for `ACTION_GET_CONTENT`.
+- The change survives reboots and only applies to the current user (usually user 0). Tested on **LineageOS** and other AOSP-based ROMs.
+- `ACTION_GET_CONTENT` and `ACTION_PICK` also reach apps like Drive or a gallery, so Android shows a chooser: pick VFiles and **Always**. Android remembers it per file type, so it may ask again for another type.
+- **Recent Android versions** (seen on Android 16): image and video requests through `ACTION_GET_CONTENT`, and all `ACTION_PICK_IMAGES` requests, get the system Photo Picker, which an app can't replace. Disabling `com.google.android.photopicker` brings back the older picker where it exists, whose **Browse** entry opens VFiles.
 - **Android TV:** DocumentsUI isn't installed, and a stub that does nothing shows up in the chooser. Pick VFiles and **Always**, or disable it with `adb shell pm disable-user --user 0 com.android.tv.frameworkpackagestubs`.
-- The rest of what the system files app does also goes to VFiles once it's disabled: storage tiles in Settings, opening the downloads, and the folder access requests of apps from before Android 10.
-- If another picker app is installed (e.g. a third-party file manager), Android may show a chooser. Install only one if you want zero prompts.
-- **Archives:** an archive that isn't what the app asks for opens like a folder, to pick a file inside it. Otherwise, tapping it picks the archive itself. Files inside archives are read-only.
-- **FTP and WebDAV** can only replace a whole file, so apps writing part of a file, or adding to its end, get an error. SMB and SFTP don't have this limit.
+- The other jobs of the system files app also go to VFiles: storage tiles in Settings, opening downloads, and folder access requests from apps made before Android 10.
+- **Archives** open like folders to pick a file inside, unless the app asks for the archive itself. Files inside archives are read-only.
+- **FTP and WebDAV** can only replace whole files, so apps writing part of a file get an error. SMB and SFTP don't have this limit.
 
-### 🔧 For ROM builders: making it the literal system picker
+### 🔧 For ROM builders
 
-A separate, opt-in `systemPicker` build variant lets a ROM builder replace DocumentsUI outright: signed with the ROM's platform key, VFiles hands back the exact same storage URIs DocumentsUI would, so even apps that specifically require them (not just apps using the generic picker above) work against it. See [`docs/systempicker-integration.md`](docs/systempicker-integration.md) for the requirements and integration steps. This does not affect a normal install in any way.
+An opt-in `systemPicker` build variant, signed with the ROM's platform key, replaces DocumentsUI outright and returns the same storage URIs, so even apps that require them work. See [`docs/systempicker-integration.md`](docs/systempicker-integration.md). It doesn't affect a normal install.
 
 ---
 
