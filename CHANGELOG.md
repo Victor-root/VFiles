@@ -1,6 +1,6 @@
 # Changelog
 
-## 🚀 v2.0.0 (Unreleased)
+## 🚀 v2.0.0 (2026-11-21)
 
 A full rewrite of the interface in Jetpack Compose, with a gallery, a music player, a video player and a PDF viewer built in, Shizuku support, and a smoother app on phones and Android TV alike.
 
