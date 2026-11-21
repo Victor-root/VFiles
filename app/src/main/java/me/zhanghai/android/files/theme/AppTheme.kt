@@ -50,16 +50,35 @@ private val LocalStatusBarBackgrounds =
         error("No status bar backgrounds provided")
     }
 
+// The same for the navigation bar, whose default background depends on edge to edge.
+private val LocalNavigationBarBackgrounds =
+    staticCompositionLocalOf<SnapshotStateList<Color>> {
+        error("No navigation bar backgrounds provided")
+    }
+
 /**
  * Makes the status bar icons follow [color] instead of the app bar while this is shown, which is
  * while it's composed and started.
  */
 @Composable
 fun StatusBarBackgroundEffect(color: Color) {
-    val statusBarBackgrounds = LocalStatusBarBackgrounds.current
-    LifecycleStartEffect(statusBarBackgrounds, color) {
-        statusBarBackgrounds += color
-        onStopOrDispose { statusBarBackgrounds.removeAt(statusBarBackgrounds.lastIndexOf(color)) }
+    BarBackgroundEffect(LocalStatusBarBackgrounds.current, color)
+}
+
+/**
+ * Makes the navigation bar icons follow [color] instead of the content while this is shown, which
+ * is while it's composed and started.
+ */
+@Composable
+fun NavigationBarBackgroundEffect(color: Color) {
+    BarBackgroundEffect(LocalNavigationBarBackgrounds.current, color)
+}
+
+@Composable
+private fun BarBackgroundEffect(backgrounds: SnapshotStateList<Color>, color: Color) {
+    LifecycleStartEffect(backgrounds, color) {
+        backgrounds += color
+        onStopOrDispose { backgrounds.removeAt(backgrounds.lastIndexOf(color)) }
     }
 }
 
@@ -107,11 +126,13 @@ fun AppTheme(content: @Composable () -> Unit) {
         AppColors(isDark, lightColorScheme.primary, lightColorScheme.onPrimary)
     }
     val statusBarBackgrounds = remember { mutableStateListOf<Color>() }
+    val navigationBarBackgrounds = remember { mutableStateListOf<Color>() }
     val darkSystemBarsCount = remember { mutableIntStateOf(0) }
     SystemBarsEffect(
         statusBarBackgrounds.lastOrNull() ?: appColors.appBarContainer,
-        // Unless edge to edge, the navigation bar is drawn over the color of the app bar.
-        if (isEdgeToEdge) appColors.isDark else appColors.appBarContainer.luminance() < 0.5f,
+        navigationBarBackgrounds.lastOrNull()?.let { it.luminance() < 0.5f }
+            // Unless edge to edge, the navigation bar is drawn over the color of the app bar.
+            ?: if (isEdgeToEdge) appColors.isDark else appColors.appBarContainer.luminance() < 0.5f,
         darkSystemBarsCount.intValue > 0
     )
     CompositionLocalProvider(
@@ -119,6 +140,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         LocalConfiguration provides context.resources.configuration,
         LocalAppColors provides appColors,
         LocalStatusBarBackgrounds provides statusBarBackgrounds,
+        LocalNavigationBarBackgrounds provides navigationBarBackgrounds,
         LocalDarkSystemBarsCount provides darkSystemBarsCount
     ) {
         MaterialTheme(colorScheme = colorScheme, content = content)

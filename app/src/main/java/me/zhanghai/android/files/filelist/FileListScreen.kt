@@ -139,6 +139,7 @@ import me.zhanghai.android.files.navigation.NavigationDrawerContent
 import me.zhanghai.android.files.provider.archive.ArchiveHeaderEncryptedException
 import me.zhanghai.android.files.settings.Settings
 import me.zhanghai.android.files.storage.StorageVolumeList
+import me.zhanghai.android.files.theme.NavigationBarBackgroundEffect
 import me.zhanghai.android.files.theme.StatusBarBackgroundEffect
 import me.zhanghai.android.files.ui.ActionButton
 import me.zhanghai.android.files.ui.AppScaffold
@@ -482,6 +483,7 @@ private fun FileListModalDrawer(
     val isOpening = drawerState.targetValue == DrawerValue.Open
     if (isOpening) {
         StatusBarBackgroundEffect(MaterialTheme.colorScheme.surface)
+        NavigationBarBackgroundEffect(MaterialTheme.colorScheme.surface)
     }
     val windowWidth = with(LocalDensity.current) {
         LocalWindowInfo.current.containerSize.width.toDp()
